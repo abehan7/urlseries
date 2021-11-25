@@ -1,0 +1,98 @@
+@font-face {
+  font-family: "BMHANNAPro";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.grid-container {
+  display: grid;
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 40rem;
+  height: 100vh;
+  grid-template-columns: repeat(2, 25%);
+  grid-template-rows: 40px 50px 300px minmax(auto, 660px);
+  grid-gap: 20px;
+}
+
+.search-box {
+  grid-column: span 2;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding-right: 0.5rem;
+  width: 30%;
+  height: 39px;
+  background-color: #c4c4c4;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.share-write {
+  grid-column: span 2;
+  align-self: flex-end;
+  justify-self: end;
+}
+
+.share-write:hover {
+  cursor: pointer;
+}
+.share-write svg {
+  padding: 0.2rem;
+}
+
+.Rectangle {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #fafafa;
+}
+
+.Big_Rect {
+  box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+  background-color: #fafafa;
+  grid-column: span 2;
+}
+
+.Big_Rect,
+.Rectangle {
+  font-family: "BMHANNAPro";
+  padding: 1rem;
+}
+
+.share-write,
+.search-box {
+  font-size: 1.7rem;
+}
+
+.text-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.text-container > div {
+  padding: 0.5rem;
+}
+
+.text-container > div:hover {
+  background-color: beige;
+  cursor: pointer;
+}
+
+.text-three-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 5px;
+  padding: 0px;
+}
+
+.text-three-container > div:hover {
+  background-color: beige;
+  cursor: pointer;
+}
+
+.T-url {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
