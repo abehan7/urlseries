@@ -8,6 +8,7 @@ const MainPage = () => {
     <div>
       <div className="grid-container">
         <div className="search-box">
+          <input />
           <FaSearch />
         </div>
         <div className="share-write">

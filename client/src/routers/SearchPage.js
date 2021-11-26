@@ -8,6 +8,7 @@ const SearchPage = () => {
       <div className="SearchPage">
         <div className="flex-container">
           <div className="searchBar">
+            <input />
             <FaSearch />
           </div>
           <div className="titleBox">
