@@ -1,11 +1,14 @@
 import React from "react";
 import "./MainPage.css";
 import { Link } from "react-router-dom";
-
+import urls from "../urls.json";
 import { FaSearch } from "react-icons/fa";
 import { BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
+
 const MainPage = () => {
+  const values = urls.urls;
+
   return (
     <div>
       <div className="grid-container">
@@ -22,90 +25,53 @@ const MainPage = () => {
         <div className="Rectangle">
           <h3>내가 지정한 URL </h3>
           <div className="text-container">
-            <div className="url">리액트 아이콘스 - 리액트 아이콘들 있는 곳</div>
-            <div className="url">리액트 이미지 넣는 법</div>
-            <div className="url">머신러닝 교과서</div>
+            {values.slice(0, 5).map((value) => {
+              return (
+                <div
+                  className="url"
+                  onClick={() => {
+                    window.open(value.url);
+                  }}
+                >
+                  {value.title}
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="Rectangle">
           <h3>자주 이용하는 URL</h3>
           <div className="text-container">
-            <div className="url">리액트 아이콘스 - 리액트 아이콘들 있는 곳</div>
-            <div className="url">리액트 이미지 넣는 법</div>
-            <div className="url">머신러닝 교과서</div>
+            {values.slice(5, 10).map((value) => {
+              return (
+                <div
+                  className="url"
+                  onClick={() => {
+                    window.open(value.url);
+                  }}
+                >
+                  {value.title}
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="Big_Rect">
           <h3>전체 URL</h3>
           <div className="text-three-container">
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
-            <div className="T-url">리액트 이미지 넣는 법</div>
-            <div className="T-url">머신러닝 교과서</div>
-            <div className="T-url">
-              리액트 아이콘스 - 리액트 아이콘들 있는 곳
-            </div>
+            {values.map((value) => {
+              return (
+                <div
+                  className="T-url"
+                  key={value.id}
+                  onClick={() => {
+                    window.open(value.url);
+                  }}
+                >
+                  {value.title}
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -63,7 +63,7 @@
   outline: none;
 }
 
-.text-container {
+.searched-text-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,15 +71,15 @@
   width: 100%;
 }
 
-.text-container > div {
+.searched-text-container > div {
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: center;
   padding: 0.4rem;
   width: 100%;
 }
 
-.text-container > div:hover {
+.searched-text-container > div:hover {
   background-color: beige;
   cursor: pointer;
 }

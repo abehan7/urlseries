@@ -20,7 +20,7 @@ const SearchPage = () => {
           </div>
           <div className="titleBox">
             <h3>Title</h3>
-            <div className="text-container">
+            <div className="searched-text-container">
               <div className="url">
                 자바스크립트자바스크립트자바스크립트자바스크립트자바스크립트자바스크립트자바스크립트자바스크립트자바스크립트자바스크립트자바스크립트
               </div>
@@ -37,7 +37,7 @@ const SearchPage = () => {
           </div>
           <div className="HashBox">
             <h3>HashTag</h3>
-            <div className="text-container">
+            <div className="searched-text-container">
               <div className="url">자바스크립트</div>
               <div className="url">자바스크립트 타임셋</div>
               <div className="url">자바스크립트 async</div>
