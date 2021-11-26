@@ -42,11 +42,12 @@
   justify-content: center;
   flex-direction: row;
   padding: 0%;
+  width: 42%;
   font-size: 1.8rem;
-  width: 40%;
 }
 
 .flex-container > .searchBar > svg {
+  cursor: pointer;
   position: absolute;
   right: 30%;
 }
@@ -54,8 +55,12 @@
 .flex-container > .searchBar > input {
   width: 100%;
   padding: 1rem;
-  /* padding-top: 0.7rem; */
-  /* padding-bottom: 0.7rem; */
+  border: none;
+  font-size: 1rem;
+}
+
+.flex-container > .searchBar > input:focus {
+  outline: none;
 }
 
 .text-container {
@@ -76,5 +81,13 @@
 
 .text-container > div:hover {
   background-color: beige;
+  cursor: pointer;
+}
+
+.backIcon {
+  position: absolute;
+  font-size: 2rem;
+  left: 4%;
+  top: 7%;
   cursor: pointer;
 }

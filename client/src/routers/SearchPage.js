@@ -1,11 +1,18 @@
 import React from "react";
 import "./SearchPage.css";
+import { Route, Link } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
+import { BiArrowBack } from "react-icons/bi";
 
 const SearchPage = () => {
   return (
     <div>
       <div className="SearchPage">
+        <div className="backIcon">
+          <Link to="/">
+            <BiArrowBack />
+          </Link>
+        </div>
         <div className="flex-container">
           <div className="searchBar">
             <input />

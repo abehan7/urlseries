@@ -1,5 +1,7 @@
 import React from "react";
 import "./MainPage.css";
+import { Link } from "react-router-dom";
+
 import { FaSearch } from "react-icons/fa";
 import { BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
@@ -12,7 +14,9 @@ const MainPage = () => {
           <FaSearch />
         </div>
         <div className="share-write">
-          <BiPaperPlane />
+          <Link to="/search">
+            <BiPaperPlane />
+          </Link>
           <FiPlusSquare />
         </div>
         <div className="Rectangle">
