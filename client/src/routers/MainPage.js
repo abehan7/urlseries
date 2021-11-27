@@ -10,12 +10,18 @@ import FiveUrls from "../components/FiveUrls";
 
 const MainPage = () => {
   const values = urls.urls;
+  window.document.onselectstart = new Function("return false");
 
   return (
-    <div>
+    <div className="MainPage">
       <div className="grid-container">
         <div className="search-box">
-          <input />
+          <input
+            onClick={() => {
+              document.querySelector(".search-box > svg").style.display =
+                "none";
+            }}
+          />
           <FaSearch />
         </div>
         <div className="share-write">
@@ -43,6 +49,8 @@ const MainPage = () => {
           </div>
         </div>
       </div>
+
+      <div className="aside">어사이드</div>
     </div>
   );
 };

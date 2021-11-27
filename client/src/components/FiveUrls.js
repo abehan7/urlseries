@@ -13,6 +13,10 @@ const FiveUrls = ({ values, num1, num2 }) => {
             onMouseEnter={() => {
               console.log(123);
             }}
+            onContextMenu={(e) => {
+              console.log("우클릭");
+              e.preventDefault();
+            }}
             key={value.id}
           >
             {value.title}
