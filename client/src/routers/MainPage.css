@@ -10,10 +10,10 @@
   display: grid;
   justify-content: center;
   padding-top: 2rem;
-  padding-bottom: 34rem;
+  padding-bottom: 10%;
   height: 100vh;
   grid-template-columns: repeat(2, 25%);
-  grid-template-rows: 40px 50px 300px minmax(auto, 660px);
+  grid-template-rows: 40px 50px auto minmax(auto, 660px);
   grid-gap: 20px;
 }
 
@@ -60,6 +60,10 @@
 }
 .share-write svg {
   padding: 0.2rem;
+}
+
+.share-write svg:first-child:hover {
+  color: rgba(59, 255, 255, 1);
 }
 
 .Rectangle {
@@ -117,8 +121,5 @@
   justify-content: center;
   width: 100%;
   height: 100%;
-  padding: 0.4rem;
-}
-
-.url {
+  padding: 0.5rem;
 }

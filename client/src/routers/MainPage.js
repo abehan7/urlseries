@@ -5,6 +5,8 @@ import urls from "../urls.json";
 import { FaSearch } from "react-icons/fa";
 import { BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
+import TotalUrlMap from "../components/TotalUrlMap";
+import FiveUrls from "../components/FiveUrls";
 
 const MainPage = () => {
   const values = urls.urls;
@@ -22,56 +24,22 @@ const MainPage = () => {
           </Link>
           <FiPlusSquare />
         </div>
-        <div className="Rectangle">
+        <div className="Rectangle left-top">
           <h3>내가 지정한 URL </h3>
           <div className="text-container">
-            {values.slice(0, 5).map((value) => {
-              return (
-                <div
-                  className="url"
-                  onClick={() => {
-                    window.open(value.url);
-                  }}
-                >
-                  {value.title}
-                </div>
-              );
-            })}
+            <FiveUrls values={values} num1={0} num2={5} />
           </div>
         </div>
-        <div className="Rectangle">
+        <div className="Rectangle right-top">
           <h3>자주 이용하는 URL</h3>
           <div className="text-container">
-            {values.slice(5, 10).map((value) => {
-              return (
-                <div
-                  className="url"
-                  onClick={() => {
-                    window.open(value.url);
-                  }}
-                >
-                  {value.title}
-                </div>
-              );
-            })}
+            <FiveUrls values={values} num1={5} num2={10} />
           </div>
         </div>
         <div className="Big_Rect">
           <h3>전체 URL</h3>
           <div className="text-three-container">
-            {values.map((value) => {
-              return (
-                <div
-                  className="T-url"
-                  key={value.id}
-                  onClick={() => {
-                    window.open(value.url);
-                  }}
-                >
-                  {value.title}
-                </div>
-              );
-            })}
+            <TotalUrlMap values={values} />
           </div>
         </div>
       </div>
