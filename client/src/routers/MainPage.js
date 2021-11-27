@@ -10,7 +10,28 @@ import FiveUrls from "../components/FiveUrls";
 
 const MainPage = () => {
   const values = urls.urls;
-  window.document.onselectstart = new Function("return false");
+  window.document.onselectstart = () => {
+    return false;
+  };
+  window.document.oncontextmenu = () => {
+    return false;
+  };
+
+  const hashTagsUniqe = (values) => {
+    var hashList = [];
+    values.forEach((value) => {
+      // console.log(value.hashTags);
+      value.hashTags.forEach((tag) => {
+        // console.log(tag);
+        if (!hashList.includes(tag)) {
+          hashList.push(tag);
+          console.log(hashList);
+        }
+      });
+    });
+    return hashList;
+  };
+  hashTagsUniqe(values);
 
   return (
     <div className="MainPage">
@@ -50,7 +71,14 @@ const MainPage = () => {
         </div>
       </div>
 
-      <div className="aside">어사이드</div>
+      <div className="aside">
+        <div className="aside-tags">
+          {hashTagsUniqe(values).map((tag) => {
+            return <span className="tag">{tag}</span>;
+          })}
+        </div>
+        <div className="aside-details"></div>
+      </div>
     </div>
   );
 };

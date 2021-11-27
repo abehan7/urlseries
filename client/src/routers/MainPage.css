@@ -116,6 +116,7 @@
 .text-container > div:hover {
   background-color: beige;
   cursor: pointer;
+  transition: 0.4s;
 }
 
 .text-three-container {
@@ -130,6 +131,7 @@
 .text-three-container > div:hover {
   background-color: beige;
   cursor: pointer;
+  transition: 0.4s;
 }
 
 .T-url {
@@ -143,16 +145,40 @@
 }
 
 .aside {
+  font-family: "BMHANNAPro";
   display: flex;
+  flex-direction: column;
   position: sticky;
+  word-break: break-all;
   margin-top: -240px;
-  /* padding-bottom: 100px; */
   width: 300px;
-  height: 300px;
+  top: 30%;
+  gap: 50px;
+}
+
+.aside-tags {
+  display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  /* right: 2%; */
-  top: 20%;
+  flex-wrap: wrap;
+  gap: 3px;
+  /* background-color: #fafafa;
+  box-shadow: 0px 1px 1px 0 rgba(0, 0, 0, 0.25); */
+}
+.tag {
+  cursor: pointer;
+  background-color: bisque;
+  border: 1px solid #bcbcbc;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.aside-details {
+  height: 200px;
   background-color: #fafafa;
-  box-shadow: 0px 1px 1px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0px 1px 1px 0 rgba(88, 40, 40, 0.25);
 }
