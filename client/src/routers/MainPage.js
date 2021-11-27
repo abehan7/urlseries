@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./MainPage.css";
 import { Link } from "react-router-dom";
 import urls from "../urls.json";
@@ -7,8 +7,14 @@ import { BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
 import TotalUrlMap from "../components/TotalUrlMap";
 import FiveUrls from "../components/FiveUrls";
+import HashTagsUnique from "../components/HashTagsUnique";
+import BoxTagControler from "../components/BoxTagControler";
 
 const MainPage = () => {
+  const [BoxTags, setBoxTags] = useState([]);
+  const [BoxTags_First, setBoxTags_First] = useState(true);
+  const [hashList, setHashList] = useState([]);
+
   const values = urls.urls;
   window.document.onselectstart = () => {
     return false;
@@ -16,22 +22,10 @@ const MainPage = () => {
   window.document.oncontextmenu = () => {
     return false;
   };
-
-  const hashTagsUniqe = (values) => {
-    var hashList = [];
-    values.forEach((value) => {
-      // console.log(value.hashTags);
-      value.hashTags.forEach((tag) => {
-        // console.log(tag);
-        if (!hashList.includes(tag)) {
-          hashList.push(tag);
-          console.log(hashList);
-        }
-      });
-    });
-    return hashList;
-  };
-  hashTagsUniqe(values);
+  useEffect(() => {
+    setHashList(HashTagsUnique(values));
+  }, [values]);
+  // const fixedTags = useMemo(() => HashTagsUnique(values), [values]);
 
   return (
     <div className="MainPage">
@@ -73,11 +67,25 @@ const MainPage = () => {
 
       <div className="aside">
         <div className="aside-tags">
-          {hashTagsUniqe(values).map((tag) => {
-            return <span className="tag">{tag}</span>;
+          {hashList.map((tag) => {
+            return (
+              <span
+                className="tag"
+                onClick={(e) => {
+                  BoxTagControler(e, {
+                    BoxTags_First,
+                    setBoxTags_First,
+                    BoxTags,
+                    setBoxTags,
+                  });
+                }}
+              >
+                {tag}
+              </span>
+            );
           })}
         </div>
-        <div className="aside-details"></div>
+        {/* <div className="aside-details"></div> */}
       </div>
     </div>
   );

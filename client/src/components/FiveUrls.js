@@ -11,7 +11,7 @@ const FiveUrls = ({ values, num1, num2 }) => {
               window.open(value.url);
             }}
             onMouseEnter={() => {
-              console.log(123);
+              // console.log(123);
             }}
             onContextMenu={(e) => {
               console.log("우클릭");

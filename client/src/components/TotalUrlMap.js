@@ -3,7 +3,6 @@ import React from "react";
 const TotalUrlMap = ({ values }) => {
   const onMouseEnter = (e) => {
     console.log(e.target);
-
     // 시간지연같은거 두고싶은데
     // 3초 이상 누르고있으면 나오도록 하는거
     // const newDiv = document.createElement("div");
@@ -31,7 +30,9 @@ const TotalUrlMap = ({ values }) => {
               onClick={() => {
                 window.open(value.url);
               }}
-              onMouseEnter={onMouseEnter}
+              onMouseEnter={() => {
+                // console.log(value);
+              }}
               onMouseLeave={onMouseLeave}
               onContextMenu={(e) => {
                 console.log("우클릭");
