@@ -24,8 +24,7 @@ const MainPage = () => {
   };
   useEffect(() => {
     setHashList(HashTagsUnique(values));
-  }, [values]);
-  // const fixedTags = useMemo(() => HashTagsUnique(values), [values]);
+  }, []);
 
   return (
     <div className="MainPage">
