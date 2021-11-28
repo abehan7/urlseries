@@ -15,6 +15,15 @@ const MainPage = () => {
   const [BoxTags_First, setBoxTags_First] = useState(true);
   const [hashList, setHashList] = useState([]);
 
+  const clickOutSide = (e) => {
+    var target = e.target;
+
+    if (target == document.querySelector(".search-box").firstChild) {
+      return;
+    }
+    document.querySelector(".search-box > svg").style.display = "block";
+  };
+
   const values = urls.urls;
   window.document.onselectstart = () => {
     return false;
@@ -27,7 +36,7 @@ const MainPage = () => {
   }, []);
 
   return (
-    <div className="MainPage">
+    <div className="MainPage" onClick={clickOutSide}>
       <div className="grid-container">
         <div className="search-box">
           <input

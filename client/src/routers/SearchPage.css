@@ -52,6 +52,10 @@
   right: 30%;
 }
 
+/* .flex-container > .searchBar > svg :active {
+  color: black;
+} */
+
 .flex-container > .searchBar > input {
   width: 100%;
   padding: 1rem;
@@ -90,4 +94,8 @@
   left: 4%;
   top: 7%;
   cursor: pointer;
+}
+
+.backIcon svg:active {
+  color: black;
 }
