@@ -3,7 +3,7 @@ const BoxTagControler = (
   { BoxTags_First, setBoxTags_First, BoxTags, setBoxTags }
 ) => {
   var currentList = [];
-  console.log(e.target);
+  // console.log(e.target);
 
   // ====================================== 처음에 한번 누르면 전체 투명도 낮아지는 거 START ======================================
 
@@ -21,13 +21,13 @@ const BoxTagControler = (
     setBoxTags([...BoxTags, e.target.textContent]);
     // console.log(BoxTags);
     currentList = [...BoxTags, e.target.textContent];
-    console.log(currentList);
+    // console.log(currentList);
   } else {
     e.target.style.opacity = "0.3";
     setBoxTags(BoxTags.filter((oneTag) => oneTag !== e.target.textContent));
     currentList = BoxTags.filter((oneTag) => oneTag !== e.target.textContent);
-    console.log(currentList);
-    console.log(currentList.length);
+    // console.log(currentList);
+    // console.log(currentList.length);
   }
   // ====================================== 선택에 따라서 색깔변화 END ======================================
 
@@ -35,9 +35,10 @@ const BoxTagControler = (
   if (currentList.length === 0) {
     document.querySelectorAll(".tag").forEach((one) => {
       one.style.opacity = "1";
-      setBoxTags_First(true);
     });
+    setBoxTags_First(true);
   }
   // ====================================== 선택된거가 하나도 없으면 전체 색깔 찐하게 END ======================================
 };
+
 export default BoxTagControler;

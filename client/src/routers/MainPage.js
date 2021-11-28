@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MainPage.css";
 import { Link } from "react-router-dom";
 import urls from "../urls.json";
@@ -9,11 +9,13 @@ import TotalUrlMap from "../components/TotalUrlMap";
 import FiveUrls from "../components/FiveUrls";
 import HashTagsUnique from "../components/HashTagsUnique";
 import BoxTagControler from "../components/BoxTagControler";
+import UrlsByHashTag from "../components/UrlsByHashTag";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]);
   const [BoxTags_First, setBoxTags_First] = useState(true);
   const [hashList, setHashList] = useState([]);
+  const [totalUrls, setTotalUrls] = useState(["123"]);
 
   const clickOutSide = (e) => {
     var target = e.target;
@@ -31,8 +33,13 @@ const MainPage = () => {
   window.document.oncontextmenu = () => {
     return false;
   };
+
   useEffect(() => {
     setHashList(HashTagsUnique(values));
+    //url들 넣는 리스트만들기
+    var TotalUrls_title = [];
+    values.forEach((tag) => TotalUrls_title.push(tag.title));
+    setTotalUrls(TotalUrls_title);
   }, []);
 
   return (
@@ -43,6 +50,7 @@ const MainPage = () => {
             onClick={() => {
               document.querySelector(".search-box > svg").style.display =
                 "none";
+              console.log(totalUrls);
             }}
           />
           <FaSearch />
@@ -66,9 +74,17 @@ const MainPage = () => {
           </div>
         </div>
         <div className="Big_Rect">
-          <h3>전체 URL</h3>
+          {BoxTags_First ? <h3>전체 URL</h3> : <h3>HashTag</h3>}
           <div className="text-three-container">
-            <TotalUrlMap values={values} />
+            {BoxTags_First ? (
+              <TotalUrlMap values={values} />
+            ) : (
+              <UrlsByHashTag
+                values={values}
+                BoxTags={BoxTags}
+                totalUrls={totalUrls}
+              />
+            )}
           </div>
         </div>
       </div>

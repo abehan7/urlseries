@@ -22,11 +22,6 @@ const TotalUrlMap = ({ values }) => {
   return (
     <>
       {values.map((value) => {
-        // if (value.title.length >= 23) {
-        //   console.log(value.title.length);
-        //   value.title = value.title.substr(0, 23) + "...";
-        // }
-
         return (
           <>
             <div

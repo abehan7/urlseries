@@ -6,7 +6,7 @@ const HashTagsUnique = (values) => {
       // console.log(tag);
       if (!hashList.includes(tag)) {
         hashList.push(tag);
-        console.log(hashList);
+        // console.log(hashList);
       }
     });
   });
