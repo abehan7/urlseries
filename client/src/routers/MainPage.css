@@ -149,9 +149,9 @@
   flex-direction: column;
   position: sticky;
   word-break: break-all;
-  margin-top: -500px;
+  margin-top: -200px;
   width: 300px;
-  top: 5%;
+  top: 10%;
   gap: 50px;
 }
 
@@ -180,4 +180,74 @@
   height: 200px;
   background-color: #fafafa;
   box-shadow: 0px 1px 1px 0 rgba(88, 40, 40, 0.25);
+}
+.minisize-tags {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .aside {
+    display: none;
+  }
+  .minisize-tags {
+    display: flex;
+    grid-column: span 2;
+  }
+  .grid-container {
+    padding-right: 0%;
+  }
+  .tag {
+    font-family: "BMHANNAPro";
+  }
+}
+
+@media (max-width: 870px) {
+  .grid-container {
+    grid-template-columns: 400px;
+  }
+
+  .Big_Rect,
+  .search-box,
+  .share-write,
+  .minisize-tags {
+    grid-column: span 1;
+  }
+
+  .search-box > input {
+    width: 100%;
+  }
+
+  .search-box {
+    width: 200px;
+  }
+  .text-three-container {
+    grid-template-columns: 1fr;
+  }
+
+  .text-container {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text-container > div {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h3 {
+    text-align: center;
+  }
+}
+
+@media (max-width: 470px) {
+  .grid-container {
+    grid-template-columns: auto;
+  }
+
+  .Rectangle,
+  .Big_Rect {
+    box-shadow: none;
+  }
 }

@@ -38,6 +38,8 @@ const BoxTagControler = (
     });
     setBoxTags_First(true);
   }
+  console.log(currentList);
+
   // ====================================== 선택된거가 하나도 없으면 전체 색깔 찐하게 END ======================================
 };
 

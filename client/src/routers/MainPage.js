@@ -73,6 +73,26 @@ const MainPage = () => {
             <FiveUrls values={values} num1={5} num2={10} />
           </div>
         </div>
+
+        <div className="minisize-tags aside-tags">
+          {hashList.map((tag) => {
+            return (
+              <span
+                className="tag"
+                onClick={(e) => {
+                  BoxTagControler(e, {
+                    BoxTags_First,
+                    setBoxTags_First,
+                    BoxTags,
+                    setBoxTags,
+                  });
+                }}
+              >
+                {tag}
+              </span>
+            );
+          })}
+        </div>
         <div className="Big_Rect">
           {BoxTags_First ? <h3>전체 URL</h3> : <h3>HashTag</h3>}
           <div className="text-three-container">
