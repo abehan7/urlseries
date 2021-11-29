@@ -20,10 +20,11 @@ const MainPage = () => {
   const clickOutSide = (e) => {
     var target = e.target;
 
-    if (target == document.querySelector(".search-box").firstChild) {
+    if (target === document.querySelector(".search-box").firstChild) {
       return;
     }
     document.querySelector(".search-box > svg").style.display = "block";
+    document.querySelector(".Search-balloon").style.display = "none";
   };
 
   const values = urls.urls;
@@ -47,13 +48,17 @@ const MainPage = () => {
       <div className="grid-container">
         <div className="search-box">
           <input
-            onClick={() => {
+            onClick={(e) => {
               document.querySelector(".search-box > svg").style.display =
                 "none";
-              console.log(totalUrls);
+              document.querySelector(".Search-balloon").style.display = "block";
+
+              // console.log(totalUrls);
             }}
           />
           <FaSearch />
+
+          <div className="Search-balloon"></div>
         </div>
         <div className="share-write">
           <Link to="/search">

@@ -28,8 +28,9 @@
 .search-box {
   grid-column: span 2;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: end;
+  justify-content: center;
   width: 30%;
   height: 100%;
   /* background-color: #c4c4c4; */
@@ -52,16 +53,38 @@
 
 .search-box > svg {
   position: absolute;
-  /* left: 10px; */
   font-size: 30px;
   height: 35px;
-  padding-right: 5px;
-  /* background-color: #c4c4c4; */
-
-  /* background-color: #c4c4c4; */
-
-  /* left: 545px; */
+  margin-left: 90px;
 }
+
+.Search-balloon {
+  display: none;
+  position: absolute;
+  margin-top: 370px;
+  width: 350px;
+  height: 300px;
+  border-radius: 8px;
+  background: #fff;
+  color: #333;
+  font-size: 15px;
+  transition: ease-in-out 2s;
+}
+
+/* .Search-balloon:after {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -10px;
+  border: solid transparent;
+  border-color: rgba(51, 51, 51, 0);
+  border-bottom-color: #333;
+  border-width: 10px;
+  pointer-events: none;
+  content: " ";
+} */
 
 .share-write {
   grid-column: span 2;
@@ -249,5 +272,11 @@
   .Rectangle,
   .Big_Rect {
     box-shadow: none;
+  }
+
+  .text-container,
+  .text-three-container > div:hover {
+    background-color: none;
+    cursor: none;
   }
 }
