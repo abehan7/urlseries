@@ -25,7 +25,7 @@ const MainPage = () => {
   // console.log("totalUrls : ", totalUrls); // 전체 url들
 
   // 검색창 외에 바깥부분 클릭하면 모달 사라지는 onClick이벤트
-  const clickOutSide = async (e) => {
+  const clickOutSide = (e) => {
     var target = e.target;
 
     if (
@@ -50,19 +50,39 @@ const MainPage = () => {
     }
   };
 
+  const createModal = () => {
+    if (!clickedSearchInput) {
+      const newDiv = document.createElement("div");
+      newDiv.className = "Search-balloon";
+      document.querySelector(".search-box > svg").style.display = "none";
+
+      document.querySelector(".search-box").appendChild(newDiv);
+      setClickedSearchInput(!clickedSearchInput); // 이제 true
+    }
+  };
   //url.json파일에 있는 값들 불러온 값
   const values = urls.urls;
 
   // 드래그 방지
-  window.document.onselectstart = () => {
-    return false;
+  window.document.onselectstart = (e) => {
+    if (e.target !== document.querySelector(".search-box input")) {
+      return false;
+    }
   };
 
   // 우클릭 방지
-  window.document.oncontextmenu = () => {
-    return false;
+  window.document.oncontextmenu = (e) => {
+    if (e.target !== document.querySelector(".search-box input")) {
+      return false;
+    }
   };
 
+  // document.querySelector(".search-box input").onselectstart = () => {
+  //   return true;
+  // };
+  // document.querySelector(".search-box input").oncontextmenu = () => {
+  //   return true;
+  // };
   // 최초에 접속하면 여기 useEffect안에 있는 것들 실행시킴
   useEffect(() => {
     // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
@@ -82,18 +102,12 @@ const MainPage = () => {
       <div className="grid-container">
         <div className="search-box">
           <input
-            onClick={() => {
-              // 클릭하면 돋보기 사라지고 모달 (.Search-balloon) 나오게 하는 이벤트\
-              if (!clickedSearchInput) {
-                const newDiv = document.createElement("div");
-                newDiv.className = "Search-balloon";
-                document.querySelector(".search-box > svg").style.display =
-                  "none";
-
-                document.querySelector(".search-box").appendChild(newDiv);
-                setClickedSearchInput(!clickedSearchInput); // 이제 true
-              }
-              // console.log(totalUrls);
+            onClick={createModal}
+            onKeyUp={(e) => {
+              setTimeout(() => {
+                console.log(e.target.value);
+              }, 1000);
+              // console.log(e.target.value);
             }}
           />
           <FaSearch />

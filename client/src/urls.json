@@ -348,6 +348,30 @@
       "url": "https://www.youtube.com/watch?v=S-VeYcOCFZw",
       "title": "Dropdown Menus",
       "hashTags": ["#css", "#Web Dev Simplified"]
+    },
+    {
+      "id": "58",
+      "url": "https://songjang.tistory.com/20",
+      "title": "키보드 이벤트",
+      "hashTags": ["#css"]
+    },
+    {
+      "id": "59",
+      "url": "https://xetown.com/topics/263907",
+      "title": "사이트 8개를 운영 하면서 느낀점...",
+      "hashTags": ["#애드센스"]
+    },
+    {
+      "id": "60",
+      "url": "http://daplus.net/javascript-%EC%82%AC%EC%9A%A9%EC%9E%90%EA%B0%80-%EC%9E%85%EB%A0%A5%EC%9D%84-%EB%A9%88%EC%B6%9C-%EB%95%8C%EA%B9%8C%EC%A7%80-keyup-%EC%B2%98%EB%A6%AC%EA%B8%B0%EB%A5%BC-%EC%A7%80%EC%97%B0%EC%8B%9C/",
+      "title": "검색 시간지연",
+      "hashTags": ["#검색"]
+    },
+    {
+      "id": "61",
+      "url": "https://www.youtube.com/watch?v=_Bi5PLOrLuw&list=PLpPqplz6dKxUYV3x_dqyNuPW0JAut9w3L&index=3",
+      "title": "북마크)mern stack 튜토리얼 #3/#5",
+      "hashTags": ["#북마크", "#페드로테크"]
     }
   ]
 }
