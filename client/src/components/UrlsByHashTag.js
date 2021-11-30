@@ -1,6 +1,6 @@
 import React from "react";
 
-const UrlsByHashTag = ({ values, BoxTags, totalUrls }) => {
+const UrlsByHashTag = ({ values, BoxTags }) => {
   // console.log(BoxTags);
   // console.log(totalUrls);
 

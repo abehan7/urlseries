@@ -59,7 +59,6 @@
 }
 
 .Search-balloon {
-  display: none;
   position: absolute;
   margin-top: 370px;
   width: 350px;
@@ -68,7 +67,9 @@
   background: #fff;
   color: #333;
   font-size: 15px;
-  transition: ease-in-out 2s;
+  /* transition: height 100ms; */
+  /* 처음에는 고정이고 다른곳 누르면 서서히 위로 올라가는 애니메이션 */
+  transition: 200ms ease-in-out;
 }
 
 /* .Search-balloon:after {
@@ -138,7 +139,7 @@
 .text-container > div:hover {
   background-color: beige;
   cursor: pointer;
-  transition: 0.4s;
+  transition: 0.2s;
 }
 
 .text-three-container {
@@ -153,7 +154,7 @@
 .text-three-container > div:hover {
   background-color: beige;
   cursor: pointer;
-  transition: 0.4s;
+  transition: 0.2s;
 }
 
 .T-url {
@@ -172,9 +173,10 @@
   flex-direction: column;
   position: sticky;
   word-break: break-all;
-  margin-top: -200px;
+  /* margin-top: -500px; */
+  margin-top: -1300px;
   width: 300px;
-  top: 10%;
+  top: 200px;
   gap: 50px;
 }
 

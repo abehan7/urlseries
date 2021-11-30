@@ -27,11 +27,25 @@ const MainPage = () => {
   const clickOutSide = (e) => {
     var target = e.target;
 
-    if (target === document.querySelector(".search-box").firstChild) {
+    if (
+      target === document.querySelector(".search-box").firstChild ||
+      target === document.querySelector(".Search-balloon")
+    ) {
       return;
     }
+
     document.querySelector(".search-box > svg").style.display = "block";
-    document.querySelector(".Search-balloon").style.display = "none";
+
+    if (document.querySelector(".Search-balloon")) {
+      document.querySelector(".Search-balloon").style.opacity = "0";
+      // 위로 -10픽셀만큼 서서히 올라가는거
+      document.querySelector(".Search-balloon").style.transform =
+        "translateY(-20px)";
+
+      setTimeout(() => {
+        document.querySelector(".Search-balloon").remove();
+      }, 210);
+    }
   };
 
   //url.json파일에 있는 값들 불러온 값
@@ -66,18 +80,20 @@ const MainPage = () => {
       <div className="grid-container">
         <div className="search-box">
           <input
-            onClick={(e) => {
+            onClick={() => {
               // 클릭하면 돋보기 사라지고 모달 (.Search-balloon) 나오게 하는 이벤트
+              const newDiv = document.createElement("div");
+              newDiv.className = "Search-balloon";
               document.querySelector(".search-box > svg").style.display =
                 "none";
-              document.querySelector(".Search-balloon").style.display = "block";
 
+              document.querySelector(".search-box").appendChild(newDiv);
               // console.log(totalUrls);
             }}
           />
           <FaSearch />
 
-          <div className="Search-balloon"></div>
+          {/* <div className="Search-balloon"></div> */}
         </div>
         <div className="share-write">
           {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
@@ -132,18 +148,13 @@ const MainPage = () => {
               <TotalUrlMap values={values} />
             ) : (
               // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
-              <UrlsByHashTag
-                values={values}
-                BoxTags={BoxTags}
-                totalUrls={totalUrls}
-              />
+              <UrlsByHashTag values={values} BoxTags={BoxTags} />
             )}
           </div>
         </div>
       </div>
       {/* ======================================== 그리드 컨테이너  END  ========================================*/}
       {/* ======================================== 날개 START ========================================*/}{" "}
-      */}
       {/* aside설명 : 여기는 오른쪽 색깔있는 해쉬태그 버튼들 공간 */}
       <div className="aside">
         <div className="aside-tags">
