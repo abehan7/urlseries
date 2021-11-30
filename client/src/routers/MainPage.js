@@ -102,18 +102,25 @@ const MainPage = () => {
           </Link>
           <FiPlusSquare />
         </div>
-        <div className="Rectangle left-top">
-          <h3>내가 지정한 URL </h3>
-          <div className="text-container">
-            <FiveUrls values={values} num1={0} num2={5} />
-          </div>
-        </div>
-        <div className="Rectangle right-top">
-          <h3>자주 이용하는 URL</h3>
-          <div className="text-container">
-            <FiveUrls values={values} num1={5} num2={10} />
-          </div>
-        </div>
+        {BoxTags_First ? (
+          <>
+            <div className="Rectangle left-top">
+              <h3>내가 지정한 URL </h3>
+              <div className="text-container">
+                <FiveUrls values={values} num1={0} num2={5} />
+              </div>
+            </div>
+            <div className="Rectangle right-top">
+              <h3>자주 이용하는 URL</h3>
+              <div className="text-container">
+                <FiveUrls values={values} num1={5} num2={10} />
+              </div>
+            </div>
+          </>
+        ) : (
+          <></>
+        )}
+
         {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
         <div className="minisize-tags aside-tags">
           {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
