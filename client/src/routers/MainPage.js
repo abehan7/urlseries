@@ -17,6 +17,7 @@ const MainPage = () => {
   const [BoxTags_First, setBoxTags_First] = useState(true);
   const [hashList, setHashList] = useState([]); // 현재 전체 url의 해쉬태그들
   const [totalUrls, setTotalUrls] = useState(["123"]); // 전체 url들
+  const [clickedSearchInput, setClickedSearchInput] = useState(false);
 
   // 위에 useState 헷갈릴 경우 아래 콘솔로 테스트
   // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -24,7 +25,7 @@ const MainPage = () => {
   // console.log("totalUrls : ", totalUrls); // 전체 url들
 
   // 검색창 외에 바깥부분 클릭하면 모달 사라지는 onClick이벤트
-  const clickOutSide = (e) => {
+  const clickOutSide = async (e) => {
     var target = e.target;
 
     if (
@@ -36,7 +37,7 @@ const MainPage = () => {
 
     document.querySelector(".search-box > svg").style.display = "block";
 
-    if (document.querySelector(".Search-balloon")) {
+    if (clickedSearchInput) {
       document.querySelector(".Search-balloon").style.opacity = "0";
       // 위로 -10픽셀만큼 서서히 올라가는거
       document.querySelector(".Search-balloon").style.transform =
@@ -44,7 +45,8 @@ const MainPage = () => {
 
       setTimeout(() => {
         document.querySelector(".Search-balloon").remove();
-      }, 210);
+        setClickedSearchInput(!clickedSearchInput);
+      }, 100);
     }
   };
 
@@ -81,13 +83,16 @@ const MainPage = () => {
         <div className="search-box">
           <input
             onClick={() => {
-              // 클릭하면 돋보기 사라지고 모달 (.Search-balloon) 나오게 하는 이벤트
-              const newDiv = document.createElement("div");
-              newDiv.className = "Search-balloon";
-              document.querySelector(".search-box > svg").style.display =
-                "none";
+              // 클릭하면 돋보기 사라지고 모달 (.Search-balloon) 나오게 하는 이벤트\
+              if (!clickedSearchInput) {
+                const newDiv = document.createElement("div");
+                newDiv.className = "Search-balloon";
+                document.querySelector(".search-box > svg").style.display =
+                  "none";
 
-              document.querySelector(".search-box").appendChild(newDiv);
+                document.querySelector(".search-box").appendChild(newDiv);
+                setClickedSearchInput(!clickedSearchInput); // 이제 true
+              }
               // console.log(totalUrls);
             }}
           />

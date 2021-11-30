@@ -11,6 +11,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  min-height: 600px;
 }
 .grid-container {
   display: grid;
@@ -61,15 +62,17 @@
 .Search-balloon {
   position: absolute;
   margin-top: 370px;
-  width: 350px;
+  width: 400px;
   height: 300px;
   border-radius: 8px;
   background: #fff;
   color: #333;
+  box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
+
   font-size: 15px;
   /* transition: height 100ms; */
   /* 처음에는 고정이고 다른곳 누르면 서서히 위로 올라가는 애니메이션 */
-  transition: 200ms ease-in-out;
+  transition: 90ms ease-in-out;
 }
 
 /* .Search-balloon:after {
