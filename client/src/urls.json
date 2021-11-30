@@ -282,6 +282,36 @@
       "url": "http://www.gen.go.kr/xboard/board.php?mode=view&number=395258&tbnum=32&sCat=0&page=1&keyset=&searchword=",
       "title": "염주초등학교",
       "hashTags": ["#구직", "#환경미화"]
+    },
+    {
+      "id": "47",
+      "url": "https://www.daleseo.com/css-media-queries/",
+      "title": "미디어쿼리",
+      "hashTags": ["#미디어쿼리", "#반응형"]
+    },
+    {
+      "id": "48",
+      "url": "https://localtunnel.github.io/www/",
+      "title": "로컬터널",
+      "hashTags": ["#로컬터널", "#무료배포테스트"]
+    },
+    {
+      "id": "49",
+      "url": "http://blog.hivelab.co.kr/%EA%B3%B5%EC%9C%A0before%EC%99%80after-%EA%B7%B8%EB%93%A4%EC%9D%98-%EC%A0%95%EC%B2%B4%EB%8A%94/",
+      "title": ":, :: 의미 css",
+      "hashTags": ["#css"]
+    },
+    {
+      "id": "50",
+      "url": "https://webroadcast.tistory.com/4",
+      "title": ":after :before",
+      "hashTags": ["#css"]
+    },
+    {
+      "id": "51",
+      "url": "https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=woong_kiki&logNo=80151260945",
+      "title": "+css선택자",
+      "hashTags": ["#css"]
     }
   ]
 }
