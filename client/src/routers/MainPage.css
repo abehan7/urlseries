@@ -60,6 +60,7 @@
 }
 
 .Search-balloon {
+  display: none;
   position: absolute;
   margin-top: 370px;
   width: 400px;

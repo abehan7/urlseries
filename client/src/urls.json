@@ -372,6 +372,30 @@
       "url": "https://www.youtube.com/watch?v=_Bi5PLOrLuw&list=PLpPqplz6dKxUYV3x_dqyNuPW0JAut9w3L&index=3",
       "title": "북마크)mern stack 튜토리얼 #3/#5",
       "hashTags": ["#북마크", "#페드로테크"]
+    },
+    {
+      "id": "62",
+      "url": "https://search.naver.com/search.naver?sm=tab_sug.top&where=nexearch&query=%EB%85%B8%ED%8A%B8%EB%B6%81+%EB%B3%B4%EC%A1%B0%EB%B0%B0%ED%84%B0%EB%A6%AC+%EC%97%B0%EA%B2%B0%EC%84%A0&oquery=41167Hewlett-Packard+PABAS0241231&tqi=hjk8nwprvhGssPMt1UZssssstel-350613&acq=%EB%85%B8%ED%8A%B8%EB%B6%81+%EB%B3%B4%EC%A1%B0&acr=4&qdt=0",
+      "title": "노트북 보조배터리",
+      "hashTags": ["#노트북"]
+    },
+    {
+      "id": "63",
+      "url": "https://gurtn.tistory.com/73",
+      "title": "setTimeout중지",
+      "hashTags": ["#JS", "#setTimeout"]
+    },
+    {
+      "id": "64",
+      "url": "https://egg-programmer.tistory.com/200",
+      "title": "setTimeout중지 검색기능",
+      "hashTags": ["#JS", "#setTimeout"]
+    },
+    {
+      "id": "65",
+      "url": "https://www.zerocho.com/category/JavaScript/post/59a8e9cb15ac0000182794fa",
+      "title": "디바운스 검색기능",
+      "hashTags": ["#JS", "#검색기능"]
     }
   ]
 }

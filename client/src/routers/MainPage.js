@@ -10,6 +10,8 @@ import FiveUrls from "../components/FiveUrls";
 import HashTagsUnique from "../components/HashTagsUnique";
 import BoxTagControler from "../components/BoxTagControler";
 import UrlsByHashTag from "../components/UrlsByHashTag";
+import SearchDelay from "./SearchDelay";
+// import { debounceSomethingFunc, SearchDelay } from "./Search";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -18,6 +20,7 @@ const MainPage = () => {
   const [hashList, setHashList] = useState([]); // 현재 전체 url의 해쉬태그들
   const [totalUrls, setTotalUrls] = useState(["123"]); // 전체 url들
   const [clickedSearchInput, setClickedSearchInput] = useState(false);
+  const [timer, setTimer] = useState(false);
 
   // 위에 useState 헷갈릴 경우 아래 콘솔로 테스트
   // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -44,12 +47,15 @@ const MainPage = () => {
         "translateY(-20px)";
 
       setTimeout(() => {
-        document.querySelector(".Search-balloon").remove();
+        document.querySelector(".Search-balloon").style.display = "none";
         setClickedSearchInput(!clickedSearchInput);
+        console.log(clickedSearchInput);
       }, 100);
     }
   };
 
+  // 여기는 생성하는 코드
+  // 이거 쓰지 말고 flex랑 none으로 하는게 좀 더 안정정이다
   const createModal = () => {
     if (!clickedSearchInput) {
       const newDiv = document.createElement("div");
@@ -58,6 +64,17 @@ const MainPage = () => {
 
       document.querySelector(".search-box").appendChild(newDiv);
       setClickedSearchInput(!clickedSearchInput); // 이제 true
+    }
+  };
+
+  const createModal2 = () => {
+    if (!clickedSearchInput) {
+      document.querySelector(".Search-balloon").style.display = "flex";
+      document.querySelector(".Search-balloon").style.opacity = "1";
+      document.querySelector(".Search-balloon").style.transform =
+        "translateY(0)";
+      setClickedSearchInput(!clickedSearchInput); // 이제 true
+      console.log(clickedSearchInput);
     }
   };
   //url.json파일에 있는 값들 불러온 값
@@ -101,18 +118,10 @@ const MainPage = () => {
       {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
       <div className="grid-container">
         <div className="search-box">
-          <input
-            onClick={createModal}
-            onKeyUp={(e) => {
-              setTimeout(() => {
-                console.log(e.target.value);
-              }, 1000);
-              // console.log(e.target.value);
-            }}
-          />
+          <SearchDelay createModal2={createModal2} />
           <FaSearch />
 
-          {/* <div className="Search-balloon"></div> */}
+          <div className="Search-balloon"></div>
         </div>
         <div className="share-write">
           {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
