@@ -10,7 +10,7 @@ import FiveUrls from "../components/FiveUrls";
 import HashTagsUnique from "../components/HashTagsUnique";
 import BoxTagControler from "../components/BoxTagControler";
 import UrlsByHashTag from "../components/UrlsByHashTag";
-import SearchDelay from "./SearchDelay";
+import SearchDelay from "../components/SearchDelay";
 // import { debounceSomethingFunc, SearchDelay } from "./Search";
 
 const MainPage = () => {
@@ -18,9 +18,7 @@ const MainPage = () => {
 
   const [BoxTags_First, setBoxTags_First] = useState(true);
   const [hashList, setHashList] = useState([]); // 현재 전체 url의 해쉬태그들
-  const [totalUrls, setTotalUrls] = useState(["123"]); // 전체 url들
   const [clickedSearchInput, setClickedSearchInput] = useState(false);
-  const [timer, setTimer] = useState(false);
 
   // 위에 useState 헷갈릴 경우 아래 콘솔로 테스트
   // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -106,10 +104,6 @@ const MainPage = () => {
     // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
     // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
     setHashList(HashTagsUnique(values));
-    // TotalUrls_title : 전체 url의 타이틀만 뽑아서 리스트에 넣은 곳
-    var TotalUrls_title = [];
-    values.forEach((tag) => TotalUrls_title.push(tag.title));
-    setTotalUrls(TotalUrls_title);
   }, []);
 
   return (

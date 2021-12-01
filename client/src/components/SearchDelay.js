@@ -5,7 +5,7 @@ import { debounce } from "lodash";
 const debounceSomethingFunc = debounce((e) => {
   console.log("called debounceSomethingFunc");
   console.log(e.target.value);
-}, 200);
+}, 700);
 
 const SearchDelay = ({ createModal2 }) => {
   const [text2, setText2] = useState("");

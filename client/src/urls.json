@@ -396,6 +396,18 @@
       "url": "https://www.zerocho.com/category/JavaScript/post/59a8e9cb15ac0000182794fa",
       "title": "디바운스 검색기능",
       "hashTags": ["#JS", "#검색기능"]
+    },
+    {
+      "id": "66",
+      "url": "https://velog.io/@tjdud0123/%EB%A6%AC%EC%95%A1%ED%8A%B8-%EB%94%94%EB%B0%94%EC%9A%B4%EC%8B%B1-%EA%B0%84%EB%8B%A8-%EA%B5%AC%ED%98%84-react-debounce",
+      "title": "디바운싱 공부하기 여기보고",
+      "hashTags": ["#JS", "#검색기능"]
+    },
+    {
+      "id": "67",
+      "url": "https://ithub.tistory.com/319",
+      "title": "디바운싱 공부하기 여기보고2",
+      "hashTags": ["#JS", "#검색기능"]
     }
   ]
 }
