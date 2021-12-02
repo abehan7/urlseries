@@ -104,6 +104,7 @@
 
 .searched-Stuffs {
   display: flex;
+  align-items: center;
   height: 40px;
 }
 .searched-Stuffs:hover {

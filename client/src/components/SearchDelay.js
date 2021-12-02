@@ -7,6 +7,9 @@ const debounceSomethingFunc = debounce((e) => {
   newDiv.className = "searched-Stuffs";
   newDiv.innerText = "테스트";
   document.querySelector(".Searched-Stuffs-Container").appendChild(newDiv);
+  newDiv.addEventListener("click", (e) => {
+    // console.log(e.target);
+  });
 
   console.log("called debounceSomethingFunc");
   console.log(e.target.value);

@@ -30,10 +30,31 @@ const MainPage = () => {
 
     if (
       target === document.querySelector(".search-box").firstChild ||
-      target === document.querySelector(".Search-balloon")
+      target === document.querySelector(".Search-balloon") ||
+      target === document.querySelector(".Search-balloon-title")
     ) {
       return;
     }
+
+    // 모달 안에 검색어 클릭해도 모달 안사라지게 하는기능 start
+    var oneSearchedStuff;
+    document.querySelectorAll(".searched-Stuffs").forEach((val) => {
+      if (target === val) {
+        return (oneSearchedStuff = true);
+      }
+    });
+
+    if (oneSearchedStuff) {
+      return;
+    }
+    // 모달 안에 검색어 클릭해도 모달 안사라지게 하는 기능 end
+
+    // document.querySelectorAll(".searched-Stuffs").forEach((stuff) => {
+    //   if (target === stuff) {
+    //     return;
+    //   }
+    // });
+    // console.log(target);
 
     document.querySelector(".search-box > svg").style.display = "block";
 
@@ -46,7 +67,7 @@ const MainPage = () => {
       setTimeout(() => {
         document.querySelector(".Search-balloon").style.display = "none";
         setClickedSearchInput(!clickedSearchInput);
-        console.log(clickedSearchInput);
+        // console.log(clickedSearchInput);
       }, 100);
     }
   };
