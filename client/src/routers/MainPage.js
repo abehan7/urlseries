@@ -71,6 +71,8 @@ const MainPage = () => {
       document.querySelector(".Search-balloon").style.opacity = "1";
       document.querySelector(".Search-balloon").style.transform =
         "translateY(0)";
+      document.querySelector(".search-box > svg").style.display = "none";
+
       setClickedSearchInput(!clickedSearchInput); // 이제 true
       console.log(clickedSearchInput);
     }
@@ -115,7 +117,10 @@ const MainPage = () => {
           <SearchDelay createModal2={createModal2} />
           <FaSearch />
 
-          <div className="Search-balloon"></div>
+          <div className="Search-balloon">
+            <div className="Search-balloon-title">최근 검색 항목</div>
+            <div className="Searched-Stuffs-Container"></div>
+          </div>
         </div>
         <div className="share-write">
           {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
