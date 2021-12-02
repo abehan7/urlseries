@@ -46,6 +46,7 @@
   background-color: #c4c4c4;
   padding-left: 1rem;
   padding-right: 1rem;
+  z-index: 2;
 }
 
 .search-box > input:focus {
@@ -57,6 +58,7 @@
   font-size: 30px;
   height: 35px;
   margin-left: 90px;
+  z-index: 2;
 }
 
 .Search-balloon {
@@ -71,6 +73,7 @@
   box-shadow: 0px 1px 4px 1px rgba(0, 0, 0, 0.089);
 
   font-size: 15px;
+  z-index: 1;
   /* transition: height 100ms; */
   /* 처음에는 고정이고 다른곳 누르면 서서히 위로 올라가는 애니메이션 */
   transition: 90ms ease-in-out;
@@ -244,6 +247,7 @@
 
   .search-box > input {
     width: 100%;
+    z-index: 2;
   }
 
   .search-box {

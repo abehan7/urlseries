@@ -11,7 +11,6 @@ import HashTagsUnique from "../components/HashTagsUnique";
 import BoxTagControler from "../components/BoxTagControler";
 import UrlsByHashTag from "../components/UrlsByHashTag";
 import SearchDelay from "../components/SearchDelay";
-// import { debounceSomethingFunc, SearchDelay } from "./Search";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -54,6 +53,7 @@ const MainPage = () => {
 
   // 여기는 생성하는 코드
   // 이거 쓰지 말고 flex랑 none으로 하는게 좀 더 안정정이다
+  // 이 코드는 우선 남겨놓기 다른 곳에 사용될 수 있으니까
   const createModal = () => {
     if (!clickedSearchInput) {
       const newDiv = document.createElement("div");
@@ -107,7 +107,7 @@ const MainPage = () => {
   }, []);
 
   return (
-    <div className="MainPage" onClick={clickOutSide}>
+    <div className="MainPage" onMouseDown={clickOutSide}>
       {/* ======================================== 그리드 컨테이너  START  ========================================*/}
       {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
       <div className="grid-container">

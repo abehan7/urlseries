@@ -408,6 +408,18 @@
       "url": "https://ithub.tistory.com/319",
       "title": "디바운싱 공부하기 여기보고2",
       "hashTags": ["#JS", "#검색기능"]
+    },
+    {
+      "id": "68",
+      "url": "https://www.youtube.com/watch?v=Z_D4w6HmT8k&list=PLpPqplz6dKxUYV3x_dqyNuPW0JAut9w3L&index=5",
+      "title": "북마크)mern stack 튜토리얼 #5/#5",
+      "hashTags": ["#북마크", "#페드로테크"]
+    },
+    {
+      "id": "69",
+      "url": "https://developer.mozilla.org/ko/docs/Web/CSS/CSS_Positioning/Understanding_z_index/Adding_z-index",
+      "title": "z-index:겹칠때 우선순위",
+      "hashTags": ["#css"]
     }
   ]
 }
