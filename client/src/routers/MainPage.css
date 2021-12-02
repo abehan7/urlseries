@@ -194,6 +194,7 @@
 
 .text-container > div:hover {
   background-color: beige;
+  /* background: #e9ecef57; */
   cursor: pointer;
   transition: 0.2s;
 }

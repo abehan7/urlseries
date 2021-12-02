@@ -420,6 +420,12 @@
       "url": "https://developer.mozilla.org/ko/docs/Web/CSS/CSS_Positioning/Understanding_z_index/Adding_z-index",
       "title": "z-index:겹칠때 우선순위",
       "hashTags": ["#css"]
+    },
+    {
+      "id": "70",
+      "url": "https://ideveloper2.tistory.com/39",
+      "title": "ES6-Filter, includes, from을 사용해서 문자열 'e'가 포함된 배열을 만들어서 반환하기",
+      "hashTags": ["#JS", "#필터"]
     }
   ]
 }
