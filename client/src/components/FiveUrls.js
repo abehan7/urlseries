@@ -19,7 +19,9 @@ const FiveUrls = ({ values, num1, num2 }) => {
             }}
             key={value.id}
           >
-            {value.title}
+            <div className="valueId">{value.id}</div>
+            <div className="just-bar">|</div>
+            <div className="valueTitle">{value.title}</div>
           </div>
         );
       })}

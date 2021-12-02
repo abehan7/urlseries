@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import "./Test.css";
-import { debounce, includes } from "lodash";
+import { debounce } from "lodash";
 import urls from "../urls.json";
 
 const debounceSomethingFunc = debounce(async (e) => {
@@ -27,17 +27,23 @@ const debounceSomethingFunc = debounce(async (e) => {
 
   hashFilterd = urls2.filter((val) => {
     return val.hashTags.some((tag) => {
-      return tag.includes(e.target.value);
+      return tag
+        .toLowerCase()
+        .replace(/(\s*)/g, "")
+        .includes(e.target.value.toLowerCase().replace(/(\s*)/g, ""));
     });
   });
   console.log("hashFilterd first");
   console.log(hashFilterd);
 
   titleFilterd = urls2.filter((val) => {
-    return val.title.includes(e.target.value);
+    return val.title
+      .toLowerCase()
+      .replace(/(\s*)/g, "")
+      .includes(e.target.value.toLowerCase().replace(/(\s*)/g, ""));
   });
   // console.log(titleFilterd);
-  //타이틀 검색어
+  //=========== 타이틀 검색어 start ===========
   titleFilterd.forEach((val) => {
     const newDiv = document.createElement("div");
     newDiv.className = "searched-Stuff";
@@ -46,26 +52,21 @@ const debounceSomethingFunc = debounce(async (e) => {
       `<div class="just-bar"> | </div>` +
       `<div class="Searched-url-Title">${val.title}</div>`;
     document.querySelector(".Searched-Stuffs-Container").appendChild(newDiv);
+    newDiv.addEventListener("click", (e) => {
+      console.log(e.target);
+      window.open(val.url);
+    });
   });
+  //=========== 타이틀 검색어 end ===========
 
   //해쉬태그 검색어 중복 삭제
   var hashFilterd2 = hashFilterd.filter((val) => {
     return titleFilterd.every((val2) => {
-      console.log("내부");
-      console.log(val.id);
-      console.log(val2.id);
-      if (val.id === val2.id) {
-        console.log(val, val2);
-      }
       return val.id !== val2.id;
     });
   });
-  console.log("hashFilterd second");
 
-  console.log(hashFilterd2);
-  console.log(titleFilterd);
-
-  // 해쉬태그 검색어
+  // =========== 해쉬태그 검색어 start ===========
   hashFilterd2.forEach((val) => {
     const newDiv = document.createElement("div");
     newDiv.className = "searched-Stuff";
@@ -74,8 +75,13 @@ const debounceSomethingFunc = debounce(async (e) => {
       `<div class="just-bar"> | </div>` +
       `<div class="Searched-url-Title">${val.title}</div>`;
     document.querySelector(".Searched-Stuffs-Container").appendChild(newDiv);
+    newDiv.addEventListener("click", (e) => {
+      console.log(e.target);
+      window.open(val.url);
+    });
   });
 }, 1000);
+// =========== 해쉬태그 검색어 end ===========
 
 const SearchDelay = ({ createModal2 }) => {
   const [text2, setText2] = useState("");
@@ -85,7 +91,14 @@ const SearchDelay = ({ createModal2 }) => {
         val.remove();
       });
     }
+
+    // document.querySelector(".Search-balloon-title").style.display = "none";
     const value = e.target.value;
+    if (value.length === 0) {
+      document.querySelector(".Search-balloon-title").style.display = "flex";
+    } else {
+      document.querySelector(".Search-balloon-title").style.display = "none";
+    }
 
     setText2(value);
     debounceSomethingFunc(e);

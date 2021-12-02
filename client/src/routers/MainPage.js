@@ -36,9 +36,15 @@ const MainPage = () => {
       return;
     }
 
-    // 모달 안에 검색어 클릭해도 모달 안사라지게 하는기능 start
+    // =============== 모달 안에 검색어 클릭해도 모달 안사라지게 하는기능 start ===============
     var oneSearchedStuff;
     document.querySelectorAll(".searched-Stuff").forEach((val) => {
+      if (target === val) {
+        return (oneSearchedStuff = true);
+      }
+    });
+
+    document.querySelectorAll(".Searched-url-Title").forEach((val) => {
       if (target === val) {
         return (oneSearchedStuff = true);
       }
@@ -47,7 +53,7 @@ const MainPage = () => {
     if (oneSearchedStuff) {
       return;
     }
-    // 모달 안에 검색어 클릭해도 모달 안사라지게 하는 기능 end
+    // =============== 모달 안에 검색어 클릭해도 모달 안사라지게 하는 기능 end ===============
 
     // document.querySelectorAll(".searched-Stuffs").forEach((stuff) => {
     //   if (target === stuff) {
