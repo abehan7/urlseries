@@ -70,7 +70,7 @@ const debounceSomethingFunc = debounce(async (e) => {
     const newDiv = document.createElement("div");
     newDiv.className = "searched-Stuff";
     newDiv.innerHTML =
-      `<div class="Searched-url-Id">${val.id}</div>` +
+      `<div class="Searched-url-Id">#${val.id}</div>` +
       `<div class="just-bar"> | </div>` +
       `<div class="Searched-url-Title">${val.title}</div>`;
     document.querySelector(".Searched-Stuffs-Container").appendChild(newDiv);
