@@ -38,7 +38,7 @@ const MainPage = () => {
 
     // 모달 안에 검색어 클릭해도 모달 안사라지게 하는기능 start
     var oneSearchedStuff;
-    document.querySelectorAll(".searched-Stuffs").forEach((val) => {
+    document.querySelectorAll(".searched-Stuff").forEach((val) => {
       if (target === val) {
         return (oneSearchedStuff = true);
       }

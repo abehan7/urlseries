@@ -102,15 +102,32 @@
   font-size: 20px;
 }
 
-.searched-Stuffs {
+.searched-Stuff {
   display: flex;
   align-items: center;
   height: 40px;
 }
-.searched-Stuffs:hover {
+.searched-Stuff:hover {
   background: #e9ecef57;
+  cursor: pointer;
 }
 
+.searched-Stuff > div {
+  display: flex;
+  width: auto;
+  height: auto;
+}
+.Searched-url-Id {
+  /* display: flex; */
+  padding: 10px;
+  margin: 0px;
+  word-break: nowrap;
+  /* margin: 10px; */
+}
+
+.just-bar {
+  padding-right: 10px;
+}
 /* .Search-balloon:after {
   position: absolute;
   bottom: 100%;
@@ -233,7 +250,7 @@
   cursor: pointer;
   background-color: bisque;
   border: 1px solid #bcbcbc;
-  border-radius: 5px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
