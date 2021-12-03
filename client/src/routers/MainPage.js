@@ -11,8 +11,8 @@ import BoxTagControler from "../components/BoxTagControler";
 import UrlsByHashTag from "../components/UrlsByHashTag";
 import SearchDelay from "../components/SearchDelay";
 import AddUrlModal from "../components/AddUrlModal";
-import FiveUrlsRight from "../components/FiveUrlsRight";
-import FiveUrlsLeft from "../components/FiveUrlsLeft";
+import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
+import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
 import EditModeRectsFunc from "../components/editModeFucs/EditModeRectsFunc";
 import EditModalReset from "../components/editModeFucs/EditModalReset";
 
@@ -114,16 +114,26 @@ const MainPage = () => {
 
   // 드래그 방지
   window.document.onselectstart = (e) => {
-    document.querySelectorAll("input").forEach((val) => {
-      if (e.target === val) {
-        return;
-      }
-    });
+    if (
+      e.target !== document.querySelectorAll("input")[0] &&
+      e.target !== document.querySelectorAll("input")[1] &&
+      e.target !== document.querySelectorAll("input")[2] &&
+      e.target !== document.querySelectorAll("input")[3] &&
+      e.target !== document.querySelectorAll("input")[4]
+    ) {
+      return false;
+    }
   };
 
   // 우클릭 방지
   window.document.oncontextmenu = (e) => {
-    if (e.target !== document.querySelector(".search-box input")) {
+    if (
+      e.target !== document.querySelectorAll("input")[0] &&
+      e.target !== document.querySelectorAll("input")[1] &&
+      e.target !== document.querySelectorAll("input")[2] &&
+      e.target !== document.querySelectorAll("input")[3] &&
+      e.target !== document.querySelectorAll("input")[4]
+    ) {
       return false;
     }
   };
