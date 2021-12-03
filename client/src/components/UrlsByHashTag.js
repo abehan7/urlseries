@@ -32,6 +32,8 @@ const UrlsByHashTag = ({ values, BoxTags }) => {
                 e.preventDefault();
               }}
             >
+              <div className="valueId">{value.id}</div>
+              <div className="just-bar">|</div>
               <div className="valueTitle">{value.title}</div>
             </div>
           </>

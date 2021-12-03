@@ -426,6 +426,54 @@
       "url": "https://ideveloper2.tistory.com/39",
       "title": "ES6-Filter, includes, from을 사용해서 문자열 'e'가 포함된 배열을 만들어서 반환하기",
       "hashTags": ["#JS", "#필터"]
+    },
+    {
+      "id": "71",
+      "url": "https://www.youtube.com/watch?v=wnfjx65aQTw",
+      "title": "CRUD Tutorial Using MERN Stack - MongoDB, ReactJS, NodeJS [Part 2]",
+      "hashTags": ["#mern", "#페드로"]
+    },
+    {
+      "id": "72",
+      "url": "https://kimjingo.tistory.com/15",
+      "title": "[MongoDB] Mongoose-auto-increment (자동 증가 번호)",
+      "hashTags": ["#mern", "#몽구스", "#몽고"]
+    },
+    {
+      "id": "73",
+      "url": "https://www.npmjs.com/package/mongoose-auto-increment",
+      "title": "[MongoDB] Mongoose-auto-increment npm사이트",
+      "hashTags": ["#mern", "#몽구스", "#몽고"]
+    },
+    {
+      "id": "74",
+      "url": "https://koonsland.tistory.com/172",
+      "title": "[MongoDB] 데이터 삭제",
+      "hashTags": ["#mern", "#몽구스", "#몽고"]
+    },
+    {
+      "id": "75",
+      "url": "https://metleeha.tistory.com/m/entry/NOSQL%EC%9D%B4%EB%9E%91-%EC%B9%9C%ED%95%B4%EC%A7%80%EA%B8%B0-MongoDB-Compass-%EC%8B%A4%EC%8A%B5-55",
+      "title": "NOSQL이랑 친해지기 - MongoDB Compass 실습 (5/5)",
+      "hashTags": ["#mern", "#몽구스", "#몽고"]
+    },
+    {
+      "id": "76",
+      "url": "https://96yj.tistory.com/4",
+      "title": "몽고 shell사용법",
+      "hashTags": ["#mern", "#몽구스", "#몽고"]
+    },
+    {
+      "id": "77",
+      "url": "https://koonsland.tistory.com/101",
+      "title": "몽고 shell사용법2",
+      "hashTags": ["#mern", "#몽구스", "#몽고"]
+    },
+    {
+      "id": "78",
+      "url": "https://koonsland.tistory.com/172?category=1189091",
+      "title": "몽고 shell 데이터 삭제 코드",
+      "hashTags": ["#mern", "#몽구스", "#몽고"]
     }
   ]
 }
