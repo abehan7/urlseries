@@ -30,10 +30,20 @@ const AddUrlModal = () => {
               <input placeholder="제목을 추가해주세요" />
             </div>
             <div className="put-hashTag">
-              <input placeholder="해쉬태그를 추가해주세요" />
+              <input placeholder="해쉬태그를 추가해주세요 #집밥 #인스타그램 #유튜브" />
+            </div>
+            <div className="put-memo">
+              <input placeholder="메모할 내용을 입력해주세요" />
             </div>
             <div className="addUrl-btn">
-              <button>추가하기</button>
+              <button
+                onClick={() => {
+                  document.querySelector(".addUrl-container").style.display =
+                    "none";
+                }}
+              >
+                추가하기
+              </button>
             </div>
           </div>
         </div>

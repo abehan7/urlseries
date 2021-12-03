@@ -55,6 +55,7 @@
 
 .search-box > input:focus {
   outline: none;
+  background-color: #c4c4c462;
 }
 
 .search-box > svg {
