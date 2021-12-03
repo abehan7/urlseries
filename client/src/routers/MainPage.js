@@ -13,7 +13,8 @@ import SearchDelay from "../components/SearchDelay";
 import AddUrlModal from "../components/AddUrlModal";
 import FiveUrlsRight from "../components/FiveUrlsRight";
 import FiveUrlsLeft from "../components/FiveUrlsLeft";
-import EditModeFunc from "../components/EditModeFunc";
+import EditModeRectsFunc from "../components/editModeFucs/EditModeRectsFunc";
+import EditModalReset from "../components/editModeFucs/EditModalReset";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -113,9 +114,11 @@ const MainPage = () => {
 
   // 드래그 방지
   window.document.onselectstart = (e) => {
-    if (e.target !== document.querySelector(".search-box input")) {
-      return false;
-    }
+    document.querySelectorAll("input").forEach((val) => {
+      if (e.target === val) {
+        return;
+      }
+    });
   };
 
   // 우클릭 방지
@@ -158,6 +161,9 @@ const MainPage = () => {
           <div
             className="addUrl-icon"
             onClick={() => {
+              if (!editMode) {
+                EditModalReset();
+              }
               document.querySelector(".addUrl-container").style.display =
                 "block";
             }}
@@ -168,7 +174,8 @@ const MainPage = () => {
             className="editUrl-icon"
             onClick={() => {
               setEditMode(!editMode);
-              EditModeFunc(editMode);
+              EditModeRectsFunc(editMode);
+              EditModalReset();
             }}
           >
             <BiEditAlt />

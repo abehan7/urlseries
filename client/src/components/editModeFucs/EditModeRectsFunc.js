@@ -1,4 +1,4 @@
-const EditModeFunc = (editMode) => {
+const EditModeRectsFunc = (editMode) => {
   if (editMode) {
     document.querySelectorAll(".RectColor").forEach((rect) => {
       rect.style.backgroundColor = "#FFE4C4";
@@ -27,4 +27,4 @@ const EditModeFunc = (editMode) => {
   }
 };
 
-export default EditModeFunc;
+export default EditModeRectsFunc;
