@@ -153,6 +153,7 @@
   grid-column: span 2;
   align-self: flex-end;
   justify-self: end;
+  display: flex;
 }
 
 .share-write:hover {
@@ -282,6 +283,10 @@
   box-shadow: 0px 1px 1px 0 rgba(88, 40, 40, 0.25);
 }
 .minisize-tags {
+  display: none;
+}
+
+.addUrl-container {
   display: none;
 }
 

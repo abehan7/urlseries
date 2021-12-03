@@ -3,7 +3,7 @@ import "./MainPage.css";
 import { Link } from "react-router-dom";
 import urls from "../urls.json";
 import { FaSearch } from "react-icons/fa";
-import { BiPaperPlane } from "react-icons/bi";
+import { BiEditAlt, BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
 import TotalUrlMap from "../components/TotalUrlMap";
 import FiveUrls from "../components/FiveUrls";
@@ -11,6 +11,7 @@ import HashTagsUnique from "../components/HashTagsUnique";
 import BoxTagControler from "../components/BoxTagControler";
 import UrlsByHashTag from "../components/UrlsByHashTag";
 import SearchDelay from "../components/SearchDelay";
+import AddUrlModal from "../components/AddUrlModal";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -151,10 +152,21 @@ const MainPage = () => {
         </div>
         <div className="share-write">
           {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
-          <Link to="/search">
+          <div
+            className="addUrl-icon"
+            onClick={() => {
+              document.querySelector(".addUrl-container").style.display =
+                "block";
+            }}
+          >
+            <FiPlusSquare />
+          </div>
+          <div className="editUrl-icon">
+            <BiEditAlt />
+          </div>
+          <div className="shareUrl-icon">
             <BiPaperPlane />
-          </Link>
-          <FiPlusSquare />
+          </div>
         </div>
         {BoxTags_First ? (
           <>
@@ -241,6 +253,9 @@ const MainPage = () => {
         {/* <div className="aside-details"></div> */}
       </div>
       {/* ======================================== 날개 END ======================================== */}
+      <div className="addUrl-container">
+        <AddUrlModal />
+      </div>
     </div>
   );
 };

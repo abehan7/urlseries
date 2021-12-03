@@ -472,8 +472,20 @@
     {
       "id": "78",
       "url": "https://koonsland.tistory.com/172?category=1189091",
-      "title": "몽고 shell 데이터 삭제 코드",
+      "title": "몽고 shell 데이터 삭제",
       "hashTags": ["#mern", "#몽구스", "#몽고"]
+    },
+    {
+      "id": "79",
+      "url": "http://yoonbumtae.com/?p=3632",
+      "title": "모달",
+      "hashTags": ["#css", "#모달"]
+    },
+    {
+      "id": "80",
+      "url": "https://www.daleseo.com/react-styled-components/",
+      "title": "리액트 styled 컴포넌트",
+      "hashTags": ["#css", "#리액트"]
     }
   ]
 }
