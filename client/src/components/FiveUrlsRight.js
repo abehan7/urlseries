@@ -1,6 +1,6 @@
 import React from "react";
 
-const FiveUrls = ({ values, num1, num2 }) => {
+const FiveUrlsRight = ({ values, num1, num2, editMode }) => {
   return (
     <>
       {values.slice(num1, num2).map((value) => {
@@ -8,7 +8,11 @@ const FiveUrls = ({ values, num1, num2 }) => {
           <div
             className="url"
             onClick={() => {
-              window.open(value.url);
+              if (!editMode) {
+                console.log("에디터모드입니다");
+              } else {
+                window.open(value.url);
+              }
             }}
             onMouseEnter={() => {
               // console.log(123);
@@ -29,4 +33,4 @@ const FiveUrls = ({ values, num1, num2 }) => {
   );
 };
 
-export default FiveUrls;
+export default FiveUrlsRight;

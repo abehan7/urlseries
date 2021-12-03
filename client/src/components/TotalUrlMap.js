@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-const TotalUrlMap = ({ values }) => {
+const TotalUrlMap = ({ values, editMode }) => {
   const onMouseEnter = (e) => {
     console.log(e.target);
     // 시간지연같은거 두고싶은데
@@ -28,7 +28,11 @@ const TotalUrlMap = ({ values }) => {
               className="T-url"
               key={value.id}
               onClick={() => {
-                window.open(value.url);
+                if (!editMode) {
+                  console.log("에디터모드입니다");
+                } else {
+                  window.open(value.url);
+                }
               }}
               onMouseEnter={() => {
                 // console.log(value);

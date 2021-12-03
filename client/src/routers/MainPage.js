@@ -6,12 +6,14 @@ import { FaSearch } from "react-icons/fa";
 import { BiEditAlt, BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
 import TotalUrlMap from "../components/TotalUrlMap";
-import FiveUrls from "../components/FiveUrls";
 import HashTagsUnique from "../components/HashTagsUnique";
 import BoxTagControler from "../components/BoxTagControler";
 import UrlsByHashTag from "../components/UrlsByHashTag";
 import SearchDelay from "../components/SearchDelay";
 import AddUrlModal from "../components/AddUrlModal";
+import FiveUrlsRight from "../components/FiveUrlsRight";
+import FiveUrlsLeft from "../components/FiveUrlsLeft";
+import EditModeFunc from "../components/EditModeFunc";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -19,6 +21,7 @@ const MainPage = () => {
   const [BoxTags_First, setBoxTags_First] = useState(true);
   const [hashList, setHashList] = useState([]); // 현재 전체 url의 해쉬태그들
   const [clickedSearchInput, setClickedSearchInput] = useState(false);
+  const [editMode, setEditMode] = useState(true);
 
   // 위에 useState 헷갈릴 경우 아래 콘솔로 테스트
   // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -161,7 +164,13 @@ const MainPage = () => {
           >
             <FiPlusSquare />
           </div>
-          <div className="editUrl-icon">
+          <div
+            className="editUrl-icon"
+            onClick={() => {
+              setEditMode(!editMode);
+              EditModeFunc(editMode);
+            }}
+          >
             <BiEditAlt />
           </div>
           <div className="shareUrl-icon">
@@ -170,16 +179,26 @@ const MainPage = () => {
         </div>
         {BoxTags_First ? (
           <>
-            <div className="Rectangle left-top">
+            <div className="Rectangle left-top RectColor">
               <h3>내가 지정한 URL </h3>
               <div className="text-container">
-                <FiveUrls values={values} num1={0} num2={5} />
+                <FiveUrlsLeft
+                  values={values}
+                  num1={0}
+                  num2={5}
+                  editMode={editMode}
+                />
               </div>
             </div>
-            <div className="Rectangle right-top">
+            <div className="Rectangle right-top RectColor">
               <h3>자주 이용하는 URL</h3>
               <div className="text-container">
-                <FiveUrls values={values} num1={5} num2={10} />
+                <FiveUrlsRight
+                  values={values}
+                  num1={5}
+                  num2={10}
+                  editMode={editMode}
+                />
               </div>
             </div>
           </>
@@ -208,7 +227,7 @@ const MainPage = () => {
             );
           })}
         </div>
-        <div className="Big_Rect">
+        <div className="Big_Rect RectColor">
           {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
           {/* 값은 true false 이렇게 두가지인데  */}
           {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
@@ -218,7 +237,7 @@ const MainPage = () => {
           <div className="text-three-container">
             {BoxTags_First ? (
               // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
-              <TotalUrlMap values={values} />
+              <TotalUrlMap values={values} editMode={editMode} />
             ) : (
               // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
               <UrlsByHashTag values={values} BoxTags={BoxTags} />
