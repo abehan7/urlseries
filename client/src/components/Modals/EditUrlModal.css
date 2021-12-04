@@ -1,0 +1,13 @@
+.Myfav {
+  display: flex;
+  position: absolute;
+  right: 15px;
+  font-size: 25px;
+  color: #ffc64b;
+  cursor: pointer;
+}
+
+.content > .editUrl-btn {
+  flex-wrap: wrap;
+  gap: 6px;
+}

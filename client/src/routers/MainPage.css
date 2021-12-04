@@ -290,7 +290,8 @@
   display: none;
 }
 
-.addUrl-container {
+.addUrl-container,
+.editUrl-container {
   display: none;
 }
 

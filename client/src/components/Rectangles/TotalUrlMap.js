@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import EditMode_ModalFunc from "./editModeFucs/EditMode_ModalFunc";
+import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
+// import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 
 const TotalUrlMap = ({ values, editMode }) => {
   const onMouseEnter = (e) => {
@@ -31,6 +32,7 @@ const TotalUrlMap = ({ values, editMode }) => {
               onClick={() => {
                 if (!editMode) {
                   EditMode_ModalFunc(value);
+                  console.log("에디터모드입니다");
                 } else {
                   window.open(value.url);
                 }

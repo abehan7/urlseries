@@ -11,8 +11,8 @@ const EditModeRectsFunc = (editMode) => {
       //   aside.style.border = "3px dashed white";
       //   aside.style.border = "5px dotted #c4c4c462";
       //   aside.style.border = "5px dotted #91919162";
-      //   aside.style.border = "3px dashed #52525262"; // 색깔은 이게 괜찮아
-      aside.style.border = "10px dotted #52525262"; // 색깔은 이게 괜찮아
+      aside.style.border = "4px dashed #52525262"; // 색깔은 이게 괜찮아
+      // aside.style.border = "10px dotted #52525262"; // 색깔은 이게 괜찮아
     });
   } else {
     document.querySelectorAll(".RectColor").forEach((rect) => {
