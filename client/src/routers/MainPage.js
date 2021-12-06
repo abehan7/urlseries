@@ -17,6 +17,7 @@ import EditModeRectsFunc from "../components/editModeFucs/EditModeRectsFunc";
 import EditModalReset from "../components/editModeFucs/EditModalReset";
 import EditUrlModal from "../components/Modals/EditUrlModal";
 import ShareModeRectsFunc from "../components/shareModeFuncs/ShareModeRectsFunc";
+import ShareUrlModal from "../components/Modals/ShareUrlModal";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -220,19 +221,8 @@ const MainPage = () => {
             className="shareUrl-icon"
             onClick={() => {
               console.log("공유기능");
-              if (!editMode) {
-                return;
-              }
-              if (!BoxTags_First) {
-                setBoxTags_First(!BoxTags_First);
-                setBoxTags([]);
-                document.querySelectorAll(".tag").forEach((tag) => {
-                  tag.style.opacity = "1";
-                });
-                return;
-              }
-              setShareMode(!shareMode);
-              ShareModeRectsFunc(shareMode);
+              document.querySelector(".shareUrl-container").style.display =
+                "block";
             }}
           >
             <BiPaperPlane />
@@ -350,6 +340,9 @@ const MainPage = () => {
       </div>
       <div className="editUrl-container">
         <EditUrlModal />
+      </div>
+      <div className="shareUrl-container">
+        <ShareUrlModal />
       </div>
     </div>
   );

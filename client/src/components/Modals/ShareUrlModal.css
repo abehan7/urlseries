@@ -1,0 +1,28 @@
+.share-modal-window {
+  height: auto;
+}
+
+.share-content {
+  height: auto;
+}
+.shareUrl-btn > img {
+  width: 40px;
+  cursor: pointer;
+}
+.content > .message {
+  padding-bottom: 20px;
+  height: auto;
+}
+
+.content > .shareUrl-btn {
+  height: auto;
+  gap: 30px;
+  align-items: start;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.tagLists {
+  flex-direction: column;
+}
