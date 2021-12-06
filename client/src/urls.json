@@ -486,6 +486,24 @@
       "url": "https://www.daleseo.com/react-styled-components/",
       "title": "리액트 styled 컴포넌트",
       "hashTags": ["#css", "#리액트"]
+    },
+    {
+      "id": "81",
+      "url": "https://www.youtube.com/watch?v=WUirHxOBXL4&t=1s",
+      "title": "Export Default 과연 제대로 알고계십니까?",
+      "hashTags": ["#노마드코더", "#리액트"]
+    },
+    {
+      "id": "82",
+      "url": "https://www.mk.co.kr/premium/special-report/view/2021/03/29841/",
+      "title": "사업 해야하는 이유/유튜버들 현실(매일경제)",
+      "hashTags": ["#사업", "#창업", "매경"]
+    },
+    {
+      "id": "83",
+      "url": "https://www.mk.co.kr/premium/life/view/2021/12/31167/",
+      "title": "매경프리미엄(매일경제)",
+      "hashTags": ["매경"]
     }
   ]
 }

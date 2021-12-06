@@ -16,7 +16,7 @@ import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
 import EditModeRectsFunc from "../components/editModeFucs/EditModeRectsFunc";
 import EditModalReset from "../components/editModeFucs/EditModalReset";
 import EditUrlModal from "../components/Modals/EditUrlModal";
-import EditTagControler from "../components/AsideTags/EditTagControler";
+import ShareModeRectsFunc from "../components/shareModeFuncs/ShareModeRectsFunc";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -25,6 +25,7 @@ const MainPage = () => {
   const [hashList, setHashList] = useState([]); // 현재 전체 url의 해쉬태그들
   const [clickedSearchInput, setClickedSearchInput] = useState(false);
   const [editMode, setEditMode] = useState(true);
+  const [shareMode, setShareMode] = useState(true);
 
   // 위에 useState 헷갈릴 경우 아래 콘솔로 테스트
   // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -38,7 +39,8 @@ const MainPage = () => {
     if (
       target === document.querySelector(".search-box").firstChild ||
       target === document.querySelector(".Search-balloon") ||
-      target === document.querySelector(".Search-balloon-title")
+      target === document.querySelector(".Search-balloon-title") ||
+      target === document.querySelector(".notSearched")
     ) {
       return;
     }
@@ -174,6 +176,7 @@ const MainPage = () => {
           <div className="Search-balloon">
             <div className="Search-balloon-title">최근 검색 항목</div>
             <div className="Searched-Stuffs-Container"></div>
+            <div className="notSearched">검색어가 존재하지 않습니다...</div>
           </div>
         </div>
         <div className="share-write">
@@ -181,8 +184,11 @@ const MainPage = () => {
           <div
             className="addUrl-icon"
             onClick={() => {
-              if (!editMode) {
-                EditModalReset();
+              // if (!editMode) {
+              //   EditModalReset();
+              // }
+              if (!editMode || !shareMode) {
+                return;
               }
               document.querySelector(".addUrl-container").style.display =
                 "block";
@@ -192,19 +198,47 @@ const MainPage = () => {
           </div>
           <div
             className="editUrl-icon"
-            onClick={() => {
+            onClick={(e) => {
+              if (!shareMode) {
+                return;
+              }
+              if (!BoxTags_First) {
+                setBoxTags_First(!BoxTags_First);
+                setBoxTags([]);
+                document.querySelectorAll(".tag").forEach((tag) => {
+                  tag.style.opacity = "1";
+                });
+                return;
+              }
               setEditMode(!editMode);
               EditModeRectsFunc(editMode);
-              // EditModalReset();
             }}
           >
             <BiEditAlt />
           </div>
-          <div className="shareUrl-icon">
+          <div
+            className="shareUrl-icon"
+            onClick={() => {
+              console.log("공유기능");
+              if (!editMode) {
+                return;
+              }
+              if (!BoxTags_First) {
+                setBoxTags_First(!BoxTags_First);
+                setBoxTags([]);
+                document.querySelectorAll(".tag").forEach((tag) => {
+                  tag.style.opacity = "1";
+                });
+                return;
+              }
+              setShareMode(!shareMode);
+              ShareModeRectsFunc(shareMode);
+            }}
+          >
             <BiPaperPlane />
           </div>
         </div>
-        {BoxTags_First || !editMode ? (
+        {BoxTags_First || !editMode || !shareMode ? (
           <>
             <div className="Rectangle left-top RectColor">
               <h3>내가 지정한 URL </h3>
@@ -260,11 +294,20 @@ const MainPage = () => {
           {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
           {/* 전체 URL이라는 h3가 HashTag라고 바뀜  */}
           {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
-          {BoxTags_First || !editMode ? <h3>전체 URL</h3> : <h3>HashTag</h3>}
+          {BoxTags_First || !editMode || !shareMode ? (
+            <h3>전체 URL</h3>
+          ) : (
+            <h3>HashTag</h3>
+          )}
           <div className="text-three-container">
-            {BoxTags_First || !editMode ? (
+            {BoxTags_First || !editMode || !shareMode ? (
               // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
-              <TotalUrlMap values={values} editMode={editMode} />
+
+              <TotalUrlMap
+                values={values}
+                editMode={editMode}
+                shareMode={shareMode}
+              />
             ) : (
               // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
               <UrlsByHashTag values={values} BoxTags={BoxTags} />
@@ -276,30 +319,28 @@ const MainPage = () => {
       {/* ======================================== 날개 START ========================================*/}{" "}
       {/* aside설명 : 여기는 오른쪽 색깔있는 해쉬태그 버튼들 공간 */}
       <div className="aside">
-        {!editMode ? (
-          <EditTagControler hashList={hashList} />
-        ) : (
-          <div className="aside-tags">
-            {/* 전체 url들의 해쉬태그들 뿌려주는 공간*/}
-            {hashList.map((tag) => {
-              return (
-                <span
-                  className="tag"
-                  onClick={(e) => {
+        <div className="aside-tags">
+          {/* 전체 url들의 해쉬태그들 뿌려주는 공간*/}
+          {hashList.map((tag) => {
+            return (
+              <span
+                className="tag"
+                onClick={(e) => {
+                  if (editMode) {
                     BoxTagControler(e, {
                       BoxTags_First,
                       setBoxTags_First,
                       BoxTags,
                       setBoxTags,
                     });
-                  }}
-                >
-                  {tag}
-                </span>
-              );
-            })}
-          </div>
-        )}
+                  }
+                }}
+              >
+                {tag}
+              </span>
+            );
+          })}
+        </div>
 
         {/* <div className="aside-details"></div> */}
       </div>

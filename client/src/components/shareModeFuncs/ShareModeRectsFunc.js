@@ -1,12 +1,12 @@
-const EditModeRectsFunc = (editMode) => {
-  if (editMode) {
+const ShareModeRectsFunc = (shareMode) => {
+  if (shareMode) {
     document.querySelectorAll(".RectColor").forEach((rect) => {
       rect.style.backgroundColor = "#FFE4C4";
     });
 
-    document.querySelector(".Big_Rect > h3").innerText = "에디터모드입니다";
+    document.querySelector(".Big_Rect > h3").innerText = "공유모드입니다";
     document.querySelector(".Big_Rect > h3").style.color = "red";
-    document.querySelector(".editUrl-icon").style.color = "red";
+    document.querySelector(".shareUrl-icon").style.color = "red";
 
     document.querySelectorAll(".aside-tags").forEach((aside) => {
       // console.log(aside);
@@ -23,7 +23,7 @@ const EditModeRectsFunc = (editMode) => {
     });
     document.querySelector(".Big_Rect > h3").innerText = "전체 URL";
     document.querySelector(".Big_Rect > h3").style.color = "black";
-    document.querySelector(".editUrl-icon").style.color = "black";
+    document.querySelector(".shareUrl-icon").style.color = "black";
 
     document.querySelectorAll(".aside-tags").forEach((aside) => {
       aside.style.padding = "0px";
@@ -32,4 +32,4 @@ const EditModeRectsFunc = (editMode) => {
   }
 };
 
-export default EditModeRectsFunc;
+export default ShareModeRectsFunc;

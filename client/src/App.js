@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainPage from "./routers/MainPage";
-import SearchPage from "./routers/SearchPage";
+import SharePage from "./routers/SharePage";
 
 const App = () => {
   return (
     // 이름 ururl유알유알엘
     <Router>
       <Switch>
-        <Route path="/search">
-          <SearchPage />
+        <Route path="/share">
+          <SharePage />
         </Route>
         <Route path="/">
           <MainPage />

@@ -136,6 +136,17 @@
 .just-bar {
   padding-right: 10px;
 }
+
+.notSearched {
+  display: none;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  padding-bottom: 20px;
+}
 /* .Search-balloon:after {
   position: absolute;
   bottom: 100%;
@@ -367,6 +378,10 @@
     cursor: none;
   }
   .Search-balloon {
+    width: 100%;
+    border-radius: 0px;
+  }
+  .modal-overlay > .modal-window {
     width: 100%;
     border-radius: 0px;
   }

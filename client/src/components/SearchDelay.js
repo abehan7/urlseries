@@ -80,6 +80,11 @@ const debounceSomethingFunc = debounce(async (e) => {
       window.open(val.url);
     });
   });
+
+  if (hashFilterd2.length + titleFilterd.length === 0) {
+    console.log("검색어 없음");
+    document.querySelector(".notSearched").style.display = "flex";
+  }
 }, 1000);
 // =========== 해쉬태그 검색어 end ===========
 
@@ -91,7 +96,7 @@ const SearchDelay = ({ createModal2 }) => {
         val.remove();
       });
     }
-
+    document.querySelector(".notSearched").style.display = "none";
     // document.querySelector(".Search-balloon-title").style.display = "none";
     const value = e.target.value;
     if (value.length === 0) {

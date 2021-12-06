@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 // import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 
-const TotalUrlMap = ({ values, editMode }) => {
+const TotalUrlMap = ({ values, editMode, shareMode }) => {
   const onMouseEnter = (e) => {
     console.log(e.target);
     // 시간지연같은거 두고싶은데
@@ -33,6 +33,8 @@ const TotalUrlMap = ({ values, editMode }) => {
                 if (!editMode) {
                   EditMode_ModalFunc(value);
                   console.log("에디터모드입니다");
+                } else if (!shareMode) {
+                  console.log("공유모드입니다.");
                 } else {
                   window.open(value.url);
                 }
