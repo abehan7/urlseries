@@ -1,15 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config({ path: "./.env" });
 
 const app = express();
 app.use(express.json());
 
 const UrlModel = require("./models/Urls");
 
-mongoose.connect(
-  "mongodb+srv://illbeatdisney:Oat97c53AmCkt4lH@urlapp.ankxa.mongodb.net/ururl?retryWrites=true&w=majority",
-  { useNewUrlParser: true }
-);
+mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 
 app.get("/hi", async (req, res) => {
   const url = new UrlModel({

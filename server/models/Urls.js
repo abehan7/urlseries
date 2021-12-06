@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const autoIncrement = require("mongoose-auto-increment");
 
 const UrlSchema = new mongoose.Schema({
-  id: {
+  url_id: {
     type: Number,
     default: 20,
   },
@@ -10,13 +10,25 @@ const UrlSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  title: {
+  url_title: {
     type: String,
     required: true,
   },
-  hashTags: {
+  url_hashTags: {
     type: Array,
     required: false,
+  },
+  url_memo: {
+    type: String,
+    required: false,
+  },
+  url_clickedNumber: {
+    type: Number,
+    required: true,
+  },
+  url_likedUrl: {
+    type: Number,
+    required: true,
   },
 });
 
