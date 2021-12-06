@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const UserSchema = new mongoose.Schema({
   user_id: {
     type: String,
-    required: true,
+    required: false,
   },
   user_pw: {
     type: String,
-    required: true,
+    required: false,
   },
   user_hashtags: {
     type: Array,

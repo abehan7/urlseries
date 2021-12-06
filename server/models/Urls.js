@@ -4,31 +4,35 @@ const autoIncrement = require("mongoose-auto-increment");
 const UrlSchema = new mongoose.Schema({
   url_id: {
     type: Number,
-    default: 20,
+    required: false,
   },
   url: {
     type: String,
-    required: true,
+    required: false,
   },
   url_title: {
     type: String,
-    required: true,
+    required: false,
   },
   url_hashTags: {
     type: Array,
     required: false,
+    default: [],
   },
   url_memo: {
     type: String,
     required: false,
+    default: "",
   },
   url_clickedNumber: {
     type: Number,
-    required: true,
+    default: 0,
+    required: false,
   },
   url_likedUrl: {
     type: Number,
-    required: true,
+    default: 0,
+    required: false,
   },
 });
 
@@ -39,14 +43,17 @@ autoIncrement.initialize(connection);
 
 UrlSchema.plugin(autoIncrement.plugin, {
   model: "Urls",
-  field: "id",
-  // startAt: 79,
+  field: "url_id",
+  startAt: 88,
   // increasementBy: 1,
 });
 const Urls = mongoose.model("urls", UrlSchema);
 Urls.nextCount((err, count1) => {
+  // var urls = new Urls();
   console.log(count1);
-  var urls = new Urls();
+  // urls.resetCount((err, next) => {
+  //   console.log(next);
+  // });
 });
 
 module.exports = Urls;

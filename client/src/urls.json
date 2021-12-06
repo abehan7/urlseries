@@ -503,7 +503,34 @@
       "id": "83",
       "url": "https://www.mk.co.kr/premium/life/view/2021/12/31167/",
       "title": "매경프리미엄(매일경제)",
-      "hashTags": ["매경"]
+      "hashTags": ["#매경"]
+    },
+    {
+      "id": "84",
+      "url": "https://bongbongreview.tistory.com/18",
+      "title": "몽고db 칼럼명 변경하기",
+      "hashTags": ["#몽고", "#db", "#몽구스"]
+    },
+    {
+      "id": "85",
+      "url": "https://webisfree.com/2021-04-11/mongodb-%EC%82%AC%EC%9A%A9-%EC%95%88-%ED%95%98%EB%8A%94-%EC%BB%AC%EB%9F%BC-%ED%95%84%EB%93%9C-%EC%82%AD%EC%A0%9C%ED%95%98%EA%B8%B0-deprecated-column",
+      "title": "몽고db 칼럼 삭제하기",
+      "hashTags": ["#몽고", "#db", "#몽구스"],
+      "memo": "db.urls.updateMany({},{$unset:{ 'url_memo':true,''url_clickedNumber':true},'url_likedUrl':true) 필드 삭제 방법"
+    },
+    {
+      "id": "86",
+      "url": "https://minimilab.tistory.com/43",
+      "title": "몽고db find 데이터조회",
+      "hashTags": ["#몽고", "#db", "#몽구스"],
+      "memo": ""
+    },
+    {
+      "id": "87",
+      "url": "https://www.zerocho.com/category/MongoDB/post/57a17d114105f0a03bc55f74",
+      "title": "몽고db 비교쿼리",
+      "hashTags": ["#몽고", "#db", "#몽구스"],
+      "memo": ""
     }
   ]
 }

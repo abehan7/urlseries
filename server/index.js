@@ -12,10 +12,10 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 
 app.get("/hi", async (req, res) => {
   const url = new UrlModel({
-    id: "0",
     url: "https://www.youtube.com/watch?v=wgGkF4k9c7A",
-    title: "CRUD Tutorial Using MERN Stack",
+    url_title: "CRUD Tutorial Using MERN Stack",
     hashTags: ["#mern", "#몽고", "페드로테크", "페드로"],
+    memo: "",
   });
 
   try {
