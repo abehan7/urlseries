@@ -1,9 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors");
+
 dotenv.config({ path: "./.env" });
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 const UrlModel = require("./models/Urls");
@@ -12,16 +15,34 @@ mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 
 app.get("/hi", async (req, res) => {
   const url = new UrlModel({
-    url: "https://www.youtube.com/watch?v=wgGkF4k9c7A",
+    url: "https://iancoding.tistory.com/164",
     url_title: "CRUD Tutorial Using MERN Stack",
     hashTags: ["#mern", "#몽고", "페드로테크", "페드로"],
-    memo: "",
+    url_memo: "",
   });
 
   try {
     await url.save();
     res.send("inserted data");
     console.log("inserted data");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post("/addUrl", async (req, res) => {
+  console.log(req.body);
+  const url = new UrlModel({
+    url: req.body.url,
+    url_title: req.body.title,
+    hashTags: req.body.hashTags,
+    url_memo: req.body.memo,
+  });
+
+  try {
+    await url.save();
+    res.send("inserted data from addUrl");
+    console.log("inserted data from addUrl");
   } catch (err) {
     console.log(err);
   }

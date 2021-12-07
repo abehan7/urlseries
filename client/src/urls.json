@@ -531,6 +531,20 @@
       "title": "몽고db 비교쿼리",
       "hashTags": ["#몽고", "#db", "#몽구스"],
       "memo": ""
+    },
+    {
+      "id": "88",
+      "url": "https://iancoding.tistory.com/164",
+      "title": "몽고db 다른 ip에서 접속하기",
+      "hashTags": ["#몽고", "#db", "#몽구스"],
+      "memo": ""
+    },
+    {
+      "id": "87",
+      "url": "https://www.youtube.com/watch?v=I7EDAR2GRVo",
+      "title": "몽고db mern스택 60분",
+      "hashTags": ["#몽고", "#db", "#몽구스", "#페드로"],
+      "memo": ""
     }
   ]
 }

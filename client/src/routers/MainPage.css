@@ -260,14 +260,22 @@
   font-family: "BMHANNAPro";
   display: flex;
   flex-direction: column;
+  align-items: start;
+  justify-content: start;
   position: sticky;
   word-break: break-all;
   /* margin-top: -500px; */
-  margin-top: -800px;
+  margin-top: -100000px;
   width: 350px;
+  height: 100%;
   top: 200px;
-  gap: 50px;
+  /* gap: 50px; */
 }
+
+/* .for-filling {
+  height: 100px;
+  width: 100%;
+} */
 
 .aside-tags {
   display: flex;
@@ -302,7 +310,8 @@
 }
 
 .addUrl-container,
-.editUrl-container {
+.editUrl-container,
+.shareUrl-container {
   display: none;
 }
 

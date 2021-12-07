@@ -18,6 +18,7 @@ import EditModalReset from "../components/editModeFucs/EditModalReset";
 import EditUrlModal from "../components/Modals/EditUrlModal";
 import ShareModeRectsFunc from "../components/shareModeFuncs/ShareModeRectsFunc";
 import ShareUrlModal from "../components/Modals/ShareUrlModal";
+import Axios from "axios";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -309,6 +310,7 @@ const MainPage = () => {
       {/* ======================================== 날개 START ========================================*/}{" "}
       {/* aside설명 : 여기는 오른쪽 색깔있는 해쉬태그 버튼들 공간 */}
       <div className="aside">
+        <div className="for-filling"></div>
         <div className="aside-tags">
           {/* 전체 url들의 해쉬태그들 뿌려주는 공간*/}
           {hashList.map((tag) => {
