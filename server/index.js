@@ -35,7 +35,7 @@ app.post("/addUrl", async (req, res) => {
   const url = new UrlModel({
     url: req.body.url,
     url_title: req.body.title,
-    hashTags: req.body.hashTags,
+    url_hashTags: req.body.hashTags,
     url_memo: req.body.memo,
   });
 
@@ -46,6 +46,14 @@ app.post("/addUrl", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+app.get("/totalUrl", (req, res) => {
+  UrlModel.find({}, (err, result) => {
+    if (err) console.log(err);
+    console.log(result);
+    res.json(result);
+  });
 });
 
 app.listen(3001, () => {

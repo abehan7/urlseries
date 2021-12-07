@@ -6,10 +6,36 @@ import Axios from "axios";
 const AddUrlModal = () => {
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
-  const [hashTag, setHashTag] = useState([]);
+  const [hashTag, setHashTag] = useState("");
+  // const [hashText, setHashText] = useState([]);
   const [memo, setMemo] = useState("");
   // var totalHashes = [];
   // var filterdHashes = [];
+  const addBtn = () => {
+    var totalHashes = [];
+    var filterdHashes = [];
+    totalHashes = hashTag.split("#");
+    console.log(totalHashes);
+    totalHashes.forEach((tag) => {
+      if (tag.length !== 0) {
+        filterdHashes.push("#" + tag.replace(/\s/g, ""));
+        console.log("#" + tag);
+      }
+    });
+
+    Axios.post("http://localhost:3001/addUrl", {
+      url: url,
+      title: title,
+      hashTags: filterdHashes,
+      memo: memo,
+    });
+
+    document.querySelector(".addUrl-container").style.display = "none";
+    setUrl("");
+    setTitle("");
+    setHashTag("");
+    setMemo("");
+  };
 
   return (
     <>
@@ -33,6 +59,7 @@ const AddUrlModal = () => {
           <div className="content">
             <div className="put-url">
               <input
+                value={url}
                 placeholder="URL을 추가해주세요"
                 onChange={(e) => {
                   setUrl(e.target.value);
@@ -41,6 +68,7 @@ const AddUrlModal = () => {
             </div>
             <div className="put-title">
               <input
+                value={title}
                 placeholder="제목을 추가해주세요"
                 onChange={(e) => {
                   setTitle(e.target.value);
@@ -49,24 +77,16 @@ const AddUrlModal = () => {
             </div>
             <div className="put-hashTag">
               <input
+                value={hashTag}
                 placeholder="해쉬태그를 추가해주세요 #집밥 #인스타그램 #유튜브"
                 onChange={(e) => {
-                  var totalHashes = [];
-                  var filterdHashes = [];
-                  totalHashes = e.target.value.split("#");
-                  console.log(totalHashes);
-                  totalHashes.forEach((tag) => {
-                    if (tag.length !== 0) {
-                      filterdHashes.push("#" + tag.replace(/\s/g, ""));
-                      console.log("#" + tag);
-                    }
-                  });
-                  setHashTag(filterdHashes);
+                  setHashTag(e.target.value);
                 }}
               />
             </div>
             <div className="put-memo">
               <input
+                value={memo}
                 placeholder="메모할 내용을 입력해주세요"
                 onChange={(e) => {
                   setMemo(e.target.value);
@@ -74,21 +94,7 @@ const AddUrlModal = () => {
               />
             </div>
             <div className="addUrl-btn">
-              <button
-                onClick={() => {
-                  Axios.post("http://localhost:3001/addUrl", {
-                    url: url,
-                    title: title,
-                    hashTags: hashTag,
-                    memo: memo,
-                  });
-
-                  document.querySelector(".addUrl-container").style.display =
-                    "none";
-                }}
-              >
-                추가하기
-              </button>
+              <button onClick={addBtn}>추가하기</button>
             </div>
           </div>
         </div>
