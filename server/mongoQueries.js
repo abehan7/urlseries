@@ -36,10 +36,11 @@ db.urls.deleteMany({ url_id: { $in: list } });
 
 db.urls.find({}).sort({ _id: -1 });
 
+db.urls.find({}, { url_id: 1 }).limit(20).sort({ _id: -1 });
 // 리스트에 원하는 정보만 담는 기능
 var list = [];
 db.urls.find({}).forEach((doc) => {
-  if (Number(doc.url_id) >= 112) {
+  if (Number(doc.url_id) >= 123) {
     list.push(doc.url_id);
   }
 });

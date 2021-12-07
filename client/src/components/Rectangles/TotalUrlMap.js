@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 // import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 
-import Axios from "axios";
 const TotalUrlMap = ({ values, editMode, shareMode }) => {
-  const [getUrls, setGetUrls] = useState([]);
   const onMouseEnter = (e) => {
     console.log(e.target);
     // 시간지연같은거 두고싶은데
@@ -15,13 +13,6 @@ const TotalUrlMap = ({ values, editMode, shareMode }) => {
     // newDiv.appendChild(newText);
     // document.querySelector(".text-three-container").appendChild(newDiv);
   };
-  useEffect(() => {
-    console.log("유스이펙트");
-    Axios.get("http://localhost:3001/totalUrl").then((response) => {
-      console.log(response.data);
-      setGetUrls(response.data);
-    });
-  }, []);
 
   const onMouseLeave = () => {
     if (document.querySelector(".hello")) {
@@ -30,9 +21,11 @@ const TotalUrlMap = ({ values, editMode, shareMode }) => {
       });
     }
   };
+  var num = 0;
   return (
     <>
-      {getUrls.map((value) => {
+      {values.map((value) => {
+        num += 1;
         return (
           <>
             <div
@@ -57,7 +50,7 @@ const TotalUrlMap = ({ values, editMode, shareMode }) => {
                 e.preventDefault();
               }}
             >
-              <div className="valueId">{value.url_id}</div>
+              <div className="valueId">{num}</div>
               <div className="just-bar">|</div>
               <div className="valueTitle">{value.url_title}</div>
             </div>

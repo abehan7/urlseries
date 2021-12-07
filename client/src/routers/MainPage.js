@@ -18,6 +18,7 @@ import EditModalReset from "../components/editModeFucs/EditModalReset";
 import EditUrlModal from "../components/Modals/EditUrlModal";
 import ShareModeRectsFunc from "../components/shareModeFuncs/ShareModeRectsFunc";
 import ShareUrlModal from "../components/Modals/ShareUrlModal";
+import Axios from "axios";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -27,11 +28,27 @@ const MainPage = () => {
   const [clickedSearchInput, setClickedSearchInput] = useState(false);
   const [editMode, setEditMode] = useState(true);
   const [shareMode, setShareMode] = useState(true);
+  const [getUrls, setGetUrls] = useState([]);
 
   // 위에 useState 헷갈릴 경우 아래 콘솔로 테스트
   // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
   // console.log("hashList : ", hashList); // 현재 전체 url의 해쉬태그들
   // console.log("totalUrls : ", totalUrls); // 전체 url들
+
+  // 최초에 접속하면 여기 useEffect안에 있는 것들 실행시킴
+  useEffect(() => {
+    // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
+    // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
+    // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
+    Axios.get("http://localhost:3001/totalUrl").then((response) => {
+      console.log(response.data);
+      setGetUrls(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
+    setHashList(HashTagsUnique(values));
+  }, []);
 
   // 검색창 외에 바깥부분 클릭하면 모달 사라지는 onClick이벤트
   const clickOutSide = (e) => {
@@ -157,13 +174,6 @@ const MainPage = () => {
   // document.querySelector(".search-box input").oncontextmenu = () => {
   //   return true;
   // };
-  // 최초에 접속하면 여기 useEffect안에 있는 것들 실행시킴
-  useEffect(() => {
-    // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
-    // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
-    // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
-    setHashList(HashTagsUnique(values));
-  }, []);
 
   return (
     <div className="MainPage" onMouseDown={clickOutSide}>
@@ -294,7 +304,7 @@ const MainPage = () => {
               // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
 
               <TotalUrlMap
-                values={values}
+                values={getUrls}
                 editMode={editMode}
                 shareMode={shareMode}
               />
@@ -337,7 +347,7 @@ const MainPage = () => {
       </div>
       {/* ======================================== 날개 END ======================================== */}
       <div className="addUrl-container">
-        <AddUrlModal />
+        <AddUrlModal getUrls={getUrls} setGetUrls={setGetUrls} />
       </div>
       <div className="editUrl-container">
         <EditUrlModal />

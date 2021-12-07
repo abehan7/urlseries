@@ -3,7 +3,7 @@ import "./AddUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
 import Axios from "axios";
 
-const AddUrlModal = () => {
+const AddUrlModal = ({ setGetUrls, getUrls }) => {
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const [hashTag, setHashTag] = useState("");
@@ -23,6 +23,8 @@ const AddUrlModal = () => {
       }
     });
 
+    console.log(getUrls);
+
     Axios.post("http://localhost:3001/addUrl", {
       url: url,
       title: title,
@@ -35,6 +37,16 @@ const AddUrlModal = () => {
     setTitle("");
     setHashTag("");
     setMemo("");
+    setGetUrls([
+      {
+        url: url,
+        url_title: title,
+        url_hashTags: filterdHashes,
+        url_memo: memo,
+      },
+      ...getUrls,
+    ]);
+    console.log(getUrls);
   };
 
   return (
