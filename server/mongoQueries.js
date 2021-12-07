@@ -1,4 +1,7 @@
 //몽고db  shell 쿼리들
+
+const { db } = require("./models/Urls");
+
 // 필드 이름 바꾸기
 db.urls.updateMany(
   {},
@@ -51,3 +54,9 @@ db.urls.deleteMany({ url_id: { $in: list } });
 
 //필드 삭제
 db.urls.updateMany({}, { $unset: { memo: true } });
+
+// mongosh에서 바꾸는 방법
+// use ururl
+
+// 딱 10개만 뽑아오라는 의미
+db.urls.find({}).limit(10);

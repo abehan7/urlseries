@@ -49,11 +49,13 @@ app.post("/addUrl", async (req, res) => {
 });
 
 app.get("/totalUrl", (req, res) => {
-  UrlModel.find({}, (err, result) => {
-    if (err) console.log(err);
-    console.log(result);
-    res.json(result);
-  });
+  //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
+  UrlModel.find({})
+    .limit(42)
+    .then((response) => {
+      console.log(response);
+      res.json(response);
+    });
 });
 
 app.listen(3001, () => {

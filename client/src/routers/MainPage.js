@@ -18,7 +18,6 @@ import EditModalReset from "../components/editModeFucs/EditModalReset";
 import EditUrlModal from "../components/Modals/EditUrlModal";
 import ShareModeRectsFunc from "../components/shareModeFuncs/ShareModeRectsFunc";
 import ShareUrlModal from "../components/Modals/ShareUrlModal";
-import Axios from "axios";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간

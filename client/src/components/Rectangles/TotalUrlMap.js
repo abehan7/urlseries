@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 // import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 
+import Axios from "axios";
 const TotalUrlMap = ({ values, editMode, shareMode }) => {
+  const [getUrls, setGetUrls] = useState([]);
   const onMouseEnter = (e) => {
     console.log(e.target);
     // 시간지연같은거 두고싶은데
@@ -13,6 +15,13 @@ const TotalUrlMap = ({ values, editMode, shareMode }) => {
     // newDiv.appendChild(newText);
     // document.querySelector(".text-three-container").appendChild(newDiv);
   };
+  useEffect(() => {
+    console.log("유스이펙트");
+    Axios.get("http://localhost:3001/totalUrl").then((response) => {
+      console.log(response.data);
+      setGetUrls(response.data);
+    });
+  }, []);
 
   const onMouseLeave = () => {
     if (document.querySelector(".hello")) {
@@ -23,12 +32,12 @@ const TotalUrlMap = ({ values, editMode, shareMode }) => {
   };
   return (
     <>
-      {values.map((value) => {
+      {getUrls.map((value) => {
         return (
           <>
             <div
               className="T-url"
-              key={value.id}
+              key={value._id}
               onClick={() => {
                 if (!editMode) {
                   EditMode_ModalFunc(value);
@@ -48,9 +57,9 @@ const TotalUrlMap = ({ values, editMode, shareMode }) => {
                 e.preventDefault();
               }}
             >
-              <div className="valueId">{value.id}</div>
+              <div className="valueId">{value.url_id}</div>
               <div className="just-bar">|</div>
-              <div className="valueTitle">{value.title}</div>
+              <div className="valueTitle">{value.url_title}</div>
             </div>
           </>
         );
