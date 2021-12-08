@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 // import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 
-const TotalUrlMap = ({ values, editMode, shareMode }) => {
+const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
   const onMouseEnter = (e) => {
     console.log(e.target);
     // 시간지연같은거 두고싶은데
@@ -34,6 +34,7 @@ const TotalUrlMap = ({ values, editMode, shareMode }) => {
               onClick={() => {
                 if (!editMode) {
                   EditMode_ModalFunc(value);
+                  setMyFav(value.url_likedUrl === 1);
                   console.log("에디터모드입니다");
                 } else if (!shareMode) {
                   console.log("공유모드입니다.");

@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./AddUrlModal.css";
 import "./EditUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
-const EditUrlModal = () => {
-  const [myFav, setMyFav] = useState(false);
+const EditUrlModal = ({ myFav, setMyFav }) => {
+  console.log("111");
+
   return (
     <>
       <div id="modal" className="modal-overlay">
@@ -52,7 +53,7 @@ const EditUrlModal = () => {
               <button>삭제하기</button>
               <button
                 onClick={() => {
-                  document.querySelector(".addUrl-container").style.display =
+                  document.querySelector(".editUrl-container").style.display =
                     "none";
                 }}
               >
@@ -61,6 +62,10 @@ const EditUrlModal = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="urlInfoes">
+        <div className="url_id"></div>
+        <div className="url_likedUrl">0</div>
       </div>
     </>
   );

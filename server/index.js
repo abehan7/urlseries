@@ -48,7 +48,7 @@ app.post("/addUrl", async (req, res) => {
   }
 });
 
-app.get("/totalUrl", (req, res) => {
+app.get("/totalURL", (req, res) => {
   //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
 
   UrlModel.find({})
@@ -58,13 +58,40 @@ app.get("/totalUrl", (req, res) => {
       console.log(response);
       res.json(response);
     });
+});
 
-  // UrlModel.find({})
-  //   .limit(42)
-  //   .then((response) => {
-  //     console.log(response);
-  //     res.json(response);
-  //   });
+app.post("/likedURL", (req, res) => {
+  //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
+
+  UrlModel.updateOne({})
+    .limit(42)
+    .sort({ _id: -1 })
+    .then((response) => {
+      console.log(response);
+      res.json(response);
+    });
+});
+
+app.post("/search", async (req, res) => {
+  UrlModel.find({
+    // url_title: { $regex: new RegExp(req.body.typedKeyword), $options: "i" },
+    $or: [
+      {
+        url_title: {
+          $regex: new RegExp(req.body.typedKeyword),
+          $options: "i",
+        },
+      },
+      {
+        url_hashTags: {
+          $regex: new RegExp(req.body.typedKeyword),
+          $options: "i",
+        },
+      },
+    ],
+  }).then((response) => {
+    res.json(response);
+  });
 });
 
 app.listen(3001, () => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "./MainPage.css";
 import { Link } from "react-router-dom";
 import urls from "../urls.json";
@@ -29,6 +29,9 @@ const MainPage = () => {
   const [editMode, setEditMode] = useState(true);
   const [shareMode, setShareMode] = useState(true);
   const [getUrls, setGetUrls] = useState([]);
+  const [myFav, setMyFav] = useState(false);
+
+  console.log("메인");
 
   // 위에 useState 헷갈릴 경우 아래 콘솔로 테스트
   // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -40,9 +43,9 @@ const MainPage = () => {
     // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
     // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
     // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
-    Axios.get("http://localhost:3001/totalUrl").then((response) => {
+    Axios.get("http://localhost:3001/totalURL").then(async (response) => {
+      await setGetUrls(response.data);
       console.log(response.data);
-      setGetUrls(response.data);
     });
   }, []);
 
@@ -307,6 +310,7 @@ const MainPage = () => {
                 values={getUrls}
                 editMode={editMode}
                 shareMode={shareMode}
+                setMyFav={setMyFav}
               />
             ) : (
               // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
@@ -350,7 +354,7 @@ const MainPage = () => {
         <AddUrlModal getUrls={getUrls} setGetUrls={setGetUrls} />
       </div>
       <div className="editUrl-container">
-        <EditUrlModal />
+        <EditUrlModal myFav={myFav} setMyFav={setMyFav} />
       </div>
       <div className="shareUrl-container">
         <ShareUrlModal />

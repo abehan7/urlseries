@@ -2,8 +2,10 @@ import React, { useState } from "react";
 // import "./Test.css";
 import { debounce } from "lodash";
 import urls from "../urls.json";
+import Axios from "axios";
 
 const debounceSomethingFunc = debounce(async (e) => {
+  var SearchedList = [];
   // const newDiv = document.createElement("div");
   // newDiv.className = "searched-Stuff";
   // newDiv.innerText = "테스트";
@@ -17,16 +19,28 @@ const debounceSomethingFunc = debounce(async (e) => {
     return;
   }
   console.log(e.target.value);
+  const typedKeyword = e.target.value.toLowerCase().replace(/(\s*)/g, "");
+
   // console.log(document.querySelector(".Search-balloon"));
+
   const urls2 = await urls.urls;
+  console.log(typedKeyword);
+
+  await Axios.post("http://localhost:3001/search", {
+    typedKeyword: typedKeyword,
+  }).then((response) => {
+    console.log("액시오스");
+    console.log(response.data);
+    SearchedList = response.data;
+  });
 
   var hashFilterd = [];
   var titleFilterd = [];
 
   //헐 return 2개 하니까 되네
 
-  hashFilterd = urls2.filter((val) => {
-    return val.hashTags.some((tag) => {
+  hashFilterd = SearchedList.filter((val) => {
+    return val.url_hashTags.some((tag) => {
       return tag
         .toLowerCase()
         .replace(/(\s*)/g, "")
@@ -36,8 +50,8 @@ const debounceSomethingFunc = debounce(async (e) => {
   console.log("hashFilterd first");
   console.log(hashFilterd);
 
-  titleFilterd = urls2.filter((val) => {
-    return val.title
+  titleFilterd = SearchedList.filter((val) => {
+    return val.url_title
       .toLowerCase()
       .replace(/(\s*)/g, "")
       .includes(e.target.value.toLowerCase().replace(/(\s*)/g, ""));
@@ -48,9 +62,9 @@ const debounceSomethingFunc = debounce(async (e) => {
     const newDiv = document.createElement("div");
     newDiv.className = "searched-Stuff";
     newDiv.innerHTML =
-      `<div class="Searched-url-Id">${val.id}</div>` +
+      `<div class="Searched-url-Id">${val.url_id}</div>` +
       `<div class="just-bar"> | </div>` +
-      `<div class="Searched-url-Title">${val.title}</div>`;
+      `<div class="Searched-url-Title">${val.url_title}</div>`;
     document.querySelector(".Searched-Stuffs-Container").appendChild(newDiv);
     newDiv.addEventListener("click", (e) => {
       console.log(e.target);
@@ -62,7 +76,7 @@ const debounceSomethingFunc = debounce(async (e) => {
   //해쉬태그 검색어 중복 삭제
   var hashFilterd2 = hashFilterd.filter((val) => {
     return titleFilterd.every((val2) => {
-      return val.id !== val2.id;
+      return val.url_id !== val2.url_id;
     });
   });
 
@@ -71,9 +85,9 @@ const debounceSomethingFunc = debounce(async (e) => {
     const newDiv = document.createElement("div");
     newDiv.className = "searched-Stuff";
     newDiv.innerHTML =
-      `<div class="Searched-url-Id">#${val.id}</div>` +
+      `<div class="Searched-url-Id">#${val.url_id}</div>` +
       `<div class="just-bar"> | </div>` +
-      `<div class="Searched-url-Title">${val.title}</div>`;
+      `<div class="Searched-url-Title">${val.url_title}</div>`;
     document.querySelector(".Searched-Stuffs-Container").appendChild(newDiv);
     newDiv.addEventListener("click", (e) => {
       console.log(e.target);

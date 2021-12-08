@@ -61,3 +61,11 @@ db.urls.updateMany({}, { $unset: { memo: true } });
 
 // 딱 10개만 뽑아오라는 의미
 db.urls.find({}).limit(10);
+
+// 검색 쿼리
+db.urls.find({ url_title: /Mern/ });
+
+// 대소문자 구분 없애는 법
+db.myCollection.find({ sitename: { $regex: "web", $options: "i" } });
+// 대소문자 없애는 법
+db.urls.find({ url_title: { $regex: /mern/, $options: "i" } });
