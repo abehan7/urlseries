@@ -7,11 +7,10 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const [hashTag, setHashTag] = useState("");
-  // const [hashText, setHashText] = useState([]);
   const [memo, setMemo] = useState("");
   // var totalHashes = [];
   // var filterdHashes = [];
-  const addBtn = () => {
+  const addBtn = async () => {
     var totalHashes = [];
     var filterdHashes = [];
     totalHashes = hashTag.split("#");
@@ -25,28 +24,21 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
 
     console.log(getUrls);
 
-    Axios.post("http://localhost:3001/addUrl", {
+    await Axios.post("http://localhost:3001/addUrl", {
       url: url,
       title: title,
       hashTags: filterdHashes,
       memo: memo,
+    }).then((response) => {
+      console.log(response.data);
+      document.querySelector(".addUrl-container").style.display = "none";
+      setUrl("");
+      setTitle("");
+      setHashTag("");
+      setMemo("");
+      setGetUrls([response.data, ...getUrls]);
+      console.log(getUrls);
     });
-
-    document.querySelector(".addUrl-container").style.display = "none";
-    setUrl("");
-    setTitle("");
-    setHashTag("");
-    setMemo("");
-    setGetUrls([
-      {
-        url: url,
-        url_title: title,
-        url_hashTags: filterdHashes,
-        url_memo: memo,
-      },
-      ...getUrls,
-    ]);
-    console.log(getUrls);
   };
 
   return (

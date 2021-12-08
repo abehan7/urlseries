@@ -41,8 +41,30 @@ app.post("/addUrl", async (req, res) => {
 
   try {
     await url.save();
-    res.send("inserted data from addUrl");
+    res.json(url);
     console.log("inserted data from addUrl");
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.put("/editUrl", async (req, res) => {
+  console.log(req.body);
+  const _id = req.body._id;
+  const newUrl = req.body.newUrl;
+  const newTitle = req.body.newTitle;
+  const newHashTags = req.body.newHashTags;
+  const newMemo = req.body.newMemo;
+
+  try {
+    await UrlModel.findById(_id, (error, urlToUpdate) => {
+      urlToUpdate.url = newUrl;
+      urlToUpdate.url_title = newTitle;
+      urlToUpdate.url_hashTags = newHashTags;
+      urlToUpdate.url_memo = newMemo;
+      urlToUpdate.save();
+      res.json(urlToUpdate);
+    });
   } catch (err) {
     console.log(err);
   }
@@ -80,27 +102,6 @@ app.get("/totalURL", async (req, res) => {
     leftURL: leftURL,
     rightURL: rightURL,
   });
-});
-
-app.get("/leftFive", (req, res) => {
-  //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
-
-  UrlModel.find({ url_likedUrl: 1 }).then((response) => {
-    console.log(response);
-    res.json(response);
-  });
-});
-
-app.post("/likedURL", (req, res) => {
-  //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
-
-  UrlModel.updateOne({})
-    .limit(42)
-    .sort({ _id: -1 })
-    .then((response) => {
-      console.log(response);
-      res.json(response);
-    });
 });
 
 app.post("/search", async (req, res) => {

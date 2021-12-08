@@ -348,7 +348,12 @@ const MainPage = () => {
         <AddUrlModal getUrls={getUrls} setGetUrls={setGetUrls} />
       </div>
       <div className="editUrl-container">
-        <EditUrlModal myFav={myFav} setMyFav={setMyFav} />
+        <EditUrlModal
+          myFav={myFav}
+          setMyFav={setMyFav}
+          getUrls={getUrls}
+          setGetUrls={setGetUrls}
+        />
       </div>
       <div className="shareUrl-container">
         <ShareUrlModal />

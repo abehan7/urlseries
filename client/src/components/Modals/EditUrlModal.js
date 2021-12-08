@@ -3,9 +3,50 @@ import "./AddUrlModal.css";
 import "./EditUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import Axios from "axios";
 
-const EditUrlModal = ({ myFav, setMyFav }) => {
+const EditUrlModal = ({ myFav, setMyFav, getUrls, setGetUrls }) => {
   console.log("111");
+
+  const editBtn = async () => {
+    var totalHashes = [];
+    var filterdHashes = [];
+    var hashTag = document.querySelector(
+      ".editUrl-container .put-hashTag > input"
+    ).value;
+    totalHashes = hashTag.split("#");
+    console.log(totalHashes);
+    totalHashes.forEach((tag) => {
+      if (tag.length !== 0) {
+        filterdHashes.push("#" + tag.replace(/\s/g, ""));
+        console.log("#" + tag);
+      }
+    });
+
+    await Axios.put("http://localhost:3001/editUrl", {
+      _id: document.querySelector(".url_id").innerText,
+      newUrl: document.querySelector(".editUrl-container .put-url > input")
+        .value,
+      newTitle: document.querySelector(".editUrl-container .put-title > input")
+        .value,
+      newHashTags: filterdHashes,
+      newMemo: document.querySelector(".editUrl-container .put-memo > input")
+        .value,
+    }).then((response) => {
+      console.log(response.data);
+      document.querySelector(".editUrl-container").style.display = "none";
+      // setGetUrls([response.data, ...getUrls]);
+      setGetUrls(
+        getUrls.map((val) => {
+          return val._id === document.querySelector(".url_id").innerText
+            ? response.data
+            : val;
+        })
+      );
+      console.log(getUrls);
+      console.log("업데이트 완료");
+    });
+  };
 
   return (
     <>
@@ -53,8 +94,7 @@ const EditUrlModal = ({ myFav, setMyFav }) => {
               <button>삭제하기</button>
               <button
                 onClick={() => {
-                  document.querySelector(".editUrl-container").style.display =
-                    "none";
+                  editBtn();
                 }}
               >
                 수정하기

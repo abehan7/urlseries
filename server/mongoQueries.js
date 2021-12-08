@@ -90,3 +90,13 @@ db.urls
   .sort({ url_clickedNumber: -1 })
   .collation({ locale: "en_US", numericOrdering: true })
   .limit(10);
+
+//업데이트ok
+db.urls.updateOne(
+  {
+    url_id: "1",
+  },
+  {
+    $set: { url_title: "검색창 디자인 수정 완료" },
+  }
+);

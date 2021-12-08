@@ -17,7 +17,7 @@ const EditMode_ModalFunc = (value) => {
     oneLineTags;
   document.querySelector(".editUrl-container .put-memo > input").value =
     value.url_memo;
-  document.querySelector(".url_id").innerText = value.url_id;
+  document.querySelector(".url_id").innerText = value._id;
   document.querySelector(".url_likedUrl").innerText = value.url_likedUrl;
   console.log(value);
 };
