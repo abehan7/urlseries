@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 // import "./Test.css";
 import { debounce } from "lodash";
-import urls from "../urls.json";
 import Axios from "axios";
 
 const debounceSomethingFunc = debounce(async (e) => {
@@ -23,7 +22,6 @@ const debounceSomethingFunc = debounce(async (e) => {
 
   // console.log(document.querySelector(".Search-balloon"));
 
-  const urls2 = await urls.urls;
   console.log(typedKeyword);
 
   await Axios.post("http://localhost:3001/search", {

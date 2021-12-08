@@ -1,9 +1,9 @@
 import React from "react";
 
-const FiveUrlsRight = ({ values, num1, num2, editMode }) => {
+const FiveUrlsRight = ({ values, editMode }) => {
   return (
     <>
-      {values.slice(num1, num2).map((value) => {
+      {values.map((value) => {
         return (
           <div
             className="url"
@@ -21,11 +21,11 @@ const FiveUrlsRight = ({ values, num1, num2, editMode }) => {
               console.log("우클릭");
               e.preventDefault();
             }}
-            key={value.id}
+            key={value.url_id}
           >
-            <div className="valueId">{value.id}</div>
+            <div className="valueId">{value.url_id}</div>
             <div className="just-bar">|</div>
-            <div className="valueTitle">{value.title}</div>
+            <div className="valueTitle">{value.url_title}</div>
           </div>
         );
       })}

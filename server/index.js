@@ -48,16 +48,47 @@ app.post("/addUrl", async (req, res) => {
   }
 });
 
-app.get("/totalURL", (req, res) => {
+app.get("/totalURL", async (req, res) => {
   //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
+  var totalURL = [];
+  var leftURL = [];
+  var rightURL = [];
 
-  UrlModel.find({})
+  await UrlModel.find({})
     .limit(42)
     .sort({ _id: -1 })
     .then((response) => {
-      console.log(response);
-      res.json(response);
+      totalURL = response;
     });
+
+  await UrlModel.find({ url_likedUrl: 1 }).then((response) => {
+    leftURL = response;
+  });
+
+  await UrlModel.find({
+    $expr: { $gte: [{ $toDouble: "$url_clickedNumber" }, 1] },
+  })
+    .sort({ url_clickedNumber: -1 })
+    .collation({ locale: "en_US", numericOrdering: true })
+    .limit(5)
+    .then((response) => {
+      rightURL = response;
+    });
+
+  res.json({
+    totalURL: totalURL,
+    leftURL: leftURL,
+    rightURL: rightURL,
+  });
+});
+
+app.get("/leftFive", (req, res) => {
+  //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
+
+  UrlModel.find({ url_likedUrl: 1 }).then((response) => {
+    console.log(response);
+    res.json(response);
+  });
 });
 
 app.post("/likedURL", (req, res) => {

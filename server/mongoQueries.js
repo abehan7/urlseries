@@ -69,3 +69,24 @@ db.urls.find({ url_title: /Mern/ });
 db.myCollection.find({ sitename: { $regex: "web", $options: "i" } });
 // 대소문자 없애는 법
 db.urls.find({ url_title: { $regex: /mern/, $options: "i" } });
+
+// 문자열 인트로 바꾸는 방법
+// 아싸 드디어
+db.urls.find({
+  $expr: { $gte: [{ $toDouble: "$url_clickedNumber" }, 10] },
+});
+
+db.urls.find({
+  $expr: { $toDouble: "$url_clickedNumber" },
+});
+//이거는 구버전
+db.urls.find({ $where: "parseInt(this.url_clickedNumber) >=1000" });
+
+//여기서 collation하니까 되네
+
+//이거가 클릭수 많은 url
+db.urls
+  .find({ $expr: { $gte: [{ $toDouble: "$url_clickedNumber" }, 1] } })
+  .sort({ url_clickedNumber: -1 })
+  .collation({ locale: "en_US", numericOrdering: true })
+  .limit(10);

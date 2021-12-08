@@ -29,6 +29,8 @@ const MainPage = () => {
   const [editMode, setEditMode] = useState(true);
   const [shareMode, setShareMode] = useState(true);
   const [getUrls, setGetUrls] = useState([]);
+  const [mostClickedUrls, setMostClickedUrls] = useState([]);
+  const [likedUrls, setLikedUrls] = useState([]);
   const [myFav, setMyFav] = useState(false);
 
   console.log("메인");
@@ -44,7 +46,9 @@ const MainPage = () => {
     // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
     // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
     Axios.get("http://localhost:3001/totalURL").then(async (response) => {
-      await setGetUrls(response.data);
+      await setGetUrls(response.data.totalURL);
+      await setMostClickedUrls(response.data.rightURL);
+      await setLikedUrls(response.data.leftURL);
       console.log(response.data);
     });
   }, []);
@@ -246,23 +250,13 @@ const MainPage = () => {
             <div className="Rectangle left-top RectColor">
               <h3>내가 지정한 URL </h3>
               <div className="text-container">
-                <FiveUrlsLeft
-                  values={values}
-                  num1={0}
-                  num2={5}
-                  editMode={editMode}
-                />
+                <FiveUrlsLeft values={likedUrls} editMode={editMode} />
               </div>
             </div>
             <div className="Rectangle right-top RectColor">
               <h3>자주 이용하는 URL</h3>
               <div className="text-container">
-                <FiveUrlsRight
-                  values={values}
-                  num1={5}
-                  num2={10}
-                  editMode={editMode}
-                />
+                <FiveUrlsRight values={mostClickedUrls} editMode={editMode} />
               </div>
             </div>
           </>
