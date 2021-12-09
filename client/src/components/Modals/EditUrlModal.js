@@ -5,12 +5,24 @@ import { IoArrowBack } from "react-icons/io5";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import Axios from "axios";
 
-const EditUrlModal = ({ myFav, setMyFav, getUrls, setGetUrls }) => {
+const EditUrlModal = ({
+  myFav,
+  setMyFav,
+  getUrls,
+  setGetUrls,
+  likedUrls,
+  setLikedUrls,
+}) => {
   console.log("111");
 
   const editBtn = async () => {
     var totalHashes = [];
     var filterdHashes = [];
+    var newLikedUrl = 0;
+
+    if (myFav) {
+      newLikedUrl = 1;
+    }
     var hashTag = document.querySelector(
       ".editUrl-container .put-hashTag > input"
     ).value;
@@ -32,6 +44,7 @@ const EditUrlModal = ({ myFav, setMyFav, getUrls, setGetUrls }) => {
       newHashTags: filterdHashes,
       newMemo: document.querySelector(".editUrl-container .put-memo > input")
         .value,
+      newLikedUrl: newLikedUrl,
     }).then((response) => {
       console.log(response.data);
       document.querySelector(".editUrl-container").style.display = "none";
@@ -43,6 +56,43 @@ const EditUrlModal = ({ myFav, setMyFav, getUrls, setGetUrls }) => {
             : val;
         })
       );
+
+      if (response.data.url_likedUrl === 1) {
+        console.log("setLikedUrls DONE");
+        setLikedUrls([...likedUrls, response.data]);
+      }
+
+      likedUrls.forEach((val) => {
+        if (val._id === response.data._id && response.data.url_likedUrl === 0) {
+          setLikedUrls(
+            likedUrls.filter((val2) => {
+              return val2 !== val;
+            })
+          );
+        }
+      });
+      // setLikedUrls([
+      //   likedUrls.filter((val) => {
+      //     if (
+      //       val._id === response.data._id &&
+      //       response.data.url_likedUrl === 0
+      //     ) {
+      //       return val !== response.data;
+      //     } else {
+      //       return false;
+      //     }
+      //   }),
+      // ]);
+
+      // setLikedUrls(
+      //   likedUrls.map((val) => {
+      //     if (val.url_likedUrl === 1) {
+      //       // console.log(val);
+      //       return val;
+      //     }
+      //   })
+      // );
+
       console.log(getUrls);
       console.log("업데이트 완료");
     });

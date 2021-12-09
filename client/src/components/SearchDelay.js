@@ -4,6 +4,8 @@ import { debounce } from "lodash";
 import Axios from "axios";
 
 const debounceSomethingFunc = debounce(async (e) => {
+  document.querySelector(".loadingImg").style.display = "none";
+
   var SearchedList = [];
   // const newDiv = document.createElement("div");
   // newDiv.className = "searched-Stuff";
@@ -109,10 +111,13 @@ const SearchDelay = ({ createModal2 }) => {
       });
     }
     document.querySelector(".notSearched").style.display = "none";
+    document.querySelector(".loadingImg").style.display = "flex";
+
     // document.querySelector(".Search-balloon-title").style.display = "none";
     const value = e.target.value;
     if (value.length === 0) {
       document.querySelector(".Search-balloon-title").style.display = "flex";
+      document.querySelector(".loadingImg").style.display = "none";
     } else {
       document.querySelector(".Search-balloon-title").style.display = "none";
     }

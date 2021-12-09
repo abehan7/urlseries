@@ -55,6 +55,7 @@ app.put("/editUrl", async (req, res) => {
   const newTitle = req.body.newTitle;
   const newHashTags = req.body.newHashTags;
   const newMemo = req.body.newMemo;
+  const newLikedUrl = req.body.newLikedUrl;
 
   try {
     await UrlModel.findById(_id, (error, urlToUpdate) => {
@@ -62,6 +63,8 @@ app.put("/editUrl", async (req, res) => {
       urlToUpdate.url_title = newTitle;
       urlToUpdate.url_hashTags = newHashTags;
       urlToUpdate.url_memo = newMemo;
+      urlToUpdate.url_likedUrl = Number(newLikedUrl);
+
       urlToUpdate.save();
       res.json(urlToUpdate);
     });

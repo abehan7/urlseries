@@ -193,8 +193,16 @@ const MainPage = () => {
 
           <div className="Search-balloon">
             <div className="Search-balloon-title">최근 검색 항목</div>
+            {/* <img src="./img/loadingSpin.gif" alt="로딩" /> */}
             <div className="Searched-Stuffs-Container"></div>
             <div className="notSearched">검색어가 존재하지 않습니다...</div>
+            <div className="loadingImg">
+              <img src="./img/loadingSpin.gif" alt="로딩" />
+              <div className="loading-ment">
+                <div className="ment1">검색중입니다</div>
+                <div className="ment2">잠시만 기다려 주세요 :)</div>
+              </div>
+            </div>
           </div>
         </div>
         <div className="share-write">
@@ -353,6 +361,8 @@ const MainPage = () => {
           setMyFav={setMyFav}
           getUrls={getUrls}
           setGetUrls={setGetUrls}
+          likedUrls={likedUrls}
+          setLikedUrls={setLikedUrls}
         />
       </div>
       <div className="shareUrl-container">
