@@ -89,13 +89,6 @@ const MainPage = () => {
     }
     // =============== 모달 안에 검색어 클릭해도 모달 안사라지게 하는 기능 end ===============
 
-    // document.querySelectorAll(".searched-Stuffs").forEach((stuff) => {
-    //   if (target === stuff) {
-    //     return;
-    //   }
-    // });
-    // console.log(target);
-
     document.querySelector(".search-box > svg").style.display = "block";
 
     if (clickedSearchInput) {
@@ -183,192 +176,210 @@ const MainPage = () => {
   // };
 
   return (
-    <div className="MainPage" onMouseDown={clickOutSide}>
-      {/* ======================================== 그리드 컨테이너  START  ========================================*/}
-      {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
-      <div className="grid-container">
-        <div className="search-box">
-          <SearchDelay createModal2={createModal2} />
-          <FaSearch />
+    <>
+      {getUrls.length === 0 ? (
+        <div className="firstLoading">yourURL</div>
+      ) : (
+        <>
+          <div className="MainPage" onMouseDown={clickOutSide}>
+            {/* ======================================== 그리드 컨테이너  START  ========================================*/}
+            {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
+            <div className="grid-container">
+              <div className="search-box">
+                <SearchDelay createModal2={createModal2} />
+                <FaSearch />
 
-          <div className="Search-balloon">
-            <div className="Search-balloon-title">최근 검색 항목</div>
-            {/* <img src="./img/loadingSpin.gif" alt="로딩" /> */}
-            <div className="Searched-Stuffs-Container"></div>
-            <div className="notSearched">검색어가 존재하지 않습니다...</div>
-            <div className="loadingImg">
-              <img src="./img/loadingSpin.gif" alt="로딩" />
-              <div className="loading-ment">
-                <div className="ment1">검색중입니다</div>
-                <div className="ment2">잠시만 기다려 주세요 :)</div>
+                <div className="Search-balloon">
+                  <div className="Search-balloon-title">최근 검색 항목</div>
+                  {/* <img src="./img/loadingSpin.gif" alt="로딩" /> */}
+                  <div className="Searched-Stuffs-Container"></div>
+                  <div className="notSearched">
+                    검색어가 존재하지 않습니다...
+                  </div>
+                  <div className="loadingImg">
+                    <img src="./img/loadingSpin.gif" alt="로딩" />
+                    <div className="loading-ment">
+                      <div className="ment1">검색중입니다</div>
+                      <div className="ment2">잠시만 기다려 주세요 :)</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="share-write">
+                {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
+                <div
+                  className="addUrl-icon"
+                  onClick={() => {
+                    // if (!editMode) {
+                    //   EditModalReset();
+                    // }
+                    if (!editMode || !shareMode) {
+                      return;
+                    }
+                    document.querySelector(".addUrl-container").style.display =
+                      "block";
+                  }}
+                >
+                  <FiPlusSquare />
+                </div>
+                <div
+                  className="editUrl-icon"
+                  onClick={(e) => {
+                    if (!shareMode) {
+                      return;
+                    }
+                    if (!BoxTags_First) {
+                      setBoxTags_First(!BoxTags_First);
+                      setBoxTags([]);
+                      document.querySelectorAll(".tag").forEach((tag) => {
+                        tag.style.opacity = "1";
+                      });
+                      return;
+                    }
+                    setEditMode(!editMode);
+                    EditModeRectsFunc(editMode);
+                  }}
+                >
+                  <BiEditAlt />
+                </div>
+                <div
+                  className="shareUrl-icon"
+                  onClick={() => {
+                    console.log("공유기능");
+                    document.querySelector(
+                      ".shareUrl-container"
+                    ).style.display = "block";
+                  }}
+                >
+                  <BiPaperPlane />
+                </div>
+              </div>
+              {BoxTags_First || !editMode || !shareMode ? (
+                <>
+                  <div className="Rectangle left-top RectColor">
+                    <h3>내가 지정한 URL </h3>
+                    <div className="text-container">
+                      <FiveUrlsLeft values={likedUrls} editMode={editMode} />
+                    </div>
+                  </div>
+                  <div className="Rectangle right-top RectColor">
+                    <h3>자주 이용하는 URL</h3>
+                    <div className="text-container">
+                      <FiveUrlsRight
+                        values={mostClickedUrls}
+                        editMode={editMode}
+                      />
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
+
+              {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
+              <div className="minisize-tags aside-tags">
+                {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
+                {hashList.map((tag) => {
+                  return (
+                    <span
+                      className="tag"
+                      onClick={(e) => {
+                        BoxTagControler(e, {
+                          BoxTags_First,
+                          setBoxTags_First,
+                          BoxTags,
+                          setBoxTags,
+                        });
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  );
+                })}
+              </div>
+              <div className="Big_Rect RectColor">
+                {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
+                {/* 값은 true false 이렇게 두가지인데  */}
+                {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
+                {/* 전체 URL이라는 h3가 HashTag라고 바뀜  */}
+                {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
+                {BoxTags_First || !editMode || !shareMode ? (
+                  <h3>전체 URL</h3>
+                ) : (
+                  <h3>HashTag</h3>
+                )}
+                <div className="text-three-container">
+                  {BoxTags_First || !editMode || !shareMode ? (
+                    // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
+                    <>
+                      <TotalUrlMap
+                        values={getUrls}
+                        editMode={editMode}
+                        shareMode={shareMode}
+                        setMyFav={setMyFav}
+                      />
+                      <div className="Target-Element">
+                        <img src="./img/loadingSpin.gif" alt="로딩" />
+                      </div>
+                    </>
+                  ) : (
+                    // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
+                    <UrlsByHashTag values={values} BoxTags={BoxTags} />
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div className="share-write">
-          {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
-          <div
-            className="addUrl-icon"
-            onClick={() => {
-              // if (!editMode) {
-              //   EditModalReset();
-              // }
-              if (!editMode || !shareMode) {
-                return;
-              }
-              document.querySelector(".addUrl-container").style.display =
-                "block";
-            }}
-          >
-            <FiPlusSquare />
-          </div>
-          <div
-            className="editUrl-icon"
-            onClick={(e) => {
-              if (!shareMode) {
-                return;
-              }
-              if (!BoxTags_First) {
-                setBoxTags_First(!BoxTags_First);
-                setBoxTags([]);
-                document.querySelectorAll(".tag").forEach((tag) => {
-                  tag.style.opacity = "1";
-                });
-                return;
-              }
-              setEditMode(!editMode);
-              EditModeRectsFunc(editMode);
-            }}
-          >
-            <BiEditAlt />
-          </div>
-          <div
-            className="shareUrl-icon"
-            onClick={() => {
-              console.log("공유기능");
-              document.querySelector(".shareUrl-container").style.display =
-                "block";
-            }}
-          >
-            <BiPaperPlane />
-          </div>
-        </div>
-        {BoxTags_First || !editMode || !shareMode ? (
-          <>
-            <div className="Rectangle left-top RectColor">
-              <h3>내가 지정한 URL </h3>
-              <div className="text-container">
-                <FiveUrlsLeft values={likedUrls} editMode={editMode} />
+            {/* ======================================== 그리드 컨테이너  END  ========================================*/}
+            {/* ======================================== 날개 START ========================================*/}{" "}
+            {/* aside설명 : 여기는 오른쪽 색깔있는 해쉬태그 버튼들 공간 */}
+            <div className="aside">
+              <div className="for-filling"></div>
+              <div className="aside-tags">
+                {/* 전체 url들의 해쉬태그들 뿌려주는 공간*/}
+                {hashList.map((tag) => {
+                  return (
+                    <span
+                      className="tag"
+                      onClick={(e) => {
+                        if (editMode) {
+                          BoxTagControler(e, {
+                            BoxTags_First,
+                            setBoxTags_First,
+                            BoxTags,
+                            setBoxTags,
+                          });
+                        }
+                      }}
+                    >
+                      {tag}
+                    </span>
+                  );
+                })}
               </div>
-            </div>
-            <div className="Rectangle right-top RectColor">
-              <h3>자주 이용하는 URL</h3>
-              <div className="text-container">
-                <FiveUrlsRight values={mostClickedUrls} editMode={editMode} />
-              </div>
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
 
-        {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
-        <div className="minisize-tags aside-tags">
-          {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
-          {hashList.map((tag) => {
-            return (
-              <span
-                className="tag"
-                onClick={(e) => {
-                  BoxTagControler(e, {
-                    BoxTags_First,
-                    setBoxTags_First,
-                    BoxTags,
-                    setBoxTags,
-                  });
-                }}
-              >
-                {tag}
-              </span>
-            );
-          })}
-        </div>
-        <div className="Big_Rect RectColor">
-          {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
-          {/* 값은 true false 이렇게 두가지인데  */}
-          {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
-          {/* 전체 URL이라는 h3가 HashTag라고 바뀜  */}
-          {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
-          {BoxTags_First || !editMode || !shareMode ? (
-            <h3>전체 URL</h3>
-          ) : (
-            <h3>HashTag</h3>
-          )}
-          <div className="text-three-container">
-            {BoxTags_First || !editMode || !shareMode ? (
-              // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
-
-              <TotalUrlMap
-                values={getUrls}
-                editMode={editMode}
-                shareMode={shareMode}
+              {/* <div className="aside-details"></div> */}
+            </div>
+            {/* ======================================== 날개 END ======================================== */}
+            <div className="addUrl-container">
+              <AddUrlModal getUrls={getUrls} setGetUrls={setGetUrls} />
+            </div>
+            <div className="editUrl-container">
+              <EditUrlModal
+                myFav={myFav}
                 setMyFav={setMyFav}
+                getUrls={getUrls}
+                setGetUrls={setGetUrls}
+                likedUrls={likedUrls}
+                setLikedUrls={setLikedUrls}
               />
-            ) : (
-              // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
-              <UrlsByHashTag values={values} BoxTags={BoxTags} />
-            )}
+            </div>
+            <div className="shareUrl-container">
+              <ShareUrlModal />
+            </div>
           </div>
-        </div>
-      </div>
-      {/* ======================================== 그리드 컨테이너  END  ========================================*/}
-      {/* ======================================== 날개 START ========================================*/}{" "}
-      {/* aside설명 : 여기는 오른쪽 색깔있는 해쉬태그 버튼들 공간 */}
-      <div className="aside">
-        <div className="for-filling"></div>
-        <div className="aside-tags">
-          {/* 전체 url들의 해쉬태그들 뿌려주는 공간*/}
-          {hashList.map((tag) => {
-            return (
-              <span
-                className="tag"
-                onClick={(e) => {
-                  if (editMode) {
-                    BoxTagControler(e, {
-                      BoxTags_First,
-                      setBoxTags_First,
-                      BoxTags,
-                      setBoxTags,
-                    });
-                  }
-                }}
-              >
-                {tag}
-              </span>
-            );
-          })}
-        </div>
-
-        {/* <div className="aside-details"></div> */}
-      </div>
-      {/* ======================================== 날개 END ======================================== */}
-      <div className="addUrl-container">
-        <AddUrlModal getUrls={getUrls} setGetUrls={setGetUrls} />
-      </div>
-      <div className="editUrl-container">
-        <EditUrlModal
-          myFav={myFav}
-          setMyFav={setMyFav}
-          getUrls={getUrls}
-          setGetUrls={setGetUrls}
-          likedUrls={likedUrls}
-          setLikedUrls={setLikedUrls}
-        />
-      </div>
-      <div className="shareUrl-container">
-        <ShareUrlModal />
-      </div>
-    </div>
+        </>
+      )}
+    </>
   );
 };
 

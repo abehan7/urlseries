@@ -51,7 +51,7 @@ const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
                 e.preventDefault();
               }}
             >
-              <div className="valueId">{num}</div>
+              <div className="valueId">{value.url_id}</div>
               <div className="just-bar">|</div>
               <div className="valueTitle">{value.url_title}</div>
             </div>
