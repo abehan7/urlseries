@@ -100,3 +100,5 @@ db.urls.updateOne(
     $set: { url_title: "검색창 디자인 수정 완료" },
   }
 );
+
+UrlModel.findOneAndRemove({ _id: id });

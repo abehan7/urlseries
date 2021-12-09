@@ -6,6 +6,8 @@ const cors = require("cors");
 dotenv.config({ path: "./.env" });
 
 const app = express();
+const ObjectId = mongoose.Types.ObjectId;
+
 app.use(cors());
 app.use(express.json());
 
@@ -127,6 +129,13 @@ app.post("/search", async (req, res) => {
   }).then((response) => {
     res.json(response);
   });
+});
+app.delete("/deleteUrl/:id", async (req, res) => {
+  const id = req.params.id;
+  console.log(id);
+  await UrlModel.findOneAndRemove({ _id: id });
+  res.send("item deleted");
+  console.log("item deleted");
 });
 
 app.listen(3001, () => {

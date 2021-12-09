@@ -71,31 +71,20 @@ const EditUrlModal = ({
           );
         }
       });
-      // setLikedUrls([
-      //   likedUrls.filter((val) => {
-      //     if (
-      //       val._id === response.data._id &&
-      //       response.data.url_likedUrl === 0
-      //     ) {
-      //       return val !== response.data;
-      //     } else {
-      //       return false;
-      //     }
-      //   }),
-      // ]);
-
-      // setLikedUrls(
-      //   likedUrls.map((val) => {
-      //     if (val.url_likedUrl === 1) {
-      //       // console.log(val);
-      //       return val;
-      //     }
-      //   })
-      // );
 
       console.log(getUrls);
       console.log("업데이트 완료");
     });
+  };
+
+  const deleteBtn = async (_id) => {
+    await Axios.delete(`http://localhost:3001/deleteUrl/${_id}`);
+    document.querySelector(".editUrl-container").style.display = "none";
+    setGetUrls(
+      getUrls.filter((val) => {
+        return val._id !== _id;
+      })
+    );
   };
 
   return (
@@ -141,7 +130,15 @@ const EditUrlModal = ({
               <input placeholder="메모할 내용을 입력해주세요" />
             </div>
             <div className="addUrl-btn editUrl-btn">
-              <button>삭제하기</button>
+              <button
+                onClick={() => {
+                  const _id = document.querySelector(".url_id").innerText;
+                  console.log(_id);
+                  deleteBtn(_id);
+                }}
+              >
+                삭제하기
+              </button>
               <button
                 onClick={() => {
                   editBtn();
