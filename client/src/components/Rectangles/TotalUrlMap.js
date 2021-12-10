@@ -15,11 +15,8 @@ const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
   };
 
   const onMouseLeave = () => {
-    if (document.querySelector(".hello")) {
-      document.querySelectorAll(".hello").forEach((one) => {
-        one.remove();
-      });
-    }
+    const circle = document.querySelector(".circle");
+    circle.style.display = "none";
   };
   var num = 0;
   return (
@@ -42,13 +39,20 @@ const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
                   window.open(value.url);
                 }
               }}
-              onMouseEnter={() => {
-                // console.log(value);
-              }}
               onMouseLeave={onMouseLeave}
               onContextMenu={(e) => {
                 console.log("우클릭");
                 e.preventDefault();
+              }}
+              onMouseMove={(e) => {
+                const circle = document.querySelector(".circle");
+                circle.style.display = "block";
+
+                const mouseX = e.clientX;
+                const mouseY = e.pageY;
+                circle.style.left = mouseX + "px";
+                circle.style.top = mouseY - 100 + "px";
+                console.log(mouseY);
               }}
             >
               <div className="valueId">{value.url_id}</div>

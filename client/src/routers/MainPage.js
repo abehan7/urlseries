@@ -20,6 +20,8 @@ import ShareModeRectsFunc from "../components/shareModeFuncs/ShareModeRectsFunc"
 import ShareUrlModal from "../components/Modals/ShareUrlModal";
 import Axios from "axios";
 import Loader from "../components/Loader";
+import NewSearchBar from "../components/Rectangles/NewSearchBar";
+import MovingBalloon from "../components/Rectangles/MovingBalloon";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -253,6 +255,7 @@ const MainPage = () => {
             <div className="grid-container">
               <div className="search-box">
                 <SearchDelay createModal2={createModal2} />
+                {/* <NewSearchBar /> */}
                 <FaSearch />
 
                 <div className="Search-balloon">
@@ -452,6 +455,7 @@ const MainPage = () => {
               <ShareUrlModal />
             </div>
           </div>
+          <MovingBalloon />
         </>
       )}
     </>

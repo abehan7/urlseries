@@ -5,9 +5,19 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: "GowunDodum-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 
 * {
-  font-family: "BMHANNAPro";
+  font-family: "GowunDodum-Regular";
+  /* font-family: "BMHANNAPro"; */
+
+  font-weight: bold;
 }
 
 .firstLoading {
@@ -56,21 +66,28 @@
   border: 0;
   width: 200px;
   height: 100%;
-  background-color: #c4c4c4;
+  border: 2px solid #ffffff;
+  background-color: transparent;
   padding-left: 1rem;
   padding-right: 1rem;
+  border-radius: 4px;
+  outline: 0;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
   /* z-index: 2; */
 }
 
 .search-box > input:focus {
   outline: none;
   /* background-color: #52525262; */
-  background-color: #c4c4c462;
+  background-color: #ffffff;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
 
 .search-box > svg {
   position: absolute;
-  font-size: 30px;
+  font-size: 27px;
   height: 35px;
   margin-left: 90px;
   /* z-index: 2; */
@@ -256,6 +273,7 @@
 
 .text-container > div:hover {
   background-color: beige;
+  outline: 0;
   /* background: #e9ecef57; */
   cursor: pointer;
   transition: 0.2s;
@@ -359,7 +377,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 3px;
+  gap: 6px;
   max-height: 445px;
   overflow-y: auto;
   /* background-color: #fafafa;
@@ -367,13 +385,13 @@
 }
 .tag {
   cursor: pointer;
-  background-color: bisque;
-  border: 1px solid #bcbcbc;
-  border-radius: 10px;
+  /* background-color: bisque; */
+  border: 1px solid black;
+  border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4px;
+  padding: 2px;
 }
 
 .aside-details {
@@ -403,7 +421,6 @@
     padding-right: 0%;
   }
   .tag {
-    font-family: "BMHANNAPro";
   }
 }
 

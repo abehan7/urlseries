@@ -3,9 +3,11 @@ import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import { MdExpandMore } from "react-icons/md";
 
 const FiveUrlsRight = ({ values, editMode, shareMode, setMyFav }) => {
+  const fiveStuffs = values.slice(0, 5);
+
   return (
     <>
-      {values.map((value) => {
+      {fiveStuffs.map((value) => {
         return (
           <div
             className="url"
