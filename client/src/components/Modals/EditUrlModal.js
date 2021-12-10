@@ -12,6 +12,8 @@ const EditUrlModal = ({
   setGetUrls,
   likedUrls,
   setLikedUrls,
+  setMostClickedUrls,
+  mostClickedUrls,
 }) => {
   console.log("111");
 
@@ -57,9 +59,36 @@ const EditUrlModal = ({
         })
       );
 
-      if (response.data.url_likedUrl === 1) {
+      setMostClickedUrls(
+        mostClickedUrls.map((val) => {
+          return val._id === document.querySelector(".url_id").innerText
+            ? response.data
+            : val;
+        })
+      );
+
+      console.log(likedUrls);
+      console.log(response.data._id);
+      var likedUrls_id = [];
+      likedUrls.forEach((val) => {
+        likedUrls_id.push(val._id);
+      });
+      console.log(likedUrls_id.includes(response.data._id));
+
+      if (
+        response.data.url_likedUrl === 1 &&
+        !likedUrls_id.includes(response.data._id)
+      ) {
         console.log("setLikedUrls DONE");
         setLikedUrls([...likedUrls, response.data]);
+      } else {
+        setLikedUrls(
+          likedUrls.map((val) => {
+            return val._id === document.querySelector(".url_id").innerText
+              ? response.data
+              : val;
+          })
+        );
       }
 
       likedUrls.forEach((val) => {

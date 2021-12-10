@@ -78,7 +78,7 @@ const MainPage = () => {
     await Axios.post("http://localhost:3001/get21Urls", {
       lastId: realLastId,
     }).then(async (response) => {
-      await new Promise((resolve) => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
       responseListLength = response.data.length;
       if (responseListLength === 0) {
         return;
@@ -325,7 +325,12 @@ const MainPage = () => {
                   <div className="Rectangle left-top RectColor">
                     <h3>내가 지정한 URL </h3>
                     <div className="text-container">
-                      <FiveUrlsLeft values={likedUrls} editMode={editMode} />
+                      <FiveUrlsLeft
+                        values={likedUrls}
+                        editMode={editMode}
+                        shareMode={shareMode}
+                        setMyFav={setMyFav}
+                      />
                     </div>
                   </div>
                   <div className="Rectangle right-top RectColor">
@@ -334,6 +339,8 @@ const MainPage = () => {
                       <FiveUrlsRight
                         values={mostClickedUrls}
                         editMode={editMode}
+                        shareMode={shareMode}
+                        setMyFav={setMyFav}
                       />
                     </div>
                   </div>
@@ -437,6 +444,8 @@ const MainPage = () => {
                 setGetUrls={setGetUrls}
                 likedUrls={likedUrls}
                 setLikedUrls={setLikedUrls}
+                mostClickedUrls={mostClickedUrls}
+                setMostClickedUrls={setMostClickedUrls}
               />
             </div>
             <div className="shareUrl-container">
