@@ -91,6 +91,12 @@ db.urls
   .collation({ locale: "en_US", numericOrdering: true })
   .limit(10);
 
+db.urls
+  .find({ $expr: { $lt: [{ $toDouble: "$url_id" }, 78] } })
+  .sort({ url_id: -1 })
+  .collation({ locale: "en_US", numericOrdering: true })
+  .limit(21);
+
 //업데이트ok
 db.urls.updateOne(
   {
@@ -102,3 +108,10 @@ db.urls.updateOne(
 );
 
 UrlModel.findOneAndRemove({ _id: id });
+
+db.urls
+  .find({ $expr: { $lt: [{ $toDouble: "$url_id" }, 76] } })
+  .sort({ url_id: -1 })
+  .collation({ locale: "en_US", numericOrdering: true })
+  .skip(21)
+  .limit(5);

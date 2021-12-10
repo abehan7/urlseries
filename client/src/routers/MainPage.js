@@ -19,6 +19,7 @@ import EditUrlModal from "../components/Modals/EditUrlModal";
 import ShareModeRectsFunc from "../components/shareModeFuncs/ShareModeRectsFunc";
 import ShareUrlModal from "../components/Modals/ShareUrlModal";
 import Axios from "axios";
+import Loader from "../components/Loader";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -32,6 +33,8 @@ const MainPage = () => {
   const [mostClickedUrls, setMostClickedUrls] = useState([]);
   const [likedUrls, setLikedUrls] = useState([]);
   const [myFav, setMyFav] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [target, setTarget] = useState(null);
 
   console.log("메인");
 
@@ -56,6 +59,69 @@ const MainPage = () => {
   useEffect(() => {
     setHashList(HashTagsUnique(values));
   }, []);
+
+  // ============================================= 여기는 Ininity Scroll START =============================================
+
+  var realLastId = 0;
+  var responseListLength = 1;
+  const getNextItems = async () => {
+    console.log("현재 스크롤");
+    if (realLastId === 0) {
+      realLastId = getUrls[getUrls.length - 1].url_id;
+    }
+
+    console.log(realLastId);
+    console.log(getUrls[getUrls.length - 1].url_id);
+    var lastId = getUrls[getUrls.length - 1].url_id;
+    setIsLoaded(true);
+
+    await Axios.post("http://localhost:3001/get21Urls", {
+      lastId: realLastId,
+    }).then(async (response) => {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      responseListLength = response.data.length;
+      if (responseListLength === 0) {
+        return;
+      }
+
+      setGetUrls((val) => [...val, ...response.data]);
+      realLastId = response.data[response.data.length - 1].url_id;
+    });
+
+    setIsLoaded(false);
+    console.log(getUrls[getUrls.length - 1].url_id);
+    console.log("무한스크롤입니다");
+  };
+
+  const onIntersect = async ([entry], observer) => {
+    if (entry.isIntersecting && !isLoaded) {
+      observer.unobserve(entry.target);
+      console.log(responseListLength);
+      if (responseListLength === 0) {
+        return;
+      }
+      await getNextItems();
+
+      observer.observe(entry.target);
+    }
+  };
+
+  useEffect(() => {
+    console.log(getUrls);
+  }, [getUrls]);
+
+  useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.4,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
+
+  // ============================================= Ininity Scroll END =============================================
 
   // 검색창 외에 바깥부분 클릭하면 모달 사라지는 onClick이벤트
   const clickOutSide = (e) => {
@@ -318,8 +384,8 @@ const MainPage = () => {
                         shareMode={shareMode}
                         setMyFav={setMyFav}
                       />
-                      <div className="Target-Element">
-                        <img src="./img/loadingSpin.gif" alt="로딩" />
+                      <div ref={setTarget} className="Target-Element">
+                        {isLoaded && <Loader />}
                       </div>
                     </>
                   ) : (

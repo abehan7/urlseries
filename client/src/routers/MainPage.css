@@ -291,8 +291,9 @@
   background-color: #fafafa;
   transition: 0;
 }
-.Target-Element > img {
-  width: 100px;
+
+.lastId {
+  display: none;
 }
 
 .T-url > .valueTitle {

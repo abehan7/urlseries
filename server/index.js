@@ -130,6 +130,19 @@ app.post("/search", async (req, res) => {
     res.json(response);
   });
 });
+
+app.post("/get21Urls", async (req, res) => {
+  await UrlModel.find({
+    $expr: { $lt: [{ $toDouble: "$url_id" }, Number(req.body.lastId)] },
+  })
+    .sort({ url_id: -1 })
+    .collation({ locale: "en_US", numericOrdering: true })
+    .limit(21)
+    .then((response) => {
+      res.json(response);
+    });
+});
+
 app.delete("/deleteUrl/:id", async (req, res) => {
   const id = req.params.id;
   console.log(id);
