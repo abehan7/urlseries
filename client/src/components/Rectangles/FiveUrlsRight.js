@@ -1,6 +1,9 @@
 import React from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import { MdExpandMore } from "react-icons/md";
+import { FiSmile } from "react-icons/fi";
+import { AiOutlineSmile } from "react-icons/ai";
+import { CgSmileUpside, CgSmile } from "react-icons/cg";
 
 const FiveUrlsRight = ({ values, editMode, shareMode, setMyFav }) => {
   const fiveStuffs = values.slice(0, 5);
@@ -37,7 +40,11 @@ const FiveUrlsRight = ({ values, editMode, shareMode, setMyFav }) => {
       })}
       {values.length >= 5 && (
         <div className="moreBtn">
-          <MdExpandMore />
+          <FiSmile />
+          <AiOutlineSmile />
+          <FiSmile />
+          <AiOutlineSmile />
+          {/* 여기 자바스크립트로 한번 누를때랑 2번 누를때 얼굴 색깔 다르게 만들기 */}
         </div>
       )}
     </>
