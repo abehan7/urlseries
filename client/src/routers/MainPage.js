@@ -203,6 +203,13 @@ const MainPage = () => {
   const values = urls.urls;
 
   // 드래그 방지
+  // window.document.onmousemove = (e) => {
+  //   if (e.target !== document.querySelector(".Big_Rect")) {
+  //     const circle = document.querySelector(".detail-container");
+  //     circle.style.display = "none";
+  //   }
+  // };
+
   window.document.onselectstart = (e) => {
     if (
       e.target !== document.querySelectorAll("input")[0] &&
@@ -373,7 +380,7 @@ const MainPage = () => {
                   );
                 })}
               </div>
-              <div className="Big_Rect RectColor">
+              <div className="Big_Rect RectColor" onMouseLeave={() => {}}>
                 {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
                 {/* 값은 true false 이렇게 두가지인데  */}
                 {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}

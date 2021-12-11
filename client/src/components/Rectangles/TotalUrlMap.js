@@ -4,6 +4,17 @@ import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import { debounce } from "lodash";
 
 const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
+  const DebounceContainer = (value) => {
+    // const circle = document.querySelector(".detail-container");
+    // circle.style.display = "none";
+    grabNowValue(value);
+    grabNowValue.cancel();
+  };
+
+  // BigRect.addEventListener("mouseleave", () => {
+  //   grabNowValue.cancel();
+  // });
+
   const grabNowValue = debounce((value) => {
     const circle = document.querySelector(".detail-container");
     circle.style.display = "flex";
@@ -41,13 +52,17 @@ const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
     circle.style.left = mouseX + "px";
     // circle.style.top = 1142 + "px";
     circle.style.top = mouseY - 80 + "px";
+
+    console.log(mouseY);
   };
 
   const onMouseLeave = () => {
     const circle = document.querySelector(".detail-container");
     circle.style.display = "none";
+    grabNowValue.cancel();
   };
   var num = 0;
+
   return (
     <>
       {values.map((value) => {
@@ -71,7 +86,9 @@ const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
               onMouseLeave={onMouseLeave}
               onMouseEnter={() => {
                 grabNowValue(value);
+                // DebounceContainer(value);
               }}
+              onMouseOut={() => {}}
               onContextMenu={(e) => {
                 console.log("우클릭");
                 e.preventDefault();
