@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import styled from "styled-components";
 import { MdExpandMore } from "react-icons/md";
 
 const FiveUrlsLeft = ({ values, editMode, shareMode, setMyFav }) => {
   const fiveStuffs = values.slice(0, 5);
+
   console.log("다섯개");
   console.log(fiveStuffs);
 
@@ -39,7 +40,14 @@ const FiveUrlsLeft = ({ values, editMode, shareMode, setMyFav }) => {
         );
       })}
       {values.length > 5 && (
-        <div className="moreBtn">
+        <div
+          className="moreBtn"
+          onClick={(e) => {
+            console.log("안녕하세여");
+            document.querySelector(".top-moreUrls-container").style.display =
+              "flex";
+          }}
+        >
           <MdExpandMore />
         </div>
       )}

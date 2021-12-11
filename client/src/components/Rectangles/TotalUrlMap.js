@@ -4,6 +4,12 @@ import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import { debounce } from "lodash";
 
 const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
+  window.onscroll = () => {
+    const circle = document.querySelector(".detail-container");
+    grabNowValue.cancel();
+    circle.style.display = "none";
+  };
+
   const DebounceContainer = (value) => {
     // const circle = document.querySelector(".detail-container");
     // circle.style.display = "none";
@@ -75,6 +81,7 @@ const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
               onClick={() => {
                 if (!editMode) {
                   EditMode_ModalFunc(value);
+                  grabNowValue.cancel();
                   setMyFav(value.url_likedUrl === 1);
                   console.log("에디터모드입니다");
                 } else if (!shareMode) {

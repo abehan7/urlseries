@@ -6,7 +6,6 @@ const cors = require("cors");
 dotenv.config({ path: "./.env" });
 
 const app = express();
-const ObjectId = mongoose.Types.ObjectId;
 
 app.use(cors());
 app.use(express.json());
@@ -14,6 +13,20 @@ app.use(express.json());
 const UrlModel = require("./models/Urls");
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+
+const getCurrentDate = () => {
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth();
+  var today = date.getDate();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
+  var milliseconds = date.getMilliseconds();
+  return new Date(
+    Date.UTC(year, month, today, hours, minutes, seconds, milliseconds)
+  );
+};
 
 app.get("/hi", async (req, res) => {
   const url = new UrlModel({
@@ -58,7 +71,6 @@ app.put("/editUrl", async (req, res) => {
   const newHashTags = req.body.newHashTags;
   const newMemo = req.body.newMemo;
   const newLikedUrl = req.body.newLikedUrl;
-
   try {
     await UrlModel.findById(_id, (error, urlToUpdate) => {
       urlToUpdate.url = newUrl;
@@ -66,6 +78,7 @@ app.put("/editUrl", async (req, res) => {
       urlToUpdate.url_hashTags = newHashTags;
       urlToUpdate.url_memo = newMemo;
       urlToUpdate.url_likedUrl = Number(newLikedUrl);
+      urlToUpdate.url_updatedDate = getCurrentDate();
 
       urlToUpdate.save();
       res.json(urlToUpdate);

@@ -115,3 +115,73 @@ db.urls
   .collation({ locale: "en_US", numericOrdering: true })
   .skip(2 * 21)
   .limit(21);
+
+// 날짜 있는것들만 우선 뽑기
+db.urls.find({ url_date: { $regex: /2021/ } }).sort({ url_date: -1 });
+db.urls.find({}).sort({ url_date: -1 });
+
+// 특정 필드만 출력하는 방법
+db.urls.find({}, { url_date: 1 });
+// 1이 있는거인듯
+
+db.urls.find({}, { url_date: 1 }).forEach((val) => {
+  if (val.url_date) {
+    console.log(val);
+    console.log(typeof val.url_date);
+  }
+});
+
+// 시간 쿼리하는 방법
+
+db.urls.find({
+  url_date: { $gte: "2014-10-09T13:32:37Z", $lte: "2014-10-09T13:32:38Z" },
+});
+
+db.urls
+  .find({
+    url_date: { $gte: new Date("2014-10-09T13:32:37Z") },
+  })
+  .sort({ url_date: -1 });
+
+// 날짜 없는것들에 날짜넣기
+
+const getCurrentDate = () => {
+  var date = new Date();
+  var year = date.getFullYear();
+  var month = date.getMonth();
+  var today = date.getDate();
+  var hours = date.getHours();
+  var minutes = date.getMinutes();
+  var seconds = date.getSeconds();
+  var milliseconds = date.getMilliseconds();
+  return new Date(
+    Date.UTC(year, month, today, hours, minutes, seconds, milliseconds)
+  );
+};
+
+db.urls.updateMany(
+  {},
+  {
+    $set: {
+      url_date: getCurrentDate(),
+    },
+  }
+);
+
+db.urls.updateMany(
+  {},
+  { $unset: { url_firstDate: true, url_updatedDate: true } }
+);
+
+// 업데이트된 날짜 넣기
+// updatedDate
+
+db.urls.updateMany(
+  {},
+  {
+    $set: {
+      url_firstDate: getCurrentDate(),
+      url_updatedDate: getCurrentDate(),
+    },
+  }
+);

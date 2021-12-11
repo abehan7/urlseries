@@ -405,7 +405,8 @@
 
 .addUrl-container,
 .editUrl-container,
-.shareUrl-container {
+.shareUrl-container,
+.top-moreUrls-container {
   display: none;
 }
 
