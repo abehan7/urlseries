@@ -1,21 +1,50 @@
 import React, { useEffect, useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 // import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
+import { debounce } from "lodash";
 
 const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
-  const onMouseEnter = (e) => {
-    console.log(e.target);
-    // 시간지연같은거 두고싶은데
-    // 3초 이상 누르고있으면 나오도록 하는거
-    // const newDiv = document.createElement("div");
-    // const newText = document.createTextNode("안녕하세요");
-    // newDiv.className = "hello";
-    // newDiv.appendChild(newText);
-    // document.querySelector(".text-three-container").appendChild(newDiv);
+  const grabNowValue = debounce((value) => {
+    const circle = document.querySelector(".detail-container");
+    circle.style.display = "flex";
+    let BalloonOneLineTags = "";
+    value.url_hashTags.forEach((val) => {
+      BalloonOneLineTags += val;
+      BalloonOneLineTags += " ";
+    });
+
+    console.log(value.url_title);
+    if (value.url_memo.length === 0) {
+      document.querySelector(".memoContent").style.display = "none";
+    } else {
+      document.querySelector(".memoContent").style.display = "-webkit-box";
+    }
+    document.querySelector(".memoContent").innerText = value.url_memo;
+    document.querySelector(".tagContent").innerText = BalloonOneLineTags;
+  }, 600);
+
+  // 시간지연같은거 두고싶은데
+  // 3초 이상 누르고있으면 나오도록 하는거
+  // const newDiv = document.createElement("div");
+  // const newText = document.createTextNode("안녕하세요");
+  // newDiv.className = "hello";
+  // newDiv.appendChild(newText);
+  // document.querySelector(".text-three-container").appendChild(newDiv);
+
+  const getMouseLocation = (e) => {
+    const circle = document.querySelector(".detail-container");
+    // circle.style.display = "flex";
+
+    const mouseX = e.clientX;
+    const mouseY = e.pageY;
+    // circle.style.left = 520 + "px";
+    circle.style.left = mouseX + "px";
+    // circle.style.top = 1142 + "px";
+    circle.style.top = mouseY - 80 + "px";
   };
 
   const onMouseLeave = () => {
-    const circle = document.querySelector(".circle");
+    const circle = document.querySelector(".detail-container");
     circle.style.display = "none";
   };
   var num = 0;
@@ -40,20 +69,14 @@ const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
                 }
               }}
               onMouseLeave={onMouseLeave}
+              onMouseEnter={() => {
+                grabNowValue(value);
+              }}
               onContextMenu={(e) => {
                 console.log("우클릭");
                 e.preventDefault();
               }}
-              onMouseMove={(e) => {
-                const circle = document.querySelector(".circle");
-                circle.style.display = "block";
-
-                const mouseX = e.clientX;
-                const mouseY = e.pageY;
-                circle.style.left = mouseX + "px";
-                circle.style.top = mouseY - 100 + "px";
-                console.log(mouseY);
-              }}
+              onMouseMove={(e) => getMouseLocation(e)}
             >
               <div className="valueId">{value.url_id}</div>
               <div className="just-bar">|</div>

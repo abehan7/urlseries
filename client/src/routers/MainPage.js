@@ -21,7 +21,7 @@ import ShareUrlModal from "../components/Modals/ShareUrlModal";
 import Axios from "axios";
 import Loader from "../components/Loader";
 import NewSearchBar from "../components/Rectangles/NewSearchBar";
-import MovingBalloon from "../components/Rectangles/MovingBalloon";
+import MovingBalloon from "../components/MovingBalloon";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
