@@ -1,9 +1,27 @@
 import React from "react";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineClose, AiOutlineCloseCircle } from "react-icons/ai";
+import { CgCloseR } from "react-icons/cg";
+import { IoMdClose } from "react-icons/io";
 import styled, { createGlobalStyle } from "styled-components";
 
 const RecentSearched = ({ values }) => {
   const RecentWrapper = styled.div`
+    @font-face {
+      font-family: "Cafe24SsurroundAir";
+      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff")
+        format("woff");
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    .url-and-delete {
+      display: flex;
+    }
+    .delete-url {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     .recent-searched-Stuff {
       display: flex;
       align-items: center;
@@ -14,7 +32,7 @@ const RecentSearched = ({ values }) => {
       padding: 0;
       margin: 0;
     }
-    .recent-searched-Stuff:hover {
+    .url-and-delete:hover {
       background: #e9ecef57;
       cursor: pointer;
     }
@@ -25,6 +43,10 @@ const RecentSearched = ({ values }) => {
       height: auto;
       z-index: 1;
     }
+    .delete-url {
+      padding-right: 15px;
+      font-size: 17px;
+    }
   `;
 
   return (
@@ -32,19 +54,21 @@ const RecentSearched = ({ values }) => {
       {values.map((url) => {
         return (
           <RecentWrapper>
-            <div className=""></div>
-            <div
-              className="recent-searched-Stuff"
-              onClick={() => {
-                window.open(url.url);
-              }}
-            >
-              <div class="Searched-url-Id">{url.url_id}</div>
-              <div class="just-bar"> | </div>
-              <div class="Searched-url-Title">{url.url_title}</div>
-            </div>
-            <div className="delete-url">
-              <AiOutlineClose />
+            <div className="url-and-delete">
+              <div
+                className="recent-searched-Stuff"
+                onClick={() => {
+                  window.open(url.url);
+                }}
+              >
+                <div class="Searched-url-Id">{url.url_id}</div>
+                <div class="just-bar"> | </div>
+                <div class="Searched-url-Title">{url.url_title}</div>
+              </div>
+              <div className="delete-url" onClick={(e) => {}}>
+                {/* <IoMdClose /> */}
+                <CgCloseR />
+              </div>
             </div>
           </RecentWrapper>
         );

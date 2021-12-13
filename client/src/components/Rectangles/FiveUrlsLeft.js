@@ -7,7 +7,7 @@ const FiveUrlsLeft = ({ values, editMode, shareMode, setMyFav }) => {
   const fiveStuffs = values.slice(0, 5);
 
   console.log("다섯개");
-  console.log(fiveStuffs);
+  // console.log(fiveStuffs);
 
   return (
     <>

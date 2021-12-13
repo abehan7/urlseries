@@ -141,7 +141,8 @@ const MainPage = () => {
       target === document.querySelector(".search-box").firstChild ||
       target === document.querySelector(".Search-balloon") ||
       target === document.querySelector(".Search-balloon-title") ||
-      target === document.querySelector(".notSearched")
+      target === document.querySelector(".notSearched") ||
+      target === document.querySelector(".Searched-Stuffs-Container")
     ) {
       return;
     }
@@ -161,6 +162,24 @@ const MainPage = () => {
     });
 
     document.querySelectorAll(".Searched-url-Title").forEach((val) => {
+      if (target === val) {
+        return (oneSearchedStuff = true);
+      }
+    });
+
+    document.querySelectorAll(".delete-url").forEach((val) => {
+      if (target === val) {
+        return (oneSearchedStuff = true);
+      }
+    });
+
+    document.querySelectorAll("svg").forEach((val) => {
+      if (target === val) {
+        return (oneSearchedStuff = true);
+      }
+    });
+
+    document.querySelectorAll("path").forEach((val) => {
       if (target === val) {
         return (oneSearchedStuff = true);
       }
