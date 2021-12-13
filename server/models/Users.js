@@ -5,23 +5,19 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
-  user_pw: {
-    type: String,
-    required: false,
-  },
-  user_hashtags: {
+  user_asignedTags: {
     type: Array,
     required: false,
   },
-  user_SelectUrls: {
+  user_totalTags: {
     type: Array,
     required: false,
   },
-  user_manyClickedUrls: {
+  user_recentSearchedIds: {
     type: Array,
     required: false,
   },
 });
 
-const users = mongoose.model("users", UserSchema);
-modules.exports = users;
+const Users = mongoose.model("userdatas", UserSchema);
+module.exports = Users;

@@ -11,6 +11,7 @@ app.use(cors());
 app.use(express.json());
 
 const UrlModel = require("./models/Urls");
+const UsersModel = require("./models/users");
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 
@@ -43,6 +44,16 @@ app.get("/hi", async (req, res) => {
   } catch (err) {
     console.log(err);
   }
+});
+
+app.get("/hithere", async (req, res) => {
+  await UsersModel.find(
+    { user_id: "hanjk123@gmail.com" },
+    { user_asignedTags: 1 }
+  ).then((response) => {
+    console.log(response);
+    res.json(response);
+  });
 });
 
 app.post("/addUrl", async (req, res) => {
@@ -93,6 +104,8 @@ app.get("/totalURL", async (req, res) => {
   var totalURL = [];
   var leftURL = [];
   var rightURL = [];
+  var asignedTags = [];
+  var recentSearched = [];
 
   await UrlModel.find({})
     .limit(42)
@@ -110,15 +123,32 @@ app.get("/totalURL", async (req, res) => {
   })
     .sort({ url_clickedNumber: -1 })
     .collation({ locale: "en_US", numericOrdering: true })
-    // .limit(5)
+    .limit(6)
     .then((response) => {
       rightURL = response;
     });
 
-  res.json({
+  await UrlModel.find({ "url_search.url_searchClicked": 1 })
+    .sort({
+      url_searchedDate: 1,
+    })
+    .then((response) => {
+      recentSearched = response;
+    });
+
+  await UsersModel.find(
+    { user_id: "hanjk123@gmail.com" },
+    { user_asignedTags: 1 }
+  ).then((response) => {
+    asignedTags = response[0].user_asignedTags;
+  });
+
+  await res.json({
     totalURL: totalURL,
     leftURL: leftURL,
     rightURL: rightURL,
+    asignedTags: asignedTags,
+    recentSearched: recentSearched,
   });
 });
 

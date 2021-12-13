@@ -59,7 +59,7 @@ const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
     // circle.style.top = 1142 + "px";
     circle.style.top = mouseY - 80 + "px";
 
-    console.log(mouseY);
+    // console.log(mouseY);
   };
 
   const onMouseLeave = () => {

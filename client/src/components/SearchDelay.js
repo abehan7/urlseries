@@ -117,9 +117,15 @@ const SearchDelay = ({ createModal2 }) => {
     const value = e.target.value;
     if (value.length === 0) {
       document.querySelector(".Search-balloon-title").style.display = "flex";
+
       document.querySelector(".loadingImg").style.display = "none";
+      document.querySelector(".RecentSearched").style.display = "block";
+      // setSearchingNow(false);
     } else {
       document.querySelector(".Search-balloon-title").style.display = "none";
+      document.querySelector(".RecentSearched").style.display = "none";
+
+      // setSearchingNow(true);
     }
 
     setText2(value);

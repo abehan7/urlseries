@@ -2,8 +2,8 @@ import React, { useCallback, useEffect, useState } from "react";
 import "./MainPage.css";
 import { Link } from "react-router-dom";
 import urls from "../urls.json";
-import { FaSearch } from "react-icons/fa";
-import { BiEditAlt, BiPaperPlane } from "react-icons/bi";
+import { FaHashtag, FaSearch } from "react-icons/fa";
+import { BiEditAlt, BiPaperPlane, BiPurchaseTag } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
 import HashTagsUnique from "../components/HashTagsUnique";
@@ -23,6 +23,8 @@ import Loader from "../components/Loader";
 import NewSearchBar from "../components/Rectangles/NewSearchBar";
 import MovingBalloon from "../components/MovingBalloon";
 import TopMore from "../components/Modals/TopMore";
+import RecentSearched from "../components/RecentSearched";
+import { MdOutlineTag, MdTag } from "react-icons/md";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -38,6 +40,8 @@ const MainPage = () => {
   const [myFav, setMyFav] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [target, setTarget] = useState(null);
+  const [asignedTags, setAsignedTags] = useState([]);
+  const [recentSearched, setRecentSearch] = useState([]);
 
   console.log("메인");
 
@@ -55,6 +59,9 @@ const MainPage = () => {
       await setGetUrls(response.data.totalURL);
       await setMostClickedUrls(response.data.rightURL);
       await setLikedUrls(response.data.leftURL);
+      await setAsignedTags(response.data.asignedTags);
+      await setRecentSearch(response.data.recentSearched);
+
       console.log(response.data);
     });
   }, []);
@@ -142,6 +149,12 @@ const MainPage = () => {
     // =============== 모달 안에 검색어 클릭해도 모달 안사라지게 하는기능 start ===============
     var oneSearchedStuff;
     document.querySelectorAll(".searched-Stuff").forEach((val) => {
+      if (target === val) {
+        return (oneSearchedStuff = true);
+      }
+    });
+
+    document.querySelectorAll(".recent-searched-Stuff").forEach((val) => {
       if (target === val) {
         return (oneSearchedStuff = true);
       }
@@ -268,8 +281,10 @@ const MainPage = () => {
 
                 <div className="Search-balloon">
                   <div className="Search-balloon-title">최근 검색 항목</div>
-                  {/* <img src="./img/loadingSpin.gif" alt="로딩" /> */}
-                  <div className="Searched-Stuffs-Container"></div>
+
+                  <div className="Searched-Stuffs-Container">
+                    <RecentSearched values={recentSearched} />
+                  </div>
                   <div className="notSearched">
                     검색어가 존재하지 않습니다...
                   </div>
@@ -299,6 +314,7 @@ const MainPage = () => {
                 >
                   <FiPlusSquare />
                 </div>
+
                 <div
                   className="editUrl-icon"
                   onClick={(e) => {
@@ -318,6 +334,9 @@ const MainPage = () => {
                   }}
                 >
                   <BiEditAlt />
+                </div>
+                <div className="editHash-icon">
+                  <MdOutlineTag />
                 </div>
                 <div
                   className="shareUrl-icon"
@@ -420,7 +439,7 @@ const MainPage = () => {
               <div className="for-filling"></div>
               <div className="aside-tags">
                 {/* 전체 url들의 해쉬태그들 뿌려주는 공간*/}
-                {hashList.map((tag) => {
+                {asignedTags.map((tag) => {
                   return (
                     <span
                       className="tag"

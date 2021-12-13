@@ -112,9 +112,6 @@
   /* transition: height 100ms; */
   /* 처음에는 고정이고 다른곳 누르면 서서히 위로 올라가는 애니메이션 */
   transition: 90ms ease-in-out;
-
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 .Search-balloon-title,
 .Searched-Stuffs-Container {
@@ -126,6 +123,8 @@
 
 .Searched-Stuffs-Container {
   padding-top: 10px;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .Search-balloon-title {
@@ -163,6 +162,9 @@
   display: flex;
   align-items: center;
   min-height: 40px;
+}
+
+.Searched-url-Title {
   height: auto;
 }
 .searched-Stuff:hover {
@@ -482,6 +484,7 @@
     cursor: none;
   }
   .Search-balloon {
+    /* position: relative; */
     width: 100%;
     border-radius: 0px;
   }
@@ -503,5 +506,9 @@
 
   .aside-tags {
     max-height: 200px;
+  }
+
+  .Searched-Stuffs-Container > .searched-Stuff {
+    min-height: auto;
   }
 }

@@ -38,16 +38,18 @@ const UrlSchema = new mongoose.Schema({
     required: false,
     default: "",
   },
-  url_clickedNumber: {
-    type: Number,
-    default: 0,
-    required: false,
-  },
   url_likedUrl: {
     type: Number,
     default: 0,
     required: false,
   },
+
+  url_clickedNumber: {
+    type: Number,
+    default: 0,
+    required: false,
+  },
+
   url_firstDate: {
     type: Date,
     default: getCurrentDate(),
@@ -55,6 +57,18 @@ const UrlSchema = new mongoose.Schema({
   url_updatedDate: {
     type: Date,
     default: getCurrentDate(),
+  },
+
+  url_search: {
+    url_searchClicked: {
+      type: Number,
+      default: 0,
+      required: false,
+    },
+    url_searchedDate: {
+      type: Date,
+      default: getCurrentDate(),
+    },
   },
 });
 

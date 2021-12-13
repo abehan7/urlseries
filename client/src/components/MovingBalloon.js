@@ -31,6 +31,7 @@ const BalloonWrapper = styled.div`
   }
 
   .detail-hashTag {
+    // border-top: 1px solid #e2e2e2;
     border-top: 1px solid black;
     width: 100%;
     max-height: 60px;
@@ -45,7 +46,9 @@ const BalloonWrapper = styled.div`
   }
 
   .memoContent {
+    // border-top: 1px solid #e2e2e2;
     border-top: 1px solid black;
+
     width: 100%;
     overflow-y: hidden;
     max-height: 100px;

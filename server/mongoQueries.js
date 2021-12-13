@@ -185,3 +185,149 @@ db.urls.updateMany(
     },
   }
 );
+
+// 각 url마다 useId넣기
+db.urls.updateMany(
+  {},
+  {
+    $set: {
+      user_id: "hanjk123@gmail.com",
+    },
+  }
+);
+
+// 전체 해쉬태그만 뽑아내기
+
+var uniqueTags = [];
+db.urls.find({}, { url_hashTags: 1 }).forEach((val) => {
+  val.url_hashTags.forEach((oneTag) => {
+    if (!uniqueTags.includes(oneTag)) uniqueTags.push(oneTag);
+  });
+});
+
+db.userdatas.updateMany(
+  {},
+  {
+    $set: {
+      user_totalTags: uniqueTags,
+    },
+  }
+);
+
+db.urls
+  .find(
+    {
+      $expr: { $gte: [{ $toDouble: "$url_clickedNumber" }, 1] },
+    },
+    { url_clickedNumber: 1 }
+  )
+  .sort({ url_clickedNumber: -1 })
+  .collation({ locale: "en_US", numericOrdering: true })
+  .limit(6);
+
+db.urls
+  .find({ $expr: { $lt: [{ $toDouble: "$url_id" }, 165] } })
+  .sort({ url_id: -1 })
+  .collation({ locale: "en_US", numericOrdering: true })
+  .limit(21);
+
+db.urls
+  .find({ $expr: { $lt: [{ $toDouble: "$url_id" }, 165] } })
+  .sort({ url_id: -1 })
+  .collation({ locale: "en_US", numericOrdering: true })
+  .limit(21);
+
+var list = [];
+db.urls.find({}, { url_id: 1 }).forEach((val) => {
+  list.push(val.url_id);
+});
+
+// 스트링으로 했던거 인트로 바꾸는 방법
+db.urls.find().forEach(function (data) {
+  db.urls.update(
+    {
+      _id: data._id,
+      moop: data.moop,
+    },
+    {
+      $set: {
+        url_id: parseInt(data.url_id),
+      },
+    }
+  );
+});
+// 내 버전
+db.urls.find().forEach(function (data) {
+  db.urls.update({
+    $set: {
+      url_id: parseInt(data.url_id),
+    },
+  });
+});
+
+// 여기 쿼리 넣으면 될 듯
+db.urls.find().forEach((data) => {
+  db.urls.update(
+    { _id: data._id }, // 여기가 일치하는 아이디
+    {
+      $set: {
+        url_clickedNumber: parseInt(data.url_clickedNumber),
+      },
+    }
+  );
+});
+
+db.urls
+  .find()
+  .limit(20)
+  .forEach((data) => {
+    console.log(data.url_id);
+  });
+
+db.urls.updateMany(
+  {},
+  {
+    $set: {
+      url_id: parseInt(data.url_id),
+    },
+  }
+);
+
+// db.urls.update(
+//   {
+//     user_id: "hanjk123@gmail.com",
+//   },
+//   {
+//     $set: {
+//       user_recentSearchedIds: [
+//         { url_id: 222, url_clickedDate: "2021-12-12T17:07:24.140Z" },
+//         { url_id: 1, url_clickedDate: "2021/9" },
+//         { url_id: 4, url_clickedDate: "2021/8" },
+//         { url_id: 21, url_clickedDate: "2021/7" },
+//         { url_id: 51, url_clickedDate: "2021/6" },
+//       ],
+//     },
+//   }
+// );
+
+// db.urls.find({ url_id: { $in: [222, 1, 4, 21, 51] } },{url_id:1,url_clickedDate:1}).forEach((val) => {
+//   val.url_id
+// });
+
+// 전체 검색 넣기
+db.urls.updateMany(
+  {},
+  {
+    $set: {
+      url_search: {
+        url_searchClicked: 0,
+        url_searchedDate: getCurrentDate(),
+      },
+    },
+  }
+);
+
+// json 형태에서 find하는 방법
+db.urls
+  .find({ "url_search.url_searchClicked": 1 })
+  .sort({ url_searchedDate: 1 });
