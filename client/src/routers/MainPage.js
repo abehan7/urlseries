@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./MainPage.css";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; //클릭했을 때 페이지이동 하게하는 기능 임포트(a 태그 느낌)
 import urls from "../urls.json";
 import { FaSearch } from "react-icons/fa";
 import { BiPaperPlane } from "react-icons/bi";
@@ -10,6 +10,9 @@ import FiveUrls from "../components/FiveUrls";
 import HashTagsUnique from "../components/HashTagsUnique";
 import BoxTagControler from "../components/BoxTagControler";
 import UrlsByHashTag from "../components/UrlsByHashTag";
+import styled from "styled-components";
+import { useTheme } from "../context/themeProvider";
+import Applayout from "./AppLayout";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -22,6 +25,9 @@ const MainPage = () => {
   // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
   // console.log("hashList : ", hashList); // 현재 전체 url의 해쉬태그들
   // console.log("totalUrls : ", totalUrls); // 전체 url들
+
+  const ThemeMode = useTheme();
+  const CurrentMode = ThemeMode[0] === "light" ? "🌝" : "🌚";
 
   // 검색창 외에 바깥부분 클릭하면 모달 사라지는 onClick이벤트
   const clickOutSide = (e) => {
@@ -143,7 +149,6 @@ const MainPage = () => {
       </div>
       {/* ======================================== 그리드 컨테이너  END  ========================================*/}
       {/* ======================================== 날개 START ========================================*/}{" "}
-      */}
       {/* aside설명 : 여기는 오른쪽 색깔있는 해쉬태그 버튼들 공간 */}
       <div className="aside">
         <div className="aside-tags">
