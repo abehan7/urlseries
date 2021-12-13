@@ -9,7 +9,7 @@ import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
 import HashTagsUnique from "../components/HashTagsUnique";
 import BoxTagControler from "../components/AsideTags/BoxTagControler";
 import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
-import SearchDelay from "../components/SearchDelay";
+import SearchDelay from "../components/searchBar/SearchDelay";
 import AddUrlModal from "../components/Modals/AddUrlModal";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
 import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
@@ -19,12 +19,13 @@ import EditUrlModal from "../components/Modals/EditUrlModal";
 import ShareModeRectsFunc from "../components/shareModeFuncs/ShareModeRectsFunc";
 import ShareUrlModal from "../components/Modals/ShareUrlModal";
 import Axios from "axios";
-import Loader from "../components/Loader";
+import Loader from "../components/searchBar/Loader";
 import NewSearchBar from "../components/Rectangles/NewSearchBar";
-import MovingBalloon from "../components/MovingBalloon";
+import MovingBalloon from "../components/Modals/MovingBalloon";
 import TopMore from "../components/Modals/TopMore";
-import RecentSearched from "../components/RecentSearched";
+import RecentSearched from "../components/searchBar/RecentSearched";
 import { MdOutlineTag, MdTag } from "react-icons/md";
+import HashTagModal from "../components/Modals/HashTagModal";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -354,7 +355,15 @@ const MainPage = () => {
                 >
                   <BiEditAlt />
                 </div>
-                <div className="editHash-icon">
+                <div
+                  className="editHash-icon"
+                  onClick={() => {
+                    document.querySelector(
+                      ".hashtagModal-container"
+                    ).style.display = "block";
+                    console.log("hi there");
+                  }}
+                >
                   <MdOutlineTag />
                 </div>
                 <div
@@ -505,6 +514,9 @@ const MainPage = () => {
                 likedUrls={likedUrls}
                 mostClickedUrls={mostClickedUrls}
               />
+            </div>
+            <div className="hashtagModal-container">
+              <HashTagModal />
             </div>
           </div>
           <MovingBalloon />

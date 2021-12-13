@@ -6,14 +6,6 @@ import styled, { createGlobalStyle } from "styled-components";
 
 const RecentSearched = ({ values }) => {
   const RecentWrapper = styled.div`
-    @font-face {
-      font-family: "Cafe24SsurroundAir";
-      src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/Cafe24SsurroundAir.woff")
-        format("woff");
-      font-weight: normal;
-      font-style: normal;
-    }
-
     .url-and-delete {
       display: flex;
     }
@@ -66,7 +58,6 @@ const RecentSearched = ({ values }) => {
                 <div class="Searched-url-Title">{url.url_title}</div>
               </div>
               <div className="delete-url" onClick={(e) => {}}>
-                {/* <IoMdClose /> */}
                 <CgCloseR />
               </div>
             </div>
