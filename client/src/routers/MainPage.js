@@ -44,6 +44,7 @@ const MainPage = () => {
   const [asignedTags, setAsignedTags] = useState([]);
   const [recentSearched, setRecentSearch] = useState([]);
   const [totalTags, setTotalTags] = useState([]);
+  const [originAT, setOriginAT] = useState([]);
 
   console.log("메인");
 
@@ -62,6 +63,7 @@ const MainPage = () => {
       await setMostClickedUrls(response.data.rightURL);
       await setLikedUrls(response.data.leftURL);
       await setAsignedTags(response.data.asignedTags);
+      await setOriginAT(response.data.asignedTags);
       await setRecentSearch(response.data.recentSearched);
       await setTotalTags(response.data.totalTags);
 
@@ -522,6 +524,7 @@ const MainPage = () => {
                 asignedTags={asignedTags}
                 setAsignedTags={setAsignedTags}
                 totalTags={totalTags}
+                originAT={originAT}
               />
             </div>
           </div>

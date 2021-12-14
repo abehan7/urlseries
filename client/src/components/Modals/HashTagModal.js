@@ -1,9 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./HashTagModal.css";
-import { debounce } from "lodash";
 
-const HashTagModal = ({ asignedTags, setAsignedTags, totalTags }) => {
+const HashTagModal = ({ asignedTags, setAsignedTags, originAT, totalTags }) => {
   const [tagSearch, setTagSearch] = useState("");
   let filterd = [];
   filterd = totalTags.filter((val) => {
@@ -14,18 +13,19 @@ const HashTagModal = ({ asignedTags, setAsignedTags, totalTags }) => {
   });
 
   const makeColorBack = () => {
-    document.querySelectorAll(".total-oneHash").forEach((val) => {
-      val.style.backgroundColor = "white";
-    });
+    // document.querySelectorAll(".total-oneHash").forEach((val) => {
+    //   val.style.backgroundColor = "white";
+    // });
     setTimeout(() => {
       document.querySelectorAll(".total-oneHash").forEach((val) => {
         asignedTags.forEach((tag) => {
           if (val.innerText === tag) {
             val.style.backgroundColor = "bisque";
+            val.style.transitionDuration = "0.5s";
           }
         });
       });
-    }, 50);
+    }, 100);
   };
 
   if (tagSearch.length === 0) {
@@ -43,6 +43,7 @@ const HashTagModal = ({ asignedTags, setAsignedTags, totalTags }) => {
                 document.querySelector(
                   ".hashtagModal-container"
                 ).style.display = "none";
+                setAsignedTags(originAT);
               }}
             >
               <IoArrowBack />
@@ -60,7 +61,9 @@ const HashTagModal = ({ asignedTags, setAsignedTags, totalTags }) => {
                 console.log(e.target.value);
                 setTagSearch(e.target.value);
                 console.log(filterd);
-                makeColorBack();
+              }}
+              onKeyUp={() => {
+                // makeColorBack();
               }}
             />
           </div>
@@ -104,7 +107,15 @@ const HashTagModal = ({ asignedTags, setAsignedTags, totalTags }) => {
               )}
             </div>
             <div className="editHash-btn">
-              <button onClick={() => {}}>수정하기</button>
+              <button
+                onClick={() => {
+                  document.querySelector(
+                    ".hashtagModal-container"
+                  ).style.display = "none";
+                }}
+              >
+                수정하기
+              </button>
             </div>
           </div>
         </div>
