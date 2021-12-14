@@ -6,7 +6,7 @@ const HashTagModal = ({ asignedTags, setAsignedTags, originAT, totalTags }) => {
   const [tagSearch, setTagSearch] = useState("");
   let filterd = [];
   filterd = totalTags.filter((val) => {
-    return val
+    return val.name
       .toLowerCase()
       .replace(/(\s*)/g, "")
       .includes(tagSearch.toLowerCase().replace(/(\s*)/g, "")); // 큰거 작은거 검색하고싶은거를 뒤에 넣기
@@ -79,21 +79,21 @@ const HashTagModal = ({ asignedTags, setAsignedTags, originAT, totalTags }) => {
                           console.log(e.target.innerText);
                           if (!asignedTags.includes(e.target.innerText)) {
                             setAsignedTags((val) => [
-                              ...val,
+                              ...val.name,
                               e.target.innerText,
                             ]);
                             e.target.style.backgroundColor = "bisque";
                           } else {
                             setAsignedTags(
                               asignedTags.filter((val) => {
-                                return val !== e.target.innerText;
+                                return val.name !== e.target.innerText;
                               })
                             );
                             e.target.style.backgroundColor = "white";
                           }
                         }}
                       >
-                        {val}
+                        {val.name}
                       </div>
                     );
                   })}
@@ -101,7 +101,9 @@ const HashTagModal = ({ asignedTags, setAsignedTags, originAT, totalTags }) => {
               ) : (
                 <>
                   {filterd.map((val) => {
-                    return <div className="oneHash total-oneHash">{val}</div>;
+                    return (
+                      <div className="oneHash total-oneHash">{val.name}</div>
+                    );
                   })}
                 </>
               )}
@@ -125,7 +127,7 @@ const HashTagModal = ({ asignedTags, setAsignedTags, originAT, totalTags }) => {
           </div>
           <div className="flexWrapBox">
             {asignedTags.map((val) => {
-              return <div className="oneHash">{val}</div>;
+              return <div className="oneHash">{val.name}</div>;
             })}
           </div>
         </div>

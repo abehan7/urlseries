@@ -331,3 +331,44 @@ db.urls.updateMany(
 db.urls
   .find({ "url_search.url_searchClicked": 1 })
   .sort({ url_searchedDate: 1 });
+
+// 컬렉션 이름 바꾸는 방법
+
+// use ururl 이걸 가장먼저 해야함
+
+db.userdatas.renameCollection("users");
+
+// 필드 삭제하는 방법
+db.URL_table.update(
+  {},
+  { $unset: { desc_anal2: 1, title_anal2: 1 } },
+  { multi: true }
+);
+
+db.users.updateMany({}, { $unset: { user_recentSearchedIds: true } });
+
+// 해쉬태그 중복 없이 뽑기
+
+let hashList = [];
+db.urls.find({}, { url_hashTags: 1 }).forEach((val) => {
+  val.url_hashTags.forEach((tag) => {
+    if (!hashList.includes(tag)) {
+      hashList.push(tag);
+    }
+  });
+});
+
+// 해쉬태그 새걸로 교체하긴
+db.users.updateMany(
+  { user_id: "hanjk123@gmail.com" },
+  {
+    $set: {
+      user_totalTags: hashList,
+    },
+  }
+);
+
+let hashList2 = [];
+hashList.forEach((val) => {
+  hashList2.push({ name: val, assigned: 0 });
+});

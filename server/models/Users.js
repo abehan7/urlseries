@@ -13,11 +13,7 @@ const UserSchema = new mongoose.Schema({
     type: Array,
     required: false,
   },
-  user_recentSearchedIds: {
-    type: Array,
-    required: false,
-  },
 });
 
-const Users = mongoose.model("userdatas", UserSchema);
+const Users = mongoose.model("users", UserSchema);
 module.exports = Users;
