@@ -1,92 +1,41 @@
-import React from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
-import styled from "styled-components";
-import TagModalBar from "../searchBar/TagModalBar";
 import "./HashTagModal.css";
+import { debounce } from "lodash";
 
-const HashTagModal = ({}) => {
-  const ModalContainer = styled.div``;
-  const values = [
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-    "#안녕",
-    "#일단",
-    "#이건",
-    "#예시",
-  ];
+const HashTagModal = ({ asignedTags, setAsignedTags, totalTags }) => {
+  const [tagSearch, setTagSearch] = useState("");
+  let filterd = [];
+  filterd = totalTags.filter((val) => {
+    return val
+      .toLowerCase()
+      .replace(/(\s*)/g, "")
+      .includes(tagSearch.toLowerCase().replace(/(\s*)/g, "")); // 큰거 작은거 검색하고싶은거를 뒤에 넣기
+  });
+
+  const makeColorBack = () => {
+    document.querySelectorAll(".total-oneHash").forEach((val) => {
+      val.style.backgroundColor = "white";
+    });
+    setTimeout(() => {
+      document.querySelectorAll(".total-oneHash").forEach((val) => {
+        asignedTags.forEach((tag) => {
+          if (val.innerText === tag) {
+            val.style.backgroundColor = "bisque";
+          }
+        });
+      });
+    }, 50);
+  };
+
+  if (tagSearch.length === 0) {
+    makeColorBack();
+  }
+
   return (
     <>
-      <div id="modal" className="modal-overlay">
-        <div className="modal-window">
+      <div id="modal" className="modal-overlay hash-overlay">
+        <div className="modal-window hashTag-modal-window">
           <div className="header-Container HashTag-header-Container">
             <div
               className="close-area"
@@ -103,17 +52,70 @@ const HashTagModal = ({}) => {
             </div>
           </div>
           <div className="searchTags-Container">
-            <input className="tag-searchBar" />
+            <input
+              value={tagSearch}
+              className="tag-searchBar"
+              placeholder="선택할 태그를 입력해주세요"
+              onChange={(e) => {
+                console.log(e.target.value);
+                setTagSearch(e.target.value);
+                console.log(filterd);
+                makeColorBack();
+              }}
+            />
           </div>
           <div className="content hashtag-content">
             <div className="flexWrapBox">
-              {values.map((val) => {
-                return <div className="oneHash">{val}</div>;
-              })}
+              {tagSearch.length === 0 ? (
+                <>
+                  {totalTags.map((val) => {
+                    return (
+                      <div
+                        className="oneHash total-oneHash"
+                        onClick={(e) => {
+                          console.log(e.target.innerText);
+                          if (!asignedTags.includes(e.target.innerText)) {
+                            setAsignedTags((val) => [
+                              ...val,
+                              e.target.innerText,
+                            ]);
+                            e.target.style.backgroundColor = "bisque";
+                          } else {
+                            setAsignedTags(
+                              asignedTags.filter((val) => {
+                                return val !== e.target.innerText;
+                              })
+                            );
+                            e.target.style.backgroundColor = "white";
+                          }
+                        }}
+                      >
+                        {val}
+                      </div>
+                    );
+                  })}
+                </>
+              ) : (
+                <>
+                  {filterd.map((val) => {
+                    return <div className="oneHash total-oneHash">{val}</div>;
+                  })}
+                </>
+              )}
             </div>
             <div className="editHash-btn">
               <button onClick={() => {}}>수정하기</button>
             </div>
+          </div>
+        </div>
+        <div className="modal-window selected-tags">
+          <div className="title chosen-title">
+            <h2>Chosen Ones</h2>
+          </div>
+          <div className="flexWrapBox">
+            {asignedTags.map((val) => {
+              return <div className="oneHash">{val}</div>;
+            })}
           </div>
         </div>
       </div>

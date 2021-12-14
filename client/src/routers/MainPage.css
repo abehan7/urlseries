@@ -408,7 +408,8 @@
 .addUrl-container,
 .editUrl-container,
 .shareUrl-container,
-.top-moreUrls-container {
+.top-moreUrls-container,
+.hashtagModal-container {
   display: none;
 }
 

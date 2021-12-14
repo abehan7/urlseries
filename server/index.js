@@ -106,6 +106,7 @@ app.get("/totalURL", async (req, res) => {
   var rightURL = [];
   var asignedTags = [];
   var recentSearched = [];
+  var totalTags = [];
 
   await UrlModel.find({})
     .limit(42)
@@ -138,9 +139,10 @@ app.get("/totalURL", async (req, res) => {
 
   await UsersModel.find(
     { user_id: "hanjk123@gmail.com" },
-    { user_asignedTags: 1 }
+    { user_asignedTags: 1, user_totalTags: 1 }
   ).then((response) => {
     asignedTags = response[0].user_asignedTags;
+    totalTags = response[0].user_totalTags;
   });
 
   await res.json({
@@ -149,6 +151,7 @@ app.get("/totalURL", async (req, res) => {
     rightURL: rightURL,
     asignedTags: asignedTags,
     recentSearched: recentSearched,
+    totalTags: totalTags,
   });
 });
 

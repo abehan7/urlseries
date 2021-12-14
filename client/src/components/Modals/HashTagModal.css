@@ -1,9 +1,21 @@
+.hash-overlay {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.hashTag-modal-window {
+  height: 300px;
+}
+
 .HashTag-header-Container {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .searchTags-Container {
-  /* padding-left: 10px; */
+  padding: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,7 +35,9 @@
   flex-wrap: wrap;
   gap: 6px;
   overflow-y: auto;
+  min-height: 140px;
   max-height: 140px;
+  padding-top: 5px;
 }
 
 .hashtag-content {
@@ -32,6 +46,26 @@
 }
 
 .hashtag-content > .editHash-btn {
+  align-items: end;
+  justify-content: center;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
+  height: 40px;
+}
+
+.oneHash {
+  cursor: pointer;
+}
+
+.oneHash:hover {
+  background-color: bisque;
+}
+
+.selected-tags {
   height: auto;
+  width: 300px;
+  padding: 10px;
+}
+
+.chosen-title {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }

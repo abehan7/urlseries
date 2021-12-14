@@ -43,6 +43,7 @@ const MainPage = () => {
   const [target, setTarget] = useState(null);
   const [asignedTags, setAsignedTags] = useState([]);
   const [recentSearched, setRecentSearch] = useState([]);
+  const [totalTags, setTotalTags] = useState([]);
 
   console.log("메인");
 
@@ -62,6 +63,7 @@ const MainPage = () => {
       await setLikedUrls(response.data.leftURL);
       await setAsignedTags(response.data.asignedTags);
       await setRecentSearch(response.data.recentSearched);
+      await setTotalTags(response.data.totalTags);
 
       console.log(response.data);
     });
@@ -516,7 +518,11 @@ const MainPage = () => {
               />
             </div>
             <div className="hashtagModal-container">
-              <HashTagModal />
+              <HashTagModal
+                asignedTags={asignedTags}
+                setAsignedTags={setAsignedTags}
+                totalTags={totalTags}
+              />
             </div>
           </div>
           <MovingBalloon />

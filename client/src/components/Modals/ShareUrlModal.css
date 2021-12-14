@@ -26,3 +26,7 @@
 .tagLists {
   flex-direction: column;
 }
+
+.shareUrl-btn {
+  font-size: 25px;
+}
