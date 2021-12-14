@@ -44,7 +44,7 @@ const MainPage = () => {
   const [asignedTags, setAsignedTags] = useState([]);
   const [recentSearched, setRecentSearch] = useState([]);
   const [totalTags, setTotalTags] = useState([]);
-  const [originAT, setOriginAT] = useState([]);
+  const [OtotalTags, setOTotalTags] = useState([]);
 
   console.log("메인");
 
@@ -58,14 +58,24 @@ const MainPage = () => {
     // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
     // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
     // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
+    var tagList = [];
     Axios.get("http://localhost:3001/totalURL").then(async (response) => {
       await setGetUrls(response.data.totalURL);
       await setMostClickedUrls(response.data.rightURL);
       await setLikedUrls(response.data.leftURL);
       await setAsignedTags(response.data.asignedTags);
-      await setOriginAT(response.data.asignedTags);
       await setRecentSearch(response.data.recentSearched);
       await setTotalTags(response.data.totalTags);
+      await setOTotalTags(response.data.totalTags);
+      await response.data.totalTags.forEach((val) => {
+        if (val.assigned === 1) {
+          tagList.push(val);
+        }
+      });
+      // await setAsignedTags(tagList);
+
+      console.log(tagList);
+      await setAsignedTags(tagList);
 
       console.log(response.data);
     });
@@ -486,7 +496,7 @@ const MainPage = () => {
                         }
                       }}
                     >
-                      {tag}
+                      {tag.name}
                     </span>
                   );
                 })}
@@ -521,10 +531,11 @@ const MainPage = () => {
             </div>
             <div className="hashtagModal-container">
               <HashTagModal
-                asignedTags={asignedTags}
-                setAsignedTags={setAsignedTags}
+                assignedTags={asignedTags}
+                setAssignedTags={setAsignedTags}
                 totalTags={totalTags}
-                originAT={originAT}
+                OtotalTags={OtotalTags}
+                setTotalTags={setTotalTags}
               />
             </div>
           </div>

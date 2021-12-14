@@ -2,7 +2,13 @@ import React, { useCallback, useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./HashTagModal.css";
 
-const HashTagModal = ({ asignedTags, setAsignedTags, originAT, totalTags }) => {
+const HashTagModal = ({
+  assignedTags,
+  setAssignedTags,
+  totalTags,
+  setTotalTags,
+  OtotalTags,
+}) => {
   const [tagSearch, setTagSearch] = useState("");
   let filterd = [];
   filterd = totalTags.filter((val) => {
@@ -12,25 +18,22 @@ const HashTagModal = ({ asignedTags, setAsignedTags, originAT, totalTags }) => {
       .includes(tagSearch.toLowerCase().replace(/(\s*)/g, "")); // 큰거 작은거 검색하고싶은거를 뒤에 넣기
   });
 
-  const makeColorBack = () => {
-    // document.querySelectorAll(".total-oneHash").forEach((val) => {
-    //   val.style.backgroundColor = "white";
-    // });
-    setTimeout(() => {
-      document.querySelectorAll(".total-oneHash").forEach((val) => {
-        asignedTags.forEach((tag) => {
-          if (val.innerText === tag) {
-            val.style.backgroundColor = "bisque";
-            val.style.transitionDuration = "0.5s";
-          }
-        });
-      });
-    }, 100);
-  };
+  const toggleFunc = (e, val) => {
+    e.target.classList.toggle("clicked");
+    if (e.target.classList[2] === "clicked") {
+      val.assigned = 1;
+      setAssignedTags((tag) => [...tag, val]);
 
-  if (tagSearch.length === 0) {
-    makeColorBack();
-  }
+      console.log("클릭됨");
+    } else {
+      val.assigned = 0;
+      setAssignedTags(
+        assignedTags.filter((tag2) => {
+          return tag2 !== val;
+        })
+      );
+    }
+  };
 
   return (
     <>
@@ -43,7 +46,12 @@ const HashTagModal = ({ asignedTags, setAsignedTags, originAT, totalTags }) => {
                 document.querySelector(
                   ".hashtagModal-container"
                 ).style.display = "none";
-                setAsignedTags(originAT);
+                setTotalTags(OtotalTags);
+                // setAssignedTags.filter((val)=>{
+                //   return
+                // })
+
+                console.log(totalTags);
               }}
             >
               <IoArrowBack />
@@ -74,23 +82,13 @@ const HashTagModal = ({ asignedTags, setAsignedTags, originAT, totalTags }) => {
                   {totalTags.map((val) => {
                     return (
                       <div
-                        className="oneHash total-oneHash"
+                        className={
+                          val.assigned === 1
+                            ? "oneHash total-oneHash clicked"
+                            : "oneHash total-oneHash"
+                        }
                         onClick={(e) => {
-                          console.log(e.target.innerText);
-                          if (!asignedTags.includes(e.target.innerText)) {
-                            setAsignedTags((val) => [
-                              ...val.name,
-                              e.target.innerText,
-                            ]);
-                            e.target.style.backgroundColor = "bisque";
-                          } else {
-                            setAsignedTags(
-                              asignedTags.filter((val) => {
-                                return val.name !== e.target.innerText;
-                              })
-                            );
-                            e.target.style.backgroundColor = "white";
-                          }
+                          toggleFunc(e, val);
                         }}
                       >
                         {val.name}
@@ -102,7 +100,18 @@ const HashTagModal = ({ asignedTags, setAsignedTags, originAT, totalTags }) => {
                 <>
                   {filterd.map((val) => {
                     return (
-                      <div className="oneHash total-oneHash">{val.name}</div>
+                      <div
+                        className={
+                          val.assigned === 1
+                            ? "oneHash total-oneHash clicked"
+                            : "oneHash total-oneHash"
+                        }
+                        onClick={(e) => {
+                          toggleFunc(e, val);
+                        }}
+                      >
+                        {val.name}
+                      </div>
                     );
                   })}
                 </>
@@ -126,8 +135,12 @@ const HashTagModal = ({ asignedTags, setAsignedTags, originAT, totalTags }) => {
             <h2>Chosen Ones</h2>
           </div>
           <div className="flexWrapBox">
-            {asignedTags.map((val) => {
-              return <div className="oneHash">{val.name}</div>;
+            {assignedTags.map((val) => {
+              return (
+                <div className="oneHash" onClick={(e) => {}}>
+                  {val.name}
+                </div>
+              );
             })}
           </div>
         </div>

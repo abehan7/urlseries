@@ -60,6 +60,10 @@
   background-color: bisque;
 }
 
+.clicked {
+  background-color: bisque;
+}
+
 .selected-tags {
   height: auto;
   width: 300px;

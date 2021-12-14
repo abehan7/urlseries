@@ -363,7 +363,7 @@ db.users.updateMany(
   { user_id: "hanjk123@gmail.com" },
   {
     $set: {
-      user_totalTags: hashList,
+      user_totalTags: hashList2,
     },
   }
 );
@@ -371,4 +371,12 @@ db.users.updateMany(
 let hashList2 = [];
 hashList.forEach((val) => {
   hashList2.push({ name: val, assigned: 0 });
+});
+
+// 제이슨 파일 쿼리하는 방법
+db.Jobs.find({ "Tests.names": "Art Test" });
+
+let list = [];
+db.users.find({}, { user_totalTags: 1 }).forEach((val) => {
+  console.log(val.assigned);
 });
