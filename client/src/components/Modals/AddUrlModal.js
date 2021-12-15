@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./AddUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
 import Axios from "axios";
+import { disable } from "./stopScroll";
 
 const AddUrlModal = ({ setGetUrls, getUrls }) => {
   const [url, setUrl] = useState("");
@@ -51,6 +52,8 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
               onClick={() => {
                 document.querySelector(".addUrl-container").style.display =
                   "none";
+
+                disable();
               }}
             >
               <IoArrowBack />
@@ -98,7 +101,14 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
               />
             </div>
             <div className="addUrl-btn">
-              <button onClick={addBtn}>추가하기</button>
+              <button
+                onClick={async () => {
+                  await addBtn();
+                  disable();
+                }}
+              >
+                추가하기
+              </button>
             </div>
           </div>
         </div>

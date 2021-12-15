@@ -15,8 +15,6 @@ const EditUrlModal = ({
   setMostClickedUrls,
   mostClickedUrls,
 }) => {
-  console.log("111");
-
   const editBtn = async () => {
     var totalHashes = [];
     var filterdHashes = [];

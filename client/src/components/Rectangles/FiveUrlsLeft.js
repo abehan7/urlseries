@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import styled from "styled-components";
 import { MdExpandMore } from "react-icons/md";
+import { enable } from "../Modals/stopScroll";
 
 const FiveUrlsLeft = ({ values, editMode, shareMode, setMyFav }) => {
   const fiveStuffs = values.slice(0, 5);
 
-  console.log("다섯개");
   // console.log(fiveStuffs);
 
   return (
@@ -46,6 +46,7 @@ const FiveUrlsLeft = ({ values, editMode, shareMode, setMyFav }) => {
             console.log("안녕하세여");
             document.querySelector(".top-moreUrls-container").style.display =
               "flex";
+            enable();
           }}
         >
           <MdExpandMore />

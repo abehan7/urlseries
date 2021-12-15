@@ -11,6 +11,7 @@ import {
 } from "react-icons/ai";
 import { BsInstagram } from "react-icons/bs";
 import { SiKakaotalk } from "react-icons/si";
+import { disable } from "./stopScroll";
 
 const ShareUrlModal = () => {
   const [myFav, setMyFav] = useState(false);
@@ -27,6 +28,7 @@ const ShareUrlModal = () => {
               onClick={() => {
                 document.querySelector(".shareUrl-container").style.display =
                   "none";
+                disable();
               }}
             >
               <IoArrowBack />

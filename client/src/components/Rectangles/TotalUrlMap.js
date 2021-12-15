@@ -67,12 +67,10 @@ const TotalUrlMap = ({ values, editMode, shareMode, setMyFav }) => {
     circle.style.display = "none";
     grabNowValue.cancel();
   };
-  var num = 0;
 
   return (
     <>
       {values.map((value) => {
-        num += 1;
         return (
           <>
             <div

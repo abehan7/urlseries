@@ -1,6 +1,8 @@
+import Axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./HashTagModal.css";
+import { disable } from "./stopScroll";
 
 const HashTagModal = ({
   assignedTags,
@@ -56,6 +58,21 @@ const HashTagModal = ({
         setAssignedTags((tag) => [...tag, val]);
       }
     });
+    setTagSearch("");
+  };
+
+  const modify = () => {
+    document.querySelector(".hashtagModal-container").style.display = "none";
+
+    totalTags.forEach((val) => {
+      if (val.assigned !== val.assignedOrigin) {
+        val.assignedOrigin = val.assigned;
+      }
+    });
+    Axios.put("http://localhost:3001/ChangedAssignedTag", {
+      totalTags: totalTags,
+    });
+    setTagSearch("");
   };
 
   return (
@@ -65,8 +82,9 @@ const HashTagModal = ({
           <div className="header-Container HashTag-header-Container">
             <div
               className="close-area"
-              onClick={() => {
-                closeFunc();
+              onClick={async () => {
+                await closeFunc();
+                disable();
               }}
             >
               <IoArrowBack />
@@ -134,10 +152,9 @@ const HashTagModal = ({
             </div>
             <div className="editHash-btn">
               <button
-                onClick={() => {
-                  document.querySelector(
-                    ".hashtagModal-container"
-                  ).style.display = "none";
+                onClick={async () => {
+                  await modify();
+                  disable();
                 }}
               >
                 수정하기

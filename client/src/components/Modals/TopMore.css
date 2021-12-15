@@ -8,6 +8,11 @@
 .more-url {
   height: auto;
 }
+.more-url:hover {
+  background-color: bisque;
+  cursor: pointer;
+}
+
 .more-content {
   height: 100%;
   overflow-y: auto;

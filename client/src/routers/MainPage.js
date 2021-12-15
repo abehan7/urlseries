@@ -26,6 +26,7 @@ import TopMore from "../components/Modals/TopMore";
 import RecentSearched from "../components/searchBar/RecentSearched";
 import { MdOutlineTag, MdTag } from "react-icons/md";
 import HashTagModal from "../components/Modals/HashTagModal";
+import { enable } from "../components/Modals/stopScroll";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -44,9 +45,7 @@ const MainPage = () => {
   const [asignedTags, setAsignedTags] = useState([]);
   const [recentSearched, setRecentSearch] = useState([]);
   const [totalTags, setTotalTags] = useState([]);
-
-  console.log("메인");
-  var test3 = [];
+  const [realTotalUrls, setRealTotalUrls] = useState([]);
 
   // 위에 useState 헷갈릴 경우 아래 콘솔로 테스트
   // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -54,6 +53,7 @@ const MainPage = () => {
   // console.log("totalUrls : ", totalUrls); // 전체 url들
 
   // 최초에 접속하면 여기 useEffect안에 있는 것들 실행시킴
+
   useEffect(() => {
     // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
     // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
@@ -81,6 +81,13 @@ const MainPage = () => {
   }, []);
 
   useEffect(() => {
+    Axios.get("http://localhost:3001/TotalAfter").then((response) => {
+      setRealTotalUrls(response.data);
+      console.log(response.data);
+    });
+  }, []);
+
+  useEffect(() => {
     setHashList(HashTagsUnique(values));
   }, []);
 
@@ -88,13 +95,25 @@ const MainPage = () => {
 
   var realLastId = 0;
   var responseListLength = 1;
+  // const get21UrlsNum = (num) => {
+  //   const first = 42;
+  //   let filtered = realTotalUrls.slice(
+  //     first + 21 * (num - 1),
+  //     first + 21 * num
+  //   );
+  //   console.log(filtered[filtered.length - 1]);
+  // };
+
+  // let getNumber = 1;
   const getNextItems = async () => {
+    // console.log(getNumber);
+    // get21UrlsNum(getNumber);
+    // getNumber += 1;
     console.log("현재 스크롤");
     if (realLastId === 0) {
       realLastId = getUrls[getUrls.length - 1].url_id;
     }
 
-    console.log(realLastId);
     console.log(getUrls[getUrls.length - 1].url_id);
     var lastId = getUrls[getUrls.length - 1].url_id;
     setIsLoaded(true);
@@ -138,7 +157,7 @@ const MainPage = () => {
     let observer;
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.4,
+        threshold: 0.2,
       });
       observer.observe(target);
     }
@@ -335,14 +354,12 @@ const MainPage = () => {
                 <div
                   className="addUrl-icon"
                   onClick={() => {
-                    // if (!editMode) {
-                    //   EditModalReset();
-                    // }
                     if (!editMode || !shareMode) {
                       return;
                     }
                     document.querySelector(".addUrl-container").style.display =
                       "block";
+                    enable();
                   }}
                 >
                   <FiPlusSquare />
@@ -374,7 +391,7 @@ const MainPage = () => {
                     document.querySelector(
                       ".hashtagModal-container"
                     ).style.display = "block";
-                    console.log("hi there");
+                    enable();
                   }}
                 >
                   <MdOutlineTag />
@@ -386,6 +403,7 @@ const MainPage = () => {
                     document.querySelector(
                       ".shareUrl-container"
                     ).style.display = "block";
+                    enable();
                   }}
                 >
                   <BiPaperPlane />
@@ -423,7 +441,7 @@ const MainPage = () => {
               {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
               <div className="minisize-tags aside-tags">
                 {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
-                {hashList.map((tag) => {
+                {asignedTags.map((tag) => {
                   return (
                     <span
                       className="tag"
@@ -436,7 +454,7 @@ const MainPage = () => {
                         });
                       }}
                     >
-                      {tag}
+                      {tag.name}
                     </span>
                   );
                 })}
@@ -468,7 +486,7 @@ const MainPage = () => {
                     </>
                   ) : (
                     // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
-                    <UrlsByHashTag values={values} BoxTags={BoxTags} />
+                    <UrlsByHashTag values={realTotalUrls} BoxTags={BoxTags} />
                   )}
                 </div>
               </div>

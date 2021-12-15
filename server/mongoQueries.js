@@ -385,7 +385,7 @@ db.users.updateMany(
   { user_id: "hanjk123@gmail.com" },
   {
     $set: {
-      "user_totalTags.originAssigned": 0,
+      user_totalTags: list2,
     },
   }
 );

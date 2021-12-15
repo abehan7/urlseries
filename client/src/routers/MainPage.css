@@ -292,7 +292,7 @@
 }
 
 .text-three-container > div:hover {
-  background-color: beige;
+  background-color: bisque;
   cursor: pointer;
   transition: 0.2s;
 }

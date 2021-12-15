@@ -99,10 +99,28 @@ app.put("/editUrl", async (req, res) => {
   }
 });
 
-app.get("/totalTest", async (req, res) => {
-  await UrlModel.find({}).then((response) => {
-    res.json(response);
-  });
+app.put("/ChangedAssignedTag", async (req, res) => {
+  console.log(req.body.totalTags);
+  try {
+    await UsersModel.updateOne(
+      { user_id: "hanjk123@gmail.com" },
+      {
+        $set: {
+          user_totalTags: req.body.totalTags,
+        },
+      }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/TotalAfter", async (req, res) => {
+  await UrlModel.find({})
+    .sort({ _id: -1 })
+    .then((response) => {
+      res.json(response);
+    });
 });
 
 app.get("/totalURL", async (req, res) => {
