@@ -44,7 +44,6 @@ const MainPage = () => {
   const [asignedTags, setAsignedTags] = useState([]);
   const [recentSearched, setRecentSearch] = useState([]);
   const [totalTags, setTotalTags] = useState([]);
-  const [OtotalTags, setOTotalTags] = useState([]);
 
   console.log("메인");
   var test3 = [];
@@ -67,7 +66,6 @@ const MainPage = () => {
       await setAsignedTags(response.data.asignedTags);
       await setRecentSearch(response.data.recentSearched);
       await setTotalTags(response.data.totalTags);
-      test3 = await response.data.totalTags;
       await response.data.totalTags.forEach((val) => {
         if (val.assigned === 1) {
           tagList.push(val);
@@ -132,9 +130,9 @@ const MainPage = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(getUrls);
-  }, [getUrls]);
+  // useEffect(() => {
+  //   console.log(getUrls);
+  // }, [getUrls]);
 
   useEffect(() => {
     let observer;
@@ -535,7 +533,6 @@ const MainPage = () => {
                 assignedTags={asignedTags}
                 setAssignedTags={setAsignedTags}
                 totalTags={totalTags}
-                OtotalTags={test3}
                 setTotalTags={setTotalTags}
               />
             </div>

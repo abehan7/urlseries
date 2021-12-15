@@ -99,8 +99,15 @@ app.put("/editUrl", async (req, res) => {
   }
 });
 
+app.get("/totalTest", async (req, res) => {
+  await UrlModel.find({}).then((response) => {
+    res.json(response);
+  });
+});
+
 app.get("/totalURL", async (req, res) => {
   //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
+  var realTotalURLS = [];
   var totalURL = [];
   var leftURL = [];
   var rightURL = [];
@@ -114,6 +121,10 @@ app.get("/totalURL", async (req, res) => {
     .then((response) => {
       totalURL = response;
     });
+
+  // await UrlModel.find({}).then((response) => {
+  //   realTotalURLS = response;
+  // });
 
   await UrlModel.find({ url_likedUrl: 1 }).then((response) => {
     leftURL = response;
