@@ -3,8 +3,9 @@ import { AiOutlineClose, AiOutlineCloseCircle } from "react-icons/ai";
 import { CgCloseR } from "react-icons/cg";
 import { IoMdClose } from "react-icons/io";
 import styled, { createGlobalStyle } from "styled-components";
+import Axios from "axios";
 
-const RecentSearched = ({ values }) => {
+const RecentSearched = ({ recentSearched, setRecentSearch }) => {
   const RecentWrapper = styled.div`
     .url-and-delete {
       display: flex;
@@ -43,7 +44,7 @@ const RecentSearched = ({ values }) => {
 
   return (
     <div className="RecentSearched">
-      {values.map((url) => {
+      {recentSearched.map((url) => {
         return (
           <RecentWrapper>
             <div className="url-and-delete">
@@ -57,7 +58,21 @@ const RecentSearched = ({ values }) => {
                 <div class="just-bar"> | </div>
                 <div class="Searched-url-Title">{url.url_title}</div>
               </div>
-              <div className="delete-url" onClick={(e) => {}}>
+              <div
+                className="delete-url"
+                onClick={async (e) => {
+                  setRecentSearch(
+                    recentSearched.filter((oneurl) => {
+                      return url !== oneurl;
+                    })
+                  );
+                  url.url_search.url_searchClicked = 0;
+                  // url.url_search.url_searchClicked
+                  await Axios.put("http://localhost:3001/searchedUrlBYE", {
+                    url: url,
+                  });
+                }}
+              >
                 <CgCloseR />
               </div>
             </div>

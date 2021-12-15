@@ -3,18 +3,12 @@ import "./AddUrlModal.css";
 import "./EditUrlModal.css";
 import "./ShareUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
-import {
-  AiFillStar,
-  AiFillTwitterSquare,
-  AiOutlineFacebook,
-  AiOutlineStar,
-} from "react-icons/ai";
+import { AiFillTwitterSquare, AiOutlineFacebook } from "react-icons/ai";
 import { BsInstagram } from "react-icons/bs";
 import { SiKakaotalk } from "react-icons/si";
 import { disable } from "./stopScroll";
 
 const ShareUrlModal = () => {
-  const [myFav, setMyFav] = useState(false);
   const close = () => {
     document.querySelector(".shareUrl-container").style.display = "none";
   };
@@ -46,10 +40,6 @@ const ShareUrlModal = () => {
               <AiOutlineFacebook />
               <AiFillTwitterSquare />
               <SiKakaotalk />
-              {/* <img src="img/kakaoRect.png" alt="카카오" onClick={close} />
-              <img src="img/instagram.png" alt="인스타" onClick={close} />
-              <img src="img/twitter.png" alt="트위터" onClick={close} />
-              <img src="img/facebook.png" alt="페이스북" onClick={close} /> */}
             </div>
           </div>
         </div>

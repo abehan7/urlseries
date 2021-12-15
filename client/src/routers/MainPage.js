@@ -327,7 +327,11 @@ const MainPage = () => {
             {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
             <div className="grid-container">
               <div className="search-box">
-                <SearchDelay createModal2={createModal2} />
+                <SearchDelay
+                  createModal2={createModal2}
+                  recentSearched={recentSearched}
+                  setRecentSearch={setRecentSearch}
+                />
                 {/* <NewSearchBar /> */}
                 <FaSearch />
 
@@ -335,7 +339,10 @@ const MainPage = () => {
                   <div className="Search-balloon-title">최근 검색 항목</div>
 
                   <div className="Searched-Stuffs-Container">
-                    <RecentSearched values={recentSearched} />
+                    <RecentSearched
+                      recentSearched={recentSearched}
+                      setRecentSearch={setRecentSearch}
+                    />
                   </div>
                   <div className="notSearched">
                     검색어가 존재하지 않습니다...

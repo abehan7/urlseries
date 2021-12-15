@@ -30,3 +30,6 @@
 .shareUrl-btn {
   font-size: 25px;
 }
+.shareUrl-btn > svg {
+  cursor: pointer;
+}

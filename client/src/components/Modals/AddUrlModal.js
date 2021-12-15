@@ -52,7 +52,10 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
               onClick={() => {
                 document.querySelector(".addUrl-container").style.display =
                   "none";
-
+                setUrl("");
+                setTitle("");
+                setHashTag("");
+                setMemo("");
                 disable();
               }}
             >

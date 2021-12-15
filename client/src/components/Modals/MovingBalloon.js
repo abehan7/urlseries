@@ -42,7 +42,7 @@ const BalloonWrapper = styled.div`
   }
 
   .detail-memo {
-    padding-bottom: 10px;
+    padding-bottom: 5px;
   }
 
   .memoContent {
