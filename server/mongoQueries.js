@@ -380,3 +380,20 @@ let list = [];
 db.users.find({}, { user_totalTags: 1 }).forEach((val) => {
   console.log(val.assigned);
 });
+
+db.users.updateMany(
+  { user_id: "hanjk123@gmail.com" },
+  {
+    $set: {
+      "user_totalTags.originAssigned": 0,
+    },
+  }
+);
+
+var list2 = list.map((val) => {
+  return {
+    name: val.name,
+    assigned: val.assigned,
+    assignedOrigin: val.assigned,
+  };
+});

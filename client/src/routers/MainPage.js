@@ -47,6 +47,7 @@ const MainPage = () => {
   const [OtotalTags, setOTotalTags] = useState([]);
 
   console.log("메인");
+  var test3 = [];
 
   // 위에 useState 헷갈릴 경우 아래 콘솔로 테스트
   // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -66,7 +67,7 @@ const MainPage = () => {
       await setAsignedTags(response.data.asignedTags);
       await setRecentSearch(response.data.recentSearched);
       await setTotalTags(response.data.totalTags);
-      await setOTotalTags(response.data.totalTags);
+      test3 = await response.data.totalTags;
       await response.data.totalTags.forEach((val) => {
         if (val.assigned === 1) {
           tagList.push(val);
@@ -534,7 +535,7 @@ const MainPage = () => {
                 assignedTags={asignedTags}
                 setAssignedTags={setAsignedTags}
                 totalTags={totalTags}
-                OtotalTags={OtotalTags}
+                OtotalTags={test3}
                 setTotalTags={setTotalTags}
               />
             </div>

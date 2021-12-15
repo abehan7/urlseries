@@ -35,6 +35,29 @@ const HashTagModal = ({
     }
   };
 
+  const removeToggle = (e, val) => {
+    val.assigned = 0;
+    setAssignedTags(
+      assignedTags.filter((tag2) => {
+        return tag2 !== val;
+      })
+    );
+  };
+
+  const closeFunc = () => {
+    document.querySelector(".hashtagModal-container").style.display = "none";
+    setAssignedTags([]);
+
+    totalTags.forEach((val) => {
+      if (val.assigned !== val.assignedOrigin) {
+        val.assigned = val.assignedOrigin;
+      }
+      if (val.assignedOrigin === 1) {
+        setAssignedTags((tag) => [...tag, val]);
+      }
+    });
+  };
+
   return (
     <>
       <div id="modal" className="modal-overlay hash-overlay">
@@ -43,15 +66,7 @@ const HashTagModal = ({
             <div
               className="close-area"
               onClick={() => {
-                document.querySelector(
-                  ".hashtagModal-container"
-                ).style.display = "none";
-                setTotalTags(OtotalTags);
-                // setAssignedTags.filter((val)=>{
-                //   return
-                // })
-
-                console.log(totalTags);
+                closeFunc();
               }}
             >
               <IoArrowBack />
@@ -137,7 +152,12 @@ const HashTagModal = ({
           <div className="flexWrapBox">
             {assignedTags.map((val) => {
               return (
-                <div className="oneHash" onClick={(e) => {}}>
+                <div
+                  className="oneHash"
+                  onClick={(e) => {
+                    removeToggle(e, val);
+                  }}
+                >
                   {val.name}
                 </div>
               );
