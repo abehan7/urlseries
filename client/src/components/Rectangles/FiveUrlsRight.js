@@ -1,9 +1,8 @@
 import React from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
-import { MdExpandMore } from "react-icons/md";
 import { FiSmile } from "react-icons/fi";
 import { AiOutlineSmile } from "react-icons/ai";
-import { CgSmileUpside, CgSmile } from "react-icons/cg";
+import Axios from "axios";
 
 const FiveUrlsRight = ({ values, editMode, shareMode, setMyFav }) => {
   const fiveStuffs = values.slice(0, 5);
@@ -21,6 +20,9 @@ const FiveUrlsRight = ({ values, editMode, shareMode, setMyFav }) => {
                 console.log("에디터모드입니다");
               } else {
                 window.open(value.url);
+                Axios.put("http://localhost:3001/clickedURLInBox", {
+                  url: value,
+                });
               }
             }}
             onMouseEnter={() => {
@@ -40,7 +42,7 @@ const FiveUrlsRight = ({ values, editMode, shareMode, setMyFav }) => {
       })}
       {values.length >= 5 && (
         <div className="moreBtn">
-          <FiSmile />
+          <FiSmile onClick={(e) => {}} />
           <AiOutlineSmile />
           <FiSmile />
           <AiOutlineSmile />

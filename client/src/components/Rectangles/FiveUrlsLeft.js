@@ -3,6 +3,7 @@ import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import styled from "styled-components";
 import { MdExpandMore } from "react-icons/md";
 import { enable } from "../Modals/stopScroll";
+import Axios from "axios";
 
 const FiveUrlsLeft = ({ values, editMode, shareMode, setMyFav }) => {
   const fiveStuffs = values.slice(0, 5);
@@ -22,6 +23,9 @@ const FiveUrlsLeft = ({ values, editMode, shareMode, setMyFav }) => {
                 setMyFav(value.url_likedUrl === 1);
               } else {
                 window.open(value.url);
+                Axios.put("http://localhost:3001/clickedURLInBox", {
+                  url: value,
+                });
               }
             }}
             onMouseEnter={() => {

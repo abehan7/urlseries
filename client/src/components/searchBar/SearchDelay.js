@@ -1,22 +1,33 @@
 import React, { useState } from "react";
-// import "./Test.css";
 import { debounce } from "lodash";
 import Axios from "axios";
+
+const ClickInSearchBar = (recentSearched, setRecentSearch, val) => {
+  let recentSearched_id = [];
+  recentSearched.forEach((oneurl) => {
+    recentSearched_id.push(oneurl._id);
+  });
+  if (recentSearched_id.includes(val._id)) {
+    setRecentSearch(
+      recentSearched.filter((value) => {
+        return value._id !== val._id;
+      })
+    );
+    setRecentSearch((value) => [val, ...value]);
+  } else {
+    setRecentSearch((value) => [val, ...value]);
+  }
+  Axios.put("http://localhost:3001/clickedSeachedURL", {
+    url: val,
+  });
+};
 
 const debounceSomethingFunc = debounce(
   async (e, { setRecentSearch, recentSearched }) => {
     document.querySelector(".loadingImg").style.display = "none";
 
     var SearchedList = [];
-    // const newDiv = document.createElement("div");
-    // newDiv.className = "searched-Stuff";
-    // newDiv.innerText = "테스트";
-    // document.querySelector(".Searched-Stuffs-Container").appendChild(newDiv);
-    // newDiv.addEventListener("click", (e) => {
-    //   // console.log(e.target);
-    // });
 
-    // console.log("called debounceSomethingFunc");
     if (e.target.value.length === 0) {
       return;
     }
@@ -67,29 +78,13 @@ const debounceSomethingFunc = debounce(
         `<div class="just-bar"> | </div>` +
         `<div class="Searched-url-Title">${val.url_title}</div>`;
       document.querySelector(".Searched-Stuffs-Container").appendChild(newDiv);
-      newDiv.addEventListener("click", async (e) => {
+      newDiv.addEventListener("click", (e) => {
         console.log(e.target);
         window.open(val.url);
         // 아~순서를 이렇게 해야되네
         // 먼저 useState한다음에 axios
         // 아~ 맞네 이렇게 하니까 되네
-        let recentSearched_id = [];
-        recentSearched.forEach((oneurl) => {
-          recentSearched_id.push(oneurl._id);
-        });
-        if (recentSearched_id.includes(val._id)) {
-          setRecentSearch(
-            recentSearched.filter((value) => {
-              return value._id !== val._id;
-            })
-          );
-          setRecentSearch((value) => [val, ...value]);
-        } else {
-          setRecentSearch((value) => [val, ...value]);
-        }
-        await Axios.put("http://localhost:3001/clickedSeachedURL", {
-          url: val,
-        });
+        ClickInSearchBar(recentSearched, setRecentSearch, val);
       });
     });
     //=========== 타이틀 검색어 end ===========
@@ -113,6 +108,7 @@ const debounceSomethingFunc = debounce(
       newDiv.addEventListener("click", (e) => {
         console.log(e.target);
         window.open(val.url);
+        ClickInSearchBar(recentSearched, setRecentSearch, val);
       });
     });
 
@@ -168,3 +164,13 @@ const SearchDelay = ({ createModal2, recentSearched, setRecentSearch }) => {
 };
 
 export default SearchDelay;
+
+// const newDiv = document.createElement("div");
+// newDiv.className = "searched-Stuff";
+// newDiv.innerText = "테스트";
+// document.querySelector(".Searched-Stuffs-Container").appendChild(newDiv);
+// newDiv.addEventListener("click", (e) => {
+//   // console.log(e.target);
+// });
+
+// console.log("called debounceSomethingFunc");

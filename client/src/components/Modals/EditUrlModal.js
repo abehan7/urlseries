@@ -78,7 +78,7 @@ const EditUrlModal = ({
         !likedUrls_id.includes(response.data._id)
       ) {
         console.log("setLikedUrls DONE");
-        setLikedUrls([...likedUrls, response.data]);
+        setLikedUrls([response.data, ...likedUrls]);
       } else {
         setLikedUrls(
           likedUrls.map((val) => {

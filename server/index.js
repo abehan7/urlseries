@@ -73,9 +73,13 @@ app.get("/totalURL", async (req, res) => {
   //   realTotalURLS = response;
   // });
 
-  await UrlModel.find({ url_likedUrl: 1 }).then((response) => {
-    leftURL = response;
-  });
+  await UrlModel.find({ url_likedUrl: 1 })
+    .sort({
+      "url_search.url_searchedDate": -1,
+    })
+    .then((response) => {
+      leftURL = response;
+    });
 
   await UrlModel.find({
     $expr: { $gte: [{ $toDouble: "$url_clickedNumber" }, 1] },
@@ -248,6 +252,26 @@ app.put("/clickedSeachedURL", async (req, res) => {
         },
       }
     );
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+// [5] ==================================== 박스들에서 url클릭하면 +1 AND 클릭한 시간 갱신  (1에서 0으로 수정) put ====================================
+app.put("/clickedURLInBox", async (req, res) => {
+  const url = req.body.url;
+  try {
+    await UrlModel.updateOne(
+      { _id: url._id },
+      {
+        $set: {
+          url_updatedDate: getCurrentDate(),
+        },
+        $inc: { url_clickedNumber: 1 },
+      }
+    ).then((response) => {
+      console.log(response);
+    });
   } catch (err) {
     console.log(err);
   }

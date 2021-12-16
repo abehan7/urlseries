@@ -397,3 +397,6 @@ var list2 = list.map((val) => {
     assignedOrigin: val.assigned,
   };
 });
+
+// 기존 필드에 값 +1하기 인티저
+db.urls.updateOne({ _id: url._id }, { $inc: { url_clickedNumber: 1 } });
