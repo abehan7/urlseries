@@ -158,7 +158,30 @@ app.post("/get21Urls", async (req, res) => {
 // [3] ==================================== url추가 용도 post ====================================
 
 app.post("/addUrl", async (req, res) => {
-  console.log(req.body);
+  // console.log(req.body);
+
+  UsersModel.findOne(
+    { user_id: "hanjk123@gmail.com" },
+    "user_tagNames user_totalTags",
+    async (err, user) => {
+      // 하 이거였다. users에서 필드가 정의 안되어있으면 그래
+      // 잘 안나오면 모델을 살펴보자
+      req.body.hashTags.forEach((val) => {
+        if (!user.user_tagNames.includes(val)) {
+          console.log(val);
+          user.user_tagNames.push(val);
+          user.user_totalTags.push({
+            name: val,
+            assigned: 0,
+            assignedOrigin: 0,
+            shared: 0,
+          });
+        }
+      });
+      await user.save();
+    }
+  );
+
   const url = new UrlModel({
     url: req.body.url,
     url_title: req.body.title,
@@ -179,12 +202,14 @@ app.post("/addUrl", async (req, res) => {
 
 app.put("/editUrl", async (req, res) => {
   console.log(req.body);
-  const _id = req.body._id;
-  const newUrl = req.body.newUrl;
-  const newTitle = req.body.newTitle;
-  const newHashTags = req.body.newHashTags;
-  const newMemo = req.body.newMemo;
-  const newLikedUrl = req.body.newLikedUrl;
+  // const _id = req.body._id;
+  // const newUrl = req.body.newUrl;
+  // const newTitle = req.body.newTitle;
+  // const newHashTags = req.body.newHashTags;
+  // const newMemo = req.body.newMemo;
+  // const newLikedUrl = req.body.newLikedUrl;
+
+  const { _id, newUrl, newTitle, newHashTags, newMemo, newLikedUrl } = req.body;
   try {
     await UrlModel.findById(_id, (error, urlToUpdate) => {
       urlToUpdate.url = newUrl;
@@ -222,7 +247,7 @@ app.put("/ChangedAssignedTag", async (req, res) => {
 
 // [3] ==================================== 검색어 클릭한거 삭제  (1에서 0으로 수정) put ====================================
 app.put("/searchedUrlBYE", async (req, res) => {
-  const url = req.body.url;
+  const { url } = req.body;
   try {
     await UrlModel.updateOne(
       { _id: url._id },
@@ -240,7 +265,7 @@ app.put("/searchedUrlBYE", async (req, res) => {
 });
 // [4] ==================================== 검색어 클릭한거 +1 AND 클릭한 시간 갱신  (1에서 0으로 수정) put ====================================
 app.put("/clickedSeachedURL", async (req, res) => {
-  const url = req.body.url;
+  const { url } = req.body;
   try {
     await UrlModel.updateOne(
       { _id: url._id },
@@ -259,7 +284,7 @@ app.put("/clickedSeachedURL", async (req, res) => {
 
 // [5] ==================================== 박스들에서 url클릭하면 +1 AND 클릭한 시간 갱신  (1에서 0으로 수정) put ====================================
 app.put("/clickedURLInBox", async (req, res) => {
-  const url = req.body.url;
+  const { url } = req.body;
   try {
     await UrlModel.updateOne(
       { _id: url._id },

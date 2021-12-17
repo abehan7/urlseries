@@ -1,35 +1,27 @@
-.share-modal-window {
-  height: auto;
-}
-
-.share-content {
-  height: auto;
-}
-.shareUrl-btn > img {
-  width: 40px;
-  cursor: pointer;
-}
-.content > .message {
-  padding-bottom: 20px;
-  height: auto;
-}
-
-.content > .shareUrl-btn {
-  height: auto;
-  gap: 30px;
-  align-items: start;
+.urlList-forShare {
   padding-top: 10px;
   padding-bottom: 10px;
-  border-top: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-.tagLists {
+.share-modal-window {
+  overflow: hidden;
+}
+
+.modal-window > .share-flexWrapBox {
+  max-height: 100%;
+  flex-wrap: nowrap;
   flex-direction: column;
+  justify-content: flex-start;
+  padding: 0%;
+  gap: 0;
+  margin: 0%;
 }
 
-.shareUrl-btn {
-  font-size: 25px;
+.shareOneUrl {
+  height: auto;
+  gap: 0px;
 }
-.shareUrl-btn > svg {
+.shareOneUrl:hover {
+  background-color: bisque;
   cursor: pointer;
 }

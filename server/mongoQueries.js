@@ -400,3 +400,37 @@ var list2 = list.map((val) => {
 
 // 기존 필드에 값 +1하기 인티저
 db.urls.updateOne({ _id: url._id }, { $inc: { url_clickedNumber: 1 } });
+
+// shared 필드 추가
+let list1;
+list1 = list2.map((val) => {
+  return {
+    name: val.name,
+    assigned: val.assigned,
+    assignedOrigin: val.assignedOrigin,
+    shared: 0,
+  };
+});
+
+db.users.updateMany(
+  { user_id: "hanjk123@gmail.com" },
+  {
+    $set: {
+      user_totalTags: list1,
+    },
+  }
+);
+
+// 이렇게 하니까 된다
+db.users
+  .find({ user_id: "hanjk123@gmail.com" }, { user_totalTags: 1 })
+  .toArray()[0].user_totalTags;
+
+db.users.update(
+  { users_id: "hanjk123@gmail.com" },
+  {
+    $set: {
+      user_totalTags: list2,
+    },
+  }
+);

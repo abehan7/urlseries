@@ -1,0 +1,28 @@
+{
+  "url": {
+    "_id": "61ae230e5e92a9f7c55a9c63",
+    "url": "https://www.youtube.com/watch?v=ZMDbhYOLKF4&pp=ugMICgJrbxABGAE%3D",
+    "url_hashTags": ["#mysql", "#youtube", "#pedroTech"],
+    "url_id": 5,
+    "url_title": "Pedrotech Mysql",
+    "url_clickedNumber": 9,
+    "url_likedUrl": 0,
+    "url_memo": "",
+    "url_firstDate": { "$date": "2021-12-11T23:04:16.520Z" },
+    "url_updatedDate": { "$date": "2021-12-11T23:04:16.520Z" },
+    "user_id": "hanjk123@gmail.com",
+    "url_search": {
+      "url_searchClicked": 0,
+      "url_searchedDate": { "$date": "2021-12-16T01:50:17.156Z" }
+    }
+  },
+
+  "hashTag": {
+    "_id": "1",
+    "name": "#hello",
+    "urls": ["_id1", "_id2", "_id3"],
+    "assigned": 0,
+    "assignedOrigin": 0,
+    "shared": 0
+  }
+}

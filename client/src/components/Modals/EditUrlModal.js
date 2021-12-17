@@ -14,6 +14,8 @@ const EditUrlModal = ({
   setLikedUrls,
   setMostClickedUrls,
   mostClickedUrls,
+  realTotalUrls,
+  setRealTotalUrls,
 }) => {
   const editBtn = async () => {
     var totalHashes = [];
@@ -51,6 +53,14 @@ const EditUrlModal = ({
       // setGetUrls([response.data, ...getUrls]);
       setGetUrls(
         getUrls.map((val) => {
+          return val._id === document.querySelector(".url_id").innerText
+            ? response.data
+            : val;
+        })
+      );
+
+      setRealTotalUrls(
+        realTotalUrls.map((val) => {
           return val._id === document.querySelector(".url_id").innerText
             ? response.data
             : val;

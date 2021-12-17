@@ -38,7 +38,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
       setHashTag("");
       setMemo("");
       setGetUrls([response.data, ...getUrls]);
-      console.log(getUrls);
+      // console.log(getUrls);
     });
   };
 

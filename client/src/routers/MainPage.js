@@ -1,12 +1,10 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "./MainPage.css";
-import { Link } from "react-router-dom";
 import urls from "../urls.json";
-import { FaHashtag, FaSearch } from "react-icons/fa";
-import { BiEditAlt, BiPaperPlane, BiPurchaseTag } from "react-icons/bi";
+import { FaSearch } from "react-icons/fa";
+import { BiEditAlt, BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
-import HashTagsUnique from "../components/HashTagsUnique";
 import BoxTagControler from "../components/AsideTags/BoxTagControler";
 import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
 import SearchDelay from "../components/searchBar/SearchDelay";
@@ -14,25 +12,22 @@ import AddUrlModal from "../components/Modals/AddUrlModal";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
 import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
 import EditModeRectsFunc from "../components/editModeFucs/EditModeRectsFunc";
-import EditModalReset from "../components/editModeFucs/EditModalReset";
 import EditUrlModal from "../components/Modals/EditUrlModal";
-import ShareModeRectsFunc from "../components/shareModeFuncs/ShareModeRectsFunc";
 import ShareUrlModal from "../components/Modals/ShareUrlModal";
 import Axios from "axios";
 import Loader from "../components/searchBar/Loader";
-import NewSearchBar from "../components/Rectangles/NewSearchBar";
 import MovingBalloon from "../components/Modals/MovingBalloon";
 import TopMore from "../components/Modals/TopMore";
 import RecentSearched from "../components/searchBar/RecentSearched";
 import { MdOutlineTag, MdTag } from "react-icons/md";
 import HashTagModal from "../components/Modals/HashTagModal";
 import { enable } from "../components/Modals/stopScroll";
+import { getTotalTags } from "../components/getTags";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
 
   const [BoxTags_First, setBoxTags_First] = useState(true);
-  const [hashList, setHashList] = useState([]); // 현재 전체 url의 해쉬태그들
   const [clickedSearchInput, setClickedSearchInput] = useState(false);
   const [editMode, setEditMode] = useState(true);
   const [shareMode, setShareMode] = useState(true);
@@ -71,7 +66,6 @@ const MainPage = () => {
           tagList.push(val);
         }
       });
-      // await setAsignedTags(tagList);
 
       console.log(tagList);
       await setAsignedTags(tagList);
@@ -87,35 +81,22 @@ const MainPage = () => {
     });
   }, []);
 
-  useEffect(() => {
-    setHashList(HashTagsUnique(values));
-  }, []);
+  // totalurl 변하면 전체 tag 뽑은 다음에 users에 있는 totaltags수정하기 axios해서
+  useMemo(() => {
+    getTotalTags(realTotalUrls, totalTags, setTotalTags);
+  }, [realTotalUrls]);
 
   // ============================================= 여기는 Ininity Scroll START =============================================
 
   var realLastId = 0;
   var responseListLength = 1;
-  // const get21UrlsNum = (num) => {
-  //   const first = 42;
-  //   let filtered = realTotalUrls.slice(
-  //     first + 21 * (num - 1),
-  //     first + 21 * num
-  //   );
-  //   console.log(filtered[filtered.length - 1]);
-  // };
-
-  // let getNumber = 1;
   const getNextItems = async () => {
-    // console.log(getNumber);
-    // get21UrlsNum(getNumber);
-    // getNumber += 1;
     console.log("현재 스크롤");
     if (realLastId === 0) {
       realLastId = getUrls[getUrls.length - 1].url_id;
     }
 
     console.log(getUrls[getUrls.length - 1].url_id);
-    var lastId = getUrls[getUrls.length - 1].url_id;
     setIsLoaded(true);
 
     await Axios.post("http://localhost:3001/get21Urls", {
@@ -148,10 +129,6 @@ const MainPage = () => {
       observer.observe(entry.target);
     }
   };
-
-  // useEffect(() => {
-  //   console.log(getUrls);
-  // }, [getUrls]);
 
   useEffect(() => {
     let observer;
@@ -239,20 +216,6 @@ const MainPage = () => {
     }
   };
 
-  // 여기는 생성하는 코드
-  // 이거 쓰지 말고 flex랑 none으로 하는게 좀 더 안정정이다
-  // 이 코드는 우선 남겨놓기 다른 곳에 사용될 수 있으니까
-  const createModal = () => {
-    if (!clickedSearchInput) {
-      const newDiv = document.createElement("div");
-      newDiv.className = "Search-balloon";
-      document.querySelector(".search-box > svg").style.display = "none";
-
-      document.querySelector(".search-box").appendChild(newDiv);
-      setClickedSearchInput(!clickedSearchInput); // 이제 true
-    }
-  };
-
   const createModal2 = () => {
     if (!clickedSearchInput) {
       document.querySelector(".Search-balloon").style.display = "flex";
@@ -267,14 +230,6 @@ const MainPage = () => {
   };
   //url.json파일에 있는 값들 불러온 값
   const values = urls.urls;
-
-  // 드래그 방지
-  // window.document.onmousemove = (e) => {
-  //   if (e.target !== document.querySelector(".Big_Rect")) {
-  //     const circle = document.querySelector(".detail-container");
-  //     circle.style.display = "none";
-  //   }
-  // };
 
   window.document.onselectstart = (e) => {
     if (
@@ -308,13 +263,6 @@ const MainPage = () => {
       return false;
     }
   };
-
-  // document.querySelector(".search-box input").onselectstart = () => {
-  //   return true;
-  // };
-  // document.querySelector(".search-box input").oncontextmenu = () => {
-  //   return true;
-  // };
 
   return (
     <>
@@ -542,10 +490,16 @@ const MainPage = () => {
                 setLikedUrls={setLikedUrls}
                 mostClickedUrls={mostClickedUrls}
                 setMostClickedUrls={setMostClickedUrls}
+                realTotalUrls={realTotalUrls}
+                setRealTotalUrls={setRealTotalUrls}
               />
             </div>
             <div className="shareUrl-container">
-              <ShareUrlModal />
+              <ShareUrlModal
+                totalTags={totalTags}
+                setTotalTags={setTotalTags}
+                realTotalUrls={realTotalUrls}
+              />
             </div>
             <div className="top-moreUrls-container">
               <TopMore
@@ -558,7 +512,6 @@ const MainPage = () => {
                 assignedTags={asignedTags}
                 setAssignedTags={setAsignedTags}
                 totalTags={totalTags}
-                setTotalTags={setTotalTags}
               />
             </div>
           </div>
@@ -570,3 +523,33 @@ const MainPage = () => {
 };
 
 export default MainPage;
+
+// 여기는 생성하는 코드
+// 이거 쓰지 말고 flex랑 none으로 하는게 좀 더 안정정이다
+// 이 코드는 우선 남겨놓기 다른 곳에 사용될 수 있으니까
+// const createModal = () => {
+//   if (!clickedSearchInput) {
+//     const newDiv = document.createElement("div");
+//     newDiv.className = "Search-balloon";
+//     document.querySelector(".search-box > svg").style.display = "none";
+
+//     document.querySelector(".search-box").appendChild(newDiv);
+//     setClickedSearchInput(!clickedSearchInput); // 이제 true
+//   }
+// };
+
+// 드래그 방지
+// window.document.onmousemove = (e) => {
+//   if (e.target !== document.querySelector(".Big_Rect")) {
+//     const circle = document.querySelector(".detail-container");
+//     circle.style.display = "none";
+//   }
+// };
+
+// [3]
+// document.querySelector(".search-box input").onselectstart = () => {
+//   return true;
+// };
+// document.querySelector(".search-box input").oncontextmenu = () => {
+//   return true;
+// };

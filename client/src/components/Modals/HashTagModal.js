@@ -1,16 +1,10 @@
 import Axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./HashTagModal.css";
 import { disable } from "./stopScroll";
 
-const HashTagModal = ({
-  assignedTags,
-  setAssignedTags,
-  totalTags,
-  setTotalTags,
-  OtotalTags,
-}) => {
+const HashTagModal = ({ assignedTags, setAssignedTags, totalTags }) => {
   const [tagSearch, setTagSearch] = useState("");
   let filterd = [];
   filterd = totalTags.filter((val) => {
@@ -102,9 +96,6 @@ const HashTagModal = ({
                 console.log(e.target.value);
                 setTagSearch(e.target.value);
                 console.log(filterd);
-              }}
-              onKeyUp={() => {
-                // makeColorBack();
               }}
             />
           </div>

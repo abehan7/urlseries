@@ -1,14 +1,27 @@
 const mongoose = require("mongoose");
 
-const HashTagsSchema = new mongoose.Schema({
-  savedUrls: {
-    type: Array,
+const HashTagSchema = new mongoose.Schema({
+  name: {
+    type: String,
     required: false,
   },
-  uniqueUrls: {
-    type: Array,
-    required: false,
+  url_id: [{ type: Schema.Types.ObjectId, ref: "urls" }],
+  assigned: {
+    type: Number,
+    default: 0,
+  },
+  assignedOrigin: {
+    type: Number,
+    default: 0,
+  },
+  shared: {
+    type: Number,
+    default: 0,
+  },
+  sharedOrigin: {
+    type: Number,
+    default: 0,
   },
 });
-const hashtags = mongoose.model("hashtags", HashTagsSchema);
-modules.exports = hashtags;
+const Hashtags = mongoose.model("hashtags", HashTagSchema);
+module.exports = Hashtags;
