@@ -1,26 +1,40 @@
 const mongoose = require("mongoose");
+const { getCurrentDate } = require("./Urls");
 
 const HashTagSchema = new mongoose.Schema({
-  name: {
+  tag_name: {
     type: String,
     required: false,
   },
-  url_id: [{ type: Schema.Types.ObjectId, ref: "urls" }],
+  url_id: [{ type: mongoose.Schema.Types.ObjectId, ref: "urls" }],
   assigned: {
     type: Number,
     default: 0,
   },
-  assignedOrigin: {
+  tag_assigned: {
     type: Number,
     default: 0,
   },
-  shared: {
+  tag_assignedOrigin: {
     type: Number,
     default: 0,
   },
-  sharedOrigin: {
+  tag_shared: {
     type: Number,
     default: 0,
+  },
+  tag_clicked: {
+    type: Number,
+    default: 0,
+  },
+  user_id: {
+    type: String,
+    default: "hanjk123@gmail.com",
+    ref: "users",
+  },
+  tag_firstDate: {
+    type: Date,
+    default: getCurrentDate(),
   },
 });
 const Hashtags = mongoose.model("hashtags", HashTagSchema);

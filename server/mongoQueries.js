@@ -434,3 +434,66 @@ db.users.update(
     },
   }
 );
+
+// hashtag컬렉션 만들기 코드
+// ok 성공
+let list = [];
+
+db.urls.find().forEach((url) => {
+  url.url_hashTags.forEach((tag) => {
+    if (list.includes(tag)) {
+      db.hashtags.updateOne(
+        { name: tag },
+        {
+          $push: {
+            url_id: url._id,
+          },
+        }
+      );
+    }
+  });
+});
+
+// 오브젝트 id 쿼리하는 법
+db.urls.find({ _id: ObjectId("61ae230e5e92a9f7c55a9c94") });
+
+// 업데이트
+db.hashtags.updateMany(
+  {},
+  {
+    $set: {
+      clicked: 0,
+    },
+  }
+);
+
+// 이름바꾸기
+db.hashtags.updateMany(
+  {},
+  {
+    $rename: {
+      name: "tag_name",
+      assigned: "tag_assigned",
+      assignedOrigin: "tag_assignedOrigin",
+      shared: "tag_shared",
+      clicked: "tag_clicked",
+    },
+  }
+);
+
+// 두번째 hashtag컬렉션_id urls 컬렉션에 넣기
+// 성공
+//
+
+db.hashtags.find().forEach((tag) => {
+  tag.url_id.forEach((url) => {
+    db.urls.updateOne(
+      { _id: url },
+      {
+        $push: {
+          hashtags_id: tag._id,
+        },
+      }
+    );
+  });
+});

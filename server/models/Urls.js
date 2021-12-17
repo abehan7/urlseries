@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const autoIncrement = require("mongoose-auto-increment");
 
-const getCurrentDate = () => {
+export const getCurrentDate = () => {
   var date = new Date();
   var year = date.getFullYear();
   var month = date.getMonth();
@@ -33,6 +33,12 @@ const UrlSchema = new mongoose.Schema({
     required: false,
     default: [],
   },
+  url_hashTagRef: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "hashtags",
+    },
+  ],
   url_memo: {
     type: String,
     required: false,

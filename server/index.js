@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
+const db = require("./models");
 
 dotenv.config({ path: "./.env" });
 
@@ -10,8 +11,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const UrlModel = require("./models/Urls");
-const UsersModel = require("./models/users");
+// const UrlModel = require("./models/Urls");
+// const UsersModel = require("./models/users");
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 
@@ -31,7 +32,7 @@ const getCurrentDate = () => {
 
 // [1] ==================================== 테스트용도 get ====================================
 app.get("/hithere", async (req, res) => {
-  await UsersModel.find(
+  await db.Users.find(
     { user_id: "hanjk123@gmail.com" },
     { user_asignedTags: 1 }
   ).then((response) => {
@@ -43,7 +44,7 @@ app.get("/hithere", async (req, res) => {
 // [2] ==================================== 해쉬태그에서 사용할 전체url get ====================================
 
 app.get("/TotalAfter", async (req, res) => {
-  await UrlModel.find({})
+  await db.Urls.find({})
     .sort({ _id: -1 })
     .then((response) => {
       res.json(response);
@@ -62,7 +63,7 @@ app.get("/totalURL", async (req, res) => {
   var recentSearched = [];
   var totalTags = [];
 
-  await UrlModel.find({})
+  await db.Urls.find({})
     .limit(42)
     .sort({ _id: -1 })
     .then((response) => {
@@ -73,7 +74,7 @@ app.get("/totalURL", async (req, res) => {
   //   realTotalURLS = response;
   // });
 
-  await UrlModel.find({ url_likedUrl: 1 })
+  await db.Urls.find({ url_likedUrl: 1 })
     .sort({
       "url_search.url_searchedDate": -1,
     })
@@ -81,7 +82,7 @@ app.get("/totalURL", async (req, res) => {
       leftURL = response;
     });
 
-  await UrlModel.find({
+  await db.Urls.find({
     $expr: { $gte: [{ $toDouble: "$url_clickedNumber" }, 1] },
   })
     .sort({ url_clickedNumber: -1 })
@@ -91,7 +92,7 @@ app.get("/totalURL", async (req, res) => {
       rightURL = response;
     });
 
-  await UrlModel.find({ "url_search.url_searchClicked": 1 })
+  await db.Urls.find({ "url_search.url_searchClicked": 1 })
     .sort({
       "url_search.url_searchedDate": -1,
     })
@@ -99,7 +100,7 @@ app.get("/totalURL", async (req, res) => {
       recentSearched = response;
     });
 
-  await UsersModel.find(
+  await db.Users.find(
     { user_id: "hanjk123@gmail.com" },
     { user_asignedTags: 1, user_totalTags: 1 }
   ).then((response) => {
@@ -120,7 +121,7 @@ app.get("/totalURL", async (req, res) => {
 // [1] ==================================== 검색어 검색하는 post ====================================
 
 app.post("/search", async (req, res) => {
-  UrlModel.find({
+  db.Urls.find({
     // url_title: { $regex: new RegExp(req.body.typedKeyword), $options: "i" },
     $or: [
       {
@@ -144,7 +145,7 @@ app.post("/search", async (req, res) => {
 // [2] ==================================== 무한스크롤 post ====================================
 
 app.post("/get21Urls", async (req, res) => {
-  await UrlModel.find({
+  await db.Urls.find({
     $expr: { $lt: [{ $toDouble: "$url_id" }, Number(req.body.lastId)] },
   })
     .sort({ url_id: -1 })
@@ -160,7 +161,7 @@ app.post("/get21Urls", async (req, res) => {
 app.post("/addUrl", async (req, res) => {
   // console.log(req.body);
 
-  UsersModel.findOne(
+  db.Users.findOne(
     { user_id: "hanjk123@gmail.com" },
     "user_tagNames user_totalTags",
     async (err, user) => {
@@ -182,7 +183,7 @@ app.post("/addUrl", async (req, res) => {
     }
   );
 
-  const url = new UrlModel({
+  const url = new db.Urls({
     url: req.body.url,
     url_title: req.body.title,
     url_hashTags: req.body.hashTags,
@@ -211,7 +212,7 @@ app.put("/editUrl", async (req, res) => {
 
   const { _id, newUrl, newTitle, newHashTags, newMemo, newLikedUrl } = req.body;
   try {
-    await UrlModel.findById(_id, (error, urlToUpdate) => {
+    await db.Urls.findById(_id, (error, urlToUpdate) => {
       urlToUpdate.url = newUrl;
       urlToUpdate.url_title = newTitle;
       urlToUpdate.url_hashTags = newHashTags;
@@ -232,7 +233,7 @@ app.put("/editUrl", async (req, res) => {
 app.put("/ChangedAssignedTag", async (req, res) => {
   console.log(req.body.totalTags);
   try {
-    await UsersModel.updateOne(
+    await db.Users.updateOne(
       { user_id: "hanjk123@gmail.com" },
       {
         $set: {
@@ -249,7 +250,7 @@ app.put("/ChangedAssignedTag", async (req, res) => {
 app.put("/searchedUrlBYE", async (req, res) => {
   const { url } = req.body;
   try {
-    await UrlModel.updateOne(
+    await db.Urls.updateOne(
       { _id: url._id },
       {
         $set: {
@@ -267,7 +268,7 @@ app.put("/searchedUrlBYE", async (req, res) => {
 app.put("/clickedSeachedURL", async (req, res) => {
   const { url } = req.body;
   try {
-    await UrlModel.updateOne(
+    await db.Urls.updateOne(
       { _id: url._id },
       {
         $set: {
@@ -286,7 +287,7 @@ app.put("/clickedSeachedURL", async (req, res) => {
 app.put("/clickedURLInBox", async (req, res) => {
   const { url } = req.body;
   try {
-    await UrlModel.updateOne(
+    await db.Urls.updateOne(
       { _id: url._id },
       {
         $set: {
@@ -306,7 +307,7 @@ app.put("/clickedURLInBox", async (req, res) => {
 app.delete("/deleteUrl/:id", async (req, res) => {
   const id = req.params.id;
   console.log(id);
-  await UrlModel.findOneAndRemove({ _id: id });
+  await db.Urls.findOneAndRemove({ _id: id });
   res.send("item deleted");
   console.log("item deleted");
 });
