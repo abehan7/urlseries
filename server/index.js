@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const db = require("./models");
+const { somethingIsNotMaching, difference } = require("./Funcs");
 
 dotenv.config({ path: "./.env" });
 
@@ -14,6 +15,9 @@ app.use(express.json());
 // const UrlModel = require("./models/Urls");
 // const UsersModel = require("./models/users");
 
+// TODO: #1 해쉬태그는 잘 들어가는데 대소문자 구분을 안하고 들어가서 이거 버그생길듯
+// TODO: #2 그리고 글 등록하기 하는데 FOR때문인지 약간 느리게 느껴졌음 아싸리 그냥 async없이 그냥 일단 useState로 현재 있는 곳에 넣은 다음에
+//          사후적으로 db에 들어가게 하는 방향이 좀 더 옳은 방향일 수도 있는거같다
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 
 const getCurrentDate = () => {
@@ -32,13 +36,13 @@ const getCurrentDate = () => {
 
 // [1] ==================================== 테스트용도 get ====================================
 app.get("/hithere", async (req, res) => {
-  await db.Users.find(
-    { user_id: "hanjk123@gmail.com" },
-    { user_asignedTags: 1 }
-  ).then((response) => {
-    console.log(response);
-    res.json(response);
-  });
+  await db.Urls.find({ url_id: 5 })
+    .populate({ path: "hashtags_id" })
+    .exec((err, data) => {
+      if (err) console.log(err);
+      console.log(data[0].hashtags_id);
+      res.json(data);
+    });
 });
 
 // [2] ==================================== 해쉬태그에서 사용할 전체url get ====================================
@@ -161,29 +165,7 @@ app.post("/get21Urls", async (req, res) => {
 app.post("/addUrl", async (req, res) => {
   // console.log(req.body);
 
-  db.Users.findOne(
-    { user_id: "hanjk123@gmail.com" },
-    "user_tagNames user_totalTags",
-    async (err, user) => {
-      // 하 이거였다. users에서 필드가 정의 안되어있으면 그래
-      // 잘 안나오면 모델을 살펴보자
-      req.body.hashTags.forEach((val) => {
-        if (!user.user_tagNames.includes(val)) {
-          console.log(val);
-          user.user_tagNames.push(val);
-          user.user_totalTags.push({
-            name: val,
-            assigned: 0,
-            assignedOrigin: 0,
-            shared: 0,
-          });
-        }
-      });
-      await user.save();
-    }
-  );
-
-  const url = new db.Urls({
+  const NewUrl = new db.Urls({
     url: req.body.url,
     url_title: req.body.title,
     url_hashTags: req.body.hashTags,
@@ -191,24 +173,95 @@ app.post("/addUrl", async (req, res) => {
   });
 
   try {
-    await url.save();
-    res.json(url);
-    console.log("inserted data from addUrl");
+    await NewUrl.save();
+
+    db.Hashtags.find(
+      { tag_name: NewUrl.url_hashTags },
+      { tag_name: 1, _id: 1 }
+    ).exec(async (err, data) => {
+      if (err) console.log(err);
+      // urls 컬렉션에 hashtag들 _id넣기
+      let tagList = await data.map((tag) => {
+        return tag._id;
+      });
+
+      // db에 저장 안된 태그 만들어주는 기능
+      const newTags = await somethingIsNotMaching(NewUrl, data);
+      if (newTags.length > 0) {
+        await newTags.forEach((newTag) => {
+          let newItem = db.Hashtags({
+            tag_name: newTag,
+            url_id: [NewUrl._id],
+          });
+          newItem.save();
+          tagList.push(newItem._id);
+          console.log("new tag Inserted!");
+          console.log(newItem);
+        });
+      }
+
+      // let tagsInDb = tagList.filter((tag) => {
+      //   return newTags.includes(tag);
+      // });
+      // console.log("원래 db에 있던 아이들 :", tagsInDb);
+
+      // 저장된 태그들에 url_id넣어주는 기능
+      await db.Hashtags.updateMany(
+        { _id: tagList },
+        {
+          $push: {
+            url_id: NewUrl._id,
+          },
+        }
+      ).exec();
+
+      console.log("this tags will be inserted to the new url object");
+      console.log(tagList);
+      // updateOne하면 callback으로 도큐먼트 안나오니까 findByIdAndUpdate해야되 무조건
+      // 확실히 몽구스로 하는게 편리하다
+      await db.Urls.findByIdAndUpdate(
+        { _id: NewUrl._id },
+        {
+          $push: {
+            hashtags_id: { $each: tagList },
+          },
+        },
+        { new: true }
+      ).then((response) => {
+        res.json(response);
+      });
+    });
+    // res.json(NewUrl);
+    // console.log("inserted data from addUrl");
   } catch (err) {
     console.log(err);
   }
 });
 
 // [1] ==================================== url수정 용도 put ====================================
+// FIXME: 오늘은 여기한다
+// TODO: 차라리 해쉬태그 컬렉션 없애버리는게 좀 더 효율적일 수도 있어
+//       이거 너무 복잡하고 전체적으로 느려지니까 그냥 한번 업데이트 할 때 마다 쿼리하는게 편할꺼같아
+//       한번 속도 측정을 해보고 결정하자
+//       지금처럼 하는거는 너무 복잡해서 두아파
+//       내꺼 싸이즈로 봐서는 아직 해쉬태그 그렇게 컬렉션 하나 파서 하는건 아닌거 같아
+//       애초에 many2many는 여기 웹에서 의미가 없는거같아
+//       왜냐면 mant2many중 하나가 고정되어있어야 하는데 해쉬태그는 계속 변동되니까
+//       좀 카테고리가 정해져 있고 한사람만 업로드?하는 그런 곳에서만 의미있는 거같아 여기는 아닌거같고
+// TODO: 그러면 오늘 할 일 !
+// #1 hashtag컬렉션 다시 만든다
+// #2 add에서 다시 수정한다
+// add할때마다 indexOf하거나 includes해서 존재 여부 물어본 다음에 넣으면 될듯하다
+// 그리고 오른쪽에 배정된것도 그냥 hashtag컬렉션에 넣자 이름으로 넣는게 맞는듯하다
+// 삭제하면 딱 그 태그들 있는지 find한 다음에 없으면 지우기
+// 딱 해쉬태그 들어갈 때에만 loading 돌아가면서 그때 axios하기
+// 그러면 언제 전체 태그 unique하게 만들지?
+//  편집모드 누를때마다 한번씩 하기? 그게 나을까? 그게 맞는듯하네
+//  그래서 데이터 갱신하는게 딱 거기에만 한정짓는게 맞다
+// 아니 그냥 처음 유저가 한번만 누르면 cashe로 남게하는게 맞는듯하다
 
 app.put("/editUrl", async (req, res) => {
   console.log(req.body);
-  // const _id = req.body._id;
-  // const newUrl = req.body.newUrl;
-  // const newTitle = req.body.newTitle;
-  // const newHashTags = req.body.newHashTags;
-  // const newMemo = req.body.newMemo;
-  // const newLikedUrl = req.body.newLikedUrl;
 
   const { _id, newUrl, newTitle, newHashTags, newMemo, newLikedUrl } = req.body;
   try {
@@ -222,7 +275,7 @@ app.put("/editUrl", async (req, res) => {
 
       urlToUpdate.save();
       res.json(urlToUpdate);
-    });
+    }).clone();
   } catch (err) {
     console.log(err);
   }

@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-const { getCurrentDate } = require("./Urls");
+const getCurrentDate = require("./getCurrentDate");
 
 const HashTagSchema = new mongoose.Schema({
   tag_name: {
     type: String,
-    required: false,
+    required: true,
   },
   url_id: [{ type: mongoose.Schema.Types.ObjectId, ref: "urls" }],
   assigned: {
