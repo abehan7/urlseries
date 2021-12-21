@@ -75,6 +75,7 @@ const Page1 = ({ setAssignedTags, assignedTags, totalTags, setTotalTags }) => {
       })
     );
   };
+
   return (
     <div className="modal-window hashTag-modal-window">
       <div className="header-Container HashTag-header-Container">

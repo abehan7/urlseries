@@ -115,7 +115,7 @@ const MainPage = () => {
     await Axios.post("http://localhost:3001/get21Urls", {
       lastId: realLastId,
     }).then(async (response) => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
       responseListLength = response.data.length;
       if (responseListLength === 0) {
         return;
@@ -325,6 +325,8 @@ const MainPage = () => {
                   </div>
                   <div className="Rectangle right-top RectColor">
                     <h3>자주 이용하는 URL</h3>
+                    {/* 차라리 여기를 최근 클릭한 url로 바꿔버리고 전체보기 가능하게 만들어놓자 최근이용20개 최대
+                     */}
                     <div className="text-container">
                       <FiveUrlsRight
                         values={mostClickedUrls}

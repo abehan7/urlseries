@@ -159,7 +159,7 @@ app.post("/get21Urls", async (req, res) => {
   })
     .sort({ url_id: -1 })
     .collation({ locale: "en_US", numericOrdering: true })
-    .limit(21)
+    .limit(42)
     .then((response) => {
       res.json(response);
     });

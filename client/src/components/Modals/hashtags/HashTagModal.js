@@ -1,10 +1,6 @@
 import React, { useState } from "react";
-import { IoArrowBack } from "react-icons/io5";
-import HashTagItems from "./HashTagItems";
 import "./HashTagModal.css";
-import { disable } from "../../../functions/stopScroll";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { closeFunc, modify } from "./HashModalFuncs";
 import Page1 from "./Page1";
 import Page2 from "./Page2";
 import Page3 from "./Page3";
