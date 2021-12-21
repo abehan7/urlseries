@@ -1,71 +1,57 @@
 import Axios from "axios";
 
-export const toggleFunc = (e, val, setAssignedTags, assignedTags) => {
-  e.target.classList.toggle("clicked");
-  if (e.target.classList[2] === "clicked") {
-    val.assigned = 1;
-    setAssignedTags((tag) => [...tag, val]);
+const api = Axios.create({
+  baseURL: `http://localhost:3001/`,
+});
 
-    console.log("클릭됨");
-  } else {
-    val.assigned = 0;
-    setAssignedTags(
-      assignedTags.filter((tag2) => {
-        return tag2 !== val;
-      })
-    );
-  }
-};
-
-export const removeToggle = (val, setAssignedTags, assignedTags) => {
-  val.assigned = 0;
-  setAssignedTags(
-    assignedTags.filter((tag2) => {
-      return tag2 !== val;
+export const modify = (setTotalTags, totalTags, assignedTags, setTagSearch) => {
+  document.querySelector(".hashtagModal-container").style.display = "none";
+  setTotalTags(
+    totalTags.map((tag) => {
+      return {
+        name: tag.name,
+        assigned: tag.assigned,
+        origin: tag.assigned,
+      };
     })
   );
-};
+  console.log(assignedTags);
 
-export const closeFunc = (setAssignedTags, totalTags, setTagSearch) => {
-  document.querySelector(".hashtagModal-container").style.display = "none";
-  setAssignedTags([]);
-
-  totalTags.forEach((val) => {
-    if (val.assigned !== val.assignedOrigin) {
-      val.assigned = val.assignedOrigin;
-    }
-    if (val.assignedOrigin === 1) {
-      setAssignedTags((tag) => [...tag, val]);
-    }
+  let oneLineTags = [];
+  assignedTags.forEach((val) => {
+    oneLineTags.push(val.name);
   });
+
+  api.put("/ChangedAssignedTag", {
+    oneLineTags: oneLineTags,
+  });
+
   setTagSearch("");
 };
 
-export const closeFuncInShare = (setAssignedTags, totalTags, setTagSearch) => {
-  document.querySelector(".shareUrl-container").style.display = "none";
-  setAssignedTags([]);
-
-  totalTags.forEach((val) => {
-    if (val.assigned !== val.assignedOrigin) {
-      val.assigned = val.assignedOrigin;
-    }
-    if (val.assignedOrigin === 1) {
-      setAssignedTags((tag) => [...tag, val]);
-    }
-  });
-  setTagSearch("");
-};
-
-export const modify = (totalTags, setTagSearch) => {
+export const closeFunc = (
+  setAssignedTags,
+  totalTags,
+  setTotalTags,
+  setTagSearch
+) => {
   document.querySelector(".hashtagModal-container").style.display = "none";
 
-  totalTags.forEach((val) => {
-    if (val.assigned !== val.assignedOrigin) {
-      val.assignedOrigin = val.assigned;
-    }
-  });
-  Axios.put("http://localhost:3001/ChangedAssignedTag", {
-    totalTags: totalTags,
-  });
+  setAssignedTags(
+    totalTags.filter((tag) => {
+      return tag.origin === 1;
+    })
+  );
+
+  setTotalTags(
+    totalTags.map((tag) => {
+      return {
+        name: tag.name,
+        assigned: tag.origin,
+        origin: tag.origin,
+      };
+    })
+  );
+
   setTagSearch("");
 };

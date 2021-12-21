@@ -1,7 +1,7 @@
 .hash-overlay {
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 30px;
+  gap: 40px;
 }
 
 .hashTag-modal-window {
@@ -92,4 +92,17 @@
 .chosen-title > h3 {
   margin: 0%;
   padding: 3.5px;
+}
+
+.hash-next-modal {
+}
+.right-arrow,
+.left-arrow {
+  font-size: 60px;
+}
+
+.right-arrow > svg,
+.left-arrow > svg {
+  color: #ffffff;
+  cursor: pointer;
 }
