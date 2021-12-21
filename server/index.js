@@ -48,24 +48,36 @@ app.get("/hithere", async (req, res) => {
 // [2] ==================================== 해쉬태그에서 사용할 전체url get ====================================
 
 app.get("/TotalAfter", async (req, res) => {
+  let totalAfter = [];
+  let assignedTags = [];
   await db.Urls.find({})
     .sort({ _id: -1 })
     .then((response) => {
-      res.json(response);
+      totalAfter = response;
     });
+
+  await db.Hashtags2.findOne(
+    { user_id: "hanjk123@gmail.com" },
+    { hashtag_assigned: 1 }
+  ).then((response) => {
+    assignedTags = response.hashtag_assigned;
+  });
+
+  res.json({
+    totalAfter: totalAfter,
+    initAssigned: assignedTags,
+  });
 });
 
 // [3] ==================================== 맨 처음 접속하면 보여줄 부분들만 뽑은 get ====================================
 
 app.get("/totalURL", async (req, res) => {
   //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
-  var realTotalURLS = [];
   var totalURL = [];
   var leftURL = [];
   var rightURL = [];
-  var asignedTags = [];
+  var assignedTags = [];
   var recentSearched = [];
-  var totalTags = [];
 
   await db.Urls.find({})
     .limit(42)
@@ -73,10 +85,6 @@ app.get("/totalURL", async (req, res) => {
     .then((response) => {
       totalURL = response;
     });
-
-  // await UrlModel.find({}).then((response) => {
-  //   realTotalURLS = response;
-  // });
 
   await db.Urls.find({ url_likedUrl: 1 })
     .sort({
@@ -104,21 +112,18 @@ app.get("/totalURL", async (req, res) => {
       recentSearched = response;
     });
 
-  await db.Users.find(
-    { user_id: "hanjk123@gmail.com" },
-    { user_asignedTags: 1, user_totalTags: 1 }
-  ).then((response) => {
-    asignedTags = response[0].user_asignedTags;
-    totalTags = response[0].user_totalTags;
-  });
-
+  // await db.Hashtags2.findOne(
+  //   { user_id: "hanjk123@gmail.com" },
+  //   { hashtag_assigned: 1 }
+  // ).then((response) => {
+  //   assignedTags = response.hashtag_assigned;
+  // });
   await res.json({
     totalURL: totalURL,
     leftURL: leftURL,
     rightURL: rightURL,
-    asignedTags: asignedTags,
     recentSearched: recentSearched,
-    totalTags: totalTags,
+    // assignedTags: assignedTags,
   });
 });
 
@@ -163,76 +168,18 @@ app.post("/get21Urls", async (req, res) => {
 // [3] ==================================== url추가 용도 post ====================================
 
 app.post("/addUrl", async (req, res) => {
-  // console.log(req.body);
-
+  const { url, title, hashTags, memo } = req.body;
   const NewUrl = new db.Urls({
-    url: req.body.url,
-    url_title: req.body.title,
-    url_hashTags: req.body.hashTags,
-    url_memo: req.body.memo,
+    url: url,
+    url_title: title,
+    url_hashTags: hashTags,
+    url_memo: memo,
   });
 
   try {
     await NewUrl.save();
-
-    db.Hashtags.find(
-      { tag_name: NewUrl.url_hashTags },
-      { tag_name: 1, _id: 1 }
-    ).exec(async (err, data) => {
-      if (err) console.log(err);
-      // urls 컬렉션에 hashtag들 _id넣기
-      let tagList = await data.map((tag) => {
-        return tag._id;
-      });
-
-      // db에 저장 안된 태그 만들어주는 기능
-      const newTags = await somethingIsNotMaching(NewUrl, data);
-      if (newTags.length > 0) {
-        await newTags.forEach((newTag) => {
-          let newItem = db.Hashtags({
-            tag_name: newTag,
-            url_id: [NewUrl._id],
-          });
-          newItem.save();
-          tagList.push(newItem._id);
-          console.log("new tag Inserted!");
-          console.log(newItem);
-        });
-      }
-
-      // let tagsInDb = tagList.filter((tag) => {
-      //   return newTags.includes(tag);
-      // });
-      // console.log("원래 db에 있던 아이들 :", tagsInDb);
-
-      // 저장된 태그들에 url_id넣어주는 기능
-      await db.Hashtags.updateMany(
-        { _id: tagList },
-        {
-          $push: {
-            url_id: NewUrl._id,
-          },
-        }
-      ).exec();
-
-      console.log("this tags will be inserted to the new url object");
-      console.log(tagList);
-      // updateOne하면 callback으로 도큐먼트 안나오니까 findByIdAndUpdate해야되 무조건
-      // 확실히 몽구스로 하는게 편리하다
-      await db.Urls.findByIdAndUpdate(
-        { _id: NewUrl._id },
-        {
-          $push: {
-            hashtags_id: { $each: tagList },
-          },
-        },
-        { new: true }
-      ).then((response) => {
-        res.json(response);
-      });
-    });
-    // res.json(NewUrl);
-    // console.log("inserted data from addUrl");
+    res.json(NewUrl);
+    console.log("inserted data from addUrl");
   } catch (err) {
     console.log(err);
   }
@@ -259,6 +206,9 @@ app.post("/addUrl", async (req, res) => {
 //  편집모드 누를때마다 한번씩 하기? 그게 나을까? 그게 맞는듯하네
 //  그래서 데이터 갱신하는게 딱 거기에만 한정짓는게 맞다
 // 아니 그냥 처음 유저가 한번만 누르면 cashe로 남게하는게 맞는듯하다
+// 애초에 필드로 만들어서 할 필요는 없을꺼같아
+// assigned만 필요하고
+// 그래서 assigned에 push pull만 해주면 될꺼같아
 
 app.put("/editUrl", async (req, res) => {
   console.log(req.body);
@@ -284,16 +234,20 @@ app.put("/editUrl", async (req, res) => {
 // [2] ==================================== 태그 수정 put ====================================
 
 app.put("/ChangedAssignedTag", async (req, res) => {
-  console.log(req.body.totalTags);
+  const { oneLineTags } = req.body;
+  console.log(oneLineTags);
   try {
-    await db.Users.updateOne(
+    await db.Hashtags2.updateOne(
       { user_id: "hanjk123@gmail.com" },
       {
         $set: {
-          user_totalTags: req.body.totalTags,
+          hashtag_assigned: oneLineTags,
         },
       }
-    );
+    ).then((response) => {
+      console.log(response);
+      console.log("data changed seccessfully!");
+    });
   } catch (err) {
     console.log(err);
   }

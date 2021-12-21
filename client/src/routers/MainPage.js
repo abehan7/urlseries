@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MainPage.css";
-import urls from "../urls.json";
 import { FaSearch } from "react-icons/fa";
 import { BiEditAlt, BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
@@ -20,11 +19,13 @@ import MovingBalloon from "../components/Modals/MovingBalloon";
 import TopMore from "../components/Modals/TopMore";
 import RecentSearched from "../components/searchBar/RecentSearched";
 import { MdOutlineTag, MdTag } from "react-icons/md";
-import HashTagModal from "../components/Modals/HashTagModal";
-import { enable } from "../components/Modals/stopScroll";
+import HashTagModal from "../components/Modals/hashtags/HashTagModal";
+import { enable } from "../functions/stopScroll";
 import { getTotalTags } from "../components/getTags";
+import { clickOutSide } from "../functions/keepModalsShow";
 
 const MainPage = () => {
+  // 아~빙고
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
 
   const [BoxTags_First, setBoxTags_First] = useState(true);
@@ -37,10 +38,14 @@ const MainPage = () => {
   const [myFav, setMyFav] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [target, setTarget] = useState(null);
-  const [asignedTags, setAsignedTags] = useState([]);
+  const [assignedTags, setAssignedTags] = useState([]);
   const [recentSearched, setRecentSearch] = useState([]);
   const [totalTags, setTotalTags] = useState([]);
   const [realTotalUrls, setRealTotalUrls] = useState([]);
+
+  const api = Axios.create({
+    baseURL: `http://localhost:3001/`,
+  });
 
   // 위에 useState 헷갈릴 경우 아래 콘솔로 테스트
   // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -53,38 +58,46 @@ const MainPage = () => {
     // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
     // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
     // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
-    var tagList = [];
-    Axios.get("http://localhost:3001/totalURL").then(async (response) => {
+    // let preTags = [];
+    api.get("/totalURL").then(async (response) => {
       await setGetUrls(response.data.totalURL);
       await setMostClickedUrls(response.data.rightURL);
       await setLikedUrls(response.data.leftURL);
-      await setAsignedTags(response.data.asignedTags);
       await setRecentSearch(response.data.recentSearched);
-      await setTotalTags(response.data.totalTags);
-      await response.data.totalTags.forEach((val) => {
-        if (val.assigned === 1) {
-          tagList.push(val);
-        }
-      });
 
-      console.log(tagList);
-      await setAsignedTags(tagList);
+      // TODO: #필요한거 1)assignedTags 2) totalTags(이건 필요 없어)
 
       console.log(response.data);
     });
   }, []);
 
   useEffect(() => {
-    Axios.get("http://localhost:3001/TotalAfter").then((response) => {
-      setRealTotalUrls(response.data);
-      console.log(response.data);
+    let preTags = [];
+    api.get("/TotalAfter").then((response) => {
+      const {
+        data: { totalAfter, initAssigned },
+      } = response;
+      setRealTotalUrls(totalAfter);
+
+      // 전체 태그들 뽑는 기능
+      setTotalTags(getTotalTags(totalAfter, initAssigned));
+
+      // 선택한 태그들 json으로 만들기 // 근데 만들 필요가 있냐? 아니 굳이 그러지 않아도 될거같아
+
+      initAssigned.forEach((tag) => {
+        preTags.push({ name: tag, assigned: 1, origin: 1 });
+      });
+      setAssignedTags([...preTags]);
     });
   }, []);
 
   // totalurl 변하면 전체 tag 뽑은 다음에 users에 있는 totaltags수정하기 axios해서
-  useMemo(() => {
-    getTotalTags(realTotalUrls, totalTags, setTotalTags);
-  }, [realTotalUrls]);
+  // FIXME: 문제의 원인이 여기였어
+  //        이거 바꾸기 또 귀찮으니까 아니 이거를 수정 해볼려면 해보던지 아니면 useState하나 더 만들던지 알아서\
+  //        애초에 useMemo쓸게 아니라 useEffect안에 넣는게 옳은 방향일 수도
+  // useMemo(() => {
+  //   setTotalTags(getTotalTags(realTotalUrls));
+  // }, [realTotalUrls]);
 
   // ============================================= 여기는 Ininity Scroll START =============================================
 
@@ -143,79 +156,6 @@ const MainPage = () => {
 
   // ============================================= Ininity Scroll END =============================================
 
-  // 검색창 외에 바깥부분 클릭하면 모달 사라지는 onClick이벤트
-  const clickOutSide = (e) => {
-    var target = e.target;
-
-    if (
-      target === document.querySelector(".search-box").firstChild ||
-      target === document.querySelector(".Search-balloon") ||
-      target === document.querySelector(".Search-balloon-title") ||
-      target === document.querySelector(".notSearched") ||
-      target === document.querySelector(".Searched-Stuffs-Container")
-    ) {
-      return;
-    }
-
-    // =============== 모달 안에 검색어 클릭해도 모달 안사라지게 하는기능 start ===============
-    var oneSearchedStuff;
-    document.querySelectorAll(".searched-Stuff").forEach((val) => {
-      if (target === val) {
-        return (oneSearchedStuff = true);
-      }
-    });
-
-    document.querySelectorAll(".recent-searched-Stuff").forEach((val) => {
-      if (target === val) {
-        return (oneSearchedStuff = true);
-      }
-    });
-
-    document.querySelectorAll(".Searched-url-Title").forEach((val) => {
-      if (target === val) {
-        return (oneSearchedStuff = true);
-      }
-    });
-
-    document.querySelectorAll(".delete-url").forEach((val) => {
-      if (target === val) {
-        return (oneSearchedStuff = true);
-      }
-    });
-
-    document.querySelectorAll("svg").forEach((val) => {
-      if (target === val) {
-        return (oneSearchedStuff = true);
-      }
-    });
-
-    document.querySelectorAll("path").forEach((val) => {
-      if (target === val) {
-        return (oneSearchedStuff = true);
-      }
-    });
-
-    if (oneSearchedStuff) {
-      return;
-    }
-    // =============== 모달 안에 검색어 클릭해도 모달 안사라지게 하는 기능 end ===============
-
-    document.querySelector(".search-box > svg").style.display = "block";
-
-    if (clickedSearchInput) {
-      document.querySelector(".Search-balloon").style.opacity = "0";
-      // 위로 -10픽셀만큼 서서히 올라가는거
-      document.querySelector(".Search-balloon").style.transform =
-        "translateY(-20px)";
-
-      setTimeout(() => {
-        document.querySelector(".Search-balloon").style.display = "none";
-        setClickedSearchInput(!clickedSearchInput);
-        // console.log(clickedSearchInput);
-      }, 100);
-    }
-  };
-
   const createModal2 = () => {
     if (!clickedSearchInput) {
       document.querySelector(".Search-balloon").style.display = "flex";
@@ -229,7 +169,6 @@ const MainPage = () => {
     }
   };
   //url.json파일에 있는 값들 불러온 값
-  const values = urls.urls;
 
   window.document.onselectstart = (e) => {
     if (
@@ -270,7 +209,12 @@ const MainPage = () => {
         <div className="firstLoading">yourURL</div>
       ) : (
         <>
-          <div className="MainPage" onMouseDown={clickOutSide}>
+          <div
+            className="MainPage"
+            onMouseDown={(e) =>
+              clickOutSide(e, clickedSearchInput, setClickedSearchInput)
+            }
+          >
             {/* ======================================== 그리드 컨테이너  START  ========================================*/}
             {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
             <div className="grid-container">
@@ -334,6 +278,7 @@ const MainPage = () => {
                       });
                       return;
                     }
+
                     setEditMode(!editMode);
                     EditModeRectsFunc(editMode);
                   }}
@@ -346,6 +291,7 @@ const MainPage = () => {
                     document.querySelector(
                       ".hashtagModal-container"
                     ).style.display = "block";
+
                     enable();
                   }}
                 >
@@ -396,7 +342,7 @@ const MainPage = () => {
               {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
               <div className="minisize-tags aside-tags">
                 {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
-                {asignedTags.map((tag) => {
+                {assignedTags.map((tag) => {
                   return (
                     <span
                       className="tag"
@@ -453,18 +399,19 @@ const MainPage = () => {
               <div className="for-filling"></div>
               <div className="aside-tags">
                 {/* 전체 url들의 해쉬태그들 뿌려주는 공간*/}
-                {asignedTags.map((tag) => {
+                {assignedTags.map((tag) => {
                   return (
                     <span
                       className="tag"
                       onClick={(e) => {
                         if (editMode) {
-                          BoxTagControler(e, {
+                          BoxTagControler(
+                            e,
                             BoxTags_First,
                             setBoxTags_First,
                             BoxTags,
-                            setBoxTags,
-                          });
+                            setBoxTags
+                          );
                         }
                       }}
                     >
@@ -473,8 +420,6 @@ const MainPage = () => {
                   );
                 })}
               </div>
-
-              {/* <div className="aside-details"></div> */}
             </div>
             {/* ======================================== 날개 END ======================================== */}
             <div className="addUrl-container">
@@ -496,9 +441,9 @@ const MainPage = () => {
             </div>
             <div className="shareUrl-container">
               <ShareUrlModal
-                totalTags={totalTags}
-                setTotalTags={setTotalTags}
-                realTotalUrls={realTotalUrls}
+              // totalTags={totalTags}
+              // setTotalTags={setTotalTags}
+              // realTotalUrls={realTotalUrls}
               />
             </div>
             <div className="top-moreUrls-container">
@@ -509,9 +454,10 @@ const MainPage = () => {
             </div>
             <div className="hashtagModal-container">
               <HashTagModal
-                assignedTags={asignedTags}
-                setAssignedTags={setAsignedTags}
+                assignedTags={assignedTags}
+                setAssignedTags={setAssignedTags}
                 totalTags={totalTags}
+                setTotalTags={setTotalTags}
               />
             </div>
           </div>
@@ -553,3 +499,16 @@ export default MainPage;
 // document.querySelector(".search-box input").oncontextmenu = () => {
 //   return true;
 // };
+
+// TODO:리덕스
+// function mapStateToProps(state) {
+//   return { todos: state };
+// }
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     addToDo: (text) => dispatch(actionCreators.addToDo(text)),
+//     deleteToDo: (text) => dispatch(actionCreators.deleteToDo(text)),
+//   };
+// }
+// export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

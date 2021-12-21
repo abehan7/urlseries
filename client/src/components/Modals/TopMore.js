@@ -1,7 +1,7 @@
 import React from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./AddUrlModal.css";
-import { disable } from "./stopScroll";
+import { disable } from "../../functions/stopScroll";
 import "./TopMore.css";
 const TopMore = ({ likedUrls, mostClickedUrls }) => {
   return (

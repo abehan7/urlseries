@@ -1,22 +1,25 @@
-import Axios from "axios";
 import React, { useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
-import "./HashTagModal.css";
+import "./hashtags/HashTagModal.css";
 import "./ShareUrlModal.css";
-import { disable } from "./stopScroll";
+import { disable } from "../../functions/stopScroll";
 
-const ShareUrlModal = ({ totalTags, setTotalTags, realTotalUrls }) => {
+const ShareUrlModal = ({
+  totalTags = [],
+  setTotalTags = [],
+  realTotalUrls = [],
+}) => {
   const [tagSearch, setTagSearch] = useState("");
   const [shareFilterTag, setShareFilterTag] = useState([]);
 
-  console.log(shareFilterTag);
+  // console.log(shareFilterTag);
   let sharefilterd = [];
   sharefilterd = realTotalUrls.filter((oneURL) => {
     return shareFilterTag.some((shareOneTag) => {
       return oneURL.url_hashTags.includes(shareOneTag);
     });
   });
-  console.log(sharefilterd);
+  // console.log(sharefilterd);
 
   let filterd = [];
   filterd = totalTags.filter((val) => {

@@ -1,6 +1,9 @@
 const BoxTagControler = (
   e,
-  { BoxTags_First, setBoxTags_First, BoxTags, setBoxTags }
+  BoxTags_First,
+  setBoxTags_First,
+  BoxTags,
+  setBoxTags
 ) => {
   var currentList = [];
   // console.log(e.target);

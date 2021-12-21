@@ -1,27 +1,41 @@
-export const getTotalTags = (realTotalUrls, totalTags, setTotalTags) => {
-  let urls_totaltags = [];
-  let user_totaltags = [];
-  realTotalUrls.forEach((url) => {
+export const getTotalTags = (urls, initAssigned) => {
+  let urls_name = [];
+  let urls_tag = [];
+
+  urls.forEach((url) => {
     url.url_hashTags.forEach((tag) => {
-      if (!urls_totaltags.includes(tag)) {
-        urls_totaltags.push(tag);
+      if (!urls_name.includes(tag)) {
+        urls_name.push(tag);
+        if (initAssigned.includes(tag)) {
+          urls_tag.push({ name: tag, assigned: 1, origin: 1 });
+          console.log(tag);
+        } else {
+          urls_tag.push({ name: tag, assigned: 0, origin: 0 });
+        }
       }
     });
   });
 
-  totalTags.forEach((url) => {});
-
   console.log("메모");
-  //   if (urls_totaltags!== )
+  // console.log(urls_tag);
+  //   if (urls_name!== )
 
   // 삭제
   // 아~ 무조껀 realTotalUrls에 있는 태그들만 따르면 되겠네
   // 삭제하면 realTotalUrls
-  console.log(urls_totaltags);
-  return urls_totaltags;
+  // console.log("여기는 태그 이름들");
+  // console.log(urls_name);
+  // console.log("여기는 assigned까지");
+  // console.log(urls_tag);
+  return urls_tag;
 };
 
-export const assignedTags = (realTotalUrls) => {
-  let assignedTags = [];
-  realTotalUrls.forEach((url) => {});
+export const coverColor = (total_tag, assigned_tag) => {
+  total_tag.forEach((val) => {
+    if (assigned_tag.includes(val.name)) {
+      val.assigned = 1;
+      val.origin = 1;
+    }
+  });
+  return total_tag;
 };

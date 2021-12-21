@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import styled from "styled-components";
 import { MdExpandMore } from "react-icons/md";
-import { enable } from "../Modals/stopScroll";
+import { enable } from "../../functions/stopScroll";
 import Axios from "axios";
 
 const FiveUrlsLeft = ({ values, editMode, shareMode, setMyFav }) => {

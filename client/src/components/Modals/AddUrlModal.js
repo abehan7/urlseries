@@ -2,9 +2,14 @@ import React, { useState } from "react";
 import "./AddUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
 import Axios from "axios";
-import { disable } from "./stopScroll";
+import { disable } from "../../functions/stopScroll";
+import { connect } from "react-redux";
 
-const AddUrlModal = ({ setGetUrls, getUrls }) => {
+const api = Axios.create({
+  baseURL: `http://localhost:3001/`,
+});
+
+const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
   const [url, setUrl] = useState("");
   const [title, setTitle] = useState("");
   const [hashTag, setHashTag] = useState("");
@@ -25,21 +30,23 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
 
     console.log(getUrls);
 
-    await Axios.post("http://localhost:3001/addUrl", {
-      url: url,
-      title: title,
-      hashTags: filterdHashes,
-      memo: memo,
-    }).then((response) => {
-      console.log(response.data);
-      document.querySelector(".addUrl-container").style.display = "none";
-      setUrl("");
-      setTitle("");
-      setHashTag("");
-      setMemo("");
-      setGetUrls([response.data, ...getUrls]);
-      // console.log(getUrls);
-    });
+    await api
+      .post("/addUrl", {
+        url: url,
+        title: title,
+        hashTags: filterdHashes,
+        memo: memo,
+      })
+      .then((response) => {
+        console.log(response.data);
+        document.querySelector(".addUrl-container").style.display = "none";
+        setUrl("");
+        setTitle("");
+        setHashTag("");
+        setMemo("");
+        setGetUrls([response.data, ...getUrls]);
+        // console.log(getUrls);
+      });
   };
 
   return (
@@ -50,6 +57,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
             <div
               className="close-area"
               onClick={() => {
+                console.log(todos);
                 document.querySelector(".addUrl-container").style.display =
                   "none";
                 setUrl("");
@@ -120,4 +128,9 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
   );
 };
 
-export default AddUrlModal;
+function mapStateToProps(state) {
+  return {
+    todos: state,
+  };
+}
+export default connect(mapStateToProps)(AddUrlModal);
