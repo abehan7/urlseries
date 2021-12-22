@@ -11,6 +11,7 @@ import BoxTagControler from "../components/AsideTags/BoxTagControler";
 import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
 import SearchDelay from "../components/SearchDelay";
 import AddUrlModal from "../components/Modals/AddUrlModal";
+import Join, { Login } from "../components/Modals/Join";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
 import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
 import EditModeRectsFunc from "../components/editModeFucs/EditModeRectsFunc";
@@ -297,7 +298,9 @@ const MainPage = () => {
                   </div>
                 </div>
               </div>
+
               <div className="login">로그인/회원가입</div>
+
               <div className="share-write">
                 {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
                 <div
@@ -464,6 +467,7 @@ const MainPage = () => {
               {/* <div className="aside-details"></div> */}
             </div>
             {/* ======================================== 날개 END ======================================== */}
+            <div className="join-container">{/* <Login /> */}</div>
             <div className="addUrl-container">
               <AddUrlModal getUrls={getUrls} setGetUrls={setGetUrls} />
             </div>

@@ -7,7 +7,7 @@ import { GoogleLogin, GoogleLogout } from "react-google-login";
 
 //구글로그인기능
 
-export default function Login() {
+export function Login() {
   const clientId = "";
 
   const [showLoginButton, setShowLoginButton] = useState(true);
@@ -31,31 +31,38 @@ export default function Login() {
   };
 
   return (
-    <div>
-      {showLoginButton ? (
-        <GoogleLogin
-          clientId={clientId}
-          buttonText="구글계정으로 로그인"
-          onSuccess={onLoginSuccess}
-          onFailure={onFailureSuccess}
-          cookiePolicy={"single_host_origin"}
-        />
-      ) : null}
+    <>
+      <div id="modal" className="modal-overlay">
+        <div className="modal-window">
+          <div>
+            {showLoginButton ? (
+              <GoogleLogin
+                clientId={clientId}
+                buttonText="구글계정으로 로그인"
+                onSuccess={onLoginSuccess}
+                onFailure={onFailureSuccess}
+                cookiePolicy={"single_host_origin"}
+              />
+            ) : null}
 
-      {showLogoutButton ? (
-        <GoogleLogout
-          clientId={clientId}
-          buttonText="구글계정 로그아웃"
-          onLogoutSuccess={onSignoutSuccess}
-        />
-      ) : null}
-    </div>
+            {showLogoutButton ? (
+              <GoogleLogout
+                clientId={clientId}
+                buttonText="구글계정 로그아웃"
+                onLogoutSuccess={onSignoutSuccess}
+              />
+            ) : null}
+          </div>
+          <Join />
+        </div>
+      </div>
+    </>
   );
 }
 
 //간단회원가입 기능
 
-class App extends Component {
+export class Join extends Component {
   constructor() {
     super();
     this.state = {
