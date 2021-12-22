@@ -7,13 +7,36 @@ dotenv.config({ path: "./.env" });
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
 const UrlModel = require("./models/Urls");
-const UsersModel = require("./models/users");
+const UsersModel = require("./models/Users");
+const { response } = require("express");
+const bcrypt = require("bcrypt");
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+
+//로그인
+app.post("/signup", async (request, response) => {
+  const saltPassword = await bcrypt.genSalt(10);
+  const securePassword = await bcrypt.hash(request.body.password, saltPassword);
+
+  const signedUpUser = new UsersModel({
+    user_id: request.body.user_id,
+    password: securePassword,
+    email: request.body.email,
+  });
+
+  signedUpUser
+    .save()
+    .then((data) => {
+      response.json(data);
+    })
+    .catch((error) => {
+      response.json(error);
+    });
+});
 
 const getCurrentDate = () => {
   var date = new Date();
@@ -99,13 +122,23 @@ app.put("/editUrl", async (req, res) => {
   }
 });
 
+app.get("/TotalAfter", async (req, res) => {
+  await UrlModel.find({})
+    .sort({ _id: -1 })
+    .then((response) => {
+      res.json(response);
+    });
+});
+
 app.get("/totalURL", async (req, res) => {
   //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
+  var realTotalURLS = [];
   var totalURL = [];
   var leftURL = [];
   var rightURL = [];
   var asignedTags = [];
   var recentSearched = [];
+  var totalTags = [];
 
   await UrlModel.find({})
     .limit(42)
@@ -113,6 +146,10 @@ app.get("/totalURL", async (req, res) => {
     .then((response) => {
       totalURL = response;
     });
+
+  // await UrlModel.find({}).then((response) => {
+  //   realTotalURLS = response;
+  // });
 
   await UrlModel.find({ url_likedUrl: 1 }).then((response) => {
     leftURL = response;
@@ -138,9 +175,10 @@ app.get("/totalURL", async (req, res) => {
 
   await UsersModel.find(
     { user_id: "hanjk123@gmail.com" },
-    { user_asignedTags: 1 }
+    { user_asignedTags: 1, user_totalTags: 1 }
   ).then((response) => {
     asignedTags = response[0].user_asignedTags;
+    totalTags = response[0].user_totalTags;
   });
 
   await res.json({
@@ -149,6 +187,7 @@ app.get("/totalURL", async (req, res) => {
     rightURL: rightURL,
     asignedTags: asignedTags,
     recentSearched: recentSearched,
+    totalTags: totalTags,
   });
 });
 

@@ -297,6 +297,7 @@ const MainPage = () => {
                   </div>
                 </div>
               </div>
+              <div className="login">로그인/회원가입</div>
               <div className="share-write">
                 {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
                 <div
