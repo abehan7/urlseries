@@ -6,7 +6,7 @@ const RightItem = ({ assignedTags, removeToggle }) => {
       <div className="title chosen-title">
         <h3>Chosen Ones</h3>
       </div>
-      <div className="flexWrapBox">
+      <div className="flexWrapBox flexWrap-right">
         {assignedTags.map((val, i) => {
           return (
             <div

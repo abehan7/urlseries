@@ -1,5 +1,7 @@
 import React from "react";
 import { IoArrowBack } from "react-icons/io5";
+import { AiOutlineFolder, AiOutlinePlusSquare } from "react-icons/ai";
+import { BiEditAlt } from "react-icons/bi";
 import styled from "styled-components";
 const Page2 = () => {
   const Page2Wrap = styled.div`
@@ -8,8 +10,31 @@ const Page2 = () => {
     }
     .tagFolder-window > .folder-content {
       height: auto;
-      overflow: auto;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
+
+    .addFolder {
+    }
+
+    .hash-btns {
+      position: absolute;
+      display: flex;
+
+      right: 10px;
+      gap: 5px;
+    }
+
+    .hash-btns > div {
+      display: flex;
+      align-items: center;
+      justify-contents: center;
+    }
+    .hash-btns > div > svg {
+      font-size: 30px;
+      cursor: pointer;
+    }
+
     .tagFolder-grid {
       display: grid;
       height: 100%;
@@ -19,12 +44,16 @@ const Page2 = () => {
 
     .tagFolder-grid > div {
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       width: 100%;
       height: 100%;
       padding: 0;
       margin: 0;
+      cursor: pointer;
+      // border-right: 1px solid black;
+      // border-bottom: 1px solid black;
     }
   `;
   return (
@@ -38,22 +67,87 @@ const Page2 = () => {
             <div className="title">
               <h2>TagFolder</h2>
             </div>
+            <div className="hash-btns">
+              <div className="addFolder">
+                <AiOutlinePlusSquare />
+              </div>
+              <div className="editFolder">
+                <BiEditAlt />
+              </div>
+            </div>
           </div>
 
           <div className="content folder-content">
             <div className="tagFolder-grid">
-              <div>1</div>
-              <div>2</div>
-              <div>3</div>
-              <div>4</div>
-              <div>5</div>
-              <div>6</div>
-              <div>7</div>
-              <div>8</div>
-              <div>9</div>
-              <div>10</div>
-              <div>11</div>
-              <div>12</div>
+              <div>
+                <div>
+                  <AiOutlineFolder />
+                </div>
+                <div
+                  onClick={() => {
+                    // 토글
+                  }}
+                >
+                  노마드코더
+                </div>
+              </div>
+              <div>
+                <div>
+                  <AiOutlineFolder />
+                </div>
+                페드로테크
+              </div>
+              <div>
+                <div>
+                  <AiOutlineFolder />
+                </div>
+                타입스크립트
+              </div>
+              <div>
+                <div>
+                  <AiOutlineFolder />
+                </div>
+                그래프QL
+              </div>
+              <div>
+                <div>
+                  <AiOutlineFolder />
+                </div>
+                리액트
+              </div>
+              <div>
+                <div>
+                  <AiOutlineFolder />
+                </div>
+                노드JS
+              </div>
+              <div>
+                <div>
+                  <AiOutlineFolder />
+                </div>
+                창업
+              </div>
+              <div>
+                <div>
+                  <AiOutlineFolder />
+                </div>
+                몽고
+              </div>
+              <div>
+                <AiOutlineFolder />9
+              </div>
+              <div>
+                <AiOutlineFolder />
+                10
+              </div>
+              <div>
+                <AiOutlineFolder />
+                11
+              </div>
+              <div>
+                <AiOutlineFolder />
+                12
+              </div>
             </div>
           </div>
         </div>
