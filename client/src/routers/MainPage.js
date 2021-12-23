@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./MainPage.css";
 import { FaSearch } from "react-icons/fa";
-import { BiEditAlt, BiPaperPlane } from "react-icons/bi";
-import { FiPlusSquare } from "react-icons/fi";
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
 import BoxTagControler from "../components/AsideTags/BoxTagControler";
 import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
@@ -10,7 +8,6 @@ import SearchDelay from "../components/searchBar/SearchDelay";
 import AddUrlModal from "../components/Modals/AddUrlModal";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
 import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
-import EditModeRectsFunc from "../components/editModeFucs/EditModeRectsFunc";
 import EditUrlModal from "../components/Modals/EditUrlModal";
 import ShareUrlModal from "../components/Modals/ShareUrlModal";
 import Axios from "axios";
@@ -18,11 +15,11 @@ import Loader from "../components/searchBar/Loader";
 import MovingBalloon from "../components/Modals/MovingBalloon";
 import TopMore from "../components/Modals/TopMore";
 import RecentSearched from "../components/searchBar/RecentSearched";
-import { MdOutlineTag, MdTag } from "react-icons/md";
 import HashTagModal from "../components/Modals/hashtags/HashTagModal";
-import { enable } from "../functions/stopScroll";
 import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../functions/keepModalsShow";
+import LeftIcons from "../components/TopIcons/LeftIcons";
+import RightIcons from "../components/TopIcons/RightIcons";
 
 const MainPage = () => {
   // 아~빙고
@@ -42,6 +39,7 @@ const MainPage = () => {
   const [recentSearched, setRecentSearch] = useState([]);
   const [totalTags, setTotalTags] = useState([]);
   const [realTotalUrls, setRealTotalUrls] = useState([]);
+  const [deleteMode, setDeleteMode] = useState(false);
 
   const api = Axios.create({
     baseURL: `http://localhost:3001/`,
@@ -170,6 +168,13 @@ const MainPage = () => {
   };
   //url.json파일에 있는 값들 불러온 값
 
+  // const x = 100;
+  // const y = 100;
+  // const styles = {
+  //   transform: `translate(${x}px, ${y}px)`,
+  //   transition: ` 2s`,
+  // };
+
   window.document.onselectstart = (e) => {
     if (
       e.target !== document.querySelectorAll("input")[0] &&
@@ -248,67 +253,24 @@ const MainPage = () => {
                   </div>
                 </div>
               </div>
+
               <div className="share-write">
                 {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
-                <div
-                  className="addUrl-icon"
-                  onClick={() => {
-                    if (!editMode || !shareMode) {
-                      return;
-                    }
-                    document.querySelector(".addUrl-container").style.display =
-                      "block";
-                    enable();
-                  }}
-                >
-                  <FiPlusSquare />
-                </div>
-
-                <div
-                  className="editUrl-icon"
-                  onClick={(e) => {
-                    if (!shareMode) {
-                      return;
-                    }
-                    if (!BoxTags_First) {
-                      setBoxTags_First(!BoxTags_First);
-                      setBoxTags([]);
-                      document.querySelectorAll(".tag").forEach((tag) => {
-                        tag.style.opacity = "1";
-                      });
-                      return;
-                    }
-
-                    setEditMode(!editMode);
-                    EditModeRectsFunc(editMode);
-                  }}
-                >
-                  <BiEditAlt />
-                </div>
-                <div
-                  className="editHash-icon"
-                  onClick={() => {
-                    document.querySelector(
-                      ".hashtagModal-container"
-                    ).style.display = "block";
-
-                    enable();
-                  }}
-                >
-                  <MdOutlineTag />
-                </div>
-                <div
-                  className="shareUrl-icon"
-                  onClick={() => {
-                    console.log("공유기능");
-                    document.querySelector(
-                      ".shareUrl-container"
-                    ).style.display = "block";
-                    enable();
-                  }}
-                >
-                  <BiPaperPlane />
-                </div>
+                <LeftIcons
+                  editMode={editMode}
+                  deleteMode={deleteMode}
+                  setDeleteMode={setDeleteMode}
+                  getUrls={getUrls}
+                  setGetUrls={setGetUrls}
+                />
+                <RightIcons
+                  editMode={editMode}
+                  shareMode={shareMode}
+                  BoxTags_First={BoxTags_First}
+                  setBoxTags_First={setBoxTags_First}
+                  setBoxTags={setBoxTags}
+                  setEditMode={setEditMode}
+                />
               </div>
               {BoxTags_First || !editMode || !shareMode ? (
                 <>
@@ -378,10 +340,12 @@ const MainPage = () => {
                     // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
                     <>
                       <TotalUrlMap
-                        values={getUrls}
+                        getUrls={getUrls}
+                        setGetUrls={setGetUrls}
                         editMode={editMode}
                         shareMode={shareMode}
                         setMyFav={setMyFav}
+                        deleteMode={deleteMode}
                       />
                       <div ref={setTarget} className="Target-Element">
                         {isLoaded && <Loader />}

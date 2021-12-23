@@ -6,7 +6,7 @@ const EditModeRectsFunc = (editMode) => {
 
     document.querySelector(".Big_Rect > h3").innerText = "에디터모드입니다";
     document.querySelector(".Big_Rect > h3").style.color = "red";
-    document.querySelector(".editUrl-icon").style.color = "red";
+    document.querySelector(".editUrl-icon").style.color = "tomato";
 
     document.querySelectorAll(".aside-tags").forEach((aside) => {
       // console.log(aside);
