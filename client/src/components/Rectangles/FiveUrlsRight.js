@@ -1,10 +1,10 @@
 import React from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
-import { FiSmile } from "react-icons/fi";
-import { AiOutlineSmile } from "react-icons/ai";
 import Axios from "axios";
+import { MdExpandMore } from "react-icons/md";
+import { enable } from "../../functions/stopScroll";
 
-const FiveUrlsRight = ({ values, editMode, shareMode, setMyFav }) => {
+const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
   const fiveStuffs = values.slice(0, 5);
 
   return (
@@ -40,13 +40,17 @@ const FiveUrlsRight = ({ values, editMode, shareMode, setMyFav }) => {
           </div>
         );
       })}
-      {values.length >= 5 && (
-        <div className="moreBtn">
-          <FiSmile onClick={(e) => {}} />
-          <AiOutlineSmile />
-          <FiSmile />
-          <AiOutlineSmile />
-          {/* 여기 자바스크립트로 한번 누를때랑 2번 누를때 얼굴 색깔 다르게 만들기 */}
+      {values.length > 5 && (
+        <div
+          className="moreBtn"
+          onClick={() => {
+            setTopMoreWhat(false);
+            document.querySelector(".top-moreUrls-container").style.display =
+              "flex";
+            enable();
+          }}
+        >
+          <MdExpandMore />
         </div>
       )}
     </>

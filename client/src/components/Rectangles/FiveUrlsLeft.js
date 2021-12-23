@@ -1,14 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
-import styled from "styled-components";
 import { MdExpandMore } from "react-icons/md";
 import { enable } from "../../functions/stopScroll";
 import Axios from "axios";
 
-const FiveUrlsLeft = ({ values, editMode, shareMode, setMyFav }) => {
+const FiveUrlsLeft = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
   const fiveStuffs = values.slice(0, 5);
-
-  // console.log(fiveStuffs);
 
   return (
     <>
@@ -48,6 +45,7 @@ const FiveUrlsLeft = ({ values, editMode, shareMode, setMyFav }) => {
           className="moreBtn"
           onClick={(e) => {
             console.log("안녕하세여");
+            setTopMoreWhat(true);
             document.querySelector(".top-moreUrls-container").style.display =
               "flex";
             enable();

@@ -1,5 +1,6 @@
 import React from "react";
-import { BiEditAlt, BiPaperPlane } from "react-icons/bi";
+import { AiOutlineEdit, AiTwotoneEdit } from "react-icons/ai";
+import { BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
 import { MdOutlineTag } from "react-icons/md";
 import { enable } from "../../functions/stopScroll";
@@ -47,7 +48,7 @@ const RightIcons = ({
           EditModeRectsFunc(editMode);
         }}
       >
-        <BiEditAlt />
+        {editMode ? <AiOutlineEdit /> : <AiTwotoneEdit />}
       </div>
       <div
         className="editHash-icon"
@@ -64,8 +65,8 @@ const RightIcons = ({
         className="shareUrl-icon"
         onClick={() => {
           console.log("공유기능");
-          document.querySelector(".shareUrl-container").style.display = "block";
-          enable();
+          // document.querySelector(".shareUrl-container").style.display = "block";
+          // enable();
         }}
       >
         <BiPaperPlane />

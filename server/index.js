@@ -76,7 +76,6 @@ app.get("/totalURL", async (req, res) => {
   var totalURL = [];
   var leftURL = [];
   var rightURL = [];
-  var assignedTags = [];
   var recentSearched = [];
 
   await db.Urls.find({})
@@ -94,14 +93,12 @@ app.get("/totalURL", async (req, res) => {
       leftURL = response;
     });
 
-  await db.Urls.find({
-    $expr: { $gte: [{ $toDouble: "$url_clickedNumber" }, 1] },
-  })
-    .sort({ url_clickedNumber: -1 })
-    .collation({ locale: "en_US", numericOrdering: true })
-    .limit(6)
+  await db.Urls.find({})
+    .sort({ url_updatedDate: -1 })
+    .limit(20)
     .then((response) => {
       rightURL = response;
+      console.log(rightURL);
     });
 
   await db.Urls.find({ "url_search.url_searchClicked": 1 })

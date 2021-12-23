@@ -1,7 +1,12 @@
 import React from "react";
 import { IoArrowBack } from "react-icons/io5";
-import { AiOutlineFolder, AiOutlinePlusSquare } from "react-icons/ai";
+import {
+  AiOutlineEdit,
+  AiOutlineFolder,
+  AiOutlinePlusSquare,
+} from "react-icons/ai";
 import { BiEditAlt } from "react-icons/bi";
+import { FiPlusSquare } from "react-icons/fi";
 import styled from "styled-components";
 const Page2 = () => {
   const Page2Wrap = styled.div`
@@ -16,13 +21,16 @@ const Page2 = () => {
 
     .addFolder {
     }
+    .header-Container {
+      position: relative;
+    }
 
     .hash-btns {
       position: absolute;
       display: flex;
 
-      right: 10px;
-      gap: 5px;
+      right: 15px;
+      gap: 2px;
     }
 
     .hash-btns > div {
@@ -31,7 +39,8 @@ const Page2 = () => {
       justify-contents: center;
     }
     .hash-btns > div > svg {
-      font-size: 30px;
+      font-size: 25px;
+      padding-right: 5px;
       cursor: pointer;
     }
 
@@ -69,10 +78,10 @@ const Page2 = () => {
             </div>
             <div className="hash-btns">
               <div className="addFolder">
-                <AiOutlinePlusSquare />
+                <FiPlusSquare />
               </div>
               <div className="editFolder">
-                <BiEditAlt />
+                <AiOutlineEdit />
               </div>
             </div>
           </div>

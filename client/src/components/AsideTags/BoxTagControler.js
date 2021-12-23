@@ -1,10 +1,10 @@
-const BoxTagControler = (
+const BoxTagControler = ({
   e,
   BoxTags_First,
   setBoxTags_First,
   BoxTags,
-  setBoxTags
-) => {
+  setBoxTags,
+}) => {
   var currentList = [];
   // console.log(e.target);
 
