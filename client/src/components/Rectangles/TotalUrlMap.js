@@ -3,6 +3,7 @@ import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import { getMouseLocation, grabNowValue } from "./movingModalFuncs";
 import Axios from "axios";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
+import { whenIclickUrl } from "./FuncTotalUrlMap";
 
 const TotalUrlMap = ({
   getUrls,
@@ -12,24 +13,24 @@ const TotalUrlMap = ({
   setMyFav,
   deleteMode,
 }) => {
-  const [deleteList, setDeleteList] = useState([]);
+  // const [deleteList, setDeleteList] = useState([]);
 
-  const TrafficLight = ({
-    totalList: list,
-    setTotalList: setList,
-    clickedUrl: value,
-  }) => {
-    if (!list.includes(value._id)) {
-      setList([...list, value._id]);
-    } else {
-      setList(
-        list.filter((val) => {
-          return val !== value._id;
-        })
-      );
-    }
-    console.log(list);
-  };
+  // const TrafficLight = ({
+  //   totalList: list,
+  //   setTotalList: setList,
+  //   clickedUrl: value,
+  // }) => {
+  //   if (!list.includes(value._id)) {
+  //     setList([...list, value._id]);
+  //   } else {
+  //     setList(
+  //       list.filter((val) => {
+  //         return val !== value._id;
+  //       })
+  //     );
+  //   }
+  //   console.log(list);
+  // };
 
   window.onscroll = () => {
     const circle = document.querySelector(".detail-container");
@@ -43,43 +44,6 @@ const TotalUrlMap = ({
     grabNowValue.cancel();
   };
 
-  const DeleteMode = ({ oneUrl: value }) => {
-    value.clicked = !value.clicked;
-    value.clicked === undefined && (value.clicked = true);
-
-    // TrafficLight({
-    //   totalList: deleteList,
-    //   setTotalList: setDeleteList,
-    //   clickedUrl: value,
-    // });
-
-    setGetUrls(
-      getUrls.map((url) => {
-        return url._id === value._id ? value : url;
-      })
-    );
-  };
-
-  const FuncEditMode = ({ oneUrl: value }) => {
-    console.log("에디터모드입니다");
-    if (deleteMode) {
-      DeleteMode({ oneUrl: value });
-    } else {
-      EditMode_ModalFunc(value);
-      grabNowValue.cancel();
-      setMyFav(value.url_likedUrl === 1);
-    }
-  };
-
-  const NormalMode = ({ oneUrl: value }) => {
-    window.open(value.url);
-    Axios.put("http://localhost:3001/clickedURLInBox", { url: value });
-  };
-
-  const whenIclickUrl = ({ oneUrl: value }) => {
-    !editMode ? FuncEditMode({ oneUrl: value }) : NormalMode({ oneUrl: value });
-  };
-
   return (
     <>
       {getUrls.map((value) => {
@@ -89,7 +53,14 @@ const TotalUrlMap = ({
               className="T-url"
               key={value._id}
               onClick={() => {
-                whenIclickUrl({ oneUrl: value });
+                whenIclickUrl({
+                  oneUrl: value,
+                  deleteMode,
+                  editMode,
+                  setMyFav,
+                  setGetUrls: setGetUrls,
+                  getUrls: getUrls,
+                });
               }}
               onMouseLeave={onMouseLeave}
               onMouseEnter={() => {
@@ -132,3 +103,36 @@ export default TotalUrlMap;
 // newDiv.className = "hello";
 // newDiv.appendChild(newText);
 // document.querySelector(".text-three-container").appendChild(newDiv);
+
+// ============================================================ url온클릭 이벤트 START ============================================================
+
+// const DeleteMode = ({ oneUrl: value }) => {
+//   value.clicked = !value.clicked;
+//   value.clicked === undefined && (value.clicked = true);
+//   setGetUrls(
+//     getUrls.map((url) => {
+//       return url._id === value._id ? value : url;
+//     })
+//   );
+// };
+
+// const FuncEditMode = ({ oneUrl: value }) => {
+//   console.log("에디터모드입니다");
+//   if (deleteMode) {
+//     DeleteMode({ oneUrl: value });
+//   } else {
+//     EditMode_ModalFunc(value);
+//     grabNowValue.cancel();
+//     setMyFav(value.url_likedUrl === 1);
+//   }
+// };
+
+// const NormalMode = ({ oneUrl: value }) => {
+//   window.open(value.url);
+//   Axios.put("http://localhost:3001/clickedURLInBox", { url: value });
+// };
+
+// const whenIclickUrl = ({ oneUrl: value }) => {
+//   !editMode ? FuncEditMode({ oneUrl: value }) : NormalMode({ oneUrl: value });
+// };
+// ============================================================ url온클릭 이벤트 END ============================================================

@@ -244,6 +244,9 @@ const MainPage = () => {
                   setDeleteMode={setDeleteMode}
                   getUrls={getUrls}
                   setGetUrls={setGetUrls}
+                  realTotalUrls={realTotalUrls}
+                  setRealTotalUrls={setRealTotalUrls}
+                  BoxTags_First={BoxTags_First}
                 />
                 <RightIcons
                   editMode={editMode}
@@ -252,9 +255,11 @@ const MainPage = () => {
                   setBoxTags_First={setBoxTags_First}
                   setBoxTags={setBoxTags}
                   setEditMode={setEditMode}
+                  setDeleteMode={setDeleteMode}
+                  deleteMode={deleteMode}
                 />
               </div>
-              {BoxTags_First || !editMode || !shareMode ? (
+              {BoxTags_First ? (
                 <>
                   <div
                     className="Rectangle left-top RectColor"
@@ -312,13 +317,19 @@ const MainPage = () => {
                 {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
                 {/* 전체 URL이라는 h3가 HashTag라고 바뀜  */}
                 {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
-                {BoxTags_First || !editMode || !shareMode ? (
-                  <h3>전체 URL</h3>
+                {editMode ? (
+                  BoxTags_First ? (
+                    <h3>전체 URL</h3>
+                  ) : (
+                    <h3>HashTag</h3>
+                  )
+                ) : BoxTags_First ? (
+                  <h3>에디터모드입니다</h3>
                 ) : (
                   <h3>HashTag</h3>
                 )}
                 <div className="text-three-container">
-                  {BoxTags_First || !editMode || !shareMode ? (
+                  {BoxTags_First ? (
                     // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
                     <>
                       <TotalUrlMap
@@ -335,7 +346,14 @@ const MainPage = () => {
                     </>
                   ) : (
                     // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
-                    <UrlsByHashTag values={realTotalUrls} BoxTags={BoxTags} />
+                    <UrlsByHashTag
+                      realTotalUrls={realTotalUrls}
+                      setRealTotalUrls={setRealTotalUrls}
+                      BoxTags={BoxTags}
+                      editMode={editMode}
+                      deleteMode={deleteMode}
+                      setMyFav={setMyFav}
+                    />
                   )}
                 </div>
               </div>
@@ -358,6 +376,7 @@ const MainPage = () => {
               </div>
             </div>
             {/* ======================================== 날개 END ======================================== */}
+            {/* ======================================== 모달들 START ======================================== */}
             <div className="addUrl-container">
               <AddUrlModal getUrls={getUrls} setGetUrls={setGetUrls} />
             </div>
@@ -398,6 +417,7 @@ const MainPage = () => {
                 setTotalTags={setTotalTags}
               />
             </div>
+            {/* ======================================== 모달들 END ======================================== */}
           </div>
           <MovingBalloon />
         </>

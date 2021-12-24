@@ -1,32 +1,81 @@
-import React from "react";
+import React, { useEffect, useMemo, useCallback } from "react";
 import { AiFillDelete, AiOutlineDelete } from "react-icons/ai";
+import { connect } from "react-redux";
+import { actionCreators } from "../../store.js";
+const LeftIcons = (props) => {
+  const {
+    editMode,
+    deleteMode,
+    setDeleteMode,
+    getUrls,
+    setGetUrls,
+    realTotalUrls,
+    setRealTotalUrls,
+    BoxTags_First,
+    state,
+  } = props;
 
-const LeftIcons = ({
-  editMode,
-  deleteMode,
-  setDeleteMode,
-  getUrls,
-  setGetUrls,
-}) => {
-  const ClickTotal = ({
-    urls_you_wanna_select: getUrls,
-    set_urls_you_wanna_select: setGetUrls,
-  }) => {
-    getUrls.forEach((val) => {
-      val.clicked = true;
-    });
-    setGetUrls([...getUrls]);
+  console.log("props테스트");
+  useEffect(() => console.log(state), [state]);
+  const ClickTotal = () => {
+    if (!BoxTags_First) {
+      realTotalUrls.forEach((val) => {
+        state.includes(val._id) && (val.clicked = true);
+      });
+      setRealTotalUrls([...realTotalUrls]);
+    } else {
+      getUrls.forEach((val) => {
+        val.clicked = true;
+      });
+      setGetUrls([...getUrls]);
+    }
   };
 
-  const ClickOffUrls = ({
-    urls_you_wanna_select_off: getUrls,
-    set_urls_you_wanna_select_off: setGetUrls,
-  }) => {
+  const ClickOffUrls = () => {
+    if (!BoxTags_First) {
+      realTotalUrls.forEach((val) => {
+        val.clicked = false;
+      });
+      setRealTotalUrls([...realTotalUrls]);
+    } else {
+      getUrls.forEach((val) => {
+        val.clicked = false;
+      });
+      setGetUrls([...getUrls]);
+    }
+  };
+
+  const AllReset = useCallback(() => {
+    realTotalUrls.forEach((val) => {
+      val.clicked = false;
+    });
+    setRealTotalUrls([...realTotalUrls]);
     getUrls.forEach((val) => {
       val.clicked = false;
     });
     setGetUrls([...getUrls]);
-  };
+  }, [realTotalUrls, getUrls]);
+
+  useEffect(() => {
+    !deleteMode && AllReset();
+  }, [deleteMode]);
+
+  const ResetTags = useCallback(() => {
+    realTotalUrls.forEach((val) => {
+      val.clicked = false;
+    });
+  }, [realTotalUrls]);
+
+  const ResetBigRect = useCallback(() => {
+    getUrls.forEach((val) => {
+      val.clicked = false;
+    });
+  }, [getUrls]);
+
+  useEffect(() => {
+    !editMode && deleteMode && BoxTags_First && ResetTags();
+    !editMode && deleteMode && !BoxTags_First && ResetBigRect();
+  }, [BoxTags_First]);
 
   const TrashCanSlideStyle = {
     display: "flex",
@@ -35,6 +84,7 @@ const LeftIcons = ({
     opacity: "1",
   };
   const style2 = {};
+
   return (
     <div className="left-icons">
       {!editMode && (
@@ -60,27 +110,10 @@ const LeftIcons = ({
               className="delete-mode-click-container"
               style={deleteMode ? TrashCanSlideStyle : style2}
             >
-              <div
-                className="delete-mode-click-total"
-                onClick={() => {
-                  ClickTotal({
-                    urls_you_wanna_select: getUrls,
-                    set_urls_you_wanna_select: setGetUrls,
-                  });
-                }}
-              >
+              <div className="delete-mode-click-total" onClick={ClickTotal}>
                 전체선택
               </div>
-              <div
-                onClick={() => {
-                  ClickOffUrls({
-                    urls_you_wanna_select_off: getUrls,
-                    set_urls_you_wanna_select_off: setGetUrls,
-                  });
-                }}
-              >
-                선택취소
-              </div>
+              <div onClick={ClickOffUrls}>선택취소</div>
               <div
                 className="delete--mode--delete--total"
                 onClick={() => {
@@ -99,4 +132,14 @@ const LeftIcons = ({
   );
 };
 
-export default LeftIcons;
+const mapStateToProps = (state, ownProps) => {
+  // console.log("ownProps");
+  // console.log(ownProps);
+  return { state };
+};
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    addToDo: (text) => dispatch(actionCreators.addToDo(text)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(LeftIcons);

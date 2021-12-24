@@ -16,15 +16,15 @@ const AsideTag = ({
           <span
             className="tag"
             onClick={(e) => {
-              if (editMode) {
-                BoxTagControler({
-                  e,
-                  BoxTags_First,
-                  setBoxTags_First,
-                  BoxTags,
-                  setBoxTags,
-                });
-              }
+              // if (editMode) {
+              BoxTagControler({
+                e,
+                BoxTags_First,
+                setBoxTags_First,
+                BoxTags,
+                setBoxTags,
+              });
+              // }
             }}
           >
             {tag.name}

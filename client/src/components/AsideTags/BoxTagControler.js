@@ -6,7 +6,6 @@ const BoxTagControler = ({
   setBoxTags,
 }) => {
   var currentList = [];
-  // console.log(e.target);
 
   // ====================================== 처음에 한번 누르면 전체 투명도 낮아지는 거 START ======================================
 
@@ -46,4 +45,11 @@ const BoxTagControler = ({
   // ====================================== 선택된거가 하나도 없으면 전체 색깔 찐하게 END ======================================
 };
 
+export const RefreshBtn = ({ setBoxTags_First, setBoxTags }) => {
+  document.querySelectorAll(".tag").forEach((one) => {
+    one.style.opacity = "1";
+  });
+  setBoxTags_First(true);
+  setBoxTags([]);
+};
 export default BoxTagControler;

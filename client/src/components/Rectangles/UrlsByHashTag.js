@@ -1,22 +1,38 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
+import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import {
   grabNowValue,
   getMouseLocation,
   onMouseLeave,
 } from "./movingModalFuncs";
+import { whenIclickUrl } from "./FuncTotalUrlMap";
+import { connect } from "react-redux";
+import { actionCreators } from "../../store";
 
-const UrlsByHashTag = ({ values, BoxTags }) => {
-  // console.log(BoxTags);
-  // console.log(totalUrls);
-
+const UrlsByHashTag = ({
+  realTotalUrls,
+  setRealTotalUrls,
+  BoxTags,
+  editMode,
+  deleteMode,
+  setMyFav,
+  state,
+  addUrls,
+}) => {
   var showThisList = [];
+  let onlyId = [];
   //해쉬태그는 여러개고 하나만 포함되어 있기만 하면 돼
   //filteredSpots = spots.filter((spot) => filtered.every((v) => spot.S_AMENITY.includes(v)));
-  showThisList = values.filter((value) =>
+  showThisList = realTotalUrls.filter((value) =>
     BoxTags.some((v) => value.url_hashTags.includes(v))
   );
+  showThisList.forEach((val) => {
+    onlyId.push(val._id);
+  });
 
-  // console.log(showThisList);
+  useEffect(() => {
+    addUrls(onlyId);
+  }, [BoxTags]);
 
   return (
     <>
@@ -27,7 +43,15 @@ const UrlsByHashTag = ({ values, BoxTags }) => {
               className="T-url"
               key={value.id}
               onClick={() => {
-                window.open(value.url);
+                whenIclickUrl({
+                  oneUrl: value,
+                  deleteMode,
+                  editMode,
+                  setMyFav,
+                  setGetUrls: setRealTotalUrls,
+                  getUrls: realTotalUrls,
+                  where: "UrlByHashTag",
+                });
               }}
               onMouseEnter={() => {
                 grabNowValue(value);
@@ -39,6 +63,17 @@ const UrlsByHashTag = ({ values, BoxTags }) => {
                 e.preventDefault();
               }}
             >
+              {!editMode && deleteMode && (
+                <>
+                  <div className="select-box">
+                    {value.clicked ? (
+                      <MdCheckBox />
+                    ) : (
+                      <MdCheckBoxOutlineBlank />
+                    )}
+                  </div>
+                </>
+              )}
               <div className="valueId">{value.url_id}</div>
               <div className="just-bar">|</div>
               <div className="valueTitle">{value.url_title}</div>
@@ -50,4 +85,12 @@ const UrlsByHashTag = ({ values, BoxTags }) => {
   );
 };
 
-export default UrlsByHashTag;
+const mapStateToProps = (state, ownProps) => {
+  return { state };
+};
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    addUrls: (url) => dispatch(actionCreators.addToDo(url)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(UrlsByHashTag);
