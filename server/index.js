@@ -98,7 +98,7 @@ app.get("/totalURL", async (req, res) => {
     .limit(20)
     .then((response) => {
       rightURL = response;
-      console.log(rightURL);
+      // console.log(rightURL);
     });
 
   await db.Urls.find({ "url_search.url_searchClicked": 1 })

@@ -14,61 +14,54 @@ const RightIcons = ({
   setBoxTags,
   setEditMode,
 }) => {
+  const AddIconOnClick = () => {
+    if (!editMode || !shareMode) {
+      return;
+    }
+    document.querySelector(".addUrl-container").style.display = "block";
+    enable();
+  };
+  const EditIconOnClick = () => {
+    if (!shareMode) {
+      return;
+    }
+    if (!BoxTags_First) {
+      setBoxTags_First(!BoxTags_First);
+      setBoxTags([]);
+      document.querySelectorAll(".tag").forEach((tag) => {
+        tag.style.opacity = "1";
+      });
+      return;
+    }
+
+    setEditMode(!editMode);
+    EditModeRectsFunc(editMode);
+  };
+
+  const HashIconOnClick = () => {
+    document.querySelector(".hashtagModal-container").style.display = "block";
+    enable();
+  };
+  const ShareIconOnClick = () => {
+    console.log("공유기능");
+    // document.querySelector(".shareUrl-container").style.display = "block";
+    // enable();
+  };
   return (
     <div className="right-icons">
-      <div
-        className="addUrl-icon"
-        onClick={() => {
-          if (!editMode || !shareMode) {
-            return;
-          }
-          document.querySelector(".addUrl-container").style.display = "block";
-          enable();
-        }}
-      >
+      <div className="addUrl-icon" onClick={AddIconOnClick}>
         <FiPlusSquare />
       </div>
 
-      <div
-        className="editUrl-icon"
-        onClick={(e) => {
-          if (!shareMode) {
-            return;
-          }
-          if (!BoxTags_First) {
-            setBoxTags_First(!BoxTags_First);
-            setBoxTags([]);
-            document.querySelectorAll(".tag").forEach((tag) => {
-              tag.style.opacity = "1";
-            });
-            return;
-          }
-
-          setEditMode(!editMode);
-          EditModeRectsFunc(editMode);
-        }}
-      >
+      <div className="editUrl-icon" onClick={EditIconOnClick}>
         {editMode ? <AiOutlineEdit /> : <AiTwotoneEdit />}
       </div>
-      <div
-        className="editHash-icon"
-        onClick={() => {
-          document.querySelector(".hashtagModal-container").style.display =
-            "block";
 
-          enable();
-        }}
-      >
+      <div className="editHash-icon" onClick={HashIconOnClick}>
         <MdOutlineTag />
       </div>
-      <div
-        className="shareUrl-icon"
-        onClick={() => {
-          console.log("공유기능");
-          // document.querySelector(".shareUrl-container").style.display = "block";
-          // enable();
-        }}
-      >
+
+      <div className="shareUrl-icon" onClick={ShareIconOnClick}>
         <BiPaperPlane />
       </div>
     </div>

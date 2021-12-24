@@ -183,6 +183,13 @@ const MainPage = () => {
   // };
   StopDrag();
 
+  //
+  const bcTopRect = "#FFE4C4";
+  const emptyStyle = {};
+  const MkColorTopRect = {
+    backgroundColor: bcTopRect,
+  };
+
   return (
     <>
       {getUrls.length === 0 ? (
@@ -249,7 +256,12 @@ const MainPage = () => {
               </div>
               {BoxTags_First || !editMode || !shareMode ? (
                 <>
-                  <div className="Rectangle left-top RectColor">
+                  <div
+                    className="Rectangle left-top RectColor"
+                    style={
+                      BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                    }
+                  >
                     <h3>즐겨찾기 </h3>
                     <div className="text-container">
                       <FiveUrlsLeft
@@ -260,7 +272,12 @@ const MainPage = () => {
                       />
                     </div>
                   </div>
-                  <div className="Rectangle right-top RectColor">
+                  <div
+                    className="Rectangle right-top RectColor"
+                    style={
+                      BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                    }
+                  >
                     <h3>최근기록</h3>
                     <div className="text-container">
                       <FiveUrlsRight
