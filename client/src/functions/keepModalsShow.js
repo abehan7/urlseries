@@ -6,7 +6,9 @@ export const clickOutSide = (e, clickedSearchInput, setClickedSearchInput) => {
     target === document.querySelector(".Search-balloon") ||
     target === document.querySelector(".Search-balloon-title") ||
     target === document.querySelector(".notSearched") ||
-    target === document.querySelector(".Searched-Stuffs-Container")
+    target === document.querySelector(".Searched-Stuffs-Container") ||
+    target === document.querySelector(".delete-recent-searched") ||
+    target === document.querySelector(".recent-serached-title")
   ) {
     return;
   }

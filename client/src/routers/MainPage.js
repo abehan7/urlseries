@@ -173,17 +173,10 @@ const MainPage = () => {
       console.log(clickedSearchInput);
     }
   };
-  //url.json파일에 있는 값들 불러온 값
 
-  // const x = 100;
-  // const y = 100;
-  // const styles = {
-  //   transform: `translate(${x}px, ${y}px)`,
-  //   transition: ` 2s`,
-  // };
   StopDrag();
 
-  //
+  // editmode일 때 스타일 사각형에 색깔 변하게하기
   const bcTopRect = "#FFE4C4";
   const emptyStyle = {};
   const MkColorTopRect = {
@@ -215,7 +208,10 @@ const MainPage = () => {
                 <FaSearch />
 
                 <div className="Search-balloon">
-                  <div className="Search-balloon-title">최근 검색 항목</div>
+                  <div className="Search-balloon-title">
+                    <div className="recent-serached-title">최근 검색 항목</div>
+                    <div className="delete-recent-searched">전체삭제</div>
+                  </div>
 
                   <div className="Searched-Stuffs-Container">
                     <RecentSearched

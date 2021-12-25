@@ -105,6 +105,7 @@ app.get("/totalURL", async (req, res) => {
     .sort({
       "url_search.url_searchedDate": -1,
     })
+    .limit(20)
     .then((response) => {
       recentSearched = response;
     });
