@@ -1,19 +1,7 @@
 {
-  "url": {
-    "_id": "61ae230e5e92a9f7c55a9c63",
-    "url": "https://www.youtube.com/watch?v=ZMDbhYOLKF4&pp=ugMICgJrbxABGAE%3D",
-    "url_hashTags": ["#mysql", "#youtube", "#pedroTech"],
-    "url_id": 5,
-    "url_title": "Pedrotech Mysql",
-    "url_clickedNumber": 4,
-    "url_likedUrl": 0,
-    "url_memo": "",
-    "url_firstDate": { "$date": "2021-12-11T23:04:16.520Z" },
-    "url_updatedDate": { "$date": "2021-12-11T23:04:16.520Z" },
-    "user_id": "hanjk123@gmail.com",
-    "url_search": {
-      "url_searchClicked": 1,
-      "url_searchedDate": { "$date": "2021-12-13T08:46:22.432Z" }
-    }
-  }
+  "_id": "123123123123fsd",
+  "folder_name": "페드로테크",
+  "folder_contents": ["pedro", "pedrotech", "페드로", "페드로테크"],
+  "folder_date_inserted": "12/25",
+  "user_name": "hanjk123@gmail.com"
 }

@@ -36,13 +36,17 @@ const getCurrentDate = () => {
 
 // [1] ==================================== 테스트용도 get ====================================
 app.get("/hithere", async (req, res) => {
-  await db.Urls.find({ url_id: 5 })
-    .populate({ path: "hashtags_id" })
-    .exec((err, data) => {
-      if (err) console.log(err);
-      console.log(data[0].hashtags_id);
-      res.json(data);
-    });
+  // 맨 처음에 회원가입 할 때 이걸로 유저들꺼 만든 다음에 hi2에 있는 걸로 insert하는 형식으로 하면 될 듯
+  const Folder = new db.Folders({
+    user_id: "hanjk123@gmail.com",
+    folder_name: "페드로테크",
+    folder_contents: ["#페드로", "#페드로테크", "#pedro", "#pedrotech"],
+  });
+  // console.log(Folder);
+
+  Folder.save();
+  console.log("folder inserted!");
+  res.json(Folder);
 });
 
 // [2] ==================================== 해쉬태그에서 사용할 전체url get ====================================

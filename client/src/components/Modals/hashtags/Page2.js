@@ -8,7 +8,8 @@ import {
 import { BiEditAlt } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
 import styled from "styled-components";
-const Page2 = () => {
+import { disable } from "../../../functions/stopScroll";
+const Page2 = ({ setNowPage }) => {
   const Page2Wrap = styled.div`
     .tagFolder-window {
       overflow: hidden;
@@ -61,8 +62,17 @@ const Page2 = () => {
       padding: 0;
       margin: 0;
       cursor: pointer;
+
       // border-right: 1px solid black;
       // border-bottom: 1px solid black;
+    }
+
+    .tagFolder-grid > div path {
+      // color: #fbb917;
+    }
+
+    .folder-clicked {
+      color: #fbb917;
     }
   `;
   return (
@@ -70,16 +80,25 @@ const Page2 = () => {
       <Page2Wrap>
         <div className="modal-window tagFolder-window">
           <div className="header-Container">
-            <div className="close-area" onClick={() => {}}>
+            <div
+              className="close-area"
+              onClick={() => {
+                document.querySelector(
+                  ".hashtagModal-container"
+                ).style.display = "none";
+                setNowPage((val) => val - 1);
+                disable();
+              }}
+            >
               <IoArrowBack />
             </div>
             <div className="title">
               <h2>TagFolder</h2>
             </div>
             <div className="hash-btns">
-              <div className="addFolder">
+              {/* <div className="addFolder">
                 <FiPlusSquare />
-              </div>
+              </div> */}
               <div className="editFolder">
                 <AiOutlineEdit />
               </div>
@@ -89,16 +108,14 @@ const Page2 = () => {
           <div className="content folder-content">
             <div className="tagFolder-grid">
               <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
                 <div
-                  onClick={() => {
-                    // 토글
+                  onClick={(e) => {
+                    e.target.classList.toggle("folder-clicked");
                   }}
                 >
-                  노마드코더
+                  <AiOutlineFolder />
                 </div>
+                <div>노마드코더</div>
               </div>
               <div>
                 <div>

@@ -6,8 +6,9 @@ import {
   onMouseLeave,
 } from "./movingModalFuncs";
 import { whenIclickUrl } from "./FuncTotalUrlMap";
-import { connect } from "react-redux";
-import { actionCreators } from "../../store";
+// import { actionCreators } from "../../store";
+import { useDispatch } from "react-redux";
+import { actionCreators2 } from "../../store/reducers/filteredTags.js";
 
 const UrlsByHashTag = ({
   realTotalUrls,
@@ -19,6 +20,11 @@ const UrlsByHashTag = ({
   state,
   addUrls,
 }) => {
+  const dispatch = useDispatch();
+  // const { value } = useSelector(state => state.value)
+  const addUrls2 = (url) => {
+    dispatch(actionCreators2.addFiltered(url));
+  };
   var showThisList = [];
   let onlyId = [];
   //해쉬태그는 여러개고 하나만 포함되어 있기만 하면 돼
@@ -31,7 +37,8 @@ const UrlsByHashTag = ({
   });
 
   useEffect(() => {
-    addUrls(onlyId);
+    // addUrls(onlyId);
+    addUrls2(onlyId);
   }, [BoxTags]);
 
   return (
@@ -85,12 +92,4 @@ const UrlsByHashTag = ({
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return { state };
-};
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    addUrls: (url) => dispatch(actionCreators.addToDo(url)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(UrlsByHashTag);
+export default UrlsByHashTag;

@@ -1,7 +1,8 @@
 import React, { useEffect, useMemo, useCallback } from "react";
 import { AiFillDelete, AiOutlineDelete } from "react-icons/ai";
-import { connect } from "react-redux";
-import { actionCreators } from "../../store.js";
+import { useSelector } from "react-redux";
+
+// import { actionCreators } from "../../store.js";
 const LeftIcons = (props) => {
   const {
     editMode,
@@ -12,15 +13,20 @@ const LeftIcons = (props) => {
     realTotalUrls,
     setRealTotalUrls,
     BoxTags_First,
-    state,
   } = props;
 
-  console.log("props테스트");
-  useEffect(() => console.log(state), [state]);
+  const { edit } = useSelector((state) => state);
+
+  // console.log("props테스트");
+  // console.log(edit);
+  useEffect(() => {
+    console.log("props테스트");
+    console.log(edit);
+  }, [edit]);
   const ClickTotal = () => {
     if (!BoxTags_First) {
       realTotalUrls.forEach((val) => {
-        state.includes(val._id) && (val.clicked = true);
+        edit.includes(val._id) && (val.clicked = true);
       });
       setRealTotalUrls([...realTotalUrls]);
     } else {
@@ -132,14 +138,15 @@ const LeftIcons = (props) => {
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
-  // console.log("ownProps");
-  // console.log(ownProps);
-  return { state };
-};
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    addToDo: (text) => dispatch(actionCreators.addToDo(text)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(LeftIcons);
+export default LeftIcons;
+
+// const mapStateToProps = (state, ownProps) => {
+//   // console.log("ownProps");
+//   // console.log(ownProps);
+//   return { state };
+// };
+// const mapDispatchToProps = (dispatch, ownProps) => {
+//   return {
+//     addToDo: (text) => dispatch(actionCreators.addToDo(text)),
+//   };
+// };

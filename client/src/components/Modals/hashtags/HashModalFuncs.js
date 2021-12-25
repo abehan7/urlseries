@@ -29,12 +29,12 @@ export const modify = (setTotalTags, totalTags, assignedTags, setTagSearch) => {
   setTagSearch("");
 };
 
-export const closeFunc = (
+export const closeFunc = ({
   setAssignedTags,
   totalTags,
   setTotalTags,
-  setTagSearch
-) => {
+  setTagSearch,
+}) => {
   document.querySelector(".hashtagModal-container").style.display = "none";
 
   setAssignedTags(
