@@ -1,4 +1,5 @@
 import React from "react";
+import { connect, useSelector } from "react-redux";
 
 const LeftItem = ({
   tagSearch,
@@ -7,6 +8,34 @@ const LeftItem = ({
   totalTags,
   toggleFunc,
 }) => {
+  // ==================== 리덕스 START ====================
+  const {
+    page3Storage: { nowPage2 },
+  } = useSelector((state) => state);
+  // ==================== 리덕스 END ====================
+
+  // ========================== 색깔 칠하는 className START==========================
+  const totalMapColor = ({ val }) => {
+    switch (nowPage2) {
+      case 1:
+        return val.assigned === 1
+          ? "oneHash total-oneHash clicked"
+          : "oneHash total-oneHash";
+      case 3:
+        return val.folderAssigned === 1
+          ? "oneHash total-oneHash clicked"
+          : "oneHash total-oneHash";
+      default:
+        return "oneHash total-oneHash";
+    }
+    // if (nowPage2 === 1) {
+    //   return val.assigned === 1
+    //     ? "oneHash total-oneHash clicked"
+    //     : "oneHash total-oneHash";
+    // }
+  };
+  // ========================== 색깔 칠하는 className END==========================
+
   return (
     <div className="LeftItem">
       <div className="searchTags-Container">
@@ -29,11 +58,7 @@ const LeftItem = ({
                 return (
                   <div
                     key={i}
-                    className={
-                      val.assigned === 1
-                        ? "oneHash total-oneHash clicked"
-                        : "oneHash total-oneHash"
-                    }
+                    className={totalMapColor({ val })}
                     onClick={(e) => {
                       toggleFunc(e, val);
                     }}
@@ -49,11 +74,7 @@ const LeftItem = ({
                 return (
                   <div
                     key={i}
-                    className={
-                      val.assigned === 1
-                        ? "oneHash total-oneHash clicked"
-                        : "oneHash total-oneHash"
-                    }
+                    className={totalMapColor({ val })}
                     onClick={(e) => {
                       toggleFunc(e, val);
                     }}
@@ -70,4 +91,7 @@ const LeftItem = ({
   );
 };
 
-export default LeftItem;
+const mapStateToProps = (state, ownProps) => {
+  return { state };
+};
+export default connect(mapStateToProps)(LeftItem);

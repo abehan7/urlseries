@@ -497,3 +497,14 @@ db.hashtags.find().forEach((tag) => {
     );
   });
 });
+
+// 쿼리 저장해놓기
+await db.Urls.find({
+  $expr: { $gte: [{ $toDouble: "$url_clickedNumber" }, 1] },
+})
+  .sort({ url_clickedNumber: -1 })
+  .collation({ locale: "en_US", numericOrdering: true })
+  .limit(20)
+  .then((response) => {
+    rightURL = response;
+  });

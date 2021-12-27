@@ -1,9 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
-import { AiOutlineFolder, AiOutlinePlusSquare } from "react-icons/ai";
-import { BiEditAlt } from "react-icons/bi";
+import { AiOutlineEdit } from "react-icons/ai";
 import styled from "styled-components";
-const Page2 = () => {
+import { disable } from "../../../functions/stopScroll";
+import Page2GridItem from "./Page2GridItem";
+import { useSelector } from "react-redux";
+const Page2 = ({ setNowPage }) => {
+  const [nowFolder, setNowFolder] = useState(0);
+  const {
+    page3Storage: { folderItems },
+  } = useSelector((state) => state);
+
   const Page2Wrap = styled.div`
     .tagFolder-window {
       overflow: hidden;
@@ -16,13 +23,16 @@ const Page2 = () => {
 
     .addFolder {
     }
+    .header-Container {
+      position: relative;
+    }
 
     .hash-btns {
       position: absolute;
       display: flex;
 
-      right: 10px;
-      gap: 5px;
+      right: 15px;
+      gap: 2px;
     }
 
     .hash-btns > div {
@@ -31,7 +41,8 @@ const Page2 = () => {
       justify-contents: center;
     }
     .hash-btns > div > svg {
-      font-size: 30px;
+      font-size: 25px;
+      padding-right: 5px;
       cursor: pointer;
     }
 
@@ -52,102 +63,61 @@ const Page2 = () => {
       padding: 0;
       margin: 0;
       cursor: pointer;
+
       // border-right: 1px solid black;
       // border-bottom: 1px solid black;
     }
+
+    .tagFolder-grid > div path {
+      // color: #fbb917;
+    }
+
+    .folder-clicked {
+      color: #fbb917;
+    }
   `;
+
   return (
     <>
       <Page2Wrap>
         <div className="modal-window tagFolder-window">
           <div className="header-Container">
-            <div className="close-area" onClick={() => {}}>
+            <div
+              className="close-area"
+              onClick={() => {
+                document.querySelector(
+                  ".hashtagModal-container"
+                ).style.display = "none";
+                setNowPage((val) => val - 1);
+                disable();
+              }}
+            >
               <IoArrowBack />
             </div>
             <div className="title">
               <h2>TagFolder</h2>
             </div>
             <div className="hash-btns">
-              <div className="addFolder">
-                <AiOutlinePlusSquare />
-              </div>
+              {/* <div className="addFolder">
+                <FiPlusSquare />
+              </div> */}
               <div className="editFolder">
-                <BiEditAlt />
+                <AiOutlineEdit />
               </div>
             </div>
           </div>
 
           <div className="content folder-content">
             <div className="tagFolder-grid">
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                <div
-                  onClick={() => {
-                    // 토글
-                  }}
-                >
-                  노마드코더
-                </div>
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                페드로테크
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                타입스크립트
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                그래프QL
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                리액트
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                노드JS
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                창업
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                몽고
-              </div>
-              <div>
-                <AiOutlineFolder />9
-              </div>
-              <div>
-                <AiOutlineFolder />
-                10
-              </div>
-              <div>
-                <AiOutlineFolder />
-                11
-              </div>
-              <div>
-                <AiOutlineFolder />
-                12
-              </div>
+              {folderItems.map((folder) => {
+                return (
+                  <Page2GridItem
+                    folder={folder}
+                    setNowFolder={setNowFolder}
+                    nowFolder={nowFolder}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>

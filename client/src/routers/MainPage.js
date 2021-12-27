@@ -1,29 +1,34 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./MainPage.css";
-import { FaSearch } from "react-icons/fa";
-import { BiEditAlt, BiPaperPlane } from "react-icons/bi";
-import { FiPlusSquare } from "react-icons/fi";
-import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
-import BoxTagControler from "../components/AsideTags/BoxTagControler";
-import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
-import SearchDelay from "../components/searchBar/SearchDelay";
-import AddUrlModal from "../components/Modals/AddUrlModal";
-import Join, { Login } from "../components/Modals/Join";
-import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
-import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
-import EditModeRectsFunc from "../components/editModeFucs/EditModeRectsFunc";
-import EditUrlModal from "../components/Modals/EditUrlModal";
-import ShareUrlModal from "../components/Modals/ShareUrlModal";
 import Axios from "axios";
-import Loader from "../components/searchBar/Loader";
-import MovingBalloon from "../components/Modals/MovingBalloon";
-import TopMore from "../components/Modals/TopMore";
-import RecentSearched from "../components/searchBar/RecentSearched";
-import { MdOutlineTag, MdTag } from "react-icons/md";
-import HashTagModal from "../components/Modals/hashtags/HashTagModal";
-import { enable } from "../functions/stopScroll";
+// Functions
 import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../functions/keepModalsShow";
+import { FaSearch } from "react-icons/fa";
+import StopDrag from "../functions/StopDrag";
+// Rectangles
+import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
+import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
+import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
+import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
+// searchBar
+import SearchDelay from "../components/searchBar/SearchDelay";
+import Loader from "../components/searchBar/Loader";
+import RecentSearched from "../components/searchBar/RecentSearched";
+// Modals
+import AddUrlModal from "../components/Modals/AddUrlModal";
+import EditUrlModal from "../components/Modals/EditUrlModal";
+import ShareUrlModal from "../components/Modals/ShareUrlModal";
+import TopMore from "../components/Modals/TopMore";
+import MovingBalloon from "../components/Modals/MovingBalloon";
+import HashTagModal from "../components/Modals/hashtags/HashTagModal";
+// TopIcons
+import LeftIcons from "../components/TopIcons/LeftIcons";
+import RightIcons from "../components/TopIcons/RightIcons";
+// AsideTags
+import AsideTag from "../components/AsideTags/AsideTag";
+import { useDispatch } from "react-redux";
+import { Page3Actions } from "../store/reducers/editModalP3";
 
 const MainPage = () => {
   // 아~빙고
@@ -43,6 +48,18 @@ const MainPage = () => {
   const [recentSearched, setRecentSearch] = useState([]);
   const [totalTags, setTotalTags] = useState([]);
   const [realTotalUrls, setRealTotalUrls] = useState([]);
+  const [deleteMode, setDeleteMode] = useState(false);
+  const [topMoreWhat, setTopMoreWhat] = useState(true);
+
+  const dispatch = useDispatch();
+
+  const setFolderItemRedux = () => {
+    dispatch(Page3Actions.GetFolderItems());
+  };
+
+  useEffect(() => {
+    setFolderItemRedux();
+  }, []);
 
   const api = Axios.create({
     baseURL: `http://localhost:3001/`,
@@ -59,15 +76,11 @@ const MainPage = () => {
     // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
     // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
     // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
-    // let preTags = [];
     api.get("/totalURL").then(async (response) => {
       await setGetUrls(response.data.totalURL);
       await setMostClickedUrls(response.data.rightURL);
       await setLikedUrls(response.data.leftURL);
       await setRecentSearch(response.data.recentSearched);
-
-      // TODO: #필요한거 1)assignedTags 2) totalTags(이건 필요 없어)
-
       console.log(response.data);
     });
   }, []);
@@ -169,39 +182,14 @@ const MainPage = () => {
       console.log(clickedSearchInput);
     }
   };
-  //url.json파일에 있는 값들 불러온 값
 
-  window.document.onselectstart = (e) => {
-    if (
-      e.target !== document.querySelectorAll("input")[0] &&
-      e.target !== document.querySelectorAll("input")[1] &&
-      e.target !== document.querySelectorAll("input")[2] &&
-      e.target !== document.querySelectorAll("input")[3] &&
-      e.target !== document.querySelectorAll("input")[4] &&
-      e.target !== document.querySelectorAll("input")[5] &&
-      e.target !== document.querySelectorAll("input")[6] &&
-      e.target !== document.querySelectorAll("input")[7] &&
-      e.target !== document.querySelectorAll("input")[8]
-    ) {
-      return false;
-    }
-  };
+  StopDrag();
 
-  // 우클릭 방지
-  window.document.oncontextmenu = (e) => {
-    if (
-      e.target !== document.querySelectorAll("input")[0] &&
-      e.target !== document.querySelectorAll("input")[1] &&
-      e.target !== document.querySelectorAll("input")[2] &&
-      e.target !== document.querySelectorAll("input")[3] &&
-      e.target !== document.querySelectorAll("input")[4] &&
-      e.target !== document.querySelectorAll("input")[5] &&
-      e.target !== document.querySelectorAll("input")[6] &&
-      e.target !== document.querySelectorAll("input")[7] &&
-      e.target !== document.querySelectorAll("input")[8]
-    ) {
-      return false;
-    }
+  // editmode일 때 스타일 사각형에 색깔 변하게하기
+  const bcTopRect = "#FFE4C4";
+  const emptyStyle = {};
+  const MkColorTopRect = {
+    backgroundColor: bcTopRect,
   };
 
   return (
@@ -229,7 +217,10 @@ const MainPage = () => {
                 <FaSearch />
 
                 <div className="Search-balloon">
-                  <div className="Search-balloon-title">최근 검색 항목</div>
+                  <div className="Search-balloon-title">
+                    <div className="recent-serached-title">최근 검색 항목</div>
+                    <div className="delete-recent-searched">전체삭제</div>
+                  </div>
 
                   <div className="Searched-Stuffs-Container">
                     <RecentSearched
@@ -254,89 +245,59 @@ const MainPage = () => {
 
               <div className="share-write">
                 {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
-                <div
-                  className="addUrl-icon"
-                  onClick={() => {
-                    if (!editMode || !shareMode) {
-                      return;
-                    }
-                    document.querySelector(".addUrl-container").style.display =
-                      "block";
-                    enable();
-                  }}
-                >
-                  <FiPlusSquare />
-                </div>
-
-                <div
-                  className="editUrl-icon"
-                  onClick={(e) => {
-                    if (!shareMode) {
-                      return;
-                    }
-                    if (!BoxTags_First) {
-                      setBoxTags_First(!BoxTags_First);
-                      setBoxTags([]);
-                      document.querySelectorAll(".tag").forEach((tag) => {
-                        tag.style.opacity = "1";
-                      });
-                      return;
-                    }
-
-                    setEditMode(!editMode);
-                    EditModeRectsFunc(editMode);
-                  }}
-                >
-                  <BiEditAlt />
-                </div>
-                <div
-                  className="editHash-icon"
-                  onClick={() => {
-                    document.querySelector(
-                      ".hashtagModal-container"
-                    ).style.display = "block";
-
-                    enable();
-                  }}
-                >
-                  <MdOutlineTag />
-                </div>
-                <div
-                  className="shareUrl-icon"
-                  onClick={() => {
-                    console.log("공유기능");
-                    document.querySelector(
-                      ".shareUrl-container"
-                    ).style.display = "block";
-                    enable();
-                  }}
-                >
-                  <BiPaperPlane />
-                </div>
+                <LeftIcons
+                  editMode={editMode}
+                  deleteMode={deleteMode}
+                  setDeleteMode={setDeleteMode}
+                  getUrls={getUrls}
+                  setGetUrls={setGetUrls}
+                  realTotalUrls={realTotalUrls}
+                  setRealTotalUrls={setRealTotalUrls}
+                  BoxTags_First={BoxTags_First}
+                />
+                <RightIcons
+                  editMode={editMode}
+                  shareMode={shareMode}
+                  BoxTags_First={BoxTags_First}
+                  setBoxTags_First={setBoxTags_First}
+                  setBoxTags={setBoxTags}
+                  setEditMode={setEditMode}
+                  setDeleteMode={setDeleteMode}
+                  deleteMode={deleteMode}
+                />
               </div>
-              {BoxTags_First || !editMode || !shareMode ? (
+              {BoxTags_First ? (
                 <>
-                  <div className="Rectangle left-top RectColor">
-                    <h3>내가 지정한 URL </h3>
+                  <div
+                    className="Rectangle left-top RectColor"
+                    style={
+                      BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                    }
+                  >
+                    <h3>즐겨찾기 </h3>
                     <div className="text-container">
                       <FiveUrlsLeft
                         values={likedUrls}
                         editMode={editMode}
-                        shareMode={shareMode}
                         setMyFav={setMyFav}
+                        setTopMoreWhat={setTopMoreWhat}
                       />
                     </div>
                   </div>
-                  <div className="Rectangle right-top RectColor">
-                    <h3>자주 이용하는 URL</h3>
-                    {/* 차라리 여기를 최근 클릭한 url로 바꿔버리고 전체보기 가능하게 만들어놓자 최근이용20개 최대
-                     */}
+                  <div
+                    className="Rectangle right-top RectColor"
+                    style={
+                      BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                    }
+                  >
+                    <h3>최근기록</h3>
                     <div className="text-container">
                       <FiveUrlsRight
                         values={mostClickedUrls}
                         editMode={editMode}
                         shareMode={shareMode}
                         setMyFav={setMyFav}
+                        setTopMoreWhat={setTopMoreWhat}
                       />
                     </div>
                   </div>
@@ -348,44 +309,43 @@ const MainPage = () => {
               {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
               <div className="minisize-tags aside-tags">
                 {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
-                {assignedTags.map((tag) => {
-                  return (
-                    <span
-                      className="tag"
-                      onClick={(e) => {
-                        BoxTagControler(e, {
-                          BoxTags_First,
-                          setBoxTags_First,
-                          BoxTags,
-                          setBoxTags,
-                        });
-                      }}
-                    >
-                      {tag.name}
-                    </span>
-                  );
-                })}
+                <AsideTag
+                  editMode={editMode}
+                  BoxTags_First={BoxTags_First}
+                  setBoxTags_First={setBoxTags_First}
+                  BoxTags={BoxTags}
+                  setBoxTags={setBoxTags}
+                  assignedTags={assignedTags}
+                />
               </div>
-              <div className="Big_Rect RectColor" onMouseLeave={() => {}}>
+              <div className="Big_Rect RectColor">
                 {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
                 {/* 값은 true false 이렇게 두가지인데  */}
                 {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
                 {/* 전체 URL이라는 h3가 HashTag라고 바뀜  */}
                 {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
-                {BoxTags_First || !editMode || !shareMode ? (
-                  <h3>전체 URL</h3>
+                {editMode ? (
+                  BoxTags_First ? (
+                    <h3>전체 URL</h3>
+                  ) : (
+                    <h3>HashTag</h3>
+                  )
+                ) : BoxTags_First ? (
+                  <h3>에디터모드입니다</h3>
                 ) : (
                   <h3>HashTag</h3>
                 )}
                 <div className="text-three-container">
-                  {BoxTags_First || !editMode || !shareMode ? (
+                  {BoxTags_First ? (
                     // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
                     <>
                       <TotalUrlMap
-                        values={getUrls}
+                        getUrls={getUrls}
+                        setGetUrls={setGetUrls}
                         editMode={editMode}
                         shareMode={shareMode}
                         setMyFav={setMyFav}
+                        deleteMode={deleteMode}
                       />
                       <div ref={setTarget} className="Target-Element">
                         {isLoaded && <Loader />}
@@ -393,7 +353,14 @@ const MainPage = () => {
                     </>
                   ) : (
                     // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
-                    <UrlsByHashTag values={realTotalUrls} BoxTags={BoxTags} />
+                    <UrlsByHashTag
+                      realTotalUrls={realTotalUrls}
+                      setRealTotalUrls={setRealTotalUrls}
+                      BoxTags={BoxTags}
+                      editMode={editMode}
+                      deleteMode={deleteMode}
+                      setMyFav={setMyFav}
+                    />
                   )}
                 </div>
               </div>
@@ -405,30 +372,18 @@ const MainPage = () => {
               <div className="for-filling"></div>
               <div className="aside-tags">
                 {/* 전체 url들의 해쉬태그들 뿌려주는 공간*/}
-                {assignedTags.map((tag) => {
-                  return (
-                    <span
-                      className="tag"
-                      onClick={(e) => {
-                        if (editMode) {
-                          BoxTagControler(
-                            e,
-                            BoxTags_First,
-                            setBoxTags_First,
-                            BoxTags,
-                            setBoxTags
-                          );
-                        }
-                      }}
-                    >
-                      {tag.name}
-                    </span>
-                  );
-                })}
+                <AsideTag
+                  editMode={editMode}
+                  BoxTags_First={BoxTags_First}
+                  setBoxTags_First={setBoxTags_First}
+                  BoxTags={BoxTags}
+                  setBoxTags={setBoxTags}
+                  assignedTags={assignedTags}
+                />
               </div>
             </div>
             {/* ======================================== 날개 END ======================================== */}
-            <div className="join-container">{/* <Login /> */}</div>
+            {/* ======================================== 모달들 START ======================================== */}
             <div className="addUrl-container">
               <AddUrlModal getUrls={getUrls} setGetUrls={setGetUrls} />
             </div>
@@ -457,6 +412,8 @@ const MainPage = () => {
               <TopMore
                 likedUrls={likedUrls}
                 mostClickedUrls={mostClickedUrls}
+                topMoreWhat={topMoreWhat}
+                setTopMoreWhat={setTopMoreWhat}
               />
             </div>
             <div className="hashtagModal-container">
@@ -467,6 +424,7 @@ const MainPage = () => {
                 setTotalTags={setTotalTags}
               />
             </div>
+            {/* ======================================== 모달들 END ======================================== */}
           </div>
           <MovingBalloon />
         </>

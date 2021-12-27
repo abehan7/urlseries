@@ -3,7 +3,14 @@ import { IoArrowBack } from "react-icons/io5";
 import "./AddUrlModal.css";
 import { disable } from "../../functions/stopScroll";
 import "./TopMore.css";
-const TopMore = ({ likedUrls, mostClickedUrls }) => {
+const TopMore = ({
+  mostClickedUrls,
+  likedUrls,
+  topMoreWhat,
+  setTopMoreWhat,
+}) => {
+  // likedUrls === 왼쪽 === topMoreWhat = 2
+  // mostClickedUrls=== 오른쪽=== topMoreWhat = 1
   return (
     <>
       <div id="modal" className="modal-overlay">
@@ -21,13 +28,13 @@ const TopMore = ({ likedUrls, mostClickedUrls }) => {
               <IoArrowBack />
             </div>
             <div className="title">
-              <h2>내가 지정한 URL</h2>
+              <h2>{topMoreWhat ? "즐겨찾기" : "최근기록"}</h2>
             </div>
           </div>
 
           <div className="content more-content">
             <div className="more-urls-contents">
-              {likedUrls.map((value) => {
+              {(topMoreWhat ? likedUrls : mostClickedUrls).map((value) => {
                 return (
                   <div
                     className="url more-url"

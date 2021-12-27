@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import "./AddUrlModal.css";
 import "./EditUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
