@@ -53,6 +53,7 @@ export function Login() {
               />
             ) : null}
           </div>
+          <br></br>
           <Join />
         </div>
       </div>
@@ -116,7 +117,7 @@ export class Join extends Component {
             <form onSubmit={this.onSubmit}>
               <input
                 type="text"
-                placeholder="user_id"
+                placeholder="아이디를 입력해주세요"
                 onChange={this.changeUser_id}
                 value={this.state.user_id}
                 className="form-control form-group"
@@ -124,7 +125,7 @@ export class Join extends Component {
 
               <input
                 type="text"
-                placeholder="password"
+                placeholder="비밀번호를 입력해주세요"
                 onChange={this.changePassword}
                 value={this.state.password}
                 className="form-control form-group"
@@ -132,7 +133,7 @@ export class Join extends Component {
 
               <input
                 type="text"
-                placeholder="email"
+                placeholder="이메일을 입력해주세요"
                 onChange={this.changeEmail}
                 value={this.state.email}
                 className="form-control form-group"
@@ -141,7 +142,7 @@ export class Join extends Component {
               <input
                 type="submit"
                 className="btn btn-danger btn-block"
-                value="Submit"
+                value="회원가입"
               />
             </form>
           </div>

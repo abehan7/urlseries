@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import SearchDelay from "../components/SearchDelay";
 import "./SharePage.css";
 
 const SharePage = () => {

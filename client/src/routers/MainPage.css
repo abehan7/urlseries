@@ -89,7 +89,7 @@
   position: absolute;
   font-size: 27px;
   height: 35px;
-  margin-left: 90px;
+  margin-left: 80px;
   /* z-index: 2; */
 }
 
@@ -408,7 +408,8 @@
 .addUrl-container,
 .editUrl-container,
 .shareUrl-container,
-.top-moreUrls-container {
+.top-moreUrls-container,
+.hashtagModal-container {
   display: none;
 }
 

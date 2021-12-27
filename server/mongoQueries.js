@@ -331,3 +331,169 @@ db.urls.updateMany(
 db.urls
   .find({ "url_search.url_searchClicked": 1 })
   .sort({ url_searchedDate: 1 });
+
+// 컬렉션 이름 바꾸는 방법
+
+// use ururl 이걸 가장먼저 해야함
+
+db.userdatas.renameCollection("users");
+
+// 필드 삭제하는 방법
+db.URL_table.update(
+  {},
+  { $unset: { desc_anal2: 1, title_anal2: 1 } },
+  { multi: true }
+);
+
+db.users.updateMany({}, { $unset: { user_recentSearchedIds: true } });
+
+// 해쉬태그 중복 없이 뽑기
+
+let hashList = [];
+db.urls.find({}, { url_hashTags: 1 }).forEach((val) => {
+  val.url_hashTags.forEach((tag) => {
+    if (!hashList.includes(tag)) {
+      hashList.push(tag);
+    }
+  });
+});
+
+// 해쉬태그 새걸로 교체하긴
+db.users.updateMany(
+  { user_id: "hanjk123@gmail.com" },
+  {
+    $set: {
+      user_totalTags: hashList2,
+    },
+  }
+);
+
+let hashList2 = [];
+hashList.forEach((val) => {
+  hashList2.push({ name: val, assigned: 0 });
+});
+
+// 제이슨 파일 쿼리하는 방법
+db.Jobs.find({ "Tests.names": "Art Test" });
+
+let list = [];
+db.users.find({}, { user_totalTags: 1 }).forEach((val) => {
+  console.log(val.assigned);
+});
+
+db.users.updateMany(
+  { user_id: "hanjk123@gmail.com" },
+  {
+    $set: {
+      user_totalTags: list2,
+    },
+  }
+);
+
+var list2 = list.map((val) => {
+  return {
+    name: val.name,
+    assigned: val.assigned,
+    assignedOrigin: val.assigned,
+  };
+});
+
+// 기존 필드에 값 +1하기 인티저
+db.urls.updateOne({ _id: url._id }, { $inc: { url_clickedNumber: 1 } });
+
+// shared 필드 추가
+let list1;
+list1 = list2.map((val) => {
+  return {
+    name: val.name,
+    assigned: val.assigned,
+    assignedOrigin: val.assignedOrigin,
+    shared: 0,
+  };
+});
+
+db.users.updateMany(
+  { user_id: "hanjk123@gmail.com" },
+  {
+    $set: {
+      user_totalTags: list1,
+    },
+  }
+);
+
+// 이렇게 하니까 된다
+db.users
+  .find({ user_id: "hanjk123@gmail.com" }, { user_totalTags: 1 })
+  .toArray()[0].user_totalTags;
+
+db.users.update(
+  { users_id: "hanjk123@gmail.com" },
+  {
+    $set: {
+      user_totalTags: list2,
+    },
+  }
+);
+
+// hashtag컬렉션 만들기 코드
+// ok 성공
+let list = [];
+
+db.urls.find().forEach((url) => {
+  url.url_hashTags.forEach((tag) => {
+    if (list.includes(tag)) {
+      db.hashtags.updateOne(
+        { name: tag },
+        {
+          $push: {
+            url_id: url._id,
+          },
+        }
+      );
+    }
+  });
+});
+
+// 오브젝트 id 쿼리하는 법
+db.urls.find({ _id: ObjectId("61ae230e5e92a9f7c55a9c94") });
+
+// 업데이트
+db.hashtags.updateMany(
+  {},
+  {
+    $set: {
+      clicked: 0,
+    },
+  }
+);
+
+// 이름바꾸기
+db.hashtags.updateMany(
+  {},
+  {
+    $rename: {
+      name: "tag_name",
+      assigned: "tag_assigned",
+      assignedOrigin: "tag_assignedOrigin",
+      shared: "tag_shared",
+      clicked: "tag_clicked",
+    },
+  }
+);
+
+// 두번째 hashtag컬렉션_id urls 컬렉션에 넣기
+// 성공
+//
+
+db.hashtags.find().forEach((tag) => {
+  tag.url_id.forEach((url) => {
+    db.urls.updateOne(
+      { _id: url },
+      {
+        $push: {
+          hashtags_id: tag._id,
+        },
+      }
+    );
+  });
+});

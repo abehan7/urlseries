@@ -1,6 +1,6 @@
 import { debounce } from "lodash";
 
-const GrabNowValue = debounce((value) => {
+export const grabNowValue = debounce((value) => {
   const circle = document.querySelector(".detail-container");
   circle.style.display = "flex";
   let BalloonOneLineTags = "";
@@ -19,4 +19,22 @@ const GrabNowValue = debounce((value) => {
   document.querySelector(".tagContent").innerText = BalloonOneLineTags;
 }, 600);
 
-export default GrabNowValue;
+export const onMouseLeave = () => {
+  const circle = document.querySelector(".detail-container");
+  circle.style.display = "none";
+  grabNowValue.cancel();
+};
+
+export const getMouseLocation = (e) => {
+  const circle = document.querySelector(".detail-container");
+  // circle.style.display = "flex";
+
+  const mouseX = e.clientX;
+  const mouseY = e.pageY;
+  // circle.style.left = 520 + "px";
+  circle.style.left = mouseX + "px";
+  // circle.style.top = 1142 + "px";
+  circle.style.top = mouseY - 80 + "px";
+
+  // console.log(mouseY);
+};

@@ -1,4 +1,9 @@
 import React from "react";
+import {
+  grabNowValue,
+  getMouseLocation,
+  onMouseLeave,
+} from "./movingModalFuncs";
 
 const UrlsByHashTag = ({ values, BoxTags }) => {
   // console.log(BoxTags);
@@ -8,7 +13,7 @@ const UrlsByHashTag = ({ values, BoxTags }) => {
   //해쉬태그는 여러개고 하나만 포함되어 있기만 하면 돼
   //filteredSpots = spots.filter((spot) => filtered.every((v) => spot.S_AMENITY.includes(v)));
   showThisList = values.filter((value) =>
-    BoxTags.some((v) => value.hashTags.includes(v))
+    BoxTags.some((v) => value.url_hashTags.includes(v))
   );
 
   // console.log(showThisList);
@@ -25,16 +30,18 @@ const UrlsByHashTag = ({ values, BoxTags }) => {
                 window.open(value.url);
               }}
               onMouseEnter={() => {
-                // console.log(value);
+                grabNowValue(value);
               }}
+              onMouseMove={(e) => getMouseLocation(e)}
+              onMouseLeave={onMouseLeave}
               onContextMenu={(e) => {
                 console.log("우클릭");
                 e.preventDefault();
               }}
             >
-              <div className="valueId">{value.id}</div>
+              <div className="valueId">{value.url_id}</div>
               <div className="just-bar">|</div>
-              <div className="valueTitle">{value.title}</div>
+              <div className="valueTitle">{value.url_title}</div>
             </div>
           </>
         );

@@ -14,9 +14,9 @@ const EditUrlModal = ({
   setLikedUrls,
   setMostClickedUrls,
   mostClickedUrls,
+  realTotalUrls,
+  setRealTotalUrls,
 }) => {
-  console.log("111");
-
   const editBtn = async () => {
     var totalHashes = [];
     var filterdHashes = [];
@@ -59,6 +59,14 @@ const EditUrlModal = ({
         })
       );
 
+      setRealTotalUrls(
+        realTotalUrls.map((val) => {
+          return val._id === document.querySelector(".url_id").innerText
+            ? response.data
+            : val;
+        })
+      );
+
       setMostClickedUrls(
         mostClickedUrls.map((val) => {
           return val._id === document.querySelector(".url_id").innerText
@@ -80,7 +88,7 @@ const EditUrlModal = ({
         !likedUrls_id.includes(response.data._id)
       ) {
         console.log("setLikedUrls DONE");
-        setLikedUrls([...likedUrls, response.data]);
+        setLikedUrls([response.data, ...likedUrls]);
       } else {
         setLikedUrls(
           likedUrls.map((val) => {

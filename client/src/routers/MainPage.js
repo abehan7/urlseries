@@ -1,37 +1,35 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MainPage.css";
-import { Link } from "react-router-dom";
-import urls from "../urls.json";
-import { FaHashtag, FaSearch } from "react-icons/fa";
-import { BiEditAlt, BiPaperPlane, BiPurchaseTag } from "react-icons/bi";
+import { FaSearch } from "react-icons/fa";
+import { BiEditAlt, BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
-import HashTagsUnique from "../components/HashTagsUnique";
 import BoxTagControler from "../components/AsideTags/BoxTagControler";
 import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
-import SearchDelay from "../components/SearchDelay";
+import SearchDelay from "../components/searchBar/SearchDelay";
 import AddUrlModal from "../components/Modals/AddUrlModal";
 import Join, { Login } from "../components/Modals/Join";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
 import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
 import EditModeRectsFunc from "../components/editModeFucs/EditModeRectsFunc";
-import EditModalReset from "../components/editModeFucs/EditModalReset";
 import EditUrlModal from "../components/Modals/EditUrlModal";
-import ShareModeRectsFunc from "../components/shareModeFuncs/ShareModeRectsFunc";
 import ShareUrlModal from "../components/Modals/ShareUrlModal";
 import Axios from "axios";
-import Loader from "../components/Loader";
-import NewSearchBar from "../components/Rectangles/NewSearchBar";
-import MovingBalloon from "../components/MovingBalloon";
+import Loader from "../components/searchBar/Loader";
+import MovingBalloon from "../components/Modals/MovingBalloon";
 import TopMore from "../components/Modals/TopMore";
-import RecentSearched from "../components/RecentSearched";
+import RecentSearched from "../components/searchBar/RecentSearched";
 import { MdOutlineTag, MdTag } from "react-icons/md";
+import HashTagModal from "../components/Modals/hashtags/HashTagModal";
+import { enable } from "../functions/stopScroll";
+import { getTotalTags } from "../components/getTags";
+import { clickOutSide } from "../functions/keepModalsShow";
 
 const MainPage = () => {
+  // 아~빙고
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
 
   const [BoxTags_First, setBoxTags_First] = useState(true);
-  const [hashList, setHashList] = useState([]); // 현재 전체 url의 해쉬태그들
   const [clickedSearchInput, setClickedSearchInput] = useState(false);
   const [editMode, setEditMode] = useState(true);
   const [shareMode, setShareMode] = useState(true);
@@ -41,10 +39,14 @@ const MainPage = () => {
   const [myFav, setMyFav] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [target, setTarget] = useState(null);
-  const [asignedTags, setAsignedTags] = useState([]);
+  const [assignedTags, setAssignedTags] = useState([]);
   const [recentSearched, setRecentSearch] = useState([]);
+  const [totalTags, setTotalTags] = useState([]);
+  const [realTotalUrls, setRealTotalUrls] = useState([]);
 
-  console.log("메인");
+  const api = Axios.create({
+    baseURL: `http://localhost:3001/`,
+  });
 
   // 위에 useState 헷갈릴 경우 아래 콘솔로 테스트
   // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -52,24 +54,51 @@ const MainPage = () => {
   // console.log("totalUrls : ", totalUrls); // 전체 url들
 
   // 최초에 접속하면 여기 useEffect안에 있는 것들 실행시킴
+
   useEffect(() => {
     // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
     // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
     // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
-    Axios.get("http://localhost:3001/totalURL").then(async (response) => {
+    // let preTags = [];
+    api.get("/totalURL").then(async (response) => {
       await setGetUrls(response.data.totalURL);
       await setMostClickedUrls(response.data.rightURL);
       await setLikedUrls(response.data.leftURL);
-      await setAsignedTags(response.data.asignedTags);
       await setRecentSearch(response.data.recentSearched);
+
+      // TODO: #필요한거 1)assignedTags 2) totalTags(이건 필요 없어)
 
       console.log(response.data);
     });
   }, []);
 
   useEffect(() => {
-    setHashList(HashTagsUnique(values));
+    let preTags = [];
+    api.get("/TotalAfter").then((response) => {
+      const {
+        data: { totalAfter, initAssigned },
+      } = response;
+      setRealTotalUrls(totalAfter);
+
+      // 전체 태그들 뽑는 기능
+      setTotalTags(getTotalTags(totalAfter, initAssigned));
+
+      // 선택한 태그들 json으로 만들기 // 근데 만들 필요가 있냐? 아니 굳이 그러지 않아도 될거같아
+
+      initAssigned.forEach((tag) => {
+        preTags.push({ name: tag, assigned: 1, origin: 1 });
+      });
+      setAssignedTags([...preTags]);
+    });
   }, []);
+
+  // totalurl 변하면 전체 tag 뽑은 다음에 users에 있는 totaltags수정하기 axios해서
+  // FIXME: 문제의 원인이 여기였어
+  //        이거 바꾸기 또 귀찮으니까 아니 이거를 수정 해볼려면 해보던지 아니면 useState하나 더 만들던지 알아서\
+  //        애초에 useMemo쓸게 아니라 useEffect안에 넣는게 옳은 방향일 수도
+  // useMemo(() => {
+  //   setTotalTags(getTotalTags(realTotalUrls));
+  // }, [realTotalUrls]);
 
   // ============================================= 여기는 Ininity Scroll START =============================================
 
@@ -81,15 +110,13 @@ const MainPage = () => {
       realLastId = getUrls[getUrls.length - 1].url_id;
     }
 
-    console.log(realLastId);
     console.log(getUrls[getUrls.length - 1].url_id);
-    var lastId = getUrls[getUrls.length - 1].url_id;
     setIsLoaded(true);
 
     await Axios.post("http://localhost:3001/get21Urls", {
       lastId: realLastId,
     }).then(async (response) => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
       responseListLength = response.data.length;
       if (responseListLength === 0) {
         return;
@@ -118,14 +145,10 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    console.log(getUrls);
-  }, [getUrls]);
-
-  useEffect(() => {
     let observer;
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.4,
+        threshold: 0.2,
       });
       observer.observe(target);
     }
@@ -133,74 +156,6 @@ const MainPage = () => {
   }, [target]);
 
   // ============================================= Ininity Scroll END =============================================
-
-  // 검색창 외에 바깥부분 클릭하면 모달 사라지는 onClick이벤트
-  const clickOutSide = (e) => {
-    var target = e.target;
-
-    if (
-      target === document.querySelector(".search-box").firstChild ||
-      target === document.querySelector(".Search-balloon") ||
-      target === document.querySelector(".Search-balloon-title") ||
-      target === document.querySelector(".notSearched")
-    ) {
-      return;
-    }
-
-    // =============== 모달 안에 검색어 클릭해도 모달 안사라지게 하는기능 start ===============
-    var oneSearchedStuff;
-    document.querySelectorAll(".searched-Stuff").forEach((val) => {
-      if (target === val) {
-        return (oneSearchedStuff = true);
-      }
-    });
-
-    document.querySelectorAll(".recent-searched-Stuff").forEach((val) => {
-      if (target === val) {
-        return (oneSearchedStuff = true);
-      }
-    });
-
-    document.querySelectorAll(".Searched-url-Title").forEach((val) => {
-      if (target === val) {
-        return (oneSearchedStuff = true);
-      }
-    });
-
-    if (oneSearchedStuff) {
-      return;
-    }
-    // =============== 모달 안에 검색어 클릭해도 모달 안사라지게 하는 기능 end ===============
-
-    document.querySelector(".search-box > svg").style.display = "block";
-
-    if (clickedSearchInput) {
-      document.querySelector(".Search-balloon").style.opacity = "0";
-      // 위로 -10픽셀만큼 서서히 올라가는거
-      document.querySelector(".Search-balloon").style.transform =
-        "translateY(-20px)";
-
-      setTimeout(() => {
-        document.querySelector(".Search-balloon").style.display = "none";
-        setClickedSearchInput(!clickedSearchInput);
-        // console.log(clickedSearchInput);
-      }, 100);
-    }
-  };
-
-  // 여기는 생성하는 코드
-  // 이거 쓰지 말고 flex랑 none으로 하는게 좀 더 안정정이다
-  // 이 코드는 우선 남겨놓기 다른 곳에 사용될 수 있으니까
-  const createModal = () => {
-    if (!clickedSearchInput) {
-      const newDiv = document.createElement("div");
-      newDiv.className = "Search-balloon";
-      document.querySelector(".search-box > svg").style.display = "none";
-
-      document.querySelector(".search-box").appendChild(newDiv);
-      setClickedSearchInput(!clickedSearchInput); // 이제 true
-    }
-  };
 
   const createModal2 = () => {
     if (!clickedSearchInput) {
@@ -215,15 +170,6 @@ const MainPage = () => {
     }
   };
   //url.json파일에 있는 값들 불러온 값
-  const values = urls.urls;
-
-  // 드래그 방지
-  // window.document.onmousemove = (e) => {
-  //   if (e.target !== document.querySelector(".Big_Rect")) {
-  //     const circle = document.querySelector(".detail-container");
-  //     circle.style.display = "none";
-  //   }
-  // };
 
   window.document.onselectstart = (e) => {
     if (
@@ -258,25 +204,27 @@ const MainPage = () => {
     }
   };
 
-  // document.querySelector(".search-box input").onselectstart = () => {
-  //   return true;
-  // };
-  // document.querySelector(".search-box input").oncontextmenu = () => {
-  //   return true;
-  // };
-
   return (
     <>
       {getUrls.length === 0 ? (
         <div className="firstLoading">yourURL</div>
       ) : (
         <>
-          <div className="MainPage" onMouseDown={clickOutSide}>
+          <div
+            className="MainPage"
+            onMouseDown={(e) =>
+              clickOutSide(e, clickedSearchInput, setClickedSearchInput)
+            }
+          >
             {/* ======================================== 그리드 컨테이너  START  ========================================*/}
             {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
             <div className="grid-container">
               <div className="search-box">
-                <SearchDelay createModal2={createModal2} />
+                <SearchDelay
+                  createModal2={createModal2}
+                  recentSearched={recentSearched}
+                  setRecentSearch={setRecentSearch}
+                />
                 {/* <NewSearchBar /> */}
                 <FaSearch />
 
@@ -284,7 +232,10 @@ const MainPage = () => {
                   <div className="Search-balloon-title">최근 검색 항목</div>
 
                   <div className="Searched-Stuffs-Container">
-                    <RecentSearched values={recentSearched} />
+                    <RecentSearched
+                      recentSearched={recentSearched}
+                      setRecentSearch={setRecentSearch}
+                    />
                   </div>
                   <div className="notSearched">
                     검색어가 존재하지 않습니다...
@@ -306,14 +257,12 @@ const MainPage = () => {
                 <div
                   className="addUrl-icon"
                   onClick={() => {
-                    // if (!editMode) {
-                    //   EditModalReset();
-                    // }
                     if (!editMode || !shareMode) {
                       return;
                     }
                     document.querySelector(".addUrl-container").style.display =
                       "block";
+                    enable();
                   }}
                 >
                   <FiPlusSquare />
@@ -333,13 +282,23 @@ const MainPage = () => {
                       });
                       return;
                     }
+
                     setEditMode(!editMode);
                     EditModeRectsFunc(editMode);
                   }}
                 >
                   <BiEditAlt />
                 </div>
-                <div className="editHash-icon">
+                <div
+                  className="editHash-icon"
+                  onClick={() => {
+                    document.querySelector(
+                      ".hashtagModal-container"
+                    ).style.display = "block";
+
+                    enable();
+                  }}
+                >
                   <MdOutlineTag />
                 </div>
                 <div
@@ -349,6 +308,7 @@ const MainPage = () => {
                     document.querySelector(
                       ".shareUrl-container"
                     ).style.display = "block";
+                    enable();
                   }}
                 >
                   <BiPaperPlane />
@@ -369,6 +329,8 @@ const MainPage = () => {
                   </div>
                   <div className="Rectangle right-top RectColor">
                     <h3>자주 이용하는 URL</h3>
+                    {/* 차라리 여기를 최근 클릭한 url로 바꿔버리고 전체보기 가능하게 만들어놓자 최근이용20개 최대
+                     */}
                     <div className="text-container">
                       <FiveUrlsRight
                         values={mostClickedUrls}
@@ -386,7 +348,7 @@ const MainPage = () => {
               {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
               <div className="minisize-tags aside-tags">
                 {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
-                {hashList.map((tag) => {
+                {assignedTags.map((tag) => {
                   return (
                     <span
                       className="tag"
@@ -399,7 +361,7 @@ const MainPage = () => {
                         });
                       }}
                     >
-                      {tag}
+                      {tag.name}
                     </span>
                   );
                 })}
@@ -431,7 +393,7 @@ const MainPage = () => {
                     </>
                   ) : (
                     // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
-                    <UrlsByHashTag values={values} BoxTags={BoxTags} />
+                    <UrlsByHashTag values={realTotalUrls} BoxTags={BoxTags} />
                   )}
                 </div>
               </div>
@@ -443,28 +405,27 @@ const MainPage = () => {
               <div className="for-filling"></div>
               <div className="aside-tags">
                 {/* 전체 url들의 해쉬태그들 뿌려주는 공간*/}
-                {asignedTags.map((tag) => {
+                {assignedTags.map((tag) => {
                   return (
                     <span
                       className="tag"
                       onClick={(e) => {
                         if (editMode) {
-                          BoxTagControler(e, {
+                          BoxTagControler(
+                            e,
                             BoxTags_First,
                             setBoxTags_First,
                             BoxTags,
-                            setBoxTags,
-                          });
+                            setBoxTags
+                          );
                         }
                       }}
                     >
-                      {tag}
+                      {tag.name}
                     </span>
                   );
                 })}
               </div>
-
-              {/* <div className="aside-details"></div> */}
             </div>
             {/* ======================================== 날개 END ======================================== */}
             <div className="join-container">{/* <Login /> */}</div>
@@ -481,15 +442,29 @@ const MainPage = () => {
                 setLikedUrls={setLikedUrls}
                 mostClickedUrls={mostClickedUrls}
                 setMostClickedUrls={setMostClickedUrls}
+                realTotalUrls={realTotalUrls}
+                setRealTotalUrls={setRealTotalUrls}
               />
             </div>
             <div className="shareUrl-container">
-              <ShareUrlModal />
+              <ShareUrlModal
+              // totalTags={totalTags}
+              // setTotalTags={setTotalTags}
+              // realTotalUrls={realTotalUrls}
+              />
             </div>
             <div className="top-moreUrls-container">
               <TopMore
                 likedUrls={likedUrls}
                 mostClickedUrls={mostClickedUrls}
+              />
+            </div>
+            <div className="hashtagModal-container">
+              <HashTagModal
+                assignedTags={assignedTags}
+                setAssignedTags={setAssignedTags}
+                totalTags={totalTags}
+                setTotalTags={setTotalTags}
               />
             </div>
           </div>
@@ -501,3 +476,46 @@ const MainPage = () => {
 };
 
 export default MainPage;
+
+// 여기는 생성하는 코드
+// 이거 쓰지 말고 flex랑 none으로 하는게 좀 더 안정정이다
+// 이 코드는 우선 남겨놓기 다른 곳에 사용될 수 있으니까
+// const createModal = () => {
+//   if (!clickedSearchInput) {
+//     const newDiv = document.createElement("div");
+//     newDiv.className = "Search-balloon";
+//     document.querySelector(".search-box > svg").style.display = "none";
+
+//     document.querySelector(".search-box").appendChild(newDiv);
+//     setClickedSearchInput(!clickedSearchInput); // 이제 true
+//   }
+// };
+
+// 드래그 방지
+// window.document.onmousemove = (e) => {
+//   if (e.target !== document.querySelector(".Big_Rect")) {
+//     const circle = document.querySelector(".detail-container");
+//     circle.style.display = "none";
+//   }
+// };
+
+// [3]
+// document.querySelector(".search-box input").onselectstart = () => {
+//   return true;
+// };
+// document.querySelector(".search-box input").oncontextmenu = () => {
+//   return true;
+// };
+
+// TODO:리덕스
+// function mapStateToProps(state) {
+//   return { todos: state };
+// }
+
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     addToDo: (text) => dispatch(actionCreators.addToDo(text)),
+//     deleteToDo: (text) => dispatch(actionCreators.deleteToDo(text)),
+//   };
+// }
+// export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

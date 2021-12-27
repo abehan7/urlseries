@@ -1,17 +1,23 @@
 .content > .more-urls-contents {
   display: flex;
   flex-direction: column;
-  justify-content: start;
-  align-items: start;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .more-url {
   height: auto;
 }
+.more-url:hover {
+  background-color: beige;
+  cursor: pointer;
+}
+
 .more-content {
   height: 100%;
   overflow-y: auto;
 }
 
 .top-modal-window {
+  overflow: hidden;
 }

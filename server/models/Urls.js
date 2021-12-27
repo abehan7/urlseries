@@ -1,19 +1,6 @@
 const mongoose = require("mongoose");
 const autoIncrement = require("mongoose-auto-increment");
-
-const getCurrentDate = () => {
-  var date = new Date();
-  var year = date.getFullYear();
-  var month = date.getMonth();
-  var today = date.getDate();
-  var hours = date.getHours();
-  var minutes = date.getMinutes();
-  var seconds = date.getSeconds();
-  var milliseconds = date.getMilliseconds();
-  return new Date(
-    Date.UTC(year, month, today, hours, minutes, seconds, milliseconds)
-  );
-};
+const getCurrentDate = require("./getCurrentDate");
 
 const UrlSchema = new mongoose.Schema({
   url_id: {
@@ -32,7 +19,14 @@ const UrlSchema = new mongoose.Schema({
     type: Array,
     required: false,
     default: [],
+    ref: "hashtags",
   },
+  hashtags_id: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "hashtags",
+    },
+  ],
   url_memo: {
     type: String,
     required: false,
@@ -69,6 +63,11 @@ const UrlSchema = new mongoose.Schema({
       type: Date,
       default: getCurrentDate(),
     },
+  },
+  user_id: {
+    type: String,
+    default: "hanjk123@gmail.com",
+    ref: "users",
   },
 });
 

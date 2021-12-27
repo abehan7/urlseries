@@ -42,15 +42,16 @@ const BalloonWrapper = styled.div`
   }
 
   .detail-memo {
-    padding-bottom: 10px;
+    padding-bottom: 5px;
   }
 
   .memoContent {
-    // border-top: 1px solid #e2e2e2;
     border-top: 1px solid black;
 
     width: 100%;
+    max-width: 250px;
     overflow-y: hidden;
+    overflow-x: hidden;
     max-height: 100px;
     text-overflow: ellipsis;
     display: -webkit-box;
