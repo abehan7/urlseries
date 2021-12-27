@@ -83,10 +83,14 @@ const TotalUrlMap = ({
                   </div>
                 </>
               )}
+<<<<<<< HEAD
               <img
                 id="urlFavicon"
                 src={"http://www.google.com/s2/favicons?domain=" + value.url}
               />
+=======
+              <div className="valueId">{value.url_id}</div>
+>>>>>>> c9b9ee24520db274a1be00912590695e20f60ce4
               <div className="just-bar">|</div>
               <div className="valueTitle">{value.url_title}</div>
             </div>

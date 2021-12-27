@@ -241,8 +241,11 @@ const MainPage = () => {
                 </div>
               </div>
 
+<<<<<<< HEAD
               <div className="login">로그인/회원가입</div>
 
+=======
+>>>>>>> c9b9ee24520db274a1be00912590695e20f60ce4
               <div className="share-write">
                 {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
                 <LeftIcons
