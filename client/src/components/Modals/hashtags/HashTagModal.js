@@ -25,6 +25,7 @@ const HashTagModal = ({
   const setNowPageRedux = (page) => {
     dispatch(Page3Actions.SetNowPage(page));
   };
+
   useEffect(() => {
     setNowPageRedux(nowPage);
     console.log("현재 페이지 설정 완료");

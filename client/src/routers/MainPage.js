@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import "./MainPage.css";
 import Axios from "axios";
 // Functions
@@ -27,6 +27,8 @@ import LeftIcons from "../components/TopIcons/LeftIcons";
 import RightIcons from "../components/TopIcons/RightIcons";
 // AsideTags
 import AsideTag from "../components/AsideTags/AsideTag";
+import { useDispatch } from "react-redux";
+import { Page3Actions } from "../store/reducers/editModalP3";
 
 const MainPage = () => {
   // 아~빙고
@@ -49,6 +51,16 @@ const MainPage = () => {
   const [deleteMode, setDeleteMode] = useState(false);
   const [topMoreWhat, setTopMoreWhat] = useState(true);
 
+  const dispatch = useDispatch();
+
+  const setFolderItemRedux = () => {
+    dispatch(Page3Actions.GetFolderItems());
+  };
+
+  useEffect(() => {
+    setFolderItemRedux();
+  }, []);
+
   const api = Axios.create({
     baseURL: `http://localhost:3001/`,
   });
@@ -69,9 +81,6 @@ const MainPage = () => {
       await setMostClickedUrls(response.data.rightURL);
       await setLikedUrls(response.data.leftURL);
       await setRecentSearch(response.data.recentSearched);
-
-      // TODO: #필요한거 1)assignedTags 2) totalTags(이건 필요 없어)
-
       console.log(response.data);
     });
   }, []);

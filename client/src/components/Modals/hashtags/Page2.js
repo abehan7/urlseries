@@ -1,15 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
-import {
-  AiOutlineEdit,
-  AiOutlineFolder,
-  AiOutlinePlusSquare,
-} from "react-icons/ai";
-import { BiEditAlt } from "react-icons/bi";
-import { FiPlusSquare } from "react-icons/fi";
+import { AiOutlineEdit } from "react-icons/ai";
 import styled from "styled-components";
 import { disable } from "../../../functions/stopScroll";
+import Page2GridItem from "./Page2GridItem";
+import { useSelector } from "react-redux";
 const Page2 = ({ setNowPage }) => {
+  const [nowFolder, setNowFolder] = useState(0);
+  const {
+    page3Storage: { folderItems },
+  } = useSelector((state) => state);
+
   const Page2Wrap = styled.div`
     .tagFolder-window {
       overflow: hidden;
@@ -75,6 +76,7 @@ const Page2 = ({ setNowPage }) => {
       color: #fbb917;
     }
   `;
+
   return (
     <>
       <Page2Wrap>
@@ -107,73 +109,15 @@ const Page2 = ({ setNowPage }) => {
 
           <div className="content folder-content">
             <div className="tagFolder-grid">
-              <div>
-                <div
-                  onClick={(e) => {
-                    e.target.classList.toggle("folder-clicked");
-                  }}
-                >
-                  <AiOutlineFolder />
-                </div>
-                <div>노마드코더</div>
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                페드로테크
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                타입스크립트
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                그래프QL
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                리액트
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                노드JS
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                창업
-              </div>
-              <div>
-                <div>
-                  <AiOutlineFolder />
-                </div>
-                몽고
-              </div>
-              <div>
-                <AiOutlineFolder />9
-              </div>
-              <div>
-                <AiOutlineFolder />
-                10
-              </div>
-              <div>
-                <AiOutlineFolder />
-                11
-              </div>
-              <div>
-                <AiOutlineFolder />
-                12
-              </div>
+              {folderItems.map((folder) => {
+                return (
+                  <Page2GridItem
+                    folder={folder}
+                    setNowFolder={setNowFolder}
+                    nowFolder={nowFolder}
+                  />
+                );
+              })}
             </div>
           </div>
         </div>

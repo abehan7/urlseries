@@ -125,7 +125,13 @@ app.get("/totalURL", async (req, res) => {
     leftURL: leftURL,
     rightURL: rightURL,
     recentSearched: recentSearched,
-    // assignedTags: assignedTags,
+  });
+});
+// [4] ==================================== 폴더 아이템들 가지고오기 ====================================
+app.get("/folderItems", (req, res) => {
+  db.Folders.find().then((response) => {
+    console.log("folderItems found!");
+    res.json(response);
   });
 });
 

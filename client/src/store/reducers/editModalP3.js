@@ -1,22 +1,19 @@
-const ADD = "ADD";
-const RESET = "RESET";
+import Axios from "axios";
+
 const SETNOW = "SETNOW";
+const GETFITEM = "GETFITEM";
+const GETFITEM_SUCCESS = "GETFITEM_SUCCESS";
+
+const folderItemsAPI = async () => {
+  const { data } = await Axios.get("http://localhost:3001/folderItems");
+  return data;
+};
 
 const initialState = {
   nowPage2: 0,
+  folderItems: null,
 };
 
-const AddNowPage = (nowP) => {
-  return {
-    type: ADD,
-    paload: nowP,
-  };
-};
-const ResetNowPage = () => {
-  return {
-    type: RESET,
-  };
-};
 const SetNowPage = (nowP) => {
   return {
     type: SETNOW,
@@ -24,14 +21,26 @@ const SetNowPage = (nowP) => {
   };
 };
 
+const GetFolderItems = () => {
+  return {
+    type: GETFITEM,
+    payload: folderItemsAPI,
+  };
+};
+
 const editModalP3 = (state = initialState, action) => {
   switch (action.type) {
-    case ADD:
-      return { nowPage2: state.nowPage2 + 1 };
-    case RESET:
-      return { nowPage2: 1 };
     case SETNOW:
-      return { nowPage2: Number(action.payload) };
+      return {
+        nowPage2: Number(action.payload),
+        folderItems: state.folderItems,
+      };
+    case GETFITEM_SUCCESS:
+      return {
+        nowPage2: state.nowPage2,
+        folderItems: action.payload,
+      };
+
     default:
       return state;
   }
@@ -40,9 +49,8 @@ const editModalP3 = (state = initialState, action) => {
 export default editModalP3;
 
 export const Page3Actions = {
-  AddNowPage,
-  ResetNowPage,
   SetNowPage,
+  GetFolderItems,
 };
 
 // 나중에 구조 복잡해지면 이렇게 사용하기
