@@ -4,9 +4,22 @@
   gap: 40px;
 }
 
+/* 폴더 뒷배경으로 하는 기능 */
 .hashTag-modal-window {
+  /* position: relative; */
   width: 600px;
   height: auto;
+}
+.big-folder-Icon {
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 100px;
+  pointer-events: none;
+  opacity: 0.1;
 }
 
 .HashTagItems {
@@ -54,6 +67,7 @@
 }
 
 .hashtag-content {
+  position: relative;
   height: auto;
   min-height: 205px;
   margin: 0;

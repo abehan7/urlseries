@@ -61,6 +61,7 @@ const LeftItem = ({
                     className={totalMapColor({ val })}
                     onClick={(e) => {
                       toggleFunc(e, val);
+                      console.log(val);
                     }}
                   >
                     {val.name}

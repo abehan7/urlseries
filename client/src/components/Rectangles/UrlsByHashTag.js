@@ -81,6 +81,11 @@ const UrlsByHashTag = ({
                   </div>
                 </>
               )}
+              <img
+                className="urlFavicon"
+                src={`http://www.google.com/s2/favicons?domain=${value.url}`}
+                alt=""
+              />
               <div className="valueId">{value.url_id}</div>
               <div className="just-bar">|</div>
               <div className="valueTitle">{value.url_title}</div>

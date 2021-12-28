@@ -1,4 +1,6 @@
 import React from "react";
+import { AiOutlineFolder } from "react-icons/ai";
+import { MdOutlineTag } from "react-icons/md";
 import { useSelector } from "react-redux";
 
 const RightItem = ({ assignedTags, removeToggle }) => {
@@ -12,6 +14,10 @@ const RightItem = ({ assignedTags, removeToggle }) => {
         <h3>선택된 태그들</h3>
       </div>
       <div className="content hashtag-content">
+        <div className="big-folder-Icon">
+          {nowPage2 === 3 && <AiOutlineFolder />}
+          {nowPage2 === 1 && <MdOutlineTag />}
+        </div>
         <div className="flexWrapBox flexWrap-right">
           {(nowPage2 === 1
             ? assignedTags

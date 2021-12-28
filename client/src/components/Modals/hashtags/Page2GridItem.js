@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AiOutlineFolder } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../../../store/reducers/editModalP3";
@@ -8,6 +8,7 @@ const Page2GridItem = ({ folder, setNowFolder, nowFolder }) => {
   // const SetNowFolder = (folder2) => {
   //   dispatch(Page3Actions.SetNowFolder(folder2));
   // };
+
   const {
     page3Storage: { nowFolder2 },
   } = useSelector((state) => state);
@@ -21,10 +22,10 @@ const Page2GridItem = ({ folder, setNowFolder, nowFolder }) => {
       className="Page2GridItem"
       onClick={() => {
         if (nowFolder2?._id === folder._id) {
-          setNowFolder({});
+          // setNowFolder({});
           SetReduxNowFolder({});
         } else {
-          setNowFolder({ ...folder });
+          // setNowFolder({ ...folder });
           SetReduxNowFolder({ ...folder });
         }
 
