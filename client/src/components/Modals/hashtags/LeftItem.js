@@ -1,5 +1,5 @@
 import React from "react";
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 const LeftItem = ({
   tagSearch,
@@ -91,7 +91,4 @@ const LeftItem = ({
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return { state };
-};
-export default connect(mapStateToProps)(LeftItem);
+export default LeftItem;

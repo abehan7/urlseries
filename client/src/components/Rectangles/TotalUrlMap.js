@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
+import React from "react";
 import { getMouseLocation, grabNowValue } from "./movingModalFuncs";
-import Axios from "axios";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import { whenIclickUrl } from "./FuncTotalUrlMap";
 
