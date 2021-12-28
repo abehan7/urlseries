@@ -297,10 +297,24 @@ app.put("/clickedURLInBox", async (req, res) => {
 
 // [6] ====================================  폴더 해쉬태그 contents 수정하는 put ====================================
 app.put("/folderContentsChanged", (req, res) => {
-  const { folder_id, folder_contents } = req.body;
+  const {
+    nowFolder2: { _id, folder_contents },
+  } = req.body;
+  console.log(_id, folder_contents);
 
-  db.Folders.find({ _id: folder_id }).then((response) => {
+  const query = { _id: _id };
+
+  const update = {
+    $set: {
+      folder_contents: folder_contents,
+    },
+  };
+  // 이거 옵션 선택하면 수정된거 보내주는 기능
+  const options = { returnOriginal: false };
+
+  db.Folders.findOneAndUpdate(query, update, options).then((response) => {
     console.log(response);
+    //   res.json();
   });
 });
 

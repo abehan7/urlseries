@@ -216,19 +216,19 @@ const Page1 = ({
                   item.folder_contents = editedTags;
                 }
               });
-              // 폴더 내부 태그들 수정하기 end
-              console.log(nowFolder2);
-              Axios.put("https://localhost:3001/folderContentsChanged", {
-                nowFolder2: nowFolder2,
-              });
-
               // 이제 초기화해주기
 
+              console.log(nowFolder2);
               setNowPage(1);
               SetReduxNowFolder({});
 
               setTagSearch("");
               disable();
+              // 폴더 내부 태그들 수정하기 end
+
+              await Axios.put("http://localhost:3001/folderContentsChanged", {
+                nowFolder2: nowFolder2,
+              });
 
               // 이제 테스트 완료 됬으니 이거를 folderItems.folder_contents에 싹 넣으면 될 듯 map 한거를
             }
