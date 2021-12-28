@@ -47,7 +47,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 30%;
+  width: 250px;
   height: 100%;
   /* background-color: #c4c4c4; */
   margin-left: auto;
@@ -321,7 +321,7 @@
 }
 
 .text-container > div:hover {
-  background-color: beige;
+  background: #e9ecef57;
   outline: 0;
   /* background: #e9ecef57; */
   cursor: pointer;
@@ -339,11 +339,13 @@
 }
 
 .text-three-container > div:hover {
-  background-color: beige;
+  background: #e9ecef57;
   cursor: pointer;
   transition: 0.2s;
 }
-
+.urlFavicon {
+  padding-left: 10px;
+}
 .T-url,
 .url {
   display: flex;

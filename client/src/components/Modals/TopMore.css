@@ -9,7 +9,7 @@
   height: auto;
 }
 .more-url:hover {
-  background-color: beige;
+  background: #e9ecef57;
   cursor: pointer;
 }
 

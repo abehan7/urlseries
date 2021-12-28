@@ -12,6 +12,11 @@ const Page2 = ({ setNowPage }) => {
     page3Storage: { folderItems },
   } = useSelector((state) => state);
 
+  const dispatch = useDispatch();
+  const SetReduxNowFolder = (folder2) => {
+    dispatch(Page3Actions.SetNowFolder(folder2));
+  };
+
   // const dispatch = useDispatch();
   // const SetNowFolder2 = (folder2) => {
   //   dispatch(Page3Actions.SetNowFolder(folder2));
@@ -25,6 +30,7 @@ const Page2 = ({ setNowPage }) => {
     .tagFolder-window {
       overflow: hidden;
     }
+
     .tagFolder-window > .folder-content {
       height: auto;
       overflow-y: auto;
@@ -96,6 +102,7 @@ const Page2 = ({ setNowPage }) => {
                   ".hashtagModal-container"
                 ).style.display = "none";
                 setNowPage((val) => val - 1);
+                SetReduxNowFolder({});
                 disable();
               }}
             >

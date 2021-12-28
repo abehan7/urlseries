@@ -74,6 +74,11 @@ const debounceSomethingFunc = debounce(
       const newDiv = document.createElement("div");
       newDiv.className = "searched-Stuff";
       newDiv.innerHTML =
+        `<img
+        class="urlFavicon"
+        src=http://www.google.com/s2/favicons?domain=${val.url}
+        alt=""
+        />` +
         `<div class="Searched-url-Id">${val.url_id}</div>` +
         `<div class="just-bar"> | </div>` +
         `<div class="Searched-url-Title">${val.url_title}</div>`;
@@ -101,6 +106,11 @@ const debounceSomethingFunc = debounce(
       const newDiv = document.createElement("div");
       newDiv.className = "searched-Stuff";
       newDiv.innerHTML =
+        `<img
+      class="urlFavicon"
+      src=http://www.google.com/s2/favicons?domain=${val.url}
+      alt=""
+      />` +
         `<div class="Searched-url-Id">#${val.url_id}</div>` +
         `<div class="just-bar"> | </div>` +
         `<div class="Searched-url-Title">${val.url_title}</div>`;
@@ -117,7 +127,7 @@ const debounceSomethingFunc = debounce(
       document.querySelector(".notSearched").style.display = "flex";
     }
   },
-  1000
+  500
 );
 // =========== 해쉬태그 검색어 end ===========
 

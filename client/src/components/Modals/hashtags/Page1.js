@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { AiOutlineFolder } from "react-icons/ai";
 import { IoArrowBack } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { disable } from "../../../functions/stopScroll";
 import { Page3Actions } from "../../../store/reducers/editModalP3";
 import { closeFunc, modify } from "./HashModalFuncs";
 import HashTagItems from "./HashTagItems";
+import Axios from "axios";
 
 const Page1 = ({
   setAssignedTags,
@@ -47,6 +49,7 @@ const Page1 = ({
       console.log("정상적으로 작동중");
       val.folderAssigned = 1;
       nowFolder2.folder_contents = [val.name, ...nowFolder2.folder_contents];
+      console.log(nowFolder2);
 
       setTotalTags(
         totalTags.map((tag) => {
@@ -99,9 +102,8 @@ const Page1 = ({
         totalTags.map((tag) => {
           return val.name === tag.name
             ? {
-                name: tag.name,
+                ...tag,
                 assigned: 0,
-                origin: tag.origin,
               }
             : tag;
         })
@@ -129,7 +131,7 @@ const Page1 = ({
   // =========== 리덕스 START ===========
 
   const {
-    page3Storage: { nowPage2, nowFolder2 },
+    page3Storage: { nowPage2, nowFolder2, folderItems },
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -137,9 +139,22 @@ const Page1 = ({
     dispatch(Page3Actions.SetNowFolder(folder2));
   };
 
-  console.log("3페이지 테스트");
-  console.log(nowFolder2);
+  // console.log("3페이지 테스트");
+  // console.log(nowFolder2);
   // =========== 리덕스 END ===========
+  // const modalWindStyle = {
+  //   position: "relative",
+  // };
+
+  // const FolderIconStyle = {
+  //   position: "absolute",
+  //   fontSize: "100px",
+  //   opacity: "0.1",
+  //   width: "100%",
+  //   height: "100%",
+  //   textAlign: "center",
+  //   // textAlign: "justify"
+  // };
 
   return (
     <div className="modal-window hashTag-modal-window">
@@ -180,6 +195,42 @@ const Page1 = ({
             if (nowPage2 === 1) {
               await modify(setTotalTags, totalTags, assignedTags, setTagSearch);
               disable();
+            } else if (nowPage2 === 3) {
+              console.log("page1 수정하기");
+              // 창닫기
+              document.querySelector(".hashtagModal-container").style.display =
+                "none";
+
+              // 폴더 내부 태그들 수정하기 start
+              let editedTags = [];
+              totalTags.forEach((val) => {
+                if (val.folderAssigned === 1) {
+                  editedTags.push(val.name);
+                }
+              });
+
+              // console.log(editedTags);
+
+              folderItems.forEach((item) => {
+                if (item._id === nowFolder2._id) {
+                  item.folder_contents = editedTags;
+                }
+              });
+              // 폴더 내부 태그들 수정하기 end
+              console.log(nowFolder2);
+              Axios.put("https://localhost:3001/folderContentsChanged", {
+                nowFolder2: nowFolder2,
+              });
+
+              // 이제 초기화해주기
+
+              setNowPage(1);
+              SetReduxNowFolder({});
+
+              setTagSearch("");
+              disable();
+
+              // 이제 테스트 완료 됬으니 이거를 folderItems.folder_contents에 싹 넣으면 될 듯 map 한거를
             }
           }}
         >
