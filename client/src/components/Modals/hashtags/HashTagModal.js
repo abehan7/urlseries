@@ -32,7 +32,7 @@ const HashTagModal = ({
   }, [nowPage]);
 
   const {
-    page3Storage: { nowPage2 },
+    page3Storage: { nowPage2, nowFolder2 },
   } = useSelector((state) => state);
   // ================================= 리덕스 END =================================
 
@@ -70,17 +70,19 @@ const HashTagModal = ({
           />
         )}
 
-        {nowPage < 3 && (
-          <div className="right-arrow">
-            <IoIosArrowForward
-              onClick={() => {
-                if (nowPage < 3) {
-                  setNowPage((val) => val + 1);
-                }
-              }}
-            />
-          </div>
-        )}
+        {(nowPage === 1 || nowFolder2?.folder_name !== undefined) &&
+          nowPage !== 3 && (
+            <div className="right-arrow">
+              <IoIosArrowForward
+                onClick={() => {
+                  if (nowPage < 3) {
+                    console.log(nowFolder2);
+                    setNowPage((val) => val + 1);
+                  }
+                }}
+              />
+            </div>
+          )}
       </div>
     </>
   );

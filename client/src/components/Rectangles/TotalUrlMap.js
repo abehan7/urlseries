@@ -9,29 +9,9 @@ const TotalUrlMap = ({
   getUrls,
   setGetUrls,
   editMode,
-  shareMode,
   setMyFav,
   deleteMode,
 }) => {
-  // const [deleteList, setDeleteList] = useState([]);
-
-  // const TrafficLight = ({
-  //   totalList: list,
-  //   setTotalList: setList,
-  //   clickedUrl: value,
-  // }) => {
-  //   if (!list.includes(value._id)) {
-  //     setList([...list, value._id]);
-  //   } else {
-  //     setList(
-  //       list.filter((val) => {
-  //         return val !== value._id;
-  //       })
-  //     );
-  //   }
-  //   console.log(list);
-  // };
-
   window.onscroll = () => {
     const circle = document.querySelector(".detail-container");
     grabNowValue.cancel();
@@ -83,6 +63,11 @@ const TotalUrlMap = ({
                   </div>
                 </>
               )}
+              <img
+                className="urlFavicon"
+                src={`http://www.google.com/s2/favicons?domain=${value.url}`}
+                alt=""
+              />
               <div className="valueId">{value.url_id}</div>
               <div className="just-bar">|</div>
               <div className="valueTitle">{value.url_title}</div>

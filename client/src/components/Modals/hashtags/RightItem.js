@@ -3,24 +3,8 @@ import { useSelector } from "react-redux";
 
 const RightItem = ({ assignedTags, removeToggle }) => {
   const {
-    page3Storage: { nowPage2 },
+    page3Storage: { nowPage2, nowFolder2 },
   } = useSelector((state) => state);
-
-  // const mapList = () => {
-  //   assignedTags.map((val, i) => {
-  //     return (
-  //       <div
-  //         key={i}
-  //         className="oneHash"
-  //         onClick={() => {
-  //           removeToggle(val);
-  //         }}
-  //       >
-  //         {val.name}
-  //       </div>
-  //     );
-  //   });
-  // };
 
   return (
     <div className="RightItem">
@@ -29,22 +13,21 @@ const RightItem = ({ assignedTags, removeToggle }) => {
       </div>
       <div className="content hashtag-content">
         <div className="flexWrapBox flexWrap-right">
-          {(nowPage2 === 1
-            ? assignedTags
-            : [{ name: "안녕" }, { name: "지금은" }, { name: "테스트" }]
-          )?.map((val, i) => {
-            return (
-              <div
-                key={i}
-                className="oneHash"
-                onClick={() => {
-                  nowPage2 === 1 && removeToggle(val);
-                }}
-              >
-                {val.name}
-              </div>
-            );
-          })}
+          {(nowPage2 === 1 ? assignedTags : nowFolder2?.folder_contents)?.map(
+            (val, i) => {
+              return (
+                <div
+                  key={i}
+                  className="oneHash"
+                  onClick={() => {
+                    nowPage2 === 1 && removeToggle(val);
+                  }}
+                >
+                  {nowPage2 === 1 ? val.name : val}
+                </div>
+              );
+            }
+          )}
         </div>
       </div>
     </div>

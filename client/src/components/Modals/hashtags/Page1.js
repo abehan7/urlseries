@@ -103,10 +103,11 @@ const Page1 = ({
 
   // =========== 리덕스 START ===========
   const {
-    page3Storage: { nowPage2 },
+    page3Storage: { nowPage2, nowFolder2 },
   } = useSelector((state) => state);
+
   console.log("3페이지 테스트");
-  console.log(nowPage2);
+  console.log(nowFolder2);
   // =========== 리덕스 END ===========
 
   return (
@@ -127,7 +128,7 @@ const Page1 = ({
           <IoArrowBack />
         </div>
         <div className="title">
-          <h2>{nowPage === 3 ? "노마드코더" : "HashTags"}</h2>
+          <h2>{nowPage === 3 ? nowFolder2.folder_name : "HashTags"}</h2>
         </div>
       </div>
 

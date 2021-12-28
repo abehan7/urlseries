@@ -1,15 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import { AiOutlineEdit } from "react-icons/ai";
 import styled from "styled-components";
 import { disable } from "../../../functions/stopScroll";
 import Page2GridItem from "./Page2GridItem";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { Page3Actions } from "../../../store/reducers/editModalP3";
 const Page2 = ({ setNowPage }) => {
-  const [nowFolder, setNowFolder] = useState(0);
+  const [nowFolder, setNowFolder] = useState({});
   const {
     page3Storage: { folderItems },
   } = useSelector((state) => state);
+
+  // const dispatch = useDispatch();
+  // const SetNowFolder2 = (folder2) => {
+  //   dispatch(Page3Actions.SetNowFolder(folder2));
+  // };
+
+  // useEffect(() => {
+  //   SetNowFolder2(nowFolder);
+  // }, [nowFolder]);
 
   const Page2Wrap = styled.div`
     .tagFolder-window {
@@ -63,9 +73,6 @@ const Page2 = ({ setNowPage }) => {
       padding: 0;
       margin: 0;
       cursor: pointer;
-
-      // border-right: 1px solid black;
-      // border-bottom: 1px solid black;
     }
 
     .tagFolder-grid > div path {
@@ -98,9 +105,6 @@ const Page2 = ({ setNowPage }) => {
               <h2>TagFolder</h2>
             </div>
             <div className="hash-btns">
-              {/* <div className="addFolder">
-                <FiPlusSquare />
-              </div> */}
               <div className="editFolder">
                 <AiOutlineEdit />
               </div>
@@ -126,4 +130,4 @@ const Page2 = ({ setNowPage }) => {
   );
 };
 
-export default Page2;
+export default React.memo(Page2);

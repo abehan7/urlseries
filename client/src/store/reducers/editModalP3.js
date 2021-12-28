@@ -3,6 +3,7 @@ import Axios from "axios";
 const SETNOW = "SETNOW";
 const GETFITEM = "GETFITEM";
 const GETFITEM_SUCCESS = "GETFITEM_SUCCESS";
+const SET_FOLDER = "SET_FOLDER";
 
 const folderItemsAPI = async () => {
   const { data } = await Axios.get("http://localhost:3001/folderItems");
@@ -12,6 +13,7 @@ const folderItemsAPI = async () => {
 const initialState = {
   nowPage2: 0,
   folderItems: null,
+  nowFolder2: null,
 };
 
 const SetNowPage = (nowP) => {
@@ -28,17 +30,30 @@ const GetFolderItems = () => {
   };
 };
 
+const SetNowFolder = (folder) => {
+  return {
+    type: SET_FOLDER,
+    payload: folder,
+  };
+};
+
 const editModalP3 = (state = initialState, action) => {
   switch (action.type) {
     case SETNOW:
       return {
+        ...state,
         nowPage2: Number(action.payload),
-        folderItems: state.folderItems,
       };
     case GETFITEM_SUCCESS:
       return {
-        nowPage2: state.nowPage2,
+        ...state,
         folderItems: action.payload,
+      };
+
+    case SET_FOLDER:
+      return {
+        ...state,
+        nowFolder2: action.payload,
       };
 
     default:
@@ -51,6 +66,7 @@ export default editModalP3;
 export const Page3Actions = {
   SetNowPage,
   GetFolderItems,
+  SetNowFolder,
 };
 
 // 나중에 구조 복잡해지면 이렇게 사용하기
