@@ -24,7 +24,8 @@ const RightItem = ({ assignedTags, removeToggle }) => {
                 key={i}
                 className="oneHash"
                 onClick={() => {
-                  nowPage2 === 1 && removeToggle(val);
+                  // nowPage2 === 1 && removeToggle(val);
+                  removeToggle(val);
                 }}
               >
                 {nowPage2 === 1 ? val.name : val}

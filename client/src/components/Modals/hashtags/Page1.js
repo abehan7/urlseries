@@ -60,30 +60,25 @@ const Page1 = ({
 
   // =========== [2] 토글 클릭 해제 START ===========
   const ToggleUnClicked = ({ val }) => {
+    nowPage2 === 1 ? (val.assigned = 0) : (val.folderAssigned = 0);
+
+    //공통
+    setTotalTags(
+      totalTags.map((tag) => {
+        return val.name === tag.name ? val : tag;
+      })
+    );
+
     if (nowPage2 === 1) {
-      val.assigned = 0;
-      setTotalTags(
-        totalTags.map((tag) => {
-          return val.name === tag.name ? val : tag;
-        })
-      );
       setAssignedTags(
         assignedTags.filter((tag2) => {
           return tag2.name !== val.name;
         })
       );
-      console.log(val);
     } else if (nowPage2 === 3) {
-      console.log("3에서 토글 해제");
-      val.folderAssigned = 0;
       nowFolder2.folder_contents = nowFolder2.folder_contents.filter((one) => {
         return val.name !== one;
       });
-      setTotalTags(
-        totalTags.map((tag) => {
-          return val.name === tag.name ? val : tag;
-        })
-      );
     }
   };
   // =========== 토글 클릭 해제 END ===========
@@ -99,23 +94,35 @@ const Page1 = ({
 
   // =========== [4] 오른쪽 토글 없애기 기능 START ===========
   const removeToggle = (val) => {
-    setTotalTags(
-      totalTags.map((tag) => {
-        return val.name === tag.name
-          ? {
-              name: tag.name,
-              assigned: 0,
-              origin: tag.origin,
-            }
-          : tag;
-      })
-    );
+    if (nowPage2 === 1) {
+      setTotalTags(
+        totalTags.map((tag) => {
+          return val.name === tag.name
+            ? {
+                name: tag.name,
+                assigned: 0,
+                origin: tag.origin,
+              }
+            : tag;
+        })
+      );
 
-    setAssignedTags(
-      assignedTags.filter((tag2) => {
-        return tag2 !== val;
-      })
-    );
+      setAssignedTags(
+        assignedTags.filter((tag2) => {
+          return tag2 !== val;
+        })
+      );
+    } else if (nowPage2 === 3) {
+      console.log("3P");
+      nowFolder2.folder_contents = nowFolder2.folder_contents.filter((one) => {
+        return val !== one;
+      });
+      setTotalTags(
+        totalTags.map((tag) => {
+          return tag.name === val ? { ...tag, folderAssigned: 0 } : tag;
+        })
+      );
+    }
   };
   // =========== 오른쪽 토글 없애기 기능 END ===========
 
@@ -146,7 +153,7 @@ const Page1 = ({
               setTotalTags,
               setTagSearch,
             });
-            setNowPage(1);
+            nowPage === 3 && setNowPage(1);
             SetReduxNowFolder({});
             disable();
           }}
