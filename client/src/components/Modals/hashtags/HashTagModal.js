@@ -67,6 +67,7 @@ const HashTagModal = ({
             totalTags={totalTags}
             setTotalTags={setTotalTags}
             nowPage={nowPage}
+            setNowPage={setNowPage}
           />
         )}
 

@@ -119,6 +119,7 @@ const Page2 = ({ setNowPage }) => {
                     folder={folder}
                     setNowFolder={setNowFolder}
                     nowFolder={nowFolder}
+                    key={folder._id}
                   />
                 );
               })}

@@ -27,7 +27,7 @@ import LeftIcons from "../components/TopIcons/LeftIcons";
 import RightIcons from "../components/TopIcons/RightIcons";
 // AsideTags
 import AsideTag from "../components/AsideTags/AsideTag";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../store/reducers/editModalP3";
 
 const MainPage = () => {
@@ -104,6 +104,22 @@ const MainPage = () => {
       setAssignedTags([...preTags]);
     });
   }, []);
+
+  const {
+    page3Storage: { nowFolder2 },
+  } = useSelector((state) => state);
+
+  useEffect(() => {
+    setTotalTags(
+      totalTags.map((val) => {
+        nowFolder2?.folder_contents?.includes(val.name) //여기 표현식 써야할 듯
+          ? (val.folderAssigned = 1)
+          : (val.folderAssigned = 0);
+        val.folderAssigned === 1 && console.log(val);
+        return val;
+      })
+    );
+  }, [nowFolder2]);
 
   // totalurl 변하면 전체 tag 뽑은 다음에 users에 있는 totaltags수정하기 axios해서
   // FIXME: 문제의 원인이 여기였어
