@@ -38,7 +38,10 @@ const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
             }}
             key={value.url_id}
           >
-            <div className="valueId">{value.url_id}</div>
+            <img
+              id="urlFavicon"
+              src={"http://www.google.com/s2/favicons?domain=" + value.url}
+            ></img>
             <div className="just-bar">|</div>
             <div className="valueTitle">{value.url_title}</div>
           </div>
