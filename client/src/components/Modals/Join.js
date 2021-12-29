@@ -1,5 +1,6 @@
 import React, { Component, useState } from "react";
 // import "bootstrap/dist/css/bootstrap.min.css";
+import styled from "styled-components";
 import axios from "axios";
 import "./Join.css";
 //-------------------------
@@ -8,7 +9,8 @@ import { GoogleLogin, GoogleLogout } from "react-google-login";
 //구글로그인기능
 
 export function Login() {
-  const clientId = "";
+  const clientId =
+    "828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com";
 
   const [showLoginButton, setShowLoginButton] = useState(true);
   const [showLogoutButton, setShowLogoutButton] = useState(false);
@@ -62,6 +64,10 @@ export function Login() {
 }
 
 //간단회원가입 기능
+const Joinstyle = styled.div`
+  .container {
+  }
+`;
 
 export class Join extends Component {
   constructor() {
@@ -111,7 +117,7 @@ export class Join extends Component {
 
   render() {
     return (
-      <div>
+      <Joinstyle>
         <div className="container">
           <div className="form-div">
             <form onSubmit={this.onSubmit}>
@@ -147,7 +153,7 @@ export class Join extends Component {
             </form>
           </div>
         </div>
-      </div>
+      </Joinstyle>
     );
   }
 }
