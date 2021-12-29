@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const db = require("./models");
-const { somethingIsNotMaching, difference } = require("./Funcs");
+// const { somethingIsNotMaching, difference } = require("./Funcs");
+const puppeteer = require("puppeteer");
 
 dotenv.config({ path: "./.env" });
 
@@ -326,6 +327,105 @@ app.delete("/deleteUrl/:id", async (req, res) => {
   await db.Urls.findOneAndRemove({ _id: id });
   res.send("item deleted");
   console.log("item deleted");
+});
+
+// [1] ====================================== 퍼펫티어 ======================================
+
+app.post("/crawling", (req, res) => {
+  const { url } = req.body;
+  // console.log(url);
+  (async () => {
+    const browser = await puppeteer.launch({ headless: true });
+    const page = await browser.newPage();
+    await page.goto(url);
+    const title = await page.title();
+    const siteNames = [
+      { url: "youtube", ko_name: "유튜브" },
+      { url: "tistory", ko_name: "티스토리" },
+      { url: "velog", ko_name: "벨로그" },
+      { url: "naver", ko_name: "네이버" },
+      { url: "instagram", ko_name: "인스타그램" },
+      { url: "evernote", ko_name: "에버노트" },
+      { url: "stackoverflow", ko_name: "스택오버플로우" },
+    ];
+
+    // const testurl = url.split("//");
+    // testurl[1].includes("www")
+    //   ? console.log(testurl[1].split("/")[0].split(".")[1])
+    //   : console.log(testurl[1].split("/")[0].split(".")[0]);
+
+    const siteInfo = siteNames.find((site) =>
+      url.toLowerCase().includes(site.url)
+    ) || { ko_name: "notExist" };
+    // console.log(siteInfo);
+
+    let hashtags = [];
+    siteInfo.ko_name !== "notExist" && (hashtags = [`#${siteInfo.ko_name}`]);
+
+    switch (siteInfo.ko_name) {
+      case "유튜브":
+        await page.waitForSelector("#text-container");
+        try {
+          const grabAuthor = await page.evaluate(() => {
+            const author = document.querySelector("#text-container");
+            return `#${author.innerText}`;
+          });
+          hashtags.push(grabAuthor);
+        } catch (error) {
+          console.log(error);
+        }
+      case "notExist":
+        const testurl = url.split("//");
+        testurl[1].includes("www")
+          ? hashtags.push(`#${testurl[1].split("/")[0].split(".")[1]}`)
+          : hashtags.push(`#${testurl[1].split("/")[0].split(".")[0]}`);
+
+      default:
+    }
+    console.log(hashtags);
+
+    // const grabData = await page.evaluate(() => {
+    //   const data = document.querySelector("#info h1");
+    //   return data.textContent;
+    // });
+    // await page.waitForSelector("#text-container");
+
+    // const grabData = await page.evaluate(() => {
+    //   const author = document.querySelector("#text-container");
+    //   return author.innerText;
+    // });
+
+    // console.log(grabData);
+
+    res.json(title);
+
+    // await browser.close();
+  })();
+  // const options = {
+  //   headless: true,
+  //   args: ["--fast-start", "--disable-extensions", "--no-sandbox"],
+  //   ignoreHTTPSErrors: true,
+  // };
+  // await puppeteer.launch(options);
+
+  // switch (siteName) {
+  //   case "YOUTUBE":
+  //     return 1;
+  //   case "NEVER":
+  //     return 1;
+  //   case "INSTAGRAM":
+  //     return 1;
+  //   case "FACEBOOK":
+  //     return 1;
+  //   case "TWITTER":
+  //     return 1;
+  //   case "GOOGLE":
+  //     return 1;
+  //   case "GOOGLE":
+  //     return 1;
+  //   default:
+  //     return 1;
+  // }
 });
 
 app.listen(3001, () => {
