@@ -30,8 +30,12 @@ import AsideTag from "../components/AsideTags/AsideTag";
 import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../store/reducers/editModalP3";
 
+// TODO: 12/29/수) 오늘 내가 집중해야할  useState => setAssignedTags / initAssigned
+// #1 폴더 useState만들기
+// #2 그거 aside에 넣기
+// #3 바로 옆에 넣을 지 아니면 아래에 넣을지 고민해보기
+
 const MainPage = () => {
-  // 아~빙고
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
 
   const [BoxTags_First, setBoxTags_First] = useState(true);
@@ -101,6 +105,8 @@ const MainPage = () => {
       initAssigned.forEach((tag) => {
         preTags.push({ name: tag, assigned: 1, origin: 1 });
       });
+      // FIXME: 12/29/수) 오늘 내가 집중해야할  useState => setAssignedTags / initAssigned
+
       setAssignedTags([...preTags]);
     });
   }, []);
@@ -478,16 +484,3 @@ export default MainPage;
 // document.querySelector(".search-box input").oncontextmenu = () => {
 //   return true;
 // };
-
-// TODO:리덕스
-// function mapStateToProps(state) {
-//   return { todos: state };
-// }
-
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     addToDo: (text) => dispatch(actionCreators.addToDo(text)),
-//     deleteToDo: (text) => dispatch(actionCreators.deleteToDo(text)),
-//   };
-// }
-// export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

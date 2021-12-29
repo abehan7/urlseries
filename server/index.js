@@ -349,15 +349,9 @@ app.post("/crawling", (req, res) => {
       { url: "stackoverflow", ko_name: "스택오버플로우" },
     ];
 
-    // const testurl = url.split("//");
-    // testurl[1].includes("www")
-    //   ? console.log(testurl[1].split("/")[0].split(".")[1])
-    //   : console.log(testurl[1].split("/")[0].split(".")[0]);
-
     const siteInfo = siteNames.find((site) =>
       url.toLowerCase().includes(site.url)
     ) || { ko_name: "notExist" };
-    // console.log(siteInfo);
 
     let hashtags = [];
     siteInfo.ko_name !== "notExist" && (hashtags = [`#${siteInfo.ko_name}`]);
@@ -374,32 +368,19 @@ app.post("/crawling", (req, res) => {
         } catch (error) {
           console.log(error);
         }
+        break;
       case "notExist":
         const testurl = url.split("//");
         testurl[1].includes("www")
           ? hashtags.push(`#${testurl[1].split("/")[0].split(".")[1]}`)
           : hashtags.push(`#${testurl[1].split("/")[0].split(".")[0]}`);
+        break;
 
       default:
     }
+    await browser.close();
     console.log(hashtags);
-
-    // const grabData = await page.evaluate(() => {
-    //   const data = document.querySelector("#info h1");
-    //   return data.textContent;
-    // });
-    // await page.waitForSelector("#text-container");
-
-    // const grabData = await page.evaluate(() => {
-    //   const author = document.querySelector("#text-container");
-    //   return author.innerText;
-    // });
-
-    // console.log(grabData);
-
-    res.json(title);
-
-    // await browser.close();
+    res.json({ title, hashtags });
   })();
   // const options = {
   //   headless: true,
