@@ -341,6 +341,7 @@ app.post("/crawling", (req, res) => {
     const title = await page.title();
     const siteNames = [
       { url: "youtube", ko_name: "유튜브" },
+      { url: "youtu", ko_name: "유튜브" },
       { url: "tistory", ko_name: "티스토리" },
       { url: "velog", ko_name: "벨로그" },
       { url: "naver", ko_name: "네이버" },
