@@ -6,10 +6,9 @@ import {
   onMouseLeave,
 } from "./movingModalFuncs";
 import { whenIclickUrl } from "./FuncTotalUrlMap";
-// import { actionCreators } from "../../store";
 import { useDispatch } from "react-redux";
 import { actionCreators2 } from "../../store/reducers/filteredTags.js";
-
+// TODO: 12/29) UrlsByHashTag / filterdTags(리덕스) / AsiedTag
 const UrlsByHashTag = ({
   realTotalUrls,
   setRealTotalUrls,
@@ -21,7 +20,6 @@ const UrlsByHashTag = ({
   addUrls,
 }) => {
   const dispatch = useDispatch();
-  // const { value } = useSelector(state => state.value)
   const addUrls2 = (url) => {
     dispatch(actionCreators2.addFiltered(url));
   };

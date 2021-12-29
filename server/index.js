@@ -336,52 +336,58 @@ app.post("/crawling", (req, res) => {
   // console.log(url);
   (async () => {
     const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
-    await page.goto(url);
-    const title = await page.title();
-    const siteNames = [
-      { url: "youtube", ko_name: "유튜브" },
-      { url: "youtu", ko_name: "유튜브" },
-      { url: "tistory", ko_name: "티스토리" },
-      { url: "velog", ko_name: "벨로그" },
-      { url: "naver", ko_name: "네이버" },
-      { url: "instagram", ko_name: "인스타그램" },
-      { url: "evernote", ko_name: "에버노트" },
-      { url: "stackoverflow", ko_name: "스택오버플로우" },
-    ];
+    try {
+      const page = await browser.newPage();
 
-    const siteInfo = siteNames.find((site) =>
-      url.toLowerCase().includes(site.url)
-    ) || { ko_name: "notExist" };
+      await page.goto(url);
+      const title = await page.title();
+      const siteNames = [
+        { url: "youtube", ko_name: "유튜브" },
+        { url: "youtu", ko_name: "유튜브" },
+        { url: "tistory", ko_name: "티스토리" },
+        { url: "velog", ko_name: "벨로그" },
+        { url: "naver", ko_name: "네이버" },
+        { url: "instagram", ko_name: "인스타그램" },
+        { url: "evernote", ko_name: "에버노트" },
+        { url: "stackoverflow", ko_name: "스택오버플로우" },
+      ];
 
-    let hashtags = [];
-    siteInfo.ko_name !== "notExist" && (hashtags = [`#${siteInfo.ko_name}`]);
+      const siteInfo = siteNames.find((site) =>
+        url.toLowerCase().includes(site.url)
+      ) || { ko_name: "notExist" };
 
-    switch (siteInfo.ko_name) {
-      case "유튜브":
-        await page.waitForSelector("#text-container");
-        try {
-          const grabAuthor = await page.evaluate(() => {
-            const author = document.querySelector("#text-container");
-            return `#${author.innerText}`;
-          });
-          hashtags.push(grabAuthor);
-        } catch (error) {
-          console.log(error);
-        }
-        break;
-      case "notExist":
-        const testurl = url.split("//");
-        testurl[1].includes("www")
-          ? hashtags.push(`#${testurl[1].split("/")[0].split(".")[1]}`)
-          : hashtags.push(`#${testurl[1].split("/")[0].split(".")[0]}`);
-        break;
+      let hashtags = [];
+      siteInfo.ko_name !== "notExist" && (hashtags = [`#${siteInfo.ko_name}`]);
 
-      default:
+      switch (siteInfo.ko_name) {
+        case "유튜브":
+          await page.waitForSelector("#text-container");
+          try {
+            const grabAuthor = await page.evaluate(() => {
+              const author = document.querySelector("#text-container");
+              return `#${author.innerText}`;
+            });
+            hashtags.push(grabAuthor);
+          } catch (error) {
+            console.log(error);
+          }
+          break;
+        case "notExist":
+          const testurl = url.split("//");
+          testurl[1].includes("www")
+            ? hashtags.push(`#${testurl[1].split("/")[0].split(".")[1]}`)
+            : hashtags.push(`#${testurl[1].split("/")[0].split(".")[0]}`);
+          break;
+
+        default:
+      }
+      await browser.close();
+      await console.log(hashtags);
+      await res.json({ title, hashtags });
+    } catch (error) {
+      console.log(error.name);
+      await res.json({ title: "제목이 존재하지 않습니다.", hashtags: [""] });
     }
-    await browser.close();
-    console.log(hashtags);
-    res.json({ title, hashtags });
   })();
   // const options = {
   //   headless: true,
@@ -411,5 +417,6 @@ app.post("/crawling", (req, res) => {
 });
 
 app.listen(3001, () => {
+  console.clear();
   console.log("SERVER RUNNING ON PORT 3001");
 });

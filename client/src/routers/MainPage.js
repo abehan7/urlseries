@@ -31,9 +31,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../store/reducers/editModalP3";
 
 // TODO: 12/29/수) 오늘 내가 집중해야할  useState => setAssignedTags / initAssigned
-// #1 폴더 useState만들기
+// #1 폴더 useState만들기 => boxtags에 넣으면 될 듯
 // #2 그거 aside에 넣기
 // #3 바로 옆에 넣을 지 아니면 아래에 넣을지 고민해보기
+
+// TODO: 12/29) UrlsByHashTag / filterdTags(리덕스) / AsiedTag
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -57,6 +59,10 @@ const MainPage = () => {
 
   const dispatch = useDispatch();
 
+  const api = Axios.create({
+    baseURL: `http://localhost:3001/`,
+  });
+
   const setFolderItemRedux = () => {
     dispatch(Page3Actions.GetFolderItems());
   };
@@ -64,17 +70,6 @@ const MainPage = () => {
   useEffect(() => {
     setFolderItemRedux();
   }, []);
-
-  const api = Axios.create({
-    baseURL: `http://localhost:3001/`,
-  });
-
-  // 위에 useState 헷갈릴 경우 아래 콘솔로 테스트
-  // console.log("BoxTags : ", BoxTags); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
-  // console.log("hashList : ", hashList); // 현재 전체 url의 해쉬태그들
-  // console.log("totalUrls : ", totalUrls); // 전체 url들
-
-  // 최초에 접속하면 여기 useEffect안에 있는 것들 실행시킴
 
   useEffect(() => {
     // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
