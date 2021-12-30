@@ -350,6 +350,7 @@ app.post("/crawling", (req, res) => {
         { url: "instagram", ko_name: "인스타그램" },
         { url: "evernote", ko_name: "에버노트" },
         { url: "stackoverflow", ko_name: "스택오버플로우" },
+        { url: "mozilla", ko_name: "모질라" },
       ];
 
       const siteInfo = siteNames.find((site) =>
@@ -372,6 +373,7 @@ app.post("/crawling", (req, res) => {
             console.log(error);
           }
           break;
+
         case "notExist":
           const testurl = url.split("//");
           testurl[1].includes("www")
