@@ -193,6 +193,17 @@ app.post("/addUrl", async (req, res) => {
     console.log(err);
   }
 });
+// [4] ==================================== 폴더 추가 ====================================
+app.post("/addFolder", (req, res) => {
+  const { folder } = req.body;
+  console.log(folder);
+  const newFolder = new db.Folders({
+    ...folder,
+  });
+  // console.log(newFolder);
+  newFolder.save();
+  res.json(newFolder);
+});
 
 // [1] ==================================== url수정 용도 put ====================================
 
@@ -335,7 +346,12 @@ app.post("/crawling", (req, res) => {
   const { url } = req.body;
   // console.log(url);
   (async () => {
-    const browser = await puppeteer.launch({ headless: true });
+    const options = {
+      headless: true,
+      args: ["--fast-start", "--disable-extensions", "--no-sandbox"],
+      ignoreHTTPSErrors: true,
+    };
+    const browser = await puppeteer.launch(options);
     try {
       const page = await browser.newPage();
 
@@ -397,25 +413,6 @@ app.post("/crawling", (req, res) => {
   //   ignoreHTTPSErrors: true,
   // };
   // await puppeteer.launch(options);
-
-  // switch (siteName) {
-  //   case "YOUTUBE":
-  //     return 1;
-  //   case "NEVER":
-  //     return 1;
-  //   case "INSTAGRAM":
-  //     return 1;
-  //   case "FACEBOOK":
-  //     return 1;
-  //   case "TWITTER":
-  //     return 1;
-  //   case "GOOGLE":
-  //     return 1;
-  //   case "GOOGLE":
-  //     return 1;
-  //   default:
-  //     return 1;
-  // }
 });
 
 app.listen(3001, () => {

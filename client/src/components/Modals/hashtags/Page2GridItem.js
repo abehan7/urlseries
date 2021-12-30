@@ -21,6 +21,12 @@ const Page2GridItem = ({ folder, setNowFolder, nowFolder }) => {
     <div
       className="Page2GridItem"
       onClick={() => {
+        if (
+          document.querySelector(".addFolder-icon").classList[1] === "closed"
+        ) {
+          return;
+        }
+        console.log(document.querySelector(".addFolder-icon").classList);
         if (nowFolder2?._id === folder._id) {
           // setNowFolder({});
           SetReduxNowFolder({});

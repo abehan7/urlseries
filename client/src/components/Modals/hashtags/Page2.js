@@ -10,10 +10,9 @@ import { Page3Actions } from "../../../store/reducers/editModalP3";
 import { FiPlusSquare } from "react-icons/fi";
 const Page2 = ({ setNowPage }) => {
   const [nowFolder, setNowFolder] = useState({});
-  const [addBtnClicked, setAddBtnClicked] = useState(false);
 
   const {
-    page3Storage: { folderItems },
+    page3Storage: { folderItems, nowFolder2 },
   } = useSelector((state) => state);
 
   const dispatch = useDispatch();
@@ -77,15 +76,14 @@ const Page2 = ({ setNowPage }) => {
       cursor: pointer;
     }
 
-    .addItem {
+    .tagFolder-grid .addItem {
       display: none;
     }
 
     .tempModal {
       position: absolute;
-      transition: "1s";
+      transition: 1s;
 
-      // visibility: hidden;
       cursor: default;
       display: flex;
       align-items: center;
@@ -98,11 +96,22 @@ const Page2 = ({ setNowPage }) => {
       border-radius: 6px;
     }
     .tagFolder-grid > div path {
-      // color: #fbb917;
     }
 
     .folder-clicked {
       color: #fbb917;
+    }
+    .tagFolder-grid .closed {
+      display: none;
+    }
+
+    .tagFolder-grid .back {
+      display: none;
+      transition: 200ms;
+    }
+    .tagFolder-grid .open {
+      display: flex;
+      transition: 200ms;
     }
   `;
 
@@ -125,7 +134,7 @@ const Page2 = ({ setNowPage }) => {
               <IoArrowBack />
             </div>
             <div className="title">
-              <h2>TagFolder</h2>
+              <h2>폴더</h2>
             </div>
             <div className="hash-btns">
               <div className="editFolder">
@@ -138,37 +147,66 @@ const Page2 = ({ setNowPage }) => {
             <div className="tagFolder-grid">
               <div
                 className="addFolder-icon"
-                onClick={() => {
-                  setAddBtnClicked((val) => !val);
-                  document.querySelector(".tempModal");
+                onClick={(e) => {
+                  if (Object.keys(nowFolder2).length !== 0) {
+                    return;
+                  }
+                  e.target.classList.toggle("closed");
+                  document.querySelector(".back").classList.toggle("open");
+                  document.querySelector(".addItem").classList.toggle("open");
+                  console.log(Object.keys(nowFolder2).length);
                 }}
               >
-                <div>{!addBtnClicked ? <FiPlusSquare /> : <TiBackspace />}</div>
-
-                <div>{!addBtnClicked ? "추가하기" : ""}</div>
-              </div>
-
-              {addBtnClicked && (
-                <div className="addItem">
-                  <div className="tempModal">
-                    <div>폴더이름을 작성후 [+] 버튼을 클릭해주세요</div>
-                  </div>
-                  <div className="addFolder-Icon-moved">
-                    <FiPlusSquare />
-                  </div>
-                  <div>
-                    <input
-                      placeholder="@폴더이름@"
-                      style={{
-                        border: "none",
-                        padding: "0",
-                        textAlign: "center",
-                        fontSize: "15px",
-                      }}
-                    />
-                  </div>
+                <div style={{ pointerEvents: "none" }}>
+                  <FiPlusSquare />
                 </div>
-              )}
+
+                <div style={{ pointerEvents: "none" }}> 추가하기</div>
+              </div>
+              <div
+                className="back"
+                onClick={(e) => {
+                  document.querySelector(".folder-name input").value = "";
+                  document
+                    .querySelector(".addFolder-icon")
+                    .classList.toggle("closed");
+                  e.target.classList.toggle("open");
+                  document.querySelector(".addItem").classList.toggle("open");
+                }}
+              >
+                <TiBackspace style={{ pointerEvents: "none" }} />
+              </div>
+              <div
+                className="addItem"
+                onClick={(e) => {
+                  if (
+                    e.target === document.querySelector(".tempModal") ||
+                    e.target === document.querySelector(".tempModal div") ||
+                    e.target === document.querySelector(".folder-name input")
+                  ) {
+                    return;
+                  }
+                  document.querySelector(".folder-name input").value = "";
+                }}
+              >
+                <div className="tempModal">
+                  <div>폴더이름을 작성후 [+] 버튼을 클릭해주세요</div>
+                </div>
+                <div className="addFolder-Icon-moved ">
+                  <FiPlusSquare />
+                </div>
+                <div className="folder-name">
+                  <input
+                    placeholder="@폴더이름@"
+                    style={{
+                      border: "none",
+                      padding: "0",
+                      textAlign: "center",
+                      fontSize: "15px",
+                    }}
+                  />
+                </div>
+              </div>
 
               {folderItems.map((folder) => {
                 return (
