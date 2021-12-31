@@ -59,7 +59,7 @@ const RecentSearched = ({ recentSearched, setRecentSearch }) => {
                   src={`http://www.google.com/s2/favicons?domain=${url.url}`}
                   alt=""
                 />
-                <div class="Searched-url-Id">{url.url_id}</div>
+                {/* <div class="Searched-url-Id">{url.url_id}</div> */}
                 <div class="just-bar"> | </div>
                 <div class="Searched-url-Title">{url.url_title}</div>
               </div>

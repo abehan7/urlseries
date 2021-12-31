@@ -14,7 +14,7 @@ const folderItemsAPI = async () => {
 const initialState = {
   nowPage2: 0,
   folderItems: null,
-  nowFolder2: null,
+  nowFolder2: {},
 };
 
 const SetNowPage = (nowP) => {
@@ -48,22 +48,26 @@ const SetNowFolder = (folder) => {
 const editModalP3 = (state = initialState, action) => {
   switch (action.type) {
     case SETNOW:
+      // 해쉬모달 현재 페이지
       return {
         ...state,
         nowPage2: Number(action.payload),
       };
+    // API CALL 맨 처음에 화면 렌더링 될 때 <전체 폴더 아이템>
     case GETFITEM_SUCCESS:
       return {
         ...state,
         folderItems: action.payload,
       };
-
+    // 여기는 어디서 사용되는지 잘 모르겠어
+    // 일단 page2에서 folderItems 추가할 때 사용
+    // 그러면 내부 모양이 어떻게 생겼는지 확인해봐야겠다 folderItems 이거
     case EDIT_FITEMS:
       return {
         ...state,
         folderItems: action.payload,
       };
-
+    // 현재 클릭한 폴더
     case SET_FOLDER:
       return {
         ...state,

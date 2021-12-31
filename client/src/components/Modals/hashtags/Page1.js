@@ -176,7 +176,7 @@ const Page1 = ({
           <IoArrowBack />
         </div>
         <div className="title">
-          <h2>{nowPage === 3 ? nowFolder2.folder_name : "HashTags"}</h2>
+          <h2>{nowPage === 3 ? nowFolder2.folder_name : "해쉬태그"}</h2>
         </div>
       </div>
 

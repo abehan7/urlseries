@@ -1,6 +1,8 @@
 const ADD = "ADD";
 const DELETE = "DELETE";
 
+// 이거 어디에서 사용되지?
+// 필터된 태그들이니까 휴지통에서 사용된거같아
 const addFiltered = (url) => {
   return {
     type: ADD,

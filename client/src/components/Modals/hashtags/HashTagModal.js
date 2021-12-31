@@ -25,6 +25,9 @@ const HashTagModal = ({
   const setNowPageRedux = (page) => {
     dispatch(Page3Actions.SetNowPage(page));
   };
+  const SetReduxNowFolder = (folder) => {
+    dispatch(Page3Actions.SetNowFolder(folder));
+  };
 
   useEffect(() => {
     setNowPageRedux(nowPage);
@@ -46,6 +49,7 @@ const HashTagModal = ({
             <IoIosArrowBack
               onClick={() => {
                 setNowPage((val) => val - 1);
+                SetReduxNowFolder({});
               }}
             />
           </div>

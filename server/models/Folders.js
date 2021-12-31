@@ -13,6 +13,7 @@ const FolderSchema = new mongoose.Schema({
   folder_contents: {
     type: Array,
     required: false,
+    default: [],
   },
   folder_date_first: {
     type: Date,

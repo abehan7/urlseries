@@ -81,6 +81,22 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
                 placeholder="URL을 추가해주세요"
                 onChange={(e) => {
                   setUrl(e.target.value);
+
+                  if (e.target.value.length > 5) {
+                    setTitle("잠시만 기다려주세요...");
+                    setHashTag("잠시만 기다려주세요...");
+                    Axios.post("http://localhost:3001/crawling", {
+                      url: e.target.value,
+                    }).then((response) => {
+                      const { data } = response;
+                      console.log(data);
+                      setTitle(data.title);
+                      setHashTag(data.hashtags.join(""));
+                    });
+                  } else {
+                    setTitle("");
+                    setHashTag("");
+                  }
                 }}
               />
             </div>
