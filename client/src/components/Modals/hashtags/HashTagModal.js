@@ -39,21 +39,36 @@ const HashTagModal = ({
   } = useSelector((state) => state);
   // ================================= 리덕스 END =================================
 
+  // 스타일 오른쪽 화살표 남겨두기 hidden으로
+  const arrowStyleHidden = {
+    visible: "hidden",
+    opacity: "0",
+    // transition: "300ms",
+    pointerEvents: "none",
+  };
+
+  const arrowStyleShowUp = {
+    visible: "visible",
+    opacity: "1",
+  };
+
   return (
     <>
       <div id="modal" className="modal-overlay hash-overlay">
         <div style={{ color: "white" }}>{nowPage2}</div>
 
-        {nowPage > 1 && (
-          <div className="left-arrow">
-            <IoIosArrowBack
-              onClick={() => {
+        <div className="left-arrow">
+          <IoIosArrowBack
+            onClick={() => {
+              if (nowPage > 1) {
                 setNowPage((val) => val - 1);
                 SetReduxNowFolder({});
-              }}
-            />
-          </div>
-        )}
+              }
+            }}
+            style={nowPage > 1 ? arrowStyleShowUp : arrowStyleHidden}
+          />
+        </div>
+
         {nowPage === 1 && (
           <Page1
             setAssignedTags={setAssignedTags}
@@ -75,22 +90,33 @@ const HashTagModal = ({
           />
         )}
 
-        {(nowPage === 1 || nowFolder2?.folder_name !== undefined) &&
-          nowPage !== 3 && (
-            <div className="right-arrow">
-              <IoIosArrowForward
-                onClick={() => {
-                  if (nowPage < 3) {
-                    console.log(nowFolder2);
-                    setNowPage((val) => val + 1);
-                  }
-                }}
-              />
-            </div>
-          )}
+        <div
+          className="right-arrow"
+          style={
+            (nowPage === 1 || nowFolder2?.folder_name !== undefined) &&
+            nowPage !== 3
+              ? arrowStyleShowUp
+              : arrowStyleHidden
+          }
+        >
+          <IoIosArrowForward
+            onClick={() => {
+              if (nowPage < 3) {
+                console.log(nowFolder2);
+                setNowPage((val) => val + 1);
+              }
+            }}
+          />
+        </div>
       </div>
     </>
   );
 };
 
 export default HashTagModal;
+
+// (nowPage === 1 || nowFolder2?.folder_name !== undefined) &&
+//           nowPage !== 3 &&
+
+// (nowPage === 1 || nowFolder2?.folder_name !== undefined) &&
+//           nowPage !== 3 &&

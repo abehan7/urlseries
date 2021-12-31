@@ -238,6 +238,10 @@
   flex: 1;
 }
 
+.delete-click-icon {
+  font-size: 20px;
+}
+
 .share-write svg {
   cursor: pointer;
 }
@@ -266,8 +270,14 @@
   transition: 200ms ease-in-out;
 }
 .delete-mode-click-container div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: pointer;
 }
+/* .delete-ment {
+  font-size: 14px;
+} */
 
 .delete-icon {
   display: flex;
@@ -277,7 +287,7 @@
 
 .delete-icon > div {
   /* transition: all 1s; */
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .Rectangle {
@@ -373,7 +383,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  grid-column: span 3;
+  grid-column: span 4;
 }
 .text-three-container > .Target-Element:hover {
   cursor: auto;

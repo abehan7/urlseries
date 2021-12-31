@@ -1,5 +1,10 @@
 import React, { useEffect, useMemo, useCallback } from "react";
 import { AiFillDelete, AiOutlineDelete } from "react-icons/ai";
+import {
+  IoCheckmarkCircleOutline,
+  IoCheckmarkCircleSharp,
+} from "react-icons/io5";
+import { MdOutlineChecklist, MdOutlineDeleteForever } from "react-icons/md";
 import { useSelector } from "react-redux";
 
 // import { actionCreators } from "../../store.js";
@@ -117,9 +122,17 @@ const LeftIcons = (props) => {
               style={deleteMode ? TrashCanSlideStyle : style2}
             >
               <div className="delete-mode-click-total" onClick={ClickTotal}>
-                전체선택
+                <div className="delete-click-icon">
+                  <IoCheckmarkCircleSharp />
+                </div>
+                <div className="delete-ment">전체선택</div>
               </div>
-              <div onClick={ClickOffUrls}>선택취소</div>
+              <div onClick={ClickOffUrls}>
+                <div className="delete-click-icon">
+                  <IoCheckmarkCircleOutline />
+                </div>
+                <div className="delete-ment"> 선택취소</div>
+              </div>
               <div
                 className="delete--mode--delete--total"
                 onClick={() => {
@@ -128,7 +141,10 @@ const LeftIcons = (props) => {
                   });
                 }}
               >
-                삭제하기
+                <div className="delete-click-icon">
+                  <MdOutlineDeleteForever />
+                </div>
+                <div className="delete-ment">삭제하기</div>
               </div>
             </div>
           </div>
