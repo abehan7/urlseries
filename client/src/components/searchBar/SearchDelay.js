@@ -79,7 +79,7 @@ const debounceSomethingFunc = debounce(
         src=http://www.google.com/s2/favicons?domain=${val.url}
         alt=""
         />` +
-        `<div class="Searched-url-Id">${val.url_id}</div>` +
+        // `<div class="Searched-url-Id">${val.url_id}</div>` +
         `<div class="just-bar"> | </div>` +
         `<div class="Searched-url-Title">${val.url_title}</div>`;
       document.querySelector(".Searched-Stuffs-Container").appendChild(newDiv);
@@ -111,7 +111,7 @@ const debounceSomethingFunc = debounce(
       src=http://www.google.com/s2/favicons?domain=${val.url}
       alt=""
       />` +
-        `<div class="Searched-url-Id">#${val.url_id}</div>` +
+        // `<div class="Searched-url-Id">#${val.url_id}</div>` +
         `<div class="just-bar"> | </div>` +
         `<div class="Searched-url-Title">${val.url_title}</div>`;
       document.querySelector(".Searched-Stuffs-Container").appendChild(newDiv);

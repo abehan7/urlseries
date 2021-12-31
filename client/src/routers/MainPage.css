@@ -172,9 +172,11 @@
   min-height: 40px;
 }
 
-.Searched-url-Title {
-  height: auto;
+.searched-Stuff .Searched-url-Title {
+  max-height: 40px;
+  overflow: hidden;
 }
+
 .searched-Stuff:hover {
   background: #e9ecef57;
   cursor: pointer;
@@ -297,6 +299,7 @@
 
 .RectColor {
   transition: 200ms ease-in-out;
+  border-radius: 20px;
 }
 .moreBtn {
   display: flex;
@@ -328,14 +331,19 @@
   transition: 0.2s;
 }
 
-.text-three-container {
+.grid-container .text-three-container {
   display: grid;
-  align-items: center;
-  justify-content: center;
+  /* align-items: center; */
+  /* justify-content: center; */
   /* grid-template-columns: repeat(3, 250px); */
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  /* grid-template-rows: repeat(2, 1fr); */
   grid-gap: 5px;
   padding: 0px;
+}
+
+.text-three-container .T-url {
+  grid-column: span 2;
 }
 
 .text-three-container > div:hover {
@@ -353,7 +361,7 @@
   align-items: center;
   justify-content: start;
   width: 100%;
-  height: 65%;
+  height: auto;
   padding: 0.4rem 0 0.4rem 0;
 }
 
