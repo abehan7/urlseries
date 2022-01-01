@@ -30,8 +30,8 @@ const AsideTag = ({
   // ================== 스타일 관리하는 곳 END ==================
 
   const ClickFolderTag = ({ e, folder }) => {
-    e.target.classList.toggle("folder-clicked");
-    if (e.target.classList[2] === "folder-clicked") {
+    e.target.classList.toggle("aside-folder-clicked");
+    if (e.target.classList[2] === "aside-folder-clicked") {
       // 여기는 한번 클릭됬을때
       setBoxTags((val) => [...val, ...folder.folder_contents]);
       setBoxTags_First(false);
@@ -56,7 +56,7 @@ const AsideTag = ({
         });
       // 그리고 다시 색깔 1로 바꾸기
       tmp.length === 0 && (e.target.style.opacity = "1");
-      // tmp.length === 0 && e.target.classList.remove("folder-clicked");
+      // tmp.length === 0 && e.target.classList.remove("aside-folder-clicked");
     }
 
     // setBoxTags
@@ -67,7 +67,7 @@ const AsideTag = ({
     if (BoxTags_First) {
       document.querySelectorAll(".tag").forEach((one) => {
         one.style.opacity = "0.3";
-        one?.classList?.remove("folder-clicked");
+        one?.classList?.remove("aside-folder-clicked");
       });
       setBoxTags_First(false);
     }

@@ -74,7 +74,10 @@
 }
 
 .folder-clicked {
-  /* color: #fbb917; */
+  color: #fbb917;
+}
+
+.aside-folder-clicked {
 }
 .tagFolder-grid .closed {
   display: none;
