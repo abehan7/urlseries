@@ -140,10 +140,6 @@ const Page2 = ({ setNowPage }) => {
   // }, [nowFolder2]);
 
   // ================== 스타일 공간 START ==================
-  const backClicked = {
-    display: "flex",
-  };
-  const backDefault = {};
 
   return (
     <>
