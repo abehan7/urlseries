@@ -130,10 +130,12 @@ app.get("/totalURL", async (req, res) => {
 });
 // [4] ==================================== 폴더 아이템들 가지고오기 ====================================
 app.get("/folderItems", (req, res) => {
-  db.Folders.find().then((response) => {
-    console.log("folderItems found!");
-    res.json(response);
-  });
+  db.Folders.find()
+    .sort({ folder_date_first: -1 })
+    .then((response) => {
+      console.log("folderItems found!");
+      res.json(response);
+    });
 });
 
 // [1] ==================================== 검색어 검색하는 post ====================================

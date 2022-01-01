@@ -46,8 +46,8 @@ const RecentSearched = ({ recentSearched, setRecentSearch }) => {
     <div className="RecentSearched">
       {recentSearched.map((url) => {
         return (
-          <RecentWrapper>
-            <div className="url-and-delete" key={url.url_id}>
+          <RecentWrapper key={url.url_id}>
+            <div className="url-and-delete">
               <div
                 className="recent-searched-Stuff"
                 onClick={() => {

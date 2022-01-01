@@ -36,31 +36,41 @@ const Page2 = ({ setNowPage }) => {
 
   const ClickAddIcon = useCallback(
     (e) => {
-      console.log(nowFolder2._id);
+      // console.log(nowFolder2);
+      // if (Object.keys(nowFolder).length > 0) {
+      //   return;
+      // }
 
-      if (Object.keys(nowFolder2).length > 0) {
-        return;
-      }
-
+      // >>>>>>>>
+      // 현재 맨 처음[+] 닫는거
       e.target.classList.toggle("closed");
+      // 뒤로가기 열기
       document.querySelector(".back").classList.toggle("open");
+      // 추가버튼 열기 input있는거
       document.querySelector(".addItem").classList.toggle("open");
-      console.log(nowFolder2);
-      nowFolder2 !== null && console.log(Object.keys(nowFolder2).length);
+      // <<<<<<<<<
+
+      // console.log(nowFolder2);
+      // nowFolder2 !== null && console.log(Object.keys(nowFolder2).length);
     },
     [nowFolder]
   );
 
   const ClickBackIcon = useCallback(
     (e) => {
-      if (Object.keys(nowFolder2).length !== 0) {
+      // 만약 현재 클릭한 폴더가 있는경우
+      // back 누르면 폴더 비워지는거
+      if (Object.keys(nowFolder).length !== 0) {
         setNowFolder({});
         SetReduxNowFolder({});
       }
       document.querySelector(".folder-name input").value = "";
-      document.querySelector(".addFolder-icon")?.classList?.toggle("closed");
       e.target?.classList?.toggle("open");
-      document.querySelector(".addItem")?.classList?.toggle("open");
+      document.querySelector(".addFolder-icon")?.classList?.toggle("closed");
+
+      // 비어있을때만
+      Object.keys(nowFolder).length === 0 &&
+        document.querySelector(".addItem")?.classList?.toggle("open");
     },
     [nowFolder]
   );
@@ -80,19 +90,22 @@ const Page2 = ({ setNowPage }) => {
     let folder_name = document.querySelector(".folder-name input").value;
     // <폴더 추가하는 공간>
 
-    // 폴더이름에 최소한 1개라도 적어야 등록되도록 하기
+    // 폴더이름에 최소한 1글자라도 적어야 등록되도록 하기
     // 여기에 이벤트 넣기
     // 빨간색으로 click아니면 클릭이라고 한글로 넣기
 
     if (folder_name.length >= 1) {
+      // 1자라도 넣은 경우
       Axios.post("http://localhost:3001/addFolder", {
         folder: { folder_name },
       }).then((response) => {
+        // 몽구스 스키마에 적용해서 그대로 받아오기
         const { data } = response;
         addNewFolderItem([data, ...folderItems]);
       });
       document.querySelector(".folder-name input").value = "";
     } else {
+      // 1자도 안넣은 경우
       console.log("@@폴더 이름을 작성해주세요@@");
       document.querySelector(".tempModal div").innerText =
         "@@폴더 이름을 작성해주세요@@";
@@ -175,9 +188,6 @@ const Page2 = ({ setNowPage }) => {
               onClick={(e) => {
                 ClickBackIcon(e);
               }}
-              style={
-                Object.keys(nowFolder).length !== 0 ? backClicked : backDefault
-              }
             >
               <TiBackspace style={{ pointerEvents: "none" }} />
               <div
