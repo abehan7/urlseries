@@ -38,30 +38,29 @@ const Page2 = ({ setNowPage }) => {
     (e) => {
       console.log(nowFolder2._id);
 
-      // if (Object.keys(nowFolder2).length > 0) {
-      //   return;
-      // }
+      if (Object.keys(nowFolder2).length > 0) {
+        return;
+      }
 
-      // e.target.classList.toggle("closed");
-      // document.querySelector(".back").classList.toggle("open");
-      // document.querySelector(".addItem").classList.toggle("open");
-      // console.log(nowFolder2);
-      // nowFolder2 !== null && console.log(Object.keys(nowFolder2).length);
+      e.target.classList.toggle("closed");
+      document.querySelector(".back").classList.toggle("open");
+      document.querySelector(".addItem").classList.toggle("open");
+      console.log(nowFolder2);
+      nowFolder2 !== null && console.log(Object.keys(nowFolder2).length);
     },
     [nowFolder]
   );
 
   const ClickBackIcon = useCallback(
     (e) => {
-      console.log(nowFolder);
-      if (Object.keys(nowFolder).length !== 0) {
+      if (Object.keys(nowFolder2).length !== 0) {
         setNowFolder({});
         SetReduxNowFolder({});
       }
-      // document.querySelector(".folder-name input").value = "";
-      // document.querySelector(".addFolder-icon")?.classList?.toggle("closed");
-      // e.target?.classList?.toggle("open");
-      // document.querySelector(".addItem")?.classList?.toggle("open");
+      document.querySelector(".folder-name input").value = "";
+      document.querySelector(".addFolder-icon")?.classList?.toggle("closed");
+      e.target?.classList?.toggle("open");
+      document.querySelector(".addItem")?.classList?.toggle("open");
     },
     [nowFolder]
   );
@@ -78,29 +77,31 @@ const Page2 = ({ setNowPage }) => {
       return;
     }
     // 폴더이름
-    // let folder_name = document.querySelector(".folder-name input").value;
+    let folder_name = document.querySelector(".folder-name input").value;
     // <폴더 추가하는 공간>
 
     // 폴더이름에 최소한 1개라도 적어야 등록되도록 하기
     // 여기에 이벤트 넣기
     // 빨간색으로 click아니면 클릭이라고 한글로 넣기
 
-    // if (folder_name.length >= 1) {
-    //   Axios.post("http://localhost:3001/addFolder", {
-    //     folder: { folder_name },
-    //   }).then((response) => {
-    //     const { data } = response;
-    //     addNewFolderItem([data, ...folderItems]);
-    //   });
-    //   document.querySelector(".folder-name input").value = "";
-    // } else {
-    //   console.log("@@폴더 이름을 작성해주세요@@");
-    //   document.querySelector(".tempModal div").innerText =
-    //     "@@폴더 이름을 작성해주세요@@";
-    //   document.querySelector(".tempModal").style.backgroundColor = "#FF7276";
+    if (folder_name.length >= 1) {
+      Axios.post("http://localhost:3001/addFolder", {
+        folder: { folder_name },
+      }).then((response) => {
+        const { data } = response;
+        addNewFolderItem([data, ...folderItems]);
+      });
+      document.querySelector(".folder-name input").value = "";
+    } else {
+      console.log("@@폴더 이름을 작성해주세요@@");
+      document.querySelector(".tempModal div").innerText =
+        "@@폴더 이름을 작성해주세요@@";
+      document.querySelector(".tempModal").style.backgroundColor = "#FF7276";
 
-    //   debounceSomethingFunc();
-    // }
+      // document.querySelector(".tempModal div").innerText =
+      //   "폴더이름을 작성후 [+] 버튼을 클릭해주세요";
+      debounceSomethingFunc();
+    }
   }, []);
   // ================== ONCLICK 공간 END ==================
 
@@ -135,16 +136,7 @@ const Page2 = ({ setNowPage }) => {
     <>
       <div className="modal-window tagFolder-window">
         <div className="header-Container">
-          <div
-            className="close-area"
-            onClick={() => {
-              document.querySelector(".hashtagModal-container").style.display =
-                "none";
-              setNowPage((val) => val - 1);
-              SetReduxNowFolder({});
-              disable();
-            }}
-          >
+          <div className="close-area" onClick={ClickClose}>
             <IoArrowBack />
           </div>
           <div className="title">
@@ -165,18 +157,7 @@ const Page2 = ({ setNowPage }) => {
               <div
                 className="addFolder-icon"
                 onClick={(e) => {
-                  console.log(nowFolder2._id);
-
-                  if (Object.keys(nowFolder2).length > 0) {
-                    return;
-                  }
-
-                  e.target.classList.toggle("closed");
-                  document.querySelector(".back").classList.toggle("open");
-                  document.querySelector(".addItem").classList.toggle("open");
-                  console.log(nowFolder2);
-                  nowFolder2 !== null &&
-                    console.log(Object.keys(nowFolder2).length);
+                  ClickAddIcon(e);
                 }}
               >
                 <div style={{ pointerEvents: "none" }}>
@@ -192,16 +173,7 @@ const Page2 = ({ setNowPage }) => {
                 Object.keys(nowFolder2).length === 0 ? "back" : "back open"
               }
               onClick={(e) => {
-                if (Object.keys(nowFolder2).length !== 0) {
-                  setNowFolder({});
-                  SetReduxNowFolder({});
-                }
-                document.querySelector(".folder-name input").value = "";
-                document
-                  .querySelector(".addFolder-icon")
-                  ?.classList?.toggle("closed");
-                e.target?.classList?.toggle("open");
-                document.querySelector(".addItem")?.classList?.toggle("open");
+                ClickBackIcon(e);
               }}
               style={
                 Object.keys(nowFolder).length !== 0 ? backClicked : backDefault
@@ -218,42 +190,7 @@ const Page2 = ({ setNowPage }) => {
             <div
               className="addItem"
               onClick={(e) => {
-                // +버튼 눌러야만 Axios보내는데 <input버튼> 아니면 위에 있는< 설명모달> 클릭하면 <axios보내>지니까 그런거 <방지>하는 기능
-                if (
-                  e.target === document.querySelector(".tempModal") ||
-                  e.target === document.querySelector(".tempModal div") ||
-                  e.target === document.querySelector(".folder-name input")
-                ) {
-                  return;
-                }
-                // 폴더이름
-                let folder_name =
-                  document.querySelector(".folder-name input").value;
-                // <폴더 추가하는 공간>
-
-                // 폴더이름에 최소한 1개라도 적어야 등록되도록 하기
-                // 여기에 이벤트 넣기
-                // 빨간색으로 click아니면 클릭이라고 한글로 넣기
-
-                if (folder_name.length >= 1) {
-                  Axios.post("http://localhost:3001/addFolder", {
-                    folder: { folder_name },
-                  }).then((response) => {
-                    const { data } = response;
-                    addNewFolderItem([data, ...folderItems]);
-                  });
-                  document.querySelector(".folder-name input").value = "";
-                } else {
-                  console.log("@@폴더 이름을 작성해주세요@@");
-                  document.querySelector(".tempModal div").innerText =
-                    "@@폴더 이름을 작성해주세요@@";
-                  document.querySelector(".tempModal").style.backgroundColor =
-                    "#FF7276";
-
-                  // document.querySelector(".tempModal div").innerText =
-                  //   "폴더이름을 작성후 [+] 버튼을 클릭해주세요";
-                  debounceSomethingFunc();
-                }
+                ClickAddItem(e);
               }}
             >
               <div className="tempModal">
