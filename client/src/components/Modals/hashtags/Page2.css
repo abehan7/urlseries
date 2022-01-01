@@ -18,21 +18,49 @@
   position: absolute;
   display: flex;
 
+  /* border-top-left-radius: 37px 140px;
+  border-top-right-radius: 23px 130px;
+  border-bottom-left-radius: 110px 19px;
+  border-bottom-right-radius: 120px 24px;
+  border: solid 3px #6e7491; */
+  width: auto;
+  height: auto;
   right: 15px;
   gap: 2px;
+}
+
+.hash-btns .editFolder-left-Icons {
+  height: auto;
+  width: auto;
+  gap: 4px;
+}
+
+.hash-btns .editFolder-left-Icons div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .hash-btns > div {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 32px;
+  width: 32px;
+  border-radius: 30%;
 }
 .hash-btns > div > svg {
-  font-size: 25px;
+  font-size: 23px;
   padding-right: 5px;
   cursor: pointer;
+  padding: 0;
 }
 
+.hash-btns > div:hover {
+  /* background-color: rgba(0, 0, 0, 0.05); */
+  /* transition: 200ms; */
+}
 .folder-content .tagFolder-grid {
   position: relative;
   display: grid;
@@ -91,4 +119,28 @@
 .tagFolder-grid .open {
   display: flex;
   transition: 200ms;
+}
+
+.Page2GridItem,
+.addFolder-icon,
+.back {
+  border-radius: 35%;
+}
+
+.Page2GridItem:hover,
+.addFolder-icon:hover,
+.back:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  transition: 200ms;
+}
+
+.Page2GridItem:active,
+.addFolder-icon:active,
+.back:active {
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: 500ms;
+}
+
+.Page2GridItem:active {
+  opacity: 1;
 }

@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useCallback } from "react";
 import { AiFillDelete, AiOutlineDelete } from "react-icons/ai";
+import { RiDeleteBin5Fill, RiDeleteBin5Line } from "react-icons/ri";
 import {
   IoCheckmarkCircleOutline,
   IoCheckmarkCircleSharp,
@@ -105,14 +106,14 @@ const LeftIcons = (props) => {
         <>
           <div className="delete-icon">
             {deleteMode ? (
-              <AiFillDelete
+              <RiDeleteBin5Fill
                 className="delete-icon-svg"
                 onClick={() => {
                   setDeleteMode(!deleteMode);
                 }}
               />
             ) : (
-              <AiOutlineDelete
+              <RiDeleteBin5Line
                 className="delete-icon-svg"
                 onClick={() => {
                   setDeleteMode(!deleteMode);

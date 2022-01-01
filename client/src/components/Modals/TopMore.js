@@ -23,6 +23,9 @@ const TopMore = ({
                   ".top-moreUrls-container"
                 ).style.display = "none";
                 disable();
+                document
+                  .querySelector(".top-modal-window")
+                  .classList.toggle("top-modal-window-clicked");
               }}
             >
               <IoArrowBack />

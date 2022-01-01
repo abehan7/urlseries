@@ -20,5 +20,12 @@
 
 .top-modal-window {
   overflow: hidden;
-  height: 500px;
+  height: 300px;
 }
+
+.top-modal-window-clicked {
+  height: 500px;
+  transition: 500ms;
+}
+
+/* 300=>500 */

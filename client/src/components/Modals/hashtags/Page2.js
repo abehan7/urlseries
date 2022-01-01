@@ -2,11 +2,12 @@ import React, { useCallback, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./Page2.css";
 import {
+  AiFillStar,
   AiOutlineArrowUp,
   AiOutlineEdit,
   AiOutlineFolder,
 } from "react-icons/ai";
-import { TiBackspace } from "react-icons/ti";
+import { TiBackspace, TiFolderDelete } from "react-icons/ti";
 import styled from "styled-components";
 import { disable } from "../../../functions/stopScroll";
 import Page2GridItem from "./Page2GridItem";
@@ -152,6 +153,21 @@ const Page2 = ({ setNowPage }) => {
             <h2>폴더</h2>
           </div>
           <div className="hash-btns">
+            <div className="editFolder-left-Icons">
+              <div className="editFolde-delete">
+                <div>
+                  <TiFolderDelete />
+                </div>
+                <div>삭제</div>
+              </div>
+
+              <div className="editFolde-like">
+                <div>
+                  <AiFillStar />
+                </div>
+                <div>좋아요</div>
+              </div>
+            </div>
             <div className="editFolder">
               <AiOutlineEdit />
             </div>
