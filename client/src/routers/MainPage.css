@@ -66,6 +66,9 @@
   outline: 0;
   -webkit-transition: 0.3s ease-in-out;
   transition: 0.3s ease-in-out;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+
   /* z-index: 2; */
 }
 
@@ -238,6 +241,10 @@
   flex: 1;
 }
 
+.delete-click-icon {
+  font-size: 20px;
+}
+
 .share-write svg {
   cursor: pointer;
 }
@@ -264,10 +271,30 @@
   opacity: 0;
   transform: translate(-40px);
   transition: 200ms ease-in-out;
+  padding: 7px;
 }
 .delete-mode-click-container div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: pointer;
 }
+
+/* 3개 아이콘 허버되면 투명도 낮아지는거 */
+.delete-mode-click-container div:hover {
+  transition: 200ms ease-in-out;
+  opacity: 0.4;
+}
+
+/* 속에 있는 작은 아이콘들까지 따로따로 투명도 중첩으로 낮아지는거 방지 */
+.delete-mode-click-container div div:hover,
+.delete-mode-click-container div svg:hover {
+  opacity: 1;
+}
+
+/* .delete-ment {
+  font-size: 14px;
+} */
 
 .delete-icon {
   display: flex;
@@ -277,7 +304,7 @@
 
 .delete-icon > div {
   /* transition: all 1s; */
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .Rectangle {
@@ -373,7 +400,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  grid-column: span 3;
+  grid-column: span 4;
 }
 .text-three-container > .Target-Element:hover {
   cursor: auto;
@@ -455,6 +482,7 @@
   align-items: center;
   justify-content: center;
   padding: 2px;
+  /* box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; */
 }
 
 .aside-details {
@@ -515,7 +543,7 @@
     right: -10px;
   }
 
-  .text-three-container {
+  .Big_Rect .text-three-container {
     display: flex;
     flex-direction: column;
   }
