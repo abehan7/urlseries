@@ -90,3 +90,18 @@ button {
   cursor: pointer;
   padding-top: 5px;
 }
+
+.put-memo textarea:focus {
+  outline: none;
+}
+
+textarea {
+  font-size: 17px;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-left: 15px;
+  height: 40px;
+  resize: none;
+  width: 100%;
+  overflow: hidden;
+}

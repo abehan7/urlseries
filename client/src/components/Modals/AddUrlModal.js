@@ -119,7 +119,7 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
               />
             </div>
             <div className="put-memo">
-              <input
+              <textarea
                 value={memo}
                 placeholder="메모할 내용을 입력해주세요"
                 onChange={(e) => {
