@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
+import "./Page2.css";
 import {
   AiOutlineArrowUp,
   AiOutlineEdit,
@@ -24,6 +25,80 @@ const debounceSomethingFunc = debounce(() => {
 const Page2 = ({ setNowPage }) => {
   const [nowFolder, setNowFolder] = useState({});
 
+  // ================== ONCLICK 공간 START ==================
+
+  const ClickClose = useCallback(() => {
+    document.querySelector(".hashtagModal-container").style.display = "none";
+    setNowPage((val) => val - 1);
+    SetReduxNowFolder({});
+    disable();
+  }, []);
+
+  const ClickAddIcon = useCallback((e) => {
+    console.log(nowFolder2._id);
+
+    // if (Object.keys(nowFolder2).length > 0) {
+    //   return;
+    // }
+
+    // e.target.classList.toggle("closed");
+    // document.querySelector(".back").classList.toggle("open");
+    // document.querySelector(".addItem").classList.toggle("open");
+    // console.log(nowFolder2);
+    // nowFolder2 !== null && console.log(Object.keys(nowFolder2).length);
+  }, []);
+
+  const ClickBackIcon = useCallback((e) => {
+    // if (Object.keys(nowFolder2).length !== 0) {
+    //   setNowFolder({});
+    //   SetReduxNowFolder({});
+    // }
+    // document.querySelector(".folder-name input").value = "";
+    // document.querySelector(".addFolder-icon")?.classList?.toggle("closed");
+    // e.target?.classList?.toggle("open");
+    // document.querySelector(".addItem")?.classList?.toggle("open");
+  }, []);
+
+  // 처음 Add는 맨 처음 나오는 아이콘 나올때
+  // 여기는 첫번째 아이콘 누른 다음에 나오는 두번째 아이콘
+  const ClickAddItem = useCallback((e) => {
+    // +버튼 눌러야만 Axios보내는데 <input버튼> 아니면 위에 있는< 설명모달> 클릭하면 <axios보내>지니까 그런거 <방지>하는 기능
+    if (
+      e.target === document.querySelector(".tempModal") ||
+      e.target === document.querySelector(".tempModal div") ||
+      e.target === document.querySelector(".folder-name input")
+    ) {
+      return;
+    }
+    // 폴더이름
+    // let folder_name = document.querySelector(".folder-name input").value;
+    // <폴더 추가하는 공간>
+
+    // 폴더이름에 최소한 1개라도 적어야 등록되도록 하기
+    // 여기에 이벤트 넣기
+    // 빨간색으로 click아니면 클릭이라고 한글로 넣기
+
+    // if (folder_name.length >= 1) {
+    //   Axios.post("http://localhost:3001/addFolder", {
+    //     folder: { folder_name },
+    //   }).then((response) => {
+    //     const { data } = response;
+    //     addNewFolderItem([data, ...folderItems]);
+    //   });
+    //   document.querySelector(".folder-name input").value = "";
+    // } else {
+    //   console.log("@@폴더 이름을 작성해주세요@@");
+    //   document.querySelector(".tempModal div").innerText =
+    //     "@@폴더 이름을 작성해주세요@@";
+    //   document.querySelector(".tempModal").style.backgroundColor = "#FF7276";
+
+    //   debounceSomethingFunc();
+    // }
+  }, []);
+  // ================== ONCLICK 공간 END ==================
+
+  // ================== 리덕스 공간 START ==================
+
   const {
     page3Storage: { folderItems, nowFolder2 },
   } = useSelector((state) => state);
@@ -38,255 +113,114 @@ const Page2 = ({ setNowPage }) => {
     dispatch(Page3Actions.EditFolderItems(folder));
   };
 
-  const Page2Wrap = styled.div`
-    .tagFolder-window {
-      overflow: hidden;
-    }
-
-    .tagFolder-window > .folder-content {
-      height: auto;
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
-
-    .addFolder {
-    }
-    .header-Container {
-      position: relative;
-    }
-
-    .hash-btns {
-      position: absolute;
-      display: flex;
-
-      right: 15px;
-      gap: 2px;
-    }
-
-    .hash-btns > div {
-      display: flex;
-      align-items: center;
-      justify-contents: center;
-    }
-    .hash-btns > div > svg {
-      font-size: 25px;
-      padding-right: 5px;
-      cursor: pointer;
-    }
-
-    .tagFolder-grid {
-      position: relative;
-      display: grid;
-      height: 100%;
-      grid-template-columns: repeat(4, 1fr);
-      grid-auto-rows: 100px;
-    }
-
-    .tagFolder-grid > div {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      padding: 0;
-      margin: 0;
-      cursor: pointer;
-    }
-
-    .tagFolder-grid .addItem {
-      display: none;
-    }
-
-    .tempModal {
-      position: absolute;
-      cursor: default;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: grey;
-      color: #fff;
-      top: 0;
-      width: 90%;
-      left: 5%;
-      border-radius: 6px;
-    }
-    .tagFolder-grid > div path {
-    }
-
-    .folder-clicked {
-      color: #fbb917;
-    }
-    .tagFolder-grid .closed {
-      display: none;
-    }
-
-    .tagFolder-grid .back {
-      display: none;
-      transition: 200ms;
-    }
-    .tagFolder-grid .open {
-      display: flex;
-      transition: 200ms;
-    }
-  `;
+  // ================== 리덕스 공간 END ==================
+  // ================== 스타일 공간 START ==================
+  const backClicked = {
+    display: "flex",
+  };
+  const backDefault = {};
 
   return (
     <>
-      <Page2Wrap>
-        <div className="modal-window tagFolder-window">
-          <div className="header-Container">
-            <div
-              className="close-area"
-              onClick={() => {
-                document.querySelector(
-                  ".hashtagModal-container"
-                ).style.display = "none";
-                setNowPage((val) => val - 1);
-                SetReduxNowFolder({});
-                disable();
-              }}
-            >
-              <IoArrowBack />
-            </div>
-            <div className="title">
-              <h2>폴더</h2>
-            </div>
-            <div className="hash-btns">
-              <div className="editFolder">
-                <AiOutlineEdit />
-              </div>
-            </div>
+      <div className="modal-window tagFolder-window">
+        {/* 헤더 START */}
+        <div className="header-Container">
+          <div className="close-area" onClick={ClickClose}>
+            <IoArrowBack />
           </div>
-
-          <div className="content folder-content">
-            <div className="tagFolder-grid">
-              {/* 폴더 클릭 안했을때만 나오게하기 */}
-              {Object.keys(nowFolder2).length === 0 && (
-                <div
-                  className="addFolder-icon"
-                  onClick={(e) => {
-                    console.log(nowFolder2._id);
-
-                    if (Object.keys(nowFolder2).length > 0) {
-                      return;
-                    }
-
-                    e.target.classList.toggle("closed");
-                    document.querySelector(".back").classList.toggle("open");
-                    document.querySelector(".addItem").classList.toggle("open");
-                    console.log(nowFolder2);
-                    nowFolder2 !== null &&
-                      console.log(Object.keys(nowFolder2).length);
-                  }}
-                >
-                  <div style={{ pointerEvents: "none" }}>
-                    <FiPlusSquare />
-                  </div>
-
-                  <div style={{ pointerEvents: "none" }}> 추가하기</div>
-                </div>
-              )}
-
-              <div
-                className={
-                  Object.keys(nowFolder2).length === 0 ? "back" : "back open"
-                }
-                onClick={(e) => {
-                  if (Object.keys(nowFolder2).length !== 0) {
-                    setNowFolder({});
-                    SetReduxNowFolder({});
-                  }
-                  document.querySelector(".folder-name input").value = "";
-                  document
-                    .querySelector(".addFolder-icon")
-                    ?.classList?.toggle("closed");
-                  e.target?.classList?.toggle("open");
-                  document.querySelector(".addItem")?.classList?.toggle("open");
-                }}
-              >
-                <TiBackspace style={{ pointerEvents: "none" }} />
-                <div
-                  className="click-here"
-                  style={{ display: "none", color: "#FF7276" }}
-                >
-                  <AiOutlineArrowUp />
-                </div>
-              </div>
-              <div
-                className="addItem"
-                onClick={(e) => {
-                  // +버튼 눌러야만 Axios보내는데 <input버튼> 아니면 위에 있는< 설명모달> 클릭하면 <axios보내>지니까 그런거 <방지>하는 기능
-                  if (
-                    e.target === document.querySelector(".tempModal") ||
-                    e.target === document.querySelector(".tempModal div") ||
-                    e.target === document.querySelector(".folder-name input")
-                  ) {
-                    return;
-                  }
-                  // 폴더이름
-                  let folder_name =
-                    document.querySelector(".folder-name input").value;
-                  // <폴더 추가하는 공간>
-
-                  // 폴더이름에 최소한 1개라도 적어야 등록되도록 하기
-                  // 여기에 이벤트 넣기
-                  // 빨간색으로 click아니면 클릭이라고 한글로 넣기
-
-                  if (folder_name.length >= 1) {
-                    Axios.post("http://localhost:3001/addFolder", {
-                      folder: { folder_name },
-                    }).then((response) => {
-                      const { data } = response;
-                      addNewFolderItem([data, ...folderItems]);
-                    });
-                    document.querySelector(".folder-name input").value = "";
-                  } else {
-                    console.log("@@폴더 이름을 작성해주세요@@");
-                    document.querySelector(".tempModal div").innerText =
-                      "@@폴더 이름을 작성해주세요@@";
-                    document.querySelector(".tempModal").style.backgroundColor =
-                      "#FF7276";
-
-                    // document.querySelector(".tempModal div").innerText =
-                    //   "폴더이름을 작성후 [+] 버튼을 클릭해주세요";
-                    debounceSomethingFunc();
-                  }
-                }}
-              >
-                <div className="tempModal">
-                  <div>폴더이름을 작성후 [+] 버튼을 클릭해주세요</div>
-                </div>
-                <div className="addFolder-Icon-moved ">
-                  <FiPlusSquare />
-                </div>
-                <div className="folder-name">
-                  <input
-                    placeholder="@폴더이름@"
-                    style={{
-                      border: "none",
-                      padding: "0",
-                      textAlign: "center",
-                      fontSize: "15px",
-                    }}
-                  />
-                </div>
-              </div>
-
-              {folderItems.map((folder) => {
-                return (
-                  <Page2GridItem
-                    folder={folder}
-                    setNowFolder={setNowFolder}
-                    nowFolder={nowFolder}
-                    key={folder._id}
-                  />
-                );
-              })}
+          <div className="title">
+            <h2>폴더</h2>
+          </div>
+          <div className="hash-btns">
+            <div className="editFolder">
+              <AiOutlineEdit />
             </div>
           </div>
         </div>
-      </Page2Wrap>
+        {/* 헤더 END */}
+
+        {/* 컨텐츠 START */}
+        <div className="content folder-content">
+          <div className="tagFolder-grid">
+            {/* 폴더 클릭 안했을때만 나오게하기 */}
+            {/* 맨 처음 추가하기 START */}
+            {Object.keys(nowFolder2).length === 0 && (
+              <div
+                className="addFolder-icon"
+                onClick={(e) => {
+                  ClickAddIcon(e);
+                }}
+              >
+                <div style={{ pointerEvents: "none" }}>
+                  <FiPlusSquare />
+                </div>
+
+                <div style={{ pointerEvents: "none" }}> 추가하기</div>
+              </div>
+            )}
+            {/* 맨 처음 추가하기 END */}
+            {/* 뒤로가기 버튼 START */}
+
+            <div
+              className="back"
+              onClick={(e) => {
+                ClickBackIcon(e);
+              }}
+              style={
+                Object.keys(nowFolder2).length !== 0 ? backClicked : backDefault
+              }
+            >
+              <TiBackspace style={{ pointerEvents: "none" }} />
+              <div
+                className="click-here"
+                style={{ display: "none", color: "#FF7276" }}
+              >
+                <AiOutlineArrowUp />
+              </div>
+            </div>
+            {/* 뒤로가기 버튼 END */}
+
+            {/* 아이템추가 버튼 START */}
+            <div
+              className="addItem"
+              onClick={(e) => {
+                ClickAddItem(e);
+              }}
+            >
+              <div className="tempModal">
+                <div>폴더이름을 작성후 [+] 버튼을 클릭해주세요</div>
+              </div>
+              <div className="addFolder-Icon-moved ">
+                <FiPlusSquare />
+              </div>
+              <div className="folder-name">
+                <input
+                  placeholder="@폴더이름@"
+                  style={{
+                    border: "none",
+                    padding: "0",
+                    textAlign: "center",
+                    fontSize: "15px",
+                  }}
+                />
+              </div>
+            </div>
+            {/* 아이템추가 버튼 END */}
+
+            {folderItems.map((folder) => {
+              return (
+                <Page2GridItem
+                  folder={folder}
+                  setNowFolder={setNowFolder}
+                  nowFolder={nowFolder}
+                  key={folder._id}
+                />
+              );
+            })}
+          </div>
+        </div>
+        {/* 컨텐츠 END */}
+      </div>
     </>
   );
 };

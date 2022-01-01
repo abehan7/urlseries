@@ -93,6 +93,9 @@ const LeftIcons = (props) => {
     visibility: "visible",
     transform: "translate(0px)",
     opacity: "1",
+    border: "1px solid #fff",
+
+    borderRadius: "20px",
   };
   const style2 = {};
 
