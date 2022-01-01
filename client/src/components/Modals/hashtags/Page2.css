@@ -17,12 +17,6 @@
 .hash-btns {
   position: absolute;
   display: flex;
-
-  /* border-top-left-radius: 37px 140px;
-  border-top-right-radius: 23px 130px;
-  border-bottom-left-radius: 110px 19px;
-  border-bottom-right-radius: 120px 24px;
-  border: solid 3px #6e7491; */
   width: auto;
   height: auto;
   right: 15px;
@@ -31,31 +25,68 @@
 
 .hash-btns .editFolder-left-Icons {
   height: auto;
-  width: auto;
-  gap: 4px;
+  width: 100%;
 }
-
-.hash-btns .editFolder-left-Icons div {
+/* 아이콘 2개 */
+.editFolder-left-Icons div {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 1px;
+  width: 42px;
+  height: 42px;
+  border-radius: 30%;
+  cursor: pointer;
+}
+
+/* 위에 아이콘 3개 허버이벤트 */
+.editFolder-left-Icons div:hover,
+.editFolder svg:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: 200ms;
+}
+
+/* 아이콘 3개 클릭하면 더 찐해지게 */
+.editFolder-left-Icons div:active,
+.editFolder svg:active {
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: 200ms;
+}
+
+.editFolder-one-ment {
+  font-size: 13px;
+  pointer-events: none;
+}
+.editFolder-one-icon {
+  pointer-events: none;
 }
 
 .hash-btns > div {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 32px;
-  width: 32px;
+  /* width: 32px; */
   border-radius: 30%;
 }
-.hash-btns > div > svg {
-  font-size: 23px;
+
+.hash-btns svg {
+  /* font-size: 20px; */
   padding-right: 5px;
   cursor: pointer;
   padding: 0;
 }
+
+.hash-btns > .editFolder {
+  font-size: 25px;
+}
+.editFolder svg {
+  border-radius: 30%;
+}
+/* .editFolder svg:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: 200ms;
+} */
 
 .hash-btns > div:hover {
   /* background-color: rgba(0, 0, 0, 0.05); */
@@ -98,14 +129,9 @@
   left: 5%;
   border-radius: 6px;
 }
-.tagFolder-grid > div path {
-}
 
 .folder-clicked {
   color: #fbb917;
-}
-
-.aside-folder-clicked {
 }
 
 .tagFolder-grid .closed {

@@ -250,8 +250,22 @@
 }
 .right-icons {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-end;
+}
+.right-icons div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.right-icons div:active {
+  opacity: 1;
+}
+
+.addUrl-icon {
+  position: relative;
 }
 
 .share-write svg {

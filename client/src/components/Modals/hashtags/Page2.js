@@ -25,6 +25,7 @@ const debounceSomethingFunc = debounce(() => {
 
 const Page2 = ({ setNowPage }) => {
   const [nowFolder, setNowFolder] = useState({});
+  const [clickedP2Edit, setClickedP2Edit] = useState(false);
 
   // ================== ONCLICK 공간 START ==================
 
@@ -142,6 +143,13 @@ const Page2 = ({ setNowPage }) => {
 
   // ================== 스타일 공간 START ==================
 
+  const empty = {
+    transform: "scale(0)",
+  };
+  const showUp = {
+    transform: "scale(1)",
+    transition: "300ms",
+  };
   return (
     <>
       <div className="modal-window tagFolder-window">
@@ -149,26 +157,40 @@ const Page2 = ({ setNowPage }) => {
           <div className="close-area" onClick={ClickClose}>
             <IoArrowBack />
           </div>
-          <div className="title">
+          <div className="title page2-title">
             <h2>폴더</h2>
           </div>
           <div className="hash-btns">
+            {/* 오른쪽에 2개 아이콘 */}
             <div className="editFolder-left-Icons">
-              <div className="editFolde-delete">
-                <div>
+              {/* 삭제 */}
+              <div
+                className="editFolde-delete"
+                style={clickedP2Edit ? showUp : empty}
+              >
+                <div className="editFolder-one-icon">
                   <TiFolderDelete />
                 </div>
-                <div>삭제</div>
+                <div className="editFolder-one-ment">삭제</div>
               </div>
-
-              <div className="editFolde-like">
-                <div>
+              {/* 좋아요 */}
+              <div
+                className="editFolde-like"
+                style={clickedP2Edit ? showUp : empty}
+              >
+                <div className="editFolder-one-icon">
                   <AiFillStar />
                 </div>
-                <div>좋아요</div>
+                <div className="editFolder-one-ment">좋아요</div>
               </div>
             </div>
-            <div className="editFolder">
+            {/* 편집모드 */}
+            <div
+              className="editFolder"
+              onClick={() => {
+                setClickedP2Edit((val) => !val);
+              }}
+            >
               <AiOutlineEdit />
             </div>
           </div>

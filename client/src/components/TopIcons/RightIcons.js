@@ -3,6 +3,7 @@ import { AiOutlineEdit, AiTwotoneEdit } from "react-icons/ai";
 import { BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
 import { MdOutlineTag } from "react-icons/md";
+import styled from "styled-components";
 import { enable } from "../../functions/stopScroll";
 import { RefreshBtn } from "../AsideTags/BoxTagControler";
 import EditModeRectsFunc from "../editModeFucs/EditModeRectsFunc";
@@ -60,6 +61,7 @@ const RightIcons = ({
     transition: `${transitionTime}s ease-in-out`,
     color: "#fff",
   };
+
   // ========================================== 스타일 END ==========================================
 
   return (
