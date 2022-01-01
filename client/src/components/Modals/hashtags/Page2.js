@@ -34,30 +34,37 @@ const Page2 = ({ setNowPage }) => {
     disable();
   }, []);
 
-  const ClickAddIcon = useCallback((e) => {
-    console.log(nowFolder2._id);
+  const ClickAddIcon = useCallback(
+    (e) => {
+      console.log(nowFolder2._id);
 
-    // if (Object.keys(nowFolder2).length > 0) {
-    //   return;
-    // }
+      // if (Object.keys(nowFolder2).length > 0) {
+      //   return;
+      // }
 
-    // e.target.classList.toggle("closed");
-    // document.querySelector(".back").classList.toggle("open");
-    // document.querySelector(".addItem").classList.toggle("open");
-    // console.log(nowFolder2);
-    // nowFolder2 !== null && console.log(Object.keys(nowFolder2).length);
-  }, []);
+      // e.target.classList.toggle("closed");
+      // document.querySelector(".back").classList.toggle("open");
+      // document.querySelector(".addItem").classList.toggle("open");
+      // console.log(nowFolder2);
+      // nowFolder2 !== null && console.log(Object.keys(nowFolder2).length);
+    },
+    [nowFolder]
+  );
 
-  const ClickBackIcon = useCallback((e) => {
-    // if (Object.keys(nowFolder2).length !== 0) {
-    //   setNowFolder({});
-    //   SetReduxNowFolder({});
-    // }
-    // document.querySelector(".folder-name input").value = "";
-    // document.querySelector(".addFolder-icon")?.classList?.toggle("closed");
-    // e.target?.classList?.toggle("open");
-    // document.querySelector(".addItem")?.classList?.toggle("open");
-  }, []);
+  const ClickBackIcon = useCallback(
+    (e) => {
+      console.log(nowFolder);
+      if (Object.keys(nowFolder).length !== 0) {
+        setNowFolder({});
+        SetReduxNowFolder({});
+      }
+      // document.querySelector(".folder-name input").value = "";
+      // document.querySelector(".addFolder-icon")?.classList?.toggle("closed");
+      // e.target?.classList?.toggle("open");
+      // document.querySelector(".addItem")?.classList?.toggle("open");
+    },
+    [nowFolder]
+  );
 
   // 처음 Add는 맨 처음 나오는 아이콘 나올때
   // 여기는 첫번째 아이콘 누른 다음에 나오는 두번째 아이콘
@@ -114,6 +121,10 @@ const Page2 = ({ setNowPage }) => {
   };
 
   // ================== 리덕스 공간 END ==================
+  // useEffect(() => {
+
+  // }, [nowFolder2]);
+
   // ================== 스타일 공간 START ==================
   const backClicked = {
     display: "flex",
@@ -144,7 +155,7 @@ const Page2 = ({ setNowPage }) => {
           <div className="tagFolder-grid">
             {/* 폴더 클릭 안했을때만 나오게하기 */}
             {/* 맨 처음 추가하기 START */}
-            {Object.keys(nowFolder2).length === 0 && (
+            {Object.keys(nowFolder).length === 0 && (
               <div
                 className="addFolder-icon"
                 onClick={(e) => {
@@ -167,7 +178,7 @@ const Page2 = ({ setNowPage }) => {
                 ClickBackIcon(e);
               }}
               style={
-                Object.keys(nowFolder2).length !== 0 ? backClicked : backDefault
+                Object.keys(nowFolder).length !== 0 ? backClicked : backDefault
               }
             >
               <TiBackspace style={{ pointerEvents: "none" }} />
