@@ -107,7 +107,7 @@ const MainPage = () => {
   }, []);
 
   const {
-    page3Storage: { nowFolder2 },
+    page3Storage: { nowFolder2, nowPage2 },
   } = useSelector((state) => state);
 
   useEffect(() => {
@@ -120,7 +120,7 @@ const MainPage = () => {
         return val;
       })
     );
-  }, [nowFolder2]);
+  }, [nowPage2]);
 
   // totalurl 변하면 전체 tag 뽑은 다음에 users에 있는 totaltags수정하기 axios해서
   // FIXME: 문제의 원인이 여기였어

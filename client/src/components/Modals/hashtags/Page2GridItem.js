@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AiOutlineFolder } from "react-icons/ai";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { Page3Actions } from "../../../store/reducers/editModalP3";
 import { debounce } from "lodash";
 import "./Page2.css";
@@ -30,9 +30,9 @@ const Page2GridItem = ({ folder, setNowFolder, nowFolder }) => {
   //   setFolderItemRedux();
   // }, []);
 
-  const {
-    page3Storage: { nowFolder2 },
-  } = useSelector((state) => state);
+  // const {
+  //   page3Storage: { nowFolder2 },
+  // } = useSelector((state) => state);
 
   const SetReduxNowFolder = (folder2) => {
     dispatch(Page3Actions.SetNowFolder(folder2));
@@ -52,7 +52,7 @@ const Page2GridItem = ({ folder, setNowFolder, nowFolder }) => {
         // 그거 방지하려고
 
         // console.log(document.querySelector(".addFolder-icon").classList);
-        if (nowFolder2?._id === folder._id) {
+        if (nowFolder?._id === folder._id) {
           setNowFolder({});
           SetReduxNowFolder({});
         } else {
