@@ -49,10 +49,23 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
       });
   };
 
+  const height = 37;
+  const defaultHeight = {
+    height: `${height}px`,
+    transition: "1s",
+  };
+
   return (
     <>
       <div id="modal" className="modal-overlay">
-        <div className="modal-window">
+        <div
+          className="modal-window"
+          style={
+            memo.length < 25
+              ? { transition: "1s" }
+              : { height: "400px", transition: "1s" }
+          }
+        >
           <div className="header-Container">
             <div
               className="close-area"
@@ -77,6 +90,7 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
           <div className="content">
             <div className="put-url">
               <input
+                style={defaultHeight}
                 value={url}
                 placeholder="URL을 추가해주세요"
                 onChange={(e) => {
@@ -103,6 +117,7 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
             <div className="put-title">
               <input
                 value={title}
+                style={defaultHeight}
                 placeholder="제목을 추가해주세요"
                 onChange={(e) => {
                   setTitle(e.target.value);
@@ -112,6 +127,7 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
             <div className="put-hashTag">
               <input
                 value={hashTag}
+                style={defaultHeight}
                 placeholder="해쉬태그를 추가해주세요 #집밥 #인스타그램 #유튜브"
                 onChange={(e) => {
                   setHashTag(e.target.value);
@@ -120,15 +136,22 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
             </div>
             <div className="put-memo">
               <textarea
+                style={
+                  memo.length < 25
+                    ? defaultHeight
+                    : { height: "160px", transition: "1s" }
+                }
                 value={memo}
                 placeholder="메모할 내용을 입력해주세요"
                 onChange={(e) => {
                   setMemo(e.target.value);
+                  // 25글자 넘어가면 바로 바꾸기
                 }}
               />
             </div>
             <div className="addUrl-btn">
               <button
+                style={defaultHeight}
                 onClick={async () => {
                   await addBtn();
                   disable();
