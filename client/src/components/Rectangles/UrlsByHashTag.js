@@ -5,7 +5,7 @@ import {
   getMouseLocation,
   onMouseLeave,
 } from "./movingModalFuncs";
-import { whenIclickUrl } from "./FuncTotalUrlMap";
+import whenIclickUrl from "./FuncTotalUrlMap";
 import { useDispatch } from "react-redux";
 import { actionCreators2 } from "../../store/reducers/filteredTags.js";
 // TODO: 12/29) UrlsByHashTag / filterdTags(리덕스) / AsiedTag
@@ -16,8 +16,6 @@ const UrlsByHashTag = ({
   editMode,
   deleteMode,
   setMyFav,
-  state,
-  addUrls,
 }) => {
   const dispatch = useDispatch();
   const addUrls2 = (url) => {
@@ -56,6 +54,7 @@ const UrlsByHashTag = ({
                   setGetUrls: setRealTotalUrls,
                   getUrls: realTotalUrls,
                   where: "UrlByHashTag",
+                  dispatch,
                 });
               }}
               onMouseEnter={() => {

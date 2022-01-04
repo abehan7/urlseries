@@ -1,7 +1,9 @@
 import React from "react";
 import { getMouseLocation, grabNowValue } from "./movingModalFuncs";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
-import { whenIclickUrl } from "./FuncTotalUrlMap";
+import whenIclickUrl from "./FuncTotalUrlMap";
+import { useDispatch } from "react-redux";
+import { UrlDetailActions } from "../../store/reducers/ClickedUrlDetails";
 
 const TotalUrlMap = ({
   getUrls,
@@ -10,6 +12,7 @@ const TotalUrlMap = ({
   setMyFav,
   deleteMode,
 }) => {
+  const dispatch = useDispatch();
   window.onscroll = () => {
     const circle = document.querySelector(".detail-container");
     grabNowValue.cancel();
@@ -25,17 +28,6 @@ const TotalUrlMap = ({
   return (
     <>
       {getUrls.map((value) => {
-        // let imgThum;
-
-        // if (value.url.includes("youtu")) {
-        //   const ytUrl = value.url;
-        //   imgThum = ytUrl.split("https://youtu.be/")[1];
-        // }
-        // if (value.url.includes("youtube")) {
-        //   const ytUrl = value.url;
-        //   imgThum = ytUrl.split("watch?v=")[1];
-        // }
-
         return (
           <>
             <div
@@ -49,6 +41,7 @@ const TotalUrlMap = ({
                   setMyFav,
                   setGetUrls: setGetUrls,
                   getUrls: getUrls,
+                  dispatch,
                 });
               }}
               onMouseLeave={onMouseLeave}
@@ -107,44 +100,3 @@ const TotalUrlMap = ({
 };
 
 export default TotalUrlMap;
-
-// 시간지연같은거 두고싶은데
-// 3초 이상 누르고있으면 나오도록 하는거
-// const newDiv = document.createElement("div");
-// const newText = document.createTextNode("안녕하세요");
-// newDiv.className = "hello";
-// newDiv.appendChild(newText);
-// document.querySelector(".text-three-container").appendChild(newDiv);
-
-// ============================================================ url온클릭 이벤트 START ============================================================
-
-// const DeleteMode = ({ oneUrl: value }) => {
-//   value.clicked = !value.clicked;
-//   value.clicked === undefined && (value.clicked = true);
-//   setGetUrls(
-//     getUrls.map((url) => {
-//       return url._id === value._id ? value : url;
-//     })
-//   );
-// };
-
-// const FuncEditMode = ({ oneUrl: value }) => {
-//   console.log("에디터모드입니다");
-//   if (deleteMode) {
-//     DeleteMode({ oneUrl: value });
-//   } else {
-//     EditMode_ModalFunc(value);
-//     grabNowValue.cancel();
-//     setMyFav(value.url_likedUrl === 1);
-//   }
-// };
-
-// const NormalMode = ({ oneUrl: value }) => {
-//   window.open(value.url);
-//   Axios.put("http://localhost:3001/clickedURLInBox", { url: value });
-// };
-
-// const whenIclickUrl = ({ oneUrl: value }) => {
-//   !editMode ? FuncEditMode({ oneUrl: value }) : NormalMode({ oneUrl: value });
-// };
-// ============================================================ url온클릭 이벤트 END ============================================================
