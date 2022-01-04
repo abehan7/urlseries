@@ -1,12 +1,7 @@
-import React, { useCallback, useState, createContext, useEffect } from "react";
-import { IoArrowBack, IoCheckmarkCircleSharp } from "react-icons/io5";
+import React, { useCallback, useState, createContext, useMemo } from "react";
+import { IoArrowBack } from "react-icons/io5";
 import "./Page2.css";
-import {
-  AiFillStar,
-  AiOutlineArrowUp,
-  AiOutlineEdit,
-  AiOutlineFolder,
-} from "react-icons/ai";
+import { AiFillStar, AiOutlineArrowUp, AiOutlineEdit } from "react-icons/ai";
 import { TiBackspace, TiFolderDelete } from "react-icons/ti";
 import { BsPatchCheck } from "react-icons/bs";
 import { disable } from "../../../functions/stopScroll";
@@ -55,12 +50,15 @@ const Page2 = ({ setNowPage }) => {
     await Axios.post("http://localhost:3001/deleteFolder", { idList: DList });
   };
 
+  // 좋아요 추가하는 리덕스
+  // 추가할때 뿐만 아니라 그냥 수정한거 통으로 넣는 action
   // 폴더 추가한거 folderItems에 넣기
-  const addNewFolderItem = (folder) => {
-    dispatch(Page3Actions.EditFolderItems(folder));
+  const addNewFolderItem = (Modified_Folder_Items) => {
+    dispatch(Page3Actions.EditFolderItems(Modified_Folder_Items));
   };
 
   // ================== 리덕스 공간 END ==================
+
   // ================== ONCLICK 공간 START ==================
 
   const ClickClose = useCallback(() => {
@@ -157,10 +155,31 @@ const Page2 = ({ setNowPage }) => {
     [folderItems]
   );
 
+  // FIXME: 추가 수정 START
+  const LikeConfirmList = () => {
+    return folderItems.map((item) => {
+      return LList.includes(item._id)
+        ? { ...item, folder_liked: true }
+        : { ...item, folder_liked: false };
+    });
+  };
+
+  const ApiLikeConfirmPut = async (NewFolderItems) => {
+    await Axios.put("http://localhost:3001/FolderLiked", {
+      ModifiedList: NewFolderItems,
+    });
+  };
+
   // 2P에디터모드일때 확인버튼 기능
-  // TODO: ADD 할 때 버그있어 2개 연속으로 추가하면 하나만 되 그거 수정하자
   const ClickConfirm = () => {
     if (LikeM) {
+      console.log("👏👏👏👏👏👏👏");
+
+      // 이제 이거를 리덕스에 넣는거야
+      addNewFolderItem(LikeConfirmList());
+      // db에 넣기
+      ApiLikeConfirmPut(LikeConfirmList());
+
       setLikeM(false);
       setLList([]);
     }
@@ -170,8 +189,10 @@ const Page2 = ({ setNowPage }) => {
       setDList([]);
     }
 
-    console.log("확인");
+    // console.log("확인");
   };
+  // FIXME: 추가 수정 END
+
   // ================== ONCLICK 공간 END ==================
 
   // ================== 스타일 공간 START ==================
@@ -252,8 +273,8 @@ const Page2 = ({ setNowPage }) => {
                   onClick={() => {
                     setLikeM((val) => !val);
                     DeleteM === true && setDeleteM(false);
+                    LikeM && setLList([]);
                     setDList([]);
-                    setLList([]);
                   }}
                 >
                   <div className="editFolder-one-icon">

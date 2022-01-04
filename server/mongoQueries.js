@@ -508,3 +508,21 @@ await db.Urls.find({
   .then((response) => {
     rightURL = response;
   });
+
+db.folders.updateMany(
+  {},
+  {
+    $set: {
+      folder_liked: false,
+    },
+  }
+);
+
+db.folders.updateMany(
+  {},
+  {
+    $unset: {
+      Liked: 1,
+    },
+  }
+);

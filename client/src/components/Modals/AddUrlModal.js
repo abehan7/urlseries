@@ -4,6 +4,7 @@ import { IoArrowBack } from "react-icons/io5";
 import Axios from "axios";
 import { disable } from "../../functions/stopScroll";
 import { connect } from "react-redux";
+import TextArea from "../../Styled/TextArea.styled";
 
 const api = Axios.create({
   baseURL: `http://localhost:3001/`,
@@ -134,22 +135,8 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
                 }}
               />
             </div>
-            <div
-              className="put-memo"
-            >
-              <textarea
-                style={
-                  memo.length < 25
-                    ? defaultHeight
-                    : { height: "160px", transition: "1s" }
-                }
-                value={memo}
-                placeholder="메모할 내용을 입력해주세요"
-                onChange={(e) => {
-                  setMemo(e.target.value);
-                  // 25글자 넘어가면 바로 바꾸기
-                }}
-              />
+            <div className="put-memo">
+              <TextArea memo={memo} setMemo={setMemo} />
             </div>
             <div className="addUrl-btn">
               <button

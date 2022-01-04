@@ -26,6 +26,11 @@ const FolderSchema = new mongoose.Schema({
     required: true,
     default: getCurrentDate(),
   },
+  folder_liked: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 const Folders = mongoose.model("folders", FolderSchema);

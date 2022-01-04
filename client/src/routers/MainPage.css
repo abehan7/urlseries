@@ -410,6 +410,9 @@
 
 .text-three-container .T-url {
   grid-column: span 2;
+  border-radius: 10px;
+  border: 1px solid #ebebeb;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px;
 }
 
 .text-three-container > div:hover {

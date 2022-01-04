@@ -87,10 +87,14 @@
 
 .oneHash:hover {
   background-color: bisque;
+  transition: 200ms;
+  border-radius: 5px;
 }
 
 .clicked {
   background-color: bisque;
+  transition: 200ms;
+  border-radius: 5px;
 }
 
 .selected-tags {

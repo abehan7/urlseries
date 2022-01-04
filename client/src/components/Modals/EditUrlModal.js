@@ -1,5 +1,4 @@
-import React from "react";
-import "./AddUrlModal.css";
+import React, { useEffect, useState } from "react";
 import "./EditUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
@@ -164,7 +163,7 @@ const EditUrlModal = ({
               <input placeholder="해쉬태그를 추가해주세요 #집밥 #인스타그램 #유튜브" />
             </div>
             <div className="put-memo">
-              <input placeholder="메모할 내용을 입력해주세요" />
+              <textarea style={{}} placeholder="메모할 내용을 입력해주세요" />
             </div>
             <div className="addUrl-btn editUrl-btn">
               <button

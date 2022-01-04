@@ -1,4 +1,10 @@
-import React, { useState, createContext, useContext } from "react";
+import React, {
+  useState,
+  createContext,
+  useContext,
+  useMemo,
+  useEffect,
+} from "react";
 import { AiOutlineFolder } from "react-icons/ai";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
@@ -89,6 +95,13 @@ const Page2GridItem = ({ folder, setNowFolder, nowFolder, clickedP2Edit }) => {
   // useContext
   const { DeleteM, LikeM, DList, setDList, LList, setLList } =
     useContext(Page2Context);
+
+  // 맨 처음 folder_liked가 true인거 LList에 넣기
+  useEffect(() => {
+    LikeM && folder.folder_liked && setLList((val) => [...val, folder._id]);
+    // LikeM && folder.folder_liked && console.log("👏👏👏👏👏");
+    // folder.folder_liked && console.log(folder);
+  }, [LikeM]);
 
   return (
     <div

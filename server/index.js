@@ -332,6 +332,27 @@ app.put("/folderContentsChanged", (req, res) => {
   });
 });
 
+// [7] ==================================== 폴더 좋아요 된거 수정 ====================================
+app.put("/FolderLiked", (req, res) => {
+  const { ModifiedList } = req.body;
+
+  try {
+    ModifiedList.forEach(async (val) => {
+      const query = { _id: val._id };
+      const option = {
+        $set: {
+          folder_liked: val.folder_liked,
+        },
+      };
+      await db.Folders.updateOne(query, option).exec();
+    });
+    console.log("Like Modified!");
+  } catch (err) {
+    console.log(err);
+    res.json(err);
+  }
+});
+
 // [1] ==================================== url삭제 delete ====================================
 
 app.delete("/deleteUrl/:id", async (req, res) => {
