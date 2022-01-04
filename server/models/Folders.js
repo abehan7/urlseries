@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const getCurrentDate = require("./getCurrentDate");
 
 const FolderSchema = new mongoose.Schema({
   user_id: {
@@ -18,12 +19,12 @@ const FolderSchema = new mongoose.Schema({
   folder_date_first: {
     type: Date,
     required: true,
-    default: Date.now(),
+    default: getCurrentDate(),
   },
   folder_edited: {
     type: Date,
     required: true,
-    default: Date.now(),
+    default: getCurrentDate(),
   },
 });
 

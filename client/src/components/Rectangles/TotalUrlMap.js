@@ -25,16 +25,16 @@ const TotalUrlMap = ({
   return (
     <>
       {getUrls.map((value) => {
-        let imgThum;
+        // let imgThum;
 
-        if (value.url.includes("youtu")) {
-          const ytUrl = value.url;
-          imgThum = ytUrl.split("https://youtu.be/")[1];
-        }
-        if (value.url.includes("youtube")) {
-          const ytUrl = value.url;
-          imgThum = ytUrl.split("watch?v=")[1];
-        }
+        // if (value.url.includes("youtu")) {
+        //   const ytUrl = value.url;
+        //   imgThum = ytUrl.split("https://youtu.be/")[1];
+        // }
+        // if (value.url.includes("youtube")) {
+        //   const ytUrl = value.url;
+        //   imgThum = ytUrl.split("watch?v=")[1];
+        // }
 
         return (
           <>

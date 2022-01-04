@@ -131,7 +131,7 @@ app.get("/totalURL", async (req, res) => {
 // [4] ==================================== 폴더 아이템들 가지고오기 ====================================
 app.get("/folderItems", (req, res) => {
   db.Folders.find()
-    .sort({ folder_date_first: -1 })
+    .sort({ _id: -1 })
     .then((response) => {
       console.log("folderItems found!");
       res.json(response);
@@ -196,14 +196,14 @@ app.post("/addUrl", async (req, res) => {
   }
 });
 // [4] ==================================== 폴더 추가 ====================================
-app.post("/addFolder", (req, res) => {
+app.post("/addFolder", async (req, res) => {
   const { folder } = req.body;
   console.log(folder);
   const newFolder = new db.Folders({
     ...folder,
   });
   // console.log(newFolder);
-  newFolder.save();
+  await newFolder.save();
   res.json(newFolder);
 });
 

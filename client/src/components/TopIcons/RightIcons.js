@@ -29,6 +29,7 @@ const RightIcons = ({
     deleteMode && setDeleteMode(false);
 
     setEditMode(!editMode);
+
     EditModeRectsFunc(editMode);
   };
 

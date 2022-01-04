@@ -1,4 +1,4 @@
-import React, { useCallback, useState, createContext } from "react";
+import React, { useCallback, useState, createContext, useEffect } from "react";
 import { IoArrowBack, IoCheckmarkCircleSharp } from "react-icons/io5";
 import "./Page2.css";
 import {
@@ -36,6 +36,31 @@ const Page2 = ({ setNowPage }) => {
   const [LList, setLList] = useState([]);
   const [LikeM, setLikeM] = useState(false);
 
+  // ================== 리덕스 공간 START ==================
+
+  const {
+    page3Storage: { folderItems, nowFolder2 },
+  } = useSelector((state) => state);
+
+  const dispatch = useDispatch();
+  const SetReduxNowFolder = (folder2) => {
+    dispatch(Page3Actions.SetNowFolder(folder2));
+  };
+
+  const DeleteFolder = async () => {
+    const NewFolderItem = folderItems.filter((val) => {
+      return !DList.some((DItem) => DItem === val._id);
+    });
+    dispatch(Page3Actions.EditFolderItems(NewFolderItem));
+    await Axios.post("http://localhost:3001/deleteFolder", { idList: DList });
+  };
+
+  // 폴더 추가한거 folderItems에 넣기
+  const addNewFolderItem = (folder) => {
+    dispatch(Page3Actions.EditFolderItems(folder));
+  };
+
+  // ================== 리덕스 공간 END ==================
   // ================== ONCLICK 공간 START ==================
 
   const ClickClose = useCallback(() => {
@@ -88,45 +113,49 @@ const Page2 = ({ setNowPage }) => {
 
   // 처음 Add는 맨 처음 나오는 아이콘 나올때
   // 여기는 첫번째 아이콘 누른 다음에 나오는 두번째 아이콘
-  const ClickAddItem = useCallback((e) => {
-    // +버튼 눌러야만 Axios보내는데 <input버튼> 아니면 위에 있는< 설명모달> 클릭하면 <axios보내>지니까 그런거 <방지>하는 기능
-    if (
-      e.target === document.querySelector(".tempModal") ||
-      e.target === document.querySelector(".tempModal div") ||
-      e.target === document.querySelector(".folder-name input")
-    ) {
-      return;
-    }
-    // 폴더이름
-    let folder_name = document.querySelector(".folder-name input").value;
-    // <폴더 추가하는 공간>
+  const ClickAddItem = useCallback(
+    async (e) => {
+      // +버튼 눌러야만 Axios보내는데 <input버튼> 아니면 위에 있는< 설명모달> 클릭하면 <axios보내>지니까 그런거 <방지>하는 기능
+      if (
+        e.target === document.querySelector(".tempModal") ||
+        e.target === document.querySelector(".tempModal div") ||
+        e.target === document.querySelector(".folder-name input")
+      ) {
+        return;
+      }
+      // 폴더이름
+      let folder_name = document.querySelector(".folder-name input").value;
+      // <폴더 추가하는 공간>
 
-    // 폴더이름에 최소한 1글자라도 적어야 등록되도록 하기
-    // 여기에 이벤트 넣기
-    // 빨간색으로 click아니면 클릭이라고 한글로 넣기
+      // 폴더이름에 최소한 1글자라도 적어야 등록되도록 하기
+      // 여기에 이벤트 넣기
+      // 빨간색으로 click아니면 클릭이라고 한글로 넣기
 
-    if (folder_name.length >= 1) {
-      // 1자라도 넣은 경우
-      Axios.post("http://localhost:3001/addFolder", {
-        folder: { folder_name },
-      }).then((response) => {
-        // 몽구스 스키마에 적용해서 그대로 받아오기
-        const { data } = response;
-        addNewFolderItem([data, ...folderItems]);
-      });
-      document.querySelector(".folder-name input").value = "";
-    } else {
-      // 1자도 안넣은 경우
-      console.log("@@폴더 이름을 작성해주세요@@");
-      document.querySelector(".tempModal div").innerText =
-        "@@폴더 이름을 작성해주세요@@";
-      document.querySelector(".tempModal").style.backgroundColor = "#FF7276";
+      if (folder_name.length >= 1) {
+        // 1자라도 넣은 경우
+        await Axios.post("http://localhost:3001/addFolder", {
+          folder: { folder_name },
+        }).then((response) => {
+          // 몽구스 스키마에 적용해서 그대로 받아오기
+          const { data } = response;
+          addNewFolderItem([data, ...folderItems]);
+          console.log(folderItems);
+        });
+        document.querySelector(".folder-name input").value = "";
+      } else {
+        // 1자도 안넣은 경우
+        console.log("@@폴더 이름을 작성해주세요@@");
+        document.querySelector(".tempModal div").innerText =
+          "@@폴더 이름을 작성해주세요@@";
+        document.querySelector(".tempModal").style.backgroundColor = "#FF7276";
 
-      // document.querySelector(".tempModal div").innerText =
-      //   "폴더이름을 작성후 [+] 버튼을 클릭해주세요";
-      debounceSomethingFunc();
-    }
-  }, []);
+        // document.querySelector(".tempModal div").innerText =
+        //   "폴더이름을 작성후 [+] 버튼을 클릭해주세요";
+        debounceSomethingFunc();
+      }
+    },
+    [folderItems]
+  );
 
   // 2P에디터모드일때 확인버튼 기능
   // TODO: ADD 할 때 버그있어 2개 연속으로 추가하면 하나만 되 그거 수정하자
@@ -144,44 +173,6 @@ const Page2 = ({ setNowPage }) => {
     console.log("확인");
   };
   // ================== ONCLICK 공간 END ==================
-
-  // ================== 리덕스 공간 START ==================
-
-  const {
-    page3Storage: { folderItems, nowFolder2 },
-  } = useSelector((state) => state);
-
-  const dispatch = useDispatch();
-  const SetReduxNowFolder = (folder2) => {
-    dispatch(Page3Actions.SetNowFolder(folder2));
-  };
-
-  const DeleteFolder = async () => {
-    console.log("1번 DList");
-    console.log(DList);
-
-    const NewFolderItem = folderItems.filter((val) => {
-      return !DList.some((DItem) => DItem === val._id);
-    });
-    dispatch(Page3Actions.EditFolderItems(NewFolderItem));
-
-    console.log("2번 DList");
-    console.log(DList);
-
-    await Axios.post("http://localhost:3001/deleteFolder", { idList: DList });
-    console.log("3번 DList");
-    console.log(DList);
-  };
-
-  // 폴더 추가한거 folderItems에 넣기
-  const addNewFolderItem = (folder) => {
-    dispatch(Page3Actions.EditFolderItems(folder));
-  };
-
-  // ================== 리덕스 공간 END ==================
-  // useEffect(() => {
-
-  // }, [nowFolder2]);
 
   // ================== 스타일 공간 START ==================
 
@@ -374,4 +365,4 @@ const Page2 = ({ setNowPage }) => {
   );
 };
 
-export default React.memo(Page2);
+export default Page2;
