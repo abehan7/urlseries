@@ -92,9 +92,10 @@ const LeftIcons = (props) => {
   const TrashCanSlideStyle = {
     display: "flex",
     visibility: "visible",
-    transform: "translate(0px)",
+    // transform: "translate(0px)",
+    // transform: scale(0)
+
     opacity: "1",
-    border: "1px solid #fff",
 
     borderRadius: "20px",
   };
@@ -129,13 +130,13 @@ const LeftIcons = (props) => {
                 <div className="delete-click-icon">
                   <IoCheckmarkCircleSharp />
                 </div>
-                <div className="delete-ment">전체선택</div>
+                {/* <div className="delete-ment">전체선택</div> */}
               </div>
               <div onClick={ClickOffUrls}>
                 <div className="delete-click-icon">
                   <IoCheckmarkCircleOutline />
                 </div>
-                <div className="delete-ment"> 선택취소</div>
+                {/* <div className="delete-ment"> 선택취소</div> */}
               </div>
               <div
                 className="delete--mode--delete--total"
@@ -148,7 +149,7 @@ const LeftIcons = (props) => {
                 <div className="delete-click-icon">
                   <MdOutlineDeleteForever />
                 </div>
-                <div className="delete-ment">삭제하기</div>
+                {/* <div className="delete-ment">삭제하기</div> */}
               </div>
             </div>
           </div>

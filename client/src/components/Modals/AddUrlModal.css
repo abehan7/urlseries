@@ -79,6 +79,7 @@ input {
 .put-memo {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
+
 input:focus {
   outline: none;
 }
@@ -102,6 +103,7 @@ textarea {
   padding-left: 15px;
   resize: none;
   width: 100%;
+  vertical-align: middle;
   /* height: 150px; */
   overflow: auto;
 }

@@ -257,11 +257,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border-radius: 40%;
+  padding: 3px;
+  border: 3px solid #f3f3f3;
+}
+
+.right-icons div:hover {
+  background-color: rgba(0, 0, 0, 0.07);
+  transition: 200ms;
 }
 
 .right-icons div:active {
   opacity: 1;
+}
+.right-icons div svg {
+  padding: 0;
 }
 
 .addUrl-icon {
@@ -283,7 +293,8 @@
   visibility: hidden;
   gap: 10px;
   opacity: 0;
-  transform: translate(-40px);
+  /* transform: translate(-40px); */
+  /* transform: scale(0); */
   transition: 200ms ease-in-out;
   padding: 7px;
 }
@@ -297,7 +308,9 @@
 /* 3개 아이콘 허버되면 투명도 낮아지는거 */
 .delete-mode-click-container div:hover {
   transition: 200ms ease-in-out;
-  opacity: 0.4;
+  /* opacity: 0.4; */
+  /* background-color: rgba(0, 0, 0, 0.07); */
+  /* transition: 200ms; */
 }
 
 /* 속에 있는 작은 아이콘들까지 따로따로 투명도 중첩으로 낮아지는거 방지 */
@@ -316,8 +329,20 @@
   gap: 10px;
 }
 
+.delete-icon svg {
+  border-radius: 40%;
+  padding: 3px;
+  border: 3px solid #f3f3f3;
+}
+
+.delete-icon svg:hover {
+  background-color: rgba(0, 0, 0, 0.07);
+  transition: 200ms;
+}
+
 .delete-icon > div {
   /* transition: all 1s; */
+
   font-size: 13px;
 }
 

@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { IoArrowBack } from "react-icons/io5";
+import React, { useCallback, useState, createContext } from "react";
+import { IoArrowBack, IoCheckmarkCircleSharp } from "react-icons/io5";
 import "./Page2.css";
 import {
   AiFillStar,
@@ -8,7 +8,7 @@ import {
   AiOutlineFolder,
 } from "react-icons/ai";
 import { TiBackspace, TiFolderDelete } from "react-icons/ti";
-import styled from "styled-components";
+import { BsPatchCheck } from "react-icons/bs";
 import { disable } from "../../../functions/stopScroll";
 import Page2GridItem from "./Page2GridItem";
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,7 @@ import { Page3Actions } from "../../../store/reducers/editModalP3";
 import { FiPlusSquare } from "react-icons/fi";
 import { debounce } from "lodash";
 import Axios from "axios";
+import Colors from "../../../Colors";
 
 const debounceSomethingFunc = debounce(() => {
   document.querySelector(".tempModal div").innerText =
@@ -23,9 +24,17 @@ const debounceSomethingFunc = debounce(() => {
   document.querySelector(".tempModal").style.backgroundColor = "grey";
 }, 1000);
 
+// useContext공간
+// 이걸로 여기부분만 useState관리하면 될 듯
+export const Page2Context = createContext(null);
+
 const Page2 = ({ setNowPage }) => {
   const [nowFolder, setNowFolder] = useState({});
   const [clickedP2Edit, setClickedP2Edit] = useState(false);
+  const [DeleteM, setDeleteM] = useState(false);
+  const [DList, setDList] = useState([]);
+  const [LList, setLList] = useState([]);
+  const [LikeM, setLikeM] = useState(false);
 
   // ================== ONCLICK 공간 START ==================
 
@@ -118,6 +127,22 @@ const Page2 = ({ setNowPage }) => {
       debounceSomethingFunc();
     }
   }, []);
+
+  // 2P에디터모드일때 확인버튼 기능
+  // TODO: ADD 할 때 버그있어 2개 연속으로 추가하면 하나만 되 그거 수정하자
+  const ClickConfirm = () => {
+    if (LikeM) {
+      setLikeM(false);
+      setLList([]);
+    }
+    if (DeleteM) {
+      DeleteFolder();
+      setDeleteM(false);
+      setDList([]);
+    }
+
+    console.log("확인");
+  };
   // ================== ONCLICK 공간 END ==================
 
   // ================== 리덕스 공간 START ==================
@@ -129,6 +154,23 @@ const Page2 = ({ setNowPage }) => {
   const dispatch = useDispatch();
   const SetReduxNowFolder = (folder2) => {
     dispatch(Page3Actions.SetNowFolder(folder2));
+  };
+
+  const DeleteFolder = async () => {
+    console.log("1번 DList");
+    console.log(DList);
+
+    const NewFolderItem = folderItems.filter((val) => {
+      return !DList.some((DItem) => DItem === val._id);
+    });
+    dispatch(Page3Actions.EditFolderItems(NewFolderItem));
+
+    console.log("2번 DList");
+    console.log(DList);
+
+    await Axios.post("http://localhost:3001/deleteFolder", { idList: DList });
+    console.log("3번 DList");
+    console.log(DList);
   };
 
   // 폴더 추가한거 folderItems에 넣기
@@ -150,125 +192,184 @@ const Page2 = ({ setNowPage }) => {
     transform: "scale(1)",
     transition: "300ms",
   };
+
+  const ChangedColor = {
+    backgroundColor: Colors.Peach,
+    transition: "400ms",
+  };
+
+  const NomalColor = {
+    transition: "400ms",
+  };
+
+  const DeleteMStyle = {
+    backgroundColor: "rgba(0, 0, 0, 0.05)",
+    transition: "200ms",
+  };
   return (
     <>
-      <div className="modal-window tagFolder-window">
-        <div className="header-Container">
-          <div className="close-area" onClick={ClickClose}>
-            <IoArrowBack />
-          </div>
-          <div className="title page2-title">
-            <h2>폴더</h2>
-          </div>
-          <div className="hash-btns">
-            {/* 오른쪽에 2개 아이콘 */}
-            <div className="editFolder-left-Icons">
-              {/* 삭제 */}
-              <div
-                className="editFolde-delete"
-                style={clickedP2Edit ? showUp : empty}
-              >
-                <div className="editFolder-one-icon">
-                  <TiFolderDelete />
-                </div>
-                <div className="editFolder-one-ment">삭제</div>
-              </div>
-              {/* 좋아요 */}
-              <div
-                className="editFolde-like"
-                style={clickedP2Edit ? showUp : empty}
-              >
-                <div className="editFolder-one-icon">
-                  <AiFillStar />
-                </div>
-                <div className="editFolder-one-ment">좋아요</div>
-              </div>
+      <Page2Context.Provider
+        value={{
+          DeleteM,
+          setDeleteM,
+          LikeM,
+          setLikeM,
+          DList,
+          setDList,
+          LList,
+          setLList,
+        }}
+      >
+        <div
+          className="modal-window tagFolder-window"
+          style={clickedP2Edit ? ChangedColor : NomalColor}
+        >
+          <div className="header-Container">
+            <div className="close-area" onClick={ClickClose}>
+              <IoArrowBack />
             </div>
-            {/* 편집모드 */}
-            <div
-              className="editFolder"
-              onClick={() => {
-                setClickedP2Edit((val) => !val);
-              }}
-            >
-              <AiOutlineEdit />
+            <div className="title page2-title">
+              <h2>폴더</h2>
             </div>
-          </div>
-        </div>
-
-        <div className="content folder-content">
-          <div className="tagFolder-grid">
-            {/* 폴더 클릭 안했을때만 나오게하기 */}
-            {/* 맨 처음 추가하기 START */}
-            {Object.keys(nowFolder).length === 0 && (
+            <div className="hash-btns">
+              {/* 오른쪽에 2개 아이콘 */}
+              <div className="editFolder-left-Icons">
+                {/* 삭제 */}
+                <div
+                  className="editFolde-delete"
+                  style={
+                    clickedP2Edit ? (DeleteM ? DeleteMStyle : showUp) : empty
+                  }
+                  onClick={() => {
+                    setDeleteM((val) => !val);
+                    setDList([]);
+                    setLList([]);
+                    LikeM === true && setLikeM(false);
+                  }}
+                >
+                  <div className="editFolder-one-icon">
+                    <TiFolderDelete />
+                  </div>
+                  <div className="editFolder-one-ment">삭제</div>
+                </div>
+                {/* 좋아요 */}
+                <div
+                  className="editFolde-like"
+                  style={
+                    clickedP2Edit ? (LikeM ? DeleteMStyle : showUp) : empty
+                  }
+                  onClick={() => {
+                    setLikeM((val) => !val);
+                    DeleteM === true && setDeleteM(false);
+                    setDList([]);
+                    setLList([]);
+                  }}
+                >
+                  <div className="editFolder-one-icon">
+                    <AiFillStar />
+                  </div>
+                  <div className="editFolder-one-ment">좋아요</div>
+                </div>
+              </div>
+              {/* 편집모드 */}
               <div
-                className="addFolder-icon"
-                onClick={(e) => {
-                  ClickAddIcon(e);
+                className="editFolder"
+                onClick={() => {
+                  LikeM === true && setLikeM(false);
+                  DeleteM === true && setDeleteM(false);
+                  setClickedP2Edit((val) => !val);
+                  if (Object.keys(nowFolder).length !== 0) {
+                    setNowFolder({});
+                    SetReduxNowFolder({});
+                  }
                 }}
               >
-                <div style={{ pointerEvents: "none" }}>
+                <AiOutlineEdit />
+              </div>
+            </div>
+          </div>
+
+          <div className="content folder-content">
+            <div className="tagFolder-grid">
+              {/* 폴더 클릭 안했을때만 나오게하기 */}
+              {/* 맨 처음 추가하기 START */}
+              {Object.keys(nowFolder).length === 0 && (
+                <div
+                  className="addFolder-icon"
+                  onClick={(e) => {
+                    clickedP2Edit ? ClickConfirm() : ClickAddIcon(e);
+                  }}
+                >
+                  <div style={{ pointerEvents: "none" }}>
+                    {clickedP2Edit ? (
+                      <BsPatchCheck style={{ pointerEvents: "none" }} />
+                    ) : (
+                      <FiPlusSquare />
+                    )}
+                  </div>
+
+                  <div style={{ pointerEvents: "none" }}>
+                    {clickedP2Edit ? "확인" : "추가하기"}
+                  </div>
+                </div>
+              )}
+
+              <div
+                className={
+                  Object.keys(nowFolder2).length === 0 ? "back" : "back open"
+                }
+                onClick={(e) => {
+                  ClickBackIcon(e);
+                }}
+              >
+                <TiBackspace style={{ pointerEvents: "none" }} />
+                <div
+                  className="click-here"
+                  style={{ display: "none", color: "#FF7276" }}
+                >
+                  <AiOutlineArrowUp />
+                </div>
+              </div>
+              <div
+                className="addItem"
+                onClick={(e) => {
+                  ClickAddItem(e);
+                }}
+              >
+                <div className="tempModal">
+                  <div>폴더이름을 작성후 [+] 버튼을 클릭해주세요</div>
+                </div>
+                <div className="addFolder-Icon-moved ">
                   <FiPlusSquare />
                 </div>
-
-                <div style={{ pointerEvents: "none" }}> 추가하기</div>
+                <div className="folder-name">
+                  <input
+                    placeholder="@폴더이름@"
+                    style={{
+                      border: "none",
+                      padding: "0",
+                      textAlign: "center",
+                      fontSize: "15px",
+                    }}
+                  />
+                </div>
               </div>
-            )}
 
-            <div
-              className={
-                Object.keys(nowFolder2).length === 0 ? "back" : "back open"
-              }
-              onClick={(e) => {
-                ClickBackIcon(e);
-              }}
-            >
-              <TiBackspace style={{ pointerEvents: "none" }} />
-              <div
-                className="click-here"
-                style={{ display: "none", color: "#FF7276" }}
-              >
-                <AiOutlineArrowUp />
-              </div>
+              {folderItems.map((folder) => {
+                return (
+                  <Page2GridItem
+                    folder={folder}
+                    setNowFolder={setNowFolder}
+                    nowFolder={nowFolder}
+                    key={folder._id}
+                    clickedP2Edit={clickedP2Edit}
+                  />
+                );
+              })}
             </div>
-            <div
-              className="addItem"
-              onClick={(e) => {
-                ClickAddItem(e);
-              }}
-            >
-              <div className="tempModal">
-                <div>폴더이름을 작성후 [+] 버튼을 클릭해주세요</div>
-              </div>
-              <div className="addFolder-Icon-moved ">
-                <FiPlusSquare />
-              </div>
-              <div className="folder-name">
-                <input
-                  placeholder="@폴더이름@"
-                  style={{
-                    border: "none",
-                    padding: "0",
-                    textAlign: "center",
-                    fontSize: "15px",
-                  }}
-                />
-              </div>
-            </div>
-
-            {folderItems.map((folder) => {
-              return (
-                <Page2GridItem
-                  folder={folder}
-                  setNowFolder={setNowFolder}
-                  nowFolder={nowFolder}
-                  key={folder._id}
-                />
-              );
-            })}
           </div>
         </div>
-      </div>
+      </Page2Context.Provider>
     </>
   );
 };

@@ -25,6 +25,17 @@ const TotalUrlMap = ({
   return (
     <>
       {getUrls.map((value) => {
+        let imgThum;
+
+        if (value.url.includes("youtu")) {
+          const ytUrl = value.url;
+          imgThum = ytUrl.split("https://youtu.be/")[1];
+        }
+        if (value.url.includes("youtube")) {
+          const ytUrl = value.url;
+          imgThum = ytUrl.split("watch?v=")[1];
+        }
+
         return (
           <>
             <div
@@ -61,11 +72,29 @@ const TotalUrlMap = ({
                   </div>
                 </>
               )}
+              {/* <img
+                width={value.url.includes("youtu") ? "100px" : "20px"}
+                className="urlFavicon"
+                src={
+                  value.url.includes("youtu")
+                    ? `https://i.ytimg.com/vi/${imgThum}/maxresdefault.jpg`
+                    : `http://www.google.com/s2/favicons?domain=${value.url}`
+                }
+                alt=""
+              /> */}
               <img
                 className="urlFavicon"
                 src={`http://www.google.com/s2/favicons?domain=${value.url}`}
                 alt=""
               />
+
+              {/* <iframe
+                title="test"
+                width="320"
+                height="440"
+                src="https://www.instagram.com/p/CYO9ux9uEMr/embed"
+                frameborder="0"
+              /> */}
               {/* <div className="valueId">{value.url_id}</div> */}
               <div className="just-bar">|</div>
               <div className="valueTitle">{value.url_title}</div>

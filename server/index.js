@@ -342,6 +342,21 @@ app.delete("/deleteUrl/:id", async (req, res) => {
   console.log("item deleted");
 });
 
+// [2] ==================================== 폴더삭제 ====================================
+app.post("/deleteFolder", async (req, res) => {
+  const { idList } = req.body;
+  console.log(idList);
+  const query = { _id: idList };
+  try {
+    await db.Folders.deleteMany(query).exec();
+    console.log(`${idList} Folder Deleted!`);
+    res.json(`${idList} Folder Deleted!`);
+  } catch (err) {
+    console.log(err);
+    res.json(`${idList} Folder NOT Deleted`);
+  }
+});
+
 // [1] ====================================== 퍼펫티어 ======================================
 
 app.post("/crawling", (req, res) => {
@@ -418,6 +433,5 @@ app.post("/crawling", (req, res) => {
 });
 
 app.listen(3001, () => {
-  console.clear();
   console.log("SERVER RUNNING ON PORT 3001");
 });

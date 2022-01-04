@@ -134,7 +134,9 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
                 }}
               />
             </div>
-            <div className="put-memo">
+            <div
+              className="put-memo"
+            >
               <textarea
                 style={
                   memo.length < 25
