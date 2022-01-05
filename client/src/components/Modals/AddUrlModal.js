@@ -4,7 +4,7 @@ import { IoArrowBack } from "react-icons/io5";
 import Axios from "axios";
 import { disable } from "../../functions/stopScroll";
 import { connect } from "react-redux";
-import TextArea from "../../Styled/TextArea.styled";
+import TextArea from "../styled/TextArea.styled";
 
 const api = Axios.create({
   baseURL: `http://localhost:3001/`,

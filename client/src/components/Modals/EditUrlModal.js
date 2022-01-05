@@ -4,7 +4,7 @@ import { IoArrowBack } from "react-icons/io5";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import Axios from "axios";
 import { useSelector } from "react-redux";
-import TextArea from "../../Styled/TextArea.styled";
+import TextArea from "../styled/TextArea.styled";
 
 const EditUrlModal = ({
   myFav,

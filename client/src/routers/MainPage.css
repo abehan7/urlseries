@@ -264,11 +264,12 @@
 
 .right-icons div:hover {
   background-color: rgba(0, 0, 0, 0.07);
-  transition: 200ms;
+  transition: 500ms;
 }
 
 .right-icons div:active {
-  opacity: 1;
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: 500ms;
 }
 .right-icons div svg {
   padding: 0;
@@ -337,7 +338,7 @@
 
 .delete-icon svg:hover {
   background-color: rgba(0, 0, 0, 0.07);
-  transition: 200ms;
+  transition: 500ms;
 }
 
 .delete-icon > div {

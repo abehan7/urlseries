@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { getMouseLocation, grabNowValue } from "./movingModalFuncs";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import whenIclickUrl from "./FuncTotalUrlMap";
 import { useDispatch } from "react-redux";
 import { UrlDetailActions } from "../../store/reducers/ClickedUrlDetails";
+import HoverModal from "../styled/HoverModal.styled";
 
 const TotalUrlMap = ({
   getUrls,
@@ -12,6 +13,7 @@ const TotalUrlMap = ({
   setMyFav,
   deleteMode,
 }) => {
+  const [hoverList, setHoverList] = useState([]);
   const dispatch = useDispatch();
   window.onscroll = () => {
     const circle = document.querySelector(".detail-container");
@@ -31,6 +33,7 @@ const TotalUrlMap = ({
         return (
           <>
             <div
+              style={{ position: "relative" }}
               className="T-url"
               key={value._id}
               onClick={() => {
@@ -44,9 +47,26 @@ const TotalUrlMap = ({
                   dispatch,
                 });
               }}
-              onMouseLeave={onMouseLeave}
-              onMouseEnter={() => {
-                grabNowValue(value);
+              onMouseOut={() => {
+                setGetUrls(
+                  getUrls.map((val) => {
+                    return val._id === value._id
+                      ? { ...value, url_hover: false }
+                      : val;
+                  })
+                );
+                // onMouseLeave()
+              }}
+              onMouseOver={(e) => {
+                setGetUrls(
+                  getUrls.map((val) => {
+                    return val._id === value._id
+                      ? { ...value, url_hover: true }
+                      : val;
+                  })
+                );
+
+                // grabNowValue(value);
               }}
               onContextMenu={(e) => {
                 console.log("우클릭");
@@ -91,6 +111,7 @@ const TotalUrlMap = ({
               {/* <div className="valueId">{value.url_id}</div> */}
               <div className="just-bar">|</div>
               <div className="valueTitle">{value.url_title}</div>
+              <HoverModal value={value} />
             </div>
           </>
         );
