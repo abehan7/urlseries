@@ -1,5 +1,4 @@
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
-import { grabNowValue } from "./movingModalFuncs";
 import Axios from "axios";
 import { UrlDetailActions } from "../../store/reducers/ClickedUrlDetails";
 
@@ -47,7 +46,6 @@ const whenIclickUrl = ({
       });
     } else {
       EditMode_ModalFunc(value);
-      grabNowValue.cancel();
       setMyFav(value.url_likedUrl === 1);
       // 리덕스로 클릭한거 넣기
       setUrlDetail({
