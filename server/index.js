@@ -5,7 +5,7 @@ const cors = require("cors");
 const db = require("./models");
 const { somethingIsNotMaching, difference } = require("./Funcs");
 const { response } = require("express");
-
+const { LoginMiddleWare } = require("./middleware/login");
 const { Users } = require("./models/Users");
 const { auth } = require("./middleware/auth");
 
@@ -88,55 +88,8 @@ app.post("/signup", (req, res) => {
 
 //================================================로그인==============================
 
-app.post("/login", auth, (req, res) => {
-  //아이디가 데이터 베이스에 있는지 확인
-
-  const { user_id, password } = req.body;
-
-  Users.findOne({ user_id: user_id }, (err, user) => {
-    if (user) {
-      if (Users.comparePassword(password) === user.password) {
-        res.send({ message: "login success", user: user });
-      } else {
-        res.send({ message: "wrong credentials" });
-      }
-    } else {
-      res.send("not register");
-    }
-  });
-
-  // Users.findOne({ user_id: req.body.user_id }, (err, user) => {
-  //   if (err) {
-  //     return res.json({
-  //       loginSuccess: false,
-  //       message: "존재하지 않는 아이디입니다.",
-  //     });
-  //   }
-  //   user
-  //     .comparePassword(req.body.password)
-  //     .then((isMatch) => {
-  //       if (!isMatch) {
-  //         return res.json({
-  //           loginSuccess: false,
-  //           message: "비밀번호가 일치하지 않습니다",
-  //         });
-  //       }
-  //       //비밀번호가 일치하면 토큰을 생성한다
-  //       //jwt 토큰 생성하는 메소드 작성
-  //       user
-  //         .generateToken()
-  //         .then((user) => {
-  //           res
-  //             .cookie("x_auth", user.token)
-  //             .status(200)
-  //             .json({ loginSuccess: true, userId: user._id });
-  //         })
-  //         .catch((err) => {
-  //           res.status(400).send(err);
-  //         });
-  //     })
-  //     .catch((err) => res.json({ loginSuccess: false, err }));
-  // });
+app.post("/login", LoginMiddleWare, (req, res) => {
+  res.send("로그인 완료");
 });
 
 //================================================사용자인증===========================

@@ -48,12 +48,15 @@ UserSchema.pre("save", function (next) {
   }
 });
 //유저가 입력한 패스워드와 데이터베이스의 패스워드를 비교한 후 true/false 를 콜백함수로 넘겨줌
-UserSchema.methods.comparePassword = function (plainPassword) {
-  //plainPassword를 암호화해서 현재 비밀번호화 비교
+UserSchema.statics.comparePassword = function (plainPassword, hashedPw) {
+  //plainPassword를 암호화해서 현재 비밀번호화 비교\
   return bcrypt
-    .compare(plainPassword, this.password)
-    .then((isMatch) => console.log(isMatch))
-    .catch((err) => console.log(err));
+    .compare(plainPassword, hashedPw)
+    .then((isMatch) => {
+      console.log(isMatch);
+      return isMatch;
+    })
+    .catch((err) => err);
 };
 
 //jwt를 통해 유저의 아이디로 토큰을 만든 후 저장
