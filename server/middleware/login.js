@@ -6,14 +6,30 @@ const LoginMiddleWare = (req, res, next) => {
   Users.findOne(query, async (err, user) => {
     if (err) console(err);
     if (user) {
-      const LoginAuth = await Users.comparePassword(password, user.password);
-      if (LoginAuth) {
-        return next();
-      } else {
-        res.send({ message: "wrong credentials" });
-      }
-    } else {
-      res.send("not register");
+      // #FIXME: 비밀번호 확인
+      await user.comparePassword(password).then((isMatch) => {
+        if (!isMatch) {
+          return res.json({
+            loginSuccess: false,
+            message: "비밀번호가 일치하지 않습니다",
+          });
+        }
+      });
+      // FIXME: 확인 후 토큰화
+      console.log("👏👏👏👏👏👏");
+
+      await user
+        .generateToken()
+        .then((user) => {
+          return res
+            .cookie("x_auth", user.token)
+            .status(200)
+            .json({ message: "로그인 성공🎉🎉🎉🎉", user: user._id });
+        })
+        .catch((err) => {
+          res.status(400).send(err);
+        });
+      // 토큰화 완료
     }
   });
 };
