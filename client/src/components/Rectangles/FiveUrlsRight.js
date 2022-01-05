@@ -5,7 +5,6 @@ import MoreBtn from "./MoreBtn";
 import HoverModal from "../styled/HoverModal.styled";
 
 const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
-  const [hoverList, setHoverList] = useState([]);
   const fiveStuffs = values.slice(0, 5);
 
   const WhenEditMode = ({ url: value }) => {
@@ -49,10 +48,7 @@ const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
               src={`http://www.google.com/s2/favicons?domain=${value.url}`}
               alt=""
             />
-<<<<<<< HEAD
-=======
             {/* <div className="valueId">{value.url_id}</div> */}
->>>>>>> HAN
             <div className="just-bar">|</div>
             <div className="valueTitle">{value.url_title}</div>
             <HoverModal value={value} />
