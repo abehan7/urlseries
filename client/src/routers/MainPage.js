@@ -29,6 +29,8 @@ import RightIcons from "../components/TopIcons/RightIcons";
 import AsideTag from "../components/AsideTags/AsideTag";
 import { useDispatch } from "react-redux";
 import { Page3Actions } from "../store/reducers/editModalP3";
+//링크이동
+import { Link } from "react-router-dom";
 
 const MainPage = () => {
   // 아~빙고
@@ -192,6 +194,10 @@ const MainPage = () => {
     backgroundColor: bcTopRect,
   };
 
+  function handleClick(e) {
+    window.location.href = "/login";
+  }
+
   return (
     <>
       {getUrls.length === 0 ? (
@@ -241,11 +247,12 @@ const MainPage = () => {
                 </div>
               </div>
 
-<<<<<<< HEAD
-              <div className="login">로그인/회원가입</div>
+              <div type="button" onClick={handleClick}>
+                로그인/회원가입
+              </div>
 
-=======
->>>>>>> c9b9ee24520db274a1be00912590695e20f60ce4
+              {/* <div className="login">로그인/회원가입</div> */}
+
               <div className="share-write">
                 {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
                 <LeftIcons

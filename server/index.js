@@ -4,21 +4,42 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const db = require("./models");
 const { somethingIsNotMaching, difference } = require("./Funcs");
+const { response } = require("express");
+
+const { Users } = require("./models/Users");
+const { auth } = require("./middleware/auth");
+
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 dotenv.config({ path: "./.env" });
 
 const app = express();
 
-app.use(cors());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
+
+app.use(
+  cors({
+    origin: true,
+    credentials: true, //도메인이 다른경우 서로 쿠키등을 주고받을때 허용해준다고 한다
+  })
+);
 app.use(express.json());
 
 // const UrlModel = require("./models/Urls");
 // const UsersModel = require("./models/users");
 
-// TODO: #1 해쉬태그는 잘 들어가는데 대소문자 구분을 안하고 들어가서 이거 버그생길듯
+// TODO: #1 해쉬태그는  잘 들어가는데 대소문자 구분을 안하고 들어가서 이거 버그생길듯
 // TODO: #2 그리고 글 등록하기 하는데 FOR때문인지 약간 느리게 느껴졌음 아싸리 그냥 async없이 그냥 일단 useState로 현재 있는 곳에 넣은 다음에
 //          사후적으로 db에 들어가게 하는 방향이 좀 더 옳은 방향일 수도 있는거같다
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const getCurrentDate = () => {
   var date = new Date();
@@ -33,6 +54,115 @@ const getCurrentDate = () => {
     Date.UTC(year, month, today, hours, minutes, seconds, milliseconds)
   );
 };
+
+//==========================================회원가입====================
+
+// const signUpTemplateCopy = require("../server/models/Users");
+
+app.post("/signup", (req, res) => {
+  // const saltPassword = await bcrypt.genSalt(10);
+  // const securePassword = await bcrypt.hash(request.body.password, saltPassword);
+
+  // const signedUpUser = new signUpTemplateCopy({
+  //   user_id: request.body.user_id,
+  //   // password: securePassword,
+  //   password: request.body.password,
+  //   email: request.body.email,
+  // });
+
+  // signedUpUser
+  //   .save()
+  //   .then((data) => {
+  //     response.json(data);
+  //   })
+  //   .catch((error) => {
+  //     response.json(error);
+  //   });
+
+  const user = new Users(req.body);
+  user.save((err, userInfo) => {
+    if (err) return res.json({ success: false, err });
+    return res.status(200).json({ success: true });
+  });
+});
+
+//================================================로그인==============================
+
+app.post("/login", auth, (req, res) => {
+  //아이디가 데이터 베이스에 있는지 확인
+
+  const { user_id, password } = req.body;
+
+  Users.findOne({ user_id: user_id }, (err, user) => {
+    if (user) {
+      if (Users.comparePassword(password) === user.password) {
+        res.send({ message: "login success", user: user });
+      } else {
+        res.send({ message: "wrong credentials" });
+      }
+    } else {
+      res.send("not register");
+    }
+  });
+
+  // Users.findOne({ user_id: req.body.user_id }, (err, user) => {
+  //   if (err) {
+  //     return res.json({
+  //       loginSuccess: false,
+  //       message: "존재하지 않는 아이디입니다.",
+  //     });
+  //   }
+  //   user
+  //     .comparePassword(req.body.password)
+  //     .then((isMatch) => {
+  //       if (!isMatch) {
+  //         return res.json({
+  //           loginSuccess: false,
+  //           message: "비밀번호가 일치하지 않습니다",
+  //         });
+  //       }
+  //       //비밀번호가 일치하면 토큰을 생성한다
+  //       //jwt 토큰 생성하는 메소드 작성
+  //       user
+  //         .generateToken()
+  //         .then((user) => {
+  //           res
+  //             .cookie("x_auth", user.token)
+  //             .status(200)
+  //             .json({ loginSuccess: true, userId: user._id });
+  //         })
+  //         .catch((err) => {
+  //           res.status(400).send(err);
+  //         });
+  //     })
+  //     .catch((err) => res.json({ loginSuccess: false, err }));
+  // });
+});
+
+//================================================사용자인증===========================
+
+app.get("/auth", auth, (req, res) => {
+  //auth 미들웨어를 통과한 상태 이므로
+  //req.user에 user값을 넣어줬으므로
+  res.status(200).json({
+    _id: req._id,
+    isAdmin: req.user.role === 09 ? false : true,
+    isAuth: true,
+    email: req.user.email,
+  });
+});
+
+//===============================================로그아웃================================
+
+app.get("/logout", auth, (req, res) => {
+  Users.findOneAndUpdate({ _id: req.user._id }, { token: "" }, (err, user) => {
+    if (err) return res.json({ success: false, err });
+    res.clearCookie("x_auth");
+    return res.status(200).send({
+      success: true,
+    });
+  });
+});
 
 // [1] ==================================== 테스트용도 get ====================================
 app.get("/hithere", async (req, res) => {
