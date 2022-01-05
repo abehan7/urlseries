@@ -1,9 +1,8 @@
-POST http://localhost:3001/login
+POST      http://localhost:3001/login
 Content-Type: application/json
 
 {
-    "user_id": "new",    
-    "password" : "$2b$10$hUI7FBJBGkTd5cHffpktnudtm4.58dlQnIKRTvWIre41mz6cAIhYG",
-    "email": "xptmxm@mail.com"
-    
+    "user_id": "axax",    
+    "password" : "axax",    
+        
 }

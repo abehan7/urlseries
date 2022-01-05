@@ -13,7 +13,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            {user && user._id ? <MainPage /> : <Login />}
+            {/* {user && user._id ? <MainPage /> : <Login />} */}
             <MainPage />
           </Route>
           <Route path="/Login">

@@ -52,8 +52,8 @@ UserSchema.methods.comparePassword = function (plainPassword) {
   //plainPassword를 암호화해서 현재 비밀번호화 비교
   return bcrypt
     .compare(plainPassword, this.password)
-    .then((isMatch) => console.log(isMatch))
-    .catch((err) => console.log(err));
+    .then((isMatch) => isMatch)
+    .catch((err) => err);
 };
 
 //jwt를 통해 유저의 아이디로 토큰을 만든 후 저장
@@ -70,7 +70,7 @@ UserSchema.statics.findByToken = function (token) {
   let user = this;
   //secretToken을 통해 user의 id값을 받아오고 해당 아이디를 통해
   //Db에 접근해서 유저의 정보를 가져온다
-  console.log("123123");
+
   return jwt.verify(token, "secretToken", function (err, decoded) {
     return user
       .findOne({ _id: decoded, token: token })
