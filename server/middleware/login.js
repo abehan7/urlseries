@@ -24,7 +24,15 @@ const LoginMiddleWare = (req, res, next) => {
           return res
             .cookie("x_auth", user.token)
             .status(200)
-            .json({ message: "로그인 성공🎉🎉🎉🎉", user: user._id });
+            .json({
+              message: "로그인 성공🎉🎉🎉🎉",
+              user: {
+                user_id: user.user_id,
+                _id: user._id,
+                user_assignedTags: user.user_assignedTags,
+              },
+              // userData: { user_id, _id, email, user_asignedTags },
+            });
         })
         .catch((err) => {
           res.status(400).send(err);

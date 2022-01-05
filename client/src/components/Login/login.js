@@ -21,9 +21,11 @@ const Login = ({ setLoginUser }) => {
   };
 
   const login = () => {
-    axios.post("http://localhost:3001/login", user).then((res) => {
-      alert(res.data.message);
-      setLoginUser(res.data.user);
+    axios.post("http://localhost:3001/login", user).then((response) => {
+      console.log(response);
+      const { message, user } = response.data;
+      alert(message);
+      setLoginUser(user);
       history.push("/");
     });
   };
