@@ -14,6 +14,7 @@ const TotalUrlMap = ({
   deleteMode,
 }) => {
   const [hoverList, setHoverList] = useState([]);
+  const [Height, setHeight] = useState(0);
   const dispatch = useDispatch();
   window.onscroll = () => {
     const circle = document.querySelector(".detail-container");
@@ -36,7 +37,7 @@ const TotalUrlMap = ({
               style={{ position: "relative" }}
               className="T-url"
               key={value._id}
-              onClick={() => {
+              onClick={(e) => {
                 whenIclickUrl({
                   oneUrl: value,
                   deleteMode,
@@ -58,6 +59,7 @@ const TotalUrlMap = ({
                 // onMouseLeave()
               }}
               onMouseOver={(e) => {
+                setHeight(e.target.offsetHeight);
                 setGetUrls(
                   getUrls.map((val) => {
                     return val._id === value._id
@@ -96,6 +98,7 @@ const TotalUrlMap = ({
                 alt=""
               /> */}
               <img
+                style={{ pointerEvents: "none" }}
                 className="urlFavicon"
                 src={`http://www.google.com/s2/favicons?domain=${value.url}`}
                 alt=""
@@ -109,9 +112,13 @@ const TotalUrlMap = ({
                 frameborder="0"
               /> */}
               {/* <div className="valueId">{value.url_id}</div> */}
-              <div className="just-bar">|</div>
-              <div className="valueTitle">{value.url_title}</div>
-              <HoverModal value={value} />
+              <div className="just-bar" style={{ pointerEvents: "none" }}>
+                |
+              </div>
+              <div className="valueTitle" style={{ pointerEvents: "none" }}>
+                {value.url_title}
+              </div>
+              <HoverModal value={value} Height={Height} />
             </div>
           </>
         );

@@ -6,6 +6,7 @@ const HoverModalEl = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
+
   flex-direction: column;
   display: ${(props) => (props.hover ? "flex" : "none")};
   pointer-events: none;
@@ -13,9 +14,9 @@ const HoverModalEl = styled.div`
 
 const Wrapper = styled.div`
   z-index: 1;
-  margin-top: 40px;
   border-radius: 5px;
   height: auto;
+  margin-top: ${(props) => props.Height + "px"};
   box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 4px;
   border: 1px solid #ebebeb;
   background-color: ${Colors.Gray};
@@ -28,10 +29,10 @@ const Memo = styled.div`
 `;
 const Hashtags = styled.div``;
 const Content = styled.span``;
-const HoverModal = ({ value }) => {
+const HoverModal = ({ value, Height }) => {
   return (
-    <HoverModalEl hover={value?.url_hover}>
-      <Wrapper>
+    <HoverModalEl hover={value.url_hover}>
+      <Wrapper Height={Height}>
         <Hashtags>
           {value.url_hashTags.map((tag) => {
             return <Content>{tag + " "}</Content>;
