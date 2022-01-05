@@ -79,6 +79,7 @@ input {
 .put-memo {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
+
 input:focus {
   outline: none;
 }
@@ -89,4 +90,20 @@ button {
   font-size: 20px;
   cursor: pointer;
   padding-top: 5px;
+}
+
+.put-memo textarea:focus {
+  outline: none;
+}
+
+textarea {
+  font-size: 17px;
+  border: none;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  padding-left: 15px;
+  resize: none;
+  width: 100%;
+  vertical-align: middle;
+  /* height: 150px; */
+  overflow: auto;
 }

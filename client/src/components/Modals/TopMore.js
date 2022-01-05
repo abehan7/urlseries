@@ -3,6 +3,7 @@ import { IoArrowBack } from "react-icons/io5";
 import "./AddUrlModal.css";
 import { disable } from "../../functions/stopScroll";
 import "./TopMore.css";
+
 const TopMore = ({
   mostClickedUrls,
   likedUrls,
@@ -23,6 +24,9 @@ const TopMore = ({
                   ".top-moreUrls-container"
                 ).style.display = "none";
                 disable();
+                document
+                  .querySelector(".top-modal-window")
+                  .classList.toggle("top-modal-window-clicked");
               }}
             >
               <IoArrowBack />

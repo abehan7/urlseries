@@ -29,6 +29,8 @@ import RightIcons from "../components/TopIcons/RightIcons";
 import AsideTag from "../components/AsideTags/AsideTag";
 import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../store/reducers/editModalP3";
+import { AiOutlineInstagram, AiOutlineYoutube } from "react-icons/ai";
+import GridHeader from "../components/GridHeader";
 
 // TODO: 12/29/수) 오늘 내가 집중해야할  useState => setAssignedTags / initAssigned
 // #1 폴더 useState만들기 => boxtags에 넣으면 될 듯
@@ -343,7 +345,7 @@ const MainPage = () => {
                 {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
                 {editMode ? (
                   BoxTags_First ? (
-                    <h3>전체 URL</h3>
+                    <GridHeader />
                   ) : (
                     <h3>HashTag</h3>
                   )

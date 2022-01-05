@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import Axios from "axios";
 import MoreBtn from "./MoreBtn";
+import HoverModal from "../styled/HoverModal.styled";
 
 const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
+  const [hoverList, setHoverList] = useState([]);
   const fiveStuffs = values.slice(0, 5);
 
   const WhenEditMode = ({ url: value }) => {
@@ -27,10 +29,14 @@ const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
       {fiveStuffs.map((value) => {
         return (
           <div
+            style={{ position: "relative" }}
             className="url"
             onClick={() => RightOnClick({ url: value })}
             onMouseEnter={() => {
-              // console.log(123);
+              value.url_hover = true;
+            }}
+            onMouseLeave={() => {
+              value.url_hover = false;
             }}
             onContextMenu={(e) => {
               console.log("우클릭");
@@ -49,6 +55,7 @@ const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
 >>>>>>> HAN
             <div className="just-bar">|</div>
             <div className="valueTitle">{value.url_title}</div>
+            <HoverModal value={value} />
           </div>
         );
       })}

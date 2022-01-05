@@ -55,7 +55,7 @@ const HashTagModal = ({
   return (
     <>
       <div id="modal" className="modal-overlay hash-overlay">
-        <div style={{ color: "white" }}>{nowPage2}</div>
+        {/* <div style={{ color: "white" }}>{nowPage2}</div> */}
 
         <div className="left-arrow">
           <IoIosArrowBack

@@ -17,22 +17,84 @@
 .hash-btns {
   position: absolute;
   display: flex;
-
+  width: auto;
+  height: auto;
   right: 15px;
   gap: 2px;
+}
+
+/* 아이콘 2개 */
+.editFolder-left-Icons div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1px;
+  width: 42px;
+  height: 42px;
+  border-radius: 35%;
+  cursor: pointer;
+}
+
+/* 위에 아이콘 3개 허버이벤트 */
+.editFolder-left-Icons div:hover,
+.editFolder:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: 200ms;
+}
+
+/* 아이콘 3개 클릭하면 더 찐해지게 */
+.editFolder-left-Icons div:active,
+.editFolder:active {
+  background-color: rgba(0, 0, 0, 0.1);
+  transition: 200ms;
+}
+
+.editFolder-one-ment {
+  font-size: 13px;
+  pointer-events: none;
+}
+.editFolder-one-icon {
+  pointer-events: none;
+}
+
+/* 오른쪽 한 개 */
+
+.editFolder {
+  width: 39px;
+  height: 39px;
 }
 
 .hash-btns > div {
   display: flex;
   align-items: center;
   justify-content: center;
-}
-.hash-btns > div > svg {
-  font-size: 25px;
-  padding-right: 5px;
-  cursor: pointer;
+  /* width: 32px; */
+  border-radius: 35%;
 }
 
+.hash-btns svg {
+  /* font-size: 20px; */
+  padding-right: 5px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.hash-btns > .editFolder {
+  font-size: 25px;
+}
+.editFolder svg {
+  border-radius: 35%;
+}
+/* .editFolder svg:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: 200ms;
+} */
+
+.hash-btns > div:hover {
+  /* background-color: rgba(0, 0, 0, 0.05); */
+  /* transition: 200ms; */
+}
 .folder-content .tagFolder-grid {
   position: relative;
   display: grid;
@@ -70,12 +132,11 @@
   left: 5%;
   border-radius: 6px;
 }
-.tagFolder-grid > div path {
-}
 
 .folder-clicked {
   color: #fbb917;
 }
+
 .tagFolder-grid .closed {
   display: none;
 }
@@ -87,4 +148,28 @@
 .tagFolder-grid .open {
   display: flex;
   transition: 200ms;
+}
+
+.Page2GridItem,
+.addFolder-icon,
+.back {
+  border-radius: 35%;
+}
+
+.Page2GridItem:hover,
+.addFolder-icon:hover,
+.back:hover {
+  background-color: rgba(0, 0, 0, 0.03);
+  transition: 200ms;
+}
+
+.Page2GridItem:active,
+.addFolder-icon:active,
+.back:active {
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: 500ms;
+}
+
+.Page2GridItem:active {
+  opacity: 1;
 }

@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const db = require("./models");
 // const { somethingIsNotMaching, difference } = require("./Funcs");
-const puppeteer = require("puppeteer");
+// const puppeteer = require("puppeteer");
 
 dotenv.config({ path: "./.env" });
 
@@ -130,10 +130,12 @@ app.get("/totalURL", async (req, res) => {
 });
 // [4] ==================================== 폴더 아이템들 가지고오기 ====================================
 app.get("/folderItems", (req, res) => {
-  db.Folders.find().then((response) => {
-    console.log("folderItems found!");
-    res.json(response);
-  });
+  db.Folders.find()
+    .sort({ _id: -1 })
+    .then((response) => {
+      console.log("folderItems found!");
+      res.json(response);
+    });
 });
 
 // [1] ==================================== 검색어 검색하는 post ====================================
@@ -194,14 +196,14 @@ app.post("/addUrl", async (req, res) => {
   }
 });
 // [4] ==================================== 폴더 추가 ====================================
-app.post("/addFolder", (req, res) => {
+app.post("/addFolder", async (req, res) => {
   const { folder } = req.body;
   console.log(folder);
   const newFolder = new db.Folders({
     ...folder,
   });
   // console.log(newFolder);
-  newFolder.save();
+  await newFolder.save();
   res.json(newFolder);
 });
 
@@ -330,6 +332,27 @@ app.put("/folderContentsChanged", (req, res) => {
   });
 });
 
+// [7] ==================================== 폴더 좋아요 된거 수정 ====================================
+app.put("/FolderLiked", (req, res) => {
+  const { ModifiedList } = req.body;
+
+  try {
+    ModifiedList.forEach(async (val) => {
+      const query = { _id: val._id };
+      const option = {
+        $set: {
+          folder_liked: val.folder_liked,
+        },
+      };
+      await db.Folders.updateOne(query, option).exec();
+    });
+    console.log("Like Modified!");
+  } catch (err) {
+    console.log(err);
+    res.json(err);
+  }
+});
+
 // [1] ==================================== url삭제 delete ====================================
 
 app.delete("/deleteUrl/:id", async (req, res) => {
@@ -338,6 +361,21 @@ app.delete("/deleteUrl/:id", async (req, res) => {
   await db.Urls.findOneAndRemove({ _id: id });
   res.send("item deleted");
   console.log("item deleted");
+});
+
+// [2] ==================================== 폴더삭제 ====================================
+app.post("/deleteFolder", async (req, res) => {
+  const { idList } = req.body;
+  console.log(idList);
+  const query = { _id: idList };
+  try {
+    await db.Folders.deleteMany(query).exec();
+    console.log(`${idList} Folder Deleted!`);
+    res.json(`${idList} Folder Deleted!`);
+  } catch (err) {
+    console.log(err);
+    res.json(`${idList} Folder NOT Deleted`);
+  }
 });
 
 // [1] ====================================== 퍼펫티어 ======================================
@@ -416,6 +454,5 @@ app.post("/crawling", (req, res) => {
 });
 
 app.listen(3001, () => {
-  console.clear();
   console.log("SERVER RUNNING ON PORT 3001");
 });

@@ -1,9 +1,10 @@
-import React from "react";
-import "./AddUrlModal.css";
+import React, { useEffect, useState } from "react";
 import "./EditUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import Axios from "axios";
+import { useSelector } from "react-redux";
+import TextArea from "../styled/TextArea.styled";
 
 const EditUrlModal = ({
   myFav,
@@ -17,6 +18,16 @@ const EditUrlModal = ({
   realTotalUrls,
   setRealTotalUrls,
 }) => {
+  const [Memo, setMemo] = useState("");
+
+  const { ClickedUrl } = useSelector((state) => state);
+  useEffect(() => {
+    setMemo(ClickedUrl.memo);
+    console.log("👏👏👏👏👏👏");
+    console.log(ClickedUrl);
+  }, [ClickedUrl]);
+
+  // FIXME: 수정하기
   const editBtn = async () => {
     var totalHashes = [];
     var filterdHashes = [];
@@ -114,6 +125,7 @@ const EditUrlModal = ({
     });
   };
 
+  // FIXME: 취소하기
   const deleteBtn = async (_id) => {
     await Axios.delete(`http://localhost:3001/deleteUrl/${_id}`);
     document.querySelector(".editUrl-container").style.display = "none";
@@ -124,10 +136,24 @@ const EditUrlModal = ({
     );
   };
 
+  // FIXME: style
+
+  const height = 37;
+  const defaultHeight = {
+    height: `${height}px`,
+    transition: "1s",
+  };
   return (
     <>
       <div id="modal" className="modal-overlay">
-        <div className="modal-window">
+        <div
+          className="modal-window"
+          style={
+            Memo.length < 25
+              ? { transition: "1s" }
+              : { height: "400px", transition: "1s" }
+          }
+        >
           <div className="header-Container">
             <div
               className="close-area"
@@ -155,16 +181,19 @@ const EditUrlModal = ({
 
           <div className="content">
             <div className="put-url">
-              <input placeholder="URL을 추가해주세요" />
+              <input placeholder="URL을 추가해주세요" style={defaultHeight} />
             </div>
             <div className="put-title">
-              <input placeholder="제목을 추가해주세요" />
+              <input placeholder="제목을 추가해주세요" style={defaultHeight} />
             </div>
             <div className="put-hashTag">
-              <input placeholder="해쉬태그를 추가해주세요 #집밥 #인스타그램 #유튜브" />
+              <input
+                placeholder="해쉬태그를 추가해주세요 #집밥 #인스타그램 #유튜브"
+                style={defaultHeight}
+              />
             </div>
             <div className="put-memo">
-              <input placeholder="메모할 내용을 입력해주세요" />
+              <TextArea memo={Memo} setMemo={setMemo} />
             </div>
             <div className="addUrl-btn editUrl-btn">
               <button

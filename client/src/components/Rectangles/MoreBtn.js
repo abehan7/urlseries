@@ -11,6 +11,9 @@ const MoreBtn = ({ setTopMoreWhat, where }) => {
         document.querySelector(".top-moreUrls-container").style.display =
           "flex";
         enable();
+        document
+          .querySelector(".top-modal-window")
+          .classList.toggle("top-modal-window-clicked");
       }}
     >
       <MdExpandMore />
