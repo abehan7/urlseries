@@ -1,10 +1,6 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
-import {
-  grabNowValue,
-  getMouseLocation,
-  onMouseLeave,
-} from "./movingModalFuncs";
+
 import whenIclickUrl from "./FuncTotalUrlMap";
 import { useDispatch } from "react-redux";
 import { actionCreators2 } from "../../store/reducers/filteredTags.js";
@@ -57,11 +53,6 @@ const UrlsByHashTag = ({
                   dispatch,
                 });
               }}
-              onMouseEnter={() => {
-                grabNowValue(value);
-              }}
-              onMouseMove={(e) => getMouseLocation(e)}
-              onMouseLeave={onMouseLeave}
               onContextMenu={(e) => {
                 console.log("우클릭");
                 e.preventDefault();

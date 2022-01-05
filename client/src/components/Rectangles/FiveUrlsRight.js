@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import Axios from "axios";
 import MoreBtn from "./MoreBtn";
 import HoverModal from "../styled/HoverModal.styled";
 import styled from "styled-components";
 import UrlRectWrapper from "../styled/UrlRectWrapper.styled";
+import { modalHover } from "./TotalUrlMap";
 
 const FiveUrlsRightEl = styled(UrlRectWrapper)``;
 const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
@@ -36,13 +37,11 @@ const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
             className="url"
             onClick={() => RightOnClick({ url: value })}
             onMouseOut={(e) => {
+              modalHover.cancel();
               e.target.lastChild.classList.remove("hover-on");
             }}
             onMouseOver={(e) => {
-              e.target.lastChild.classList.add("hover-on");
-
-              Height !== e.target.offsetHeight &&
-                setHeight(e.target.offsetHeight);
+              modalHover(e, setHeight, Height);
             }}
             onContextMenu={(e) => {
               console.log("우클릭");

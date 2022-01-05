@@ -5,6 +5,12 @@ import { useDispatch } from "react-redux";
 import HoverModal from "../styled/HoverModal.styled";
 import styled from "styled-components";
 import UrlRectWrapper from "../styled/UrlRectWrapper.styled";
+import { debounce } from "lodash";
+
+export const modalHover = debounce((e, setHeight, Height) => {
+  e.target.lastChild.classList.add("hover-on");
+  Height !== e.target.offsetHeight && setHeight(e.target.offsetHeight);
+}, 500);
 
 const TotalUrlMapEl = styled(UrlRectWrapper)``;
 const TotalUrlMap = ({
@@ -16,6 +22,11 @@ const TotalUrlMap = ({
 }) => {
   const [Height, setHeight] = useState(0);
   const dispatch = useDispatch();
+
+  // const modalHover = debounce((e) => {
+  //   e.target.lastChild.classList.add("hover-on");
+  //   Height !== e.target.offsetHeight && setHeight(e.target.offsetHeight);
+  // }, 500);
 
   return (
     <>
@@ -38,12 +49,11 @@ const TotalUrlMap = ({
                 });
               }}
               onMouseOut={(e) => {
+                modalHover.cancel();
                 e.target.lastChild.classList.remove("hover-on");
               }}
               onMouseOver={(e) => {
-                e.target.lastChild.classList.add("hover-on");
-                Height !== e.target.offsetHeight &&
-                  setHeight(e.target.offsetHeight);
+                modalHover(e, setHeight, Height);
               }}
               onContextMenu={(e) => {
                 console.log("우클릭");
