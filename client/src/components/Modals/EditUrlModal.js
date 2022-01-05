@@ -55,7 +55,7 @@ const EditUrlModal = ({
       newTitle: document.querySelector(".editUrl-container .put-title > input")
         .value,
       newHashTags: filterdHashes,
-      newMemo: document.querySelector(".editUrl-container .put-memo > input")
+      newMemo: document.querySelector(".editUrl-container .put-memo > textarea")
         .value,
       newLikedUrl: newLikedUrl,
     }).then((response) => {
