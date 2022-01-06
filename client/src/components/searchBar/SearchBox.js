@@ -37,7 +37,7 @@ const SearchBox = ({ createModal2, recentSearched, setRecentSearch }) => {
   const [resultList, setResultList] = useState([]);
 
   const onDebounceChange = async (e) => {
-    resultList.length >= 1 && setResultList([]);
+    resultList?.length >= 1 && setResultList([]);
 
     setText2(e.target.value);
     debounceSomethingFunc.cancel();
@@ -67,15 +67,24 @@ const SearchBox = ({ createModal2, recentSearched, setRecentSearch }) => {
           </div>
 
           <div className="Searched-Stuffs-Container">
-            {text2.length === 0 && (
-              <RecentSearched
-                recentSearched={recentSearched}
-                setRecentSearch={setRecentSearch}
-                text2={text2}
-              />
-            )}
+            <div
+              className="RecentSearched"
+              style={
+                text2.length >= 1 ? { display: "none" } : { display: "block" }
+              }
+            >
+              {recentSearched.map((val) => {
+                return (
+                  <RecentSearched
+                    val={val}
+                    recentSearched={recentSearched}
+                    setRecentSearch={setRecentSearch}
+                  />
+                );
+              })}
+            </div>
 
-            {text2.length > 0 &&
+            {text2?.length > 0 &&
               resultList?.map((url) => {
                 return <SearchedStuff val={url} key={url._id} />;
               })}
