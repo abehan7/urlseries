@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./AddUrlModal.css";
 import { disable } from "../../functions/stopScroll";
 import "./TopMore.css";
+import { ModalInfos } from "../../routers/MainPage";
 
 const TopMore = ({
   mostClickedUrls,
@@ -10,8 +11,21 @@ const TopMore = ({
   topMoreWhat,
   setTopMoreWhat,
 }) => {
-  // likedUrls === 왼쪽 === topMoreWhat = 2
-  // mostClickedUrls=== 오른쪽=== topMoreWhat = 1
+  // FIXME:
+  // likedUrls === 왼쪽 === topMoreWhat = true
+  // mostClickedUrls=== 오른쪽=== topMoreWhat = false
+
+  const NormalMode = (value) => {
+    window.open(value.url);
+  };
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setModalInfo({
+  //     ...modalInfo,
+  //     [name]: value,
+  //   });
+  // };
   return (
     <>
       <div id="modal" className="modal-overlay">
@@ -43,7 +57,7 @@ const TopMore = ({
                   <div
                     className="url more-url"
                     onClick={() => {
-                      window.open(value.url);
+                      NormalMode(value);
                     }}
                   >
                     <img

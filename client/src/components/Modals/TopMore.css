@@ -31,7 +31,7 @@
 /* 미디어쿼리 */
 @media (max-width: 470px) {
   #modal > .top-modal-window {
-    height: 100%;
+    /* height: 100%; */
   }
 }
 

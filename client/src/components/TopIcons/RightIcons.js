@@ -63,6 +63,8 @@ const RightIcons = ({
     color: "#fff",
   };
 
+  const stopClickStyle = {};
+
   // ========================================== 스타일 END ==========================================
 
   return (
@@ -72,7 +74,11 @@ const RightIcons = ({
       </div>
 
       <div className="editUrl-icon" onClick={EditIconOnClick}>
-        {editMode ? <AiOutlineEdit /> : <AiTwotoneEdit />}
+        {editMode ? (
+          <AiOutlineEdit style={stopClickStyle} />
+        ) : (
+          <AiTwotoneEdit style={stopClickStyle} />
+        )}
       </div>
 
       <div className="editHash-icon" onClick={HashIconOnClick}>

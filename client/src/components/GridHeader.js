@@ -1,18 +1,21 @@
 import React from "react";
-import {
-  AiOutlineFacebook,
-  AiOutlineInstagram,
-  AiOutlineTwitter,
-  AiOutlineYoutube,
-} from "react-icons/ai";
-import { FiTwitter } from "react-icons/fi";
+import { AiOutlineInstagram, AiOutlineYoutube } from "react-icons/ai";
 import styled from "styled-components";
 
 const GridHeaderEl = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 470px) {
+    width: 100%;
+  }
 `;
-const Title = styled.h3``;
+
+const Title = styled.h3`
+  @media (max-width: 470px) {
+    padding-left: 1rem;
+  }
+`;
+
 const IconsWrapper = styled.span`
   display: flex;
   justify-content: flex-end;

@@ -30,7 +30,7 @@ const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
 
   return (
     <>
-      {fiveStuffs.map((value) => {
+      {(editMode ? fiveStuffs : values).map((value) => {
         return (
           <FiveUrlsRightEl
             style={{ position: "relative" }}
@@ -62,11 +62,11 @@ const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
             <div className="valueTitle" style={{ pointerEvents: "none" }}>
               {value.url_title}
             </div>
-            <HoverModal Height={Height} value={value} />
+            {editMode && <HoverModal Height={Height} value={value} />}
           </FiveUrlsRightEl>
         );
       })}
-      {values.length > 5 && (
+      {values.length > 5 && editMode && (
         <MoreBtn setTopMoreWhat={setTopMoreWhat} where="Right" />
       )}
     </>

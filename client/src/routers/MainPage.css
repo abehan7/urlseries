@@ -564,8 +564,6 @@
   .grid-container {
     padding-right: 0%;
   }
-  .tag {
-  }
 }
 
 @media (max-width: 870px) {
@@ -599,56 +597,55 @@
     flex-direction: column;
   }
 
-  /* .text-container {
-    align-items: center;
-    justify-content: center;
-  }
-
-  .text-container > div {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  } */
-
   h3 {
     text-align: center;
   }
 }
 
 @media (max-width: 470px) {
-  .grid-container {
-    grid-template-columns: auto;
+  .MainPage .grid-container {
+    /* grid-template-columns: 1; */
+    grid-template-columns: 90%;
+    width: 100vw;
+  }
+
+  .text-three-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .T-url {
+    width: 90%;
+  }
+
+  .RectColor {
+    width: 100%;
+    padding: 0;
   }
 
   .Rectangle,
   .Big_Rect {
+    width: 100%;
     box-shadow: none;
   }
 
-  .text-container,
-  .text-three-container > div:hover {
-    background-color: none;
-    cursor: none;
+  .Big_Rect {
+    padding-bottom: 20px;
   }
   .Search-balloon {
     width: 100vw;
-    border-radius: 0px;
   }
+
   .modal-overlay > .modal-window {
-    width: 100%;
-    border-radius: 0px;
+    width: 90%;
   }
+
   .share-write {
     align-items: center;
     justify-content: end;
     margin-right: 10px;
     width: 100%;
-  }
-  .url > .valueTitle {
-    white-space: normal;
-    text-overflow: none;
-    overflow: none;
   }
 
   .aside-tags {
@@ -657,13 +654,5 @@
 
   .Searched-Stuffs-Container > .searched-Stuff {
     min-height: auto;
-  }
-
-  .text-container .url:hover {
-    background-color: transparent;
-  }
-
-  .text-three-container .T-url:hover {
-    background-color: transparent;
   }
 }

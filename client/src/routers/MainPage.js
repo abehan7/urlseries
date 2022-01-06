@@ -1,4 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import "./MainPage.css";
 import Axios from "axios";
 // Functions
@@ -31,13 +37,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../store/reducers/editModalP3";
 import { AiOutlineInstagram, AiOutlineYoutube } from "react-icons/ai";
 import GridHeader from "../components/GridHeader";
-
-// TODO: 12/29/수) 오늘 내가 집중해야할  useState => setAssignedTags / initAssigned
-// #1 폴더 useState만들기 => boxtags에 넣으면 될 듯
-// #2 그거 aside에 넣기
-// #3 바로 옆에 넣을 지 아니면 아래에 넣을지 고민해보기
-
-// TODO: 12/29) UrlsByHashTag / filterdTags(리덕스) / AsiedTag
+import SearchedStuff from "../components/searchBar/SearchedStuff";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -110,7 +110,12 @@ const MainPage = () => {
 
   const {
     page3Storage: { nowFolder2, nowPage2 },
+    searchedList,
   } = useSelector((state) => state);
+
+  useEffect(() => {
+    console.log(searchedList);
+  }, [searchedList]);
 
   useEffect(() => {
     setTotalTags(
@@ -204,6 +209,13 @@ const MainPage = () => {
 
   StopDrag();
 
+  // window.document.onclick = (e) => {
+  //   if (e.target === document.querySelector(".MainPage")) {
+  //     setEditMode(true);
+  //     console.log("121233");
+  //   }
+  // };
+
   // editmode일 때 스타일 사각형에 색깔 변하게하기
   const bcTopRect = "#FFE4C4";
   const emptyStyle = {};
@@ -246,6 +258,11 @@ const MainPage = () => {
                       recentSearched={recentSearched}
                       setRecentSearch={setRecentSearch}
                     />
+
+                    {searchedList?.length >= 1 &&
+                      searchedList?.map((url) => {
+                        return <SearchedStuff val={url} />;
+                      })}
                   </div>
                   <div className="notSearched">
                     검색어가 존재하지 않습니다...
@@ -292,7 +309,14 @@ const MainPage = () => {
                     }
                   >
                     <h3>즐겨찾기 </h3>
-                    <div className="text-container">
+                    <div
+                      className="text-container"
+                      style={
+                        !editMode
+                          ? { maxHeight: "205px", overflow: "auto" }
+                          : {}
+                      }
+                    >
                       <FiveUrlsLeft
                         values={likedUrls}
                         editMode={editMode}
@@ -308,7 +332,14 @@ const MainPage = () => {
                     }
                   >
                     <h3>최근기록</h3>
-                    <div className="text-container">
+                    <div
+                      className="text-container"
+                      style={
+                        !editMode
+                          ? { maxHeight: "205px", overflow: "auto" }
+                          : {}
+                      }
+                    >
                       <FiveUrlsRight
                         values={mostClickedUrls}
                         editMode={editMode}
@@ -443,7 +474,6 @@ const MainPage = () => {
             </div>
             {/* ======================================== 모달들 END ======================================== */}
           </div>
-          <MovingBalloon />
         </>
       )}
     </>
