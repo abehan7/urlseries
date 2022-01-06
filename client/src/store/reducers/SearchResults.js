@@ -1,9 +1,12 @@
 const initialStates = {
   resultList: [],
+  typingNow: false,
 };
 
 const ADD_URLS = "ADD_URLS";
+const Add_KEYWORD = "Add_KEYWORD";
 const ADD_URLS_SUCCESS = "ADD_URLS_SUCCESS";
+
 export const SetResults = (results) => {
   results === undefined && (results = []);
   return {
@@ -12,12 +15,21 @@ export const SetResults = (results) => {
   };
 };
 
+export const SetTypingNow = (Boolean) => {
+  return {
+    type: Add_KEYWORD,
+    payload: Boolean,
+  };
+};
+
 const SearchResults = (state = initialStates, action) => {
   switch (action.type) {
     case ADD_URLS:
-      return action.payload;
+      return { ...state, resultList: action.payload };
     case ADD_URLS_SUCCESS:
-      return action.payload;
+      return { ...state, resultList: action.payload };
+    case Add_KEYWORD:
+      return { ...state, typingNow: action.payload };
 
     default:
       return state;

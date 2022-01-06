@@ -110,12 +110,8 @@ const MainPage = () => {
 
   const {
     page3Storage: { nowFolder2, nowPage2 },
-    searchedList,
+    searchedList: { resultList, typingNow },
   } = useSelector((state) => state);
-
-  useEffect(() => {
-    console.log(searchedList);
-  }, [searchedList]);
 
   useEffect(() => {
     setTotalTags(
@@ -254,14 +250,17 @@ const MainPage = () => {
                   </div>
 
                   <div className="Searched-Stuffs-Container">
-                    <RecentSearched
-                      recentSearched={recentSearched}
-                      setRecentSearch={setRecentSearch}
-                    />
+                    {!typingNow && resultList?.length === 0 && (
+                      <RecentSearched
+                        recentSearched={recentSearched}
+                        setRecentSearch={setRecentSearch}
+                      />
+                    )}
 
-                    {searchedList?.length >= 1 &&
-                      searchedList?.map((url) => {
-                        return <SearchedStuff val={url} />;
+                    {!typingNow &&
+                      resultList?.length >= 1 &&
+                      resultList?.map((url) => {
+                        return <SearchedStuff val={url} key={url._id} />;
                       })}
                   </div>
                   <div className="notSearched">

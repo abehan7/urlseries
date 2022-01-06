@@ -2,7 +2,7 @@ import React from "react";
 import { AiOutlineClose, AiOutlineCloseCircle } from "react-icons/ai";
 import { CgCloseR } from "react-icons/cg";
 import { IoMdClose } from "react-icons/io";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import Axios from "axios";
 
 const RecentSearched = ({ recentSearched, setRecentSearch }) => {
