@@ -38,6 +38,7 @@ import { Page3Actions } from "../store/reducers/editModalP3";
 import { AiOutlineInstagram, AiOutlineYoutube } from "react-icons/ai";
 import GridHeader from "../components/GridHeader";
 import SearchedStuff from "../components/searchBar/SearchedStuff";
+import SearchBox from "../components/searchBar/SearchBox";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -58,6 +59,9 @@ const MainPage = () => {
   const [realTotalUrls, setRealTotalUrls] = useState([]);
   const [deleteMode, setDeleteMode] = useState(false);
   const [topMoreWhat, setTopMoreWhat] = useState(true);
+  const [text2, setText2] = useState("");
+
+  const MainPageStates = createContext(null);
 
   const dispatch = useDispatch();
 
@@ -234,47 +238,11 @@ const MainPage = () => {
             {/* ======================================== 그리드 컨테이너  START  ========================================*/}
             {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
             <div className="grid-container">
-              <div className="search-box">
-                <SearchDelay
-                  createModal2={createModal2}
-                  recentSearched={recentSearched}
-                  setRecentSearch={setRecentSearch}
-                />
-                {/* <NewSearchBar /> */}
-                <FaSearch />
-
-                <div className="Search-balloon">
-                  <div className="Search-balloon-title">
-                    <div className="recent-serached-title">최근 검색 항목</div>
-                    <div className="delete-recent-searched">전체삭제</div>
-                  </div>
-
-                  <div className="Searched-Stuffs-Container">
-                    {!typingNow && resultList?.length === 0 && (
-                      <RecentSearched
-                        recentSearched={recentSearched}
-                        setRecentSearch={setRecentSearch}
-                      />
-                    )}
-
-                    {!typingNow &&
-                      resultList?.length >= 1 &&
-                      resultList?.map((url) => {
-                        return <SearchedStuff val={url} key={url._id} />;
-                      })}
-                  </div>
-                  <div className="notSearched">
-                    검색어가 존재하지 않습니다...
-                  </div>
-                  <div className="loadingImg">
-                    <img src="./img/loadingSpin.gif" alt="로딩" />
-                    <div className="loading-ment">
-                      <div className="ment1">검색중입니다</div>
-                      <div className="ment2">잠시만 기다려 주세요 :)</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <SearchBox
+                createModal2={createModal2}
+                recentSearched={recentSearched}
+                setRecentSearch={setRecentSearch}
+              />
 
               <div className="share-write">
                 {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}

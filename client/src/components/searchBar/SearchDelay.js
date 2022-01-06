@@ -4,7 +4,7 @@ import Axios from "axios";
 import { useDispatch } from "react-redux";
 import { SetResults, SetTypingNow } from "../../store/reducers/SearchResults";
 
-// =========== 해쉬태그 검색어 end ===========\
+// =========== 해쉬태그 검색어 end ===========
 
 // FIXME: APICALL
 const ApiGetSearchedList = async (e) => {
@@ -30,24 +30,20 @@ const ApiGetSearchedList = async (e) => {
 // FIXME:TODO:우선 리덕스에 넣는거까지는 완료
 // 이제 이거를 검색창에 넣기
 
-const debounceSomethingFunc = debounce(
-  async (e, AddUrls2Redux, SetTypingNow2) => {
-    console.log("디바운스");
-    SetTypingNow2(false);
-    const ApiResult = await ApiGetSearchedList(e);
-    AddUrls2Redux(ApiResult);
+const debounceSomethingFunc = debounce(async (e, AddUrls2Redux) => {
+  console.log("디바운스");
+  const ApiResult = await ApiGetSearchedList(e);
+  AddUrls2Redux(ApiResult);
 
-    // TODO:로딩창 없애기
-    // document.querySelector(".loadingImg").style.display = "none";
-    //=========== 타이틀 검색어 start ===========
-    // TODO:검색어 없음 띄우기
-    // if (hashFilterd2.length + titleFilterd.length === 0) {
-    //   console.log("검색어 없음");
-    //   document.querySelector(".notSearched").style.display = "flex";
-    // }
-  },
-  400
-);
+  // TODO:로딩창 없애기
+  // document.querySelector(".loadingImg").style.display = "none";
+  //=========== 타이틀 검색어 start ===========
+  // TODO:검색어 없음 띄우기
+  // if (hashFilterd2.length + titleFilterd.length === 0) {
+  //   console.log("검색어 없음");
+  //   document.querySelector(".notSearched").style.display = "flex";
+  // }
+}, 400);
 // FIXME:
 
 const SearchDelay = ({ createModal2, recentSearched, setRecentSearch }) => {
@@ -60,8 +56,8 @@ const SearchDelay = ({ createModal2, recentSearched, setRecentSearch }) => {
     dispatch(SetResults(results));
   };
 
-  const SetTypingNow2 = (Boolean) => {
-    dispatch(SetTypingNow(Boolean));
+  const SetTypingNow2 = (text) => {
+    dispatch(SetTypingNow(text));
   };
 
   // FIXME: 최근 클릭한 url 기록으로 넣기
@@ -110,17 +106,6 @@ const SearchDelay = ({ createModal2, recentSearched, setRecentSearch }) => {
   // };
 
   const onDebounceChange = (e) => {
-    switch (e.target.value.length) {
-      case 1:
-        SetTypingNow2(true);
-        break;
-      case 0:
-        SetTypingNow2(false);
-        break;
-      default:
-        break;
-    }
-
     debounceSomethingFunc.cancel();
     // TODO: 검색된 모든 목록 없애기
     // if (document.querySelector(".searched-Stuff")) {
@@ -157,7 +142,11 @@ const SearchDelay = ({ createModal2, recentSearched, setRecentSearch }) => {
     // }
     // TODO: 디바운스 하기
     setText2(e.target.value);
-    debounceSomethingFunc(e, AddUrls2Redux, SetTypingNow2);
+    if (e.target.value.length <= 1) {
+      SetTypingNow2(e.target.value);
+    }
+
+    debounceSomethingFunc(e, AddUrls2Redux);
   };
 
   return (

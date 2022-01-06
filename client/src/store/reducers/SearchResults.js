@@ -1,6 +1,6 @@
 const initialStates = {
   resultList: [],
-  typingNow: false,
+  typingNow: "",
 };
 
 const ADD_URLS = "ADD_URLS";
@@ -15,10 +15,10 @@ export const SetResults = (results) => {
   };
 };
 
-export const SetTypingNow = (Boolean) => {
+export const SetTypingNow = (text) => {
   return {
     type: Add_KEYWORD,
-    payload: Boolean,
+    payload: text,
   };
 };
 
