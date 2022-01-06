@@ -40,9 +40,9 @@ const ImgContainer = styled.div`
   height: 100%;
   margin-left: 10px;
 `;
-const SearchedStuff = ({ val, key }) => {
+const SearchedStuff = ({ val }) => {
   return (
-    <SearchedStuffEl key={key}>
+    <SearchedStuffEl key={val._id}>
       <ImgContainer>
         <Image
           class="urlFavicon"
@@ -57,5 +57,3 @@ const SearchedStuff = ({ val, key }) => {
 };
 
 export default SearchedStuff;
-
-export { SearchedStuffEl, ImgContainer, Image, Bar, Title };

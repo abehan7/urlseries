@@ -67,6 +67,8 @@ const SearchBox = ({ createModal2, recentSearched, setRecentSearch }) => {
           </div>
 
           <div className="Searched-Stuffs-Container">
+            {/* none은 해도 상관없어 다만 어떤 구조로 하느냐가 중요해 */}
+            {/* map 할때는 이렇게 작은 컴포넌트 밖에 해야돼 안에 넣으면 안돼 */}
             <div
               className="RecentSearched"
               style={
@@ -76,7 +78,7 @@ const SearchBox = ({ createModal2, recentSearched, setRecentSearch }) => {
               {recentSearched.map((val) => {
                 return (
                   <RecentSearched
-                    val={val}
+                    url={val}
                     recentSearched={recentSearched}
                     setRecentSearch={setRecentSearch}
                   />
