@@ -11,6 +11,9 @@ import styled from "styled-components";
 const GridHeaderEl = styled.div`
   display: flex;
   align-items: center;
+  color: white;
+  font-size: 18px;
+  font-weight: lighter;
 `;
 const Title = styled.h3``;
 const IconsWrapper = styled.span`

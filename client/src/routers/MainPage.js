@@ -5,6 +5,14 @@ import Axios from "axios";
 import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../functions/keepModalsShow";
 import { FaSearch } from "react-icons/fa";
+import {
+  CgProfile,
+  CgMenuBoxed,
+  CgUserlane,
+  CgMenu,
+  CgHeart,
+  CgReorder,
+} from "react-icons/cg";
 import StopDrag from "../functions/StopDrag";
 // Rectangles
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
@@ -211,18 +219,59 @@ const MainPage = () => {
     backgroundColor: bcTopRect,
   };
 
+  // const toggleBtn = document.querySelector(".navbar__toogleBtn");
+  // const menu = document.querySelector(".navbar__menu");
+  // const icons = document.querySelector(".navbar__icons");
+
+  // toggleBtn.addEventListener("click", () => {
+  //   menu.classList.toggle("active");
+  //   icons.classList.toggle("active");
+  // });
+
   return (
     <>
       {getUrls.length === 0 ? (
         <div className="firstLoading">yourURL</div>
       ) : (
         <>
+          {/* ===========================헤더 Start======================= */}
+          <nav class="navbar">
+            <div class="navbar__logo">
+              <CgUserlane />
+              <a href="">URurl</a>
+              <ul class="navbar__menu">
+                <li>
+                  <a href="">About Site</a>
+                </li>
+                <li>
+                  <a href="">고객센터</a>
+                </li>
+              </ul>
+            </div>
+
+            <div class="navbar__icons">
+              <li>
+                <CgProfile />
+              </li>
+
+              <li class="burger">
+                <CgMenu />
+              </li>
+            </div>
+
+            <a href="#" class="navbar__toogleBtn">
+              <CgMenu />
+            </a>
+          </nav>
+
+          {/* ===========================헤더 End======================= */}
           <div
             className="MainPage"
             onMouseDown={(e) =>
               clickOutSide(e, clickedSearchInput, setClickedSearchInput)
             }
           >
+            {/* ===========================헤더 Start======================= */}
             {/* ======================================== 그리드 컨테이너  START  ========================================*/}
             {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
             <div className="grid-container">
@@ -259,8 +308,7 @@ const MainPage = () => {
                   </div>
                 </div>
               </div>
-
-              <div className="login">로그인/회원가입</div>
+              <h3>여긴가?</h3>
 
               <div className="share-write">
                 {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
@@ -285,39 +333,55 @@ const MainPage = () => {
                   deleteMode={deleteMode}
                 />
               </div>
+
               {BoxTags_First ? (
                 <>
-                  <div
-                    className="Rectangle left-top RectColor"
-                    style={
-                      BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
-                    }
-                  >
-                    <h3>즐겨찾기 </h3>
-                    <div className="text-container">
-                      <FiveUrlsLeft
-                        values={likedUrls}
-                        editMode={editMode}
-                        setMyFav={setMyFav}
-                        setTopMoreWhat={setTopMoreWhat}
-                      />
+                  <div>
+                    <h3 class="small__title">
+                      <CgHeart />
+                      즐겨찾기
+                    </h3>
+                    <div
+                      className="Rectangle left-top RectColor"
+                      style={
+                        BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                      }
+                    >
+                      {/* <h3>즐겨찾기 </h3> */}
+
+                      <div className="text-container">
+                        <FiveUrlsLeft
+                          values={likedUrls}
+                          editMode={editMode}
+                          setMyFav={setMyFav}
+                          setTopMoreWhat={setTopMoreWhat}
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div
-                    className="Rectangle right-top RectColor"
-                    style={
-                      BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
-                    }
-                  >
-                    <h3>최근기록</h3>
-                    <div className="text-container">
-                      <FiveUrlsRight
-                        values={mostClickedUrls}
-                        editMode={editMode}
-                        shareMode={shareMode}
-                        setMyFav={setMyFav}
-                        setTopMoreWhat={setTopMoreWhat}
-                      />
+
+                  <div>
+                    <h3 class="small__title">
+                      <CgReorder />
+                      최근기록
+                    </h3>
+                    <div
+                      className="Rectangle right-top RectColor"
+                      style={
+                        BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                      }
+                    >
+                      {/* <h3>최근기록</h3> */}
+
+                      <div className="text-container">
+                        <FiveUrlsRight
+                          values={mostClickedUrls}
+                          editMode={editMode}
+                          shareMode={shareMode}
+                          setMyFav={setMyFav}
+                          setTopMoreWhat={setTopMoreWhat}
+                        />
+                      </div>
                     </div>
                   </div>
                 </>
@@ -337,13 +401,26 @@ const MainPage = () => {
                   assignedTags={assignedTags}
                 />
               </div>
+
+              {editMode ? (
+                BoxTags_First ? (
+                  <GridHeader />
+                ) : (
+                  <h3>HashTag</h3>
+                )
+              ) : BoxTags_First ? (
+                <h3>에디터모드입니다</h3>
+              ) : (
+                <h3>HashTag</h3>
+              )}
+
               <div className="Big_Rect RectColor">
                 {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
                 {/* 값은 true false 이렇게 두가지인데  */}
                 {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
                 {/* 전체 URL이라는 h3가 HashTag라고 바뀜  */}
                 {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
-                {editMode ? (
+                {/* {editMode ? (
                   BoxTags_First ? (
                     <GridHeader />
                   ) : (
@@ -353,7 +430,7 @@ const MainPage = () => {
                   <h3>에디터모드입니다</h3>
                 ) : (
                   <h3>HashTag</h3>
-                )}
+                )} */}
                 <div className="text-three-container">
                   {BoxTags_First ? (
                     // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)

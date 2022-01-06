@@ -45,7 +45,6 @@ const FiveUrlsLeft = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
             }}
             key={value.url_id}
           >
-<<<<<<< HEAD
             {/* <div className="valueId">{value.url_id}</div> */}
             <div className="valueId">
               <img
@@ -53,14 +52,6 @@ const FiveUrlsLeft = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
                 src={"http://www.google.com/s2/favicons?domain=" + value.url}
               ></img>
             </div>
-=======
-            <img
-              className="urlFavicon"
-              src={`http://www.google.com/s2/favicons?domain=${value.url}`}
-              alt=""
-            />
-            {/* <div className="valueId">{value.url_id}</div> */}
->>>>>>> HAN
             <div className="just-bar">|</div>
             <div className="valueTitle">{value.url_title}</div>
             <HoverModal value={value} />
