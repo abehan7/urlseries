@@ -59,9 +59,6 @@ const MainPage = () => {
   const [realTotalUrls, setRealTotalUrls] = useState([]);
   const [deleteMode, setDeleteMode] = useState(false);
   const [topMoreWhat, setTopMoreWhat] = useState(true);
-  const [text2, setText2] = useState("");
-
-  const MainPageStates = createContext(null);
 
   const dispatch = useDispatch();
 
@@ -242,6 +239,7 @@ const MainPage = () => {
                 createModal2={createModal2}
                 recentSearched={recentSearched}
                 setRecentSearch={setRecentSearch}
+                realTotalUrls={realTotalUrls}
               />
 
               <div className="share-write">

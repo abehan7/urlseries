@@ -5,6 +5,7 @@ import SearchedStuff from "./SearchedStuff";
 import Axios from "axios";
 import { debounce } from "lodash";
 
+// FIXME: db에서 검색하주는 기능
 const ApiGetSearchedList = async (e) => {
   if (e.target.value.length === 0) {
     return;
@@ -20,28 +21,89 @@ const ApiGetSearchedList = async (e) => {
   }).then((response) => {
     const { data } = response;
     console.log("액시오스");
-    console.log(response.data);
+    // console.log(response.data);
     results = data;
   });
   return results;
 };
 
-const debounceSomethingFunc = debounce(async (e, setResultList) => {
-  console.log("디바운스");
-  const ApiResult = await ApiGetSearchedList(e);
-  setResultList(ApiResult);
-}, 1000);
+// FIXME: 디바운스 기능
+const debounceSomethingFunc = debounce((setResultList, Filterd) => {
+  setResultList(Filterd);
+}, 100);
 
-const SearchBox = ({ createModal2, recentSearched, setRecentSearch }) => {
+// FIXME: react컴포넌트 내부
+const SearchBox = ({
+  createModal2,
+  recentSearched,
+  setRecentSearch,
+  realTotalUrls,
+}) => {
   const [text2, setText2] = useState("");
   const [resultList, setResultList] = useState([]);
 
+  // FIXME: 키워드 정규화
+  const KeywordNormalize = (keyword) => {
+    const proccecced = keyword.toLowerCase().replace(/(\s*)/g, "");
+    return proccecced;
+  };
+
+  // FIXME: DB없이 검색하기
+
+  // 타이틀필터
+  const TitleFilter = (url, PKeyword) => {
+    return KeywordNormalize(url.url_title).includes(PKeyword);
+  };
+
+  // 해쉬태그
+  const HashTagFilter = (url, PKeyword) => {
+    return url.url_hashTags.some((tag) => {
+      return KeywordNormalize(tag).includes(PKeyword);
+    });
+  };
+  // 메모필터
+  const MemoFilter = (url, PKeyword) => {
+    return KeywordNormalize(url.url_memo).includes(PKeyword);
+  };
+
+  // 전체 필터링
+  const SearchNotByDB = (PKeyword) => {
+    const Filterd = realTotalUrls.filter((url) => {
+      return (
+        HashTagFilter(url, PKeyword) ||
+        TitleFilter(url, PKeyword) ||
+        MemoFilter(url, PKeyword)
+      );
+    });
+
+    console.log(Filterd);
+
+    return Filterd;
+  };
+
+  // FIXME: onChange 함수
   const onDebounceChange = async (e) => {
+    // 이전에 있던 기록 지워주는 기능
     resultList?.length >= 1 && setResultList([]);
 
     setText2(e.target.value);
+
+    // 맨 처음에 디바운스 된거 없애기
     debounceSomethingFunc.cancel();
-    debounceSomethingFunc(e, setResultList);
+
+    // test
+    const PKeyword = KeywordNormalize(e.target.value);
+
+    if (PKeyword.length >= 1) {
+      PKeyword.length >= 1 && SearchNotByDB(PKeyword);
+      const Filterd = SearchNotByDB(PKeyword);
+      // setResultList(Filterd);
+      debounceSomethingFunc(setResultList, Filterd);
+    }
+
+    // 작성한 키워드가 1개라도 있어야 db검색 가능
+    // e.target.value.length >= 1 &&
+    //   debounceSomethingFunc(e, setResultList, realTotalUrls);
   };
 
   useEffect(() => {
