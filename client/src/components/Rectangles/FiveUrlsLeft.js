@@ -51,19 +51,6 @@ const FiveUrlsLeft = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
             }}
             key={value.url_id}
           >
-<<<<<<< HEAD
-            {/* <div className="valueId">{value.url_id}</div> */}
-            <div className="valueId">
-              <img
-                id="urlFavicon"
-                src={"http://www.google.com/s2/favicons?domain=" + value.url}
-              ></img>
-            </div>
-            <div className="just-bar">|</div>
-            <div className="valueTitle">{value.url_title}</div>
-            <HoverModal value={value} />
-          </div>
-=======
             <img
               style={{ pointerEvents: "none" }}
               className="urlFavicon"
@@ -78,7 +65,6 @@ const FiveUrlsLeft = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
             </div>
             <HoverModal Height={Height} value={value} />
           </FiveUrlsLeftEl>
->>>>>>> ca1352b4c9368d87a13541a2a13ad808c8c9b3c6
         );
       })}
       {values.length > 5 && (

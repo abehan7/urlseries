@@ -55,12 +55,6 @@ const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
               src={`http://www.google.com/s2/favicons?domain=${value.url}`}
               alt=""
             />
-<<<<<<< HEAD
-            <div className="just-bar">|</div>
-            <div className="valueTitle">{value.url_title}</div>
-            <HoverModal value={value} />
-          </div>
-=======
 
             <div className="just-bar" style={{ pointerEvents: "none" }}>
               |
@@ -70,7 +64,6 @@ const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
             </div>
             <HoverModal Height={Height} value={value} />
           </FiveUrlsRightEl>
->>>>>>> ca1352b4c9368d87a13541a2a13ad808c8c9b3c6
         );
       })}
       {values.length > 5 && (
