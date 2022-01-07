@@ -4,8 +4,10 @@ import RecentSearched from "./RecentSearched";
 import SearchedStuff from "./SearchedStuff";
 import Axios from "axios";
 import { debounce } from "lodash";
+import LoadingImg from "./LoadingImg";
+import styled from "styled-components";
 
-// FIXME: db에서 검색하주는 기능
+// FIXME: db에서 검색하주는 기능 // 이건 안쓸거같은데 일단 남겨두긴 하자
 const ApiGetSearchedList = async (e) => {
   if (e.target.value.length === 0) {
     return;
@@ -27,10 +29,32 @@ const ApiGetSearchedList = async (e) => {
   return results;
 };
 
-// FIXME: 디바운스 기능
-const debounceSomethingFunc = debounce((setResultList, Filterd) => {
-  setResultList(Filterd);
-}, 100);
+// FIXME: 디바운스 기능 //TODO:
+const debounceSomethingFunc = debounce(
+  (setResultList, Filterd, setSearchState) => {
+    if (Filterd.length === 0) {
+      // nothingFound: false,
+      // searchDone: false,
+      setSearchState({ searchDone: true, nothingFound: true });
+    } else {
+      setSearchState({ searchDone: true, nothingFound: false });
+    }
+    setResultList(Filterd);
+  },
+  300
+);
+
+// FIXME: 스타일드 컴포넌트
+const NotSearched = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  padding-bottom: 20px;
+`;
 
 // FIXME: react컴포넌트 내부
 const SearchBox = ({
@@ -41,6 +65,11 @@ const SearchBox = ({
 }) => {
   const [text2, setText2] = useState("");
   const [resultList, setResultList] = useState([]);
+  // TODO:
+  const [searchState, setSearchState] = useState({
+    nothingFound: false,
+    searchDone: true,
+  });
 
   // FIXME: 키워드 정규화
   const KeywordNormalize = (keyword) => {
@@ -61,6 +90,7 @@ const SearchBox = ({
       return KeywordNormalize(tag).includes(PKeyword);
     });
   };
+
   // 메모필터
   const MemoFilter = (url, PKeyword) => {
     return KeywordNormalize(url.url_memo).includes(PKeyword);
@@ -85,30 +115,26 @@ const SearchBox = ({
   const onDebounceChange = async (e) => {
     // 이전에 있던 기록 지워주는 기능
     resultList?.length >= 1 && setResultList([]);
+    // 현재 검색중
+
+    // TODO:
+    setSearchState({ nothingFound: false, searchDone: false });
 
     setText2(e.target.value);
 
     // 맨 처음에 디바운스 된거 없애기
     debounceSomethingFunc.cancel();
 
-    // test
+    // 키워드 정규화
     const PKeyword = KeywordNormalize(e.target.value);
 
+    // 작성한 키워드가 1자라도 있어야 검색되게
     if (PKeyword.length >= 1) {
       PKeyword.length >= 1 && SearchNotByDB(PKeyword);
       const Filterd = SearchNotByDB(PKeyword);
-      // setResultList(Filterd);
-      debounceSomethingFunc(setResultList, Filterd);
+      debounceSomethingFunc(setResultList, Filterd, setSearchState);
     }
-
-    // 작성한 키워드가 1개라도 있어야 db검색 가능
-    // e.target.value.length >= 1 &&
-    //   debounceSomethingFunc(e, setResultList, realTotalUrls);
   };
-
-  useEffect(() => {
-    console.log(resultList);
-  }, [resultList]);
 
   return (
     <>
@@ -153,14 +179,12 @@ const SearchBox = ({
                 return <SearchedStuff val={url} key={url._id} />;
               })}
           </div>
-          <div className="notSearched">검색어가 존재하지 않습니다...</div>
-          <div className="loadingImg">
-            <img src="./img/loadingSpin.gif" alt="로딩" />
-            <div className="loading-ment">
-              <div className="ment1">검색중입니다</div>
-              <div className="ment2">잠시만 기다려 주세요 :)</div>
-            </div>
-          </div>
+          {text2?.length > 0 && searchState.nothingFound && (
+            <NotSearched className="notSearched">
+              검색어가 존재하지 않습니다...
+            </NotSearched>
+          )}
+          {text2?.length > 0 && !searchState.searchDone && <LoadingImg />}
         </div>
       </div>
     </>

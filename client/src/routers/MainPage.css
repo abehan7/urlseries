@@ -145,28 +145,16 @@
   justify-content: center;
 }
 .loadingImg {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
 }
 
 .loadingImg img {
-  width: 80px;
 }
 
 .loading-ment {
-  padding-bottom: 50px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .loading-ment > div {
-  padding: 2px;
+  /* padding: 2px; */
 }
 
 .searched-Stuff {
