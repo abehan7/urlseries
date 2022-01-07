@@ -5,8 +5,10 @@ const cors = require("cors");
 const db = require("./models");
 // const { somethingIsNotMaching, difference } = require("./Funcs");
 const puppeteer = require("puppeteer");
+const jwt = require("jsonwebtoken");
 
 dotenv.config({ path: "./.env" });
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
@@ -19,7 +21,10 @@ app.use(express.json());
 // TODO: #1 해쉬태그는 잘 들어가는데 대소문자 구분을 안하고 들어가서 이거 버그생길듯
 // TODO: #2 그리고 글 등록하기 하는데 FOR때문인지 약간 느리게 느껴졌음 아싸리 그냥 async없이 그냥 일단 useState로 현재 있는 곳에 넣은 다음에
 //          사후적으로 db에 들어가게 하는 방향이 좀 더 옳은 방향일 수도 있는거같다
-mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
+mongoose.connect(process.env.DATABASE_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 const getCurrentDate = () => {
   var date = new Date();
@@ -205,6 +210,54 @@ app.post("/addFolder", async (req, res) => {
   // console.log(newFolder);
   await newFolder.save();
   res.json(newFolder);
+});
+
+// [5]==================================== 로그인 post ====================================
+
+const generateAccessToken = (user) => {
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECERT, { expiresIn: "6h" });
+};
+
+const authenicateToken = (req, res, next) => {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (token === null) return res.sendStatus(401);
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    req.user = user;
+    next();
+  });
+};
+
+app.post("/login", (req, res) => {
+  const { user } = req.body;
+  const accessToken = generateAccessToken(user);
+  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+  // 여기 refrechToken은 db에 저장하기
+  res.json({ accessToken: accessToken, refreshToken: refreshToken });
+});
+
+let refreshTokens = [];
+// 이거는 db에 저장해야돼
+
+app.post("/token", (req, res) => {
+  const { refreshToken } = req.body;
+  if (refreshToken === null) return res.sendStatus(401);
+  if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    if (err) return res.sendStatus(403);
+    const accessToken = generateAccessToken({ name: user.name });
+    res.json({ accessToken: accessToken });
+  });
+});
+
+app.delete("/logout", (req, res) => {
+  refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
+  res.sendStatus(204);
+});
+
+app.get("/posts", authenicateToken, (req, res) => {
+  res.json(posts.filter((post) => post.username === req.user.name));
 });
 
 // [1] ==================================== url수정 용도 put ====================================

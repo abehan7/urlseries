@@ -1,5 +1,4 @@
 import { memo } from "react";
-import ReactLoading from "react-loading";
 import styled from "styled-components";
 
 const LoaderWrap = styled.div`

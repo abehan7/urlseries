@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import "./MainPage.css";
 import Axios from "axios";
 // Functions
@@ -20,15 +20,12 @@ import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
 import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
 import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
 // searchBar
-import SearchDelay from "../components/searchBar/SearchDelay";
 import Loader from "../components/searchBar/Loader";
-import RecentSearched from "../components/searchBar/RecentSearched";
 // Modals
 import AddUrlModal from "../components/Modals/AddUrlModal";
 import EditUrlModal from "../components/Modals/EditUrlModal";
 import ShareUrlModal from "../components/Modals/ShareUrlModal";
 import TopMore from "../components/Modals/TopMore";
-import MovingBalloon from "../components/Modals/MovingBalloon";
 import HashTagModal from "../components/Modals/hashtags/HashTagModal";
 // TopIcons
 import LeftIcons from "../components/TopIcons/LeftIcons";
@@ -37,15 +34,8 @@ import RightIcons from "../components/TopIcons/RightIcons";
 import AsideTag from "../components/AsideTags/AsideTag";
 import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../store/reducers/editModalP3";
-import { AiOutlineInstagram, AiOutlineYoutube } from "react-icons/ai";
 import GridHeader from "../components/GridHeader";
-
-// TODO: 12/29/수) 오늘 내가 집중해야할  useState => setAssignedTags / initAssigned
-// #1 폴더 useState만들기 => boxtags에 넣으면 될 듯
-// #2 그거 aside에 넣기
-// #3 바로 옆에 넣을 지 아니면 아래에 넣을지 고민해보기
-
-// TODO: 12/29) UrlsByHashTag / filterdTags(리덕스) / AsiedTag
+import SearchBox from "../components/searchBar/SearchBox";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -110,7 +100,6 @@ const MainPage = () => {
       initAssigned.forEach((tag) => {
         preTags.push({ name: tag, assigned: 1, origin: 1 });
       });
-      // FIXME: 12/29/수) 오늘 내가 집중해야할  useState => setAssignedTags / initAssigned
 
       setAssignedTags([...preTags]);
     });
@@ -212,6 +201,13 @@ const MainPage = () => {
 
   StopDrag();
 
+  // window.document.onclick = (e) => {
+  //   if (e.target === document.querySelector(".MainPage")) {
+  //     setEditMode(true);
+  //     console.log("121233");
+  //   }
+  // };
+
   // editmode일 때 스타일 사각형에 색깔 변하게하기
   const bcTopRect = "#FFE4C4";
   const emptyStyle = {};
@@ -275,39 +271,12 @@ const MainPage = () => {
             {/* ======================================== 그리드 컨테이너  START  ========================================*/}
             {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
             <div className="grid-container">
-              <div className="search-box">
-                <SearchDelay
-                  createModal2={createModal2}
-                  recentSearched={recentSearched}
-                  setRecentSearch={setRecentSearch}
-                />
-                {/* <NewSearchBar /> */}
-                <FaSearch />
-
-                <div className="Search-balloon">
-                  <div className="Search-balloon-title">
-                    <div className="recent-serached-title">최근 검색 항목</div>
-                    <div className="delete-recent-searched">전체삭제</div>
-                  </div>
-
-                  <div className="Searched-Stuffs-Container">
-                    <RecentSearched
-                      recentSearched={recentSearched}
-                      setRecentSearch={setRecentSearch}
-                    />
-                  </div>
-                  <div className="notSearched">
-                    검색어가 존재하지 않습니다...
-                  </div>
-                  <div className="loadingImg">
-                    <img src="./img/loadingSpin.gif" alt="로딩" />
-                    <div className="loading-ment">
-                      <div className="ment1">검색중입니다</div>
-                      <div className="ment2">잠시만 기다려 주세요 :)</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <SearchBox
+                createModal2={createModal2}
+                recentSearched={recentSearched}
+                setRecentSearch={setRecentSearch}
+                realTotalUrls={realTotalUrls}
+              />
 
               <div class="favicon_box">
                 <div class="item">
@@ -350,52 +319,51 @@ const MainPage = () => {
 
               {BoxTags_First ? (
                 <>
-                  <div>
-                    <h3 class="small__title">
-                      <CgHeart />
-                      즐겨찾기
-                    </h3>
+                  <div
+                    className="Rectangle left-top RectColor"
+                    style={
+                      BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                    }
+                  >
+                    <h3>즐겨찾기 </h3>
                     <div
-                      className="Rectangle left-top RectColor"
+                      className="text-container"
                       style={
-                        BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                        !editMode
+                          ? { maxHeight: "205px", overflow: "auto" }
+                          : {}
                       }
                     >
-                      {/* <h3>즐겨찾기 </h3> */}
-
-                      <div className="text-container">
-                        <FiveUrlsLeft
-                          values={likedUrls}
-                          editMode={editMode}
-                          setMyFav={setMyFav}
-                          setTopMoreWhat={setTopMoreWhat}
-                        />
-                      </div>
+                      <FiveUrlsLeft
+                        values={likedUrls}
+                        editMode={editMode}
+                        setMyFav={setMyFav}
+                        setTopMoreWhat={setTopMoreWhat}
+                      />
                     </div>
                   </div>
-
-                  <div>
-                    <h3 class="small__title">
-                      <CgReorder />
-                      최근기록
-                    </h3>
+                  <div
+                    className="Rectangle right-top RectColor"
+                    style={
+                      BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                    }
+                  >
+                    <h3>최근기록</h3>
                     <div
-                      className="Rectangle right-top RectColor"
+                      className="text-container"
                       style={
-                        BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                        !editMode
+                          ? { maxHeight: "205px", overflow: "auto" }
+                          : {}
                       }
                     >
-                      {/* <h3>최근기록</h3> */}
-
-                      <div className="text-container">
-                        <FiveUrlsRight
-                          values={mostClickedUrls}
-                          editMode={editMode}
-                          shareMode={shareMode}
-                          setMyFav={setMyFav}
-                          setTopMoreWhat={setTopMoreWhat}
-                        />
-                      </div>
+                      <FiveUrlsRight
+                        values={mostClickedUrls}
+                        editMode={editMode}
+                        shareMode={shareMode}
+                        setMyFav={setMyFav}
+                        setTopMoreWhat={setTopMoreWhat}
+                      />
                     </div>
                   </div>
                 </>
@@ -536,7 +504,6 @@ const MainPage = () => {
             </div>
             {/* ======================================== 모달들 END ======================================== */}
           </div>
-          <MovingBalloon />
         </>
       )}
     </>

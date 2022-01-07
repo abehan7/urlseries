@@ -15,7 +15,7 @@ const Wrapper = styled.div`
   z-index: 1;
   border-radius: 5px;
   height: auto;
-  margin-top: ${(props) => props.Height + "px"};
+  margin-top: ${(props) => `${props.Height}px`};
   box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 4px;
   border: 1px solid #ebebeb;
   background-color: ${Colors.Gray};

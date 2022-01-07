@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import Axios from "axios";
 import MoreBtn from "./MoreBtn";
@@ -28,7 +28,7 @@ const FiveUrlsLeft = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
 
   return (
     <>
-      {fiveStuffs.map((value) => {
+      {(editMode ? fiveStuffs : values).map((value) => {
         return (
           <FiveUrlsLeftEl
             style={{ position: "relative" }}
@@ -63,11 +63,11 @@ const FiveUrlsLeft = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
             <div className="valueTitle" style={{ pointerEvents: "none" }}>
               {value.url_title}
             </div>
-            <HoverModal Height={Height} value={value} />
+            {editMode && <HoverModal Height={Height} value={value} />}
           </FiveUrlsLeftEl>
         );
       })}
-      {values.length > 5 && (
+      {values.length > 5 && editMode && (
         <MoreBtn setTopMoreWhat={setTopMoreWhat} where="Left" />
       )}
     </>

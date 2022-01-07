@@ -1,27 +1,22 @@
 import React from "react";
-import {
-  AiOutlineFacebook,
-  AiOutlineInstagram,
-  AiOutlineTwitter,
-  AiOutlineYoutube,
-} from "react-icons/ai";
-import { FiTwitter } from "react-icons/fi";
+import { AiOutlineInstagram, AiOutlineYoutube } from "react-icons/ai";
 import styled from "styled-components";
 import { CgList, CgChevronUpO } from "react-icons/cg";
 
 const GridHeaderEl = styled.div`
   display: flex;
   align-items: center;
-  color: white;
-  font-size: 17px;
-  font-weight: lighter;
-  grid-column: span 2;
-  padding-left: 10px;
+  @media (max-width: 470px) {
+    width: 100%;
+  }
 `;
+
 const Title = styled.h3`
-  padding-left: 5px;
-  padding-right: 5px;
+  @media (max-width: 470px) {
+    padding-left: 1rem;
+  }
 `;
+
 const IconsWrapper = styled.span`
   display: flex;
   justify-content: flex-end;

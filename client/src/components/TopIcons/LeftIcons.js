@@ -159,7 +159,7 @@ const LeftIcons = (props) => {
   );
 };
 
-export default LeftIcons;
+export default React.memo(LeftIcons);
 
 // const mapStateToProps = (state, ownProps) => {
 //   // console.log("ownProps");

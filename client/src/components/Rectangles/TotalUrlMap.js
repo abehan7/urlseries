@@ -128,7 +128,7 @@ export default TotalUrlMap;
 // };
 
 // const onMouseLeave = () => {
-//   const circle = document.querySelector(".detail-container");
+//   const circleㅜ   = document.querySelector(".detail-container");
 //   circle.style.display = "none";
 //   grabNowValue.cancel();
 // };
