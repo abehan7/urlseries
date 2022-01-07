@@ -18,14 +18,16 @@ const Image = styled.img`
   align-items: center;
   justify-content: center;
   width: 16px;
-  height: 16px;
   pointer-events: none;
+  height: 16px;
 `;
 const Item = styled.div`
+  pointer-events: none;
   display: flex;
   align-items: center;
   pointer-events: none;
   justify-content: center;
+  pointer-events: none;
 `;
 
 const Title = styled(Item)`
@@ -33,7 +35,6 @@ const Title = styled(Item)`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 `;
@@ -48,10 +49,18 @@ const ImgContainer = styled.div`
   width: auto;
   height: 100%;
   margin-left: 10px;
+  pointer-events: none;
 `;
 const SearchedStuff = ({ val }) => {
   return (
-    <SearchedStuffEl key={val._id}>
+    <SearchedStuffEl
+      className="searched-Stuff"
+      key={val._id}
+      onClick={(e) => {
+        console.log(e.target);
+        window.open(val.url);
+      }}
+    >
       <ImgContainer>
         <Image
           class="urlFavicon"

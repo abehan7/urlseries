@@ -29,12 +29,10 @@ const ApiGetSearchedList = async (e) => {
   return results;
 };
 
-// FIXME: 디바운스 기능 //TODO:
+// FIXME: 디바운스 기능
 const debounceSomethingFunc = debounce(
   (setResultList, Filterd, setSearchState) => {
     if (Filterd.length === 0) {
-      // nothingFound: false,
-      // searchDone: false,
       setSearchState({ searchDone: true, nothingFound: true });
     } else {
       setSearchState({ searchDone: true, nothingFound: false });
@@ -149,8 +147,14 @@ const SearchBox = ({
         <FaSearch />
 
         <div className="Search-balloon">
-          <div className="Search-balloon-title">
+          <div
+            className="Search-balloon-title"
+            style={
+              text2.length >= 1 ? { display: "none" } : { display: "flex" }
+            }
+          >
             <div className="recent-serached-title">최근 검색 항목</div>
+
             <div className="delete-recent-searched">전체삭제</div>
           </div>
 

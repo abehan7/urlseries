@@ -1,16 +1,9 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import "./MainPage.css";
 import Axios from "axios";
 // Functions
 import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../functions/keepModalsShow";
-import { FaSearch } from "react-icons/fa";
 import StopDrag from "../functions/StopDrag";
 // Rectangles
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
@@ -18,15 +11,12 @@ import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
 import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
 import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
 // searchBar
-import SearchDelay from "../components/searchBar/SearchDelay";
 import Loader from "../components/searchBar/Loader";
-import RecentSearched from "../components/searchBar/RecentSearched";
 // Modals
 import AddUrlModal from "../components/Modals/AddUrlModal";
 import EditUrlModal from "../components/Modals/EditUrlModal";
 import ShareUrlModal from "../components/Modals/ShareUrlModal";
 import TopMore from "../components/Modals/TopMore";
-import MovingBalloon from "../components/Modals/MovingBalloon";
 import HashTagModal from "../components/Modals/hashtags/HashTagModal";
 // TopIcons
 import LeftIcons from "../components/TopIcons/LeftIcons";
@@ -35,9 +25,7 @@ import RightIcons from "../components/TopIcons/RightIcons";
 import AsideTag from "../components/AsideTags/AsideTag";
 import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../store/reducers/editModalP3";
-import { AiOutlineInstagram, AiOutlineYoutube } from "react-icons/ai";
 import GridHeader from "../components/GridHeader";
-import SearchedStuff from "../components/searchBar/SearchedStuff";
 import SearchBox from "../components/searchBar/SearchBox";
 
 const MainPage = () => {
@@ -103,7 +91,6 @@ const MainPage = () => {
       initAssigned.forEach((tag) => {
         preTags.push({ name: tag, assigned: 1, origin: 1 });
       });
-      // FIXME: 12/29/수) 오늘 내가 집중해야할  useState => setAssignedTags / initAssigned
 
       setAssignedTags([...preTags]);
     });
@@ -111,7 +98,6 @@ const MainPage = () => {
 
   const {
     page3Storage: { nowFolder2, nowPage2 },
-    searchedList: { resultList, typingNow },
   } = useSelector((state) => state);
 
   useEffect(() => {
