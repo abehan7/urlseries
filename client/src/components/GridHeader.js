@@ -7,15 +7,21 @@ import {
 } from "react-icons/ai";
 import { FiTwitter } from "react-icons/fi";
 import styled from "styled-components";
+import { CgList, CgChevronUpO } from "react-icons/cg";
 
 const GridHeaderEl = styled.div`
   display: flex;
   align-items: center;
   color: white;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: lighter;
+  grid-column: span 2;
+  padding-left: 10px;
 `;
-const Title = styled.h3``;
+const Title = styled.h3`
+  padding-left: 5px;
+  padding-right: 5px;
+`;
 const IconsWrapper = styled.span`
   display: flex;
   justify-content: flex-end;
@@ -40,13 +46,15 @@ const Icon = styled.div`
 const GridHeader = () => {
   return (
     <GridHeaderEl>
+      <CgList size="21" />
       <Title>전체 URL</Title>
+      <CgChevronUpO size="21" />
       <IconsWrapper>
         <Icon>
-          <AiOutlineInstagram />
+          <AiOutlineInstagram size="23" />
         </Icon>
         <Icon>
-          <AiOutlineYoutube />
+          <AiOutlineYoutube size="23" />
         </Icon>
       </IconsWrapper>
     </GridHeaderEl>

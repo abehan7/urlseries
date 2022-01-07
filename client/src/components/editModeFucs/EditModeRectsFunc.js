@@ -7,7 +7,7 @@ const EditModeRectsFunc = (editMode) => {
     if (document.querySelector(".Big_Rect > div > h3")) {
       document.querySelector(".Big_Rect > div > h3").innerText =
         "에디터모드입니다";
-      document.querySelector(".Big_Rect > div > h3").style.color = "red";
+      document.querySelector(".Big_Rect > div > h3").style.color = "white";
     }
   } else {
     document.querySelectorAll(".RectColor").forEach((rect) => {

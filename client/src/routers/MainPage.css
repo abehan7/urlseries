@@ -14,10 +14,13 @@
 /* ================Header Start================ */
 
 .navbar {
+  position: fixed;
+  z-index: 1;
+  width: 95%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(14, 16, 21) 75.62%;
+  background: rgb(14, 16, 21) 75.62%;
   padding: 8px 50px;
 }
 
@@ -125,7 +128,31 @@ a {
   } */
 }
 
-/* ================Header End================ */
+/* ================Header End====================*/
+
+/* ================Favicon Box start============= */
+
+.favicon_box {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 2 span;
+}
+.item {
+  padding: 8px 12px;
+  height: auto;
+  background-color: rgba(58, 57, 57, 0.2);
+  /* border: 2px solid rgb(255, 255, 255); */
+  margin: 6px;
+  border-radius: 10px;
+}
+
+.item img {
+  width: 30px;
+}
+
+/* ================Favicon Box end============= */
 
 .firstLoading {
   font-size: 50px;

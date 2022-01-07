@@ -308,7 +308,21 @@ const MainPage = () => {
                   </div>
                 </div>
               </div>
-              <h3>여긴가?</h3>
+
+              <div class="favicon_box">
+                <div class="item">
+                  <img src="https://www.youtube.com/favicon.ico" />
+                </div>
+                <div class="item">
+                  <img src="https://www.naver.com/favicon.ico" />
+                </div>
+                <div class="item">
+                  <img src="https://www.google.com/favicon.ico" />
+                </div>
+                <div class="item">
+                  <img src="https://www.netflix.com/kr/favicon.ico" />
+                </div>
+              </div>
 
               <div className="share-write">
                 {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
