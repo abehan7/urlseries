@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { getMouseLocation, grabNowValue } from "./movingModalFuncs";
+import React, { useState } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import whenIclickUrl from "./FuncTotalUrlMap";
 import { useDispatch } from "react-redux";
-import { UrlDetailActions } from "../../store/reducers/ClickedUrlDetails";
 import HoverModal from "../styled/HoverModal.styled";
+import styled from "styled-components";
+import UrlRectWrapper from "../styled/UrlRectWrapper.styled";
+import { debounce } from "lodash";
 
+export const modalHover = debounce((e, setHeight, Height) => {
+  e.target.lastChild.classList.add("hover-on");
+  Height !== e.target.offsetHeight && setHeight(e.target.offsetHeight);
+}, 500);
+
+const TotalUrlMapEl = styled(UrlRectWrapper)``;
 const TotalUrlMap = ({
   getUrls,
   setGetUrls,
@@ -13,30 +20,24 @@ const TotalUrlMap = ({
   setMyFav,
   deleteMode,
 }) => {
-  const [hoverList, setHoverList] = useState([]);
+  const [Height, setHeight] = useState(0);
   const dispatch = useDispatch();
-  window.onscroll = () => {
-    const circle = document.querySelector(".detail-container");
-    grabNowValue.cancel();
-    circle.style.display = "none";
-  };
 
-  const onMouseLeave = () => {
-    const circle = document.querySelector(".detail-container");
-    circle.style.display = "none";
-    grabNowValue.cancel();
-  };
+  // const modalHover = debounce((e) => {
+  //   e.target.lastChild.classList.add("hover-on");
+  //   Height !== e.target.offsetHeight && setHeight(e.target.offsetHeight);
+  // }, 500);
 
   return (
     <>
       {getUrls.map((value) => {
         return (
           <>
-            <div
+            <TotalUrlMapEl
               style={{ position: "relative" }}
               className="T-url"
               key={value._id}
-              onClick={() => {
+              onClick={(e) => {
                 whenIclickUrl({
                   oneUrl: value,
                   deleteMode,
@@ -47,32 +48,17 @@ const TotalUrlMap = ({
                   dispatch,
                 });
               }}
-              onMouseOut={() => {
-                setGetUrls(
-                  getUrls.map((val) => {
-                    return val._id === value._id
-                      ? { ...value, url_hover: false }
-                      : val;
-                  })
-                );
-                // onMouseLeave()
+              onMouseOut={(e) => {
+                modalHover.cancel();
+                e.target.lastChild.classList.remove("hover-on");
               }}
               onMouseOver={(e) => {
-                setGetUrls(
-                  getUrls.map((val) => {
-                    return val._id === value._id
-                      ? { ...value, url_hover: true }
-                      : val;
-                  })
-                );
-
-                // grabNowValue(value);
+                modalHover(e, setHeight, Height);
               }}
               onContextMenu={(e) => {
                 console.log("우클릭");
                 e.preventDefault();
               }}
-              onMouseMove={(e) => getMouseLocation(e)}
             >
               {!editMode && deleteMode && (
                 <>
@@ -85,34 +71,22 @@ const TotalUrlMap = ({
                   </div>
                 </>
               )}
-              {/* <img
-                width={value.url.includes("youtu") ? "100px" : "20px"}
-                className="urlFavicon"
-                src={
-                  value.url.includes("youtu")
-                    ? `https://i.ytimg.com/vi/${imgThum}/maxresdefault.jpg`
-                    : `http://www.google.com/s2/favicons?domain=${value.url}`
-                }
-                alt=""
-              /> */}
+
               <img
+                style={{ pointerEvents: "none" }}
                 className="urlFavicon"
                 src={`http://www.google.com/s2/favicons?domain=${value.url}`}
                 alt=""
               />
 
-              {/* <iframe
-                title="test"
-                width="320"
-                height="440"
-                src="https://www.instagram.com/p/CYO9ux9uEMr/embed"
-                frameborder="0"
-              /> */}
-              {/* <div className="valueId">{value.url_id}</div> */}
-              <div className="just-bar">|</div>
-              <div className="valueTitle">{value.url_title}</div>
-              <HoverModal value={value} />
-            </div>
+              <div className="just-bar" style={{ pointerEvents: "none" }}>
+                |
+              </div>
+              <div className="valueTitle" style={{ pointerEvents: "none" }}>
+                {value.url_title}
+              </div>
+              <HoverModal Height={Height} value={value} />
+            </TotalUrlMapEl>
           </>
         );
       })}
@@ -121,3 +95,40 @@ const TotalUrlMap = ({
 };
 
 export default TotalUrlMap;
+
+{
+  /* <iframe
+                title="test"
+                width="320"
+                height="440"
+                src="https://www.instagram.com/p/CYO9ux9uEMr/embed"
+                frameborder="0"
+              /> */
+}
+{
+  /* <div className="valueId">{value.url_id}</div> */
+}
+{
+  /* <img
+                width={value.url.includes("youtu") ? "100px" : "20px"}
+                className="urlFavicon"
+                src={
+                  value.url.includes("youtu")
+                    ? `https://i.ytimg.com/vi/${imgThum}/maxresdefault.jpg`
+                    : `http://www.google.com/s2/favicons?domain=${value.url}`
+                }
+                alt=""
+              /> */
+}
+
+// window.onscroll = () => {
+//   const circle = document.querySelector(".detail-container");
+//   grabNowValue.cancel();
+//   circle.style.display = "none";
+// };
+
+// const onMouseLeave = () => {
+//   const circle = document.querySelector(".detail-container");
+//   circle.style.display = "none";
+//   grabNowValue.cancel();
+// };
