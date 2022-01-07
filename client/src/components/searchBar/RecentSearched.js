@@ -25,7 +25,7 @@ const RecentWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: start;
-    min-height: 40px;
+    min-height: 43px;
     height: auto;
     width: 100%;
     padding: 0;
@@ -46,7 +46,12 @@ const RecentWrapper = styled.div`
     padding-right: 15px;
     font-size: 17px;
   }
-  .Searched-url-Title {
+  .recent-searched-Stuff > .Searched-url-Title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 `;
 

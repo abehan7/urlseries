@@ -3,8 +3,9 @@ import styled from "styled-components";
 
 const SearchedStuffEl = styled.div`
   display: flex;
+  align-items: center;
   height: auto;
-  min-height: 40px;
+  min-height: 43px;
   width: 100%;
   cursor: pointer;
   :hover {
@@ -27,7 +28,15 @@ const Item = styled.div`
   justify-content: center;
 `;
 
-const Title = styled(Item)``;
+const Title = styled(Item)`
+  /* width: 200px; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+`;
 const Bar = styled(Item)`
   padding-right: 10px;
 `;
