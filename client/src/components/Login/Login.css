@@ -1,7 +1,8 @@
 :root {
-  --main-btn-size: 250px;
+  --main-btn-width: 250px;
+  --main-input-size: 250px;
   --main-border-radius: 8px;
-  --main-btn-height: 43px;
+  --main-btn-height: 40px;
   --btn-padding: 0 1rem;
 }
 
@@ -29,7 +30,7 @@
   outline: none;
   color: #1d2129;
   padding: 0.5rem 0.75rem;
-  width: var(--main-btn-size);
+  width: var(--main-input-size);
 }
 
 .login > .button {
@@ -37,7 +38,7 @@
   border-radius: var(--main-border-radius);
   outline: none;
   cursor: pointer;
-  width: var(--main-btn-size);
+  width: var(--main-btn-width);
   height: var(--main-btn-height);
   padding: 0 1rem;
 
@@ -59,7 +60,7 @@
 /* 구글 버튼 */
 
 .g-signin2 button {
-  width: var(--main-btn-size);
+  width: var(--main-btn-width);
   height: var(--main-btn-height);
   padding: 0;
 }

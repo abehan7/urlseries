@@ -300,6 +300,8 @@ const FolderLiked = (req, res) => {
   }
 };
 
+// FIXME: delete
+
 const DeleteUrl = async (req, res) => {
   const id = req.params.id;
   console.log(id);
@@ -322,6 +324,7 @@ const DeleteFolder = async (req, res) => {
   }
 };
 
+// FIXME: 크롤링
 const Crawling = (req, res) => {
   const { url } = req.body;
   // console.log(url);
@@ -395,7 +398,69 @@ const Crawling = (req, res) => {
   // await puppeteer.launch(options);
 };
 
+// FIXME: 로그인 회원가입
+const SignUp = async (req, res) => {
+  console.log(req.body);
+  const user = req.body;
+
+  const newUser = new db.Users({ ...user });
+
+  newUser.save((err, userInfo) => {
+    if (err) return res.json({ success: false, err });
+    console.log("user inserted");
+    return res.status(200).json({ success: true });
+  });
+};
+
+const Login = async (req, res) => {
+  //로그인을할때 아이디와 비밀번호를 받는다
+
+  const { user_id, password } = req.body;
+  const query = { user_id: user_id };
+  const options = (err, user) => {
+    console.log(user);
+    if (err) console.log(err);
+
+    if (user === null) {
+      return res.json({
+        loginSuccess: false,
+        message: "존재하지 않는 아이디입니다.",
+      });
+    }
+
+    user
+      .comparePassword(password)
+      .then((isMatch) => {
+        if (!isMatch) {
+          return res.json({
+            loginSuccess: false,
+            message: "비밀번호가 일치하지 않습니다",
+          });
+        }
+        // 유저 있으면 토큰 만들어서 보내기
+        const token = user.generateToken();
+        res.status(200).json({ loginSuccess: true, token });
+
+        //   .then((user) => {
+        //     res.status(200).json({ loginSuccess: true, userId: user._id });
+        //   })
+        //   .catch((err) => {
+        //     res.status(400).send(err);
+        //   });
+      })
+      .catch((err) => res.json({ loginSuccess: false, err }));
+    //비밀번호가 일치하면 토큰을 생성한다
+    //해야될것: jwt 토큰 생성하는 메소드 작성
+  };
+
+  await db.Users.findOne(query, options).clone();
+  // 비밀번호는 암호화되어있기때문에 암호화해서 전송해서 비교를 해야한다 .
+  //암호화 메소드는 User.js에 작성한다.
+  //로그인 암호화 비밀번호가 일치하면 jwt 토큰을 발급한다
+};
+
 module.exports = {
+  SignUp,
   TotalAfter,
   TotalURL,
   FolderItems,
@@ -413,4 +478,5 @@ module.exports = {
   DeleteUrl,
   DeleteFolder,
   Crawling,
+  Login,
 };

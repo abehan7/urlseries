@@ -29,7 +29,6 @@
   padding: 1rem;
   align-items: center;
   text-align: center;
-  margin-top: 300px;
   flex-direction: column;
 }
 .form-div {
@@ -37,13 +36,7 @@
 }
 
 /* 레이아웃 틀 */
-/* 
-  body {
-    margin: 0;
-    height: 100%;
-    background: #f5f6f7;
-    font-family: Dotum, "돋움", Helvetica, sans-serif;
-  } */
+
 #logo {
   width: 240px;
   height: 44px;
@@ -67,7 +60,6 @@ h3 {
   height: 43px;
   border: solid 1px #dadada;
   padding-top: 5px;
-  /* padding: 10px 14px 10px 14px; */
   box-sizing: border-box;
   background: #fff;
   position: relative;
@@ -158,7 +150,6 @@ select {
   text-align: start;
   border: none;
   cursor: default;
-  font-family: Dotum, "돋움", Helvetica, sans-serif;
 }
 
 /* 에러메세지 */
@@ -181,28 +172,11 @@ select {
 
 /* 버튼 */
 
-.btn_area {
-  /* margin: 30px 0 91px; */
-}
-
 #btnJoin {
-  /* width: 178px;
-    height: 43px;
-    padding: 21px 0 17px;
-    border: 0;
-    cursor: pointer;
-    color: #fff;
-    background-color: #3f3f3f;
-    font-size: 20px;
-    font-weight: 400;
-    font-family: "GowunDodum-Regular";
-    text-align: center;
-    padding-right: 13px; */
   background: #2d2e30;
   border: 1px solid #2d2e30;
   color: #fff;
   padding: 0.5rem;
-  margin: 0.5rem 0;
   border-radius: 8px;
   outline: none;
   cursor: pointer;

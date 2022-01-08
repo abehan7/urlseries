@@ -4,6 +4,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import styled from "styled-components";
+import { SignIn } from "../Api";
 
 const LoginEl = styled.div`
   width: 100%;
@@ -13,7 +14,7 @@ const LoginEl = styled.div`
   justify-content: center;
 `;
 
-const ItemWrapper = styled.div`
+export const ItemWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,7 +81,7 @@ const GoogleLoginEl = styled.div`
   }
 `;
 
-const LoginWrapper = styled.div`
+export const LoginWrapper = styled.div`
   &:hover {
     box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25);
   }
@@ -151,13 +152,15 @@ const Login = ({ setLoginUser }) => {
 
   //   FIXME: APICALL
 
-  const Apilogin = () => {
-    axios.post("http://localhost:3001/login", user).then((response) => {
-      console.log(response);
-      const { message, user } = response.data;
-      alert(message);
+  const OnclickLogin = async () => {
+    console.log(user);
+
+    await SignIn(user).then((response) => {
+      console.log(response.data);
+      const { message, user, loginSuccess } = response.data;
+      !loginSuccess && alert(message);
+      loginSuccess && history.push("/");
       setLoginUser(user);
-      history.push("/");
     });
   };
 
@@ -179,12 +182,7 @@ const Login = ({ setLoginUser }) => {
           onChange={handleChange}
           placeholder="Enter your Password"
         />
-        <LoginWrapper
-          className="button"
-          onClick={() => {
-            console.log(user);
-          }}
-        >
+        <LoginWrapper className="button" onClick={OnclickLogin}>
           <ItemWrapper>로그인</ItemWrapper>
         </LoginWrapper>
         <div className="g-signin2">

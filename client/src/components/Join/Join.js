@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import axios from "axios";
+import Axios from "axios";
 import "./Join.css";
 //-------------------------
 import styled from "styled-components";
-
+import { ItemWrapper, LoginWrapper } from "../Login/Login";
+import { SignUp } from "../Api";
 //간단회원가입 기능
 
 const JoinEl = styled.div`
@@ -12,6 +13,38 @@ const JoinEl = styled.div`
   justify-content: center;
   width: 100vw;
   height: 100vh;
+`;
+
+const JoinWrapper = styled(LoginWrapper)`
+  margin-top: 0.3rem;
+  border: 1px solid #2d2e30;
+  border-radius: var(--main-border-radius);
+  outline: none;
+  cursor: pointer;
+  width: var(--main-btn-width);
+  height: var(--main-btn-height);
+  padding: 0 1rem;
+
+  transition: background-color 0.3s, box-shadow 0.3s;
+
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
+
+  color: #757575;
+  font-size: 14px;
+  font-weight: 500;
+
+  background-color: white;
+  background-repeat: no-repeat;
+  background-position: 12px 11px;
+`;
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Join = () => {
@@ -31,7 +64,14 @@ const Join = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
+    // console.log(user);
+
+    SignUp(user).then((response) => {
+      console.log(response.data);
+    });
+
+    //     window.location = "/";
+    //   }
   };
 
   return (
@@ -39,7 +79,7 @@ const Join = () => {
       <div id="content">
         <h1>URurl</h1>
         <div className="form-div">
-          <form onSubmit={onSubmit}>
+          <Form onSubmit={onSubmit}>
             <div>
               <input
                 type="text"
@@ -79,10 +119,10 @@ const Join = () => {
               />
             </div>
 
-            <div className="btn_area">
-              <input type="submit" id="btnJoin" value="가입하기" />
-            </div>
-          </form>
+            <JoinWrapper className="button" onClick={onSubmit}>
+              <ItemWrapper>가입하기</ItemWrapper>
+            </JoinWrapper>
+          </Form>
         </div>
       </div>
     </JoinEl>

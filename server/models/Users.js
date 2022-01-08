@@ -61,9 +61,9 @@ UserSchema.methods.generateToken = function () {
   // let user = this;
   const token = jwt.sign(this._id.toHexString(), "secretToken");
   this.token = token;
-  return this.save()
-    .then((user) => user)
-    .catch((err) => err);
+  return token;
+  // .then((user) => user)
+  // .catch((err) => err);
 };
 
 UserSchema.statics.findByToken = function (token) {

@@ -22,6 +22,8 @@ const {
   DeleteUrl,
   DeleteFolder,
   Crawling,
+  SignUp,
+  Login,
 } = require("./controller/main");
 dotenv.config({ path: "./.env" });
 const PORT = process.env.PORT || 3001;
@@ -79,6 +81,11 @@ app.post("/addUrl", AddUrl);
 app.post("/addFolder", AddFolder);
 
 // [5]==================================== 로그인 post ====================================
+// #FIXME: 회원가입
+
+app.post("/signUp", SignUp);
+
+app.post("/login", Login);
 
 const generateAccessToken = (user) => {
   return jwt.sign(user, process.env.ACCESS_TOKEN_SECERT, { expiresIn: "6h" });
@@ -95,7 +102,7 @@ const authenicateToken = (req, res, next) => {
   });
 };
 
-app.post("/login", (req, res) => {
+app.post("/login2", (req, res) => {
   const { user } = req.body;
   const accessToken = generateAccessToken(user);
   const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);

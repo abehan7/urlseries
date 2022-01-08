@@ -566,14 +566,11 @@ h3 {
   }
 
   .search-box > input {
-    width: 100%;
   }
 
   .search-box {
-    width: 200px;
   }
   .search-box > svg {
-    right: -10px;
   }
 
   .Big_Rect .text-three-container {
