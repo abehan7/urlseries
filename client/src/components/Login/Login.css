@@ -1,8 +1,8 @@
 :root {
-  --main-bg-color: brown;
   --main-btn-size: 250px;
   --main-border-radius: 8px;
-  --main-height: 43px;
+  --main-btn-height: 43px;
+  --btn-padding: 0 1rem;
 }
 
 .login {
@@ -38,7 +38,8 @@
   outline: none;
   cursor: pointer;
   width: var(--main-btn-size);
-  height: var(--main-height);
+  height: var(--main-btn-height);
+  padding: 0 1rem;
 
   transition: background-color 0.3s, box-shadow 0.3s;
 
@@ -53,33 +54,12 @@
   background-color: white;
   background-repeat: no-repeat;
   background-position: 12px 11px;
-
-  &:hover {
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25);
-  }
-
-  &:active {
-    background-color: #eeeeee;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 0, 0, 0.25),
-      0 0 0 3px #c8dafc;
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &:disabled {
-    filter: grayscale(100%);
-    background-color: #ebebeb;
-    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
-    cursor: not-allowed;
-  }
 }
 
-.login > .button 
-
 /* 구글 버튼 */
+
 .g-signin2 button {
   width: var(--main-btn-size);
-  border-radius: var(--main-border-radius);
+  height: var(--main-btn-height);
+  padding: 0;
 }

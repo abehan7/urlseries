@@ -5,6 +5,7 @@ import styled from "styled-components";
 const GridHeaderEl = styled.div`
   display: flex;
   align-items: center;
+  padding: 10px 0;
   @media (max-width: 470px) {
     width: 100%;
   }

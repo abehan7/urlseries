@@ -11,6 +11,9 @@
   font-weight: bold;
 }
 
+h3 {
+  margin: 0;
+}
 .firstLoading {
   font-size: 50px;
   display: flex;
