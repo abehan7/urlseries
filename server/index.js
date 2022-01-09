@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const db = require("./models");
 const jwt = require("jsonwebtoken");
+
 const {
   TotalAfter,
   TotalURL,
@@ -25,6 +26,8 @@ const {
   SignUp,
   Login,
 } = require("./controller/main");
+const auth = require("./middleware/auth");
+
 dotenv.config({ path: "./.env" });
 const PORT = process.env.PORT || 3001;
 
@@ -62,9 +65,9 @@ app.get("/TotalAfter", TotalAfter);
 
 // [3] ==================================== 맨 처음 접속하면 보여줄 부분들만 뽑은 get ====================================
 
-app.get("/totalURL", TotalURL);
+app.get("/totalURL", auth, TotalURL);
 // [4] ==================================== 폴더 아이템들 가지고오기 ====================================
-app.get("/folderItems", FolderItems);
+app.get("/folderItems", auth, FolderItems);
 
 // [1] ==================================== 검색어 검색하는 post ====================================
 
@@ -72,7 +75,7 @@ app.post("/search", Search);
 
 // [2] ==================================== 무한스크롤 post ====================================
 
-app.post("/get21Urls", Get21Urls);
+app.post("/get21Urls", auth, Get21Urls);
 
 // [3] ==================================== url추가 용도 post ====================================
 
@@ -87,8 +90,16 @@ app.post("/signUp", SignUp);
 
 app.post("/login", Login);
 
+// TODO:
+//  여기 있는것들을 조합해서 만들면 될듯
+//  그리고 db에 RefreshToken USERS에 넣기
+
 const generateAccessToken = (user) => {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECERT, { expiresIn: "6h" });
+  return jwt.sign(user, process.env.ACCESS_TOKEN_SECERT, { expiresIn: "1h" });
+};
+
+const generateRefreshToken = (user) => {
+  return jwt.sign(user.process.env.REFRESH_TOKEN_SECRET, { expiresIn: "3d" });
 };
 
 const authenicateToken = (req, res, next) => {
@@ -102,10 +113,17 @@ const authenicateToken = (req, res, next) => {
   });
 };
 
+app.post("/tokentest", (req, res) => {
+  const { BearerToken } = req.body;
+  const token = BearerToken.split(" ")[1];
+  const result = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  res.json(result);
+});
+
 app.post("/login2", (req, res) => {
   const { user } = req.body;
   const accessToken = generateAccessToken(user);
-  const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+  const refreshToken = generateRefreshToken(user);
   // 여기 refrechToken은 db에 저장하기
   res.json({ accessToken: accessToken, refreshToken: refreshToken });
 });
@@ -149,7 +167,7 @@ app.put("/clickedSeachedURL", ClickedSeachedURL);
 // [5] ==================================== 박스들에서 url클릭하면 +1 AND 클릭한 시간 갱신  (1에서 0으로 수정) put ====================================
 app.put("/clickedURLInBox", ClickedURLInBox);
 
-// [6] ====================================  폴더 해쉬태그 contents 수정하는 put ====================================
+// [6] ====================================   폴더 해쉬태그 contents 수정하는 put ====================================
 app.put("/folderContentsChanged", FolderContentsChanged);
 
 // [7] ==================================== 폴더 좋아요 된거 수정 ====================================

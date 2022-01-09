@@ -1,4 +1,4 @@
-import Axios from "axios";
+import { getFolderItems } from "../../components/Api";
 
 const SETNOW = "SETNOW";
 const GETFITEM = "GETFITEM";
@@ -7,7 +7,7 @@ const GETFITEM_SUCCESS = "GETFITEM_SUCCESS";
 const SET_FOLDER = "SET_FOLDER";
 
 const folderItemsAPI = async () => {
-  const { data } = await Axios.get("http://localhost:3001/folderItems");
+  const { data } = await getFolderItems();
   return data;
 };
 

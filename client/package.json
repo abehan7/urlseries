@@ -147,7 +147,7 @@
     ]
   },
   "devDependencies": {
-    "node-sass": "^7.0.1",
+    "node-sass": "4.14.1",
     "sass-loader": "^12.4.0"
   }
 }

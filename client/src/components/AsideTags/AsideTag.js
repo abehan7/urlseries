@@ -86,7 +86,7 @@ const AsideTag = ({
 
       {/* 폴더 공간 */}
       {/* FIXME:12/30(목) 마지막 작업 제대로 하기 */}
-      {folderItems.map((folder) => {
+      {folderItems?.map((folder) => {
         return (
           <FolderMap
             FirstOpacity={FirstOpacity}

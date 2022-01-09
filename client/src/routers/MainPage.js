@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MainPage.css";
 import Axios from "axios";
 // Functions
@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../store/reducers/editModalP3";
 import GridHeader from "../components/GridHeader";
 import SearchBox from "../components/searchBar/SearchBox";
+import { GetTotalUrls, Get21Urls, TotalAfter } from "../components/Api";
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -35,6 +36,7 @@ const MainPage = () => {
   const [clickedSearchInput, setClickedSearchInput] = useState(false);
   const [editMode, setEditMode] = useState(true);
   const [shareMode, setShareMode] = useState(true);
+  const [urlsGotten, setUrlsGotten] = useState(false);
   const [getUrls, setGetUrls] = useState([]);
   const [mostClickedUrls, setMostClickedUrls] = useState([]);
   const [likedUrls, setLikedUrls] = useState([]);
@@ -50,10 +52,6 @@ const MainPage = () => {
 
   const dispatch = useDispatch();
 
-  const api = Axios.create({
-    baseURL: `http://localhost:3001/`,
-  });
-
   const setFolderItemRedux = () => {
     dispatch(Page3Actions.GetFolderItems());
   };
@@ -66,18 +64,20 @@ const MainPage = () => {
     // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
     // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
     // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
-    api.get("/totalURL").then(async (response) => {
+    GetTotalUrls().then(async (response) => {
+      console.log(response);
       await setGetUrls(response.data.totalURL);
       await setMostClickedUrls(response.data.rightURL);
       await setLikedUrls(response.data.leftURL);
       await setRecentSearch(response.data.recentSearched);
+      await setUrlsGotten(true);
       console.log(response.data);
     });
   }, []);
 
   useEffect(() => {
     let preTags = [];
-    api.get("/TotalAfter").then((response) => {
+    TotalAfter().then((response) => {
       const {
         data: { totalAfter, initAssigned },
       } = response;
@@ -131,11 +131,10 @@ const MainPage = () => {
     }
 
     console.log(getUrls[getUrls.length - 1].url_id);
+
     setIsLoaded(true);
 
-    await Axios.post("http://localhost:3001/get21Urls", {
-      lastId: realLastId,
-    }).then(async (response) => {
+    await Get21Urls(realLastId).then(async (response) => {
       // await new Promise((resolve) => setTimeout(resolve, 1000));
       responseListLength = response.data.length;
       if (responseListLength === 0) {
@@ -166,6 +165,7 @@ const MainPage = () => {
 
   useEffect(() => {
     let observer;
+    console.log(target);
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.2,

@@ -9,11 +9,9 @@
 
 .content > .editUrl-btn {
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 2.3rem;
 }
 
 .urlInfoes {
   display: none;
 }
-
-/* Add */

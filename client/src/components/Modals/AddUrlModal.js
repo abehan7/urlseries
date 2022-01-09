@@ -140,7 +140,7 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
             </div>
             <div className="addUrl-btn">
               <button
-                style={defaultHeight}
+                style={{ height: "43px" }}
                 onClick={async () => {
                   await addBtn();
                   disable();

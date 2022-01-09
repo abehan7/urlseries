@@ -1,10 +1,14 @@
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
 
-const secret = "test";
-
+dotenv.config({ path: "./.env" });
+const secret = process.env.ACCESS_TOKEN_SECRET;
 const auth = async (req, res, next) => {
+  const rowToken = req.headers.authorization;
+  // console.log(rowToken);
+  // console.log(secret);
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const token = rowToken.split(" ")[1];
     const isCustomAuth = token.length < 500;
 
     let decodedData;
@@ -12,11 +16,11 @@ const auth = async (req, res, next) => {
     if (token && isCustomAuth) {
       decodedData = jwt.verify(token, secret);
 
-      req.userId = decodedData?.id;
+      // req.userId = decodedData?.id;
+      req.decodedData = decodedData;
     } else {
       decodedData = jwt.decode(token);
-
-      req.userId = decodedData?.sub;
+      req.user_id = decodedData?.sub;
     }
 
     next();
@@ -24,4 +28,5 @@ const auth = async (req, res, next) => {
     console.log(error);
   }
 };
+
 module.exports = auth;

@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
+dotenv.config({ path: "./../.env" });
 const saltRounds = 10;
 
 const UserSchema = new mongoose.Schema({
@@ -16,19 +19,13 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  user_asignedTags: {
-    type: Array,
-    required: false,
-  },
-  user_totalTags: {
-    type: Array,
-    required: false,
-  },
-  date: {
+  createdAt: {
     type: Date,
     default: Date.now,
   },
 });
+
+const secret = process.env.REFRESH_TOKEN_SECRET;
 //save메소드가 실행되기 전에 비밀번호를 암호화하는 로직
 UserSchema.pre("save", function (next) {
   let user = this;
@@ -56,27 +53,39 @@ UserSchema.methods.comparePassword = function (plainPassword) {
     .catch((err) => err);
 };
 
-//jwt를 통해 유저의 아이디로 토큰을 만든 후 저장
-UserSchema.methods.generateToken = function () {
-  // let user = this;
-  const token = jwt.sign(this._id.toHexString(), "secretToken");
-  this.token = token;
-  return token;
-  // .then((user) => user)
-  // .catch((err) => err);
-};
-
-UserSchema.statics.findByToken = function (token) {
-  let user = this;
-  //secretToken을 통해 user의 id값을 받아오고 해당 아이디를 통해
-  //Db에 접근해서 유저의 정보를 가져온다
-
-  return jwt.verify(token, "secretToken", function (err, decoded) {
-    return user
-      .findOne({ _id: decoded, token: token })
-      .then((user) => user)
-      .catch((err) => err);
-  });
-};
 const Users = mongoose.model("users", UserSchema);
 module.exports = Users;
+
+//jwt를 통해 유저의 아이디로 토큰을 만든 후 저장
+// UserSchema.methods.generateAccessToken = function () {
+//   // let user = this;
+//   const secret = process.env.ACCESS_TOKEN_SECRET;
+//   const token = jwt.sign(this._id.toHexString(), secret, {
+//     expiresIn: "1h",
+//   });
+//   console.log(token);
+//   // this.token = token;
+//   return token;
+//   // .then((user) => user)
+//   // .catch((err) => err);
+// };
+
+// UserSchema.methods.generateRefreshToken = () => {
+//   const secret = process.env.ACCESS_TOKEN_SECRET;
+//   const token = jwt.sign(this._id.toHexString(), secret, { expiresIn: "3d" });
+//   // 리프레쉬토큰만 저장
+//   this.token.save();
+//   return token;
+// };
+// UserSchema.statics.findByToken = function (token) {
+//   let user = this;
+//   //secretToken을 통해 user의 id값을 받아오고 해당 아이디를 통해
+//   //Db에 접근해서 유저의 정보를 가져온다
+//   const secret = process.env.ACCESS_TOKEN_SECRET;
+//   return jwt.verify(token, secret, function (err, decoded) {
+//     return user
+//       .findOne({ _id: decoded, token: token })
+//       .then((user) => user)
+//       .catch((err) => err);
+//   });
+// };

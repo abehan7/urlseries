@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import Axios from "axios";
 import "./Join.css";
 //-------------------------
 import styled from "styled-components";

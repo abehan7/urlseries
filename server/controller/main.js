@@ -1,5 +1,9 @@
 const db = require("../models");
 const puppeteer = require("puppeteer");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+
+dotenv.config({ path: "../.env" });
 
 const getCurrentDate = () => {
   var date = new Date();
@@ -38,60 +42,40 @@ const TotalAfter = async (req, res) => {
 };
 
 const TotalURL = async (req, res) => {
+  console.log(req.decodedData);
+  const { user_id } = req.decodedData;
+  console.log(user_id);
+  // const { authorization } = req.headers;
+  // console.log(authorization);
   //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
   var totalURL = [];
   var leftURL = [];
   var rightURL = [];
   var recentSearched = [];
 
-  await db.Urls.find({})
-    .limit(42)
-    .sort({ _id: -1 })
-    .then((response) => {
-      totalURL = response;
-    });
+  const query = { user_id };
 
-  await db.Urls.find({ url_likedUrl: 1 })
-    .sort({
-      "url_search.url_searchedDate": -1,
-    })
-    .then((response) => {
-      leftURL = response;
-    });
+  totalURL = await db.Urls.find(query).limit(42).sort({ _id: -1 });
 
-  await db.Urls.find({})
-    .sort({ url_updatedDate: -1 })
-    .limit(20)
-    .then((response) => {
-      rightURL = response;
-      // console.log(rightURL);
-    });
-
-  await db.Urls.find({ "url_search.url_searchClicked": 1 })
-    .sort({
-      "url_search.url_searchedDate": -1,
-    })
-    .limit(20)
-    .then((response) => {
-      recentSearched = response;
-    });
-
-  // await db.Hashtags2.findOne(
-  //   { user_id: "hanjk123@gmail.com" },
-  //   { hashtag_assigned: 1 }
-  // ).then((response) => {
-  //   assignedTags = response.hashtag_assigned;
-  // });
-  await res.json({
-    totalURL: totalURL,
-    leftURL: leftURL,
-    rightURL: rightURL,
-    recentSearched: recentSearched,
+  leftURL = await db.Urls.find({ url_likedUrl: 1, user_id }).sort({
+    "url_search.url_searchedDate": -1,
   });
+
+  rightURL = await db.Urls.find(query).sort({ url_updatedDate: -1 }).limit(20);
+
+  recentSearched = await db.Urls.find({
+    "url_search.url_searchClicked": 1,
+    user_id,
+  })
+    .sort({ "url_search.url_searchedDate": -1 })
+    .limit(20);
+
+  await res.json({ totalURL, leftURL, rightURL, recentSearched });
 };
 
 const FolderItems = async (req, res) => {
-  await db.Folders.find()
+  const { user_id } = req.decodedData;
+  await db.Folders.find({ user_id })
     .sort({ _id: -1 })
     .then((response) => {
       console.log("folderItems found!");
@@ -100,29 +84,36 @@ const FolderItems = async (req, res) => {
 };
 
 const Search = async (req, res) => {
-  await db.Urls.find({
-    // url_title: { $regex: new RegExp(req.body.typedKeyword), $options: "i" },
-    $or: [
-      {
-        url_title: {
-          $regex: new RegExp(req.body.typedKeyword),
-          $options: "i",
+  // url_title: { $regex: new RegExp(req.body.typedKeyword), $options: "i" },
+
+  await db.Urls.find(
+    { user_id },
+    {
+      $or: [
+        {
+          url_title: {
+            $regex: new RegExp(req.body.typedKeyword),
+            $options: "i",
+          },
         },
-      },
-      {
-        url_hashTags: {
-          $regex: new RegExp(req.body.typedKeyword),
-          $options: "i",
+        {
+          url_hashTags: {
+            $regex: new RegExp(req.body.typedKeyword),
+            $options: "i",
+          },
         },
-      },
-    ],
-  }).then((response) => {
+      ],
+    }
+  ).then((response) => {
     res.json(response);
   });
 };
 
 const Get21Urls = async (req, res) => {
+  const { user_id } = req.decodedData;
+  console.log(user_id);
   await db.Urls.find({
+    user_id: user_id,
     $expr: { $lt: [{ $toDouble: "$url_id" }, Number(req.body.lastId)] },
   })
     .sort({ url_id: -1 })
@@ -398,17 +389,39 @@ const Crawling = (req, res) => {
   // await puppeteer.launch(options);
 };
 
+const generateAccessToken1 = async (user) => {
+  const secret = process.env.ACCESS_TOKEN_SECRET;
+  const option = {
+    expiresIn: "1h",
+  };
+  const token = await jwt.sign({ user_id: user.user_id }, secret, option);
+  return token;
+};
+
 // FIXME: 로그인 회원가입
 const SignUp = async (req, res) => {
   console.log(req.body);
-  const user = req.body;
+  const { user_id, password, email } = req.body;
 
-  const newUser = new db.Users({ ...user });
+  const newUser = new db.Users({
+    user_id,
+    password,
+    email,
+  });
+
+  const InitUrl = new db.Urls({
+    url: "http://localhost:3000",
+    url_title: "유알유알엘입니다 :)",
+    user_id,
+  });
+
+  InitUrl.save();
 
   newUser.save((err, userInfo) => {
     if (err) return res.json({ success: false, err });
     console.log("user inserted");
-    return res.status(200).json({ success: true });
+    const token = generateAccessToken1(newUser);
+    return res.status(200).json({ success: true, token: token });
   });
 };
 
@@ -418,7 +431,6 @@ const Login = async (req, res) => {
   const { user_id, password } = req.body;
   const query = { user_id: user_id };
   const options = (err, user) => {
-    console.log(user);
     if (err) console.log(err);
 
     if (user === null) {
@@ -430,16 +442,17 @@ const Login = async (req, res) => {
 
     user
       .comparePassword(password)
-      .then((isMatch) => {
+      .then(async (isMatch) => {
         if (!isMatch) {
           return res.json({
             loginSuccess: false,
             message: "비밀번호가 일치하지 않습니다",
           });
         }
+
         // 유저 있으면 토큰 만들어서 보내기
-        const token = user.generateToken();
-        res.status(200).json({ loginSuccess: true, token });
+        const token = await generateAccessToken1(user);
+        res.status(200).json({ loginSuccess: true, user, token });
 
         //   .then((user) => {
         //     res.status(200).json({ loginSuccess: true, userId: user._id });

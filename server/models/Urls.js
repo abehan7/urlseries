@@ -19,14 +19,7 @@ const UrlSchema = new mongoose.Schema({
     type: Array,
     required: false,
     default: [],
-    ref: "hashtags",
   },
-  hashtags_id: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "hashtags",
-    },
-  ],
   url_memo: {
     type: String,
     required: false,
@@ -66,8 +59,8 @@ const UrlSchema = new mongoose.Schema({
   },
   user_id: {
     type: String,
+    required: true,
     default: "hanjk123@gmail.com",
-    ref: "users",
   },
 });
 
@@ -83,6 +76,7 @@ UrlSchema.plugin(autoIncrement.plugin, {
   // increasementBy: 1,
 });
 const Urls = mongoose.model("urls", UrlSchema);
+
 Urls.nextCount((err, count1) => {
   // var urls = new Urls();
   console.log(count1);

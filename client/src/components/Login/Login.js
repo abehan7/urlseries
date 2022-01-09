@@ -21,23 +21,12 @@ export const ItemWrapper = styled.div`
   height: 100%;
 `;
 
-// const GLWrapper = styled(ItemWrapper)`
-//   padding: 0 1rem;
-// `;
-
 const Title = styled.h1`
   padding: 0;
   margin: 0;
 `;
 
 const GoogleLoginEl = styled.div`
-  :root {
-    --main-bg-color: brown;
-    --main-btn-size: 250px;
-    --main-border-radius: 8px;
-    --main-height: 43px;
-    --padding: 0 1rem;
-  }
   padding: 0 1rem;
   box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04), 0 1px 1px rgba(0, 0, 0, 0.25);
   border: none;
@@ -157,10 +146,15 @@ const Login = ({ setLoginUser }) => {
 
     await SignIn(user).then((response) => {
       console.log(response.data);
-      const { message, user, loginSuccess } = response.data;
-      !loginSuccess && alert(message);
-      loginSuccess && history.push("/");
-      setLoginUser(user);
+      const { message, user, loginSuccess, token } = response.data;
+
+      if (loginSuccess) {
+        setLoginUser(user);
+        localStorage.setItem("accessToken", JSON.stringify(token));
+        loginSuccess && history.push("/");
+      } else {
+        alert(message);
+      }
     });
   };
 
