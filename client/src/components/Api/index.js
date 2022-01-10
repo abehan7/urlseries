@@ -22,6 +22,8 @@ export const GetTotalUrls = () => API.get("/totalURL");
 
 export const TotalAfter = () => API.get("/TotalAfter");
 
+export const SearchDeleteAll = () => API.get("/search/delete/all");
+
 export const Get21Urls = (lastId) => API.post("/get21Urls", { lastId });
 
 export const getFolderItems = () => API.get("/folderItems");
@@ -40,8 +42,14 @@ export const DeleteFolderAPI = (idList) =>
 
 export const EditUrlAPI = (url) => API.put("/editUrl", { ...url });
 
+export const ClickedSeachedUrlAPI = (_id) =>
+  API.put(`/clickedSeachedURL/${_id}`);
+
 export const FolderContentsChangedAPI = (nowFolder2) =>
   API.put("/folderContentsChanged", { nowFolder2 });
+
+export const ChangedAssignedTagAPI = (oneLineTags) =>
+  API.put("/ChangedAssignedTag", { oneLineTags });
 
 export const DeleteUrlAPI = (_id) => API.delete(`/deleteUrl/${_id}`);
 

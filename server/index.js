@@ -24,6 +24,7 @@ const {
   Crawling,
   SignUp,
   Login,
+  SearchDeleteAll,
 } = require("./controller/main");
 const auth = require("./middleware/auth");
 
@@ -68,6 +69,9 @@ app.get("/totalURL", auth, TotalURL);
 // [4] ==================================== 폴더 아이템들 가지고오기 ====================================
 app.get("/folderItems", auth, FolderItems);
 
+// [5] ==================================== 폴더 아이템들 가지고오기 ====================================
+app.get("/search/delete/all", auth, SearchDeleteAll);
+
 // [1] ==================================== 검색어 검색하는 post ====================================
 
 app.post("/search", Search);
@@ -95,18 +99,18 @@ app.put("/editUrl", auth, EditUrl);
 
 // [2] ==================================== 태그 수정 put ====================================
 
-app.put("/ChangedAssignedTag", ChangedAssignedTag);
+app.put("/ChangedAssignedTag", auth, ChangedAssignedTag);
 
 // [3] ==================================== 검색어 클릭한거 삭제  (1에서 0으로 수정) put ====================================
 app.put("/searchedUrlBYE", SearchedUrlBYE);
 // [4] ==================================== 검색어 클릭한거 +1 AND 클릭한 시간 갱신  (1에서 0으로 수정) put ====================================
-app.put("/clickedSeachedURL", ClickedSeachedURL);
+app.put("/clickedSeachedURL/:_id", ClickedSeachedURL);
 
 // [5] ==================================== 박스들에서 url클릭하면 +1 AND 클릭한 시간 갱신  (1에서 0으로 수정) put ====================================
 app.put("/clickedURLInBox", ClickedURLInBox);
 
 // [6] ====================================   폴더 해쉬태그 contents 수정하는 put ====================================
-app.put("/folderContentsChanged", FolderContentsChanged);
+app.put("/folderContentsChanged", auth, FolderContentsChanged);
 
 // [7] ==================================== 폴더 좋아요 된거 수정 ====================================
 app.put("/FolderLiked", auth, FolderLiked);

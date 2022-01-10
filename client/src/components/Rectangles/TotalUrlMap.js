@@ -23,11 +23,6 @@ const TotalUrlMap = ({
   const [Height, setHeight] = useState(0);
   const dispatch = useDispatch();
 
-  // const modalHover = debounce((e) => {
-  //   e.target.lastChild.classList.add("hover-on");
-  //   Height !== e.target.offsetHeight && setHeight(e.target.offsetHeight);
-  // }, 500);
-
   return (
     <>
       {getUrls.map((value) => {

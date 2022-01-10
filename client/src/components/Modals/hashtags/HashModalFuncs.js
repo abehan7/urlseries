@@ -1,8 +1,4 @@
-import Axios from "axios";
-
-const api = Axios.create({
-  baseURL: `http://localhost:3001/`,
-});
+import { ChangedAssignedTagAPI } from "../../Api";
 
 export const modify = (setTotalTags, totalTags, assignedTags, setTagSearch) => {
   document.querySelector(".hashtagModal-container").style.display = "none";
@@ -22,9 +18,7 @@ export const modify = (setTotalTags, totalTags, assignedTags, setTagSearch) => {
     oneLineTags.push(val.name);
   });
 
-  api.put("/ChangedAssignedTag", {
-    oneLineTags: oneLineTags,
-  });
+  ChangedAssignedTagAPI(oneLineTags);
 
   setTagSearch("");
 };

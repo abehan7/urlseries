@@ -6,6 +6,11 @@ import Axios from "axios";
 import { debounce } from "lodash";
 import LoadingImg from "./LoadingImg";
 import styled from "styled-components";
+import {
+  ClickedSeachedUrlAPI,
+  DeleteAllSearchedRecordAPI,
+  SearchDeleteAll,
+} from "../Api";
 
 // FIXME: db에서 검색하주는 기능 // 이건 안쓸거같은데 일단 남겨두긴 하자
 const ApiGetSearchedList = async (e) => {
@@ -52,6 +57,15 @@ const NotSearched = styled.div`
   justify-content: center;
   font-size: 20px;
   padding-bottom: 20px;
+`;
+
+const DeleteBtn = styled.div`
+  /* border-radius: 7px; */
+  margin-right: 8px;
+  /* &:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    transition: 500ms;
+  } */
 `;
 
 // FIXME: react컴포넌트 내부
@@ -134,6 +148,18 @@ const SearchBox = ({
     }
   };
 
+  // FIXME: 클릭하면 최근 검색기록으로 올라가게 하기
+  const handleUrlClicked = async (url) => {
+    const { data } = await ClickedSeachedUrlAPI(url._id);
+    setRecentSearch((prev) => [data, ...prev]);
+  };
+
+  // FIXME: 전체 검색기록 삭제
+  const handleDelete = () => {
+    setRecentSearch([]);
+    SearchDeleteAll();
+  };
+
   return (
     <>
       <div className="search-box">
@@ -155,7 +181,12 @@ const SearchBox = ({
           >
             <div className="recent-serached-title">최근 검색 항목</div>
 
-            <div className="delete-recent-searched">전체삭제</div>
+            <DeleteBtn
+              className="delete-recent-searched"
+              onClick={handleDelete}
+            >
+              전체삭제
+            </DeleteBtn>
           </div>
 
           <div className="Searched-Stuffs-Container">
@@ -180,7 +211,13 @@ const SearchBox = ({
 
             {text2?.length > 0 &&
               resultList?.map((url) => {
-                return <SearchedStuff val={url} key={url._id} />;
+                return (
+                  <SearchedStuff
+                    val={url}
+                    key={url._id}
+                    handleUrlClicked={handleUrlClicked}
+                  />
+                );
               })}
           </div>
           {text2?.length > 0 && searchState.nothingFound && (

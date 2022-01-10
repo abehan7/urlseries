@@ -105,6 +105,19 @@ const Search = async (req, res) => {
   });
 };
 
+const SearchDeleteAll = async (req, res) => {
+  const query = {
+    $set: {
+      "url_search.url_searchClicked": 0,
+      "url_search.url_searchedDate": Date.now(),
+    },
+  };
+  try {
+    await db.Urls.updateMany({}, query);
+    console.log("deleted all search records");
+  } catch (err) {}
+};
+
 const Get21Urls = async (req, res) => {
   const { user_id } = req.decodedData;
   console.log(user_id);
@@ -214,18 +227,26 @@ const SearchedUrlBYE = async (req, res) => {
 };
 
 const ClickedSeachedURL = async (req, res) => {
-  const { url } = req.body;
+  const { _id } = req.params;
+  const query = { _id };
   try {
-    await db.Urls.updateOne(
-      { _id: url._id },
-      {
-        $set: {
-          url_clickedNumber: url.url_clickedNumber + 1,
-          "url_search.url_searchClicked": 1,
-          "url_search.url_searchedDate": getCurrentDate(),
-        },
-      }
-    );
+    const clickedUrl = await db.Urls.findOne(query);
+    clickedUrl.url_search.url_searchClicked = 1;
+    clickedUrl.url_search.url_searchedDate = Date.now();
+    await clickedUrl.save();
+    console.log(clickedUrl);
+    res.json(clickedUrl);
+
+    // await db.Urls.updateOne(
+    //   { _id: url._id },
+    //   {
+    //     $set: {
+    //       url_clickedNumber: url.url_clickedNumber + 1,
+    //       "url_search.url_searchClicked": 1,
+    //       "url_search.url_searchedDate": getCurrentDate(),
+    //     },
+    //   }
+    // );
   } catch (err) {
     console.log(err);
   }
@@ -254,9 +275,10 @@ const FolderContentsChanged = (req, res) => {
   const {
     nowFolder2: { _id, folder_contents },
   } = req.body;
+  const { user_id } = req.decodedData;
   console.log(_id, folder_contents);
 
-  const query = { _id: _id };
+  const query = { _id: _id, user_id };
 
   const update = {
     $set: {
@@ -266,10 +288,15 @@ const FolderContentsChanged = (req, res) => {
   // 이거 옵션 선택하면 수정된거 보내주는 기능
   const options = { returnOriginal: false };
 
-  db.Folders.findOneAndUpdate(query, update, options).then((response) => {
-    console.log(response);
-    //   res.json();
-  });
+  try {
+    db.Folders.findOneAndUpdate(query, update, options).exec();
+    console.log("contents changed successfully!");
+    res.send("contents changed successfully!");
+  } catch (err) {
+    console.log("contents NOT changed");
+    console.log(err);
+    res.send(err);
+  }
 };
 
 const FolderLiked = (req, res) => {
@@ -502,4 +529,5 @@ module.exports = {
   DeleteFolder,
   Crawling,
   Login,
+  SearchDeleteAll,
 };

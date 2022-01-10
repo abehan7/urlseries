@@ -51,7 +51,7 @@ const ImgContainer = styled.div`
   margin-left: 10px;
   pointer-events: none;
 `;
-const SearchedStuff = ({ val }) => {
+const SearchedStuff = ({ val, handleUrlClicked }) => {
   return (
     <SearchedStuffEl
       className="searched-Stuff"
@@ -59,6 +59,7 @@ const SearchedStuff = ({ val }) => {
       onClick={(e) => {
         console.log(e.target);
         window.open(val.url);
+        handleUrlClicked(val);
       }}
     >
       <ImgContainer>
