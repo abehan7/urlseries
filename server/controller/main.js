@@ -20,24 +20,20 @@ const getCurrentDate = () => {
 };
 
 const TotalAfter = async (req, res) => {
+  const { user_id } = req.decodedData;
   let totalAfter = [];
-  let assignedTags = [];
-  await db.Urls.find({})
-    .sort({ _id: -1 })
-    .then((response) => {
-      totalAfter = response;
-    });
 
-  await db.Hashtags2.findOne(
-    { user_id: "hanjk123@gmail.com" },
-    { hashtag_assigned: 1 }
-  ).then((response) => {
-    assignedTags = response.hashtag_assigned;
+  const query = { user_id };
+
+  totalAfter = await db.Urls.find(query).sort({ _id: -1 });
+
+  const { hashtag_assigned } = await db.Hashtags2.findOne(query, {
+    hashtag_assigned: 1,
   });
 
   res.json({
     totalAfter: totalAfter,
-    initAssigned: assignedTags,
+    initAssigned: hashtag_assigned,
   });
 };
 
@@ -125,12 +121,14 @@ const Get21Urls = async (req, res) => {
 };
 
 const AddUrl = async (req, res) => {
+  const { user_id } = req.decodedData;
   const { url, title, hashTags, memo } = req.body;
   const NewUrl = new db.Urls({
     url: url,
     url_title: title,
     url_hashTags: hashTags,
     url_memo: memo,
+    user_id,
   });
 
   try {

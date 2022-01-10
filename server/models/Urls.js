@@ -60,7 +60,6 @@ const UrlSchema = new mongoose.Schema({
   user_id: {
     type: String,
     required: true,
-    default: "hanjk123@gmail.com",
   },
 });
 

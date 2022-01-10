@@ -5,10 +5,7 @@ import Axios from "axios";
 import { disable } from "../../functions/stopScroll";
 import { connect } from "react-redux";
 import TextArea from "../styled/TextArea.styled";
-
-const api = Axios.create({
-  baseURL: `http://localhost:3001/`,
-});
+import { AddUrl } from "../Api";
 
 const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
   const [url, setUrl] = useState("");
@@ -31,23 +28,15 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
 
     console.log(getUrls);
 
-    await api
-      .post("/addUrl", {
-        url: url,
-        title: title,
-        hashTags: filterdHashes,
-        memo: memo,
-      })
-      .then((response) => {
-        console.log(response.data);
-        document.querySelector(".addUrl-container").style.display = "none";
-        setUrl("");
-        setTitle("");
-        setHashTag("");
-        setMemo("");
-        setGetUrls([response.data, ...getUrls]);
-        // console.log(getUrls);
-      });
+    await AddUrl(url, title, filterdHashes, memo).then((response) => {
+      console.log(response.data);
+      document.querySelector(".addUrl-container").style.display = "none";
+      setUrl("");
+      setTitle("");
+      setHashTag("");
+      setMemo("");
+      setGetUrls([response.data, ...getUrls]);
+    });
   };
 
   const height = 37;
