@@ -141,17 +141,20 @@ const AddUrl = async (req, res) => {
 };
 
 const AddFolder = async (req, res) => {
+  const { user_id } = req.decodedData;
   const { folder } = req.body;
-  console.log(folder);
   const newFolder = new db.Folders({
     ...folder,
+    user_id,
   });
-  // console.log(newFolder);
+
   await newFolder.save();
   res.json(newFolder);
 };
 
 const EditUrl = async (req, res) => {
+  const { user_id } = req.decodedData;
+  console.log(user_id);
   console.log(req.body);
 
   const { _id, newUrl, newTitle, newHashTags, newMemo, newLikedUrl } = req.body;
@@ -270,11 +273,12 @@ const FolderContentsChanged = (req, res) => {
 };
 
 const FolderLiked = (req, res) => {
+  const { user_id } = req.decodedData;
   const { ModifiedList } = req.body;
 
   try {
     ModifiedList.forEach(async (val) => {
-      const query = { _id: val._id };
+      const query = { _id: val._id, user_id };
       const option = {
         $set: {
           folder_liked: val.folder_liked,
@@ -292,17 +296,25 @@ const FolderLiked = (req, res) => {
 // FIXME: delete
 
 const DeleteUrl = async (req, res) => {
+  const { user_id } = req.decodedData;
   const id = req.params.id;
   console.log(id);
-  await db.Urls.findOneAndRemove({ _id: id });
-  res.send("item deleted");
-  console.log("item deleted");
+  const query = { _id: id, user_id };
+  try {
+    await db.Urls.findOneAndRemove(query).exec();
+    res.send("item deleted");
+    console.log("item deleted");
+  } catch (err) {
+    console.log(err);
+    res.send("item NOT deleted");
+  }
 };
 
 const DeleteFolder = async (req, res) => {
+  const { user_id } = req.decodedData;
   const { idList } = req.body;
-  console.log(idList);
-  const query = { _id: idList };
+
+  const query = { _id: idList, user_id };
   try {
     await db.Folders.deleteMany(query).exec();
     console.log(`${idList} Folder Deleted!`);
@@ -390,7 +402,7 @@ const Crawling = (req, res) => {
 const generateAccessToken1 = async (user) => {
   const secret = process.env.ACCESS_TOKEN_SECRET;
   const option = {
-    expiresIn: "1h",
+    expiresIn: "3d",
   };
   const token = await jwt.sign({ user_id: user.user_id }, secret, option);
   return token;

@@ -10,8 +10,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../../../store/reducers/editModalP3";
 import { FiPlusSquare } from "react-icons/fi";
 import { debounce } from "lodash";
-import Axios from "axios";
 import Colors from "../../../Colors";
+import { AddFolder, DeleteFolderAPI, LikeConfirmPutAPI } from "../../Api";
 
 const debounceSomethingFunc = debounce(() => {
   document.querySelector(".tempModal div").innerText =
@@ -47,7 +47,8 @@ const Page2 = ({ setNowPage }) => {
       return !DList.some((DItem) => DItem === val._id);
     });
     dispatch(Page3Actions.EditFolderItems(NewFolderItem));
-    await Axios.post("http://localhost:3001/deleteFolder", { idList: DList });
+
+    await DeleteFolderAPI(DList);
   };
 
   // 좋아요 추가하는 리덕스
@@ -70,11 +71,6 @@ const Page2 = ({ setNowPage }) => {
 
   const ClickAddIcon = useCallback(
     (e) => {
-      // console.log(nowFolder2);
-      // if (Object.keys(nowFolder).length > 0) {
-      //   return;
-      // }
-
       // >>>>>>>>
       // 현재 맨 처음[+] 닫는거
       e.target.classList.toggle("closed");
@@ -83,9 +79,6 @@ const Page2 = ({ setNowPage }) => {
       // 추가버튼 열기 input있는거
       document.querySelector(".addItem").classList.toggle("open");
       // <<<<<<<<<
-
-      // console.log(nowFolder2);
-      // nowFolder2 !== null && console.log(Object.keys(nowFolder2).length);
     },
     [nowFolder]
   );
@@ -131,14 +124,10 @@ const Page2 = ({ setNowPage }) => {
 
       if (folder_name.length >= 1) {
         // 1자라도 넣은 경우
-        await Axios.post("http://localhost:3001/addFolder", {
-          folder: { folder_name },
-        }).then((response) => {
-          // 몽구스 스키마에 적용해서 그대로 받아오기
-          const { data } = response;
-          addNewFolderItem([data, ...folderItems]);
-          console.log(folderItems);
-        });
+
+        const { data } = await AddFolder(folder_name);
+        addNewFolderItem([data, ...folderItems]);
+
         document.querySelector(".folder-name input").value = "";
       } else {
         // 1자도 안넣은 경우
@@ -164,21 +153,13 @@ const Page2 = ({ setNowPage }) => {
     });
   };
 
-  const ApiLikeConfirmPut = async (NewFolderItems) => {
-    await Axios.put("http://localhost:3001/FolderLiked", {
-      ModifiedList: NewFolderItems,
-    });
-  };
-
   // 2P에디터모드일때 확인버튼 기능
   const ClickConfirm = () => {
     if (LikeM) {
-      console.log("👏👏👏👏👏👏👏");
-
-      // 이제 이거를 리덕스에 넣는거야
+      //  리덕스에 넣기
       addNewFolderItem(LikeConfirmList());
       // db에 넣기
-      ApiLikeConfirmPut(LikeConfirmList());
+      LikeConfirmPutAPI(LikeConfirmList());
 
       setLikeM(false);
       setLList([]);
@@ -188,8 +169,6 @@ const Page2 = ({ setNowPage }) => {
       setDeleteM(false);
       setDList([]);
     }
-
-    // console.log("확인");
   };
   // FIXME: 추가 수정 END
 

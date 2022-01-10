@@ -15,7 +15,7 @@ const TextArea = ({ memo, setMemo }) => {
         setMemo(e.target.value);
         // 25글자 넘어가면 바로 바꾸기
       }}
-    ></TextAreaEl>
+    />
   );
 };
 

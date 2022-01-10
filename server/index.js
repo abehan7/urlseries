@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const db = require("./models");
-const jwt = require("jsonwebtoken");
 
 const {
   TotalAfter,
@@ -81,7 +80,7 @@ app.post("/get21Urls", auth, Get21Urls);
 
 app.post("/addUrl", auth, AddUrl);
 // [4] ==================================== 폴더 추가 ====================================
-app.post("/addFolder", AddFolder);
+app.post("/addFolder", auth, AddFolder);
 
 // [5]==================================== 로그인 post ====================================
 // #FIXME: 회원가입
@@ -90,70 +89,9 @@ app.post("/signUp", SignUp);
 
 app.post("/login", Login);
 
-// TODO:
-//  여기 있는것들을 조합해서 만들면 될듯
-//  그리고 db에 RefreshToken USERS에 넣기
-
-const generateAccessToken = (user) => {
-  return jwt.sign(user, process.env.ACCESS_TOKEN_SECERT, { expiresIn: "1h" });
-};
-
-const generateRefreshToken = (user) => {
-  return jwt.sign(user.process.env.REFRESH_TOKEN_SECRET, { expiresIn: "3d" });
-};
-
-const authenicateToken = (req, res, next) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (token === null) return res.sendStatus(401);
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    req.user = user;
-    next();
-  });
-};
-
-app.post("/tokentest", (req, res) => {
-  const { BearerToken } = req.body;
-  const token = BearerToken.split(" ")[1];
-  const result = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-  res.json(result);
-});
-
-app.post("/login2", (req, res) => {
-  const { user } = req.body;
-  const accessToken = generateAccessToken(user);
-  const refreshToken = generateRefreshToken(user);
-  // 여기 refrechToken은 db에 저장하기
-  res.json({ accessToken: accessToken, refreshToken: refreshToken });
-});
-
-let refreshTokens = [];
-// 이거는 db에 저장해야돼
-
-app.post("/token", (req, res) => {
-  const { refreshToken } = req.body;
-  if (refreshToken === null) return res.sendStatus(401);
-  if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
-  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403);
-    const accessToken = generateAccessToken({ name: user.name });
-    res.json({ accessToken: accessToken });
-  });
-});
-
-app.delete("/logout", (req, res) => {
-  refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
-  res.sendStatus(204);
-});
-
-app.get("/posts", authenicateToken, (req, res) => {
-  res.json(posts.filter((post) => post.username === req.user.name));
-});
-
 // [1] ==================================== url수정 용도 put ====================================
 
-app.put("/editUrl", EditUrl);
+app.put("/editUrl", auth, EditUrl);
 
 // [2] ==================================== 태그 수정 put ====================================
 
@@ -171,19 +109,80 @@ app.put("/clickedURLInBox", ClickedURLInBox);
 app.put("/folderContentsChanged", FolderContentsChanged);
 
 // [7] ==================================== 폴더 좋아요 된거 수정 ====================================
-app.put("/FolderLiked", FolderLiked);
+app.put("/FolderLiked", auth, FolderLiked);
 
 // [1] ==================================== url삭제 delete ====================================
 
-app.delete("/deleteUrl/:id", DeleteUrl);
+app.delete("/deleteUrl/:id", auth, DeleteUrl);
 
 // [2] ==================================== 폴더삭제 ====================================
-app.post("/deleteFolder", DeleteFolder);
+app.post("/deleteFolder", auth, DeleteFolder);
 
 // [1] ====================================== 퍼펫티어 ======================================
 
 app.post("/crawling", Crawling);
 
-app.listen(3001, () => {
-  console.log("SERVER RUNNING ON PORT 3001");
+app.listen(PORT, () => {
+  console.log(`SERVER RUNNING ON PORT ${PORT}`);
 });
+
+// TODO:
+//  여기 있는것들을 조합해서 만들면 될듯
+//  그리고 db에 RefreshToken USERS에 넣기
+
+// const generateAccessToken = (user) => {
+//   return jwt.sign(user, process.env.ACCESS_TOKEN_SECERT, { expiresIn: "1h" });
+// };
+
+// const generateRefreshToken = (user) => {
+//   return jwt.sign(user.process.env.REFRESH_TOKEN_SECRET, { expiresIn: "3d" });
+// };
+
+// const authenicateToken = (req, res, next) => {
+//   const authHeader = req.headers["authorization"];
+//   const token = authHeader && authHeader.split(" ")[1];
+//   if (token === null) return res.sendStatus(401);
+//   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+//     if (err) return res.sendStatus(403);
+//     req.user = user;
+//     next();
+//   });
+// };
+
+// app.post("/tokentest", (req, res) => {
+//   const { BearerToken } = req.body;
+//   const token = BearerToken.split(" ")[1];
+//   const result = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+//   res.json(result);
+// });
+
+// app.post("/login2", (req, res) => {
+//   const { user } = req.body;
+//   const accessToken = generateAccessToken(user);
+//   const refreshToken = generateRefreshToken(user);
+//   // 여기 refrechToken은 db에 저장하기
+//   res.json({ accessToken: accessToken, refreshToken: refreshToken });
+// });
+
+// let refreshTokens = [];
+// // 이거는 db에 저장해야돼
+
+// app.post("/token", (req, res) => {
+//   const { refreshToken } = req.body;
+//   if (refreshToken === null) return res.sendStatus(401);
+//   if (!refreshTokens.includes(refreshToken)) return res.sendStatus(403);
+//   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+//     if (err) return res.sendStatus(403);
+//     const accessToken = generateAccessToken({ name: user.name });
+//     res.json({ accessToken: accessToken });
+//   });
+// });
+
+// app.delete("/logout", (req, res) => {
+//   refreshTokens = refreshTokens.filter((token) => token !== req.body.token);
+//   res.sendStatus(204);
+// });
+
+// app.get("/posts", authenicateToken, (req, res) => {
+//   res.json(posts.filter((post) => post.username === req.user.name));
+// });

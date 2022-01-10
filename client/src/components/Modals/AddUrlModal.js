@@ -1,44 +1,115 @@
 import React, { useState } from "react";
 import "./AddUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
-import Axios from "axios";
 import { disable } from "../../functions/stopScroll";
 import { connect } from "react-redux";
-import TextArea from "../styled/TextArea.styled";
-import { AddUrl } from "../Api";
+import { AddUrl, CrawlingAPI } from "../Api";
+import styled from "styled-components";
+import { debounce } from "lodash";
 
-const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
-  const [url, setUrl] = useState("");
-  const [title, setTitle] = useState("");
-  const [hashTag, setHashTag] = useState("");
-  const [memo, setMemo] = useState("");
-  // var totalHashes = [];
-  // var filterdHashes = [];
-  const addBtn = async () => {
+// FIXME: 여기서 문제점1
+//        1. 디바운스 되면 모달 닫아도 글자가 남아있어
+//           그거를 useState넣어서 수정해야 할 듯
+//        2. 그리고 로그인창처럼 검색기록 나오는데 그거 없애야해
+//           없앨려면 styled components사용해야 할 듯
+
+const AddTextArea = styled.textarea`
+  transition: 1s;
+`;
+
+const debounceCrawling = debounce(async ({ setUrlInfo, urlInfo, grabUrl }) => {
+  setUrlInfo({
+    ...urlInfo,
+    url: grabUrl,
+    title: "잠시만 기다려주세요...",
+    hashTag: "잠시만 기다려주세요...",
+  });
+
+  const {
+    data: { title, hashtags },
+  } = await CrawlingAPI(grabUrl);
+
+  setUrlInfo({
+    ...urlInfo,
+    url: grabUrl,
+    title: title,
+    hashTag: hashtags.join(""),
+  });
+}, 500);
+
+// 리액트 컴포넌트 시작
+const AddUrlModal = ({ setGetUrls, getUrls }) => {
+  const InitialStates = {
+    url: "",
+    title: "",
+    hashTag: "",
+    memo: "",
+  };
+
+  const [urlInfo, setUrlInfo] = useState(InitialStates);
+
+  // 해쉬태그 전처리
+  const processdHashTag = () => {
     var totalHashes = [];
     var filterdHashes = [];
-    totalHashes = hashTag.split("#");
-    console.log(totalHashes);
+    totalHashes = urlInfo.hashTag.split("#");
     totalHashes.forEach((tag) => {
       if (tag.length !== 0) {
         filterdHashes.push("#" + tag.replace(/\s/g, ""));
         console.log("#" + tag);
       }
     });
+    return filterdHashes;
+  };
 
-    console.log(getUrls);
+  // add버튼
+  const handleAddBtn = async () => {
+    const filterdHashes = processdHashTag();
 
-    await AddUrl(url, title, filterdHashes, memo).then((response) => {
-      console.log(response.data);
-      document.querySelector(".addUrl-container").style.display = "none";
-      setUrl("");
-      setTitle("");
-      setHashTag("");
-      setMemo("");
-      setGetUrls([response.data, ...getUrls]);
+    document.querySelector(".addUrl-container").style.display = "none";
+    disable();
+
+    const { data } = await AddUrl(
+      urlInfo.url,
+      urlInfo.title,
+      filterdHashes,
+      urlInfo.memo
+    );
+
+    setGetUrls([data, ...getUrls]);
+    setUrlInfo(InitialStates);
+  };
+
+  // input onchange
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUrlInfo({
+      ...urlInfo,
+      [name]: value,
     });
   };
 
+  // url부분 크롤링
+  const handleCrawling = async (e) => {
+    debounceCrawling.cancel();
+    handleChange(e);
+    const grabUrl = e.target.value;
+    if (grabUrl.length > 5) {
+      debounceCrawling({ setUrlInfo, urlInfo, grabUrl });
+    } else {
+      debounceCrawling.cancel();
+      setUrlInfo({ ...urlInfo, url: grabUrl, title: "", hashTag: "" });
+    }
+  };
+
+  // 모달 닫기
+  const handleClose = () => {
+    document.querySelector(".addUrl-container").style.display = "none";
+    debounceCrawling.cancel();
+    setUrlInfo(InitialStates);
+  };
+
+  // 스타일
   const height = 37;
   const defaultHeight = {
     height: `${height}px`,
@@ -51,25 +122,13 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
         <div
           className="modal-window"
           style={
-            memo.length < 25
+            urlInfo.memo.length < 25
               ? { transition: "1s" }
               : { height: "400px", transition: "1s" }
           }
         >
           <div className="header-Container">
-            <div
-              className="close-area"
-              onClick={() => {
-                console.log(todos);
-                document.querySelector(".addUrl-container").style.display =
-                  "none";
-                setUrl("");
-                setTitle("");
-                setHashTag("");
-                setMemo("");
-                disable();
-              }}
-            >
+            <div className="close-area" onClick={handleClose}>
               <IoArrowBack />
             </div>
             <div className="title">
@@ -80,61 +139,46 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
           <div className="content">
             <div className="put-url">
               <input
+                name="url"
                 style={defaultHeight}
-                value={url}
+                value={urlInfo.url}
                 placeholder="URL을 추가해주세요"
-                onChange={(e) => {
-                  setUrl(e.target.value);
-
-                  if (e.target.value.length > 5) {
-                    setTitle("잠시만 기다려주세요...");
-                    setHashTag("잠시만 기다려주세요...");
-                    Axios.post("http://localhost:3001/crawling", {
-                      url: e.target.value,
-                    }).then((response) => {
-                      const { data } = response;
-                      console.log(data);
-                      setTitle(data.title);
-                      setHashTag(data.hashtags.join(""));
-                    });
-                  } else {
-                    setTitle("");
-                    setHashTag("");
-                  }
-                }}
+                onChange={handleCrawling}
               />
             </div>
             <div className="put-title">
               <input
-                value={title}
+                name="title"
+                value={urlInfo.title}
                 style={defaultHeight}
                 placeholder="제목을 추가해주세요"
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
+                onChange={handleChange}
               />
             </div>
             <div className="put-hashTag">
               <input
-                value={hashTag}
+                name="hashTag"
+                value={urlInfo.hashTag}
                 style={defaultHeight}
                 placeholder="해쉬태그를 추가해주세요 #집밥 #인스타그램 #유튜브"
-                onChange={(e) => {
-                  setHashTag(e.target.value);
-                }}
+                onChange={handleChange}
               />
             </div>
             <div className="put-memo">
-              <TextArea memo={memo} setMemo={setMemo} />
+              <AddTextArea
+                value={urlInfo.memo}
+                name="memo"
+                style={
+                  urlInfo.memo.length < 25
+                    ? { height: "37px" }
+                    : { height: "160px" }
+                }
+                placeholder="메모할 내용을 입력해주세요"
+                onChange={handleChange}
+              />
             </div>
             <div className="addUrl-btn">
-              <button
-                style={{ height: "43px" }}
-                onClick={async () => {
-                  await addBtn();
-                  disable();
-                }}
-              >
+              <button style={{ height: "43px" }} onClick={handleAddBtn}>
                 추가하기
               </button>
             </div>
@@ -145,9 +189,4 @@ const AddUrlModal = ({ setGetUrls, getUrls, todos }) => {
   );
 };
 
-function mapStateToProps(state) {
-  return {
-    todos: state,
-  };
-}
-export default connect(mapStateToProps)(AddUrlModal);
+export default AddUrlModal;

@@ -7,6 +7,7 @@ import { Page3Actions } from "../../../store/reducers/editModalP3";
 import { closeFunc, modify } from "./HashModalFuncs";
 import HashTagItems from "./HashTagItems";
 import Axios from "axios";
+import { FolderContentsChangedAPI } from "../../Api";
 
 const Page1 = ({
   setAssignedTags,
@@ -225,10 +226,7 @@ const Page1 = ({
               setTagSearch("");
               disable();
               // 폴더 내부 태그들 수정하기 end
-
-              await Axios.put("http://localhost:3001/folderContentsChanged", {
-                nowFolder2: nowFolder2,
-              });
+              await FolderContentsChangedAPI(nowFolder2);
 
               // 이제 테스트 완료 됬으니 이거를 folderItems.folder_contents에 싹 넣으면 될 듯 map 한거를
             }

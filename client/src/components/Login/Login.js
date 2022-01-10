@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import "./Login.css";
-import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import styled from "styled-components";
-import { SignIn } from "../Api";
+import { LoginApi } from "../Api";
 
 const LoginEl = styled.div`
   width: 100%;
@@ -144,7 +143,7 @@ const Login = ({ setLoginUser }) => {
   const OnclickLogin = async () => {
     console.log(user);
 
-    await SignIn(user).then((response) => {
+    await LoginApi(user).then((response) => {
       console.log(response.data);
       const { message, user, loginSuccess, token } = response.data;
 

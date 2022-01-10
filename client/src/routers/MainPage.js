@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./MainPage.css";
-import Axios from "axios";
+
 // Functions
 import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../functions/keepModalsShow";
@@ -10,8 +10,6 @@ import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
 import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
 import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
-// searchBar
-import Loader from "../components/searchBar/Loader";
 // Modals
 import AddUrlModal from "../components/Modals/AddUrlModal";
 import EditUrlModal from "../components/Modals/EditUrlModal";
@@ -23,10 +21,14 @@ import LeftIcons from "../components/TopIcons/LeftIcons";
 import RightIcons from "../components/TopIcons/RightIcons";
 // AsideTags
 import AsideTag from "../components/AsideTags/AsideTag";
+import GridHeader from "../components/GridHeader";
+// SearchArea
+import SearchBox from "../components/searchBar/SearchBox";
+import Loader from "../components/searchBar/Loader";
+// REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../store/reducers/editModalP3";
-import GridHeader from "../components/GridHeader";
-import SearchBox from "../components/searchBar/SearchBox";
+// API
 import { GetTotalUrls, Get21Urls, TotalAfter } from "../components/Api";
 
 const MainPage = () => {
@@ -36,7 +38,6 @@ const MainPage = () => {
   const [clickedSearchInput, setClickedSearchInput] = useState(false);
   const [editMode, setEditMode] = useState(true);
   const [shareMode, setShareMode] = useState(true);
-  const [urlsGotten, setUrlsGotten] = useState(false);
   const [getUrls, setGetUrls] = useState([]);
   const [mostClickedUrls, setMostClickedUrls] = useState([]);
   const [likedUrls, setLikedUrls] = useState([]);
@@ -70,7 +71,6 @@ const MainPage = () => {
       await setMostClickedUrls(response.data.rightURL);
       await setLikedUrls(response.data.leftURL);
       await setRecentSearch(response.data.recentSearched);
-      await setUrlsGotten(true);
       console.log(response.data);
     });
   }, []);
