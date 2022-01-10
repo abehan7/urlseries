@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./AddUrlModal.css";
-import { disable } from "../../functions/stopScroll";
+import { PopupDisable } from "../../functions/stopScroll";
 import "./TopMore.css";
 import { ModalInfos } from "../../routers/MainPage";
 
@@ -37,7 +37,7 @@ const TopMore = ({
                 document.querySelector(
                   ".top-moreUrls-container"
                 ).style.display = "none";
-                disable();
+                PopupDisable();
                 document
                   .querySelector(".top-modal-window")
                   .classList.toggle("top-modal-window-clicked");

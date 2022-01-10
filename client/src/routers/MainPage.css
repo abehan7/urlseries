@@ -40,7 +40,7 @@ h3 {
   grid-template-columns: repeat(2, 400px);
   grid-template-rows: 40px 50px auto auto;
   grid-gap: 20px;
-  padding-right: 30px;
+  padding-right: 40px;
 }
 
 .search-box {
@@ -329,11 +329,14 @@ h3 {
 }
 
 .Rectangle {
+  min-height: 246px;
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.25);
   background-color: #fafafa;
 }
 
 .Big_Rect {
+  min-height: 300px;
+
   box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.25);
   background-color: #fafafa;
   grid-column: span 2;
@@ -341,7 +344,6 @@ h3 {
 
 .Big_Rect,
 .Rectangle {
-  font-family: "BMHANNAPro";
   padding: 1rem;
 }
 
@@ -476,7 +478,6 @@ h3 {
 }
 
 .aside {
-  font-family: "BMHANNAPro";
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -488,6 +489,7 @@ h3 {
   width: 350px;
   height: 100%;
   top: 200px;
+  /* padding-left: 30px; */
   /* gap: 50px; */
 }
 

@@ -3,8 +3,7 @@ import { AiOutlineEdit, AiTwotoneEdit } from "react-icons/ai";
 import { BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
 import { MdOutlineTag } from "react-icons/md";
-import styled from "styled-components";
-import { enable } from "../../functions/stopScroll";
+import { PopupEnable } from "../../functions/stopScroll";
 import { RefreshBtn } from "../AsideTags/BoxTagControler";
 import EditModeRectsFunc from "../editModeFucs/EditModeRectsFunc";
 
@@ -23,7 +22,7 @@ const RightIcons = ({
       return;
     }
     document.querySelector(".addUrl-container").style.display = "block";
-    enable();
+    PopupEnable();
   };
   const EditIconOnClick = () => {
     deleteMode && setDeleteMode(false);
@@ -43,12 +42,12 @@ const RightIcons = ({
     // #@#@#@#@#@#@#@#@#@#@여기가 전체 태그 풀어주는 곳 END #@#@#@#@#@#@#@#@#@#@
 
     document.querySelector(".hashtagModal-container").style.display = "block";
-    enable();
+    PopupEnable();
   };
   const ShareIconOnClick = () => {
     console.log("공유기능");
     // document.querySelector(".shareUrl-container").style.display = "block";
-    // enable();
+    // PopupEnable();
   };
 
   // ========================================== 스타일 START ==========================================

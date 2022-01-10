@@ -64,16 +64,18 @@ const LeftIcons = ({
   // 삭제할 리스트들 뽑기
   const FilterdId = () => {
     let DeleteList = [];
-    if (BoxTags_First) {
-      console.log("🎉🎉🎉🎉");
-      getUrls.forEach((val) => {
+
+    const methodDelete = (urlList) => {
+      urlList.forEach((val) => {
         val.clicked === true && DeleteList.push(val._id);
       });
-    } else {
-      realTotalUrls.forEach((val) => {
-        val.clicked === true && DeleteList.push(val._id);
-      });
-    }
+    };
+
+    // 태그 클릭 안된경우
+    BoxTags_First && methodDelete(getUrls);
+    // 태그 클릭 된경우
+    !BoxTags_First && methodDelete(realTotalUrls);
+
     return DeleteList;
   };
 
@@ -94,24 +96,6 @@ const LeftIcons = ({
 
     // setRealTotalUrls(
     //   realTotalUrls.filter((val) => {
-    //     return !deleteList.includes(val._id);
-    //   })
-    // );
-
-    // setGetUrls(
-    //   getUrls.filter((val) => {
-    //     return !deleteList.includes(val._id);
-    //   })
-    // );
-
-    // setLikedUrls(
-    //   likedUrls.filter((val) => {
-    //     return !deleteList.includes(val._id);
-    //   })
-    // );
-
-    // setMostClickedUrls(
-    //   mostClickedUrls.filter((val) => {
     //     return !deleteList.includes(val._id);
     //   })
     // );

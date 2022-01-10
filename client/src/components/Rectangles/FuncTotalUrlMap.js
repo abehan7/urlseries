@@ -1,6 +1,7 @@
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import Axios from "axios";
 import { UrlDetailActions } from "../../store/reducers/ClickedUrlDetails";
+import { PopupEnable } from "../../functions/stopScroll";
 
 const whenIclickUrl = ({
   oneUrl: value,
@@ -12,6 +13,7 @@ const whenIclickUrl = ({
   where: hashOrTotal,
   dispatch,
 }) => {
+  PopupEnable();
   // FIXME: 리덕스
 
   const setUrlDetail = (detail) => {

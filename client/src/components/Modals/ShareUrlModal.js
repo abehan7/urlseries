@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./hashtags/HashTagModal.css";
 import "./ShareUrlModal.css";
-import { disable } from "../../functions/stopScroll";
+import { PopupDisable } from "../../functions/stopScroll";
 
 const ShareUrlModal = ({
   totalTags = [],
@@ -74,7 +74,7 @@ const ShareUrlModal = ({
               className="close-area"
               onClick={async () => {
                 await closeFunc();
-                disable();
+                PopupDisable();
               }}
             >
               <IoArrowBack />
@@ -140,7 +140,7 @@ const ShareUrlModal = ({
             <div className="editHash-btn">
               <button
                 onClick={async () => {
-                  disable();
+                  PopupDisable();
                   document.querySelector(".shareUrl-container").style.display =
                     "none";
                 }}

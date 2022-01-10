@@ -1,7 +1,7 @@
 import React from "react";
 import { MdExpandMore } from "react-icons/md";
 import styled from "styled-components";
-import { enable } from "../../functions/stopScroll";
+import { PopupEnable } from "../../functions/stopScroll";
 
 const MoreBtnEl = styled.div``;
 const MoreBtn = ({ setTopMoreWhat, where }) => {
@@ -12,7 +12,7 @@ const MoreBtn = ({ setTopMoreWhat, where }) => {
         where === "Right" ? setTopMoreWhat(false) : setTopMoreWhat(true);
         document.querySelector(".top-moreUrls-container").style.display =
           "flex";
-        enable();
+        PopupEnable();
         document
           .querySelector(".top-modal-window")
           .classList.toggle("top-modal-window-clicked");

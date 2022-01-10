@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./AddUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
-import { disable } from "../../functions/stopScroll";
-import { connect } from "react-redux";
-import { AddUrl, CrawlingAPI } from "../Api";
+import { PopupDisable } from "../../functions/stopScroll";
+import { AddUrl, CrawlingAPI, StopAPI } from "../Api";
 import styled from "styled-components";
 import { debounce } from "lodash";
+import { MainStates } from "../../routers/MainPage";
 
 // FIXME: 여기서 문제점1
 //        1. 디바운스 되면 모달 닫아도 글자가 남아있어
@@ -35,7 +35,7 @@ const debounceCrawling = debounce(async ({ setUrlInfo, urlInfo, grabUrl }) => {
     title: title,
     hashTag: hashtags.join(""),
   });
-}, 500);
+}, 1000);
 
 // 리액트 컴포넌트 시작
 const AddUrlModal = ({ setGetUrls, getUrls }) => {
@@ -46,9 +46,12 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
     memo: "",
   };
 
+  // FIXME: useContext
+  const { realTotalUrls, setRealTotalUrls } = useContext(MainStates);
+
   const [urlInfo, setUrlInfo] = useState(InitialStates);
 
-  // 해쉬태그 전처리
+  // FIXME: 해쉬태그 전처리
   const processdHashTag = () => {
     var totalHashes = [];
     var filterdHashes = [];
@@ -62,12 +65,12 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
     return filterdHashes;
   };
 
-  // add버튼
+  // FIXME: add버튼
   const handleAddBtn = async () => {
     const filterdHashes = processdHashTag();
 
     document.querySelector(".addUrl-container").style.display = "none";
-    disable();
+    PopupDisable();
 
     const { data } = await AddUrl(
       urlInfo.url,
@@ -76,11 +79,13 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
       urlInfo.memo
     );
 
+    setRealTotalUrls([data, ...realTotalUrls]);
     setGetUrls([data, ...getUrls]);
+
     setUrlInfo(InitialStates);
   };
 
-  // input onchange
+  // FIXME: useState변경
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUrlInfo({
@@ -89,8 +94,9 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
     });
   };
 
-  // url부분 크롤링
+  // FIXME: 크롤링
   const handleCrawling = async (e) => {
+    // StopAPI();
     debounceCrawling.cancel();
     handleChange(e);
     const grabUrl = e.target.value;
@@ -98,18 +104,19 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
       debounceCrawling({ setUrlInfo, urlInfo, grabUrl });
     } else {
       debounceCrawling.cancel();
+      StopAPI();
       setUrlInfo({ ...urlInfo, url: grabUrl, title: "", hashTag: "" });
     }
   };
 
-  // 모달 닫기
+  // FIXME: 모달 닫기
   const handleClose = () => {
     document.querySelector(".addUrl-container").style.display = "none";
     debounceCrawling.cancel();
     setUrlInfo(InitialStates);
   };
 
-  // 스타일
+  // FIXME: 스타일
   const height = 37;
   const defaultHeight = {
     height: `${height}px`,
@@ -124,7 +131,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
           style={
             urlInfo.memo.length < 25
               ? { transition: "1s" }
-              : { height: "400px", transition: "1s" }
+              : { height: "410px", transition: "1s" }
           }
         >
           <div className="header-Container">
@@ -139,6 +146,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
           <div className="content">
             <div className="put-url">
               <input
+                autocomplete="off"
                 name="url"
                 style={defaultHeight}
                 value={urlInfo.url}
@@ -148,6 +156,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
             </div>
             <div className="put-title">
               <input
+                autocomplete="off"
                 name="title"
                 value={urlInfo.title}
                 style={defaultHeight}
@@ -157,6 +166,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
             </div>
             <div className="put-hashTag">
               <input
+                autocomplete="off"
                 name="hashTag"
                 value={urlInfo.hashTag}
                 style={defaultHeight}
@@ -166,6 +176,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
             </div>
             <div className="put-memo">
               <AddTextArea
+                autocomplete="off"
                 value={urlInfo.memo}
                 name="memo"
                 style={

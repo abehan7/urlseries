@@ -4,7 +4,7 @@ import "./Page2.css";
 import { AiFillStar, AiOutlineArrowUp, AiOutlineEdit } from "react-icons/ai";
 import { TiBackspace, TiFolderDelete } from "react-icons/ti";
 import { BsPatchCheck } from "react-icons/bs";
-import { disable } from "../../../functions/stopScroll";
+import { PopupDisable } from "../../../functions/stopScroll";
 import Page2GridItem from "./Page2GridItem";
 import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../../../store/reducers/editModalP3";
@@ -66,7 +66,7 @@ const Page2 = ({ setNowPage }) => {
     document.querySelector(".hashtagModal-container").style.display = "none";
     setNowPage((val) => val - 1);
     SetReduxNowFolder({});
-    disable();
+    PopupDisable();
   }, []);
 
   const ClickAddIcon = useCallback(

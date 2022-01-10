@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineFolder } from "react-icons/ai";
 import { IoArrowBack } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { disable } from "../../../functions/stopScroll";
+import { PopupDisable } from "../../../functions/stopScroll";
 import { Page3Actions } from "../../../store/reducers/editModalP3";
 import { closeFunc, modify } from "./HashModalFuncs";
 import HashTagItems from "./HashTagItems";
@@ -171,7 +171,7 @@ const Page1 = ({
             });
             nowPage === 3 && setNowPage(1);
             SetReduxNowFolder({});
-            disable();
+            PopupDisable();
           }}
         >
           <IoArrowBack />
@@ -195,7 +195,7 @@ const Page1 = ({
           onClick={async () => {
             if (nowPage2 === 1) {
               await modify(setTotalTags, totalTags, assignedTags, setTagSearch);
-              disable();
+              PopupDisable();
             } else if (nowPage2 === 3) {
               console.log("page1 수정하기");
               // 창닫기
@@ -224,7 +224,7 @@ const Page1 = ({
               SetReduxNowFolder({});
 
               setTagSearch("");
-              disable();
+              PopupDisable();
               // 폴더 내부 태그들 수정하기 end
               await FolderContentsChangedAPI(nowFolder2);
 

@@ -29,47 +29,38 @@ const EditUrlModal = ({
 
   // 바뀐 state들 업데이트
   const setChnagedValues = (data) => {
-    setGetUrls(
-      getUrls.map((val) => {
-        return val._id === document.querySelector(".url_id").innerText
-          ? data
-          : val;
-      })
-    );
-
-    setRealTotalUrls(
-      realTotalUrls.map((val) => {
-        return val._id === document.querySelector(".url_id").innerText
-          ? data
-          : val;
-      })
-    );
-
-    setMostClickedUrls(
-      mostClickedUrls.map((val) => {
-        return val._id === document.querySelector(".url_id").innerText
-          ? data
-          : val;
-      })
-    );
-
-    var likedUrls_id = [];
-    likedUrls.forEach((val) => {
-      likedUrls_id.push(val._id);
-    });
-    console.log(likedUrls_id.includes(data._id));
-
-    if (data.url_likedUrl === 1 && !likedUrls_id.includes(data._id)) {
-      console.log("setLikedUrls DONE");
-      setLikedUrls([data, ...likedUrls]);
-    } else {
-      setLikedUrls(
-        likedUrls.map((val) => {
+    // 전체 수정에서 사용할 함수
+    const setMethod = (setState, state) => {
+      setState(
+        state.map((val) => {
           return val._id === document.querySelector(".url_id").innerText
             ? data
             : val;
         })
       );
+    };
+
+    // getUrls,realTotalUrls,mostClickedUrls 업데이트
+    for (const element of [
+      [setGetUrls, getUrls],
+      [setRealTotalUrls, realTotalUrls],
+      [setMostClickedUrls, mostClickedUrls],
+    ]) {
+      setMethod(element[0], element[1]);
+    }
+
+    var likedUrls_id = likedUrls.map((val) => {
+      return val._id;
+    });
+
+    console.log(likedUrls_id.includes(data._id));
+
+    // 좋아요 업데이트
+    if (data.url_likedUrl === 1 && !likedUrls_id.includes(data._id)) {
+      console.log("setLikedUrls DONE");
+      setLikedUrls([data, ...likedUrls]);
+    } else {
+      setMethod(setLikedUrls, likedUrls);
     }
 
     likedUrls.forEach((val) => {
@@ -155,7 +146,7 @@ const EditUrlModal = ({
           style={
             Memo.length < 25
               ? { transition: "1s" }
-              : { height: "400px", transition: "1s" }
+              : { height: "410px", transition: "1s" }
           }
         >
           <div className="header-Container">

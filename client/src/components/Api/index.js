@@ -2,7 +2,9 @@ import axios from "axios";
 
 const API = axios.create({ baseURL: "http://localhost:3001" });
 
-// const API2 = axios.create({ baseURL: "http://localhost:5000" });
+const controller = new AbortController();
+
+export const StopAPI = () => controller.abort();
 
 API.interceptors.request.use(
   (req) => {
@@ -53,7 +55,21 @@ export const ChangedAssignedTagAPI = (oneLineTags) =>
 
 export const DeleteUrlAPI = (_id) => API.delete(`/deleteUrl/${_id}`);
 
-export const CrawlingAPI = (url) => API.post("/crawling", { url });
+// const option = {
+//   url: `http://localhost3000/test`,
+//   method: "POST",
+//   header: {
+//     Accept: "application/json",
+//     "Content-Type": "application/json",
+//   },
+//   data: {
+//     name: "sewon",
+//     age: 20,
+//   },
+// };
+
+export const CrawlingAPI = (url) =>
+  API.post("/crawling", { url }, { signal: controller.signal });
 
 export const LoginApi = (user) => API.post("/login", user);
 

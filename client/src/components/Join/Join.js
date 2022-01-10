@@ -4,6 +4,7 @@ import "./Join.css";
 import styled from "styled-components";
 import { ItemWrapper, LoginWrapper } from "../Login/Login";
 import { SignUp } from "../Api";
+import { useHistory } from "react-router-dom";
 //간단회원가입 기능
 
 const JoinEl = styled.div`
@@ -53,6 +54,8 @@ const Join = () => {
     email: "",
   });
 
+  const history = useHistory();
+
   const onChange = (e) => {
     const { name, value } = e.target;
     setUser({
@@ -61,14 +64,15 @@ const Join = () => {
     });
   };
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     // console.log(user);
 
-    SignUp(user).then((response) => {
-      console.log(response.data);
-    });
+    const { data } = await SignUp(user);
 
+    data?.token &&
+      localStorage.setItem("accessToken", JSON.stringify(data.token));
+    data?.token && history.push("/");
     //     window.location = "/";
     //   }
   };

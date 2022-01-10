@@ -25,7 +25,11 @@ const TotalAfter = async (req, res) => {
 
   const query = { user_id };
 
-  totalAfter = await db.Urls.find(query).sort({ _id: -1 });
+  try {
+    totalAfter = await db.Urls.find(query).sort({ _id: -1 });
+  } catch (err) {
+    console.log(err);
+  }
 
   const { hashtag_assigned } = await db.Hashtags2.findOne(query, {
     hashtag_assigned: 1,
@@ -452,12 +456,17 @@ const SignUp = async (req, res) => {
     user_id,
   });
 
-  InitUrl.save();
+  const InitHashtags = new db.Hashtags2({
+    user_id,
+  });
 
-  newUser.save((err, userInfo) => {
+  InitUrl.save();
+  InitHashtags.save();
+
+  newUser.save(async (err, userInfo) => {
     if (err) return res.json({ success: false, err });
     console.log("user inserted");
-    const token = generateAccessToken1(newUser);
+    const token = await generateAccessToken1(newUser);
     return res.status(200).json({ success: true, token: token });
   });
 };
