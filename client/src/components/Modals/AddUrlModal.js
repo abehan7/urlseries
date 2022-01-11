@@ -111,6 +111,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
 
   // FIXME: 모달 닫기
   const handleClose = () => {
+    PopupDisable();
     document.querySelector(".addUrl-container").style.display = "none";
     debounceCrawling.cancel();
     setUrlInfo(InitialStates);

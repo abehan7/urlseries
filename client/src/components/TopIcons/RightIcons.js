@@ -3,6 +3,7 @@ import { AiOutlineEdit, AiTwotoneEdit } from "react-icons/ai";
 import { BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
 import { MdOutlineTag } from "react-icons/md";
+import { TopTwoRectsEditModeScrollUp } from "../../functions/ScrollUp";
 import { PopupEnable } from "../../functions/stopScroll";
 import { RefreshBtn } from "../AsideTags/BoxTagControler";
 import EditModeRectsFunc from "../editModeFucs/EditModeRectsFunc";
@@ -25,6 +26,7 @@ const RightIcons = ({
     PopupEnable();
   };
   const EditIconOnClick = () => {
+    TopTwoRectsEditModeScrollUp();
     deleteMode && setDeleteMode(false);
 
     setEditMode(!editMode);

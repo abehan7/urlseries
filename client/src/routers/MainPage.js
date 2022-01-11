@@ -205,14 +205,7 @@ const MainPage = () => {
     }
   };
 
-  StopDrag();
-
-  // window.document.onclick = (e) => {
-  //   if (e.target === document.querySelector(".MainPage")) {
-  //     setEditMode(true);
-  //     console.log("121233");
-  //   }
-  // };
+  // StopDrag();
 
   // editmode일 때 스타일 사각형에 색깔 변하게하기
   const bcTopRect = "#FFE4C4";

@@ -5,6 +5,7 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import TextArea from "../styled/TextArea.styled";
 import { DeleteUrlAPI, EditUrlAPI } from "../Api";
+import { PopupDisable } from "../../functions/stopScroll";
 
 const EditUrlModal = ({
   myFav,
@@ -115,7 +116,6 @@ const EditUrlModal = ({
     });
 
     setChnagedValues(data);
-
     console.log("업데이트 완료");
   };
 
@@ -129,6 +129,17 @@ const EditUrlModal = ({
         return val._id !== _id;
       })
     );
+  };
+
+  // FIXME: 뒤로가기
+  const handleClose = () => {
+    document.querySelector(".editUrl-container").style.display = "none";
+    PopupDisable();
+  };
+
+  //FIXME: 좋아요 클릭
+  const handleLike = () => {
+    setMyFav(!myFav);
   };
 
   // FIXME: style
@@ -150,26 +161,14 @@ const EditUrlModal = ({
           }
         >
           <div className="header-Container">
-            <div
-              className="close-area"
-              onClick={() => {
-                document.querySelector(".editUrl-container").style.display =
-                  "none";
-              }}
-            >
+            <div className="close-area" onClick={handleClose}>
               <IoArrowBack />
             </div>
             <div className="title">
               <h2>에디터모드</h2>
             </div>
 
-            <div
-              className="Myfav"
-              onClick={() => {
-                console.log("별");
-                setMyFav(!myFav);
-              }}
-            >
+            <div className="Myfav" onClick={handleLike}>
               {myFav ? <AiFillStar /> : <AiOutlineStar />}
             </div>
           </div>

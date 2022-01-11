@@ -59,9 +59,9 @@ const TotalUrlMap = ({
                 <>
                   <div className="select-box">
                     {value.clicked ? (
-                      <MdCheckBox />
+                      <MdCheckBox style={{ paddingLeft: "10px" }} />
                     ) : (
-                      <MdCheckBoxOutlineBlank />
+                      <MdCheckBoxOutlineBlank style={{ paddingLeft: "10px" }} />
                     )}
                   </div>
                 </>

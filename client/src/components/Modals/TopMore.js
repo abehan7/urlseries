@@ -4,6 +4,7 @@ import "./AddUrlModal.css";
 import { PopupDisable } from "../../functions/stopScroll";
 import "./TopMore.css";
 import { ModalInfos } from "../../routers/MainPage";
+import { TopMoreScrollUp } from "../../functions/ScrollUp";
 
 const TopMore = ({
   mostClickedUrls,
@@ -34,6 +35,7 @@ const TopMore = ({
             <div
               className="close-area"
               onClick={() => {
+                TopMoreScrollUp();
                 document.querySelector(
                   ".top-moreUrls-container"
                 ).style.display = "none";

@@ -13,7 +13,6 @@ const whenIclickUrl = ({
   where: hashOrTotal,
   dispatch,
 }) => {
-  PopupEnable();
   // FIXME: 리덕스
 
   const setUrlDetail = (detail) => {

@@ -8,6 +8,7 @@ import { closeFunc, modify } from "./HashModalFuncs";
 import HashTagItems from "./HashTagItems";
 import Axios from "axios";
 import { FolderContentsChangedAPI } from "../../Api";
+import { HashtagModalScrollUp } from "../../../functions/ScrollUp";
 
 const Page1 = ({
   setAssignedTags,
@@ -163,6 +164,7 @@ const Page1 = ({
         <div
           className="close-area"
           onClick={async () => {
+            HashtagModalScrollUp();
             await closeFunc({
               setAssignedTags,
               totalTags,

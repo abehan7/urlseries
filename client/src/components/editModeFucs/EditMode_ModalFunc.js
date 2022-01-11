@@ -1,4 +1,7 @@
+import { PopupEnable } from "../../functions/stopScroll";
+
 const EditMode_ModalFunc = (value) => {
+  PopupEnable();
   console.log("에디터모드입니다");
   var oneLineTags = "";
 
