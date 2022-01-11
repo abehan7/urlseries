@@ -539,6 +539,50 @@ h3 {
   display: none;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* button */
+::-webkit-scrollbar-button {
+  background-color: transparent;
+  height: 0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(128, 128, 128, 0.5);
+  border-radius: 20px;
+  border: 1px solid transparent;
+  background-clip: content-box;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #a8bbbf;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+/* The track NOT covered by the handle.
+::-webkit-scrollbar-track-piece {
+  background: #000; 
+}
+
+/* Corner */
+::-webkit-scrollbar-corner {
+  background: #999;
+}
+
+/* Resizer */
+::-webkit-resizer {
+  background: #111;
+}
+
 @media (max-width: 1100px) {
   .aside {
     display: none;
