@@ -39,11 +39,7 @@ export const closeFunc = ({
 
   setTotalTags(
     totalTags.map((tag) => {
-      return {
-        name: tag.name,
-        assigned: tag.origin,
-        origin: tag.origin,
-      };
+      return { ...tag, assigned: tag.origin };
     })
   );
 

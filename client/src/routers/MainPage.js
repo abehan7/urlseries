@@ -1,10 +1,9 @@
-import React, { createContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import "./MainPage.css";
 
 // Functions
 import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../functions/keepModalsShow";
-import StopDrag from "../functions/StopDrag";
 // Rectangles
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
@@ -30,8 +29,40 @@ import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../store/reducers/editModalP3";
 // API
 import { GetTotalUrls, Get21Urls, TotalAfter } from "../components/Api";
+import styled from "styled-components";
+import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
 
 export const MainStates = createContext(null);
+
+const MainEl = styled.div`
+  transition: 400ms;
+  background-color: ${(props) => (props.isDarkMode ? "#02064a" : "")};
+  color: ${(props) => (props.isDarkMode ? "#fff" : "")};
+
+  .RectColor {
+    background-color: ${(props) => (props.isDarkMode ? "#130630" : "")};
+    box-shadow: ${(props) =>
+      props.isDarkMode ? " rgba(255, 255, 255, 0.7) 0px 1px 4px" : ""};
+  }
+
+  .Search-balloon,
+  .modal-window {
+    color: ${(props) => (props.isDarkMode ? "#fff" : "")};
+    background-color: ${(props) => (props.isDarkMode ? "#130630" : "")};
+    box-shadow: ${(props) =>
+      props.isDarkMode ? "rgba(255, 255, 255, 0.7) 0px 1px 4px" : ""};
+  }
+
+  .url {
+    color: ${(props) => (props.isDarkMode ? "#fff" : "")};
+  }
+
+  .text-three-container .T-url {
+    border: ${(props) => (props.isDarkMode ? "0" : "")};
+    box-shadow: ${(props) =>
+      props.isDarkMode ? " rgba(255, 255, 255, 0.7) 0px 1px 4px" : ""};
+  }
+`;
 
 const MainPage = () => {
   const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
@@ -53,15 +84,7 @@ const MainPage = () => {
   const [deleteMode, setDeleteMode] = useState(false);
   const [topMoreWhat, setTopMoreWhat] = useState(true);
 
-  // FIXME: useContext
-  const InitialContents = {
-    likedUrls,
-    setLikedUrls,
-    mostClickedUrls,
-    setMostClickedUrls,
-    realTotalUrls,
-    setRealTotalUrls,
-  };
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   // FIXME: 리덕스
 
@@ -69,6 +92,11 @@ const MainPage = () => {
 
   const setFolderItemRedux = () => {
     dispatch(Page3Actions.GetFolderItems());
+  };
+
+  // url 클릭하면 그 디테일들 리덕스에 저장하는 기능
+  const setUrlDetail = (detail) => {
+    dispatch(UrlDetailActions.SetClickedUrl(detail));
   };
 
   useEffect(() => {
@@ -214,14 +242,28 @@ const MainPage = () => {
     backgroundColor: bcTopRect,
   };
 
+  // FIXME: useContext
+  const InitialContents = {
+    likedUrls,
+    setLikedUrls,
+    mostClickedUrls,
+    setMostClickedUrls,
+    realTotalUrls,
+    setRealTotalUrls,
+    setUrlDetail,
+  };
+
   return (
     <>
       <MainStates.Provider value={InitialContents}>
+        {/* <MainStates.Provider value={{ isDarkMode, setIsDarkMode }}> */}
         {/* {getUrls.length === 0 ? (
           <div className="firstLoading">yourURL</div>
         ) : ( */}
         <>
-          <div
+          <MainEl
+            editMode={editMode}
+            isDarkMode={isDarkMode}
             className="MainPage"
             onMouseDown={(e) =>
               clickOutSide(e, clickedSearchInput, setClickedSearchInput)
@@ -268,7 +310,13 @@ const MainPage = () => {
                       BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
                     }
                   >
-                    <h3>즐겨찾기 </h3>
+                    <h3
+                      onClick={() => {
+                        setIsDarkMode(!isDarkMode);
+                      }}
+                    >
+                      즐겨찾기{" "}
+                    </h3>
                     <div
                       className="text-container"
                       style={
@@ -326,7 +374,10 @@ const MainPage = () => {
                   assignedTags={assignedTags}
                 />
               </div>
-              <div className="Big_Rect RectColor">
+              <div
+                className="Big_Rect RectColor"
+                style={!editMode ? MkColorTopRect : emptyStyle}
+              >
                 {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
                 {/* 값은 true false 이렇게 두가지인데  */}
                 {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
@@ -438,7 +489,7 @@ const MainPage = () => {
               />
             </div>
             {/* ======================================== 모달들 END ======================================== */}
-          </div>
+          </MainEl>
         </>
         {/* )} */}
       </MainStates.Provider>

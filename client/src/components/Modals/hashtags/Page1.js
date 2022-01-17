@@ -6,11 +6,11 @@ import { PopupDisable } from "../../../functions/stopScroll";
 import { Page3Actions } from "../../../store/reducers/editModalP3";
 import { closeFunc, modify } from "./HashModalFuncs";
 import HashTagItems from "./HashTagItems";
-import Axios from "axios";
 import { FolderContentsChangedAPI } from "../../Api";
 import { HashtagModalScrollUp } from "../../../functions/ScrollUp";
 
 const Page1 = ({
+  handleClickBackIcon,
   setAssignedTags,
   assignedTags,
   totalTags,
@@ -130,6 +130,14 @@ const Page1 = ({
   };
   // =========== 오른쪽 토글 없애기 기능 END ===========
 
+  const handleCloseBtn = () => {
+    HashtagModalScrollUp();
+    handleClickBackIcon();
+    nowPage === 3 && setNowPage(1);
+    SetReduxNowFolder({});
+    PopupDisable();
+  };
+
   // =========== 리덕스 START ===========
 
   const {
@@ -141,41 +149,10 @@ const Page1 = ({
     dispatch(Page3Actions.SetNowFolder(folder2));
   };
 
-  // console.log("3페이지 테스트");
-  // console.log(nowFolder2);
-  // =========== 리덕스 END ===========
-  // const modalWindStyle = {
-  //   position: "relative",
-  // };
-
-  // const FolderIconStyle = {
-  //   position: "absolute",
-  //   fontSize: "100px",
-  //   opacity: "0.1",
-  //   width: "100%",
-  //   height: "100%",
-  //   textAlign: "center",
-  //   // textAlign: "justify"
-  // };
-
   return (
     <div className="modal-window hashTag-modal-window">
       <div className="header-Container HashTag-header-Container">
-        <div
-          className="close-area"
-          onClick={async () => {
-            HashtagModalScrollUp();
-            await closeFunc({
-              setAssignedTags,
-              totalTags,
-              setTotalTags,
-              setTagSearch,
-            });
-            nowPage === 3 && setNowPage(1);
-            SetReduxNowFolder({});
-            PopupDisable();
-          }}
-        >
+        <div className="close-area" onClick={handleCloseBtn}>
           <IoArrowBack />
         </div>
         <div className="title">

@@ -12,13 +12,13 @@ const HoverModalEl = styled.div`
 `;
 
 const Wrapper = styled.div`
-  z-index: 1;
+  z-index: 2;
   border-radius: 5px;
   height: auto;
   margin-top: ${(props) => `${props.Height}px`};
   box-shadow: rgba(0, 0, 0, 0.4) 0px 1px 4px;
   border: 1px solid #ebebeb;
-  background-color: ${Colors.Gray};
+  background-color: ${(props) => (props.isDarkMode ? "#130630" : Colors.Gray)};
   padding: 6px;
 `;
 
@@ -30,7 +30,7 @@ const Content = styled.span``;
 const HoverModal = ({ value, Height }) => {
   return (
     <HoverModalEl>
-      <Wrapper Height={Height}>
+      <Wrapper Height={Height} isDarkMode={false}>
         <Hashtags>
           {value.url_hashTags.map((tag) => {
             return <Content>{tag + " "}</Content>;

@@ -46,15 +46,15 @@ const whenIclickUrl = ({
         where: hashOrTotal,
       });
     } else {
-      EditMode_ModalFunc(value);
+      EditMode_ModalFunc(value, setUrlDetail);
       setMyFav(value.url_likedUrl === 1);
       // 리덕스로 클릭한거 넣기
-      setUrlDetail({
-        url: value.url,
-        title: value.url_title,
-        hashTags: value.url_hashTags,
-        memo: value.url_memo,
-      });
+      // setUrlDetail({
+      //   url: value.url,
+      //   title: value.url_title,
+      //   hashTags: value.url_hashTags,
+      //   memo: value.url_memo,
+      // });
     }
   };
 

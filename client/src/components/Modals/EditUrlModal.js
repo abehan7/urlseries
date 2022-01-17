@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import TextArea from "../styled/TextArea.styled";
 import { DeleteUrlAPI, EditUrlAPI } from "../Api";
 import { PopupDisable } from "../../functions/stopScroll";
+import modalCloseClickOutside from "../../functions/ModalCloseClickOutside";
 
 const EditUrlModal = ({
   myFav,
@@ -23,6 +24,7 @@ const EditUrlModal = ({
 
   const { ClickedUrl } = useSelector((state) => state);
   useEffect(() => {
+    console.log(ClickedUrl);
     setMemo(ClickedUrl.memo);
   }, [ClickedUrl]);
 
@@ -102,6 +104,7 @@ const EditUrlModal = ({
     }
 
     document.querySelector(".editUrl-container").style.display = "none";
+    PopupDisable();
 
     const { data } = await EditUrlAPI({
       _id: document.querySelector(".url_id").innerText,
@@ -123,18 +126,30 @@ const EditUrlModal = ({
   const handleDeleteBtn = async () => {
     const _id = document.querySelector(".url_id").innerText;
     document.querySelector(".editUrl-container").style.display = "none";
+    PopupDisable();
     await DeleteUrlAPI(_id);
-    setGetUrls(
-      getUrls.filter((val) => {
-        return val._id !== _id;
-      })
-    );
+
+    const method = (state, setState) => {
+      setState(
+        state.filter((val) => {
+          return val._id !== _id;
+        })
+      );
+    };
+
+    method(getUrls, setGetUrls);
+    method(realTotalUrls, setRealTotalUrls);
   };
 
   // FIXME: 뒤로가기
   const handleClose = () => {
     document.querySelector(".editUrl-container").style.display = "none";
     PopupDisable();
+  };
+
+  const handleCloseOutside = (e) => {
+    let isContained = modalCloseClickOutside(e);
+    isContained && handleClose();
   };
 
   //FIXME: 좋아요 클릭
@@ -151,7 +166,7 @@ const EditUrlModal = ({
   };
   return (
     <>
-      <div id="modal" className="modal-overlay">
+      <div id="modal" className="modal-overlay" onClick={handleCloseOutside}>
         <div
           className="modal-window"
           style={

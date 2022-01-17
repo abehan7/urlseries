@@ -6,16 +6,20 @@ import HoverModal from "../styled/HoverModal.styled";
 import styled from "styled-components";
 import UrlRectWrapper from "../styled/UrlRectWrapper.styled";
 import { modalHover } from "./TotalUrlMap";
+import { MainStates } from "../../routers/MainPage";
 
-const FiveUrlsLeftEl = styled(UrlRectWrapper)``;
+const FiveUrlsLeftEl = styled(UrlRectWrapper)`
+  border-radius: 10px;
+`;
 const FiveUrlsLeft = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
   const [Height, setHeight] = useState(0);
 
   const fiveStuffs = values.slice(0, 5);
+  const { setUrlDetail } = useContext(MainStates);
 
   const WhenEditMode = ({ url: value }) => {
     console.log("에디터모드입니다");
-    EditMode_ModalFunc(value);
+    EditMode_ModalFunc(value, setUrlDetail);
     setMyFav(value.url_likedUrl === 1);
   };
 

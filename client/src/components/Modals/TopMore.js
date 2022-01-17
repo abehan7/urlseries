@@ -20,6 +20,18 @@ const TopMore = ({
     window.open(value.url);
   };
 
+  const handleCloseBtn = () => {
+    TopMoreScrollUp();
+    document.querySelector(".top-moreUrls-container").style.display = "none";
+    PopupDisable();
+    document
+      .querySelector(".top-modal-window")
+      .classList.toggle("top-modal-window-clicked");
+  };
+
+  const handleClickOutside = (e) => {
+    document.querySelector(".topmore-overlay") === e.target && handleCloseBtn();
+  };
   // const handleChange = (e) => {
   //   const { name, value } = e.target;
   //   setModalInfo({
@@ -29,22 +41,14 @@ const TopMore = ({
   // };
   return (
     <>
-      <div id="modal" className="modal-overlay">
+      <div
+        id="modal"
+        className="modal-overlay topmore-overlay"
+        onClick={handleClickOutside}
+      >
         <div className="modal-window top-modal-window">
           <div className="header-Container">
-            <div
-              className="close-area"
-              onClick={() => {
-                TopMoreScrollUp();
-                document.querySelector(
-                  ".top-moreUrls-container"
-                ).style.display = "none";
-                PopupDisable();
-                document
-                  .querySelector(".top-modal-window")
-                  .classList.toggle("top-modal-window-clicked");
-              }}
-            >
+            <div className="close-area" onClick={handleCloseBtn}>
               <IoArrowBack />
             </div>
             <div className="title">

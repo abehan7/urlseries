@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { AiOutlineEdit, AiTwotoneEdit } from "react-icons/ai";
 import { BiPaperPlane } from "react-icons/bi";
 import { FiPlusSquare } from "react-icons/fi";
 import { MdOutlineTag } from "react-icons/md";
 import { TopTwoRectsEditModeScrollUp } from "../../functions/ScrollUp";
 import { PopupEnable } from "../../functions/stopScroll";
+import { MainStates } from "../../routers/MainPage";
 import { RefreshBtn } from "../AsideTags/BoxTagControler";
 import EditModeRectsFunc from "../editModeFucs/EditModeRectsFunc";
 
@@ -18,6 +19,7 @@ const RightIcons = ({
   setDeleteMode,
   deleteMode,
 }) => {
+  // const context = useContext(MainStates);
   const AddIconOnClick = () => {
     if (!editMode || !shareMode) {
       return;
@@ -31,7 +33,7 @@ const RightIcons = ({
 
     setEditMode(!editMode);
 
-    EditModeRectsFunc(editMode);
+    // EditModeRectsFunc(editMode);
   };
 
   const HashIconOnClick = () => {
@@ -47,6 +49,8 @@ const RightIcons = ({
     PopupEnable();
   };
   const ShareIconOnClick = () => {
+    // console.log(context.isDarkMode);
+    // context.setIsDarkMode(!context.isDarkMode);
     console.log("공유기능");
     // document.querySelector(".shareUrl-container").style.display = "block";
     // PopupEnable();

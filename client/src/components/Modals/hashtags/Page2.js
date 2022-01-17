@@ -31,8 +31,7 @@ const Page2 = ({ setNowPage }) => {
   const [LList, setLList] = useState([]);
   const [LikeM, setLikeM] = useState(false);
 
-  // ================== 리덕스 공간 START ==================
-
+  // FIXME: 리덕스
   const {
     page3Storage: { folderItems, nowFolder2 },
   } = useSelector((state) => state);
@@ -58,10 +57,7 @@ const Page2 = ({ setNowPage }) => {
     dispatch(Page3Actions.EditFolderItems(Modified_Folder_Items));
   };
 
-  // ================== 리덕스 공간 END ==================
-
-  // ================== ONCLICK 공간 START ==================
-
+  // FIXME: handler
   const ClickClose = useCallback(() => {
     document.querySelector(".hashtagModal-container").style.display = "none";
     setNowPage((val) => val - 1);
@@ -170,11 +166,8 @@ const Page2 = ({ setNowPage }) => {
       setDList([]);
     }
   };
-  // FIXME: 추가 수정 END
 
-  // ================== ONCLICK 공간 END ==================
-
-  // ================== 스타일 공간 START ==================
+  // FIXME: 스타일
 
   const empty = {
     transform: "scale(0)",
@@ -197,6 +190,7 @@ const Page2 = ({ setNowPage }) => {
     backgroundColor: "rgba(0, 0, 0, 0.05)",
     transition: "200ms",
   };
+
   return (
     <>
       <Page2Context.Provider
