@@ -6,11 +6,7 @@ import Axios from "axios";
 import { debounce } from "lodash";
 import LoadingImg from "./LoadingImg";
 import styled from "styled-components";
-import {
-  ClickedSeachedUrlAPI,
-  DeleteAllSearchedRecordAPI,
-  SearchDeleteAll,
-} from "../Api";
+import { ClickedSeachedUrlAPI, SearchDeleteAll } from "../Api";
 
 // FIXME: db에서 검색하주는 기능 // 이건 안쓸거같은데 일단 남겨두긴 하자
 const ApiGetSearchedList = async (e) => {

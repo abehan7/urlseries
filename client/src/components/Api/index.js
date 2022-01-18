@@ -59,6 +59,17 @@ export const ChangedAssignedTagAPI = (oneLineTags) =>
 
 export const DeleteUrlAPI = (_id) => API.delete(`/deleteUrl/${_id}`);
 
+export const CrawlingAPI = (url) => API.post("/crawling", { url });
+
+export const LoginApi = (user) => API.post("/login", user);
+
+export const SignUp = (user) => API.post("/signup", user);
+
+// FIXME: api call abort하는 부분
+// export const CrawlingAPI = (url) =>
+// API.post("/crawling", { url }, { signal: controller.signal });
+
+// FIXME: axios option넣어주는 곳
 // const option = {
 //   url: `http://localhost3000/test`,
 //   method: "POST",
@@ -71,11 +82,3 @@ export const DeleteUrlAPI = (_id) => API.delete(`/deleteUrl/${_id}`);
 //     age: 20,
 //   },
 // };
-
-export const CrawlingAPI = (url) => API.post("/crawling", { url });
-// export const CrawlingAPI = (url) =>
-// API.post("/crawling", { url }, { signal: controller.signal });
-
-export const LoginApi = (user) => API.post("/login", user);
-
-export const SignUp = (user) => API.post("/signup", user);

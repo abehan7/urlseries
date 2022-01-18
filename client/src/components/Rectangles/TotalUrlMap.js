@@ -23,6 +23,32 @@ const TotalUrlMap = ({
   const [Height, setHeight] = useState(0);
   const dispatch = useDispatch();
 
+  const onMouseOut = (e) => {
+    modalHover.cancel();
+    e.target.lastChild.classList.remove("hover-on");
+  };
+
+  const onMouseOver = (e) => {
+    modalHover(e, setHeight, Height);
+  };
+
+  const onContextMenu = (e) => {
+    console.log("우클릭");
+    e.preventDefault();
+  };
+
+  const onClick = (value) => {
+    whenIclickUrl({
+      oneUrl: value,
+      deleteMode,
+      editMode,
+      setMyFav,
+      setGetUrls: setGetUrls,
+      getUrls: getUrls,
+      dispatch,
+    });
+  };
+
   return (
     <>
       {getUrls.map((value) => {
@@ -32,28 +58,12 @@ const TotalUrlMap = ({
               style={{ position: "relative" }}
               className="T-url"
               key={value._id}
-              onClick={(e) => {
-                whenIclickUrl({
-                  oneUrl: value,
-                  deleteMode,
-                  editMode,
-                  setMyFav,
-                  setGetUrls: setGetUrls,
-                  getUrls: getUrls,
-                  dispatch,
-                });
+              onClick={() => {
+                onClick(value);
               }}
-              onMouseOut={(e) => {
-                modalHover.cancel();
-                e.target.lastChild.classList.remove("hover-on");
-              }}
-              onMouseOver={(e) => {
-                modalHover(e, setHeight, Height);
-              }}
-              onContextMenu={(e) => {
-                console.log("우클릭");
-                e.preventDefault();
-              }}
+              onMouseOut={onMouseOut}
+              onMouseOver={onMouseOver}
+              onContextMenu={onContextMenu}
             >
               {!editMode && deleteMode && (
                 <>

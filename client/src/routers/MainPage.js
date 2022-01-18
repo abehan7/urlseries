@@ -31,6 +31,7 @@ import { Page3Actions } from "../store/reducers/editModalP3";
 import { GetTotalUrls, Get21Urls, TotalAfter } from "../components/Api";
 import styled from "styled-components";
 import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
+import HeaderNav from "../components/header/HeaderNav";
 
 export const MainStates = createContext(null);
 
@@ -488,6 +489,8 @@ const MainPage = () => {
                 setTotalTags={setTotalTags}
               />
             </div>
+            <HeaderNav />
+
             {/* ======================================== 모달들 END ======================================== */}
           </MainEl>
         </>
