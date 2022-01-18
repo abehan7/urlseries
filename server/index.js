@@ -29,11 +29,28 @@ const {
 const auth = require("./middleware/auth");
 
 dotenv.config({ path: "./.env" });
-const PORT = process.env.PORT || 3001;
+// const PORT = process.env.PORT || 3001;
+const whitelist = [
+  "http://localhost:3000",
+  "https://61e609ea9d39fc0007234cee--inspiring-lewin-5ee272.netlify.app",
+  "https://inspiring-lewin-5ee272.netlify.app",
+];
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not Allowed Origin!"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true,
+};
 
 const app = express();
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // const UrlModel = require("./models/Urls");
@@ -50,6 +67,12 @@ app.get("/hithere", async (req, res) => {
 
   console.log("hi there");
   res.json("hi there");
+});
+
+app.get("/DBTest", async (req, res) => {
+  const data = await db.Urls.find({ url_id: 650 });
+  console.log(data[0].url_title);
+  res.json(data[0].url_title);
 });
 
 // [2] ==================================== 해쉬태그에서 사용할 전체url get ====================================
@@ -119,8 +142,8 @@ app.post("/deleteFolder", auth, DeleteFolder);
 
 app.post("/crawling", Crawling);
 
-app.listen(PORT, () => {
-  console.log(`SERVER RUNNING ON PORT ${PORT}`);
+app.listen(process.env.PORT || 3001, () => {
+  console.log(`SERVER RUNNING`);
 });
 
 // TODO:

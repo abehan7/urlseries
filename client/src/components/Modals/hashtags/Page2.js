@@ -167,6 +167,27 @@ const Page2 = ({ setNowPage }) => {
     }
   };
 
+  const handleEditFolderBtn = () => {
+    if (document.querySelector(".addFolder-icon")?.classList[1] === "closed") {
+      // document.querySelector(".click-here").style.display = "flex";
+      // 테스트용
+      // 다른폴더 누르면 나가지는걸로
+      document.querySelector(".addFolder-icon")?.classList?.toggle("closed");
+      // 없애기 현재 input 추가기능
+      document.querySelector(".addItem")?.classList?.toggle("open");
+      // 뒤로가기 없애기
+      document.querySelector(".back")?.classList?.toggle("open");
+      return;
+    }
+    LikeM === true && setLikeM(false);
+    DeleteM === true && setDeleteM(false);
+    setClickedP2Edit((val) => !val);
+    if (Object.keys(nowFolder).length !== 0) {
+      setNowFolder({});
+      SetReduxNowFolder({});
+    }
+  };
+
   // FIXME: 스타일
 
   const empty = {
@@ -257,18 +278,7 @@ const Page2 = ({ setNowPage }) => {
                 </div>
               </div>
               {/* 편집모드 */}
-              <div
-                className="editFolder"
-                onClick={() => {
-                  LikeM === true && setLikeM(false);
-                  DeleteM === true && setDeleteM(false);
-                  setClickedP2Edit((val) => !val);
-                  if (Object.keys(nowFolder).length !== 0) {
-                    setNowFolder({});
-                    SetReduxNowFolder({});
-                  }
-                }}
-              >
+              <div className="editFolder" onClick={handleEditFolderBtn}>
                 <AiOutlineEdit />
               </div>
             </div>

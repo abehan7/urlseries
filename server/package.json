@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "14.17.5"
+  },
   "dependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.8",
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
@@ -17,6 +22,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.14",
     "mongoose-auto-increment": "^5.0.1",
+    "node-pre-gyp": "^0.17.0",
     "nodemon": "^2.0.15",
     "puppeteer": "^13.0.1"
   }

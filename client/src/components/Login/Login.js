@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Login.css";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import styled from "styled-components";
 import { LoginApi } from "../Api";
@@ -101,7 +101,7 @@ const Login = ({ setLoginUser }) => {
   const [showLoginButton, setShowLoginButton] = useState(true);
   const [showLogoutButton, setShowLogoutButton] = useState(false);
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const clientId =
     "828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com";
@@ -150,7 +150,7 @@ const Login = ({ setLoginUser }) => {
       if (loginSuccess) {
         setLoginUser(user);
         localStorage.setItem("accessToken", JSON.stringify(token));
-        loginSuccess && history.push("/");
+        loginSuccess && navigate("/");
       } else {
         alert(message);
       }

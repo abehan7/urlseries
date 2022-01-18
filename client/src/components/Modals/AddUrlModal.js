@@ -65,6 +65,19 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
     return filterdHashes;
   };
 
+  const processdHashTagInputTrue = (hashTag) => {
+    var totalHashes = [];
+    var filterdHashes = [];
+    totalHashes = hashTag.split("#");
+    totalHashes.forEach((tag) => {
+      if (tag.length !== 0) {
+        filterdHashes.push("#" + tag.replace(/\s/g, ""));
+        console.log("#" + tag);
+      }
+    });
+    return filterdHashes;
+  };
+
   // FIXME: add버튼
   const handleAddBtn = async () => {
     const filterdHashes = processdHashTag();
@@ -96,16 +109,9 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
 
   // FIXME: 크롤링
   const handleCrawling = async (e) => {
-    // StopAPI();
-    debounceCrawling.cancel();
-    handleChange(e);
-    const grabUrl = e.target.value;
+    const grabUrl = urlInfo.url;
     if (grabUrl.length > 5) {
-      debounceCrawling({ setUrlInfo, urlInfo, grabUrl });
-    } else {
-      debounceCrawling.cancel();
-      StopAPI();
-      setUrlInfo({ ...urlInfo, url: grabUrl, title: "", hashTag: "" });
+      await debounceCrawling({ setUrlInfo, urlInfo, grabUrl });
     }
   };
 
@@ -113,7 +119,34 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
   const handleClose = () => {
     PopupDisable();
     document.querySelector(".addUrl-container").style.display = "none";
-    debounceCrawling.cancel();
+    setUrlInfo(InitialStates);
+  };
+
+  // FIXME: 자동완성
+  const handleAutoComplete = async (e) => {
+    document.querySelector(".addUrl-container").style.display = "none";
+    PopupDisable();
+    const FakeData = {
+      _id: 0,
+      url: "",
+      url_title: "자동생성중입니다... 잠시만 기다려주세요!",
+      url_hashTags: "",
+      url_memo: "",
+    };
+
+    const {
+      data: { title, hashtags },
+    } = await CrawlingAPI(urlInfo.url);
+
+    const { data } = await AddUrl(
+      urlInfo.url,
+      title,
+      hashtags.join(""),
+      urlInfo.memo
+    );
+
+    setRealTotalUrls([data, ...realTotalUrls]);
+    setGetUrls([data, ...getUrls]);
     setUrlInfo(InitialStates);
   };
 
@@ -152,7 +185,9 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
                 style={defaultHeight}
                 value={urlInfo.url}
                 placeholder="URL을 추가해주세요"
-                onChange={handleCrawling}
+                onChange={handleChange}
+
+                // onChange={handleCrawling}
               />
             </div>
             <div className="put-title">
@@ -193,6 +228,9 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
               <button style={{ height: "43px" }} onClick={handleAddBtn}>
                 추가하기
               </button>
+              {urlInfo.url.length !== 0 && (
+                <button onClick={handleAutoComplete}>자동완성</button>
+              )}
             </div>
           </div>
         </div>

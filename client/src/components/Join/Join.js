@@ -4,7 +4,7 @@ import "./Join.css";
 import styled from "styled-components";
 import { ItemWrapper, LoginWrapper } from "../Login/Login";
 import { SignUp } from "../Api";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 //간단회원가입 기능
 
 const JoinEl = styled.div`
@@ -54,7 +54,7 @@ const Join = () => {
     email: "",
   });
 
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const onChange = (e) => {
     const { name, value } = e.target;
@@ -72,7 +72,7 @@ const Join = () => {
 
     data?.token &&
       localStorage.setItem("accessToken", JSON.stringify(data.token));
-    data?.token && history.push("/");
+    data?.token && navigate("/");
     //     window.location = "/";
     //   }
   };
