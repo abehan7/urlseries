@@ -1,7 +1,7 @@
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import Axios from "axios";
 import { UrlDetailActions } from "../../store/reducers/ClickedUrlDetails";
-import { PopupEnable } from "../../functions/stopScroll";
+import { ClickUrl } from "../Api";
 
 const whenIclickUrl = ({
   oneUrl: value,
@@ -61,7 +61,8 @@ const whenIclickUrl = ({
   //FIXME: 일반모드
   const NormalMode = () => {
     window.open(value.url);
-    Axios.put("http://localhost:3001/clickedURLInBox", { url: value });
+    ClickUrl(value);
+    // Axios.put("http://localhost:3001/clickedURLInBox", { url: value });
   };
 
   // FIXME: 맨 처음 클릭

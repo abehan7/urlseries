@@ -26,6 +26,7 @@ const {
   Login,
   SearchDeleteAll,
 } = require("./controller/main");
+
 const auth = require("./middleware/auth");
 
 dotenv.config({ path: "./.env" });
@@ -51,6 +52,7 @@ const corsOptions = {
 const app = express();
 
 app.use(cors(corsOptions));
+// app.use(cors());
 app.use(express.json());
 
 // const UrlModel = require("./models/Urls");

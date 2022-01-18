@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const API = axios.create({ baseURL: "https://urlstory.herokuapp.com" });
+// const API = axios.create({ baseURL: "https://urlstory.herokuapp.com" });
+const API = axios.create({ baseURL: "http://localhost:3001" });
 
 const controller = new AbortController();
 
@@ -12,6 +13,7 @@ API.interceptors.request.use(
     console.log(token);
     if (token) {
       req.headers.authorization = `Bearer ${JSON.parse(token)}`;
+      // req.headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
     }
     return req;
   },
@@ -44,6 +46,8 @@ export const DeleteFolderAPI = (idList) =>
 
 export const EditUrlAPI = (url) => API.put("/editUrl", { ...url });
 
+export const ClickUrl = (url) => API.put("/clickedURLInBox", { url });
+
 export const ClickedSeachedUrlAPI = (_id) =>
   API.put(`/clickedSeachedURL/${_id}`);
 
@@ -68,8 +72,9 @@ export const DeleteUrlAPI = (_id) => API.delete(`/deleteUrl/${_id}`);
 //   },
 // };
 
-export const CrawlingAPI = (url) =>
-  API.post("/crawling", { url }, { signal: controller.signal });
+export const CrawlingAPI = (url) => API.post("/crawling", { url });
+// export const CrawlingAPI = (url) =>
+// API.post("/crawling", { url }, { signal: controller.signal });
 
 export const LoginApi = (user) => API.post("/login", user);
 

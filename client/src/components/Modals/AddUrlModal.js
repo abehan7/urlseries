@@ -18,16 +18,18 @@ const AddTextArea = styled.textarea`
 `;
 
 const debounceCrawling = debounce(async ({ setUrlInfo, urlInfo, grabUrl }) => {
-  setUrlInfo({
-    ...urlInfo,
-    url: grabUrl,
-    title: "잠시만 기다려주세요...",
-    hashTag: "잠시만 기다려주세요...",
-  });
+  // setUrlInfo({
+  //   ...urlInfo,
+  //   url: grabUrl,
+  //   title: "잠시만 기다려주세요...",
+  //   hashTag: "잠시만 기다려주세요...",
+  // });
 
   const {
     data: { title, hashtags },
   } = await CrawlingAPI(grabUrl);
+
+  console.log(hashtags);
 
   setUrlInfo({
     ...urlInfo,
@@ -123,25 +125,29 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
   };
 
   // FIXME: 자동완성
+
+  // 해쉬태그 띄어쓰기 없애기
+  const GetHashTagsProcessed = (tagList) => {
+    const processedTags = tagList.map((tag) => {
+      return tag.replace(" ", "");
+    });
+    return processedTags;
+  };
+
   const handleAutoComplete = async (e) => {
     document.querySelector(".addUrl-container").style.display = "none";
     PopupDisable();
-    const FakeData = {
-      _id: 0,
-      url: "",
-      url_title: "자동생성중입니다... 잠시만 기다려주세요!",
-      url_hashTags: "",
-      url_memo: "",
-    };
 
     const {
       data: { title, hashtags },
     } = await CrawlingAPI(urlInfo.url);
 
+    console.log(hashtags);
+
     const { data } = await AddUrl(
       urlInfo.url,
       title,
-      hashtags.join(""),
+      GetHashTagsProcessed(hashtags),
       urlInfo.memo
     );
 

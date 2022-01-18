@@ -363,9 +363,18 @@ const Crawling = (req, res) => {
   (async () => {
     const options = {
       headless: true,
-      args: ["--fast-start", "--disable-extensions", "--no-sandbox"],
+      args: [
+        "--fast-start",
+        "--disable-web-security",
+        "--disable-features=IsolateOrigins",
+        "--disable-site-isolation-trials",
+        "--disable-extensions",
+        "--disable-setuid-sandbox",
+        "--no-sandbox",
+      ],
       ignoreHTTPSErrors: true,
     };
+    console.log("hi there");
     const browser = await puppeteer.launch(options);
     try {
       const page = await browser.newPage();
@@ -415,8 +424,9 @@ const Crawling = (req, res) => {
         default:
       }
       await browser.close();
-      await console.log(hashtags);
-      await res.json({ title, hashtags });
+      console.log(title, hashtags);
+
+      res.json({ title, hashtags });
     } catch (error) {
       console.log(error.name);
       await res.json({ title: "제목이 존재하지 않습니다.", hashtags: [""] });
