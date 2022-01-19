@@ -5,63 +5,63 @@ import "./Join.css";
 //-------------------------
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 
-//구글로그인기능
+// 구글로그인기능;
 
-// export function Glogin() {
-//   const clientId =
-//     "828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com";
+export function Glogin() {
+  const clientId =
+    "828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com";
 
-//   const [showLoginButton, setShowLoginButton] = useState(true);
-//   const [showLogoutButton, setShowLogoutButton] = useState(false);
+  const [showLoginButton, setShowLoginButton] = useState(true);
+  const [showLogoutButton, setShowLogoutButton] = useState(false);
 
-//   const onLoginSuccess = (res) => {
-//     console.log("Login Success :", res.profileObj);
-//     setShowLoginButton(false);
-//     setShowLogoutButton(true);
-//     window.location = "/";
-//   };
+  const onLoginSuccess = (res) => {
+    console.log("Login Success :", res.profileObj);
+    setShowLoginButton(false);
+    setShowLogoutButton(true);
+    window.location = "/";
+  };
 
-//   const onFailureSuccess = (res) => {
-//     console.log("Login Failed :", res);
-//   };
+  const onFailureSuccess = (res) => {
+    console.log("Login Failed :", res);
+  };
 
-//   const onSignoutSuccess = () => {
-//     alert("You have been signed out successfully");
-//     setShowLoginButton(true);
-//     setShowLogoutButton(false);
-//     console.clear();
-//   };
+  const onSignoutSuccess = () => {
+    alert("You have been signed out successfully");
+    setShowLoginButton(true);
+    setShowLogoutButton(false);
+    console.clear();
+  };
 
-//   return (
-//     <>
-//       <div id="modal" className="modal-overlay">
-//         <div id="modalWindow" className="modal-window">
-//           <div className="siteLogo">Ururl</div>
-//           <div className="googleButton">
-//             {showLoginButton ? (
-//               <GoogleLogin
-//                 clientId={clientId}
-//                 buttonText="구글계정으로 로그인"
-//                 onSuccess={onLoginSuccess}
-//                 onFailure={onFailureSuccess}
-//                 cookiePolicy={"single_host_origin"}
-//               />
-//             ) : null}
+  return (
+    <>
+      <div id="modal" className="modal-overlay">
+        <div id="modalWindow" className="modal-window">
+          <div className="siteLogo">Ururl</div>
+          <div className="googleButton">
+            {showLoginButton ? (
+              <GoogleLogin
+                clientId={clientId}
+                buttonText="구글계정으로 로그인"
+                onSuccess={onLoginSuccess}
+                onFailure={onFailureSuccess}
+                cookiePolicy={"single_host_origin"}
+              />
+            ) : null}
 
-//             {showLogoutButton ? (
-//               <GoogleLogout
-//                 clientId={clientId}
-//                 buttonText="구글계정 로그아웃"
-//                 onLogoutSuccess={onSignoutSuccess}
-//               />
-//             ) : null}
-//           </div>
-//           <Join />
-//         </div>
-//       </div>
-//     </>
-//   );
-// }
+            {showLogoutButton ? (
+              <GoogleLogout
+                clientId={clientId}
+                buttonText="구글계정 로그아웃"
+                onLogoutSuccess={onSignoutSuccess}
+              />
+            ) : null}
+          </div>
+          <Join />
+        </div>
+      </div>
+    </>
+  );
+}
 
 //간단회원가입 기능
 
