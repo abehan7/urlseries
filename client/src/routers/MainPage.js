@@ -4,6 +4,9 @@ import "./MainPage.css";
 // Functions
 import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../functions/keepModalsShow";
+
+// Header
+import Header from "../components/header/Header";
 // Rectangles
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
@@ -31,9 +34,7 @@ import { Page3Actions } from "../store/reducers/editModalP3";
 import { GetTotalUrls, Get21Urls, TotalAfter } from "../components/Api";
 import styled from "styled-components";
 import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
-import HeaderNav from "../components/header/HeaderNav";
-import HeaderNavV2 from "../components/header/HeaderNavV2";
-import HeaderNavWrapper from "../components/header/HeaderNavWrapper";
+// import HeaderNavWrapper from "../components/headerNav/HeaderNavWrapper";
 
 export const MainStates = createContext(null);
 
@@ -274,10 +275,10 @@ const MainPage = () => {
           >
             {/* ======================================== 그리드 컨테이너  START  ========================================*/}
             {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
-            <div className="grid-container">
-              {/* <HeaderNavWrapper /> */}
 
-              <SearchBox
+            <div className="grid-container" style={{ position: "relative" }}>
+              {/* <HeaderNavWrapper /> */}
+              <Header
                 createModal2={createModal2}
                 recentSearched={recentSearched}
                 setRecentSearch={setRecentSearch}

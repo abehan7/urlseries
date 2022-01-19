@@ -5,7 +5,6 @@ import "./index.css";
 import { Provider } from "react-redux";
 import store2 from "./store/store2";
 import { createGlobalStyle } from "styled-components";
-import HeaderNav from "./components/header/HeaderNav";
 
 const GlobalStyle = createGlobalStyle`
 position: relative;

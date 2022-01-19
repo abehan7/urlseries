@@ -30,14 +30,7 @@ const HeaderNavWrapper = () => {
     };
   }, []);
 
-  useEffect(() => {
-    console.log(scrollFlag);
-  }, [scrollFlag]);
-  return (
-    <>
-      <HeaderNavV2 scrollFlag={scrollFlag} />
-    </>
-  );
+  return <>{scrollFlag && <HeaderNavV2 scrollFlag={scrollFlag} />}</>;
 };
 
 export default HeaderNavWrapper;

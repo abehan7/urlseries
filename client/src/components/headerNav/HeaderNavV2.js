@@ -15,8 +15,8 @@ const HeaderNavEl = styled.nav`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 40px;
-  /* opacity: 0.8; */
+  height: ${(props) => (props.scrollFlag ? "40px" : "0")};
+  opacity: 0.9;
   background-color: #211e24;
   border-radius: 10px;
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
@@ -26,6 +26,8 @@ const HeaderNavEl = styled.nav`
 `;
 
 const HeadWrapper = styled.div`
+  position: fixed;
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,12 +45,15 @@ const LeftWrapper = styled.div`
     position: absolute;
     right: 10px;
     div {
+      :hover {
+        background: none;
+      }
     }
   }
 `;
 
 const Logo = styled.div`
-  ${Fonts.Samliphopang}
+  ${Fonts.YangJin}
   /* font-family: "Cafe24Shiningstar"; */
   position: absolute;
   left: 1rem;
@@ -73,25 +78,13 @@ const SearchBarEl = styled.div`
     }
   }
 `;
-const IconsWrapper = styled(Logo)`
-  position: static;
-  width: 350px;
-  justify-content: center;
-`;
-const IconContents = styled.div`
-  font-size: 1.6rem;
-  .right-icons div {
-    border: none;
-    color: black;
-  }
-`;
 
 const HeaderNavV2 = ({ scrollFlag }) => {
   return (
     <HeaderNavEl scrollFlag={scrollFlag}>
       <HeadWrapper>
         <LeftWrapper>
-          <Logo>it's ur url</Logo>
+          <Logo> ur ur l</Logo>
           <SearchBarEl>
             <SearchBox
               createModal2={() => {}}

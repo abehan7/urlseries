@@ -44,6 +44,8 @@ const debounceSomethingFunc = debounce(
 );
 
 // FIXME: 스타일드 컴포넌트
+const SearchBoxEl = styled.div``;
+
 const NotSearched = styled.div`
   display: flex;
   flex-direction: column;
@@ -56,12 +58,7 @@ const NotSearched = styled.div`
 `;
 
 const DeleteBtn = styled.div`
-  /* border-radius: 7px; */
   margin-right: 8px;
-  /* &:hover {
-    background-color: rgba(0, 0, 0, 0.03);
-    transition: 500ms;
-  } */
 `;
 
 // FIXME: react컴포넌트 내부
@@ -158,7 +155,7 @@ const SearchBox = ({
 
   return (
     <>
-      <div className="search-box">
+      <SearchBoxEl className="search-box">
         <input
           type="text"
           value={text2}
@@ -223,7 +220,7 @@ const SearchBox = ({
           )}
           {text2?.length > 0 && !searchState.searchDone && <LoadingImg />}
         </div>
-      </div>
+      </SearchBoxEl>
     </>
   );
 };

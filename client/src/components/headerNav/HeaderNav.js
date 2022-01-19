@@ -1,5 +1,4 @@
 import React from "react";
-import { AiOutlinePlusSquare } from "react-icons/ai";
 import styled from "styled-components";
 import Colors from "../../Colors";
 import { Fonts } from "../../Themes";
