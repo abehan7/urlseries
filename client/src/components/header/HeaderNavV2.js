@@ -6,18 +6,21 @@ import SearchBox from "../searchBar/SearchBox";
 import RightIcons from "../TopIcons/RightIcons";
 
 const HeaderNavEl = styled.nav`
+  opacity: ${(props) => (props.scrollFlag ? "1" : "0")};
+  transform: translateY(${(props) => (props.scrollFlag ? "20" : "-100")}px);
   color: #fff;
   position: sticky;
-  top: 1rem;
+  top: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 40px;
-  opacity: 0.8;
+  /* opacity: 0.8; */
   background-color: #211e24;
   border-radius: 10px;
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
+  transition: 400ms;
   z-index: 3;
   grid-column: span 2;
 `;
@@ -39,6 +42,8 @@ const LeftWrapper = styled.div`
   .right-icons {
     position: absolute;
     right: 10px;
+    div {
+    }
   }
 `;
 
@@ -46,7 +51,7 @@ const Logo = styled.div`
   ${Fonts.Mongdol}
   /* font-family: "Cafe24Shiningstar"; */
   position: absolute;
-  left: 0;
+  left: 1rem;
   display: flex;
   align-items: center;
   font-size: 2rem;
@@ -81,40 +86,12 @@ const IconContents = styled.div`
   }
 `;
 
-const HeaderNavV2 = () => {
-  const [scrollFlag, setScrollFlag] = useState(false);
-
-  const throttle = (callback, delay) => {
-    let timer = null;
-    if (timer) return;
-    return () => {
-      timer = setTimeout(() => {
-        callback();
-        timer = null;
-      }, delay);
-    };
-  };
-
-  const updateScroll = () => {
-    const { scrollY } = window;
-    const isScrolled = scrollY !== 0;
-    setScrollFlag(isScrolled);
-  };
-
-  const handleScroll = throttle(updateScroll, 100);
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
+const HeaderNavV2 = ({ scrollFlag }) => {
   return (
-    <HeaderNavEl>
+    <HeaderNavEl scrollFlag={scrollFlag}>
       <HeadWrapper>
         <LeftWrapper>
-          <Logo> </Logo>
+          <Logo>it's ur url</Logo>
           <SearchBarEl>
             <SearchBox
               createModal2={() => {}}
@@ -125,9 +102,6 @@ const HeaderNavV2 = () => {
           </SearchBarEl>
           <RightIcons />
         </LeftWrapper>
-        <IconsWrapper>
-          <IconContents>{/* <RightIcons /> */}</IconContents>
-        </IconsWrapper>
       </HeadWrapper>
     </HeaderNavEl>
   );
