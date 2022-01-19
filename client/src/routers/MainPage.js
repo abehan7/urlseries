@@ -228,6 +228,12 @@ const MainPage = () => {
   //   icons.classList.toggle("active");
   // });
 
+  // ============================================= 전체리스트 접고 펼치기=============================================
+
+  const [show, setShow] = useState(true);
+
+  // ============================================= url리스트  편집버튼 일정 스크롤 이후 고정=============================================
+
   return (
     <>
       {getUrls.length === 0 ? (
@@ -428,13 +434,15 @@ const MainPage = () => {
                 <h3>HashTag</h3>
               )}
 
-              <div className="Big_Rect RectColor">
-                {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
-                {/* 값은 true false 이렇게 두가지인데  */}
-                {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
-                {/* 전체 URL이라는 h3가 HashTag라고 바뀜  */}
-                {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
-                {/* {editMode ? (
+              <button onClick={() => setShow(!show)}>접고펼치기</button>
+              {show ? (
+                <div className="Big_Rect RectColor">
+                  {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
+                  {/* 값은 true false 이렇게 두가지인데  */}
+                  {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
+                  {/* 전체 URL이라는 h3가 HashTag라고 바뀜  */}
+                  {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
+                  {/* {editMode ? (
                   BoxTags_First ? (
                     <GridHeader />
                   ) : (
@@ -445,35 +453,36 @@ const MainPage = () => {
                 ) : (
                   <h3>HashTag</h3>
                 )} */}
-                <div className="text-three-container">
-                  {BoxTags_First ? (
-                    // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
-                    <>
-                      <TotalUrlMap
-                        getUrls={getUrls}
-                        setGetUrls={setGetUrls}
+                  <div className="text-three-container">
+                    {BoxTags_First ? (
+                      // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
+                      <>
+                        <TotalUrlMap
+                          getUrls={getUrls}
+                          setGetUrls={setGetUrls}
+                          editMode={editMode}
+                          shareMode={shareMode}
+                          setMyFav={setMyFav}
+                          deleteMode={deleteMode}
+                        />
+                        <div ref={setTarget} className="Target-Element">
+                          {isLoaded && <Loader />}
+                        </div>
+                      </>
+                    ) : (
+                      // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
+                      <UrlsByHashTag
+                        realTotalUrls={realTotalUrls}
+                        setRealTotalUrls={setRealTotalUrls}
+                        BoxTags={BoxTags}
                         editMode={editMode}
-                        shareMode={shareMode}
-                        setMyFav={setMyFav}
                         deleteMode={deleteMode}
+                        setMyFav={setMyFav}
                       />
-                      <div ref={setTarget} className="Target-Element">
-                        {isLoaded && <Loader />}
-                      </div>
-                    </>
-                  ) : (
-                    // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
-                    <UrlsByHashTag
-                      realTotalUrls={realTotalUrls}
-                      setRealTotalUrls={setRealTotalUrls}
-                      BoxTags={BoxTags}
-                      editMode={editMode}
-                      deleteMode={deleteMode}
-                      setMyFav={setMyFav}
-                    />
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
+              ) : null}
             </div>
             {/* ======================================== 그리드 컨테이너  END  ========================================*/}
             {/* ======================================== 날개 START ========================================*/}{" "}

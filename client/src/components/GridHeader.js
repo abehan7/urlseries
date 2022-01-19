@@ -48,7 +48,9 @@ const GridHeader = () => {
     <GridHeaderEl>
       <CgList size="21" />
       <Title>전체 URL</Title>
-      <CgChevronUpO size="21" />
+      <button>
+        <CgChevronUpO size="21" color="white" />
+      </button>
       <IconsWrapper>
         <Icon>
           <AiOutlineInstagram size="23" />
