@@ -1,5 +1,4 @@
-import React from "react";
-import { AiOutlinePlusSquare } from "react-icons/ai";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Colors from "../../Colors";
 import { Fonts } from "../../Themes";
@@ -8,8 +7,8 @@ import RightIcons from "../TopIcons/RightIcons";
 
 const HeaderNavEl = styled.nav`
   color: #fff;
-  position: fixed;
-  top: 0;
+  position: sticky;
+  top: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,8 +16,10 @@ const HeaderNavEl = styled.nav`
   height: 40px;
   opacity: 0.8;
   background-color: #211e24;
+  border-radius: 10px;
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
   z-index: 3;
+  grid-column: span 2;
 `;
 
 const HeadWrapper = styled.div`
@@ -34,11 +35,10 @@ const LeftWrapper = styled.div`
   justify-content: center;
   width: 820px;
   min-width: 820px;
-  padding-right: 40px;
 
   .right-icons {
     position: absolute;
-    right: 40px;
+    right: 10px;
   }
 `;
 
@@ -81,12 +81,40 @@ const IconContents = styled.div`
   }
 `;
 
-const HeaderNav = () => {
+const HeaderNavV2 = () => {
+  const [scrollFlag, setScrollFlag] = useState(false);
+
+  const throttle = (callback, delay) => {
+    let timer = null;
+    if (timer) return;
+    return () => {
+      timer = setTimeout(() => {
+        callback();
+        timer = null;
+      }, delay);
+    };
+  };
+
+  const updateScroll = () => {
+    const { scrollY } = window;
+    const isScrolled = scrollY !== 0;
+    setScrollFlag(isScrolled);
+  };
+
+  const handleScroll = throttle(updateScroll, 100);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
     <HeaderNavEl>
       <HeadWrapper>
         <LeftWrapper>
-          <Logo>it's ur url </Logo>
+          <Logo> </Logo>
           <SearchBarEl>
             <SearchBox
               createModal2={() => {}}
@@ -105,4 +133,4 @@ const HeaderNav = () => {
   );
 };
 
-export default HeaderNav;
+export default HeaderNavV2;
