@@ -614,14 +614,6 @@ h3 {
     grid-column: span 1;
   }
 
-  .search-box > input {
-  }
-
-  .search-box {
-  }
-  .search-box > svg {
-  }
-
   .Big_Rect .text-three-container {
     display: flex;
     flex-direction: column;
@@ -637,6 +629,10 @@ h3 {
     /* grid-template-columns: 1; */
     grid-template-columns: 90%;
     width: 100vw;
+  }
+
+  .Search-balloon {
+    width: 90vw;
   }
 
   .text-three-container {
@@ -663,9 +659,6 @@ h3 {
   .Big_Rect {
     padding-bottom: 20px;
   }
-  .Search-balloon {
-    width: 100vw;
-  }
 
   .modal-overlay > .modal-window {
     width: 90%;
@@ -683,6 +676,6 @@ h3 {
   }
 
   .Searched-Stuffs-Container > .searched-Stuff {
-    min-height: auto;
+    /* min-height: auto; */
   }
 }

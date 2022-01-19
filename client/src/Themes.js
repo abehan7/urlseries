@@ -53,4 +53,14 @@ font-family: 'WandohopeB';
     font-family: 'Mongdol';
     
     `,
+
+  BareunBatang: `@font-face {
+      font-family: 'BareunBatang';
+      font-style: normal;
+      font-weight: 400;
+      src: url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunBatang/BareunBatangOTFM.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunBatang/BareunBatangOTFM.woff') format('woff');
+    }
+    font-family: 'BareunBatang';
+    
+    `,
 };

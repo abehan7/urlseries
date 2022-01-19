@@ -48,13 +48,13 @@ const LeftWrapper = styled.div`
 `;
 
 const Logo = styled.div`
-  ${Fonts.Mongdol}
+  ${Fonts.Samliphopang}
   /* font-family: "Cafe24Shiningstar"; */
   position: absolute;
   left: 1rem;
   display: flex;
   align-items: center;
-  font-size: 2rem;
+  font-size: 1.2rem;
 `;
 
 const SearchBarEl = styled.div`
