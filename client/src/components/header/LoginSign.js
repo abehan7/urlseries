@@ -8,10 +8,11 @@ const LoginSignEl = styled.div`
   align-items: center;
   justify-content: center;
   column-gap: 1rem;
+  padding-right: 10px;
 `;
 const Login = styled.span`
   cursor: pointer;
-  border: 3px solid #fff;
+  border: 3px solid #e9ecef;
   border-radius: 10px;
   padding: 0.3rem 0.6rem;
   ${Fonts.GowunBatang}

@@ -62,15 +62,15 @@ h3 {
   width: 100%;
   margin: 0;
   height: 37px;
-  border: 2px solid #ffffff;
+  border: 2px solid #ebebeb;
   background-color: transparent;
   /* padding-left: 1rem; */
   /* padding-right: 1rem; */
-  border-radius: 4px;
+  border-radius: 10px;
   outline: 0;
   -webkit-transition: 0.3s ease-in-out;
   transition: 0.3s ease-in-out;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
 }
 
 .search-box > input:focus {

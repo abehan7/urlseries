@@ -7,7 +7,10 @@ import LoginSign from "./LoginSign";
 import Profile from "./Profile";
 
 const HeaderEl = styled.div`
-  /* background: #211e24; */
+  background: #fff;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+
   z-index: 3;
   position: sticky;
   top: 10px;
@@ -17,6 +20,7 @@ const HeaderEl = styled.div`
   align-items: center;
   grid-column: span 2;
   width: 100%;
+  height: 50px;
   border-radius: 10px;
 
   @media (max-width: 870px) {
@@ -27,13 +31,14 @@ const HeaderEl = styled.div`
 const LeftItems = styled.div`
   display: flex;
   align-items: center;
-  column-gap: 1.4rem;
+  padding-left: 1rem;
 `;
+
 const Logo = styled.div`
   width: 40px;
   height: 40px;
   /* background: black; */
-  border: 3px solid #fff;
+  /* border: 3px solid #fff; */
   display: flex;
   align-items: center;
   font-size: 1.5rem;
@@ -64,9 +69,9 @@ const Header = ({
   return (
     <HeaderEl>
       <LeftItems>
-        <Logo>
-          <LogoWrapper>ur</LogoWrapper>
-        </Logo>
+        {/* <Logo>
+          <LogoWrapper> </LogoWrapper>
+        </Logo> */}
         {/* <UserId>hanjk123님 환영합니다</UserId> */}
       </LeftItems>
       <SearchBox
