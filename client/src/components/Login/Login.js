@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import styled from "styled-components";
 import { LoginApi } from "../Api";
+import { UserContext } from "../../App";
 
 const LoginEl = styled.div`
   width: 100%;
@@ -92,11 +93,13 @@ export const LoginWrapper = styled.div`
   }
 `;
 
-const Login = ({ setLoginUser }) => {
+const Login = () => {
   const [user, setUser] = useState({
     user_id: "",
     password: "",
   });
+
+  const { setLoginUser } = useContext(UserContext);
 
   const [showLoginButton, setShowLoginButton] = useState(true);
   const [showLogoutButton, setShowLogoutButton] = useState(false);
@@ -118,6 +121,10 @@ const Login = ({ setLoginUser }) => {
   function handleClick(e) {
     window.location.href = "/signup";
   }
+
+  const onClickTitle = () => {
+    navigate("/");
+  };
 
   // FIXME: 구글 로그인
   const onLoginSuccess = (res) => {
@@ -160,7 +167,9 @@ const Login = ({ setLoginUser }) => {
   return (
     <LoginEl>
       <div className="login">
-        <Title>URurl</Title>
+        <Title onClick={onClickTitle} style={{ cursor: "pointer" }}>
+          URurl
+        </Title>
         <input
           type="text"
           name="user_id"

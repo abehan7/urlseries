@@ -44,7 +44,12 @@ const debounceSomethingFunc = debounce(
 );
 
 // FIXME: 스타일드 컴포넌트
-const SearchBoxEl = styled.div``;
+const SearchBoxEl = styled.div`
+  display: flex;
+  @media (max-width: 870px) {
+    display: none;
+  }
+`;
 
 const NotSearched = styled.div`
   display: flex;
@@ -60,6 +65,8 @@ const NotSearched = styled.div`
 const DeleteBtn = styled.div`
   margin-right: 8px;
 `;
+
+const Input = styled.input``;
 
 // FIXME: react컴포넌트 내부
 const SearchBox = ({
@@ -156,7 +163,7 @@ const SearchBox = ({
   return (
     <>
       <SearchBoxEl className="search-box">
-        <input
+        <Input
           type="text"
           value={text2}
           onClick={createModal2}

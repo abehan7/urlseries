@@ -3,6 +3,7 @@ import { debounce } from "lodash";
 import Axios from "axios";
 import { useDispatch } from "react-redux";
 import { SetResults, SetTypingNow } from "../../store/reducers/SearchResults";
+import styled from "styled-components";
 
 // =========== 해쉬태그 검색어 end ===========
 
@@ -32,7 +33,10 @@ const debounceSomethingFunc = debounce(async (e, AddUrls2Redux) => {
   const ApiResult = await ApiGetSearchedList(e);
   AddUrls2Redux(ApiResult);
 }, 400);
-// FIXME:
+// FIXME: 스타일드 컴포넌트
+const Input = styled.input``;
+
+// FIXME: 리액트 컴포넌트
 
 const SearchDelay = ({ createModal2, recentSearched, setRecentSearch }) => {
   const [text2, setText2] = useState("");
@@ -80,14 +84,12 @@ const SearchDelay = ({ createModal2, recentSearched, setRecentSearch }) => {
   };
 
   return (
-    <>
-      <input
-        type="text"
-        value={text2}
-        onClick={createModal2}
-        onChange={onDebounceChange}
-      />
-    </>
+    <Input
+      type="text"
+      value={text2}
+      onClick={createModal2}
+      onChange={onDebounceChange}
+    />
   );
 };
 

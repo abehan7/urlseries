@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import styled from "styled-components";
 import Colors from "../../Colors";
 import { Fonts } from "../../Themes";
@@ -7,12 +7,12 @@ import LoginSign from "./LoginSign";
 import Profile from "./Profile";
 
 const HeaderEl = styled.div`
-  background: #fff;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
-    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  position: relative;
+  /* background: #fff; */
+  /* box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px; */
 
   z-index: 3;
-  position: sticky;
   top: 10px;
   margin-top: 10px;
   display: flex;
@@ -23,8 +23,11 @@ const HeaderEl = styled.div`
   height: 50px;
   border-radius: 10px;
 
+  .search-box {
+  }
   @media (max-width: 870px) {
     grid-column: span 1;
+    column-gap: 1rem;
   }
 `;
 
@@ -60,20 +63,24 @@ const LogoWrapper = styled.div`
   ${Fonts.BareunBatang}
 `;
 
+const HeaderContext = createContext(null);
+
 const Header = ({
   createModal2,
   recentSearched,
   setRecentSearch,
   realTotalUrls,
 }) => {
+  const [isSearchBarOn, setIsSearchBarOn] = useState(false);
+  const initialState = { isSearchBarOn, setIsSearchBarOn };
   return (
     <HeaderEl>
-      <LeftItems>
-        {/* <Logo>
+      {/* <LeftItems> */}
+      {/* <Logo>
           <LogoWrapper> </LogoWrapper>
         </Logo> */}
-        {/* <UserId>hanjk123님 환영합니다</UserId> */}
-      </LeftItems>
+      {/* <UserId>hanjk123님 환영합니다</UserId> */}
+      {/* </LeftItems> */}
       <SearchBox
         createModal2={createModal2}
         recentSearched={recentSearched}

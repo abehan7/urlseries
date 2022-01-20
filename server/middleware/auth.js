@@ -25,7 +25,9 @@ const auth = async (req, res, next) => {
 
     next();
   } catch (error) {
-    console.log(error);
+    // console.log(error);
+    console.log("ur not Logged in");
+    // res.json({ messege: "ur not Logged in" });
   }
 };
 
