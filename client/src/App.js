@@ -15,8 +15,6 @@ const App = () => {
     setLoginUser,
   };
   return (
-    // 이름 ururl유알유알엘
-
     <Router>
       <UserContext.Provider value={initialState}>
         <HeadNav />

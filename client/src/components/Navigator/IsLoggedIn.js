@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import { BiLogOutCircle } from "react-icons/bi";
 import styled from "styled-components";
 import Icon from "./Icon.styled";
