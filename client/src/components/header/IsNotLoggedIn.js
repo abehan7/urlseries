@@ -1,6 +1,6 @@
 import React from "react";
+import { BiLogInCircle } from "react-icons/bi";
 import styled from "styled-components";
-import Colors from "../../Colors";
 import Login from "./Login.styled";
 
 const IsNotLoggedInEl = styled.div`
@@ -14,7 +14,10 @@ const IsNotLoggedIn = ({ handleSignUp, handleLogin }) => {
   return (
     <IsNotLoggedInEl>
       <SignUp onClick={handleSignUp}>Sign Up</SignUp>
-      <Login onClick={handleLogin}>Login</Login>
+      <Login onClick={handleLogin}>
+        <BiLogInCircle />
+        Login
+      </Login>
     </IsNotLoggedInEl>
   );
 };

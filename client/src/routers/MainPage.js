@@ -197,18 +197,15 @@ const MainPage = () => {
 
     setIsLoaded(true);
 
-    await Get21Urls(realLastId).then(async (response) => {
-      // await new Promise((resolve) => setTimeout(resolve, 1000));
-      responseListLength = response.data.length;
-      if (responseListLength === 0) {
-        return;
-      }
+    const { data } = await Get21Urls(realLastId);
+    responseListLength = data.length;
+    if (responseListLength === 0) {
+      setIsLoaded(false);
+      return;
+    }
+    setGetUrls((val) => [...val, ...data]);
+    realLastId = data[data.length - 1].url_id;
 
-      setGetUrls((val) => [...val, ...response.data]);
-      realLastId = response.data[response.data.length - 1].url_id;
-    });
-
-    setIsLoaded(false);
     console.log(getUrls[getUrls.length - 1].url_id);
     console.log("무한스크롤입니다");
   };

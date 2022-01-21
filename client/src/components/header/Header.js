@@ -63,7 +63,7 @@ const LogoWrapper = styled.div`
   ${Fonts.BareunBatang}
 `;
 
-const HeaderContext = createContext(null);
+export const HeaderContext = createContext(null);
 
 const Header = ({
   createModal2,
@@ -74,22 +74,23 @@ const Header = ({
   const [isSearchBarOn, setIsSearchBarOn] = useState(false);
   const initialState = { isSearchBarOn, setIsSearchBarOn };
   return (
-    <HeaderEl>
-      {/* <LeftItems> */}
-      {/* <Logo>
+    <HeaderContext.Provider value={initialState}>
+      <HeaderEl>
+        {/* <LeftItems> */}
+        {/* <Logo>
           <LogoWrapper> </LogoWrapper>
         </Logo> */}
-      {/* <UserId>hanjk123님 환영합니다</UserId> */}
-      {/* </LeftItems> */}
-      <SearchBox
-        createModal2={createModal2}
-        recentSearched={recentSearched}
-        setRecentSearch={setRecentSearch}
-        realTotalUrls={realTotalUrls}
-      />
-
-      <LoginSign />
-    </HeaderEl>
+        {/* <UserId>hanjk123님 환영합니다</UserId> */}
+        {/* </LeftItems> */}
+        <SearchBox
+          createModal2={createModal2}
+          recentSearched={recentSearched}
+          setRecentSearch={setRecentSearch}
+          realTotalUrls={realTotalUrls}
+        />
+        <LoginSign />
+      </HeaderEl>
+    </HeaderContext.Provider>
   );
 };
 
