@@ -34,6 +34,7 @@ import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
 import HeaderNav from "../components/header/HeaderNav";
 import HeaderNavV2 from "../components/header/HeaderNavV2";
 import HeaderNavWrapper from "../components/header/HeaderNavWrapper";
+import HeadNav from "../components/Navigator/HeadNav";
 
 export const MainStates = createContext(null);
 
@@ -263,6 +264,7 @@ const MainPage = () => {
         {/* {getUrls.length === 0 ? (
           <div className="firstLoading">yourURL</div>
         ) : ( */}
+
         <>
           <MainEl
             editMode={editMode}
@@ -274,6 +276,7 @@ const MainPage = () => {
           >
             {/* ======================================== 그리드 컨테이너  START  ========================================*/}
             {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
+
             <div className="grid-container">
               {/* <HeaderNavWrapper /> */}
 
