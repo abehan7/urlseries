@@ -1,9 +1,9 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import "./HeadNav.css";
 import { CgProfile, CgUserlane } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import LoginSign from "../header/LoginSign";
+import LoginSign from "./LoginSign";
 
 const Button = styled.div`
   cursor: pointer;
@@ -11,9 +11,14 @@ const Button = styled.div`
 
 const ProfileBtn = styled(Button)`
   position: relative;
+  > svg {
+    color: ${(props) => props.isClickedProfile && "orangered"};
+  }
 `;
 
 const HeadNav = () => {
+  const [isClickedProfile, setIsClickedProfile] = useState(false);
+
   const navigate = useNavigate();
   const onClickTitle = () => {
     navigate("/");
@@ -25,6 +30,11 @@ const HeadNav = () => {
   const onClickCS = () => {
     navigate("/CS");
   };
+
+  const onClickProfile = (e) => {
+    setIsClickedProfile((val) => !val);
+  };
+
   return (
     <nav className="navbar">
       <div className="navbar__logo">
@@ -46,14 +56,15 @@ const HeadNav = () => {
         </ul>
       </div>
 
-      <ProfileBtn className="navbar__icons">
-        <CgProfile />
-        <LoginSign />
+      <ProfileBtn className="navbar__icons" isClickedProfile={isClickedProfile}>
+        <CgProfile onClick={onClickProfile} />
+        {isClickedProfile && (
+          <LoginSign
+            setIsClickedProfile={setIsClickedProfile}
+            isClickedProfile={isClickedProfile}
+          />
+        )}
       </ProfileBtn>
-
-      <div className="navbar__toogleBtn">
-        <CgProfile />
-      </div>
     </nav>
   );
 };
