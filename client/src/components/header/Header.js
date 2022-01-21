@@ -48,11 +48,6 @@ const Logo = styled.div`
   border-radius: 10px;
 `;
 
-const UserId = styled.div`
-  font-size: 1.1rem;
-  ${Fonts.GowunBatang}
-`;
-
 const LogoWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -88,7 +83,6 @@ const Header = ({
           setRecentSearch={setRecentSearch}
           realTotalUrls={realTotalUrls}
         />
-        <LoginSign />
       </HeaderEl>
     </HeaderContext.Provider>
   );

@@ -48,9 +48,6 @@ const debounceSomethingFunc = debounce(
 const SearchBoxEl = styled.div`
   display: flex;
   z-index: 2;
-  @media (max-width: 870px) {
-    display: ${(props) => (props.isSearchBarOn ? "flex" : "none")};
-  }
 `;
 
 const NotSearched = styled.div`
@@ -84,8 +81,6 @@ const SearchBox = ({
     nothingFound: false,
     searchDone: true,
   });
-
-  const { isSearchBarOn } = useContext(HeaderContext);
 
   // FIXME: 키워드 정규화
   const KeywordNormalize = (keyword) => {
@@ -166,7 +161,7 @@ const SearchBox = ({
 
   return (
     <>
-      <SearchBoxEl className="search-box" isSearchBarOn={isSearchBarOn}>
+      <SearchBoxEl className="search-box">
         <Input
           type="text"
           value={text2}

@@ -35,6 +35,7 @@ import { GetTotalUrls, Get21Urls, TotalAfter } from "../components/Api";
 import styled from "styled-components";
 import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
 import { UserContext } from "../App";
+import HeadNav from "../components/Navigator/HeadNav";
 // import HeaderNavWrapper from "../components/headerNav/HeaderNavWrapper";
 
 export const MainStates = createContext(null);
@@ -277,113 +278,177 @@ const MainPage = () => {
         {/* {getUrls.length === 0 ? (
           <div className="firstLoading">yourURL</div>
         ) : ( */}
-        <>
-          <MainEl
-            editMode={editMode}
-            isDarkMode={isDarkMode}
-            className="MainPage"
-            onMouseDown={(e) => {
-              clickOutSide(e, clickedSearchInput, setClickedSearchInput);
-            }}
-          >
-            {/* ======================================== 그리드 컨테이너  START  ========================================*/}
-            {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
+        <MainEl
+          editMode={editMode}
+          isDarkMode={isDarkMode}
+          className="MainPage"
+          onMouseDown={(e) => {
+            clickOutSide(e, clickedSearchInput, setClickedSearchInput);
+          }}
+        >
+          {/* ======================================== 그리드 컨테이너  START  ========================================*/}
+          {/* 그리드 컨테이너 설명 : 검색창 + 공유 수정 + 내가 지정한 URL + 자주 이용하는 URL  + 전체 URL 박스  5개 있는 곳 */}
+          <div className="grid-container">
+            {/* <HeaderNavWrapper /> */}
 
-            <div className="grid-container">
-              {/* <HeaderNavWrapper /> */}
-              <Header
-                createModal2={createModal2}
-                recentSearched={recentSearched}
-                setRecentSearch={setRecentSearch}
+            <Header
+              createModal2={createModal2}
+              recentSearched={recentSearched}
+              setRecentSearch={setRecentSearch}
+              realTotalUrls={realTotalUrls}
+            />
+
+            <div className="share-write">
+              {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
+              <LeftIcons
+                editMode={editMode}
+                deleteMode={deleteMode}
+                setDeleteMode={setDeleteMode}
+                getUrls={getUrls}
+                setGetUrls={setGetUrls}
                 realTotalUrls={realTotalUrls}
+                setRealTotalUrls={setRealTotalUrls}
+                BoxTags_First={BoxTags_First}
               />
+              <RightIcons
+                editMode={editMode}
+                shareMode={shareMode}
+                BoxTags_First={BoxTags_First}
+                setBoxTags_First={setBoxTags_First}
+                setBoxTags={setBoxTags}
+                setEditMode={setEditMode}
+                setDeleteMode={setDeleteMode}
+                deleteMode={deleteMode}
+              />
+            </div>
+            {BoxTags_First ? (
+              <>
+                <div
+                  className="Rectangle left-top RectColor"
+                  style={
+                    BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                  }
+                >
+                  <h3
+                    onClick={() => {
+                      setIsDarkMode(!isDarkMode);
+                    }}
+                  >
+                    즐겨찾기{" "}
+                  </h3>
+                  <div
+                    className="text-container"
+                    style={
+                      !editMode ? { maxHeight: "205px", overflow: "auto" } : {}
+                    }
+                  >
+                    <FiveUrlsLeft
+                      values={likedUrls}
+                      editMode={editMode}
+                      setMyFav={setMyFav}
+                      setTopMoreWhat={setTopMoreWhat}
+                    />
+                  </div>
+                </div>
+                <div
+                  className="Rectangle right-top RectColor"
+                  style={
+                    BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                  }
+                >
+                  <h3>최근기록</h3>
+                  <div
+                    className="text-container"
+                    style={
+                      !editMode ? { maxHeight: "205px", overflow: "auto" } : {}
+                    }
+                  >
+                    <FiveUrlsRight
+                      values={mostClickedUrls}
+                      editMode={editMode}
+                      shareMode={shareMode}
+                      setMyFav={setMyFav}
+                      setTopMoreWhat={setTopMoreWhat}
+                    />
+                  </div>
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
 
-              <div className="share-write">
-                {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
-                <LeftIcons
-                  editMode={editMode}
-                  deleteMode={deleteMode}
-                  setDeleteMode={setDeleteMode}
-                  getUrls={getUrls}
-                  setGetUrls={setGetUrls}
-                  realTotalUrls={realTotalUrls}
-                  setRealTotalUrls={setRealTotalUrls}
-                  BoxTags_First={BoxTags_First}
-                />
-                <RightIcons
-                  editMode={editMode}
-                  shareMode={shareMode}
-                  BoxTags_First={BoxTags_First}
-                  setBoxTags_First={setBoxTags_First}
-                  setBoxTags={setBoxTags}
-                  setEditMode={setEditMode}
-                  setDeleteMode={setDeleteMode}
-                  deleteMode={deleteMode}
-                />
-              </div>
-              {BoxTags_First ? (
-                <>
-                  <div
-                    className="Rectangle left-top RectColor"
-                    style={
-                      BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
-                    }
-                  >
-                    <h3
-                      onClick={() => {
-                        setIsDarkMode(!isDarkMode);
-                      }}
-                    >
-                      즐겨찾기{" "}
-                    </h3>
-                    <div
-                      className="text-container"
-                      style={
-                        !editMode
-                          ? { maxHeight: "205px", overflow: "auto" }
-                          : {}
-                      }
-                    >
-                      <FiveUrlsLeft
-                        values={likedUrls}
-                        editMode={editMode}
-                        setMyFav={setMyFav}
-                        setTopMoreWhat={setTopMoreWhat}
-                      />
-                    </div>
-                  </div>
-                  <div
-                    className="Rectangle right-top RectColor"
-                    style={
-                      BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
-                    }
-                  >
-                    <h3>최근기록</h3>
-                    <div
-                      className="text-container"
-                      style={
-                        !editMode
-                          ? { maxHeight: "205px", overflow: "auto" }
-                          : {}
-                      }
-                    >
-                      <FiveUrlsRight
-                        values={mostClickedUrls}
-                        editMode={editMode}
-                        shareMode={shareMode}
-                        setMyFav={setMyFav}
-                        setTopMoreWhat={setTopMoreWhat}
-                      />
-                    </div>
-                  </div>
-                </>
+            {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
+            <div className="minisize-tags aside-tags">
+              {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
+              <AsideTag
+                editMode={editMode}
+                BoxTags_First={BoxTags_First}
+                setBoxTags_First={setBoxTags_First}
+                BoxTags={BoxTags}
+                setBoxTags={setBoxTags}
+                assignedTags={assignedTags}
+              />
+            </div>
+            <div
+              className="Big_Rect RectColor"
+              style={!editMode ? MkColorTopRect : emptyStyle}
+            >
+              {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
+              {/* 값은 true false 이렇게 두가지인데  */}
+              {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
+              {/* 전체 URL이라는 h3가 HashTag라고 바뀜  */}
+              {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
+              {editMode ? (
+                BoxTags_First ? (
+                  <GridHeader />
+                ) : (
+                  <h3>HashTag</h3>
+                )
+              ) : BoxTags_First ? (
+                <h3>에디터모드입니다</h3>
               ) : (
-                <></>
+                <h3>HashTag</h3>
               )}
-
-              {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
-              <div className="minisize-tags aside-tags">
-                {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
+              <div className="text-three-container">
+                {BoxTags_First ? (
+                  // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
+                  <>
+                    <TotalUrlMap
+                      getUrls={getUrls}
+                      setGetUrls={setGetUrls}
+                      editMode={editMode}
+                      shareMode={shareMode}
+                      setMyFav={setMyFav}
+                      deleteMode={deleteMode}
+                    />
+                    {realTotalUrls.length > 42 && (
+                      <div ref={setTarget} className="Target-Element">
+                        {isLoaded && <Loader />}
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
+                  <UrlsByHashTag
+                    realTotalUrls={realTotalUrls}
+                    setRealTotalUrls={setRealTotalUrls}
+                    BoxTags={BoxTags}
+                    editMode={editMode}
+                    deleteMode={deleteMode}
+                    setMyFav={setMyFav}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
+          {/* ======================================== 그리드 컨테이너  END  ========================================*/}
+          {/* ======================================== 날개 START ========================================*/}
+          {/* aside설명 : 여기는 오른쪽 색깔있는 해쉬태그 버튼들 공간 */}
+          {(folderItems?.length !== 0 || assignedTags?.length !== 0) && (
+            <div className="aside">
+              <div className="for-filling"></div>
+              <div className="aside-tags">
+                {/* 전체 url들의 해쉬태그들 뿌려주는 공간*/}
                 <AsideTag
                   editMode={editMode}
                   BoxTags_First={BoxTags_First}
@@ -393,124 +458,54 @@ const MainPage = () => {
                   assignedTags={assignedTags}
                 />
               </div>
-              <div
-                className="Big_Rect RectColor"
-                style={!editMode ? MkColorTopRect : emptyStyle}
-              >
-                {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
-                {/* 값은 true false 이렇게 두가지인데  */}
-                {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
-                {/* 전체 URL이라는 h3가 HashTag라고 바뀜  */}
-                {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
-                {editMode ? (
-                  BoxTags_First ? (
-                    <GridHeader />
-                  ) : (
-                    <h3>HashTag</h3>
-                  )
-                ) : BoxTags_First ? (
-                  <h3>에디터모드입니다</h3>
-                ) : (
-                  <h3>HashTag</h3>
-                )}
-                <div className="text-three-container">
-                  {BoxTags_First ? (
-                    // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
-                    <>
-                      <TotalUrlMap
-                        getUrls={getUrls}
-                        setGetUrls={setGetUrls}
-                        editMode={editMode}
-                        shareMode={shareMode}
-                        setMyFav={setMyFav}
-                        deleteMode={deleteMode}
-                      />
-                      {realTotalUrls.length > 42 && (
-                        <div ref={setTarget} className="Target-Element">
-                          {isLoaded && <Loader />}
-                        </div>
-                      )}
-                    </>
-                  ) : (
-                    // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
-                    <UrlsByHashTag
-                      realTotalUrls={realTotalUrls}
-                      setRealTotalUrls={setRealTotalUrls}
-                      BoxTags={BoxTags}
-                      editMode={editMode}
-                      deleteMode={deleteMode}
-                      setMyFav={setMyFav}
-                    />
-                  )}
-                </div>
-              </div>
             </div>
-            {/* ======================================== 그리드 컨테이너  END  ========================================*/}
-            {/* ======================================== 날개 START ========================================*/}
-            {/* aside설명 : 여기는 오른쪽 색깔있는 해쉬태그 버튼들 공간 */}
-            {(folderItems?.length !== 0 || assignedTags?.length !== 0) && (
-              <div className="aside">
-                <div className="for-filling"></div>
-                <div className="aside-tags">
-                  {/* 전체 url들의 해쉬태그들 뿌려주는 공간*/}
-                  <AsideTag
-                    editMode={editMode}
-                    BoxTags_First={BoxTags_First}
-                    setBoxTags_First={setBoxTags_First}
-                    BoxTags={BoxTags}
-                    setBoxTags={setBoxTags}
-                    assignedTags={assignedTags}
-                  />
-                </div>
-              </div>
-            )}
+          )}
 
-            {/* ======================================== 날개 END ======================================== */}
-            {/* ======================================== 모달들 START ======================================== */}
-            <div className="addUrl-container">
-              <AddUrlModal getUrls={getUrls} setGetUrls={setGetUrls} />
-            </div>
-            <div className="editUrl-container">
-              <EditUrlModal
-                myFav={myFav}
-                setMyFav={setMyFav}
-                getUrls={getUrls}
-                setGetUrls={setGetUrls}
-                likedUrls={likedUrls}
-                setLikedUrls={setLikedUrls}
-                mostClickedUrls={mostClickedUrls}
-                setMostClickedUrls={setMostClickedUrls}
-                realTotalUrls={realTotalUrls}
-                setRealTotalUrls={setRealTotalUrls}
-              />
-            </div>
-            <div className="shareUrl-container">
-              <ShareUrlModal
-              // totalTags={totalTags}
-              // setTotalTags={setTotalTags}
-              // realTotalUrls={realTotalUrls}
-              />
-            </div>
-            <div className="top-moreUrls-container">
-              <TopMore
-                likedUrls={likedUrls}
-                mostClickedUrls={mostClickedUrls}
-                topMoreWhat={topMoreWhat}
-                setTopMoreWhat={setTopMoreWhat}
-              />
-            </div>
-            <div className="hashtagModal-container">
-              <HashTagModal
-                assignedTags={assignedTags}
-                setAssignedTags={setAssignedTags}
-                totalTags={totalTags}
-                setTotalTags={setTotalTags}
-              />
-            </div>
+          {/* ======================================== 날개 END ======================================== */}
+          {/* ======================================== 모달들 START ======================================== */}
+          <div className="addUrl-container">
+            <AddUrlModal getUrls={getUrls} setGetUrls={setGetUrls} />
+          </div>
+          <div className="editUrl-container">
+            <EditUrlModal
+              myFav={myFav}
+              setMyFav={setMyFav}
+              getUrls={getUrls}
+              setGetUrls={setGetUrls}
+              likedUrls={likedUrls}
+              setLikedUrls={setLikedUrls}
+              mostClickedUrls={mostClickedUrls}
+              setMostClickedUrls={setMostClickedUrls}
+              realTotalUrls={realTotalUrls}
+              setRealTotalUrls={setRealTotalUrls}
+            />
+          </div>
+          <div className="shareUrl-container">
+            <ShareUrlModal
+            // totalTags={totalTags}
+            // setTotalTags={setTotalTags}
+            // realTotalUrls={realTotalUrls}
+            />
+          </div>
+          <div className="top-moreUrls-container">
+            <TopMore
+              likedUrls={likedUrls}
+              mostClickedUrls={mostClickedUrls}
+              topMoreWhat={topMoreWhat}
+              setTopMoreWhat={setTopMoreWhat}
+            />
+          </div>
+          <div className="hashtagModal-container">
+            <HashTagModal
+              assignedTags={assignedTags}
+              setAssignedTags={setAssignedTags}
+              totalTags={totalTags}
+              setTotalTags={setTotalTags}
+            />
+          </div>
 
-            {/* ======================================== 모달들 END ======================================== */}
-          </MainEl>
-        </>
+          {/* ======================================== 모달들 END ======================================== */}
+        </MainEl>
         {/* )} */}
       </MainStates.Provider>
     </>

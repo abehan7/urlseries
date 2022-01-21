@@ -153,6 +153,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
 
     setRealTotalUrls([data, ...realTotalUrls]);
     setGetUrls([data, ...getUrls]);
+
     setUrlInfo(InitialStates);
   };
 

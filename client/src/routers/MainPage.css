@@ -34,7 +34,7 @@ h3 {
   display: grid;
   justify-content: center;
   align-items: center;
-  padding-top: 2rem;
+  padding-top: 3rem;
   padding-bottom: 8rem;
   height: 100%;
   grid-template-columns: repeat(2, 400px);
@@ -600,6 +600,10 @@ h3 {
 }
 
 @media (max-width: 870px) {
+  .grid-container {
+    /* padding-top: 2rem; */
+  }
+
   .delete-mode-click-container div {
     width: 30px;
   }
