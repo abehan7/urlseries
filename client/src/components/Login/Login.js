@@ -106,9 +106,6 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const clientId =
-    "828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com";
-
   const handleChange = (e) => {
     console.log(e.target.value);
     const { name, value } = e.target;
@@ -127,6 +124,10 @@ const Login = () => {
   };
 
   // FIXME: 구글 로그인
+
+  const clientId =
+    "828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com";
+
   const onLoginSuccess = (res) => {
     console.log("Login Success :", res.profileObj);
     setShowLoginButton(false);
@@ -217,6 +218,7 @@ const Login = () => {
             />
           ) : null}
         </div>
+        {/* <GoogleButton /> */}
         <div type="button" onClick={handleClick} style={{ cursor: "pointer" }}>
           회원가입
         </div>
