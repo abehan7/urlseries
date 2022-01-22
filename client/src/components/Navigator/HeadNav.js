@@ -30,13 +30,13 @@ const HeadNav = () => {
           <CgProfile />
         </li>
 
-        <li className="burger">
+        {/* <li className="burger">
           <CgMenu />
-        </li>
+        </li> */}
       </div>
 
       <a href="#" className="navbar__toogleBtn">
-        <CgMenu />
+        <CgProfile />
       </a>
     </nav>
   );
