@@ -53,4 +53,64 @@ font-family: 'WandohopeB';
     font-family: 'Mongdol';
     
     `,
+
+  BareunBatang: `@font-face {
+      font-family: 'BareunBatang';
+      font-style: normal;
+      font-weight: 400;
+      src: url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunBatang/BareunBatangOTFM.woff2') format('woff2'), url('//cdn.jsdelivr.net/korean-webfonts/1/orgs/othrs/kpa/BareunBatang/BareunBatangOTFM.woff') format('woff');
+    }
+    font-family: 'BareunBatang';
+    
+    `,
+  CWDangamAsac: `@font-face {
+      font-family: 'CWDangamAsac-Bold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/CWDangamAsac-Bold.woff') format('woff');
+      font-weight: normal;
+      font-style: normal;
+      }
+      font-family: 'CWDangamAsac-Bold';
+      
+      `,
+
+  YangJin: `@font-face {
+        font-family: '양진체';
+        src: url('https://cdn.jsdelivr.net/gh/supernovice-lab/font@0.9/yangjin.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+    font-family: '양진체';
+    
+    `,
+
+  Hahmlet: `@font-face {
+      font-family: 'Hahmlet-Bold';
+      src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/Hahmlet-Bold.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+  }
+  
+  font-family: 'Hahmlet-Bold';
+  `,
+
+  Pretendard: `@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+font-family: 'Pretendard-Regular';
+
+`,
+  GowunBatang: `
+@font-face {
+  font-family: 'GowunBatang-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunBatang-Regular.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+font-family: 'GowunBatang-Regular';
+`,
 };

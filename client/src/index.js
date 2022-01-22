@@ -5,7 +5,6 @@ import "./index.css";
 import { Provider } from "react-redux";
 import store2 from "./store/store2";
 import { createGlobalStyle } from "styled-components";
-import HeaderNav from "./components/header/HeaderNav";
 
 const GlobalStyle = createGlobalStyle`
 position: relative;
@@ -17,8 +16,19 @@ position: relative;
   font-style: normal;
 }
 
+@font-face {
+    font-family: 'Pretendard-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+    font-weight: 400;
+    font-style: normal;
+}
+
+
+
 * {
-  font-family: "GowunDodum-Regular";
+  /* font-family: "GowunDodum-Regular"; */
+  font-family: 'Pretendard-Regular';
+
   font-weight: bold;
   
 }

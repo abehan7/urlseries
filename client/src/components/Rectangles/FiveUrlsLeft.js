@@ -14,7 +14,7 @@ const FiveUrlsLeftEl = styled(UrlRectWrapper)`
 const FiveUrlsLeft = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
   const [Height, setHeight] = useState(0);
 
-  const fiveStuffs = values.slice(0, 5);
+  const fiveStuffs = values.slice(0, 6);
   const { setUrlDetail } = useContext(MainStates);
 
   const WhenEditMode = ({ url: value }) => {
@@ -72,7 +72,7 @@ const FiveUrlsLeft = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
           </FiveUrlsLeftEl>
         );
       })}
-      {values.length > 5 && editMode && (
+      {values.length > 6 && editMode && (
         <MoreBtn setTopMoreWhat={setTopMoreWhat} where="Left" />
       )}
     </>
