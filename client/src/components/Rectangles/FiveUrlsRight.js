@@ -13,7 +13,7 @@ const FiveUrlsRightEl = styled(UrlRectWrapper)`
 `;
 const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
   const [Height, setHeight] = useState(0);
-  const fiveStuffs = values.slice(0, 5);
+  const fiveStuffs = values.slice(0, 6);
 
   const { setUrlDetail } = useContext(MainStates);
 
@@ -71,7 +71,7 @@ const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
           </FiveUrlsRightEl>
         );
       })}
-      {values.length > 5 && editMode && (
+      {values.length > 6 && editMode && (
         <MoreBtn setTopMoreWhat={setTopMoreWhat} where="Right" />
       )}
     </>

@@ -77,10 +77,16 @@ const Join = () => {
     //   }
   };
 
+  const onClickTitle = () => {
+    navigate("/");
+  };
+
   return (
     <JoinEl>
       <div id="content">
-        <h1>URurl</h1>
+        <h1 onClick={onClickTitle} style={{ cursor: "pointer" }}>
+          URurl
+        </h1>
         <div className="form-div">
           <Form onSubmit={onSubmit}>
             <div>

@@ -34,11 +34,11 @@ h3 {
   display: grid;
   justify-content: center;
   align-items: center;
-  padding-top: 2rem;
+  padding-top: 3rem;
   padding-bottom: 8rem;
   height: 100%;
   grid-template-columns: repeat(2, 400px);
-  grid-template-rows: 40px 50px auto auto;
+  grid-template-rows: 50px auto auto;
   grid-gap: 20px;
   padding-right: 40px;
 }
@@ -52,7 +52,7 @@ h3 {
   justify-content: center;
   width: 250px;
   height: 100%;
-  padding: 10px;
+  /* padding: 10px; */
   margin-left: auto;
   margin-right: auto;
 }
@@ -61,16 +61,16 @@ h3 {
   border: 0;
   width: 100%;
   margin: 0;
-  height: 100%;
-  border: 2px solid #ffffff;
+  height: 37px;
+  border: 2px solid #fff;
   background-color: transparent;
   /* padding-left: 1rem; */
   /* padding-right: 1rem; */
-  border-radius: 4px;
+  border-radius: 10px;
   outline: 0;
   -webkit-transition: 0.3s ease-in-out;
   transition: 0.3s ease-in-out;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
 }
 
 .search-box > input:focus {
@@ -83,7 +83,7 @@ h3 {
 
 .search-box > svg {
   position: absolute;
-  right: 15px;
+  right: 0;
 
   /* z-index: 2; */
 }
@@ -241,7 +241,7 @@ h3 {
   border-radius: 40%;
   padding: 3px;
   margin-left: 0.3rem;
-  border: 3px solid #f3f3f3;
+  border: 3px solid #fff;
 }
 
 .right-icons div:hover {
@@ -600,6 +600,10 @@ h3 {
 }
 
 @media (max-width: 870px) {
+  .grid-container {
+    /* padding-top: 2rem; */
+  }
+
   .delete-mode-click-container div {
     width: 30px;
   }
@@ -673,9 +677,5 @@ h3 {
 
   .aside-tags {
     max-height: 200px;
-  }
-
-  .Searched-Stuffs-Container > .searched-Stuff {
-    /* min-height: auto; */
   }
 }
