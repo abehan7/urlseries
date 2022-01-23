@@ -1,5 +1,6 @@
 import React, { createContext, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import AboutPage from "./components/AboutPage/AboutPage";
 import Join from "./components/Join/Join";
 import Login from "./components/Login/Login";
 import HeadNav from "./components/Navigator/HeadNav";
@@ -20,6 +21,7 @@ const App = () => {
         <HeadNav />
 
         <Routes>
+          <Route path="/about" element={<AboutPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Join />} />
           <Route path="/" exact={true} element={<MainPage />} />

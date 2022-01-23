@@ -1,0 +1,41 @@
+.mainText {
+  padding-top: 50px;
+  height: 150px;
+  text-align: center;
+  line-height: 150px;
+}
+
+.aboutMain {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  text-align: center;
+}
+
+.maindetail_one,
+.maindetail_two {
+  display: flex;
+  flex-direction: row;
+  height: 250px;
+  justify-content: center;
+  align-items: center;
+}
+.maindetail_one {
+  background-color: #f6f6f6;
+}
+
+.maindetail_two {
+  background-color: #c4c4c4;
+}
+
+.text {
+  /* padding: 5px; */
+  width: 400px;
+  font-size: 25px;
+  font-weight: normal;
+}
+
+.image {
+  /* padding: 5px; */
+  width: 1200px;
+}
