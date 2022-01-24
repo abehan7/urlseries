@@ -2,6 +2,7 @@ const db = require("../models");
 const puppeteer = require("puppeteer");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const { Users } = require("../models");
 
 dotenv.config({ path: "../.env" });
 
