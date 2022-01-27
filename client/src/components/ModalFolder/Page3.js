@@ -48,11 +48,7 @@ const Page3 = ({ setAssignedTags, assignedTags, totalTags, setTotalTags }) => {
     }
   };
 
-  const Page3Wrap = styled.div`
-    div {
-      // color: #fff;
-    }
-  `;
+  const Page3Wrap = styled.div``;
   return (
     <Page3Wrap>
       <div className="modal-window hashTag-modal-window">

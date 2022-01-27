@@ -3,7 +3,11 @@ import { MdExpandMore } from "react-icons/md";
 import styled from "styled-components";
 import { PopupEnable } from "../../functions/stopScroll";
 
-const MoreBtnEl = styled.div``;
+const MoreBtnEl = styled.div`
+  @media (max-width: 470px) {
+    height: 2.5rem;
+  }
+`;
 const MoreBtn = ({ setTopMoreWhat, where }) => {
   return (
     <MoreBtnEl

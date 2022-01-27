@@ -1,4 +1,4 @@
-import { ChangedAssignedTagAPI } from "../../Api";
+import { ChangedAssignedTagAPI } from "../Api";
 
 export const modify = (setTotalTags, totalTags, assignedTags, setTagSearch) => {
   document.querySelector(".hashtagModal-container").style.display = "none";

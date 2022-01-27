@@ -15,9 +15,7 @@ import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
 // Modals
 import AddUrlModal from "../components/Modals/AddUrlModal";
 import EditUrlModal from "../components/Modals/EditUrlModal";
-import ShareUrlModal from "../components/Modals/ShareUrlModal";
 import TopMore from "../components/Modals/TopMore";
-import HashTagModal from "../components/Modals/hashtags/HashTagModal";
 // TopIcons
 import LeftIcons from "../components/TopIcons/LeftIcons";
 import RightIcons from "../components/TopIcons/RightIcons";
@@ -25,7 +23,6 @@ import RightIcons from "../components/TopIcons/RightIcons";
 import AsideTag from "../components/AsideTags/AsideTag";
 import GridHeader from "../components/GridHeader";
 // SearchArea
-import SearchBox from "../components/searchBar/SearchBox";
 import Loader from "../components/searchBar/Loader";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
@@ -34,9 +31,7 @@ import { Page3Actions } from "../store/reducers/editModalP3";
 import { GetTotalUrls, Get21Urls, TotalAfter } from "../components/Api";
 import styled from "styled-components";
 import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
-import { UserContext } from "../App";
-import HeadNav from "../components/Navigator/HeadNav";
-// import HeaderNavWrapper from "../components/headerNav/HeaderNavWrapper";
+import ModalHashtag from "../components/ModalHashtag/ModalHashtag";
 
 export const MainStates = createContext(null);
 
@@ -480,13 +475,7 @@ const MainPage = () => {
               setRealTotalUrls={setRealTotalUrls}
             />
           </div>
-          <div className="shareUrl-container">
-            <ShareUrlModal
-            // totalTags={totalTags}
-            // setTotalTags={setTotalTags}
-            // realTotalUrls={realTotalUrls}
-            />
-          </div>
+          <div className="shareUrl-container"></div>
           <div className="top-moreUrls-container">
             <TopMore
               likedUrls={likedUrls}
@@ -496,7 +485,7 @@ const MainPage = () => {
             />
           </div>
           <div className="hashtagModal-container">
-            <HashTagModal
+            <ModalHashtag
               assignedTags={assignedTags}
               setAssignedTags={setAssignedTags}
               totalTags={totalTags}

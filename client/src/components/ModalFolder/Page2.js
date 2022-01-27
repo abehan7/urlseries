@@ -4,14 +4,14 @@ import "./Page2.css";
 import { AiFillStar, AiOutlineArrowUp, AiOutlineEdit } from "react-icons/ai";
 import { TiBackspace, TiFolderDelete } from "react-icons/ti";
 import { BsPatchCheck } from "react-icons/bs";
-import { PopupDisable } from "../../../functions/stopScroll";
+import { PopupDisable } from "../../functions/stopScroll";
 import Page2GridItem from "./Page2GridItem";
 import { useDispatch, useSelector } from "react-redux";
-import { Page3Actions } from "../../../store/reducers/editModalP3";
+import { Page3Actions } from "../../store/reducers/editModalP3";
 import { FiPlusSquare } from "react-icons/fi";
 import { debounce } from "lodash";
-import Colors from "../../../Colors";
-import { AddFolder, DeleteFolderAPI, LikeConfirmPutAPI } from "../../Api";
+import Colors from "../../Colors";
+import { AddFolder, DeleteFolderAPI, LikeConfirmPutAPI } from "../Api";
 
 const debounceSomethingFunc = debounce(() => {
   document.querySelector(".tempModal div").innerText =

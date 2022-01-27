@@ -3,7 +3,7 @@ import { AiOutlineFolder } from "react-icons/ai";
 import { MdOutlineTag } from "react-icons/md";
 import { useSelector } from "react-redux";
 
-const RightItem = ({ assignedTags, removeToggle }) => {
+const ItemRight = ({ assignedTags, removeToggle }) => {
   const {
     page3Storage: { nowPage2, nowFolder2 },
   } = useSelector((state) => state);
@@ -44,4 +44,4 @@ const RightItem = ({ assignedTags, removeToggle }) => {
   );
 };
 
-export default RightItem;
+export default ItemRight;

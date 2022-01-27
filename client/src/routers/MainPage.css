@@ -145,41 +145,7 @@ h3 {
   align-items: center;
   justify-content: center;
 }
-.loadingImg {
-}
 
-.loadingImg img {
-}
-
-.loading-ment {
-}
-
-.loading-ment > div {
-  /* padding: 2px; */
-}
-/* 
-.searched-Stuff {
-  display: flex;
-  align-items: center;
-  min-height: 40px;
-} */
-/* 
-.searched-Stuff .Searched-url-Title {
-  max-height: 40px;
-  overflow: hidden;
-} */
-/* 
-.searched-Stuff:hover {
-  background: #e9ecef57;
-  cursor: pointer;
-} */
-/* 
-.searched-Stuff > div {
-  display: flex;
-  width: auto;
-  height: auto;
-  z-index: 1;
-} */
 .Searched-url-Id {
   /* display: flex; */
   padding: 10px;
@@ -193,24 +159,11 @@ h3 {
   padding-right: 10px;
 }
 
-.notSearched {
-}
-/* .Search-balloon:after {
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  margin-left: -10px;
-  border: solid transparent;
-  border-color: rgba(51, 51, 51, 0);
-  border-bottom-color: #333;
-  border-width: 10px;
-  pointer-events: none;
-  content: " ";
-} */
-
 .share-write {
+  /* position: sticky; */
+  top: 50px;
+  z-index: 2;
+
   grid-column: span 2;
   display: flex;
   width: 100%;
@@ -242,10 +195,13 @@ h3 {
   padding: 3px;
   margin-left: 0.3rem;
   border: 3px solid #fff;
+
+  background-color: #e9ecef;
 }
 
 .right-icons div:hover {
-  background-color: rgba(0, 0, 0, 0.07);
+  /* background-color: #fff; */
+
   transition: 500ms;
 }
 
@@ -255,6 +211,10 @@ h3 {
 }
 .right-icons div svg {
   padding: 0;
+}
+.right-icons div.shareUrl-icon svg {
+  padding: 0.2rem;
+  font-weight: 800;
 }
 
 .addUrl-icon {
@@ -316,10 +276,11 @@ h3 {
   border-radius: 40%;
   padding: 3px;
   border: 3px solid #f3f3f3;
+  background-color: #e9ecef;
 }
 
 .delete-icon svg:hover {
-  background-color: rgba(0, 0, 0, 0.07);
+  background-color: #fff;
   transition: 500ms;
 }
 

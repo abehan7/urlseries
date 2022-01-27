@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
-const LeftItem = ({
-  tagSearch,
-  setTagSearch,
+const ItemLeft = ({
+  searchedTag,
+  setSearchedTag,
   filterd,
   totalTags,
   toggleFunc,
@@ -38,21 +38,21 @@ const LeftItem = ({
 
   return (
     <div className="LeftItem">
-      <div className="searchTags-Container">
+      <div className="searchedTags-Container">
         <input
-          value={tagSearch}
+          value={searchedTag}
           className="tag-searchBar"
           placeholder="선택할 태그를 입력해주세요"
           onChange={(e) => {
             console.log(e.target.value);
-            setTagSearch(e.target.value);
+            setSearchedTag(e.target.value);
             console.log(filterd);
           }}
         />
       </div>
       <div className="content hashtag-content">
         <div className="flexWrapBox">
-          {tagSearch.length === 0 ? (
+          {searchedTag.length === 0 ? (
             <>
               {totalTags.map((val, i) => {
                 return (
@@ -92,4 +92,4 @@ const LeftItem = ({
   );
 };
 
-export default LeftItem;
+export default ItemLeft;

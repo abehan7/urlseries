@@ -1,14 +1,18 @@
 import React, { useContext } from "react";
-import { AiOutlineEdit, AiTwotoneEdit } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineFolder, AiTwotoneEdit } from "react-icons/ai";
 import { BiPaperPlane } from "react-icons/bi";
+import { FiFolder } from "react-icons/fi";
 import { FiPlusSquare } from "react-icons/fi";
 import { MdOutlineTag } from "react-icons/md";
+import styled from "styled-components";
 import { TopTwoRectsEditModeScrollUp } from "../../functions/ScrollUp";
 import { PopupEnable } from "../../functions/stopScroll";
 import { MainStates } from "../../routers/MainPage";
 import { RefreshBtn } from "../AsideTags/BoxTagControler";
-import EditModeRectsFunc from "../editModeFucs/EditModeRectsFunc";
 
+const ShareIcon = styled.div`
+  font-size: 1.3rem;
+`;
 const RightIcons = ({
   editMode,
   shareMode,
@@ -90,9 +94,9 @@ const RightIcons = ({
         <MdOutlineTag style={!BoxTags_First ? HashIconStyle : emptyStyle} />
       </div>
 
-      <div className="shareUrl-icon" onClick={ShareIconOnClick}>
-        <BiPaperPlane />
-      </div>
+      <ShareIcon className="shareUrl-icon" onClick={ShareIconOnClick}>
+        <AiOutlineFolder />
+      </ShareIcon>
     </div>
   );
 };
