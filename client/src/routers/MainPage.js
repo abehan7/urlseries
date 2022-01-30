@@ -6,7 +6,7 @@ import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../functions/keepModalsShow";
 
 // Header
-import Header from "../components/header/Header";
+import Header from "../components/Header/Header";
 // Rectangles
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
@@ -135,22 +135,22 @@ const MainPage = () => {
   useEffect(() => {
     if (token) {
       let preTags = [];
-      TotalAfter().then((response) => {
+      TotalAfter().then(async (response) => {
         const {
-          data: { totalAfter, initAssigned },
+          data: { totalAfter, hashtag_assigned },
         } = response;
-        setRealTotalUrls(totalAfter);
+        await setRealTotalUrls(totalAfter);
 
         // 전체 태그들 뽑는 기능
-        setTotalTags(getTotalTags(totalAfter, initAssigned));
+        await setTotalTags(getTotalTags(totalAfter, hashtag_assigned));
 
         // 선택한 태그들 json으로 만들기 // 근데 만들 필요가 있냐? 아니 굳이 그러지 않아도 될거같아
 
-        initAssigned.forEach((tag) => {
+        hashtag_assigned.forEach((tag) => {
           preTags.push({ name: tag, assigned: 1, origin: 1 });
         });
 
-        setAssignedTags([...preTags]);
+        await setAssignedTags([...preTags]);
       });
     }
   }, [token]);

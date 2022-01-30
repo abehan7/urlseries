@@ -16,11 +16,12 @@ const ButtonWrapper = styled.div`
 
 const ModalContent = ({
   handleCloseModal,
+  setAssignedTags,
   assignedTags,
-  totalTags,
   setTotalTags,
+  totalTags,
 }) => {
-  const [searchedTag, setSearchedTag] = useState("");
+  const [searchBarInput, setSearchBarInput] = useState("");
   const [filterdTags, setFilterdTags] = useState([]);
 
   // #FIXME: #1 검색필터
@@ -29,39 +30,57 @@ const ModalContent = ({
       return val.name
         .toLowerCase()
         .replace(/(\s*)/g, "")
-        .includes(searchedTag.toLowerCase().replace(/(\s*)/g, "")); // 큰거 작은거 검색하고싶은거를 뒤에 넣기
+        .includes(searchBarInput.toLowerCase().replace(/(\s*)/g, "")); // 큰거 작은거 검색하고싶은거를 뒤에 넣기
     });
     return filterd;
-  }, [totalTags]);
+  }, [totalTags, searchBarInput]);
 
   useEffect(() => {
     const filterd = SearchFilter();
     setFilterdTags(filterd);
-  }, [totalTags]);
+  }, [SearchFilter]);
 
-  // FIXME: #2 좌측 토글 클릭
-  const ToggleClicked = (val) => {};
+  // FIXME: #2 ItemLeft토글 클릭
+  const ToggleClicked = (clickedTag) => {
+    // assignedTags
+    setAssignedTags((tag) => [...tag, { ...clickedTag, assigned: 1 }]);
 
-  // FIXME: #3 좌측 토글 해제
-  const ToggleUnClicked = (val) => {
-    //공통
-    setTotalTags(
-      totalTags.map((tag) => {
-        return val.name === tag.name ? val : tag;
-      })
-    );
+    // totalTags
+    const filterd = totalTags.map((tag) => {
+      return tag.name === clickedTag.name ? { ...tag, assigned: 1 } : tag;
+    });
+    setTotalTags(filterd);
   };
 
-  // FIXME: #4 어떤 기능인지 잘 모르겠어
-  const toggleFunc = (e, val) => {
+  // FIXME: #3 ItemLeft토글 해제
+  const ToggleUnClicked = (clickedTag) => {
+    // assigned 태그
+    const filterdAssignedTags = assignedTags.filter((tag) => {
+      return tag.name !== clickedTag.name;
+    });
+    setAssignedTags(filterdAssignedTags);
+
+    // total 태그
+    const processedTotalTags = totalTags.map((tag) => {
+      return clickedTag.name === tag.name
+        ? { ...clickedTag, assigned: 0 }
+        : tag;
+    });
+    setTotalTags(processedTotalTags);
+  };
+
+  // FIXME: #4 ItemLeft토글기능
+  const handleToggle = (e, val) => {
     e.target.classList.toggle("clicked");
     e.target.classList[2] === "clicked"
-      ? ToggleClicked({ val })
-      : ToggleUnClicked({ val });
+      ? ToggleClicked(val)
+      : ToggleUnClicked(val);
   };
 
   // FIXME:  #5 우측 토글 해제
-  const removeToggle = (val) => {};
+  const removeToggle = (val) => {
+    ToggleUnClicked(val);
+  };
 
   // FIXME: #6 모달 닫기
   const handleCloseBtn = () => {
@@ -74,7 +93,29 @@ const ModalContent = ({
   };
 
   // #FIXME: #7 수정하기 버튼
-  const onClickBtn = async () => {};
+  const handleEditModify = () => {
+    for (const element of [
+      [assignedTags, setAssignedTags],
+      [totalTags, setTotalTags],
+    ]) {
+      const filterd = element[0].map((tag) => {
+        // origin을 assigned로 바꾸기
+        return { ...tag, origin: tag.assigned };
+      });
+      element[1](filterd);
+    }
+  };
+
+  const onClickEditBtn = async () => {
+    // 전체 스크롤 가능하게 하기
+    PopupDisable();
+    // 모달 닫기
+    document.querySelector(".hashtagModal-container").style.display = "none";
+    // 모달 스크롤 올리기
+    HashtagModalScrollUp();
+    // assigned태그 APICALL
+    handleEditModify();
+  };
 
   return (
     <div className="modal-window hashTag-modal-window">
@@ -88,18 +129,21 @@ const ModalContent = ({
       </div>
       <div className="HashTagItems">
         <ItemLeft
-          searchedTag={searchedTag}
+          searchBarInput={searchBarInput}
           totalTags={totalTags}
-          toggleFunc={toggleFunc}
-          filterd={filterdTags}
-          setSearchedTag={setSearchedTag}
+          handleToggle={handleToggle}
+          filterdTags={filterdTags}
+          setSearchBarInput={setSearchBarInput}
         />
 
-        <ItemRight assignedTags={assignedTags} removeToggle={removeToggle} />
+        <ItemRight
+          assignedTags={assignedTags}
+          ToggleUnClicked={ToggleUnClicked}
+        />
       </div>
 
       <ButtonWrapper className="editHash-btn">
-        <Button onClick={onClickBtn}>수정하기</Button>
+        <Button onClick={onClickEditBtn}>수정하기</Button>
       </ButtonWrapper>
     </div>
   );

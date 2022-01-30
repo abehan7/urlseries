@@ -1,68 +1,50 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useCallback } from "react";
+import styled from "styled-components";
+
+const Input = styled.input``;
+
+const SearchBar = styled.div``;
 
 const ItemLeft = ({
-  searchedTag,
-  setSearchedTag,
-  filterd,
+  searchBarInput,
+  setSearchBarInput,
+  filterdTags,
   totalTags,
-  toggleFunc,
+  handleToggle,
 }) => {
-  // ==================== 리덕스 START ====================
-  const {
-    page3Storage: { nowPage2 },
-  } = useSelector((state) => state);
-  // ==================== 리덕스 END ====================
+  // FIXME: #1 className === clicked면 색깔 노랑
+  const totalMapColor = useCallback((val) => {
+    return val.assigned === 1
+      ? "oneHash total-oneHash clicked"
+      : "oneHash total-oneHash";
+  }, []);
 
-  // ========================== 색깔 칠하는 className START==========================
-  const totalMapColor = ({ val }) => {
-    switch (nowPage2) {
-      case 1:
-        return val.assigned === 1
-          ? "oneHash total-oneHash clicked"
-          : "oneHash total-oneHash";
-      case 3:
-        return val.folderAssigned === 1
-          ? "oneHash total-oneHash clicked"
-          : "oneHash total-oneHash";
-      default:
-        return "oneHash total-oneHash";
-    }
-    // if (nowPage2 === 1) {
-    //   return val.assigned === 1
-    //     ? "oneHash total-oneHash clicked"
-    //     : "oneHash total-oneHash";
-    // }
-  };
-  // ========================== 색깔 칠하는 className END==========================
+  // FIXME: 검색창에서 사용할 onChange
+  const onChange = useCallback(
+    (e) => setSearchBarInput(e.target.value),
+    [totalTags]
+  );
 
   return (
     <div className="LeftItem">
-      <div className="searchedTags-Container">
-        <input
-          value={searchedTag}
+      <SearchBar className="searchTags-Container">
+        <Input
+          value={searchBarInput}
           className="tag-searchBar"
           placeholder="선택할 태그를 입력해주세요"
-          onChange={(e) => {
-            console.log(e.target.value);
-            setSearchedTag(e.target.value);
-            console.log(filterd);
-          }}
+          onChange={onChange}
         />
-      </div>
+      </SearchBar>
       <div className="content hashtag-content">
         <div className="flexWrapBox">
-          {searchedTag.length === 0 ? (
+          {searchBarInput.length === 0 ? (
             <>
               {totalTags.map((val, i) => {
                 return (
                   <div
                     key={i}
-                    className={totalMapColor({ val })}
-                    onClick={(e) => {
-                      toggleFunc(e, val);
-                      console.log(val);
-                    }}
+                    className={totalMapColor(val)}
+                    onClick={(e) => handleToggle(e, val)}
                   >
                     {val.name}
                   </div>
@@ -71,14 +53,12 @@ const ItemLeft = ({
             </>
           ) : (
             <>
-              {filterd.map((val, i) => {
+              {filterdTags.map((val, i) => {
                 return (
                   <div
                     key={i}
-                    className={totalMapColor({ val })}
-                    onClick={(e) => {
-                      toggleFunc(e, val);
-                    }}
+                    className={totalMapColor(val)}
+                    onClick={(e) => handleToggle(e, val)}
                   >
                     {val.name}
                   </div>

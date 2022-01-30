@@ -36,8 +36,8 @@ const TotalAfter = async (req, res) => {
   });
 
   res.json({
-    totalAfter: totalAfter,
-    initAssigned: hashtag_assigned,
+    totalAfter,
+    hashtag_assigned,
   });
 };
 
