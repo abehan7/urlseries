@@ -10,8 +10,15 @@ import IsNotLoggedIn from "./IsNotLoggedIn";
 const LoginSignEl = styled.div`
   position: absolute;
   right: 0;
-  top: calc(100% + 1rem);
+  top: ${(props) => (props.isClickedProfile ? "calc(100% + 1rem);" : "1rem")};
+  visibility: ${(props) => (props.isClickedProfile ? "visible" : "hidden")};
+  opacity: ${(props) => (props.isClickedProfile ? "1" : "0")};
+
+  transition: 100ms;
+  z-index: -1;
+  /* display: ${(props) => (props.isClickedProfile ? "flex" : "none")}; */
   display: flex;
+
   align-items: center;
   justify-content: center;
   column-gap: 0.6rem;
@@ -64,7 +71,7 @@ const LoginSign = ({ isClickedProfile, setIsClickedProfile }) => {
   };
 
   return (
-    <LoginSignEl>
+    <LoginSignEl isClickedProfile={isClickedProfile}>
       {token ? (
         <IsLoggedIn handleLogout={handleLogout} />
       ) : (

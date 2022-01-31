@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { useState } from "react";
 import "./HeadNav.css";
 import { CgProfile, CgUserlane } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +10,22 @@ const Button = styled.div`
 `;
 
 const ProfileBtn = styled(Button)`
+  height: calc(100%);
   position: relative;
   > svg {
     color: ${(props) => props.isClickedProfile && "orangered"};
   }
+`;
+
+const ProfileWrapper = styled.div`
+  right: 0;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: tomato;
+  height: 100%;
+  width: 100px;
 `;
 
 const HeadNav = () => {
@@ -58,12 +70,12 @@ const HeadNav = () => {
 
       <ProfileBtn className="navbar__icons" isClickedProfile={isClickedProfile}>
         <CgProfile onClick={onClickProfile} />
-        {isClickedProfile && (
-          <LoginSign
-            setIsClickedProfile={setIsClickedProfile}
-            isClickedProfile={isClickedProfile}
-          />
-        )}
+        {/* {isClickedProfile && ( */}
+        <LoginSign
+          setIsClickedProfile={setIsClickedProfile}
+          isClickedProfile={isClickedProfile}
+        />
+        {/* )} */}
       </ProfileBtn>
     </nav>
   );

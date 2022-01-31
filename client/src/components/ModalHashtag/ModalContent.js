@@ -41,59 +41,63 @@ const ModalContent = ({
   }, [SearchFilter]);
 
   // FIXME: #2 ItemLeft토글 클릭
-  const ToggleClicked = (clickedTag) => {
-    // assignedTags
-    setAssignedTags((tag) => [...tag, { ...clickedTag, assigned: 1 }]);
+  const ToggleClicked = useCallback(
+    (clickedTag) => {
+      // assignedTags
+      setAssignedTags((tag) => [...tag, { ...clickedTag, assigned: 1 }]);
 
-    // totalTags
-    const filterd = totalTags.map((tag) => {
-      return tag.name === clickedTag.name ? { ...tag, assigned: 1 } : tag;
-    });
-    setTotalTags(filterd);
-  };
+      // totalTags
+      const filterd = totalTags.map((tag) => {
+        return tag.name === clickedTag.name ? { ...tag, assigned: 1 } : tag;
+      });
+      setTotalTags(filterd);
+    },
+    [totalTags, assignedTags]
+  );
 
   // FIXME: #3 ItemLeft토글 해제
-  const ToggleUnClicked = (clickedTag) => {
-    // assigned 태그
-    const filterdAssignedTags = assignedTags.filter((tag) => {
-      return tag.name !== clickedTag.name;
-    });
-    setAssignedTags(filterdAssignedTags);
+  const ToggleUnClicked = useCallback(
+    (clickedTag) => {
+      // assigned 태그
+      const filterdAssignedTags = assignedTags.filter((tag) => {
+        return tag.name !== clickedTag.name;
+      });
+      setAssignedTags(filterdAssignedTags);
 
-    // total 태그
-    const processedTotalTags = totalTags.map((tag) => {
-      return clickedTag.name === tag.name
-        ? { ...clickedTag, assigned: 0 }
-        : tag;
-    });
-    setTotalTags(processedTotalTags);
-  };
+      // total 태그
+      const processedTotalTags = totalTags.map((tag) => {
+        return clickedTag.name === tag.name
+          ? { ...clickedTag, assigned: 0 }
+          : tag;
+      });
+      setTotalTags(processedTotalTags);
+    },
+    [totalTags, assignedTags]
+  );
 
   // FIXME: #4 ItemLeft토글기능
-  const handleToggle = (e, val) => {
-    e.target.classList.toggle("clicked");
-    e.target.classList[2] === "clicked"
-      ? ToggleClicked(val)
-      : ToggleUnClicked(val);
-  };
-
-  // FIXME:  #5 우측 토글 해제
-  const removeToggle = (val) => {
-    ToggleUnClicked(val);
-  };
+  const handleToggle = useCallback(
+    (e, val) => {
+      e.target.classList.toggle("clicked");
+      e.target.classList[2] === "clicked"
+        ? ToggleClicked(val)
+        : ToggleUnClicked(val);
+    },
+    [assignedTags, totalTags]
+  );
 
   // FIXME: #6 모달 닫기
-  const handleCloseBtn = () => {
+  const handleCloseBtn = useCallback(() => {
     // 모달 스크롤 올리기
     HashtagModalScrollUp();
     // 모달 display: none
     handleCloseModal();
     // 전체 스크롤 가능하게 하기
     PopupDisable();
-  };
+  }, [handleCloseModal]);
 
   // #FIXME: #7 수정하기 버튼
-  const handleEditModify = () => {
+  const handleEditModify = useCallback(() => {
     for (const element of [
       [assignedTags, setAssignedTags],
       [totalTags, setTotalTags],
@@ -104,9 +108,9 @@ const ModalContent = ({
       });
       element[1](filterd);
     }
-  };
+  }, [assignedTags, totalTags]);
 
-  const onClickEditBtn = async () => {
+  const onClickEditBtn = useCallback(async () => {
     // 전체 스크롤 가능하게 하기
     PopupDisable();
     // 모달 닫기
@@ -115,7 +119,7 @@ const ModalContent = ({
     HashtagModalScrollUp();
     // assigned태그 APICALL
     handleEditModify();
-  };
+  }, [handleEditModify]);
 
   return (
     <div className="modal-window hashTag-modal-window">
