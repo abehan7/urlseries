@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import "./AddUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
 import { PopupDisable } from "../../functions/stopScroll";
@@ -47,7 +47,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
     hashTag: "",
     memo: "",
   };
-
+  const overlayRef = useRef(null);
   // FIXME: useContext
   const { realTotalUrls, setRealTotalUrls } = useContext(MainStates);
 
@@ -157,6 +157,11 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
     setUrlInfo(InitialStates);
   };
 
+  // FIXME: 바깥쪽 클릭시 닫기 기능
+  const onClickOutside = (e) => {
+    e.target === overlayRef.current && handleClose();
+  };
+
   // FIXME: 스타일
   const height = 37;
   const defaultHeight = {
@@ -166,13 +171,18 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
 
   return (
     <>
-      <div id="modal" className="modal-overlay">
+      <div
+        id="modal"
+        className="modal-overlay"
+        ref={overlayRef}
+        onMouseDown={onClickOutside}
+      >
         <div
           className="modal-window"
           style={
             urlInfo.memo.length < 25
               ? { transition: "1s" }
-              : { height: "410px", transition: "1s" }
+              : { height: "405px", transition: "1s" }
           }
         >
           <div className="header-Container">
@@ -224,7 +234,11 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
                 name="memo"
                 style={
                   urlInfo.memo.length < 25
-                    ? { height: "37px" }
+                    ? {
+                        height: "20px",
+                        padding: "0.5rem 1rem",
+                        paddingTop: "0.6rem",
+                      }
                     : { height: "160px" }
                 }
                 placeholder="메모할 내용을 입력해주세요"

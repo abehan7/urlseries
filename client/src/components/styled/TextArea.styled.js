@@ -7,7 +7,15 @@ const TextAreaEl = styled.textarea`
 const TextArea = ({ memo, setMemo }) => {
   return (
     <TextAreaEl
-      style={memo.length < 25 ? { height: "37px" } : { height: "160px" }}
+      style={
+        memo.length < 25
+          ? {
+              height: "20px",
+              padding: "0.5rem 1rem",
+              paddingTop: "0.6rem",
+            }
+          : { height: "160px" }
+      }
       memo
       value={memo}
       placeholder="메모할 내용을 입력해주세요"
