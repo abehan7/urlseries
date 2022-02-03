@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import styled from "styled-components";
 import { Icon } from "../../styled/Icon.styled";
-import { Page2Context } from "./Page2";
+import { Page2Context } from "./ModalFolder";
 
 const EditDeleteModeEl = styled.div``;
 

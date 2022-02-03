@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { IoArrowBack } from "react-icons/io5";
-import { PopupDisable } from "../../functions/stopScroll";
-import { HashtagModalScrollUp } from "../../functions/ScrollUp";
+import { PopupDisable } from "../../Hooks/stopScroll";
+import { HashtagModalScrollUp } from "../../Hooks/ScrollUp";
 import ItemLeft from "./ItemLeft";
 import ItemRight from "./ItemRight";
 import styled from "styled-components";
+import { ChangedAssignedTagAPI } from "../Api";
 
 const Button = styled.button``;
 const ButtonWrapper = styled.div`
@@ -97,7 +98,7 @@ const ModalContent = ({
   }, [handleCloseModal]);
 
   // #FIXME: #7 수정하기 버튼
-  const handleEditModify = useCallback(() => {
+  const handleEditModify = useCallback(async () => {
     for (const element of [
       [assignedTags, setAssignedTags],
       [totalTags, setTotalTags],
@@ -108,6 +109,11 @@ const ModalContent = ({
       });
       element[1](filterd);
     }
+    // console.log(assignedTags);
+    const processed = assignedTags.map((tag) => {
+      return tag.name;
+    });
+    await ChangedAssignedTagAPI(processed);
   }, [assignedTags, totalTags]);
 
   const onClickEditBtn = useCallback(async () => {

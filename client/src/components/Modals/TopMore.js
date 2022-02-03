@@ -1,10 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./AddUrlModal.css";
-import { PopupDisable } from "../../functions/stopScroll";
+import { PopupDisable } from "../../Hooks/stopScroll";
 import "./TopMore.css";
 import { ModalInfos } from "../../routers/MainPage";
-import { TopMoreScrollUp } from "../../functions/ScrollUp";
+import { TopMoreScrollUp } from "../../Hooks/ScrollUp";
 
 const TopMore = ({
   mostClickedUrls,

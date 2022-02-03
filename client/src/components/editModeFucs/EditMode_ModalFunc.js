@@ -1,4 +1,4 @@
-import { PopupEnable } from "../../functions/stopScroll";
+import { PopupEnable } from "../../Hooks/stopScroll";
 
 const EditMode_ModalFunc = (value, setUrlDetail) => {
   PopupEnable();

@@ -3,7 +3,7 @@ import "./MainPage.css";
 
 // Functions
 import { getTotalTags } from "../components/getTags";
-import { clickOutSide } from "../functions/keepModalsShow";
+import { clickOutSide } from "../Hooks/keepModalsShow";
 
 // Header
 import Header from "../components/Header/Header";
@@ -122,12 +122,12 @@ const MainPage = () => {
     // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
     if (token) {
       GetTotalUrls().then(async (response) => {
-        console.log(response);
+        // console.log(response);
         await setGetUrls(response.data.totalURL);
         await setMostClickedUrls(response.data.rightURL);
         await setLikedUrls(response.data.leftURL);
         await setRecentSearch(response.data.recentSearched);
-        console.log(response.data);
+        // console.log(response.data);
       });
     }
   }, [token]);
@@ -139,8 +139,8 @@ const MainPage = () => {
         const {
           data: { totalAfter, hashtag_assigned },
         } = response;
-        await setRealTotalUrls(totalAfter);
 
+        await setRealTotalUrls(totalAfter);
         // 전체 태그들 뽑는 기능
         await setTotalTags(getTotalTags(totalAfter, hashtag_assigned));
 
@@ -221,7 +221,7 @@ const MainPage = () => {
 
   useEffect(() => {
     let observer;
-    console.log(target);
+    // console.log(target);
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.2,

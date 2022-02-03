@@ -94,7 +94,7 @@ const Join = () => {
                 type="text"
                 id="id"
                 name="user_id"
-                class="int"
+                className="int"
                 maxlength="20"
                 placeholder="아이디를 입력해주세요"
                 onChange={onChange}
@@ -106,7 +106,7 @@ const Join = () => {
               <input
                 type="password"
                 id="pswd1"
-                class="int"
+                className="int"
                 name="password"
                 maxlength="20"
                 placeholder="비밀번호를 입력해주세요"
@@ -120,7 +120,7 @@ const Join = () => {
                 type="text"
                 id="email"
                 name="email"
-                class="int"
+                className="int"
                 maxlength="100"
                 placeholder="이메일을 입력해주세요"
                 onChange={onChange}

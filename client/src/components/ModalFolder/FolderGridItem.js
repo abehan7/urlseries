@@ -10,10 +10,10 @@ import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { Page3Actions } from "../../../store/reducers/editModalP3";
-import "./Page2.css";
+
 import Colors from "../../../Colors";
-import EditP2 from "./EditP2";
-import { Page2Context } from "./Page2";
+import EditP2 from "./FolderEdit";
+import { Page2Context } from "./ModalFolder";
 
 const Input = styled.input`
   width: 4.8rem;

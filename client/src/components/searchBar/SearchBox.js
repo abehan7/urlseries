@@ -200,6 +200,7 @@ const SearchBox = ({
               {recentSearched.map((val) => {
                 return (
                   <RecentSearched
+                    key={val.url_id}
                     url={val}
                     recentSearched={recentSearched}
                     setRecentSearch={setRecentSearch}

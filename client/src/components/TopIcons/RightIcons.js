@@ -5,8 +5,8 @@ import { FiFolder } from "react-icons/fi";
 import { FiPlusSquare } from "react-icons/fi";
 import { MdOutlineTag } from "react-icons/md";
 import styled from "styled-components";
-import { TopTwoRectsEditModeScrollUp } from "../../functions/ScrollUp";
-import { PopupEnable } from "../../functions/stopScroll";
+import { TopTwoRectsEditModeScrollUp } from "../../Hooks/ScrollUp";
+import { PopupEnable } from "../../Hooks/stopScroll";
 import { MainStates } from "../../routers/MainPage";
 import { RefreshBtn } from "../AsideTags/BoxTagControler";
 

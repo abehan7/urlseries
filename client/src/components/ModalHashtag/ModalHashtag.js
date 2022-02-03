@@ -2,6 +2,8 @@ import React, { useCallback, useRef } from "react";
 // import "./ModalHashtag.css";
 import ModalContent from "./ModalContent";
 import styled from "styled-components";
+import { HashtagModalScrollUp } from "../../Hooks/ScrollUp";
+import { PopupDisable } from "../../Hooks/stopScroll";
 
 const ModalHashtagEl = styled.div`
   .hash-overlay {
@@ -159,7 +161,11 @@ const ModalHashtag = ({
   const outSideRef = useRef(null);
 
   const onClickOutSide = (e) => {
-    e.target === outSideRef.current && handleCloseModal();
+    if (e.target === outSideRef.current) {
+      HashtagModalScrollUp();
+      handleCloseModal();
+      PopupDisable();
+    }
   };
 
   // FIXME: 스타일

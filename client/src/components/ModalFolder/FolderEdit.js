@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import EditDeleteMode from "./EditDeleteMode";
-import EditLikeMode from "./EditLikeMode";
-import { Page2Context } from "./Page2";
+import EditDeleteMode from "./FolderEditDeleteMode";
+import EditLikeMode from "./FolderEditLikeMode";
+import { Page2Context } from "./ModalFolder";
 
 const EditP2El = styled.div`
   pointer-events: none;

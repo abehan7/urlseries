@@ -16,17 +16,6 @@ export const getTotalTags = (urls, initAssigned) => {
     });
   });
 
-  console.log("메모");
-  // console.log(urls_tag);
-  //   if (urls_name!== )
-
-  // 삭제
-  // 아~ 무조껀 realTotalUrls에 있는 태그들만 따르면 되겠네
-  // 삭제하면 realTotalUrls
-  // console.log("여기는 태그 이름들");
-  // console.log(urls_name);
-  // console.log("여기는 assigned까지");
-  // console.log(urls_tag);
   return urls_tag;
 };
 

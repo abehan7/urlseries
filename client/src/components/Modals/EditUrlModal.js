@@ -5,8 +5,8 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import TextArea from "../styled/TextArea.styled";
 import { DeleteUrlAPI, EditUrlAPI } from "../Api";
-import { PopupDisable } from "../../functions/stopScroll";
-import modalCloseClickOutside from "../../functions/ModalCloseClickOutside";
+import { PopupDisable } from "../../Hooks/stopScroll";
+import modalCloseClickOutside from "../../Hooks/ModalCloseClickOutside";
 
 const EditUrlModal = ({
   myFav,

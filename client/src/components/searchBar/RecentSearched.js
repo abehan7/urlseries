@@ -55,9 +55,9 @@ const RecentWrapper = styled.div`
   }
 `;
 
-const RecentSearched = ({ recentSearched, setRecentSearch, url }) => {
+const RecentSearched = ({ recentSearched, setRecentSearch, url, key }) => {
   return (
-    <RecentWrapper key={url.url_id}>
+    <RecentWrapper key={key}>
       <div className="url-and-delete">
         <div
           className="recent-searched-Stuff"
@@ -71,8 +71,8 @@ const RecentSearched = ({ recentSearched, setRecentSearch, url }) => {
             alt=""
           />
           {/* <div class="Searched-url-Id">{url.url_id}</div> */}
-          <div class="just-bar"> | </div>
-          <div class="Searched-url-Title">{url.url_title}</div>
+          <div className="just-bar"> | </div>
+          <div className="Searched-url-Title">{url.url_title}</div>
         </div>
         <div
           className="delete-url"

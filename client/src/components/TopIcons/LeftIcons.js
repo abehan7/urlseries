@@ -24,8 +24,8 @@ const LeftIcons = ({
 
   // FIXME: 클릭된 URL들 콘솔
   useEffect(() => {
-    console.log("props테스트");
-    console.log(edit);
+    // console.log("props테스트");
+    // console.log(edit);
     AllReset();
   }, [edit]);
 

@@ -1,17 +1,194 @@
-import React, { useCallback, useState, createContext, useMemo } from "react";
+import React, { useCallback, useState, createContext } from "react";
 import { IoArrowBack } from "react-icons/io5";
-import "./Page2.css";
+// import "./Page2.css";
 import { AiFillStar, AiOutlineArrowUp, AiOutlineEdit } from "react-icons/ai";
 import { TiBackspace, TiFolderDelete } from "react-icons/ti";
 import { BsPatchCheck } from "react-icons/bs";
-import { PopupDisable } from "../../functions/stopScroll";
-import Page2GridItem from "./Page2GridItem";
+import { PopupDisable } from "../../Hooks/stopScroll";
+import Page2GridItem from "./FolderGridItem";
 import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../../store/reducers/editModalP3";
 import { FiPlusSquare } from "react-icons/fi";
 import { debounce } from "lodash";
 import Colors from "../../Colors";
 import { AddFolder, DeleteFolderAPI, LikeConfirmPutAPI } from "../Api";
+import styled from "styled-components";
+
+const ModalFolderEl = styled.div`
+  .tagFolder-window {
+    overflow: hidden;
+  }
+
+  .tagFolder-window > .folder-content {
+    height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .header-Container {
+    position: relative;
+  }
+
+  .hash-btns {
+    position: absolute;
+    display: flex;
+    width: auto;
+    height: auto;
+    right: 15px;
+    gap: 2px;
+  }
+
+  /* 아이콘 2개 */
+  .editFolder-left-Icons div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1px;
+    width: 42px;
+    height: 42px;
+    border-radius: 35%;
+    cursor: pointer;
+  }
+
+  /* 위에 아이콘 3개 허버이벤트 */
+  .editFolder-left-Icons div:hover,
+  .editFolder:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: 200ms;
+  }
+
+  /* 아이콘 3개 클릭하면 더 찐해지게 */
+  .editFolder-left-Icons div:active,
+  .editFolder:active {
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: 200ms;
+  }
+
+  .editFolder-one-ment {
+    font-size: 13px;
+    pointer-events: none;
+  }
+  .editFolder-one-icon {
+    pointer-events: none;
+  }
+
+  /* 오른쪽 한 개 */
+
+  .editFolder {
+    width: 39px;
+    height: 39px;
+  }
+
+  .hash-btns > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* width: 32px; */
+    border-radius: 35%;
+  }
+
+  .hash-btns svg {
+    /* font-size: 20px; */
+    padding-right: 5px;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .hash-btns > .editFolder {
+    font-size: 25px;
+  }
+  .editFolder svg {
+    border-radius: 35%;
+  }
+  /* .editFolder svg:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: 200ms;
+} */
+
+  .hash-btns > div:hover {
+    /* background-color: rgba(0, 0, 0, 0.05); */
+    /* transition: 200ms; */
+  }
+  .folder-content .tagFolder-grid {
+    position: relative;
+    display: grid;
+    height: 100%;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 100px;
+  }
+
+  .tagFolder-grid > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+
+  .tagFolder-grid .addItem {
+    display: none;
+  }
+
+  .tempModal {
+    position: absolute;
+    cursor: default;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: grey;
+    color: #fff;
+    top: 0;
+    width: 90%;
+    left: 5%;
+    border-radius: 6px;
+  }
+
+  .folder-clicked {
+    color: #fbb917;
+  }
+
+  .tagFolder-grid .closed {
+    display: none;
+  }
+
+  .tagFolder-grid .back {
+    display: none;
+    transition: 200ms;
+  }
+  .tagFolder-grid .open {
+    display: flex;
+    transition: 200ms;
+  }
+
+  .Page2GridItem,
+  .addFolder-icon,
+  .back {
+    border-radius: 35%;
+  }
+
+  .Page2GridItem:hover,
+  .addFolder-icon:hover,
+  .back:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+    transition: 200ms;
+  }
+
+  .Page2GridItem:active,
+  .addFolder-icon:active,
+  .back:active {
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: 500ms;
+  }
+
+  .Page2GridItem:active {
+    opacity: 1;
+  }
+`;
 
 const debounceSomethingFunc = debounce(() => {
   document.querySelector(".tempModal div").innerText =
@@ -226,7 +403,7 @@ const Page2 = ({ setNowPage }) => {
           setLList,
         }}
       >
-        <div
+        <ModalFolderEl
           className="modal-window tagFolder-window"
           style={clickedP2Edit ? ChangedColor : NomalColor}
         >
@@ -363,7 +540,7 @@ const Page2 = ({ setNowPage }) => {
               })}
             </div>
           </div>
-        </div>
+        </ModalFolderEl>
       </Page2Context.Provider>
     </>
   );

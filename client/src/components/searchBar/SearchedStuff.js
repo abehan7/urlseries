@@ -48,14 +48,14 @@ const ImgContainer = styled.div`
   justify-content: center;
   width: auto;
   height: 100%;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   pointer-events: none;
 `;
-const SearchedStuff = ({ val, handleUrlClicked }) => {
+const SearchedStuff = ({ val, handleUrlClicked, key }) => {
   return (
     <SearchedStuffEl
       className="searched-Stuff"
-      key={val._id}
+      key={key}
       onClick={(e) => {
         console.log(e.target);
         window.open(val.url);
@@ -64,13 +64,13 @@ const SearchedStuff = ({ val, handleUrlClicked }) => {
     >
       <ImgContainer>
         <Image
-          class="urlFavicon"
+          className="urlFavicon"
           src={`http://www.google.com/s2/favicons?domain=${val.url}`}
           alt=""
         />
       </ImgContainer>
-      <Bar class="just-bar">|</Bar>
-      <Title class="Searched-url-Title">{val.url_title}</Title>
+      <Bar className="just-bar">|</Bar>
+      <Title className="Searched-url-Title">{val.url_title}</Title>
     </SearchedStuffEl>
   );
 };

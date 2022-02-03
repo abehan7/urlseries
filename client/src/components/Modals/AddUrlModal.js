@@ -1,7 +1,7 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import "./AddUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
-import { PopupDisable } from "../../functions/stopScroll";
+import { PopupDisable } from "../../Hooks/stopScroll";
 import { AddUrl, CrawlingAPI, StopAPI } from "../Api";
 import styled from "styled-components";
 import { debounce } from "lodash";
@@ -128,8 +128,9 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
 
   // 해쉬태그 띄어쓰기 없애기
   const GetHashTagsProcessed = (tagList) => {
+    const regex = / /gi;
     const processedTags = tagList.map((tag) => {
-      return tag.replace(" ", "");
+      return tag.replace(regex, "");
     });
     return processedTags;
   };
@@ -161,6 +162,9 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
   const onClickOutside = (e) => {
     e.target === overlayRef.current && handleClose();
   };
+
+  // FIXME: 해쉬태그 전체
+  useEffect(() => {}, [urlInfo]);
 
   // FIXME: 스타일
   const height = 37;
@@ -197,7 +201,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
           <div className="content">
             <div className="put-url">
               <input
-                autocomplete="off"
+                autoComplete="off"
                 name="url"
                 style={defaultHeight}
                 value={urlInfo.url}
@@ -209,7 +213,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
             </div>
             <div className="put-title">
               <input
-                autocomplete="off"
+                autoComplete="off"
                 name="title"
                 value={urlInfo.title}
                 style={defaultHeight}
@@ -219,7 +223,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
             </div>
             <div className="put-hashTag">
               <input
-                autocomplete="off"
+                autoComplete="off"
                 name="hashTag"
                 value={urlInfo.hashTag}
                 style={defaultHeight}
@@ -229,7 +233,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
             </div>
             <div className="put-memo">
               <AddTextArea
-                autocomplete="off"
+                autoComplete="off"
                 value={urlInfo.memo}
                 name="memo"
                 style={

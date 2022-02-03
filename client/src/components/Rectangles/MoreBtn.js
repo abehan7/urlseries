@@ -1,7 +1,7 @@
 import React from "react";
 import { MdExpandMore } from "react-icons/md";
 import styled from "styled-components";
-import { PopupEnable } from "../../functions/stopScroll";
+import { PopupEnable } from "../../Hooks/stopScroll";
 
 const MoreBtnEl = styled.div`
   @media (max-width: 470px) {
