@@ -1,6 +1,6 @@
 import React, { createContext, useState } from "react";
 import styled from "styled-components";
-import SearchBox from "../searchBar/SearchBox";
+import SearchBox from "../SearchBar/SearchBox";
 
 const HeaderEl = styled.div`
   position: relative;

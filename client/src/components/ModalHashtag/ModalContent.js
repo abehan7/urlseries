@@ -8,11 +8,31 @@ import styled from "styled-components";
 import { ChangedAssignedTagAPI } from "../Api";
 
 const Button = styled.button``;
+
 const ButtonWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   padding-bottom: 0.31rem;
+
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  height: 40px;
+`;
+
+const ItemContainer = styled.div`
+  display: flex;
+  max-height: 300px;
+`;
+
+const Title = styled.div``;
+
+const ModalWindow = styled.div`
+  width: 600px;
+  height: auto;
+`;
+
+const HeaderContainer = styled.div`
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
 const ModalContent = ({
@@ -83,7 +103,7 @@ const ModalContent = ({
   const handleToggle = useCallback(
     (e, val) => {
       e.target.classList.toggle("clicked");
-      e.target.classList[3] === "clicked"
+      e.target.classList[2] === "clicked"
         ? ToggleClicked(val)
         : ToggleUnClicked(val);
     },
@@ -130,43 +150,54 @@ const ModalContent = ({
     handleEditModify();
   }, [handleEditModify]);
 
-  const Item = ({ name, i, oneItem, handleToggle }) => (
+  const oneItemRight = ({ name, i, oneItem, handleToggle }) => (
     <div key={i} className="oneHash" onClick={() => handleToggle(oneItem)}>
       {name}
     </div>
   );
 
+  const oneItemLeft = ({ i, handleClassName, handleToggle, oneItem, name }) => (
+    <div
+      key={i}
+      className={() => handleClassName(oneItem)}
+      onClick={(e) => handleToggle(e, oneItem)}
+    >
+      {name}
+    </div>
+  );
+
   return (
-    <div className="modal-window hashTag-modal-window">
-      <div className="header-Container HashTag-header-Container">
+    <ModalWindow className="modal-window">
+      <HeaderContainer className="header-Container">
         <div className="close-area" onClick={handleCloseBtn}>
           <IoArrowBack />
         </div>
-        <div className="title">
+        <Title className="title">
           <h2>해쉬태그</h2>
-        </div>
-      </div>
-      <div className="HashTagItems">
+        </Title>
+      </HeaderContainer>
+      <ItemContainer>
         <ItemLeft
           searchBarInput={searchBarInput}
-          totalTags={totalTags}
+          itemList={totalTags}
           handleToggle={handleToggle}
-          filterdTags={filterdTags}
+          filterdList={filterdTags}
           setSearchBarInput={setSearchBarInput}
+          Item={oneItemLeft}
         />
 
         <ItemRight
           ItemList={assignedTags}
           handleToggle={ToggleUnClicked}
-          Item={Item}
+          Item={oneItemRight}
           Title="선택된 태그"
         />
-      </div>
+      </ItemContainer>
 
       <ButtonWrapper className="editHash-btn">
         <Button onClick={onClickEditBtn}>수정하기</Button>
       </ButtonWrapper>
-    </div>
+    </ModalWindow>
   );
 };
 

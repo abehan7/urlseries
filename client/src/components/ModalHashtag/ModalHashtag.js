@@ -6,58 +6,6 @@ import { HashtagModalScrollUp } from "../../Hooks/ScrollUp";
 import { PopupDisable } from "../../Hooks/stopScroll";
 
 const ModalHashtagEl = styled.div`
-  .hash-overlay {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 40px;
-  }
-
-  /* 폴더 뒷배경으로 하는 기능 */
-  .hashTag-modal-window {
-    /* position: relative; */
-    width: 600px;
-    height: auto;
-  }
-
-  .HashTagItems {
-    display: flex;
-    max-height: 300px;
-  }
-
-  .HashTag-header-Container {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  }
-
-  .searchTags-Container {
-    padding: 11px;
-    padding-top: 5px;
-    padding-bottom: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  }
-
-  .searchTags-Container > input {
-    padding: 0%;
-    border: none;
-  }
-
-  .hashtag-content {
-    position: relative;
-    height: auto;
-    min-height: 205px;
-    margin: 0;
-  }
-
-  .hashTag-modal-window > .editHash-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-top: 1px solid rgba(0, 0, 0, 0.2);
-    height: 40px;
-  }
-
   .oneHash {
     cursor: pointer;
   }
@@ -72,23 +20,6 @@ const ModalHashtagEl = styled.div`
     background-color: bisque;
     transition: 200ms;
     border-radius: 5px;
-  }
-
-  .selected-tags {
-    height: auto;
-    width: 300px;
-    padding: 10px;
-  }
-
-  .right-arrow,
-  .left-arrow {
-    font-size: 60px;
-  }
-
-  .right-arrow > svg,
-  .left-arrow > svg {
-    color: #ffffff;
-    cursor: pointer;
   }
 `;
 
@@ -132,7 +63,7 @@ const ModalHashtag = ({
   return (
     <ModalHashtagEl
       id="modal"
-      className="modal-overlay hash-overlay"
+      className="modal-overlay"
       onMouseDown={onClickOutSide}
       ref={outSideRef}
     >

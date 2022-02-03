@@ -23,7 +23,7 @@ import RightIcons from "../components/TopIcons/RightIcons";
 import AsideTag from "../components/AsideTags/AsideTag";
 import GridHeader from "../components/GridHeader";
 // SearchArea
-import Loader from "../components/searchBar/Loader";
+import Loader from "../components/SearchBar/Loader";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 import { Page3Actions } from "../store/reducers/editModalP3";
