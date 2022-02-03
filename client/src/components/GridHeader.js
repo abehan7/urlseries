@@ -5,25 +5,31 @@ import { CgList, CgChevronUpO } from "react-icons/cg";
 
 const GridHeaderEl = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
+  padding: 10px 0;
   @media (max-width: 470px) {
     width: 100%;
   }
 `;
 
 const Title = styled.h3`
+  flex: 1;
   @media (max-width: 470px) {
     padding-left: 1rem;
   }
 `;
 
 const IconsWrapper = styled.span`
+  right: 0;
+  padding-right: 10px;
   display: flex;
+
   justify-content: flex-end;
-  flex: 1;
+  position: absolute;
+  /* flex: 1; */
   font-size: 23px;
   /* column-gap: 5px; */
-  padding-right: 10px;
 `;
 const Icon = styled.div`
   display: flex;

@@ -1,9 +1,10 @@
 import React, { useContext, useEffect } from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./AddUrlModal.css";
-import { disable } from "../../functions/stopScroll";
+import { PopupDisable } from "../../Hooks/stopScroll";
 import "./TopMore.css";
 import { ModalInfos } from "../../routers/MainPage";
+import { TopMoreScrollUp } from "../../Hooks/ScrollUp";
 
 const TopMore = ({
   mostClickedUrls,
@@ -19,6 +20,18 @@ const TopMore = ({
     window.open(value.url);
   };
 
+  const handleCloseBtn = () => {
+    TopMoreScrollUp();
+    document.querySelector(".top-moreUrls-container").style.display = "none";
+    PopupDisable();
+    document
+      .querySelector(".top-modal-window")
+      .classList.toggle("top-modal-window-clicked");
+  };
+
+  const handleClickOutside = (e) => {
+    document.querySelector(".topmore-overlay") === e.target && handleCloseBtn();
+  };
   // const handleChange = (e) => {
   //   const { name, value } = e.target;
   //   setModalInfo({
@@ -28,21 +41,14 @@ const TopMore = ({
   // };
   return (
     <>
-      <div id="modal" className="modal-overlay">
+      <div
+        id="modal"
+        className="modal-overlay topmore-overlay"
+        onClick={handleClickOutside}
+      >
         <div className="modal-window top-modal-window">
           <div className="header-Container">
-            <div
-              className="close-area"
-              onClick={() => {
-                document.querySelector(
-                  ".top-moreUrls-container"
-                ).style.display = "none";
-                disable();
-                document
-                  .querySelector(".top-modal-window")
-                  .classList.toggle("top-modal-window-clicked");
-              }}
-            >
+            <div className="close-area" onClick={handleCloseBtn}>
               <IoArrowBack />
             </div>
             <div className="title">

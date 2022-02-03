@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import RecentSearched from "./RecentSearched";
 import SearchedStuff from "./SearchedStuff";
@@ -6,6 +6,8 @@ import Axios from "axios";
 import { debounce } from "lodash";
 import LoadingImg from "./LoadingImg";
 import styled from "styled-components";
+import { ClickedSeachedUrlAPI, SearchDeleteAll } from "../Api";
+import { HeaderContext } from "../Header/Header";
 
 // FIXME: db에서 검색하주는 기능 // 이건 안쓸거같은데 일단 남겨두긴 하자
 const ApiGetSearchedList = async (e) => {
@@ -43,6 +45,11 @@ const debounceSomethingFunc = debounce(
 );
 
 // FIXME: 스타일드 컴포넌트
+const SearchBoxEl = styled.div`
+  display: flex;
+  z-index: 2;
+`;
+
 const NotSearched = styled.div`
   display: flex;
   flex-direction: column;
@@ -54,6 +61,12 @@ const NotSearched = styled.div`
   padding-bottom: 20px;
 `;
 
+const DeleteBtn = styled.div`
+  margin-right: 8px;
+`;
+
+const Input = styled.input``;
+
 // FIXME: react컴포넌트 내부
 const SearchBox = ({
   createModal2,
@@ -63,7 +76,7 @@ const SearchBox = ({
 }) => {
   const [text2, setText2] = useState("");
   const [resultList, setResultList] = useState([]);
-  // TODO:
+
   const [searchState, setSearchState] = useState({
     nothingFound: false,
     searchDone: true,
@@ -134,10 +147,22 @@ const SearchBox = ({
     }
   };
 
+  // FIXME: 클릭하면 최근 검색기록으로 올라가게 하기
+  const handleUrlClicked = async (url) => {
+    const { data } = await ClickedSeachedUrlAPI(url._id);
+    setRecentSearch((prev) => [data, ...prev]);
+  };
+
+  // FIXME: 전체 검색기록 삭제
+  const handleDelete = () => {
+    setRecentSearch([]);
+    SearchDeleteAll();
+  };
+
   return (
     <>
-      <div className="search-box">
-        <input
+      <SearchBoxEl className="search-box">
+        <Input
           type="text"
           value={text2}
           onClick={createModal2}
@@ -155,7 +180,12 @@ const SearchBox = ({
           >
             <div className="recent-serached-title">최근 검색 항목</div>
 
-            <div className="delete-recent-searched">전체삭제</div>
+            <DeleteBtn
+              className="delete-recent-searched"
+              onClick={handleDelete}
+            >
+              전체삭제
+            </DeleteBtn>
           </div>
 
           <div className="Searched-Stuffs-Container">
@@ -170,6 +200,7 @@ const SearchBox = ({
               {recentSearched.map((val) => {
                 return (
                   <RecentSearched
+                    key={val.url_id}
                     url={val}
                     recentSearched={recentSearched}
                     setRecentSearch={setRecentSearch}
@@ -180,7 +211,13 @@ const SearchBox = ({
 
             {text2?.length > 0 &&
               resultList?.map((url) => {
-                return <SearchedStuff val={url} key={url._id} />;
+                return (
+                  <SearchedStuff
+                    val={url}
+                    key={url._id}
+                    handleUrlClicked={handleUrlClicked}
+                  />
+                );
               })}
           </div>
           {text2?.length > 0 && searchState.nothingFound && (
@@ -190,7 +227,7 @@ const SearchBox = ({
           )}
           {text2?.length > 0 && !searchState.searchDone && <LoadingImg />}
         </div>
-      </div>
+      </SearchBoxEl>
     </>
   );
 };

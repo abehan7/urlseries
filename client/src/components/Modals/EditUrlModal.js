@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import "./EditUrlModal.css";
 import { IoArrowBack } from "react-icons/io5";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import Axios from "axios";
 import { useSelector } from "react-redux";
 import TextArea from "../styled/TextArea.styled";
+import { DeleteUrlAPI, EditUrlAPI } from "../Api";
+import { PopupDisable } from "../../Hooks/stopScroll";
+import modalCloseClickOutside from "../../Hooks/ModalCloseClickOutside";
 
 const EditUrlModal = ({
   myFav,
@@ -22,33 +24,89 @@ const EditUrlModal = ({
 
   const { ClickedUrl } = useSelector((state) => state);
   useEffect(() => {
-    setMemo(ClickedUrl.memo);
-    console.log("👏👏👏👏👏👏");
     console.log(ClickedUrl);
+    setMemo(ClickedUrl.memo);
   }, [ClickedUrl]);
 
   // FIXME: 수정하기
-  const editBtn = async () => {
+
+  // 바뀐 state들 업데이트
+  const setChnagedValues = (data) => {
+    // 전체 수정에서 사용할 함수
+    const setMethod = (setState, state) => {
+      setState(
+        state.map((val) => {
+          return val._id === document.querySelector(".url_id").innerText
+            ? data
+            : val;
+        })
+      );
+    };
+
+    // getUrls,realTotalUrls,mostClickedUrls 업데이트
+    for (const element of [
+      [setGetUrls, getUrls],
+      [setRealTotalUrls, realTotalUrls],
+      [setMostClickedUrls, mostClickedUrls],
+    ]) {
+      setMethod(element[0], element[1]);
+    }
+
+    var likedUrls_id = likedUrls.map((val) => {
+      return val._id;
+    });
+
+    console.log(likedUrls_id.includes(data._id));
+
+    // 좋아요 업데이트
+    if (data.url_likedUrl === 1 && !likedUrls_id.includes(data._id)) {
+      console.log("setLikedUrls DONE");
+      setLikedUrls([data, ...likedUrls]);
+    } else {
+      setMethod(setLikedUrls, likedUrls);
+    }
+
+    likedUrls.forEach((val) => {
+      if (val._id === data._id && data.url_likedUrl === 0) {
+        setLikedUrls(
+          likedUrls.filter((val2) => {
+            return val2 !== val;
+          })
+        );
+      }
+    });
+  };
+
+  // 해쉬태그 전처리
+  const ProcessedHashtag = () => {
     var totalHashes = [];
     var filterdHashes = [];
+    var hashTag = document.querySelector(
+      ".editUrl-container .put-hashTag > input"
+    ).value;
+
+    totalHashes = hashTag.split("#");
+    totalHashes.forEach((tag) => {
+      if (tag.length !== 0) {
+        filterdHashes.push("#" + tag.replace(/\s/g, ""));
+      }
+    });
+    return filterdHashes;
+  };
+
+  // handler
+  const handleEditBtn = async () => {
+    const filterdHashes = ProcessedHashtag();
     var newLikedUrl = 0;
 
     if (myFav) {
       newLikedUrl = 1;
     }
-    var hashTag = document.querySelector(
-      ".editUrl-container .put-hashTag > input"
-    ).value;
-    totalHashes = hashTag.split("#");
-    console.log(totalHashes);
-    totalHashes.forEach((tag) => {
-      if (tag.length !== 0) {
-        filterdHashes.push("#" + tag.replace(/\s/g, ""));
-        console.log("#" + tag);
-      }
-    });
 
-    await Axios.put("http://localhost:3001/editUrl", {
+    document.querySelector(".editUrl-container").style.display = "none";
+    PopupDisable();
+
+    const { data } = await EditUrlAPI({
       _id: document.querySelector(".url_id").innerText,
       newUrl: document.querySelector(".editUrl-container .put-url > input")
         .value,
@@ -58,82 +116,45 @@ const EditUrlModal = ({
       newMemo: document.querySelector(".editUrl-container .put-memo > textarea")
         .value,
       newLikedUrl: newLikedUrl,
-    }).then((response) => {
-      console.log(response.data);
-      document.querySelector(".editUrl-container").style.display = "none";
-      // setGetUrls([response.data, ...getUrls]);
-      setGetUrls(
-        getUrls.map((val) => {
-          return val._id === document.querySelector(".url_id").innerText
-            ? response.data
-            : val;
-        })
-      );
-
-      setRealTotalUrls(
-        realTotalUrls.map((val) => {
-          return val._id === document.querySelector(".url_id").innerText
-            ? response.data
-            : val;
-        })
-      );
-
-      setMostClickedUrls(
-        mostClickedUrls.map((val) => {
-          return val._id === document.querySelector(".url_id").innerText
-            ? response.data
-            : val;
-        })
-      );
-
-      console.log(likedUrls);
-      console.log(response.data._id);
-      var likedUrls_id = [];
-      likedUrls.forEach((val) => {
-        likedUrls_id.push(val._id);
-      });
-      console.log(likedUrls_id.includes(response.data._id));
-
-      if (
-        response.data.url_likedUrl === 1 &&
-        !likedUrls_id.includes(response.data._id)
-      ) {
-        console.log("setLikedUrls DONE");
-        setLikedUrls([response.data, ...likedUrls]);
-      } else {
-        setLikedUrls(
-          likedUrls.map((val) => {
-            return val._id === document.querySelector(".url_id").innerText
-              ? response.data
-              : val;
-          })
-        );
-      }
-
-      likedUrls.forEach((val) => {
-        if (val._id === response.data._id && response.data.url_likedUrl === 0) {
-          setLikedUrls(
-            likedUrls.filter((val2) => {
-              return val2 !== val;
-            })
-          );
-        }
-      });
-
-      console.log(getUrls);
-      console.log("업데이트 완료");
     });
+
+    setChnagedValues(data);
+    console.log("업데이트 완료");
   };
 
-  // FIXME: 취소하기
-  const deleteBtn = async (_id) => {
-    await Axios.delete(`http://localhost:3001/deleteUrl/${_id}`);
+  // FIXME: 삭제하기
+  const handleDeleteBtn = async () => {
+    const _id = document.querySelector(".url_id").innerText;
     document.querySelector(".editUrl-container").style.display = "none";
-    setGetUrls(
-      getUrls.filter((val) => {
-        return val._id !== _id;
-      })
-    );
+    PopupDisable();
+    await DeleteUrlAPI(_id);
+
+    const method = (state, setState) => {
+      setState(
+        state.filter((val) => {
+          return val._id !== _id;
+        })
+      );
+    };
+
+    method(getUrls, setGetUrls);
+    method(realTotalUrls, setRealTotalUrls);
+  };
+
+  // FIXME: 뒤로가기
+  const handleClose = () => {
+    document.querySelector(".editUrl-container").style.display = "none";
+    PopupDisable();
+  };
+
+  const handleCloseOutside = (e) => {
+    let isContained = modalCloseClickOutside(e);
+    isContained && handleClose();
+  };
+
+  //FIXME: 좋아요 클릭
+  const handleLike = () => {
+    setMyFav(!myFav);
   };
 
   // FIXME: style
@@ -145,36 +166,24 @@ const EditUrlModal = ({
   };
   return (
     <>
-      <div id="modal" className="modal-overlay">
+      <div id="modal" className="modal-overlay" onClick={handleCloseOutside}>
         <div
           className="modal-window"
           style={
             Memo.length < 25
               ? { transition: "1s" }
-              : { height: "400px", transition: "1s" }
+              : { height: "405px", transition: "1s" }
           }
         >
           <div className="header-Container">
-            <div
-              className="close-area"
-              onClick={() => {
-                document.querySelector(".editUrl-container").style.display =
-                  "none";
-              }}
-            >
+            <div className="close-area" onClick={handleClose}>
               <IoArrowBack />
             </div>
             <div className="title">
               <h2>에디터모드</h2>
             </div>
 
-            <div
-              className="Myfav"
-              onClick={() => {
-                console.log("별");
-                setMyFav(!myFav);
-              }}
-            >
+            <div className="Myfav" onClick={handleLike}>
               {myFav ? <AiFillStar /> : <AiOutlineStar />}
             </div>
           </div>
@@ -195,23 +204,12 @@ const EditUrlModal = ({
             <div className="put-memo">
               <TextArea memo={Memo} setMemo={setMemo} />
             </div>
-            <div className="addUrl-btn editUrl-btn">
-              <button
-                onClick={() => {
-                  const _id = document.querySelector(".url_id").innerText;
-                  console.log(_id);
-                  deleteBtn(_id);
-                }}
-              >
-                삭제하기
-              </button>
-              <button
-                onClick={() => {
-                  editBtn();
-                }}
-              >
-                수정하기
-              </button>
+            <div
+              className="addUrl-btn editUrl-btn"
+              style={Memo.length < 25 ? {} : { paddingTop: "5px" }}
+            >
+              <button onClick={handleDeleteBtn}>삭제하기</button>
+              <button onClick={handleEditBtn}>수정하기</button>
             </div>
           </div>
         </div>

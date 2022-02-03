@@ -4,7 +4,6 @@ const HanshTags2Schema = new mongoose.Schema({
   user_id: {
     type: String,
     require: true,
-    default: "hanjk123@gmail.com",
   },
   hashtag_assigned: {
     type: Array,

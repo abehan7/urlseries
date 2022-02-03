@@ -23,10 +23,31 @@ const TotalUrlMap = ({
   const [Height, setHeight] = useState(0);
   const dispatch = useDispatch();
 
-  // const modalHover = debounce((e) => {
-  //   e.target.lastChild.classList.add("hover-on");
-  //   Height !== e.target.offsetHeight && setHeight(e.target.offsetHeight);
-  // }, 500);
+  const onMouseOut = (e) => {
+    modalHover.cancel();
+    e.target.lastChild.classList.remove("hover-on");
+  };
+
+  const onMouseOver = (e) => {
+    modalHover(e, setHeight, Height);
+  };
+
+  const onContextMenu = (e) => {
+    console.log("우클릭");
+    e.preventDefault();
+  };
+
+  const onClick = (value) => {
+    whenIclickUrl({
+      oneUrl: value,
+      deleteMode,
+      editMode,
+      setMyFav,
+      setGetUrls: setGetUrls,
+      getUrls: getUrls,
+      dispatch,
+    });
+  };
 
   return (
     <>
@@ -37,36 +58,20 @@ const TotalUrlMap = ({
               style={{ position: "relative" }}
               className="T-url"
               key={value._id}
-              onClick={(e) => {
-                whenIclickUrl({
-                  oneUrl: value,
-                  deleteMode,
-                  editMode,
-                  setMyFav,
-                  setGetUrls: setGetUrls,
-                  getUrls: getUrls,
-                  dispatch,
-                });
+              onClick={() => {
+                onClick(value);
               }}
-              onMouseOut={(e) => {
-                modalHover.cancel();
-                e.target.lastChild.classList.remove("hover-on");
-              }}
-              onMouseOver={(e) => {
-                modalHover(e, setHeight, Height);
-              }}
-              onContextMenu={(e) => {
-                console.log("우클릭");
-                e.preventDefault();
-              }}
+              onMouseOut={onMouseOut}
+              onMouseOver={onMouseOver}
+              onContextMenu={onContextMenu}
             >
               {!editMode && deleteMode && (
                 <>
                   <div className="select-box">
                     {value.clicked ? (
-                      <MdCheckBox />
+                      <MdCheckBox style={{ paddingLeft: "10px" }} />
                     ) : (
-                      <MdCheckBoxOutlineBlank />
+                      <MdCheckBoxOutlineBlank style={{ paddingLeft: "10px" }} />
                     )}
                   </div>
                 </>

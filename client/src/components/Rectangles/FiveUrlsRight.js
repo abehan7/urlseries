@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
 import Axios from "axios";
 import MoreBtn from "./MoreBtn";
@@ -6,14 +6,19 @@ import HoverModal from "../styled/HoverModal.styled";
 import styled from "styled-components";
 import UrlRectWrapper from "../styled/UrlRectWrapper.styled";
 import { modalHover } from "./TotalUrlMap";
+import { MainStates } from "../../routers/MainPage";
 
-const FiveUrlsRightEl = styled(UrlRectWrapper)``;
+const FiveUrlsRightEl = styled(UrlRectWrapper)`
+  border-radius: 10px;
+`;
 const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
   const [Height, setHeight] = useState(0);
-  const fiveStuffs = values.slice(0, 5);
+  const fiveStuffs = values.slice(0, 6);
+
+  const { setUrlDetail } = useContext(MainStates);
 
   const WhenEditMode = ({ url: value }) => {
-    EditMode_ModalFunc(value);
+    EditMode_ModalFunc(value, setUrlDetail);
     setMyFav(value.url_likedUrl === 1);
     console.log("에디터모드입니다");
   };
@@ -66,7 +71,7 @@ const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
           </FiveUrlsRightEl>
         );
       })}
-      {values.length > 5 && editMode && (
+      {values.length > 6 && editMode && (
         <MoreBtn setTopMoreWhat={setTopMoreWhat} where="Right" />
       )}
     </>

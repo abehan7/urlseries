@@ -1,13 +1,18 @@
-import React from "react";
-import { AiOutlineEdit, AiTwotoneEdit } from "react-icons/ai";
+import React, { useContext } from "react";
+import { AiOutlineEdit, AiOutlineFolder, AiTwotoneEdit } from "react-icons/ai";
 import { BiPaperPlane } from "react-icons/bi";
+import { FiFolder } from "react-icons/fi";
 import { FiPlusSquare } from "react-icons/fi";
 import { MdOutlineTag } from "react-icons/md";
 import styled from "styled-components";
-import { enable } from "../../functions/stopScroll";
+import { TopTwoRectsEditModeScrollUp } from "../../Hooks/ScrollUp";
+import { PopupEnable } from "../../Hooks/stopScroll";
+import { MainStates } from "../../routers/MainPage";
 import { RefreshBtn } from "../AsideTags/BoxTagControler";
-import EditModeRectsFunc from "../editModeFucs/EditModeRectsFunc";
 
+const ShareIcon = styled.div`
+  font-size: 1.3rem;
+`;
 const RightIcons = ({
   editMode,
   shareMode,
@@ -18,22 +23,24 @@ const RightIcons = ({
   setDeleteMode,
   deleteMode,
 }) => {
-  const AddIconOnClick = () => {
+  // const context = useContext(MainStates);
+  const onClickAddIcon = () => {
     if (!editMode || !shareMode) {
       return;
     }
     document.querySelector(".addUrl-container").style.display = "block";
-    enable();
+    PopupEnable();
   };
-  const EditIconOnClick = () => {
+  const onClickEditIcon = () => {
+    TopTwoRectsEditModeScrollUp();
     deleteMode && setDeleteMode(false);
 
     setEditMode(!editMode);
 
-    EditModeRectsFunc(editMode);
+    // EditModeRectsFunc(editMode);
   };
 
-  const HashIconOnClick = () => {
+  const onClickhashIcon = () => {
     // #@#@#@#@#@#@#@#@#@#@여기가 전체 태그 풀어주는 곳 START #@#@#@#@#@#@#@#@#@#@
     // BoxTags_First 처음값 true
     if (!BoxTags_First) {
@@ -43,12 +50,12 @@ const RightIcons = ({
     // #@#@#@#@#@#@#@#@#@#@여기가 전체 태그 풀어주는 곳 END #@#@#@#@#@#@#@#@#@#@
 
     document.querySelector(".hashtagModal-container").style.display = "block";
-    enable();
+    PopupEnable();
   };
-  const ShareIconOnClick = () => {
-    console.log("공유기능");
-    // document.querySelector(".shareUrl-container").style.display = "block";
-    // enable();
+  const onClickFolderIcon = () => {
+    console.log("폴더 모달");
+    document.querySelector(".folderModal-container").style.display = "block";
+    PopupEnable();
   };
 
   // ========================================== 스타일 START ==========================================
@@ -69,11 +76,11 @@ const RightIcons = ({
 
   return (
     <div className="right-icons">
-      <div className="addUrl-icon" onClick={AddIconOnClick}>
+      <div className="addUrl-icon" onClick={onClickAddIcon}>
         <FiPlusSquare />
       </div>
 
-      <div className="editUrl-icon" onClick={EditIconOnClick}>
+      <div className="editUrl-icon" onClick={onClickEditIcon}>
         {editMode ? (
           <AiOutlineEdit style={stopClickStyle} />
         ) : (
@@ -81,13 +88,13 @@ const RightIcons = ({
         )}
       </div>
 
-      <div className="editHash-icon" onClick={HashIconOnClick}>
+      <div className="editHash-icon" onClick={onClickhashIcon}>
         <MdOutlineTag style={!BoxTags_First ? HashIconStyle : emptyStyle} />
       </div>
 
-      <div className="shareUrl-icon" onClick={ShareIconOnClick}>
-        <BiPaperPlane />
-      </div>
+      <ShareIcon className="folder-icon" onClick={onClickFolderIcon}>
+        <AiOutlineFolder />
+      </ShareIcon>
     </div>
   );
 };
