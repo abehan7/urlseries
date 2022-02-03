@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
-import { Icon } from "../../styled/Icon.styled";
-import { Page2Context } from "./ModalFolder";
+import { Icon } from "../styled/Icon.styled";
+import { ModalFolderContents } from "./ModalFolder";
 
 const EditLikeModeEl = styled.div``;
 const EditLikeMode = ({ folder }) => {
-  const { LList } = useContext(Page2Context);
+  const { LList } = useContext(ModalFolderContents);
   return (
     <EditLikeModeEl>
       <Icon>

@@ -1,33 +1,59 @@
 import React from "react";
 import { MdOutlineTag } from "react-icons/md";
+import styled from "styled-components";
+import BoxWrap from "../styled/BoxWrap.styled";
 
-const ItemRight = ({ assignedTags, ToggleUnClicked }) => {
+import ModalContent from "../styled/ModalContent.styled";
+
+const ItemRightEl = styled.div`
+  flex: 1;
+`;
+
+const ItemRightBgIcon = styled.div`
+  position: absolute;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  font-size: 100px;
+  pointer-events: none;
+  opacity: 0.1;
+`;
+
+const ItemRightTitle = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  > h3 {
+    margin: 0%;
+    padding: 3.5px;
+  }
+`;
+
+const ItemRight = ({ Title, ItemList, Item, handleToggle }) => {
   return (
-    <div className="RightItem">
-      <div className="title chosen-title">
-        <h3>선택된 태그들</h3>
-      </div>
-      <div className="content hashtag-content">
-        <div className="big-folder-Icon">
+    <ItemRightEl>
+      <ItemRightTitle>
+        <h3>{Title}</h3>
+      </ItemRightTitle>
+      <ModalContent>
+        <ItemRightBgIcon>
           <MdOutlineTag />
-        </div>
-        <div className="flexWrapBox flexWrap-right">
-          {assignedTags?.map((val, i) => {
-            return (
-              <div
-                key={i}
-                className="oneHash"
-                onClick={() => {
-                  ToggleUnClicked(val);
-                }}
-              >
-                {val.name}
-              </div>
-            );
+        </ItemRightBgIcon>
+        <BoxWrap>
+          {ItemList?.map((val, i) => {
+            return Item({
+              name: val.name,
+              i,
+              oneItem: val,
+              handleToggle,
+            });
           })}
-        </div>
-      </div>
-    </div>
+        </BoxWrap>
+      </ModalContent>
+    </ItemRightEl>
   );
 };
 

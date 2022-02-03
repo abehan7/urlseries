@@ -2,20 +2,20 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import EditDeleteMode from "./FolderEditDeleteMode";
 import EditLikeMode from "./FolderEditLikeMode";
-import { Page2Context } from "./ModalFolder";
+import { ModalFolderContents } from "./ModalFolder";
 
-const EditP2El = styled.div`
+const FolderEditEl = styled.div`
   pointer-events: none;
 `;
-const EditP2 = ({ folder }) => {
-  const { DeleteM, LikeM } = useContext(Page2Context);
+const FolderEdit = ({ folder }) => {
+  const { DeleteM, LikeM } = useContext(ModalFolderContents);
 
   return (
-    <EditP2El>
+    <FolderEditEl>
       {DeleteM && <EditDeleteMode folder={folder} />}
       {LikeM && <EditLikeMode folder={folder} />}
-    </EditP2El>
+    </FolderEditEl>
   );
 };
 
-export default EditP2;
+export default FolderEdit;

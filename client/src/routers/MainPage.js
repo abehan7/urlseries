@@ -32,6 +32,7 @@ import { GetTotalUrls, Get21Urls, TotalAfter } from "../components/Api";
 import styled from "styled-components";
 import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
 import ModalHashtag from "../components/ModalHashtag/ModalHashtag";
+import ModalFolder from "../components/ModalFolder/ModalFolder";
 
 export const MainStates = createContext(null);
 
@@ -492,6 +493,9 @@ const MainPage = () => {
               setTotalTags={setTotalTags}
             />
           </div>
+          <div className="folderModal-container">
+            <ModalFolder />
+          </div>
 
           {/* ======================================== 모달들 END ======================================== */}
         </MainEl>
@@ -502,33 +506,3 @@ const MainPage = () => {
 };
 
 export default MainPage;
-
-// 여기는 생성하는 코드
-// 이거 쓰지 말고 flex랑 none으로 하는게 좀 더 안정정이다
-// 이 코드는 우선 남겨놓기 다른 곳에 사용될 수 있으니까
-// const createModal = () => {
-//   if (!clickedSearchInput) {
-//     const newDiv = document.createElement("div");
-//     newDiv.className = "Search-balloon";
-//     document.querySelector(".search-box > svg").style.display = "none";
-
-//     document.querySelector(".search-box").appendChild(newDiv);
-//     setClickedSearchInput(!clickedSearchInput); // 이제 true
-//   }
-// };
-
-// 드래그 방지
-// window.document.onmousemove = (e) => {
-//   if (e.target !== document.querySelector(".Big_Rect")) {
-//     const circle = document.querySelector(".detail-container");
-//     circle.style.display = "none";
-//   }
-// };
-
-// [3]
-// document.querySelector(".search-box input").onselectstart = () => {
-//   return true;
-// };
-// document.querySelector(".search-box input").oncontextmenu = () => {
-//   return true;
-// };

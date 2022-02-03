@@ -1,9 +1,18 @@
 import React, { useCallback } from "react";
 import styled from "styled-components";
+import BoxWrap from "../styled/BoxWrap.styled";
+// import ItemLeftEl from "../styled/ItemLeftEl.styled";
+import ModalContent from "../styled/ModalContent.styled";
+import SearchBar from "../styled/SearchBar.styled";
+
+const ItemLeftEl = styled.div`
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
+  flex: 1;
+`;
 
 const Input = styled.input``;
 
-const SearchBar = styled.div``;
+const Item = styled.div``;
 
 const ItemLeft = ({
   searchBarInput,
@@ -26,8 +35,8 @@ const ItemLeft = ({
   );
 
   return (
-    <div className="LeftItem">
-      <SearchBar className="searchTags-Container">
+    <ItemLeftEl>
+      <SearchBar>
         <Input
           value={searchBarInput}
           className="tag-searchBar"
@@ -35,19 +44,19 @@ const ItemLeft = ({
           onChange={onChange}
         />
       </SearchBar>
-      <div className="content hashtag-content">
-        <div className="flexWrapBox">
+      <ModalContent>
+        <BoxWrap>
           {searchBarInput.length === 0 ? (
             <>
               {totalTags.map((val, i) => {
                 return (
-                  <div
+                  <Item
                     key={i}
                     className={totalMapColor(val)}
                     onClick={(e) => handleToggle(e, val)}
                   >
                     {val.name}
-                  </div>
+                  </Item>
                 );
               })}
             </>
@@ -55,20 +64,20 @@ const ItemLeft = ({
             <>
               {filterdTags.map((val, i) => {
                 return (
-                  <div
+                  <Item
                     key={i}
                     className={totalMapColor(val)}
                     onClick={(e) => handleToggle(e, val)}
                   >
                     {val.name}
-                  </div>
+                  </Item>
                 );
               })}
             </>
           )}
-        </div>
-      </div>
-    </div>
+        </BoxWrap>
+      </ModalContent>
+    </ItemLeftEl>
   );
 };
 

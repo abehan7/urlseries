@@ -9,11 +9,11 @@ import { AiOutlineFolder } from "react-icons/ai";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { Page3Actions } from "../../../store/reducers/editModalP3";
+import { Page3Actions } from "../../store/reducers/editModalP3";
 
-import Colors from "../../../Colors";
+import Colors from "../../Colors";
 import EditP2 from "./FolderEdit";
-import { Page2Context } from "./ModalFolder";
+import { ModalFolderContents } from "./ModalFolder";
 
 const Input = styled.input`
   width: 4.8rem;
@@ -94,7 +94,7 @@ const Page2GridItem = ({ folder, setNowFolder, nowFolder, clickedP2Edit }) => {
 
   // useContext
   const { DeleteM, LikeM, DList, setDList, LList, setLList } =
-    useContext(Page2Context);
+    useContext(ModalFolderContents);
 
   // 맨 처음 folder_liked가 true인거 LList에 넣기
   useEffect(() => {

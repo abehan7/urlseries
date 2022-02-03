@@ -212,7 +212,7 @@ h3 {
 .right-icons div svg {
   padding: 0;
 }
-.right-icons div.shareUrl-icon svg {
+.right-icons div.folder-icon svg {
   padding: 0.2rem;
   font-weight: 800;
 }
@@ -497,7 +497,8 @@ h3 {
 .editUrl-container,
 .shareUrl-container,
 .top-moreUrls-container,
-.hashtagModal-container {
+.hashtagModal-container,
+.folderModal-container {
   display: none;
 }
 

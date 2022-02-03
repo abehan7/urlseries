@@ -24,14 +24,14 @@ const RightIcons = ({
   deleteMode,
 }) => {
   // const context = useContext(MainStates);
-  const AddIconOnClick = () => {
+  const onClickAddIcon = () => {
     if (!editMode || !shareMode) {
       return;
     }
     document.querySelector(".addUrl-container").style.display = "block";
     PopupEnable();
   };
-  const EditIconOnClick = () => {
+  const onClickEditIcon = () => {
     TopTwoRectsEditModeScrollUp();
     deleteMode && setDeleteMode(false);
 
@@ -40,7 +40,7 @@ const RightIcons = ({
     // EditModeRectsFunc(editMode);
   };
 
-  const HashIconOnClick = () => {
+  const onClickhashIcon = () => {
     // #@#@#@#@#@#@#@#@#@#@여기가 전체 태그 풀어주는 곳 START #@#@#@#@#@#@#@#@#@#@
     // BoxTags_First 처음값 true
     if (!BoxTags_First) {
@@ -52,12 +52,10 @@ const RightIcons = ({
     document.querySelector(".hashtagModal-container").style.display = "block";
     PopupEnable();
   };
-  const ShareIconOnClick = () => {
-    // console.log(context.isDarkMode);
-    // context.setIsDarkMode(!context.isDarkMode);
-    console.log("공유기능");
-    // document.querySelector(".shareUrl-container").style.display = "block";
-    // PopupEnable();
+  const onClickFolderIcon = () => {
+    console.log("폴더 모달");
+    document.querySelector(".folderModal-container").style.display = "block";
+    PopupEnable();
   };
 
   // ========================================== 스타일 START ==========================================
@@ -78,11 +76,11 @@ const RightIcons = ({
 
   return (
     <div className="right-icons">
-      <div className="addUrl-icon" onClick={AddIconOnClick}>
+      <div className="addUrl-icon" onClick={onClickAddIcon}>
         <FiPlusSquare />
       </div>
 
-      <div className="editUrl-icon" onClick={EditIconOnClick}>
+      <div className="editUrl-icon" onClick={onClickEditIcon}>
         {editMode ? (
           <AiOutlineEdit style={stopClickStyle} />
         ) : (
@@ -90,11 +88,11 @@ const RightIcons = ({
         )}
       </div>
 
-      <div className="editHash-icon" onClick={HashIconOnClick}>
+      <div className="editHash-icon" onClick={onClickhashIcon}>
         <MdOutlineTag style={!BoxTags_First ? HashIconStyle : emptyStyle} />
       </div>
 
-      <ShareIcon className="shareUrl-icon" onClick={ShareIconOnClick}>
+      <ShareIcon className="folder-icon" onClick={onClickFolderIcon}>
         <AiOutlineFolder />
       </ShareIcon>
     </div>

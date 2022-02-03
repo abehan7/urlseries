@@ -44,6 +44,8 @@ const ModalContent = ({
   // FIXME: #2 ItemLeft토글 클릭
   const ToggleClicked = useCallback(
     (clickedTag) => {
+      console.log("토글 클릭");
+
       // assignedTags
       setAssignedTags((tag) => [...tag, { ...clickedTag, assigned: 1 }]);
 
@@ -59,6 +61,7 @@ const ModalContent = ({
   // FIXME: #3 ItemLeft토글 해제
   const ToggleUnClicked = useCallback(
     (clickedTag) => {
+      console.log("토글 해제");
       // assigned 태그
       const filterdAssignedTags = assignedTags.filter((tag) => {
         return tag.name !== clickedTag.name;
@@ -80,7 +83,7 @@ const ModalContent = ({
   const handleToggle = useCallback(
     (e, val) => {
       e.target.classList.toggle("clicked");
-      e.target.classList[2] === "clicked"
+      e.target.classList[3] === "clicked"
         ? ToggleClicked(val)
         : ToggleUnClicked(val);
     },
@@ -127,6 +130,12 @@ const ModalContent = ({
     handleEditModify();
   }, [handleEditModify]);
 
+  const Item = ({ name, i, oneItem, handleToggle }) => (
+    <div key={i} className="oneHash" onClick={() => handleToggle(oneItem)}>
+      {name}
+    </div>
+  );
+
   return (
     <div className="modal-window hashTag-modal-window">
       <div className="header-Container HashTag-header-Container">
@@ -147,8 +156,10 @@ const ModalContent = ({
         />
 
         <ItemRight
-          assignedTags={assignedTags}
-          ToggleUnClicked={ToggleUnClicked}
+          ItemList={assignedTags}
+          handleToggle={ToggleUnClicked}
+          Item={Item}
+          Title="선택된 태그"
         />
       </div>
 

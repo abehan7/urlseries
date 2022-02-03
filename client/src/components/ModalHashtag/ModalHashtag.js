@@ -18,26 +18,10 @@ const ModalHashtagEl = styled.div`
     width: 600px;
     height: auto;
   }
-  .big-folder-Icon {
-    position: absolute;
-    display: flex;
-    width: 100%;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    font-size: 100px;
-    pointer-events: none;
-    opacity: 0.1;
-  }
 
   .HashTagItems {
     display: flex;
     max-height: 300px;
-  }
-
-  .LeftItem,
-  .RightItem {
-    flex: 1;
   }
 
   .HashTag-header-Container {
@@ -54,24 +38,9 @@ const ModalHashtagEl = styled.div`
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   }
 
-  .LeftItem {
-    border-right: 1px solid rgba(0, 0, 0, 0.2);
-  }
   .searchTags-Container > input {
     padding: 0%;
     border: none;
-  }
-
-  .flexWrapBox {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 6px;
-    overflow-y: auto;
-    max-height: 200px;
-    padding-top: 5px;
   }
 
   .hashtag-content {
@@ -111,17 +80,6 @@ const ModalHashtagEl = styled.div`
     padding: 10px;
   }
 
-  .chosen-title {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  }
-
-  .chosen-title > h3 {
-    margin: 0%;
-    padding: 3.5px;
-  }
-
-  .hash-next-modal {
-  }
   .right-arrow,
   .left-arrow {
     font-size: 60px;
