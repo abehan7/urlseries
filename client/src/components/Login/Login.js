@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import styled from "styled-components";
 import { LoginApi } from "../Api";
-import { UserContext } from "../../App";
+// import { UserContext } from "../../App";
 
 const LoginEl = styled.div`
   width: 100%;
@@ -99,15 +99,12 @@ const Login = () => {
     password: "",
   });
 
-  const { setLoginUser } = useContext(UserContext);
+  // const { setLoginUser } = useContext(UserContext);
 
   const [showLoginButton, setShowLoginButton] = useState(true);
   const [showLogoutButton, setShowLogoutButton] = useState(false);
 
   const navigate = useNavigate();
-
-  const clientId =
-    "828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com";
 
   const handleChange = (e) => {
     console.log(e.target.value);
@@ -127,6 +124,10 @@ const Login = () => {
   };
 
   // FIXME: 구글 로그인
+
+  const clientId =
+    "828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com";
+
   const onLoginSuccess = (res) => {
     console.log("Login Success :", res.profileObj);
     setShowLoginButton(false);
@@ -154,13 +155,13 @@ const Login = () => {
       console.log(response.data);
       const { message, user, loginSuccess, token } = response.data;
 
-      if (loginSuccess) {
-        setLoginUser(user);
-        localStorage.setItem("accessToken", JSON.stringify(token));
-        loginSuccess && navigate("/");
-      } else {
-        alert(message);
-      }
+      // if (loginSuccess) {
+      //   setLoginUser(user);
+      //   localStorage.setItem("accessToken", JSON.stringify(token));
+      //   loginSuccess && navigate("/");
+      // } else {
+      //   alert(message);
+      // }
     });
   };
 
@@ -217,6 +218,7 @@ const Login = () => {
             />
           ) : null}
         </div>
+        {/* <GoogleButton /> */}
         <div type="button" onClick={handleClick} style={{ cursor: "pointer" }}>
           회원가입
         </div>

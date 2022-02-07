@@ -13,11 +13,20 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: [true, "Please enter your password!"],
   },
   email: {
     type: String,
     required: true,
+  },
+  role: {
+    type: Number,
+    default: 0, // 0 = user, 1 = admin
+  },
+  avatar: {
+    type: String,
+    default:
+      "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png",
   },
   createdAt: {
     type: Date,
@@ -27,23 +36,23 @@ const UserSchema = new mongoose.Schema({
 
 const secret = process.env.REFRESH_TOKEN_SECRET;
 //save메소드가 실행되기 전에 비밀번호를 암호화하는 로직
-UserSchema.pre("save", function (next) {
-  let user = this;
+// UserSchema.pre("save", function (next) {
+//   let user = this;
 
-  //model 안의 paswsword가 변환될때만 암호화
-  if (user.isModified("password")) {
-    bcrypt.genSalt(saltRounds, function (err, salt) {
-      if (err) return next(err);
-      bcrypt.hash(user.password, salt, function (err, hash) {
-        if (err) return next(err);
-        user.password = hash;
-        next();
-      });
-    });
-  } else {
-    next();
-  }
-});
+//   //model 안의 paswsword가 변환될때만 암호화
+//   if (user.isModified("password")) {
+//     bcrypt.genSalt(saltRounds, function (err, salt) {
+//       if (err) return next(err);
+//       bcrypt.hash(user.password, salt, function (err, hash) {
+//         if (err) return next(err);
+//         user.password = hash;
+//         next();
+//       });
+//     });
+//   } else {
+//     next();
+//   }
+// });
 //유저가 입력한 패스워드와 데이터베이스의 패스워드를 비교한 후 true/false 를 콜백함수로 넘겨줌
 UserSchema.methods.comparePassword = function (plainPassword) {
   //plainPassword를 암호화해서 현재 비밀번호화 비교
