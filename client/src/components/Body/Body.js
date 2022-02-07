@@ -8,7 +8,6 @@ import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 import Profile from "./profile/Profile";
 import EditUser from "./profile/EditUser";
-import Mainpage from "../../routers/MainPage";
 
 import { useSelector } from "react-redux";
 import MainPage from "../../routers/MainPage";

@@ -118,9 +118,9 @@ app.post("/addFolder", authtest, AddFolder);
 // [5]==================================== 로그인 post ====================================
 // #FIXME: 회원가입
 
-app.post("/signUp", SignUp);
+// app.post("/signUp", SignUp);
 
-app.post("/login", Login);
+// app.post("/login", Login);
 
 // [1] ==================================== url수정 용도 put ====================================
 

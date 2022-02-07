@@ -9,7 +9,8 @@ export const StopAPI = () => controller.abort();
 
 API.interceptors.request.use(
   (req) => {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("firstlogin");
+    console.log("test");
     console.log(token);
     if (token) {
       req.headers.authorization = `Bearer ${JSON.parse(token)}`;
