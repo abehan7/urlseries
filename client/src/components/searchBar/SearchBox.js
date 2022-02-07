@@ -153,6 +153,11 @@ const SearchBox = ({
     setRecentSearch((prev) => [data, ...prev]);
   };
 
+  const onClickSearchedStuff = async (val) => {
+    window.open(val.url);
+    await handleUrlClicked(val);
+  };
+
   // FIXME: 전체 검색기록 삭제
   const handleDelete = () => {
     setRecentSearch([]);
@@ -215,7 +220,7 @@ const SearchBox = ({
                   <SearchedStuff
                     val={url}
                     key={url._id}
-                    handleUrlClicked={handleUrlClicked}
+                    onClick={onClickSearchedStuff}
                   />
                 );
               })}

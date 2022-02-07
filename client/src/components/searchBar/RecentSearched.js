@@ -1,12 +1,3 @@
-// export default React.memo(RecentSearched);
-// styled components를 밖에 꺼내놔야 무한 렌더링이 안돼
-// 그리고 프롭스 전달시킨 다음에 그 프롭스 값이 변화하면 렌더링되더라
-// 아~ 그게 아니였구나
-// 그냥 useState가 변화하면 원래 전체적으로 렌더링되니까
-// return 위에 있던것들이 전체적으로 다시 한번 실행되니까
-// styled 컴포넌트가 다시 실행되서 계속 렌더링된듯
-// 아무튼 styled compoenets는 밖에 꺼내놓는다
-
 import React from "react";
 import { CgCloseR } from "react-icons/cg";
 import styled from "styled-components";
@@ -96,4 +87,4 @@ const RecentSearched = ({ recentSearched, setRecentSearch, url, key }) => {
   );
 };
 
-export default React.memo(RecentSearched);
+export default RecentSearched;

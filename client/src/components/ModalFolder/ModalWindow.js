@@ -13,8 +13,8 @@ import { AddFolder, DeleteFolderAPI, LikeConfirmPutAPI } from "../Api";
 import FolderGridItem from "./FolderGridItem";
 import { ModalFolderContents } from "./ModalFolder";
 
-const ModalContentEl = styled.div``;
-const ModalContent = ({ onClickClose }) => {
+const ModalWindowEl = styled.div``;
+const ModalWindow = ({ onClickClose }) => {
   const [nowFolder, setNowFolder] = useState({});
   const [clickedP2Edit, setClickedP2Edit] = useState(false);
 
@@ -206,7 +206,7 @@ const ModalContent = ({ onClickClose }) => {
   };
 
   return (
-    <ModalContentEl
+    <ModalWindowEl
       className="modal-window tagFolder-window"
       style={clickedP2Edit ? ChangedColor : NomalColor}
     >
@@ -339,8 +339,8 @@ const ModalContent = ({ onClickClose }) => {
           })}
         </div>
       </div>
-    </ModalContentEl>
+    </ModalWindowEl>
   );
 };
 
-export default ModalContent;
+export default ModalWindow;

@@ -5,9 +5,23 @@ import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { PopupDisable } from "../../Hooks/stopScroll";
 import { Page3Actions } from "../../store/reducers/editModalP3";
-import ModalContent from "./ModalContent";
-import ModalContentHashtag from "./ModalContentHashtag";
-import ModalContentUrl from "./ModalContentUrl";
+import ModalContent from "./ModalWindow";
+import ModalContentHashtag from "./ModalWindowHashtag";
+import ModalContentUrl from "./ModalWindowUrl";
+
+const Icon = styled.div`
+  color: #fff;
+  cursor: pointer;
+  font-size: 3.4rem;
+  display: flex;
+`;
+
+const BackIcon = styled(Icon)`
+  visibility: ${(props) => (props.page > 1 ? "visible" : "hidden")};
+`;
+const ForwardIcon = styled(Icon)`
+  visibility: ${(props) => (props.page < 3 ? "visible" : "hidden")};
+`;
 
 const ModalFolderEl = styled.div`
   .tagFolder-window {
@@ -177,20 +191,12 @@ const ModalFolderEl = styled.div`
   }
   flex-direction: row;
   column-gap: 2rem;
-`;
 
-const Icon = styled.div`
-  color: #fff;
-  cursor: pointer;
-  font-size: 3.4rem;
-  display: flex;
-`;
-
-const BackIcon = styled(Icon)`
-  visibility: ${(props) => (props.page > 1 ? "visible" : "hidden")};
-`;
-const ForwardIcon = styled(Icon)`
-  visibility: ${(props) => (props.page < 3 ? "visible" : "hidden")};
+  @media (max-width: 580px) {
+    ${Icon} {
+      display: none;
+    }
+  }
 `;
 
 export const ModalFolderContents = createContext(null);

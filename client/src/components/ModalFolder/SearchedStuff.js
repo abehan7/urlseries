@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import styled from "styled-components";
 
 const SearchedStuffEl = styled.div`
@@ -48,25 +49,31 @@ const ImgContainer = styled.div`
   justify-content: center;
   width: auto;
   height: 100%;
-  /* margin-left: 10px; */
   pointer-events: none;
 `;
-const SearchedStuff = ({ val, key, onClick }) => {
+
+const SelectBox = styled.div`
+  display: flex;
+`;
+
+const SearchedStuff = ({ value, key, onClick }) => {
+  const [isChecked, setIsChecked] = useState(false);
   return (
     <SearchedStuffEl
       className="searched-Stuff"
       key={key}
-      onClick={() => onClick(val)}
+      onClick={() => {
+        setIsChecked(!isChecked);
+        onClick();
+      }}
     >
       <ImgContainer>
-        <Image
-          className="urlFavicon"
-          src={`http://www.google.com/s2/favicons?domain=${val.url}`}
-          alt=""
-        />
+        <SelectBox>
+          {isChecked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
+        </SelectBox>
       </ImgContainer>
       <Bar className="just-bar">|</Bar>
-      <Title className="Searched-url-Title">{val.url_title}</Title>
+      <Title className="Searched-url-Title">{value?.url_title}</Title>
     </SearchedStuffEl>
   );
 };

@@ -1,11 +1,11 @@
 import React, { useCallback, useRef } from "react";
-// import "./ModalHashtag.css";
-import ModalContent from "./ModalContent";
 import styled from "styled-components";
 import { HashtagModalScrollUp } from "../../Hooks/ScrollUp";
 import { PopupDisable } from "../../Hooks/stopScroll";
+import ModalOverlay from "../styled/ModalOverlay.styled";
+import ModalWindow from "./ModalWindow";
 
-const ModalHashtagEl = styled.div`
+const ModalHashtagEl = styled(ModalOverlay)`
   .oneHash {
     cursor: pointer;
   }
@@ -61,13 +61,8 @@ const ModalHashtag = ({
   // 스타일 오른쪽 화살표 남겨두기 hidden으로
 
   return (
-    <ModalHashtagEl
-      id="modal"
-      className="modal-overlay"
-      onMouseDown={onClickOutSide}
-      ref={outSideRef}
-    >
-      <ModalContent
+    <ModalHashtagEl onMouseDown={onClickOutSide} ref={outSideRef}>
+      <ModalWindow
         handleCloseModal={handleCloseModal}
         setAssignedTags={setAssignedTags}
         assignedTags={assignedTags}

@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const SearchBar = styled.div`
+const InputContainer = styled.div`
   padding: 11px;
   padding-top: 5px;
   padding-bottom: 6px;
@@ -15,4 +15,4 @@ const SearchBar = styled.div`
   }
 `;
 
-export default SearchBar;
+export default InputContainer;

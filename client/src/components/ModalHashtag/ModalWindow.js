@@ -6,6 +6,7 @@ import ItemLeft from "./ItemLeft";
 import ItemRight from "./ItemRight";
 import styled from "styled-components";
 import { ChangedAssignedTagAPI } from "../Api";
+import ModalWindowEl from "../styled/ModalWindowEl.styled";
 
 const Button = styled.button``;
 
@@ -26,23 +27,26 @@ const ItemContainer = styled.div`
 
 const Title = styled.div``;
 
-const ModalWindow = styled.div`
+const ModalWindowHashEl = styled(ModalWindowEl)`
   width: 600px;
   height: auto;
+  @media (max-width: 640px) {
+    width: 90%;
+  }
 `;
 
 const HeaderContainer = styled.div`
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
-const ModalContent = ({
+const ModalWindow = ({
   handleCloseModal,
   setAssignedTags,
   assignedTags,
   setTotalTags,
   totalTags,
 }) => {
-  const [searchBarInput, setSearchBarInput] = useState("");
+  const [keyword, setKeyword] = useState("");
   const [filterdTags, setFilterdTags] = useState([]);
 
   // #FIXME: #1 검색필터
@@ -51,10 +55,10 @@ const ModalContent = ({
       return val.name
         .toLowerCase()
         .replace(/(\s*)/g, "")
-        .includes(searchBarInput.toLowerCase().replace(/(\s*)/g, "")); // 큰거 작은거 검색하고싶은거를 뒤에 넣기
+        .includes(keyword.toLowerCase().replace(/(\s*)/g, "")); // 큰거 작은거 검색하고싶은거를 뒤에 넣기
     });
     return filterd;
-  }, [totalTags, searchBarInput]);
+  }, [totalTags, keyword]);
 
   useEffect(() => {
     const filterd = SearchFilter();
@@ -64,7 +68,7 @@ const ModalContent = ({
   // FIXME: #2 ItemLeft토글 클릭
   const ToggleClicked = useCallback(
     (clickedTag) => {
-      console.log("토글 클릭");
+      console.log(clickedTag);
 
       // assignedTags
       setAssignedTags((tag) => [...tag, { ...clickedTag, assigned: 1 }]);
@@ -150,24 +154,31 @@ const ModalContent = ({
     handleEditModify();
   }, [handleEditModify]);
 
-  const oneItemRight = ({ name, i, oneItem, handleToggle }) => (
-    <div key={i} className="oneHash" onClick={() => handleToggle(oneItem)}>
-      {name}
+  // FIXME:   className === clicked면 색깔 노랑
+  const totalMapColor = useCallback((val) => {
+    return val.assigned === 1
+      ? "oneHash total-oneHash clicked"
+      : "oneHash total-oneHash";
+  }, []);
+
+  const oneItemLeft = ({ item, index }) => (
+    <div
+      key={index}
+      className={totalMapColor(item)}
+      onClick={(e) => handleToggle(e, item)}
+    >
+      {item.name}
     </div>
   );
 
-  const oneItemLeft = ({ i, handleClassName, handleToggle, oneItem, name }) => (
-    <div
-      key={i}
-      className={() => handleClassName(oneItem)}
-      onClick={(e) => handleToggle(e, oneItem)}
-    >
-      {name}
+  const oneItemRight = ({ item, index }) => (
+    <div key={index} className="oneHash" onClick={() => ToggleUnClicked(item)}>
+      {item.name}
     </div>
   );
 
   return (
-    <ModalWindow className="modal-window">
+    <ModalWindowHashEl>
       <HeaderContainer className="header-Container">
         <div className="close-area" onClick={handleCloseBtn}>
           <IoArrowBack />
@@ -178,12 +189,13 @@ const ModalContent = ({
       </HeaderContainer>
       <ItemContainer>
         <ItemLeft
-          searchBarInput={searchBarInput}
+          keyword={keyword}
           itemList={totalTags}
           handleToggle={handleToggle}
           filterdList={filterdTags}
-          setSearchBarInput={setSearchBarInput}
+          setKeyword={setKeyword}
           Item={oneItemLeft}
+          placeholder="선택할 태그를 입력해주세요"
         />
 
         <ItemRight
@@ -197,8 +209,8 @@ const ModalContent = ({
       <ButtonWrapper className="editHash-btn">
         <Button onClick={onClickEditBtn}>수정하기</Button>
       </ButtonWrapper>
-    </ModalWindow>
+    </ModalWindowHashEl>
   );
 };
 
-export default ModalContent;
+export default ModalWindow;

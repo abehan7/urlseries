@@ -3,7 +3,7 @@ import { MdOutlineTag } from "react-icons/md";
 import styled from "styled-components";
 import BoxWrap from "../styled/BoxWrap.styled";
 
-import ModalContent from "../styled/ModalContent.styled";
+import ItemContainer from "../styled/ItemContainer.styled";
 
 const ItemRightEl = styled.div`
   flex: 1;
@@ -32,27 +32,22 @@ const ItemRightTitle = styled.div`
   }
 `;
 
-const ItemRight = ({ Title, ItemList, Item, handleToggle }) => {
+const ItemRight = ({ Title, ItemList, Item }) => {
   return (
     <ItemRightEl>
       <ItemRightTitle>
         <h3>{Title}</h3>
       </ItemRightTitle>
-      <ModalContent>
+      <ItemContainer>
         <ItemRightBgIcon>
           <MdOutlineTag />
         </ItemRightBgIcon>
         <BoxWrap>
-          {ItemList?.map((val, i) => {
-            return Item({
-              name: val.name,
-              i,
-              oneItem: val,
-              handleToggle,
-            });
+          {ItemList?.map((item, index) => {
+            return Item({ item, index });
           })}
         </BoxWrap>
-      </ModalContent>
+      </ItemContainer>
     </ItemRightEl>
   );
 };
