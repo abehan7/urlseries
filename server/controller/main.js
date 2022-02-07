@@ -139,14 +139,15 @@ const Get21Urls = async (req, res) => {
 };
 
 const AddUrl = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const user = req.user;
+  console.log(user);
   const { url, title, hashTags, memo } = req.body;
   const NewUrl = new db.Urls({
     url: url,
     url_title: title,
     url_hashTags: hashTags,
     url_memo: memo,
-    user_id,
+    _id: user.id,
   });
 
   try {
@@ -451,36 +452,69 @@ const generateAccessToken1 = async (user) => {
 };
 
 // FIXME: 로그인 회원가입
+
 const SignUp = async (req, res) => {
-  console.log(req.body);
-  const { user_id, password, email } = req.body;
+  const { user_id, email, password } = req.body;
+  db.Users.findOne({ user_id: user_id }, (err, user) => {
+    if (user) {
+      res.send({ message: "User already registerd" });
+    } else {
+      const user = new db.Users({
+        user_id,
+        email,
+        password,
+      });
 
-  const newUser = new db.Users({
-    user_id,
-    password,
-    email,
-  });
-
-  const InitUrl = new db.Urls({
-    url: "http://localhost:3000",
-    url_title: "유알유알엘입니다 :)",
-    user_id,
-  });
-
-  const InitHashtags = new db.Hashtags2({
-    user_id,
-  });
-
-  InitUrl.save();
-  InitHashtags.save();
-
-  newUser.save(async (err, userInfo) => {
-    if (err) return res.json({ success: false, err });
-    console.log("user inserted");
-    const token = await generateAccessToken1(newUser);
-    return res.status(200).json({ success: true, token: token });
+      user.save(async (err, userInfo) => {
+        if (err) return res.json({ success: false, err });
+        console.log("user inserted");
+        console.log(userInfo);
+        const token = await generateAccessToken1(user);
+        return res
+          .status(200)
+          .json({ success: true, message: "가입이 되었습니다", token: token });
+      });
+      // user.save(async (err) => {
+      //   if (err) {
+      //     res.send(err);
+      //   } else {
+      //     res.send({ message: "Successfully Registered, Please login now." });
+      //   }
+      // });
+    }
   });
 };
+
+// const SignUp = async (req, res) => {
+//   console.log(req.body);
+//   const { user_id, password, email } = req.body;
+
+//   const newUser = new db.Users({
+//     user_id,
+//     password,
+//     email,
+//   });
+
+//   newUser.save(async (err, userInfo) => {
+//     if (err) return res.json({ success: false, err });
+//     console.log("user inserted");
+//     const token = await generateAccessToken1(newUser);
+//     return res.status(200).json({ success: true, token: token });
+//   });
+
+//   const InitUrl = new db.Urls({
+//     url: "http://localhost:3000",
+//     url_title: "유알유알엘입니다 :)",
+//     user_id,
+//   });
+
+//   const InitHashtags = new db.Hashtags2({
+//     user_id,
+//   });
+
+//   InitUrl.save();
+//   InitHashtags.save();
+// };
 
 const Login = async (req, res) => {
   //로그인을할때 아이디와 비밀번호를 받는다

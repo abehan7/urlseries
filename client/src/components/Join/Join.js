@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { ItemWrapper, LoginWrapper } from "../Login/Login";
 import { SignUp } from "../Api";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 //간단회원가입 기능
 
 const JoinEl = styled.div`
@@ -48,13 +49,13 @@ const Form = styled.form`
 `;
 
 const Join = () => {
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
     user_id: "",
     password: "",
     email: "",
   });
-
-  const navigate = useNavigate();
 
   const onChange = (e) => {
     const { name, value } = e.target;
