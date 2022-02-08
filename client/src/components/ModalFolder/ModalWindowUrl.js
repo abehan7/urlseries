@@ -1,5 +1,5 @@
 import { debounce } from "lodash";
-import React, { useCallback, useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { KeywordNormalize, SearchNotByDB } from "../../Hooks/SearchHook";
 import { MainStates } from "../../routers/MainPage";
@@ -67,6 +67,9 @@ const ModalWindowUrl = () => {
   const { realTotalUrls } = useContext(MainStates);
 
   const [filterdList, setFilterdList] = useState([]);
+  const [target, setTarget] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [conetentsNum, setconetentsNum] = useState(20);
 
   const folders = useSelector((state) => state);
 
@@ -91,6 +94,35 @@ const ModalWindowUrl = () => {
     console.log(folders);
   };
 
+  // FIXME: 무한스크롤
+
+  const getNextItems = () => {
+    setconetentsNum((num) => num + 40);
+  };
+
+  const onIntersect = async ([entry], observer) => {
+    if (entry.isIntersecting && !isLoaded) {
+      observer.unobserve(entry.target);
+      if (realTotalUrls.length === conetentsNum) {
+        return;
+      }
+      await getNextItems();
+
+      observer.observe(entry.target);
+    }
+  };
+
+  useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.4,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
+
   return (
     <ModalWindowUrlEl>
       <HeaderContainerUrl className="header-Container">
@@ -107,14 +139,18 @@ const ModalWindowUrl = () => {
         </InputContainer>
         <Contents>
           {keyword.length === 0
-            ? realTotalUrls.slice(0, 10).map((url) => {
-                return (
-                  <SearchedStuff
-                    value={url}
-                    key={url._id}
-                    onClick={handleClickUrl}
-                  />
-                );
+            ? realTotalUrls.slice(0, conetentsNum).map((url, index) => {
+                if (index === conetentsNum - 3) {
+                  return <div ref={setTarget}></div>;
+                } else {
+                  return (
+                    <SearchedStuff
+                      value={url}
+                      key={url._id}
+                      onClick={handleClickUrl}
+                    />
+                  );
+                }
               })
             : filterdList?.map((url) => {
                 return (
