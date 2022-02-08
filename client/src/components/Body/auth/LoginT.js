@@ -9,6 +9,7 @@ import "./Auth.css";
 import { dispatchLogin } from "../../../redux/Actions/authAction";
 import { useDispatch } from "react-redux";
 import { GoogleLogin } from "react-google-login";
+import { RiUser3Line, RiLockPasswordLine, RiMailLine } from "react-icons/ri";
 
 const initialState = {
   user_id: "",
@@ -68,58 +69,113 @@ function LoginT() {
   };
 
   return (
-    <div className="login_page">
-      <h2>URurl login page</h2>
+    <center>
+      <div className="container" id="container">
+        <div className="form-container sign-in-container">
+          <form onSubmit={handleSubmit}>
+            <h1>로그인</h1>
 
-      {err && showErrMsg(err)}
-      {success && showSuccessMsg(success)}
+            {err && showErrMsg(err)}
+            {success && showSuccessMsg(success)}
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="user_id">ID</label>
+            <div className="icon_field">
+              <RiUser3Line className="icon" />
+              <input
+                type="text"
+                placeholder="아이디를 입력해주세요"
+                value={user_id}
+                name="user_id"
+                onChange={handleChangeInput}
+              ></input>
+            </div>
+            <div className="icon_field">
+              <RiLockPasswordLine className="icon" />
+              <input
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                value={password}
+                name="password"
+                onChange={handleChangeInput}
+              ></input>
+            </div>
+            <Link to="/forgot_password">비밀번호를 잊으셨나요?</Link>
+            <button type="summit">Sign In</button>
 
-          <input
-            type="text"
-            placeholder="아이디를 입력해주세요"
-            value={user_id}
-            name="user_id"
-            onChange={handleChangeInput}
-          ></input>
+            <div className="social">
+              <GoogleLogin
+                clientId="828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com"
+                buttonText="구글계정으로 로그인하기"
+                onSuccess={responseGoogle}
+                cookiePolicy={"single_host_origin"}
+              />
+            </div>
+          </form>
         </div>
-
-        <div>
-          <label htmlFor="password">password</label>
-
-          <input
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
-            value={password}
-            name="password"
-            onChange={handleChangeInput}
-          ></input>
+        <div className="overlay-container">
+          <div className="overlay">
+            <div className="overlay-panel overlay-right">
+              <h1>반갑습니다!</h1>
+              <p>자신만의 개성있고 효율적인 URL 관리를 시작해보세요!</p>
+              <button className="ghost" id="signUp">
+                <Link to="/registertest">회원가입</Link>
+              </button>
+            </div>
+          </div>
         </div>
-
-        <div className="row">
-          <button type="submit">로그인</button>
-          <Link to="/forgot_password">비밀번호를 잊으셨나요?</Link>
-        </div>
-      </form>
-
-      <div className="hr">Or Login with </div>
-
-      <div className="social">
-        <GoogleLogin
-          clientId="828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com"
-          buttonText="구글계정으로 로그인하기"
-          onSuccess={responseGoogle}
-          cookiePolicy={"single_host_origin"}
-        />
       </div>
+    </center>
 
-      <p>
-        새로운 계정을 만드시겠습니까?<Link to="/registertest">회원가입</Link>
-      </p>
-    </div>
+    // <div className="login_page">
+    //   <h2>Login</h2>
+
+    //  {err && showErrMsg(err)}
+    //  {success && showSuccessMsg(success)}
+
+    //   <form onSubmit={handleSubmit}>
+    //     <div>
+    //       <label htmlFor="user_id">ID</label>
+    //      <input
+    //          type="text"
+    //         placeholder="아이디를 입력해주세요"
+    // value={user_id}
+    //         name="user_id"
+    //         onChange={handleChangeInput}
+    //      ></input>
+    //    </div>
+
+    //     <div>
+    //       <label htmlFor="password">password</label>
+
+    //  <input
+    //    type="password"
+    //    placeholder="비밀번호를 입력해주세요"
+    //    value={password}
+    //    name="password"
+    //    onChange={handleChangeInput}
+    //  ></input>
+    //     </div>
+
+    //     <div className="row">
+    //       <button type="submit">로그인</button>
+    //       <Link to="/forgot_password">비밀번호를 잊으셨나요?</Link>
+    //     </div>
+    //   </form>
+
+    //   <div className="hr">Or Login with </div>
+
+    //  <div className="social">
+    //    <GoogleLogin
+    //      clientId="828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com"
+    //      buttonText="구글계정으로 로그인하기"
+    //      onSuccess={responseGoogle}
+    //      cookiePolicy={"single_host_origin"}
+    //    />
+    //  </div>
+
+    //   <p>
+    //     새로운 계정을 만드시겠습니까?<Link to="/registertest">회원가입</Link>
+    //   </p>
+    // </div>
   );
 }
 

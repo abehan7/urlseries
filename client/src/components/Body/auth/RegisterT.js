@@ -13,6 +13,8 @@ import {
   isLength,
 } from "../../Utils/validation/Validation";
 
+import { RiUser3Line, RiLockPasswordLine, RiMailLine } from "react-icons/ri";
+
 const initialState = {
   user_id: "",
   password: "",
@@ -36,22 +38,30 @@ function RegisterT() {
     if (isEmpty(user_id) || isEmpty(password))
       return setUser({
         ...user,
-        err: "Please fill in all fields.",
+        err: '"입력사항을 모두 입력해주세요"',
         success: "",
       });
 
     if (!isEmail(email))
-      return setUser({ ...user, err: "Invalid emails.", success: "" });
+      return setUser({
+        ...user,
+        err: '"이메일 형식을 확인해주세요"',
+        success: "",
+      });
 
     if (isLength(password))
       return setUser({
         ...user,
-        err: "Password must be at least 6 characters.",
+        err: '"6자리 이상으로 비밀번호를 설정해주세요"',
         success: "",
       });
 
     if (!isMatch(password, cf_password))
-      return setUser({ ...user, err: "Password did not match.", success: "" });
+      return setUser({
+        ...user,
+        err: '"비밀번호가 일치하지 않습니다"',
+        success: "",
+      });
     try {
       const res = await axios.post("/user/register", {
         user_id,
@@ -76,70 +86,139 @@ function RegisterT() {
   };
 
   return (
-    <div className="login_page">
-      <h2>URurl Register page</h2>
+    <center>
+      <div class="container" id="container">
+        <div class="form-container sign-in-container">
+          <form onSubmit={handleSubmit}>
+            <h1>회원가입 </h1>
 
-      {err && showErrMsg(err)}
-      {success && showSuccessMsg(success)}
+            {err && showErrMsg(err)}
+            {success && showSuccessMsg(success)}
+            <div className="icon_field">
+              <RiUser3Line className="icon" />
+              <input
+                type="text"
+                placeholder="아이디를 입력해주세요"
+                value={user_id}
+                name="user_id"
+                onChange={handleChangeInput}
+              ></input>
+            </div>
+            <div className="icon_field">
+              <RiMailLine className="icon" />
+              <input
+                type="text"
+                placeholder="이메일을 입력해주세요"
+                value={email}
+                name="email"
+                onChange={handleChangeInput}
+              ></input>
+            </div>
 
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="user_id">ID</label>
+            <div className="icon_field">
+              <RiLockPasswordLine className="icon" />
+              <input
+                type="password"
+                placeholder="비밀번호를 입력해주세요"
+                value={password}
+                name="password"
+                onChange={handleChangeInput}
+              ></input>
+            </div>
 
-          <input
-            type="text"
-            placeholder="아이디를 입력해주세요"
-            value={user_id}
-            name="user_id"
-            onChange={handleChangeInput}
-          ></input>
+            <div className="icon_field">
+              <RiLockPasswordLine className="icon" />
+              <input
+                type="password"
+                placeholder="비밀번호를 확인해주세요"
+                value={cf_password}
+                name="cf_password"
+                onChange={handleChangeInput}
+              ></input>
+            </div>
+
+            <button type="submit">회원가입</button>
+          </form>
         </div>
 
-        <div>
-          <label htmlFor="email">Email</label>
-
-          <input
-            type="text"
-            placeholder="이메일을 입력해주세요"
-            value={email}
-            name="email"
-            onChange={handleChangeInput}
-          ></input>
+        <div class="overlay-container">
+          <div class="overlay">
+            <div class="overlay-panel overlay-right">
+              <h1>환영합니다!</h1>
+              <p>기존 아이디가 있다면 로그인해주세요!</p>
+              <button class="ghost" id="signIn">
+                <Link to="/logintest">로그인</Link>
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
+    </center>
 
-        <div>
-          <label htmlFor="password">password</label>
+    // <div className="login_page">
+    //   <h2>URurl Register page</h2>
 
-          <input
-            type="password"
-            placeholder="비밀번호를 입력해주세요"
-            value={password}
-            name="password"
-            onChange={handleChangeInput}
-          ></input>
-        </div>
+    //   {err && showErrMsg(err)}
+    //   {success && showSuccessMsg(success)}
 
-        <div>
-          <label htmlFor="cf_password">ReEnter-password</label>
+    //   <form onSubmit={handleSubmit}>
+    // <div>
+    //   <label htmlFor="user_id">ID</label>
 
-          <input
-            type="password"
-            placeholder="비밀번호를 확인해주세요"
-            value={cf_password}
-            name="cf_password"
-            onChange={handleChangeInput}
-          ></input>
-        </div>
+    //   <input
+    //     type="text"
+    //     placeholder="아이디를 입력해주세요"
+    //     value={user_id}
+    //     name="user_id"
+    //     onChange={handleChangeInput}
+    //   ></input>
+    // </div>
 
-        <div className="row">
-          <button type="submit">회원가입</button>
-        </div>
-      </form>
+    // <div>
+    //   <label htmlFor="email">Email</label>
 
-      <p>
-        이미 아이디가 있습니까?<Link to="/logintest">로그인</Link>
-      </p>
-    </div>
+    //   <input
+    //     type="text"
+    //     placeholder="이메일을 입력해주세요"
+    //     value={email}
+    //     name="email"
+    //     onChange={handleChangeInput}
+    //   ></input>
+    // </div>
+
+    // <div>
+    //   <label htmlFor="password">password</label>
+
+    //   <input
+    //     type="password"
+    //     placeholder="비밀번호를 입력해주세요"
+    //     value={password}
+    //     name="password"
+    //     onChange={handleChangeInput}
+    //   ></input>
+    // </div>
+
+    // <div>
+    //   <label htmlFor="cf_password">ReEnter-password</label>
+
+    //   <input
+    //     type="password"
+    //     placeholder="비밀번호를 확인해주세요"
+    //     value={cf_password}
+    //     name="cf_password"
+    //     onChange={handleChangeInput}
+    //   ></input>
+    // </div>
+
+    //   <div className="row">
+    //     <button type="submit">회원가입</button>
+    //   </div>
+    // </form>
+
+    //   <p>
+    //     이미 아이디가 있습니까?<Link to="/logintest">로그인</Link>
+    //   </p>
+    // </div>
   );
 }
 
