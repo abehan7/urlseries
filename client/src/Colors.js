@@ -7,5 +7,7 @@ const Colors = {
   Ash: "#595959",
   Peach: "#FFE4C4",
   White: "#fafafa",
+  Blue: "#00B4D8",
+  Yellow: "#fbb917",
 };
 export default Colors;

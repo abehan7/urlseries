@@ -7,8 +7,8 @@ import { TiBackspace, TiFolderDelete } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Colors from "../../Colors";
-import { PopupDisable } from "../../Hooks/stopScroll";
 import { Page3Actions } from "../../store/reducers/editModalP3";
+import { actions } from "../../store/reducers/Folders";
 import { AddFolder, DeleteFolderAPI, LikeConfirmPutAPI } from "../Api";
 import FolderGridItem from "./FolderGridItem";
 import { ModalFolderContents } from "./ModalFolder";
@@ -16,6 +16,7 @@ import { ModalFolderContents } from "./ModalFolder";
 const ModalWindowEl = styled.div``;
 const ModalWindow = ({ onClickClose }) => {
   const [nowFolder, setNowFolder] = useState({});
+  const [inputFolderName, setInputFolderName] = useState("");
   const [clickedP2Edit, setClickedP2Edit] = useState(false);
 
   const {
@@ -23,10 +24,12 @@ const ModalWindow = ({ onClickClose }) => {
     DList,
     LList,
     LikeM,
+    clickedFolder,
     setDeleteM,
     setDList,
     setLList,
     setLikeM,
+    setClickedFolder,
   } = useContext(ModalFolderContents);
 
   // FIXME: 리덕스
@@ -39,8 +42,18 @@ const ModalWindow = ({ onClickClose }) => {
     dispatch(Page3Actions.SetNowFolder(folder2));
   };
 
+  const ActionAddFolder = (folderName) => {
+    const content = {
+      _id: "5f0f8f9b9c8f8b3f8c8b8b8t",
+      folderName: folderName,
+      folderContents: ["61ae230e5e92a9f7c55a9c63", "61ae230e5e92a9f7c55a9c64"],
+    };
+
+    dispatch(actions.AddFolder(content));
+  };
+
   // 리덕스 업데이트
-  const folders = useSelector((state) => state.folders);
+  const { folders } = useSelector((state) => state.folders);
 
   // fix
   const handleDeleteFolder = async () => {
@@ -97,7 +110,7 @@ const ModalWindow = ({ onClickClose }) => {
 
   // 처음 Add는 맨 처음 나오는 아이콘 나올때
   // 여기는 첫번째 아이콘 누른 다음에 나오는 두번째 아이콘
-  const ClickAddItem = useCallback(
+  const onClickAddItem = useCallback(
     async (e) => {
       // +버튼 눌러야만 Axios보내는데 <input버튼> 아니면 위에 있는< 설명모달> 클릭하면 <axios보내>지니까 그런거 <방지>하는 기능
       if (
@@ -107,26 +120,23 @@ const ModalWindow = ({ onClickClose }) => {
       ) {
         return;
       }
-      // 폴더이름
-      let folder_name = document.querySelector(".folder-name input").value;
       // <폴더 추가하는 공간>
 
       // 폴더이름에 최소한 1글자라도 적어야 등록되도록 하기
       // 여기에 이벤트 넣기
       // 빨간색으로 click아니면 클릭이라고 한글로 넣기
 
-      if (folder_name.length >= 1) {
+      if (inputFolderName.length >= 1) {
         // 1자라도 넣은 경우
-
-        const { data } = await AddFolder(folder_name);
-        addNewFolderItem([data, ...folderItems]);
+        ActionAddFolder(inputFolderName);
+        setInputFolderName("");
+        // const { data } = await AddFolder(folder_name);
 
         document.querySelector(".folder-name input").value = "";
       } else {
         // 1자도 안넣은 경우
-        console.log("@@폴더 이름을 작성해주세요@@");
         document.querySelector(".tempModal div").innerText =
-          "@@폴더 이름을 작성해주세요@@";
+          "폴더 이름을 작성해주세요";
         document.querySelector(".tempModal").style.backgroundColor = "#FF7276";
 
         // document.querySelector(".tempModal div").innerText =
@@ -134,7 +144,7 @@ const ModalWindow = ({ onClickClose }) => {
         // debounceSomethingFunc();
       }
     },
-    [folderItems]
+    [inputFolderName]
   );
 
   // FIXME: 추가 수정 START
@@ -183,6 +193,16 @@ const ModalWindow = ({ onClickClose }) => {
       setNowFolder({});
       SetReduxNowFolder({});
     }
+  };
+
+  const onChnageFolderName = (e) => {
+    setInputFolderName(e.target.value);
+  };
+
+  const handleSetClickedFolder = (folder) => {
+    folder._id === clickedFolder?._id
+      ? setClickedFolder({})
+      : setClickedFolder(folder);
   };
 
   // FIXME: 스타일
@@ -308,7 +328,7 @@ const ModalWindow = ({ onClickClose }) => {
           <div
             className="addItem"
             onClick={(e) => {
-              ClickAddItem(e);
+              onClickAddItem(e);
             }}
           >
             <div className="tempModal">
@@ -319,7 +339,9 @@ const ModalWindow = ({ onClickClose }) => {
             </div>
             <div className="folder-name">
               <input
-                placeholder="@폴더이름@"
+                value={inputFolderName}
+                onChange={onChnageFolderName}
+                placeholder="폴더이름"
                 style={{
                   border: "none",
                   padding: "0",
@@ -330,14 +352,13 @@ const ModalWindow = ({ onClickClose }) => {
             </div>
           </div>
 
-          {folderItems?.map((folder) => {
+          {folders?.map((folder) => {
             return (
               <FolderGridItem
                 folder={folder}
-                setNowFolder={setNowFolder}
-                nowFolder={nowFolder}
                 key={folder._id}
-                clickedP2Edit={clickedP2Edit}
+                onClick={handleSetClickedFolder}
+                clickedFolder={clickedFolder}
               />
             );
           })}

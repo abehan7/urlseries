@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useRef, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useRef,
+  useState,
+  useEffect,
+} from "react";
 import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 
@@ -20,7 +26,7 @@ const BackIcon = styled(Icon)`
   visibility: ${(props) => (props.page > 1 ? "visible" : "hidden")};
 `;
 const ForwardIcon = styled(Icon)`
-  visibility: ${(props) => (props.page < 3 ? "visible" : "hidden")};
+  /* visibility: ${(props) => (props.page < 3 ? "visible" : "hidden")}; */
 `;
 
 const ModalFolderEl = styled.div`
@@ -166,27 +172,27 @@ const ModalFolderEl = styled.div`
     transition: 200ms;
   }
 
-  .Page2GridItem,
+  .FolderGridItem,
   .addFolder-icon,
   .back {
     border-radius: 35%;
   }
 
-  .Page2GridItem:hover,
+  .FolderGridItem:hover,
   .addFolder-icon:hover,
   .back:hover {
     background-color: rgba(0, 0, 0, 0.03);
     transition: 200ms;
   }
 
-  .Page2GridItem:active,
+  .FolderGridItem:active,
   .addFolder-icon:active,
   .back:active {
     background-color: rgba(0, 0, 0, 0.05);
     transition: 500ms;
   }
 
-  .Page2GridItem:active {
+  .FolderGridItem:active {
     opacity: 1;
   }
   flex-direction: row;
@@ -207,19 +213,24 @@ const ModalFolder = () => {
   const [LList, setLList] = useState([]);
   const [LikeM, setLikeM] = useState(false);
   const [page, setPage] = useState(1);
+  const [clickedFolder, setClickedFolder] = useState(null);
 
   const InitialStates = {
     DeleteM,
     DList,
     LList,
     LikeM,
+    clickedFolder,
     setDeleteM,
     setDList,
     setLList,
     setLikeM,
+    setClickedFolder,
   };
 
   const outSideRef = useRef(null);
+
+  const rightArrowRef = useRef(null);
 
   const dispatch = useDispatch();
   const SetReduxNowFolder = (folder2) => {
@@ -229,7 +240,7 @@ const ModalFolder = () => {
   // FIXME: handler
   const onClickClose = useCallback(() => {
     document.querySelector(".folderModal-container").style.display = "none";
-    SetReduxNowFolder({});
+    // SetReduxNowFolder({});
     setPage(1);
     PopupDisable();
   }, []);
@@ -247,6 +258,22 @@ const ModalFolder = () => {
     page < 3 && setPage((page) => page + 1);
   };
 
+  useEffect(() => {
+    // 맨 처음에 폴더가 설정 안되어 있는 경우
+    clickedFolder === null &&
+      (rightArrowRef.current.style.visibility = "hidden");
+
+    // 이후에 폴더 2번 클릭해서 사라진 경우
+    if (clickedFolder !== null) {
+      Object.keys(clickedFolder).length !== 0 && page < 3
+        ? (rightArrowRef.current.style.visibility = "visible")
+        : (rightArrowRef.current.style.visibility = "hidden");
+    }
+
+    // ? (rightArrowRef.current.style.visibility = "visible")
+    // : (rightArrowRef.current.style.visibility = "hidden");
+  }, [clickedFolder, page]);
+
   return (
     <ModalFolderContents.Provider value={InitialStates}>
       <ModalFolderEl
@@ -261,7 +288,7 @@ const ModalFolder = () => {
         {page === 1 && <ModalContent onClickClose={onClickClose} />}
         {page === 2 && <ModalContentUrl />}
         {page === 3 && <ModalContentHashtag />}
-        <ForwardIcon page={page}>
+        <ForwardIcon page={page} ref={rightArrowRef}>
           <IoChevronForwardOutline onClick={onClickForward} />
         </ForwardIcon>
       </ModalFolderEl>

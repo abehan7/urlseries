@@ -88,7 +88,6 @@ const ModalWindowUrl = () => {
   );
 
   const handleClickUrl = () => {
-    console.log("123");
     console.log(folders);
   };
 
