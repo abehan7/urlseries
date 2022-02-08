@@ -39,6 +39,9 @@ const ModalWindow = ({ onClickClose }) => {
     dispatch(Page3Actions.SetNowFolder(folder2));
   };
 
+  // 리덕스 업데이트
+  const folders = useSelector((state) => state.folders);
+
   // fix
   const handleDeleteFolder = async () => {
     const filterdFolderItems = folderItems.filter((val) => {
@@ -60,6 +63,7 @@ const ModalWindow = ({ onClickClose }) => {
 
   const ClickAddIcon = useCallback(
     (e) => {
+      e.stopPropagation();
       // >>>>>>>>
       // 현재 맨 처음[+] 닫는거
       e.target.classList.toggle("closed");
