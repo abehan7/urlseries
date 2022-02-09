@@ -8,6 +8,8 @@ import ButtonWrapper from "../styled/ButtonWrapper.styled";
 import ModalWindowEl from "../styled/ModalWindowEl.styled";
 import HeaderContainer from "./HeaderContainer.styled";
 import { useSelector, useDispatch } from "react-redux";
+import { ModalFolderContents } from "./ModalFolder";
+import { actions } from "../../store/reducers/Folders";
 
 const HeaderContainerUrl = styled(HeaderContainer)`
   position: relative;
@@ -65,13 +67,16 @@ const BtnSelectAll = styled.div`
 const ModalWindowUrl = () => {
   const [keyword, setKeyword] = useState("");
   const { realTotalUrls } = useContext(MainStates);
+  const { clickedFolder } = useContext(ModalFolderContents);
 
   const [filterdList, setFilterdList] = useState([]);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [conetentsNum, setconetentsNum] = useState(20);
 
-  const folders = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  const folders = useSelector((state) => state.folders);
 
   const onChange = useCallback(
     (e) => {
@@ -90,8 +95,16 @@ const ModalWindowUrl = () => {
     [realTotalUrls]
   );
 
-  const handleClickUrl = () => {
-    console.log(folders);
+  const handleClickUrl = (url) => {
+    dispatch(
+      actions.AddContent({ folderId: clickedFolder._id, urlId: url._id })
+    );
+  };
+
+  const handleUnClickUrl = (url) => {
+    dispatch(
+      actions.RemoveContent({ folderId: clickedFolder._id, urlId: url._id })
+    );
   };
 
   // FIXME: 무한스크롤
@@ -126,7 +139,7 @@ const ModalWindowUrl = () => {
   return (
     <ModalWindowUrlEl>
       <HeaderContainerUrl className="header-Container">
-        <h2>url</h2>
+        <h2>{clickedFolder?.folderName}</h2>
         <BtnSelectAll>전체선택</BtnSelectAll>
       </HeaderContainerUrl>
       <ItemContainer>
@@ -141,13 +154,14 @@ const ModalWindowUrl = () => {
           {keyword.length === 0
             ? realTotalUrls.slice(0, conetentsNum).map((url, index) => {
                 if (index === conetentsNum - 3) {
-                  return <div ref={setTarget}></div>;
+                  return <div ref={setTarget} key="target" />;
                 } else {
                   return (
                     <SearchedStuff
                       value={url}
                       key={url._id}
-                      onClick={handleClickUrl}
+                      handleClickUrl={handleClickUrl}
+                      handleUnClickUrl={handleUnClickUrl}
                     />
                   );
                 }
@@ -157,7 +171,8 @@ const ModalWindowUrl = () => {
                   <SearchedStuff
                     value={url}
                     key={url._id}
-                    onClick={handleClickUrl}
+                    handleClickUrl={handleClickUrl}
+                    handleUnClickUrl={handleUnClickUrl}
                   />
                 );
               })}

@@ -5,8 +5,8 @@ const SearchedStuffEl = styled.div`
   display: flex;
   align-items: center;
   height: auto;
-  min-height: 43px;
   width: 100%;
+  padding: 0.3rem 0;
   cursor: pointer;
   :hover {
     background: #e9ecef57;
@@ -20,6 +20,7 @@ const Image = styled.img`
   width: 16px;
   pointer-events: none;
   height: 16px;
+  padding: 0.4rem;
 `;
 const Item = styled.div`
   pointer-events: none;

@@ -497,8 +497,7 @@ h3 {
 .editUrl-container,
 .shareUrl-container,
 .top-moreUrls-container,
-.hashtagModal-container,
-.folderModal-container {
+.hashtagModal-container {
   display: none;
 }
 

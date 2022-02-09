@@ -6,6 +6,8 @@ import Axios from "axios";
 const RecentWrapper = styled.div`
   .url-and-delete {
     display: flex;
+    height: auto;
+    padding: 0.3rem 0;
   }
   .delete-url {
     display: flex;
@@ -16,8 +18,6 @@ const RecentWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: start;
-    min-height: 43px;
-    height: auto;
     width: 100%;
     padding: 0;
     margin: 0;
@@ -43,6 +43,9 @@ const RecentWrapper = styled.div`
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+  }
+  .urlFavicon {
+    padding: 0.4rem;
   }
 `;
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import styled from "styled-components";
 
@@ -6,7 +6,8 @@ const SearchedStuffEl = styled.div`
   display: flex;
   align-items: center;
   height: auto;
-  min-height: 43px;
+  padding: 0.3rem 0;
+  /* min-height: 43px; */
   width: 100%;
   cursor: pointer;
   :hover {
@@ -54,18 +55,26 @@ const ImgContainer = styled.div`
 
 const SelectBox = styled.div`
   display: flex;
+  padding: 0.4rem;
 `;
 
-const SearchedStuff = ({ value, key, onClick }) => {
+const SearchedStuff = ({ value, key, handleClickUrl, handleUnClickUrl }) => {
   const [isChecked, setIsChecked] = useState(false);
+
+  const onClick = (value) => {
+    setIsChecked(!isChecked);
+    isChecked ? handleUnClickUrl(value) : handleClickUrl(value);
+  };
+
+  useEffect(() => {
+    // setIsChecked(true);
+  }, []);
+
   return (
     <SearchedStuffEl
       className="searched-Stuff"
       key={key}
-      onClick={() => {
-        setIsChecked(!isChecked);
-        onClick();
-      }}
+      onClick={() => onClick(value)}
     >
       <ImgContainer>
         <SelectBox>

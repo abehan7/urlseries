@@ -33,6 +33,7 @@ import styled from "styled-components";
 import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
 import ModalHashtag from "../components/ModalHashtag/ModalHashtag";
 import ModalFolder from "../components/ModalFolder/ModalFolder";
+import FolderModalWindow from "../components/ModalFolderPage/FolderModalWindow";
 
 export const MainStates = createContext(null);
 
@@ -494,7 +495,7 @@ const MainPage = () => {
             />
           </div>
           <div className="folderModal-container">
-            <ModalFolder />
+            <FolderModalWindow />
           </div>
 
           {/* ======================================== 모달들 END ======================================== */}

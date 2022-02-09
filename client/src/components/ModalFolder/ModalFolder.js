@@ -214,6 +214,7 @@ const ModalFolder = () => {
   const [LikeM, setLikeM] = useState(false);
   const [page, setPage] = useState(1);
   const [clickedFolder, setClickedFolder] = useState(null);
+  const [target, setTarget] = useState(null);
 
   const InitialStates = {
     DeleteM,
@@ -228,25 +229,25 @@ const ModalFolder = () => {
     setClickedFolder,
   };
 
-  const outSideRef = useRef(null);
+  // useEffect(() => {
+  //   console.log(clickedFolder);
+  // }, [clickedFolder]);
 
   const rightArrowRef = useRef(null);
 
   const dispatch = useDispatch();
-  const SetReduxNowFolder = (folder2) => {
-    dispatch(Page3Actions.SetNowFolder(folder2));
-  };
 
   // FIXME: handler
   const onClickClose = useCallback(() => {
     document.querySelector(".folderModal-container").style.display = "none";
     // SetReduxNowFolder({});
     setPage(1);
+    setClickedFolder(null);
     PopupDisable();
   }, []);
 
   const onClick = (e) => {
-    if (e.target === outSideRef.current) {
+    if (e.target === target) {
       onClickClose();
     }
   };
@@ -279,7 +280,7 @@ const ModalFolder = () => {
       <ModalFolderEl
         id="modal"
         className="modal-overlay hash-overlay"
-        ref={outSideRef}
+        ref={setTarget}
         onClick={onClick}
       >
         <BackIcon page={page}>

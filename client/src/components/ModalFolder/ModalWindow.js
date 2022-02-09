@@ -202,7 +202,7 @@ const ModalWindow = ({ onClickClose }) => {
   const handleSetClickedFolder = (folder) => {
     folder._id === clickedFolder?._id
       ? setClickedFolder({})
-      : setClickedFolder(folder);
+      : setClickedFolder(folder); // 클릭한 폴더 정보 저장
   };
 
   // FIXME: 스타일
