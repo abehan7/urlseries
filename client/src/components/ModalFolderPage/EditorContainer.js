@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Icon from "./styled/Icon.styled";
 import { IoIosAdd } from "react-icons/io";
-import { AiOutlineEdit } from "react-icons/ai";
+import { AiOutlineCheck, AiOutlineEdit, AiOutlineHeart } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { TiDocumentDelete } from "react-icons/ti";
 
@@ -34,6 +34,12 @@ const EditorContainer = () => {
         </Icon>
         <Icon>
           <TiDocumentDelete />
+        </Icon>
+        <Icon>
+          <AiOutlineHeart />
+        </Icon>
+        <Icon>
+          <AiOutlineCheck />
         </Icon>
       </IconWrapper>
     </EditorContainerEl>

@@ -10,9 +10,7 @@ import Input from "./styled/Input.styled";
 import InputWrapper from "./styled/InputWrapper.styled";
 import Title from "./styled/Title.styled";
 
-const FolderContainerEl = styled(Container)`
-  margin-left: 1rem;
-`;
+const FolderContainerEl = styled(Container)``;
 
 const FolderContainer = () => {
   const { realTotalUrls } = useContext(MainStates);

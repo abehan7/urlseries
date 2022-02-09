@@ -3,10 +3,12 @@ import styled from "styled-components";
 import ModalOverlay from "../styled/ModalOverlay.styled";
 import EditorContainer from "./EditorContainer";
 import FolderContainer from "./FolderContainer";
+import ChooseContainer from "./ChooseContainer";
+
 import UrlContainer from "./UrlContainer";
 
 import { IoArrowBackOutline } from "react-icons/io5";
-import ContentsWrapper from "./styled/ContentsWrapper.styled";
+import FolderDisplay from "./FolderDisplay";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
@@ -48,6 +50,19 @@ const Icon = styled.div`
   cursor: pointer;
 `;
 
+const ChooseWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  row-gap: 1rem;
+  height: 90%;
+  > div {
+    padding: 0;
+    margin: 0;
+  }
+`;
+
 const FolderModalWindow = () => {
   return (
     <FolderModalOverlayEl>
@@ -55,11 +70,10 @@ const FolderModalWindow = () => {
         <Icon>
           <IoArrowBackOutline />
         </Icon>
-        {/* <Wrapper> */}
         <EditorContainer />
-        <FolderContainer />
-        <UrlContainer />
-        {/* </Wrapper> */}
+        <FolderDisplay />
+        {/* <FolderContainer /> */}
+        {/* <UrlContainer /> */}
       </ModalWindow>
     </FolderModalOverlayEl>
   );
