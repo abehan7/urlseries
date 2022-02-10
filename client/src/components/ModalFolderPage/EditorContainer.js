@@ -81,6 +81,12 @@ const EditorUrls = () => {
         <IoSearchOutline />
         {/* <url> <폴더> 검색 */}
       </Icon>
+
+      <Icon>
+        <FiEdit2 />
+        {/* 폴더 편집 */}
+      </Icon>
+
       <Icon>
         <AiOutlineCheck />
         {/* <url> 저장 확인하기 */}

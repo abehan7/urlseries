@@ -67,15 +67,12 @@ export const FolderContext = createContext(null);
 const FolderModalWindow = () => {
   const [isFolderPage, setIsFolderPage] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState(null);
-  const [target, setTarget] = useState(null);
 
   const initialState = {
     isFolderPage,
     setIsFolderPage,
     selectedFolder,
     setSelectedFolder,
-    target,
-    setTarget,
   };
 
   return (
@@ -97,7 +94,7 @@ const SelectUrlContainer = () => {
   return (
     <>
       <FolderContainer />
-      <UrlContainer />
+      {/* <UrlContainer /> */}
     </>
   );
 };

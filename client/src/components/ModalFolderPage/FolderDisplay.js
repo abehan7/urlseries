@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { FcFolder, FcOpenedFolder } from "react-icons/fc";
 import { TiBackspaceOutline } from "react-icons/ti";
@@ -68,8 +68,12 @@ const FolderEl = styled.div`
     -webkit-box-orient: vertical;
   }
   :hover {
-    background: #e9ecef;
+    background: #ffefd5;
   }
+  box-shadow: ${(props) =>
+    props.isOpen ? "rgba(0, 0, 0, 0.16) 0px 1px 4px" : ""};
+  background: ${(props) => (props.isOpen ? "#ffefd5" : "#fff")};
+  transition: 300ms;
 `;
 
 const FolderName = styled.span`
@@ -92,11 +96,9 @@ const IconEl = styled(Icon)``;
 
 const FolderDisplay = () => {
   const folders = useSelector((state) => state.folders.folders);
-  const { selectedFolder, setSelectedFolder, setTarget, target } =
-    useContext(FolderContext);
+  const { selectedFolder, setSelectedFolder } = useContext(FolderContext);
 
   const onClickFolder = (folder, e) => {
-    e.target.classList.toggle("selected");
     if (folder?._id === selectedFolder?._id) {
       // click folder that is already selected
       setSelectedFolder();
@@ -139,9 +141,17 @@ const FolderDisplay = () => {
 };
 
 const Folder = ({ folder, selectedFolder, onClick }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    setIsOpen(selectedFolder?._id === folder._id);
+  }, [selectedFolder]);
   return (
-    <FolderEl key={folder._id} onClick={(e) => onClick(folder, e)}>
-      {selectedFolder?._id === folder._id ? <FcOpenedFolder /> : <FcFolder />}
+    <FolderEl
+      key={folder._id}
+      onClick={(e) => onClick(folder, e)}
+      isOpen={isOpen}
+    >
+      {isOpen ? <FcOpenedFolder /> : <FcFolder />}
       <FolderName>{folder.folderName}</FolderName>
     </FolderEl>
   );

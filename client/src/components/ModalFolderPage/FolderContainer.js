@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 import { MainStates } from "../../routers/MainPage";
-import SearchedStuff from "../ModalFolder/SearchedStuff";
+import ItemSelectContainer from "./ItemSelectContainer";
 import Container from "./styled/Container.styled";
 import Content from "./styled/Content.styled";
 import ContentsWrapper from "./styled/ContentsWrapper.styled";
@@ -14,6 +14,7 @@ const FolderContainerEl = styled(Container)``;
 const InputWrapperEl = styled(InputWrapper)`
   visibility: ${(props) => (props.clickedSearch ? "visible" : "hidden")};
   > input {
+    font-weight: 200;
     height: ${(props) => (props.clickedSearch ? "30px" : "0")};
     padding: ${(props) => (props.clickedSearch ? "0.2rem 1rem" : "0")};
   }
@@ -51,7 +52,7 @@ const FolderContainer = () => {
         <ContentEl clickedSearch={clickedSearch}>
           {realTotalUrls.slice(0, 20).map((url, index) => {
             return (
-              <SearchedStuff
+              <ItemSelectContainer
                 value={url}
                 key={url._id}
                 handleClickUrl={handleClickUrl}
