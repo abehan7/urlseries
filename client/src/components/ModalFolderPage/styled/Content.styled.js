@@ -7,6 +7,7 @@ const Content = styled.div`
   border-radius: 10px;
   border: 1px solid #e0e8e7;
   overflow-y: scroll;
+  transition: 200ms;
 `;
 
 export default Content;

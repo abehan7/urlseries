@@ -1,9 +1,8 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import styled from "styled-components";
 import ModalOverlay from "../styled/ModalOverlay.styled";
 import EditorContainer from "./EditorContainer";
 import FolderContainer from "./FolderContainer";
-import ChooseContainer from "./ChooseContainer";
 
 import UrlContainer from "./UrlContainer";
 
@@ -23,7 +22,7 @@ const ModalWindow = styled.div`
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   background-color: #e9ecef;
-  height: 85%;
+  height: 75%;
   width: 100%;
   position: relative;
   transition: 300ms;
@@ -63,19 +62,43 @@ const ChooseWrapper = styled.div`
   }
 `;
 
+export const FolderContext = createContext(null);
+
 const FolderModalWindow = () => {
+  const [isFolderPage, setIsFolderPage] = useState(false);
+  const [selectedFolder, setSelectedFolder] = useState(null);
+  const [target, setTarget] = useState(null);
+
+  const initialState = {
+    isFolderPage,
+    setIsFolderPage,
+    selectedFolder,
+    setSelectedFolder,
+    target,
+    setTarget,
+  };
+
   return (
-    <FolderModalOverlayEl>
-      <ModalWindow>
-        <Icon>
-          <IoArrowBackOutline />
-        </Icon>
-        <EditorContainer />
-        <FolderDisplay />
-        {/* <FolderContainer /> */}
-        {/* <UrlContainer /> */}
-      </ModalWindow>
-    </FolderModalOverlayEl>
+    <FolderContext.Provider value={initialState}>
+      <FolderModalOverlayEl>
+        <ModalWindow>
+          <Icon>
+            <IoArrowBackOutline />
+          </Icon>
+          <EditorContainer />
+          {isFolderPage ? <FolderDisplay /> : <SelectUrlContainer />}
+        </ModalWindow>
+      </FolderModalOverlayEl>
+    </FolderContext.Provider>
+  );
+};
+
+const SelectUrlContainer = () => {
+  return (
+    <>
+      <FolderContainer />
+      <UrlContainer />
+    </>
   );
 };
 
