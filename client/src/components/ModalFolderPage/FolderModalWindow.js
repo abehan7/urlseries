@@ -1,13 +1,12 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import ModalOverlay from "../styled/ModalOverlay.styled";
 import EditorContainer from "./EditorContainer";
 import FolderContainer from "./FolderContainer";
 
-import UrlContainer from "./UrlContainer";
-
 import { IoArrowBackOutline } from "react-icons/io5";
 import FolderDisplay from "./FolderDisplay";
+import { PopupEnable } from "../../Hooks/stopScroll";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
@@ -65,15 +64,22 @@ const ChooseWrapper = styled.div`
 export const FolderContext = createContext(null);
 
 const FolderModalWindow = () => {
-  const [isFolderPage, setIsFolderPage] = useState(false);
+  const [isFolderPage, setIsFolderPage] = useState(true);
   const [selectedFolder, setSelectedFolder] = useState(null);
+  const [clickedSearch, setClickedSearch] = useState(false);
 
   const initialState = {
     isFolderPage,
     setIsFolderPage,
     selectedFolder,
     setSelectedFolder,
+    clickedSearch,
+    setClickedSearch,
   };
+
+  useEffect(() => {
+    PopupEnable();
+  }, []);
 
   return (
     <FolderContext.Provider value={initialState}>

@@ -90,13 +90,20 @@ const IconContainer = styled.div`
   top: 50%;
   transform: translateY(-50%);
   column-gap: 0.7rem;
+
+  visibility: ${(props) => (props.isSelected ? "visible" : "hidden")};
+  opacity: ${(props) => (props.isSelected ? "1" : "0")};
+  transition: 200ms;
 `;
 
 const IconEl = styled(Icon)``;
 
 const FolderDisplay = () => {
   const folders = useSelector((state) => state.folders.folders);
-  const { selectedFolder, setSelectedFolder } = useContext(FolderContext);
+  const { selectedFolder, setSelectedFolder, setIsFolderPage } =
+    useContext(FolderContext);
+
+  const [isSelected, setIsSelected] = useState(false);
 
   const onClickFolder = (folder, e) => {
     if (folder?._id === selectedFolder?._id) {
@@ -108,16 +115,33 @@ const FolderDisplay = () => {
     }
   };
 
+  const onClickConfirm = () => {
+    setIsFolderPage(false);
+  };
+
+  const onClickCancel = () => {
+    setIsSelected(false);
+    setSelectedFolder();
+  };
+
+  useEffect(() => {
+    if (selectedFolder?._id === undefined) {
+      setIsSelected(false);
+    } else {
+      setIsSelected(true);
+    }
+  }, [selectedFolder]);
+
   return (
     <FolderDisplayEl>
       <FolderTitle>
         전체폴더
-        <IconContainer>
-          <IconEl>
+        <IconContainer isSelected={isSelected}>
+          <IconEl onClick={onClickCancel}>
             <TiBackspaceOutline />
             {/* 취소 */}
           </IconEl>
-          <IconEl>
+          <IconEl onClick={onClickConfirm}>
             <AiOutlineCheck />
             {/* 확인 */}
           </IconEl>

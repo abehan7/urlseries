@@ -1,7 +1,12 @@
-import React, { useContext, useState } from "react";
+import { debounce } from "lodash";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { FaSearch } from "react-icons/fa";
+import { TiBackspaceOutline } from "react-icons/ti";
+import { Provider } from "react-redux";
 import styled from "styled-components";
+import { KeywordNormalize, SearchNotByDB } from "../../Hooks/SearchHook";
 import { MainStates } from "../../routers/MainPage";
+import { FolderContext } from "./FolderModalWindow";
 import ItemSelectContainer from "./ItemSelectContainer";
 import Container from "./styled/Container.styled";
 import Content from "./styled/Content.styled";
@@ -24,45 +29,220 @@ const TitleEl = styled(Title)`
   column-gap: 0.41rem;
 `;
 
+const TitleName = styled.span`
+  font-weight: 100;
+  color: ${(props) => !props.isFolderContents && "orange"};
+`;
+
+const SubTitle = styled.span`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const SubTitleEl = styled.span`
+  font-weight: 100;
+  cursor: pointer;
+`;
+
+const Description = styled.div`
+  display: flex;
+  column-gap: 0.41rem;
+  font-weight: 100;
+`;
+
 const ContentEl = styled(Content)`
   height: ${(props) =>
     props.clickedSearch ? "calc(90% - 50px - 30px)" : "calc(90% - 50px)"};
 `;
 
+const doDebounce = debounce((fn) => {
+  fn();
+}, 300);
+
+export const FolderContainerContext = createContext(null);
+
 const FolderContainer = () => {
   const { realTotalUrls } = useContext(MainStates);
-  const [clickedSearch, setClickedSearch] = useState(false);
+  const [isFolderContents, setIsFolderContents] = useState(true);
+  const [scrollTarget, setScrollTarget] = useState(null);
+  const [Items, setItems] = useState([]);
+  const [filterdItems, setFilterdItems] = useState([]);
+  const [keyword, setKeyword] = useState("");
 
-  const handleClickUrl = () => {};
-  const handleUnClickUrl = () => {};
-  const onClickSearch = () => {
-    setClickedSearch(!clickedSearch);
+  const initialState = {
+    keyword,
+    filterdItems,
   };
 
+  const { clickedSearch, setClickedSearch, setSelectedFolder, selectedFolder } =
+    useContext(FolderContext);
+
+  const handleClickUrl = (url) => {
+    setItems((prev) => [...prev, url]);
+  };
+
+  const handleUnClickUrl = (url) => {
+    setItems((prev) => prev.filter((item) => item._id !== url._id));
+  };
+  const handleScrollUp = () => {
+    scrollTarget.scrollTop !== 0 && scrollTarget.scrollTo(0, 0);
+  };
+
+  const onClickSubTitle = () => {
+    setIsFolderContents(!isFolderContents);
+    handleScrollUp();
+    setItems([]);
+  };
+
+  const onChange = (e) => {
+    setKeyword(e.target.value);
+  };
+
+  useEffect(() => {
+    console.log(Items);
+  }, [Items]);
+
+  useEffect(() => {
+    doDebounce.cancel();
+    const processed = KeywordNormalize(keyword);
+    const fn = () => {
+      const filterd = SearchNotByDB(processed, realTotalUrls);
+      setFilterdItems(filterd);
+    };
+
+    keyword.length > 0 && doDebounce(fn);
+  }, [keyword]);
+
   return (
-    <FolderContainerEl>
-      <ContentsWrapper>
-        <TitleEl>
-          bored apes
-          <FaSearch style={{ cursor: "pointer" }} onClick={onClickSearch} />
-        </TitleEl>
-        <InputWrapperEl clickedSearch={clickedSearch}>
-          <Input />
-        </InputWrapperEl>
-        <ContentEl clickedSearch={clickedSearch}>
-          {realTotalUrls.slice(0, 20).map((url, index) => {
-            return (
-              <ItemSelectContainer
-                value={url}
-                key={url._id}
+    <FolderContainerContext.Provider value={initialState}>
+      <FolderContainerEl>
+        <ContentsWrapper>
+          <TitleEl>
+            <TitleName isFolderContents={isFolderContents}>
+              {isFolderContents
+                ? selectedFolder?.folderName
+                : "폴더에 추가할 url을 선택해주세요"}
+            </TitleName>
+            <SubTitle>
+              <SubTitleEl onClick={onClickSubTitle}>
+                {isFolderContents ? (
+                  "url선택하기"
+                ) : (
+                  <Description>
+                    <TiBackspaceOutline />
+                    {selectedFolder?.folderName}
+                  </Description>
+                )}
+              </SubTitleEl>
+            </SubTitle>
+          </TitleEl>
+          <InputWrapperEl clickedSearch={clickedSearch}>
+            <Input value={keyword} onChange={onChange} />
+          </InputWrapperEl>
+          <ContentEl clickedSearch={clickedSearch} ref={setScrollTarget}>
+            {isFolderContents ? (
+              // 폴더 url 선택
+              <FolderItems
+                realTotalUrls={realTotalUrls}
                 handleClickUrl={handleClickUrl}
                 handleUnClickUrl={handleUnClickUrl}
               />
-            );
-          })}
-        </ContentEl>
-      </ContentsWrapper>
-    </FolderContainerEl>
+            ) : (
+              <UrlItems
+                realTotalUrls={realTotalUrls}
+                handleClickUrl={handleClickUrl}
+                handleUnClickUrl={handleUnClickUrl}
+              />
+            )}
+          </ContentEl>
+        </ContentsWrapper>
+      </FolderContainerEl>
+    </FolderContainerContext.Provider>
+  );
+};
+
+const FolderItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
+  return realTotalUrls.slice(0, 20).map((url, index) => {
+    return (
+      <ItemSelectContainer
+        value={url}
+        key={url._id}
+        handleClickUrl={handleClickUrl}
+        handleUnClickUrl={handleUnClickUrl}
+      />
+    );
+  });
+};
+
+const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
+  const [contentsNum, setContentsNum] = useState(20);
+  const [target, setTarget] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const { keyword, filterdItems } = useContext(FolderContainerContext);
+
+  useEffect(() => {
+    console.log("urlItems");
+  }, [keyword]);
+
+  // FIXME: 무한스크롤
+
+  const getNextItems = () => {
+    setContentsNum((num) => num + 40);
+  };
+
+  const onIntersect = async ([entry], observer) => {
+    if (entry.isIntersecting && !isLoaded) {
+      observer.unobserve(entry.target);
+      if (realTotalUrls.length === contentsNum) {
+        return;
+      }
+      await getNextItems();
+
+      observer.observe(entry.target);
+    }
+  };
+
+  useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.4,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
+
+  return (
+    // 전체 url 선택
+    keyword.length === 0
+      ? realTotalUrls.slice(0, contentsNum).map((url, index) => {
+          if (index === contentsNum - 5) {
+            return <div ref={setTarget} key="thisIsTarget" />;
+          }
+          return (
+            <ItemSelectContainer
+              value={url}
+              key={url._id}
+              handleClickUrl={handleClickUrl}
+              handleUnClickUrl={handleUnClickUrl}
+            />
+          );
+        })
+      : // 검색 url 선택
+        filterdItems.map((url, index) => {
+          return (
+            <ItemSelectContainer
+              value={url}
+              key={url._id}
+              handleClickUrl={handleClickUrl}
+              handleUnClickUrl={handleUnClickUrl}
+            />
+          );
+        })
   );
 };
 

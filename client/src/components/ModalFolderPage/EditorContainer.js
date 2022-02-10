@@ -7,6 +7,8 @@ import { FiEdit2 } from "react-icons/fi";
 import { TiDocumentDelete } from "react-icons/ti";
 import { IoSearchOutline } from "react-icons/io5";
 import { FolderContext } from "./FolderModalWindow";
+import { BsCheck2All, BsCheckAll } from "react-icons/bs";
+import { MdChecklist } from "react-icons/md";
 
 const IconWrapper = styled.div`
   padding-top: 1rem;
@@ -25,11 +27,19 @@ const EditorContainerEl = styled.div`
   border-radius: 10px;
 `;
 const EditorContainer = () => {
-  const { isFolderPage, setIsFolderPage } = useContext(FolderContext);
+  const { isFolderPage, setIsFolderPage, setClickedSearch } =
+    useContext(FolderContext);
   return (
     <EditorContainerEl>
       <IconWrapper>
-        {isFolderPage ? <EditorFolder /> : <EditorUrls />}
+        {isFolderPage ? (
+          <EditorFolder />
+        ) : (
+          <EditorUrls
+            setIsFolderPage={setIsFolderPage}
+            setClickedSearch={setClickedSearch}
+          />
+        )}
       </IconWrapper>
     </EditorContainerEl>
   );
@@ -39,22 +49,23 @@ const EditorFolder = () => {
   return (
     <>
       <Icon>
-        <IoSearchOutline />
-        {/* <url> <폴더> 검색 */}
-      </Icon>
-      <Icon>
         <IoIosAdd />
         {/* <폴더> 추가 */}
       </Icon>
 
       <Icon>
-        <AiOutlineHeart />
-        {/* <폴더> 좋아요  */}
+        <IoSearchOutline />
+        {/* <url> <폴더> 검색 */}
       </Icon>
 
       <Icon>
         <FiEdit2 />
         {/* 폴더 편집 */}
+      </Icon>
+
+      <Icon>
+        <AiOutlineHeart />
+        {/* <폴더> 좋아요  */}
       </Icon>
 
       <Icon>
@@ -65,19 +76,22 @@ const EditorFolder = () => {
   );
 };
 
-const EditorUrls = () => {
-  const { isFolderPage, setIsFolderPage } = useContext(FolderContext);
-
+const EditorUrls = ({ setIsFolderPage, setClickedSearch }) => {
   const onClickBack = () => {
     setIsFolderPage(true);
+    setClickedSearch(false);
   };
+  const onClickSearch = () => {
+    setClickedSearch((prev) => !prev);
+  };
+
   return (
     <>
       <Icon onClick={onClickBack}>
         <IoIosArrowBack />
         {/* 뒤로가기 */}
       </Icon>
-      <Icon>
+      <Icon onClick={onClickSearch}>
         <IoSearchOutline />
         {/* <url> <폴더> 검색 */}
       </Icon>
@@ -85,6 +99,10 @@ const EditorUrls = () => {
       <Icon>
         <FiEdit2 />
         {/* 폴더 편집 */}
+      </Icon>
+      <Icon>
+        <MdChecklist />
+        {/* <url> 전체선택 */}
       </Icon>
 
       <Icon>

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import styled from "styled-components";
+import { FolderContainerContext } from "./FolderContainer";
 
 const ItemSelectContainerEl = styled.div`
   display: flex;
@@ -56,6 +57,8 @@ const ImgContainer = styled.div`
 const SelectBox = styled.div`
   display: flex;
   padding: 0.4rem;
+  svg {
+  }
 `;
 
 const ItemSelectContainer = ({
