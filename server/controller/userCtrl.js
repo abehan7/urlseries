@@ -142,7 +142,7 @@ const userCtrl = {
         }
         const access_token = createAccessToken({ id: user.id });
         res.json({ access_token });
-        console.log(user);
+        // console.log(user);
       });
     } catch (err) {
       return res.status(500).json({ msg: err.message });

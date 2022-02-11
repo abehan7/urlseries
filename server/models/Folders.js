@@ -3,7 +3,7 @@ const getCurrentDate = require("./getCurrentDate");
 
 const FolderSchema = new mongoose.Schema({
   user_id: {
-    type: String,
+    type: mongoose.Types.ObjectId,
     required: true,
   },
   folder_name: {

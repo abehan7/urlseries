@@ -21,10 +21,16 @@ const getCurrentDate = () => {
 };
 
 const TotalAfter = async (req, res) => {
-  const { user_id } = req.user;
+  const { id } = req.user;
+  const user_id = id;
   let totalAfter = [];
 
+  const user = await db.Users.find({ _id: user_id }, { user_id: 1 });
+  const old_Id = user[0].user_id;
+
   const query = { user_id };
+
+  const tagQuery = { user_id: old_Id };
 
   try {
     totalAfter = await db.Urls.find(query).sort({ _id: -1 });
@@ -32,7 +38,7 @@ const TotalAfter = async (req, res) => {
     console.log(err);
   }
 
-  const { hashtag_assigned } = await db.Hashtags2.findOne(query, {
+  const { hashtag_assigned } = await db.Hashtags2.findOne(tagQuery, {
     hashtag_assigned: 1,
   });
 
@@ -44,7 +50,7 @@ const TotalAfter = async (req, res) => {
 
 const TotalURL = async (req, res) => {
   console.log("total url");
-  console.log(req.user);
+  // console.log(req.user);
   const { id } = req.user;
   const user_id = id;
   console.log(id);
