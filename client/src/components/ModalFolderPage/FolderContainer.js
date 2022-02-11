@@ -52,6 +52,16 @@ const Description = styled.div`
   font-weight: 100;
 `;
 
+const DescTitle = styled.span`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  max-width: 70px;
+  font-weight: 100;
+`;
+
 const ContentEl = styled(Content)`
   height: ${(props) =>
     props.clickedSearch ? "calc(90% - 50px - 30px)" : "calc(90% - 50px)"};
@@ -79,24 +89,31 @@ const FolderContainer = () => {
   const { clickedSearch, setClickedSearch, setSelectedFolder, selectedFolder } =
     useContext(FolderContext);
 
+  // url클릭
   const handleClickUrl = (url) => {
     setItems((prev) => [...prev, url]);
   };
 
+  // url클릭 해제
   const handleUnClickUrl = (url) => {
     setItems((prev) => prev.filter((item) => item._id !== url._id));
   };
+
+  // 스크롤 초기화
   const handleScrollUp = () => {
     scrollTarget.scrollTop !== 0 && scrollTarget.scrollTo(0, 0);
   };
 
+  // 우측 선택하기 버튼 클릭시
   const onClickSubTitle = () => {
     setIsFolderContents(!isFolderContents);
     handleScrollUp();
     setItems([]);
   };
 
+  // 인풋 키워드
   const onChange = (e) => {
+    setFilterdItems([]);
     setKeyword(e.target.value);
   };
 
@@ -104,6 +121,7 @@ const FolderContainer = () => {
     console.log(Items);
   }, [Items]);
 
+  // 검색
   useEffect(() => {
     doDebounce.cancel();
     const processed = KeywordNormalize(keyword);
@@ -132,7 +150,7 @@ const FolderContainer = () => {
                 ) : (
                   <Description>
                     <TiBackspaceOutline />
-                    {selectedFolder?.folderName}
+                    <DescTitle>{selectedFolder?.folderName}</DescTitle>
                   </Description>
                 )}
               </SubTitleEl>
@@ -187,8 +205,7 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
     console.log("urlItems");
   }, [keyword]);
 
-  // FIXME: 무한스크롤
-
+  // 무한스크롤
   const getNextItems = () => {
     setContentsNum((num) => num + 40);
   };
@@ -217,9 +234,9 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
   }, [target]);
 
   return (
-    // 전체 url 선택
-    keyword.length === 0
-      ? realTotalUrls.slice(0, contentsNum).map((url, index) => {
+    <>
+      {keyword.length === 0 &&
+        realTotalUrls.slice(0, contentsNum).map((url, index) => {
           if (index === contentsNum - 5) {
             return <div ref={setTarget} key="thisIsTarget" />;
           }
@@ -231,8 +248,9 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
               handleUnClickUrl={handleUnClickUrl}
             />
           );
-        })
-      : // 검색 url 선택
+        })}
+
+      {keyword.length > 0 &&
         filterdItems.map((url, index) => {
           return (
             <ItemSelectContainer
@@ -242,7 +260,8 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
               handleUnClickUrl={handleUnClickUrl}
             />
           );
-        })
+        })}
+    </>
   );
 };
 
