@@ -6,7 +6,10 @@ function PlayerModal({ closeModal }) {
     <div className="modalBackGround">
       <div className="modalContainer">
         <div className="titleCloseBtn">
-          <button onClick={() => closeModal(false)}> X </button>
+          <button className="colseBtn" onClick={() => closeModal(false)}>
+            {" "}
+            X{" "}
+          </button>
         </div>
         <div className="title">
           <p>[다음 영상을 참고하여 이용하세요]</p>

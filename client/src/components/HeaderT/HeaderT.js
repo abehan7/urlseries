@@ -56,8 +56,8 @@ function HeaderT() {
 
       <ul style={transForm}>
         <li>
-          <Link to="/">
-            <VscLayers></VscLayers>about
+          <Link to="/about">
+            <VscLayers className="icon_page" size="20"></VscLayers>ABOUT
           </Link>
         </li>
 
@@ -66,7 +66,7 @@ function HeaderT() {
         ) : (
           <li>
             <Link to="/logintest">
-              <VscAccount></VscAccount>sign in
+              <VscAccount className="icon_page" size="20"></VscAccount>로그인
             </Link>
           </li>
         )}

@@ -159,6 +159,11 @@ button {
   padding: 12px 45px;
   letter-spacing: 1px;
   text-transform: uppercase;
+  width: 150px;
+}
+
+button:hover {
+  opacity: 1;
 }
 
 button:focus {
@@ -217,12 +222,15 @@ input {
   max-width: 100%;
   min-height: 480px;
   margin-top: 5%;
+  margin-bottom: 5%;
 }
 
 .container a {
   text-decoration-line: none;
   color: #635e5f;
   font-size: 13px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .form-container {
@@ -261,7 +269,7 @@ input {
 }
 
 .overlay a {
-  color: #eee;
+  color: rgb(255, 255, 255);
 }
 
 .overlay-panel {
@@ -280,4 +288,26 @@ input {
 
 .social-container {
   margin: 20px 0;
+}
+.response_register {
+  display: none;
+}
+
+@media screen and (max-width: 900px) {
+  .overlay-container {
+    display: none;
+  }
+
+  .container {
+    width: 400px;
+  }
+
+  .sign-in-container {
+    width: 480px;
+    width: 100%;
+  }
+
+  .response_register {
+    display: block;
+  }
 }

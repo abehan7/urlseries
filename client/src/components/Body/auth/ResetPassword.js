@@ -19,6 +19,7 @@ const initialState = {
 function ResetPassword() {
   const [data, setData] = useState(initialState);
   const { token } = useParams();
+  const navigate = useNavigate();
 
   const { password, cf_password, err, success } = data;
 
@@ -54,6 +55,10 @@ function ResetPassword() {
     }
   };
 
+  const goSignUp = () => {
+    navigate("/logintest");
+  };
+
   return (
     <center>
       <div className="container" id="container">
@@ -83,7 +88,10 @@ function ResetPassword() {
                 onChange={handleChangeInput}
               ></input>
             </div>
-            <button onClick={handleResetPass}>비밀번호 재설정</button>
+            <button onClick={handleResetPass}>재설정</button>
+            <button className="response_register" onClick={goSignUp}>
+              로그인
+            </button>
           </form>
         </div>
         <div className="overlay-container">

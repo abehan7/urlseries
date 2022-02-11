@@ -17,6 +17,7 @@ const initialState = {
 
 function ForgotPassword() {
   const [data, setData] = useState(initialState);
+  const navigate = useNavigate();
 
   const { user_id, email, err, success } = data;
 
@@ -37,6 +38,9 @@ function ForgotPassword() {
       err.response.data.msg &&
         setData({ ...data, err: err.response.data.msg, success: "" });
     }
+  };
+  const goSignUp = () => {
+    navigate("/logintest");
   };
 
   return (
@@ -68,7 +72,10 @@ function ForgotPassword() {
               ></input>
             </div>
 
-            <button onClick={forgotPassword}>이메일 확인받기</button>
+            <button onClick={forgotPassword}>이메일인증</button>
+            <button className="response_register" onClick={goSignUp}>
+              로그인
+            </button>
           </form>
         </div>
         <div className="overlay-container">

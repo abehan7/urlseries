@@ -10,6 +10,7 @@ import Register from "./components/Join/Register";
 
 import HeaderT from "./components/HeaderT/HeaderT";
 import Body from "./components/Body/Body";
+import Footer from "./components/Footer/Footer";
 
 import axios from "axios";
 
@@ -56,6 +57,7 @@ function App() {
       <div className="App">
         <HeaderT />
         <Body />
+        <Footer />
       </div>
     </Router>
   );

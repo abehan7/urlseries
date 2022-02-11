@@ -17,7 +17,7 @@ header a {
 
 header ul {
   padding-right: 5%;
-  transform: translateY(0px);
+  transform: translateY(-5px);
 }
 header ul li {
   display: inline-block;
@@ -50,15 +50,29 @@ header ul li img {
 }
 .drop-nav .dropdown {
   position: absolute;
-  background: none;
+  background: #ff4b2b;
+  border-radius: 5px;
   width: 100%;
-  width: calc(100% + 30px);
-  top: 50px;
+  height: max-content;
+  text-align: center;
+  padding: 5px;
+  padding-left: 10px;
+  /* width: calc(100% + 30px); */
+  top: 60px;
   display: none;
 }
 .drop-nav .dropdown li {
   display: block;
 }
+
+.drop-nav .dropdown li a {
+  color: white;
+}
 .drop-nav:hover .dropdown {
   display: block;
+}
+
+.icon_page {
+  padding-right: 5px;
+  vertical-align: top;
 }

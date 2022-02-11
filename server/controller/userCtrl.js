@@ -293,7 +293,7 @@ const userCtrl = {
         res.json({ msg: "로그인 성공" });
       } else {
         const newUser = new Users({
-          user_id: email,
+          user_id: name,
           email,
           password: passwordHash,
           avatar: picture,

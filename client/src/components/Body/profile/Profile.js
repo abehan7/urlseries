@@ -278,11 +278,19 @@ function Profile() {
                     </td>
                     <td>
                       <Link to={`/edit_user/${user._id}`}>
-                        <VscEdit color="black" />
+                        <VscEdit color="black" size="20" />
                       </Link>
-                      <button onClick={() => handleDelete(user._id)}>
-                        <VscTrash />
-                      </button>
+                      {/* <button
+                        className="deleteBtn"
+                        onClick={() => handleDelete(user._id)}
+                      > */}
+                      <VscTrash
+                        className="deleteBtn"
+                        cursor="pointer"
+                        size="20"
+                        onClick={() => handleDelete(user._id)}
+                      />
+                      {/* </button> */}
                     </td>
                   </tr>
                 ))}

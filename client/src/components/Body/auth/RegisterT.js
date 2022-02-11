@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import {
   showErrMsg,
@@ -25,6 +25,7 @@ const initialState = {
 };
 function RegisterT() {
   const [user, setUser] = useState(initialState);
+  const navigate = useNavigate();
 
   const { user_id, password, cf_password, email, err, success } = user;
 
@@ -85,6 +86,10 @@ function RegisterT() {
     }
   };
 
+  const goSignUp = () => {
+    navigate("/logintest");
+  };
+
   return (
     <center>
       <div class="container" id="container">
@@ -138,6 +143,9 @@ function RegisterT() {
             </div>
 
             <button type="submit">회원가입</button>
+            <button className="response_register" onClick={goSignUp}>
+              로그인
+            </button>
           </form>
         </div>
 

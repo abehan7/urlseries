@@ -68,6 +68,10 @@ function LoginT() {
     }
   };
 
+  const goSignUp = () => {
+    navigate("/registertest");
+  };
+
   return (
     <center>
       <div className="container" id="container">
@@ -99,12 +103,15 @@ function LoginT() {
               ></input>
             </div>
             <Link to="/forgot_password">비밀번호를 잊으셨나요?</Link>
-            <button type="summit">Sign In</button>
+            <button className="response_register" onClick={goSignUp}>
+              회원가입
+            </button>
+            <button type="summit">로그인</button>
 
             <div className="social">
               <GoogleLogin
                 clientId="828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com"
-                buttonText="구글계정으로 로그인하기"
+                buttonText="구글로그인"
                 onSuccess={responseGoogle}
                 cookiePolicy={"single_host_origin"}
               />
