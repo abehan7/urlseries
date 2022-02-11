@@ -62,7 +62,7 @@ const NewLogin = ({ setLoginUser }) => {
   };
 
   const onKeyPress = (e) => {
-    if (e.key == "Enter") {
+    if (e.key === "Enter") {
       login();
     }
   };

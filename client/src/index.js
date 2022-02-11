@@ -33,7 +33,9 @@ position: relative;
   font-weight: bold;
   
 }
-
+  a{
+    text-decoration-line: none;
+  }
   h2{
     font-size: 30px;
     /* font-size: 20px; */

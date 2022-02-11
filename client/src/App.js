@@ -33,6 +33,7 @@ function App() {
       const getToken = async () => {
         const res = await axios.post("/user/refresh_token", null);
         dispatch({ type: "GET_TOKEN", payload: res.data.access_token });
+        localStorage.setItem("accessToken", res.data.access_token);
       };
       getToken();
     }

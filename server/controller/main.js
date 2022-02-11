@@ -21,7 +21,7 @@ const getCurrentDate = () => {
 };
 
 const TotalAfter = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   let totalAfter = [];
 
   const query = { user_id };
@@ -43,9 +43,11 @@ const TotalAfter = async (req, res) => {
 };
 
 const TotalURL = async (req, res) => {
-  console.log(req.decodedData);
-  const { user_id } = req.decodedData;
-  console.log(user_id);
+  console.log("total url");
+  console.log(req.user);
+  const { id } = req.user;
+  const user_id = id;
+  console.log(id);
   // const { authorization } = req.headers;
   // console.log(authorization);
   //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
@@ -75,7 +77,7 @@ const TotalURL = async (req, res) => {
 };
 
 const FolderItems = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   await db.Folders.find({ user_id })
     .sort({ _id: -1 })
     .then((response) => {
@@ -124,7 +126,7 @@ const SearchDeleteAll = async (req, res) => {
 };
 
 const Get21Urls = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   console.log(user_id);
   await db.Urls.find({
     user_id: user_id,
@@ -160,7 +162,7 @@ const AddUrl = async (req, res) => {
 };
 
 const AddFolder = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   const { folder } = req.body;
   const newFolder = new db.Folders({
     ...folder,
@@ -172,7 +174,7 @@ const AddFolder = async (req, res) => {
 };
 
 const EditUrl = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   console.log(user_id);
   console.log(req.body);
 
@@ -281,7 +283,7 @@ const FolderContentsChanged = (req, res) => {
   const {
     nowFolder2: { _id, folder_contents },
   } = req.body;
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   console.log(_id, folder_contents);
 
   const query = { _id: _id, user_id };
@@ -306,7 +308,7 @@ const FolderContentsChanged = (req, res) => {
 };
 
 const FolderLiked = (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   const { ModifiedList } = req.body;
 
   try {
@@ -329,7 +331,7 @@ const FolderLiked = (req, res) => {
 // FIXME: delete
 
 const DeleteUrl = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   const id = req.params.id;
   console.log(id);
   const query = { _id: id, user_id };
@@ -344,7 +346,7 @@ const DeleteUrl = async (req, res) => {
 };
 
 const DeleteFolder = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   const { idList } = req.body;
 
   const query = { _id: idList, user_id };
