@@ -58,7 +58,7 @@ const UrlSchema = new mongoose.Schema({
     },
   },
   user_id: {
-    type: String,
+    type: mongoose.Types.ObjectId,
     required: true,
   },
 });

@@ -2,6 +2,7 @@ const db = require("../models");
 const puppeteer = require("puppeteer");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const mongoose = require("mongoose");
 
 dotenv.config({ path: "../.env" });
 
@@ -23,13 +24,14 @@ const TotalAfter = async (req, res) => {
   const { user_id } = req.decodedData;
   let totalAfter = [];
 
-  const query = { user_id };
+  const User = await db.Users.find({ user_id }, { _id: 1 });
+  const newUserId = User[0]._id.toString();
+  console.log(newUserId);
+  const query = {
+    user_id: newUserId,
+  };
 
-  try {
-    totalAfter = await db.Urls.find(query).sort({ _id: -1 });
-  } catch (err) {
-    console.log(err);
-  }
+  totalAfter = await db.Urls.find(query);
 
   const { hashtag_assigned } = await db.Hashtags2.findOne(query, {
     hashtag_assigned: 1,

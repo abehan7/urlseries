@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const HanshTags2Schema = new mongoose.Schema({
   user_id: {
-    type: String,
+    type: mongoose.Types.ObjectId,
     require: true,
   },
   hashtag_assigned: {
