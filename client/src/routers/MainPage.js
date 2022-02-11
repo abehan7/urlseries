@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import "./MainPage.css";
 
 // Functions
@@ -86,8 +92,9 @@ const MainPage = () => {
   const [realTotalUrls, setRealTotalUrls] = useState([]);
   const [deleteMode, setDeleteMode] = useState(false);
   const [topMoreWhat, setTopMoreWhat] = useState(true);
-
   const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const [itemNum, setItemNum] = useState(40);
 
   // FIXME: 리덕스
 
@@ -181,39 +188,27 @@ const MainPage = () => {
   // }, [realTotalUrls]);
 
   // ============================================= 여기는 Ininity Scroll START =============================================
-
-  var realLastId = 0;
-  var responseListLength = 1;
   const getNextItems = async () => {
-    console.log("현재 스크롤");
-    if (realLastId === 0) {
-      realLastId = getUrls[getUrls.length - 1].url_id;
-    }
-
-    console.log(getUrls[getUrls.length - 1].url_id);
-
     setIsLoaded(true);
+    await new Promise((resolve) => setTimeout(resolve, 1));
+    setItemNum(itemNum + 100);
 
-    const { data } = await Get21Urls(realLastId);
-    responseListLength = data.length;
-    if (responseListLength === 0) {
-      setIsLoaded(false);
-      return;
-    }
-    setGetUrls((val) => [...val, ...data]);
-    realLastId = data[data.length - 1].url_id;
-
-    console.log(getUrls[getUrls.length - 1].url_id);
-    console.log("무한스크롤입니다");
+    setIsLoaded(false);
   };
+
+  useEffect(() => {
+    const data = realTotalUrls.slice(0, itemNum);
+    setGetUrls(data);
+  }, [itemNum]);
 
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting && !isLoaded) {
       observer.unobserve(entry.target);
-      console.log(responseListLength);
-      if (responseListLength === 0) {
+
+      if (realTotalUrls.length === getUrls.length) {
         return;
       }
+
       await getNextItems();
 
       observer.observe(entry.target);
@@ -222,15 +217,15 @@ const MainPage = () => {
 
   useEffect(() => {
     let observer;
-    // console.log(target);
+
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.2,
+        threshold: 0.5,
       });
       observer.observe(target);
     }
     return () => observer && observer.disconnect();
-  }, [target]);
+  }, [target, getUrls]);
 
   // ============================================= Ininity Scroll END =============================================
 
@@ -417,7 +412,7 @@ const MainPage = () => {
                       setMyFav={setMyFav}
                       deleteMode={deleteMode}
                     />
-                    {realTotalUrls.length > 42 && (
+                    {realTotalUrls.length > 40 && (
                       <div ref={setTarget} className="Target-Element">
                         {isLoaded && <Loader />}
                       </div>

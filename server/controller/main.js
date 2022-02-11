@@ -25,20 +25,9 @@ const TotalAfter = async (req, res) => {
   const user_id = id;
   let totalAfter = [];
 
-  const user = await db.Users.find({ _id: user_id }, { user_id: 1 });
-  const old_Id = user[0].user_id;
-
   const query = { user_id };
-
-  const tagQuery = { user_id: old_Id };
-
-  try {
-    totalAfter = await db.Urls.find(query).sort({ _id: -1 });
-  } catch (err) {
-    console.log(err);
-  }
-
-  const { hashtag_assigned } = await db.Hashtags2.findOne(tagQuery, {
+  totalAfter = await db.Urls.find(query).sort({ _id: -1 });
+  const { hashtag_assigned } = await db.Hashtags2.findOne(query, {
     hashtag_assigned: 1,
   });
 
@@ -50,7 +39,6 @@ const TotalAfter = async (req, res) => {
 
 const TotalURL = async (req, res) => {
   console.log("total url");
-  // console.log(req.user);
   const { id } = req.user;
   const user_id = id;
   console.log(id);
@@ -64,7 +52,7 @@ const TotalURL = async (req, res) => {
 
   const query = { user_id };
 
-  totalURL = await db.Urls.find(query).limit(42).sort({ _id: -1 });
+  totalURL = await db.Urls.find(query).limit(40).sort({ _id: -1 });
 
   leftURL = await db.Urls.find({ url_likedUrl: 1, user_id }).sort({
     "url_search.url_searchedDate": -1,
