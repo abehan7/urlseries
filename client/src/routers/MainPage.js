@@ -84,8 +84,7 @@ const MainPage = () => {
   const [mostClickedUrls, setMostClickedUrls] = useState([]);
   const [likedUrls, setLikedUrls] = useState([]);
   const [myFav, setMyFav] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [target, setTarget] = useState(null);
+
   const [assignedTags, setAssignedTags] = useState([]);
   const [recentSearched, setRecentSearch] = useState([]);
   const [totalTags, setTotalTags] = useState([]);
@@ -94,7 +93,10 @@ const MainPage = () => {
   const [topMoreWhat, setTopMoreWhat] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  // 무한스크롤
   const [itemNum, setItemNum] = useState(40);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [target, setTarget] = useState(null);
 
   // FIXME: 리덕스
 
@@ -164,7 +166,7 @@ const MainPage = () => {
   }, [token]);
 
   const {
-    page3Storage: { nowFolder2, nowPage2, folderItems },
+    page3Storage: { nowFolder2, folderItems },
   } = useSelector((state) => state);
 
   useEffect(() => {
@@ -177,7 +179,7 @@ const MainPage = () => {
         return val;
       })
     );
-  }, [nowPage2]);
+  }, []);
 
   // totalurl 변하면 전체 tag 뽑은 다음에 users에 있는 totaltags수정하기 axios해서
   // FIXME: 문제의 원인이 여기였어
@@ -195,6 +197,11 @@ const MainPage = () => {
 
     setIsLoaded(false);
   };
+
+  // useState가 한번에 2번 실행되면 오류생기니까 useEffect로 바꿔줌
+  // 이게 옳은 방법
+  // 한 공간에서 useState를 2번 사용하지 말자
+  // 특히 서로 유기적으로 연관된거 사용하는 경우에는 useEffect를 사용하는 것이 좋다
 
   useEffect(() => {
     const data = realTotalUrls.slice(0, itemNum);

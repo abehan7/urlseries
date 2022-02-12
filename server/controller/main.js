@@ -135,15 +135,17 @@ const Get21Urls = async (req, res) => {
 };
 
 const AddUrl = async (req, res) => {
-  const user = req.user;
-  console.log(user);
+  const { id } = req.user;
+  const user_id = id;
+
+  console.log("addURl user_id 🥳🥳: ", user_id);
   const { url, title, hashTags, memo } = req.body;
   const NewUrl = new db.Urls({
-    url: url,
+    url,
     url_title: title,
     url_hashTags: hashTags,
     url_memo: memo,
-    _id: user.id,
+    user_id,
   });
 
   try {
