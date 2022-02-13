@@ -1,13 +1,12 @@
 import { debounce } from "lodash";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { FaSearch } from "react-icons/fa";
 import { TiBackspaceOutline } from "react-icons/ti";
-import { Provider } from "react-redux";
 import styled from "styled-components";
 import { KeywordNormalize, SearchNotByDB } from "../../Hooks/SearchHook";
 import { MainStates } from "../../routers/MainPage";
 import { FolderContext } from "./FolderModalWindow";
-import ItemSelectContainer from "./ItemSelectContainer";
+import ItemFolderContainer from "./ItemFolderContainer";
+import ItemUrlContainer from "./ItemUrlContainer";
 import Container from "./styled/Container.styled";
 import Content from "./styled/Content.styled";
 import ContentsWrapper from "./styled/ContentsWrapper.styled";
@@ -67,36 +66,39 @@ const ContentEl = styled(Content)`
     props.clickedSearch ? "calc(90% - 50px - 30px)" : "calc(90% - 50px)"};
 `;
 
+const TargetEl = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const doDebounce = debounce((fn) => {
   fn();
-}, 300);
-
-export const FolderContainerContext = createContext(null);
+}, 200);
 
 const FolderContainer = () => {
   const { realTotalUrls } = useContext(MainStates);
   const [isFolderContents, setIsFolderContents] = useState(true);
   const [scrollTarget, setScrollTarget] = useState(null);
-  const [Items, setItems] = useState([]);
-  const [filterdItems, setFilterdItems] = useState([]);
-  const [keyword, setKeyword] = useState("");
 
-  const initialState = {
+  const {
+    clickedSearch,
+    selectedFolder,
+    setFilterdItems,
     keyword,
-    filterdItems,
-  };
+    setKeyword,
+    originalItemsIds,
+  } = useContext(FolderContext);
 
-  const { clickedSearch, setClickedSearch, setSelectedFolder, selectedFolder } =
-    useContext(FolderContext);
-
+  const [Items, setItems] = useState(originalItemsIds);
   // url클릭
   const handleClickUrl = (url) => {
-    setItems((prev) => [...prev, url]);
+    setItems((prev) => [...prev, url._id]);
   };
 
   // url클릭 해제
   const handleUnClickUrl = (url) => {
-    setItems((prev) => prev.filter((item) => item._id !== url._id));
+    setItems((prev) => prev.filter((item) => item !== url._id));
   };
 
   // 스크롤 초기화
@@ -108,7 +110,7 @@ const FolderContainer = () => {
   const onClickSubTitle = () => {
     setIsFolderContents(!isFolderContents);
     handleScrollUp();
-    setItems([]);
+    setItems(originalItemsIds);
   };
 
   // 인풋 키워드
@@ -120,6 +122,8 @@ const FolderContainer = () => {
   useEffect(() => {
     console.log(Items);
   }, [Items]);
+
+  useEffect(() => {}, []);
 
   // 검색
   useEffect(() => {
@@ -134,57 +138,56 @@ const FolderContainer = () => {
   }, [keyword]);
 
   return (
-    <FolderContainerContext.Provider value={initialState}>
-      <FolderContainerEl>
-        <ContentsWrapper>
-          <TitleEl>
-            <TitleName isFolderContents={isFolderContents}>
-              {isFolderContents
-                ? selectedFolder?.folderName
-                : "폴더에 추가할 url을 선택해주세요"}
-            </TitleName>
-            <SubTitle>
-              <SubTitleEl onClick={onClickSubTitle}>
-                {isFolderContents ? (
-                  "url선택하기"
-                ) : (
-                  <Description>
-                    <TiBackspaceOutline />
-                    <DescTitle>{selectedFolder?.folderName}</DescTitle>
-                  </Description>
-                )}
-              </SubTitleEl>
-            </SubTitle>
-          </TitleEl>
-          <InputWrapperEl clickedSearch={clickedSearch}>
-            <Input value={keyword} onChange={onChange} />
-          </InputWrapperEl>
-          <ContentEl clickedSearch={clickedSearch} ref={setScrollTarget}>
-            {isFolderContents ? (
-              // 폴더 url 선택
-              <FolderItems
-                realTotalUrls={realTotalUrls}
-                handleClickUrl={handleClickUrl}
-                handleUnClickUrl={handleUnClickUrl}
-              />
-            ) : (
-              <UrlItems
-                realTotalUrls={realTotalUrls}
-                handleClickUrl={handleClickUrl}
-                handleUnClickUrl={handleUnClickUrl}
-              />
-            )}
-          </ContentEl>
-        </ContentsWrapper>
-      </FolderContainerEl>
-    </FolderContainerContext.Provider>
+    <FolderContainerEl>
+      <ContentsWrapper>
+        <TitleEl>
+          <TitleName isFolderContents={isFolderContents}>
+            {isFolderContents
+              ? selectedFolder?.folderName
+              : "폴더에 추가할 url을 선택해주세요"}
+          </TitleName>
+          <SubTitle>
+            <SubTitleEl onClick={onClickSubTitle}>
+              {isFolderContents ? (
+                "url선택하기"
+              ) : (
+                <Description>
+                  <TiBackspaceOutline />
+                  <DescTitle>{selectedFolder?.folderName}</DescTitle>
+                </Description>
+              )}
+            </SubTitleEl>
+          </SubTitle>
+        </TitleEl>
+        <InputWrapperEl clickedSearch={clickedSearch}>
+          <Input value={keyword} onChange={onChange} />
+        </InputWrapperEl>
+        <ContentEl clickedSearch={clickedSearch} ref={setScrollTarget}>
+          {isFolderContents ? (
+            // 폴더 url 선택
+            <FolderItems
+              FolderContents={selectedFolder.folderContents}
+              handleClickUrl={handleClickUrl}
+              handleUnClickUrl={handleUnClickUrl}
+            />
+          ) : (
+            <UrlItems
+              realTotalUrls={realTotalUrls}
+              handleClickUrl={handleClickUrl}
+              handleUnClickUrl={handleUnClickUrl}
+            />
+          )}
+        </ContentEl>
+      </ContentsWrapper>
+    </FolderContainerEl>
   );
 };
 
-const FolderItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
-  return realTotalUrls.slice(0, 20).map((url, index) => {
+const FolderItems = ({ FolderContents, handleClickUrl, handleUnClickUrl }) => {
+  return FolderContents.map((url, index) => {
+    console.log();
     return (
-      <ItemSelectContainer
+      <ItemFolderContainer
         value={url}
         key={url._id}
         handleClickUrl={handleClickUrl}
@@ -199,11 +202,7 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const { keyword, filterdItems } = useContext(FolderContainerContext);
-
-  useEffect(() => {
-    console.log("urlItems");
-  }, [keyword]);
+  const { keyword, filterdItems } = useContext(FolderContext);
 
   // 무한스크롤
   const getNextItems = () => {
@@ -237,11 +236,15 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
     <>
       {keyword.length === 0 &&
         realTotalUrls.slice(0, contentsNum).map((url, index) => {
-          if (index === contentsNum - 5) {
-            return <div ref={setTarget} key="thisIsTarget" />;
+          if (index === contentsNum - 1) {
+            return (
+              <TargetEl ref={setTarget} key="thisIsTarget">
+                🙂🙂로딩중입니다🙂🙂
+              </TargetEl>
+            );
           }
           return (
-            <ItemSelectContainer
+            <ItemUrlContainer
               value={url}
               key={url._id}
               handleClickUrl={handleClickUrl}
@@ -253,7 +256,7 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
       {keyword.length > 0 &&
         filterdItems.map((url, index) => {
           return (
-            <ItemSelectContainer
+            <ItemUrlContainer
               value={url}
               key={url._id}
               handleClickUrl={handleClickUrl}

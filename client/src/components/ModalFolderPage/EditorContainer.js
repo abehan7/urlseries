@@ -27,7 +27,7 @@ const EditorContainerEl = styled.div`
   border-radius: 10px;
 `;
 const EditorContainer = () => {
-  const { isFolderPage, setIsFolderPage, setClickedSearch } =
+  const { isFolderPage, setIsFolderPage, setClickedSearch, filterdItems } =
     useContext(FolderContext);
   return (
     <EditorContainerEl>
@@ -38,6 +38,7 @@ const EditorContainer = () => {
           <EditorUrls
             setIsFolderPage={setIsFolderPage}
             setClickedSearch={setClickedSearch}
+            filterdItems={filterdItems}
           />
         )}
       </IconWrapper>
@@ -76,13 +77,26 @@ const EditorFolder = () => {
   );
 };
 
-const EditorUrls = ({ setIsFolderPage, setClickedSearch }) => {
+const EditorUrls = ({
+  setIsFolderPage,
+  setClickedSearch,
+  filterdItems,
+  setOriginalItems,
+}) => {
   const onClickBack = () => {
     setIsFolderPage(true);
     setClickedSearch(false);
   };
   const onClickSearch = () => {
     setClickedSearch((prev) => !prev);
+  };
+
+  const onClickCheckAll = () => {
+    const filterd = filterdItems.map((item) => {
+      return item._id;
+    });
+
+    console.log(filterd);
   };
 
   return (
@@ -100,7 +114,7 @@ const EditorUrls = ({ setIsFolderPage, setClickedSearch }) => {
         <FiEdit2 />
         {/* 폴더 편집 */}
       </Icon>
-      <Icon>
+      <Icon onClick={onClickCheckAll}>
         <MdChecklist />
         {/* <url> 전체선택 */}
       </Icon>

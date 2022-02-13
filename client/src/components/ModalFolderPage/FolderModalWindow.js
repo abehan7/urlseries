@@ -7,6 +7,7 @@ import FolderContainer from "./FolderContainer";
 import { IoArrowBackOutline } from "react-icons/io5";
 import FolderDisplay from "./FolderDisplay";
 import { PopupEnable } from "../../Hooks/stopScroll";
+import { useSelector } from "react-redux";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
@@ -67,6 +68,9 @@ const FolderModalWindow = () => {
   const [isFolderPage, setIsFolderPage] = useState(true);
   const [selectedFolder, setSelectedFolder] = useState(null);
   const [clickedSearch, setClickedSearch] = useState(false);
+  const [filterdItems, setFilterdItems] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const [originalItemsIds, setOriginalItemsIds] = useState([]);
 
   const initialState = {
     isFolderPage,
@@ -75,10 +79,20 @@ const FolderModalWindow = () => {
     setSelectedFolder,
     clickedSearch,
     setClickedSearch,
+    filterdItems,
+    setFilterdItems,
+    keyword,
+    setKeyword,
+    originalItemsIds,
+    setOriginalItemsIds,
   };
 
   useEffect(() => {
     PopupEnable();
+  }, []);
+
+  useEffect(() => {
+    // console.log(folderContentsOnlyId);
   }, []);
 
   return (
@@ -97,12 +111,7 @@ const FolderModalWindow = () => {
 };
 
 const SelectUrlContainer = () => {
-  return (
-    <>
-      <FolderContainer />
-      {/* <UrlContainer /> */}
-    </>
-  );
+  return <FolderContainer />;
 };
 
 export default FolderModalWindow;

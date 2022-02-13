@@ -100,8 +100,12 @@ const IconEl = styled(Icon)``;
 
 const FolderDisplay = () => {
   const folders = useSelector((state) => state.folders.folders);
-  const { selectedFolder, setSelectedFolder, setIsFolderPage } =
-    useContext(FolderContext);
+  const {
+    selectedFolder,
+    setSelectedFolder,
+    setIsFolderPage,
+    setOriginalItemsIds,
+  } = useContext(FolderContext);
 
   const [isSelected, setIsSelected] = useState(false);
 
@@ -115,8 +119,17 @@ const FolderDisplay = () => {
     }
   };
 
+  const handleGetId = (urls) => {
+    const processed = urls.map((url) => {
+      return url._id;
+    });
+    console.log(processed);
+    setOriginalItemsIds(processed);
+  };
+
   const onClickConfirm = () => {
     setIsFolderPage(false);
+    handleGetId(selectedFolder.folderContents);
   };
 
   const onClickCancel = () => {

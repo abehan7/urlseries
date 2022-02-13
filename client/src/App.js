@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Join from "./components/Join/Join";
 import Login from "./components/Login/Login";
 import HeadNav from "./components/Navigator/HeadNav";
-import FolderPage from "./routers/FolderPage";
 import MainPage from "./routers/MainPage";
 
 export const UserContext = createContext(null);
@@ -24,7 +23,6 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Join />} />
           <Route path="/" exact={true} element={<MainPage />} />
-          <Route path="/folder-Management" element={<FolderPage />} />
         </Routes>
       </UserContext.Provider>
     </Router>

@@ -1,9 +1,9 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import styled from "styled-components";
-import { FolderContainerContext } from "./FolderContainer";
+import { FolderContext } from "./FolderModalWindow";
 
-const ItemSelectContainerEl = styled.div`
+export const ItemContainerEl = styled.div`
   display: flex;
   align-items: center;
   height: auto;
@@ -15,7 +15,7 @@ const ItemSelectContainerEl = styled.div`
     background: #e9ecef57;
   }
 `;
-const Image = styled.img`
+export const Image = styled.img`
   /* padding-left: 10px; */
   display: flex;
   align-items: center;
@@ -24,7 +24,7 @@ const Image = styled.img`
   pointer-events: none;
   height: 16px;
 `;
-const Item = styled.div`
+export const Item = styled.div`
   pointer-events: none;
   display: flex;
   align-items: center;
@@ -33,7 +33,7 @@ const Item = styled.div`
   pointer-events: none;
 `;
 
-const Title = styled(Item)`
+export const Title = styled(Item)`
   /* width: 200px; */
   overflow: hidden;
   text-overflow: ellipsis;
@@ -41,11 +41,11 @@ const Title = styled(Item)`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
 `;
-const Bar = styled(Item)`
+export const Bar = styled(Item)`
   padding-right: 10px;
 `;
 
-const ImgContainer = styled.div`
+export const ImgContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,19 +54,14 @@ const ImgContainer = styled.div`
   pointer-events: none;
 `;
 
-const SelectBox = styled.div`
+export const SelectBox = styled.div`
   display: flex;
   padding: 0.4rem;
   svg {
   }
 `;
 
-const ItemSelectContainer = ({
-  value,
-  key,
-  handleClickUrl,
-  handleUnClickUrl,
-}) => {
+const ItemUrlContainer = ({ value, key, handleClickUrl, handleUnClickUrl }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const onClick = (value) => {
@@ -74,12 +69,10 @@ const ItemSelectContainer = ({
     isChecked ? handleUnClickUrl(value) : handleClickUrl(value);
   };
 
-  useEffect(() => {
-    // setIsChecked(true);
-  }, []);
+  useEffect(() => {}, []);
 
   return (
-    <ItemSelectContainerEl
+    <ItemContainerEl
       className="searched-Stuff"
       key={key}
       onClick={() => onClick(value)}
@@ -89,7 +82,7 @@ const ItemSelectContainer = ({
       </ImgContainer>
       <Bar className="just-bar">|</Bar>
       <Title className="Searched-url-Title">{value?.url_title}</Title>
-    </ItemSelectContainerEl>
+    </ItemContainerEl>
   );
 };
 
@@ -100,4 +93,4 @@ const CheckBox = ({ isChecked }) => {
     </SelectBox>
   );
 };
-export default ItemSelectContainer;
+export default ItemUrlContainer;

@@ -24,14 +24,11 @@ const TotalAfter = async (req, res) => {
   const { user_id } = req.decodedData;
   let totalAfter = [];
 
-  const User = await db.Users.find({ user_id }, { _id: 1 });
-  const newUserId = User[0]._id.toString();
-  console.log(newUserId);
-  const query = {
-    user_id: newUserId,
-  };
+  // console.log("decodedData", req.decodedData);
 
-  totalAfter = await db.Urls.find(query);
+  const query = { user_id };
+
+  totalAfter = await db.Urls.find(query).sort({ _id: -1 });
 
   const { hashtag_assigned } = await db.Hashtags2.findOne(query, {
     hashtag_assigned: 1,
@@ -447,7 +444,7 @@ const generateAccessToken1 = async (user) => {
   const option = {
     expiresIn: "3d",
   };
-  const token = await jwt.sign({ user_id: user.user_id }, secret, option);
+  const token = await jwt.sign({ user_id: user._id }, secret, option);
   return token;
 };
 
@@ -487,7 +484,7 @@ const Login = async (req, res) => {
   //로그인을할때 아이디와 비밀번호를 받는다
 
   const { user_id, password } = req.body;
-  const query = { user_id: user_id };
+  const query = { user_id };
   const options = (err, user) => {
     if (err) console.log(err);
 
