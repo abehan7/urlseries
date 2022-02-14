@@ -138,7 +138,7 @@ const AddUrl = async (req, res) => {
   const { id } = req.user;
   const user_id = id;
 
-  console.log("addURl user_id 🥳🥳: ", user_id);
+  console.log("addURl user_id : ", user_id);
   const { url, title, hashTags, memo } = req.body;
   const NewUrl = new db.Urls({
     url,
@@ -327,10 +327,10 @@ const FolderLiked = (req, res) => {
 // FIXME: delete
 
 const DeleteUrl = async (req, res) => {
-  const { user_id } = req.user;
-  const id = req.params.id;
-  console.log(id);
-  const query = { _id: id, user_id };
+  const { id } = req.user;
+  const user_id = id;
+  const url_id = req.params.id;
+  const query = { _id: url_id, user_id };
   try {
     await db.Urls.findOneAndRemove(query).exec();
     res.send("item deleted");
