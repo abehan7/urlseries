@@ -27,9 +27,13 @@ const TotalAfter = async (req, res) => {
 
   const query = { user_id };
   totalAfter = await db.Urls.find(query).sort({ _id: -1 });
-  const { hashtag_assigned } = await db.Hashtags2.findOne(query, {
+  let hashtag_assigned = await db.Hashtags2.findOne(query, {
     hashtag_assigned: 1,
   });
+
+  console.log("hashtag_assigned", hashtag_assigned);
+
+  hashtag_assigned === null && (hashtag_assigned = []);
 
   res.json({
     totalAfter,
