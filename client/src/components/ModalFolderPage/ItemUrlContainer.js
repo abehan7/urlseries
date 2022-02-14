@@ -93,7 +93,7 @@ const ItemUrlContainer = ({
   );
 };
 
-const CheckBox = ({ isChecked }) => {
+export const CheckBox = ({ isChecked }) => {
   return (
     <SelectBox>
       {isChecked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}

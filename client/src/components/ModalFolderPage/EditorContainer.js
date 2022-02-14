@@ -2,12 +2,11 @@ import React, { useContext } from "react";
 import styled from "styled-components";
 import Icon from "./styled/Icon.styled";
 import { IoIosAdd, IoIosArrowBack } from "react-icons/io";
-import { AiOutlineCheck, AiOutlineEdit, AiOutlineHeart } from "react-icons/ai";
+import { AiOutlineCheck, AiOutlineHeart } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { TiDocumentDelete } from "react-icons/ti";
 import { IoSearchOutline } from "react-icons/io5";
 import { FolderContext } from "./FolderModalWindow";
-import { BsCheck2All, BsCheckAll } from "react-icons/bs";
 import { MdChecklist } from "react-icons/md";
 
 const IconWrapper = styled.div`
@@ -31,7 +30,9 @@ const SearchIcon = styled(Icon)`
   ${({ clickedSearch }) => {
     if (clickedSearch) {
       return `
-        color: #ff0000;
+      background: orange;
+      color: #fff;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
       `;
     }
   }};
@@ -46,6 +47,7 @@ const EditorContainer = () => {
     filterdItems,
     handleSetItems,
     handleSetFolderItems,
+    setIsConfirmed,
   } = useContext(FolderContext);
 
   return (
@@ -61,6 +63,7 @@ const EditorContainer = () => {
             filterdItems={filterdItems}
             handleSetItems={handleSetItems}
             handleSetFolderItems={handleSetFolderItems}
+            setIsConfirmed={setIsConfirmed}
           />
         )}
       </IconWrapper>
@@ -106,6 +109,7 @@ const EditorUrls = ({
   filterdItems,
   handleSetItems,
   handleSetFolderItems,
+  setIsConfirmed,
 }) => {
   const onClickBack = () => {
     setIsFolderPage(true);
@@ -126,6 +130,7 @@ const EditorUrls = ({
 
   const onClickConfirm = () => {
     handleSetFolderItems();
+    setIsConfirmed(true);
   };
 
   return (

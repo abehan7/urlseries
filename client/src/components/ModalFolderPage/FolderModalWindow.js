@@ -13,6 +13,7 @@ import { PopupEnable } from "../../Hooks/stopScroll";
 import { useDispatch, useSelector } from "react-redux";
 import { addItems, setItems } from "../../store/reducers/FolderItems";
 import { SetFolderContents } from "../../store/reducers/Folders";
+import ConfirmModal from "./ConfirmModal";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
@@ -75,6 +76,7 @@ const FolderModalWindow = () => {
   const [clickedSearch, setClickedSearch] = useState(false);
   const [filterdItems, setFilterdItems] = useState([]);
   const [keyword, setKeyword] = useState("");
+  const [isConfirmed, setIsConfirmed] = useState(false);
 
   const { realTotalUrls } = useContext(MainStates);
 
@@ -119,8 +121,6 @@ const FolderModalWindow = () => {
     PopupEnable();
   }, []);
 
-  useEffect(() => {}, []);
-
   const initialState = {
     isFolderPage,
     setIsFolderPage,
@@ -134,6 +134,8 @@ const FolderModalWindow = () => {
     setKeyword,
     handleSetItems,
     handleSetFolderItems,
+    isConfirmed,
+    setIsConfirmed,
   };
 
   return (
@@ -149,6 +151,7 @@ const FolderModalWindow = () => {
           ) : (
             <FolderContainer handleGetId={handleGetId} />
           )}
+          <ConfirmModal message="저장되었습니다 :)" isOpen={false} />
         </ModalWindow>
       </FolderModalOverlayEl>
     </FolderContext.Provider>

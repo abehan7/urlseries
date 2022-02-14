@@ -90,6 +90,8 @@ const FolderContainer = ({ handleGetId }) => {
     keyword,
     setKeyword,
     setClickedSearch,
+    isConfirmed,
+    setIsConfirmed,
   } = useContext(FolderContext);
 
   const dispatch = useDispatch();
@@ -103,24 +105,33 @@ const FolderContainer = ({ handleGetId }) => {
 
   // url클릭 해제
   const handleUnClickUrl = (url) => {
-    // setItems((prev) => prev.filter((item) => item !== url._id));
     const processed = items.filter((item) => item !== url._id);
     dispatch(setItems(processed));
   };
 
   // 스크롤 초기화
   const handleScrollUp = () => {
-    scrollTarget.scrollTop !== 0 && scrollTarget.scrollTo(0, 0);
+    scrollTarget?.scrollTop !== 0 && scrollTarget?.scrollTo(0, 0);
+  };
+
+  // 초기화
+  const getReset = () => {
+    // 스크롤 올리기
+    handleScrollUp();
+
+    // 키워드 초기화
+    setKeyword("");
+    // 키워드 필터링 초기화
+    setFilterdItems([]);
+    // 검색창 없애기
+    setClickedSearch(false);
   };
 
   // 우측 선택하기 버튼 클릭시
   const onClickSubTitle = () => {
     setIsFolderContents(!isFolderContents);
-    handleScrollUp();
-    setKeyword("");
-    setFilterdItems([]);
     handleGetId(selectedFolder.folderContents);
-    setClickedSearch(false);
+    getReset();
   };
 
   // 인풋 키워드
@@ -129,21 +140,34 @@ const FolderContainer = ({ handleGetId }) => {
     setKeyword(e.target.value);
   };
 
-  useEffect(() => {
-    console.log(items);
-  }, []);
-
   // 검색
   useEffect(() => {
     doDebounce.cancel();
     const processed = KeywordNormalize(keyword);
-    const fn = () => {
+    // 이쪽만 살짝 바꿔주면 될 듯한데...
+    const FindTotalUrlsFn = () => {
       const filterd = SearchNotByDB(processed, realTotalUrls);
       setFilterdItems(filterd);
     };
+    const FindFolderContentsFn = () => {
+      const filterd = SearchNotByDB(processed, selectedFolder.folderContents);
+      setFilterdItems(filterd);
+    };
 
-    keyword.length > 0 && doDebounce(fn);
+    isFolderContents && keyword.length > 0 && doDebounce(FindFolderContentsFn);
+    !isFolderContents && keyword.length > 0 && doDebounce(FindTotalUrlsFn);
   }, [keyword]);
+
+  // 만약에 folderContents가 변동이 있을 경우
+  // setIsFolderContents 가 true
+  useEffect(() => {
+    if (!isFolderContents && isConfirmed) {
+      onClickSubTitle();
+    } else {
+      getReset();
+    }
+    setIsConfirmed(false);
+  }, [isConfirmed]);
 
   return (
     <FolderContainerEl>
@@ -192,16 +216,76 @@ const FolderContainer = ({ handleGetId }) => {
 };
 
 const FolderItems = ({ FolderContents, handleClickUrl, handleUnClickUrl }) => {
-  return FolderContents.map((url, index) => {
-    return (
-      <ItemFolderContainer
-        value={url}
-        key={url._id}
-        handleClickUrl={handleClickUrl}
-        handleUnClickUrl={handleUnClickUrl}
-      />
-    );
-  });
+  const [contentsNum, setContentsNum] = useState(20);
+  const [target, setTarget] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const { keyword, filterdItems } = useContext(FolderContext);
+  const folderItems = useSelector((state) => state.folderItems);
+
+  // 무한스크롤
+  const getNextItems = () => {
+    setContentsNum((num) => num + 40);
+  };
+
+  const onIntersect = async ([entry], observer) => {
+    if (entry.isIntersecting && !isLoaded) {
+      observer.unobserve(entry.target);
+      if (FolderContents.length === contentsNum) {
+        return;
+      }
+      await getNextItems();
+
+      observer.observe(entry.target);
+    }
+  };
+
+  useEffect(() => {
+    let observer;
+    if (target) {
+      observer = new IntersectionObserver(onIntersect, {
+        threshold: 0.4,
+      });
+      observer.observe(target);
+    }
+    return () => observer && observer.disconnect();
+  }, [target]);
+
+  return (
+    <>
+      {keyword.length === 0 &&
+        FolderContents.slice(0, contentsNum).map((url, index) => {
+          if (index === contentsNum - 1) {
+            return (
+              <TargetEl ref={setTarget} key="thisIsTarget">
+                🙂🙂로딩중입니다🙂🙂
+              </TargetEl>
+            );
+          }
+          return (
+            <ItemFolderContainer
+              key={url._id}
+              value={url}
+              handleClickUrl={handleClickUrl}
+              handleUnClickUrl={handleUnClickUrl}
+              items={folderItems.items}
+            />
+          );
+        })}
+
+      {keyword.length > 0 &&
+        filterdItems.map((url, index) => {
+          return (
+            <ItemFolderContainer
+              key={url._id}
+              value={url}
+              handleClickUrl={handleClickUrl}
+              handleUnClickUrl={handleUnClickUrl}
+              items={folderItems.items}
+            />
+          );
+        })}
+    </>
+  );
 };
 
 const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
@@ -209,7 +293,6 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const { keyword, filterdItems } = useContext(FolderContext);
-
   const folderItems = useSelector((state) => state.folderItems);
 
   // 무한스크롤
