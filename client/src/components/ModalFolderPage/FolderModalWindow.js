@@ -1,5 +1,8 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+
+import { MainStates } from "../../routers/MainPage";
+
 import ModalOverlay from "../styled/ModalOverlay.styled";
 import EditorContainer from "./EditorContainer";
 import FolderContainer from "./FolderContainer";
@@ -8,7 +11,8 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import FolderDisplay from "./FolderDisplay";
 import { PopupEnable } from "../../Hooks/stopScroll";
 import { useDispatch, useSelector } from "react-redux";
-import { actions } from "../../store/reducers/FolderItems";
+import { setItems } from "../../store/reducers/FolderItems";
+import { SetFolderContents } from "../../store/reducers/Folders";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
@@ -71,7 +75,46 @@ const FolderModalWindow = () => {
   const [clickedSearch, setClickedSearch] = useState(false);
   const [filterdItems, setFilterdItems] = useState([]);
   const [keyword, setKeyword] = useState("");
-  const [originalItemsIds, setOriginalItemsIds] = useState([]);
+
+  const { realTotalUrls } = useContext(MainStates);
+
+  const dispatch = useDispatch();
+
+  const handleFillFolderItemsInit = (folderItems) => {
+    dispatch(setItems(folderItems));
+  };
+
+  const handleGetId = (urls) => {
+    const processed = urls.map((url) => {
+      return url._id;
+    });
+    handleFillFolderItemsInit(processed);
+  };
+
+  const handleSetItems = (items) => {
+    dispatch(setItems(items));
+  };
+
+  const getUrlFullAttr = (urlIdList) => {
+    const processed = realTotalUrls.filter((url) => {
+      return urlIdList.includes(url._id);
+    });
+    console.log(processed);
+    return processed;
+  };
+
+  const handleSetFolderItems = (folderId, urlIdList) => {
+    const urls = getUrlFullAttr(urlIdList);
+    dispatch(SetFolderContents({ folderId, urls }));
+  };
+
+  useEffect(() => {
+    PopupEnable();
+  }, []);
+
+  useEffect(() => {
+    // console.log(folderContentsOnlyId);
+  }, []);
 
   const initialState = {
     isFolderPage,
@@ -84,30 +127,9 @@ const FolderModalWindow = () => {
     setFilterdItems,
     keyword,
     setKeyword,
-    originalItemsIds,
-    setOriginalItemsIds,
+    handleSetItems,
+    handleSetFolderItems,
   };
-
-  const dispatch = useDispatch();
-
-  const handleFillFolderItemsInit = (folderItems) => {
-    dispatch(actions.setItems(folderItems));
-  };
-
-  const handleGetId = (urls) => {
-    const processed = urls.map((url) => {
-      return url._id;
-    });
-    handleFillFolderItemsInit(processed);
-  };
-
-  useEffect(() => {
-    PopupEnable();
-  }, []);
-
-  useEffect(() => {
-    // console.log(folderContentsOnlyId);
-  }, []);
 
   return (
     <FolderContext.Provider value={initialState}>

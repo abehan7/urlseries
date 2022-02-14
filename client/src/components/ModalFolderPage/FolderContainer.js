@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { KeywordNormalize, SearchNotByDB } from "../../Hooks/SearchHook";
 import { MainStates } from "../../routers/MainPage";
-import { actions } from "../../store/reducers/FolderItems";
+import { setItems } from "../../store/reducers/FolderItems";
 import { FolderContext } from "./FolderModalWindow";
 import ItemFolderContainer from "./ItemFolderContainer";
 import ItemUrlContainer from "./ItemUrlContainer";
@@ -97,14 +97,14 @@ const FolderContainer = ({ handleGetId }) => {
   // url클릭
   const handleClickUrl = (url) => {
     const processed = [...items, url._id];
-    dispatch(actions.setItems(processed));
+    dispatch(setItems(processed));
   };
 
   // url클릭 해제
   const handleUnClickUrl = (url) => {
     // setItems((prev) => prev.filter((item) => item !== url._id));
     const processed = items.filter((item) => item !== url._id);
-    dispatch(actions.setItems(processed));
+    dispatch(setItems(processed));
   };
 
   // 스크롤 초기화

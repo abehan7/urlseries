@@ -76,7 +76,7 @@ const ItemUrlContainer = ({
 
   useEffect(() => {
     items.includes(value._id) && setIsChecked(true);
-  }, []);
+  }, [items]);
 
   return (
     <ItemContainerEl

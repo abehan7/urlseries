@@ -27,8 +27,14 @@ const EditorContainerEl = styled.div`
   border-radius: 10px;
 `;
 const EditorContainer = () => {
-  const { isFolderPage, setIsFolderPage, setClickedSearch, filterdItems } =
-    useContext(FolderContext);
+  const {
+    isFolderPage,
+    setIsFolderPage,
+    setClickedSearch,
+    filterdItems,
+    handleSetItems,
+  } = useContext(FolderContext);
+
   return (
     <EditorContainerEl>
       <IconWrapper>
@@ -39,6 +45,7 @@ const EditorContainer = () => {
             setIsFolderPage={setIsFolderPage}
             setClickedSearch={setClickedSearch}
             filterdItems={filterdItems}
+            handleSetItems={handleSetItems}
           />
         )}
       </IconWrapper>
@@ -81,7 +88,7 @@ const EditorUrls = ({
   setIsFolderPage,
   setClickedSearch,
   filterdItems,
-  setOriginalItems,
+  handleSetItems,
 }) => {
   const onClickBack = () => {
     setIsFolderPage(true);
@@ -95,8 +102,9 @@ const EditorUrls = ({
     const filterd = filterdItems.map((item) => {
       return item._id;
     });
-
     console.log(filterd);
+    handleSetItems(filterd);
+    // 이제 이거를 item 리덕스에 넣기
   };
 
   return (
