@@ -14,12 +14,15 @@ export const folderItemsSlice = createSlice({
     setItems: (state, action) => {
       state.items = action.payload;
     },
+    addItems: (state, action) => {
+      state.items = [...state.items, ...action.payload];
+    },
     setFilterdItems: (state, action) => {
       state.filterdItems = action.payload;
     },
   },
 });
 
-export const { setItems, setFilterdItems } = folderItemsSlice.actions;
+export const { setItems, addItems, setFilterdItems } = folderItemsSlice.actions;
 
 export default folderItemsSlice.reducer;

@@ -200,7 +200,7 @@ export const folderSlice = createSlice({
     // 이거 하나로 끝내기? ok
     SetFolderContents: (state, action) => {
       const { folderId, urls } = action.payload;
-      const folder = state.find((folder) => folder._id === folderId);
+      const folder = state.folders.find((folder) => folder._id === folderId);
       folder.folderContents = urls;
     },
     // setContent 테스트 후 지우기

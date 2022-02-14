@@ -11,7 +11,7 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import FolderDisplay from "./FolderDisplay";
 import { PopupEnable } from "../../Hooks/stopScroll";
 import { useDispatch, useSelector } from "react-redux";
-import { setItems } from "../../store/reducers/FolderItems";
+import { addItems, setItems } from "../../store/reducers/FolderItems";
 import { SetFolderContents } from "../../store/reducers/Folders";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
@@ -78,6 +78,8 @@ const FolderModalWindow = () => {
 
   const { realTotalUrls } = useContext(MainStates);
 
+  const items = useSelector((state) => state.folderItems.items);
+
   const dispatch = useDispatch();
 
   const handleFillFolderItemsInit = (folderItems) => {
@@ -92,7 +94,7 @@ const FolderModalWindow = () => {
   };
 
   const handleSetItems = (items) => {
-    dispatch(setItems(items));
+    dispatch(addItems(items));
   };
 
   const getUrlFullAttr = (urlIdList) => {
@@ -103,8 +105,13 @@ const FolderModalWindow = () => {
     return processed;
   };
 
-  const handleSetFolderItems = (folderId, urlIdList) => {
+  const handleSetFolderItems = () => {
+    const urlIdList = items;
     const urls = getUrlFullAttr(urlIdList);
+    const folderId = selectedFolder._id;
+
+    setSelectedFolder({ ...selectedFolder, folderContents: urls });
+
     dispatch(SetFolderContents({ folderId, urls }));
   };
 
@@ -112,9 +119,7 @@ const FolderModalWindow = () => {
     PopupEnable();
   }, []);
 
-  useEffect(() => {
-    // console.log(folderContentsOnlyId);
-  }, []);
+  useEffect(() => {}, []);
 
   const initialState = {
     isFolderPage,

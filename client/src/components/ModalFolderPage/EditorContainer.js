@@ -26,13 +26,26 @@ const EditorContainerEl = styled.div`
   height: 85%;
   border-radius: 10px;
 `;
+
+const SearchIcon = styled(Icon)`
+  ${({ clickedSearch }) => {
+    if (clickedSearch) {
+      return `
+        color: #ff0000;
+      `;
+    }
+  }};
+`;
+
 const EditorContainer = () => {
   const {
     isFolderPage,
     setIsFolderPage,
     setClickedSearch,
+    clickedSearch,
     filterdItems,
     handleSetItems,
+    handleSetFolderItems,
   } = useContext(FolderContext);
 
   return (
@@ -44,8 +57,10 @@ const EditorContainer = () => {
           <EditorUrls
             setIsFolderPage={setIsFolderPage}
             setClickedSearch={setClickedSearch}
+            clickedSearch={clickedSearch}
             filterdItems={filterdItems}
             handleSetItems={handleSetItems}
+            handleSetFolderItems={handleSetFolderItems}
           />
         )}
       </IconWrapper>
@@ -87,8 +102,10 @@ const EditorFolder = () => {
 const EditorUrls = ({
   setIsFolderPage,
   setClickedSearch,
+  clickedSearch,
   filterdItems,
   handleSetItems,
+  handleSetFolderItems,
 }) => {
   const onClickBack = () => {
     setIsFolderPage(true);
@@ -107,16 +124,20 @@ const EditorUrls = ({
     // 이제 이거를 item 리덕스에 넣기
   };
 
+  const onClickConfirm = () => {
+    handleSetFolderItems();
+  };
+
   return (
     <>
       <Icon onClick={onClickBack}>
         <IoIosArrowBack />
         {/* 뒤로가기 */}
       </Icon>
-      <Icon onClick={onClickSearch}>
+      <SearchIcon onClick={onClickSearch} clickedSearch={clickedSearch}>
         <IoSearchOutline />
-        {/* <url> <폴더> 검색 */}
-      </Icon>
+        {/* <url>  검색 */}
+      </SearchIcon>
 
       <Icon>
         <FiEdit2 />
@@ -127,7 +148,7 @@ const EditorUrls = ({
         {/* <url> 전체선택 */}
       </Icon>
 
-      <Icon>
+      <Icon onClick={onClickConfirm}>
         <AiOutlineCheck />
         {/* <url> 저장 확인하기 */}
       </Icon>

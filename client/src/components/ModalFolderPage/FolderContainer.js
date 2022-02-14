@@ -89,6 +89,7 @@ const FolderContainer = ({ handleGetId }) => {
     setFilterdItems,
     keyword,
     setKeyword,
+    setClickedSearch,
   } = useContext(FolderContext);
 
   const dispatch = useDispatch();
@@ -117,7 +118,9 @@ const FolderContainer = ({ handleGetId }) => {
     setIsFolderContents(!isFolderContents);
     handleScrollUp();
     setKeyword("");
+    setFilterdItems([]);
     handleGetId(selectedFolder.folderContents);
+    setClickedSearch(false);
   };
 
   // 인풋 키워드
