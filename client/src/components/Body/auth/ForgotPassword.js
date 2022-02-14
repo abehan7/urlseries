@@ -55,6 +55,7 @@ function ForgotPassword() {
               <RiUser3Line className="icon" />
               <input
                 type="text"
+                className="auth_input"
                 placeholder="아이디를 입력해주세요"
                 value={user_id}
                 name="user_id"
@@ -65,6 +66,7 @@ function ForgotPassword() {
               <RiMailLine className="icon" />
               <input
                 type="text"
+                className="auth_input"
                 placeholder="이메일을 입력해주세요"
                 value={email}
                 name="email"
@@ -72,7 +74,9 @@ function ForgotPassword() {
               ></input>
             </div>
 
-            <button onClick={forgotPassword}>이메일인증</button>
+            <button id="auth_btn" onClick={forgotPassword}>
+              이메일인증
+            </button>
             <button className="response_register" onClick={goSignUp}>
               로그인
             </button>
@@ -81,8 +85,10 @@ function ForgotPassword() {
         <div className="overlay-container">
           <div className="overlay">
             <div className="overlay-panel overlay-right">
-              <h1>비밀번호를 잊으셨나요?</h1>
-              <p>이메일 확인을 받은 후 재설정 해보세요!</p>
+              <h1 className="auth_opening">비밀번호를 잊으셨나요?</h1>
+              <p className="auth_text">
+                이메일 확인을 받은 후 재설정 해보세요!
+              </p>
               <button className="ghost" id="signUp">
                 <Link to="/logintest">로그인</Link>
               </button>

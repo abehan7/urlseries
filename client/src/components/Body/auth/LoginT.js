@@ -77,7 +77,7 @@ function LoginT() {
       <div className="container" id="container">
         <div className="form-container sign-in-container">
           <form onSubmit={handleSubmit}>
-            <h1>로그인</h1>
+            <h1 className="auth_opening">로그인</h1>
 
             {err && showErrMsg(err)}
             {success && showSuccessMsg(success)}
@@ -86,6 +86,7 @@ function LoginT() {
               <RiUser3Line className="icon" />
               <input
                 type="text"
+                className="auth_input"
                 placeholder="아이디를 입력해주세요"
                 value={user_id}
                 name="user_id"
@@ -96,6 +97,7 @@ function LoginT() {
               <RiLockPasswordLine className="icon" />
               <input
                 type="password"
+                className="auth_input"
                 placeholder="비밀번호를 입력해주세요"
                 value={password}
                 name="password"
@@ -106,12 +108,14 @@ function LoginT() {
             <button className="response_register" onClick={goSignUp}>
               회원가입
             </button>
-            <button type="summit">로그인</button>
+            <button id="auth_btn" type="summit">
+              로그인
+            </button>
 
             <div className="social">
               <GoogleLogin
                 clientId="828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com"
-                buttonText="구글로그인"
+                buttonText="Google 로그인"
                 onSuccess={responseGoogle}
                 cookiePolicy={"single_host_origin"}
               />
@@ -121,8 +125,10 @@ function LoginT() {
         <div className="overlay-container">
           <div className="overlay">
             <div className="overlay-panel overlay-right">
-              <h1>반갑습니다!</h1>
-              <p>자신만의 개성있고 효율적인 URL 관리를 시작해보세요!</p>
+              <h1 className="auth_opening">반갑습니다!</h1>
+              <p className="auth_text">
+                자신만의 개성있고 효율적인 URL 관리를 시작해보세요!
+              </p>
               <button className="ghost" id="signUp">
                 <Link to="/registertest">회원가입</Link>
               </button>

@@ -71,6 +71,7 @@ function ResetPassword() {
               <RiLockPasswordLine className="icon" />
               <input
                 type="password"
+                className="auth_input"
                 placeholder="비밀번호를 입력해주세요"
                 value={password}
                 name="password"
@@ -82,13 +83,16 @@ function ResetPassword() {
               <RiLockPasswordLine className="icon" />
               <input
                 type="password"
+                className="auth_input"
                 placeholder="비밀번호를 확인해주세요"
                 value={cf_password}
                 name="cf_password"
                 onChange={handleChangeInput}
               ></input>
             </div>
-            <button onClick={handleResetPass}>재설정</button>
+            <button id="auth_btn" onClick={handleResetPass}>
+              재설정
+            </button>
             <button className="response_register" onClick={goSignUp}>
               로그인
             </button>
@@ -97,8 +101,8 @@ function ResetPassword() {
         <div className="overlay-container">
           <div className="overlay">
             <div className="overlay-panel overlay-right">
-              <h1>비밀번호를 재설정 하세요!</h1>
-              <p>비밀번호 변경 후 로그인 하세요!</p>
+              <h1 className="auth_opening">비밀번호를 재설정 하세요!</h1>
+              <p className="auth_text">비밀번호 변경 후 로그인 하세요!</p>
               <button className="ghost" id="signUp">
                 <Link to="/logintest">로그인</Link>
               </button>

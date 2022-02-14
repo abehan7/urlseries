@@ -113,22 +113,22 @@
   text-transform: capitalize;
   letter-spacing: 1.3px;
   box-shadow: 0 2px 4px #777;
-} */
+} 
 
 /* ----------------test login------------------------- */
 
-h1 {
+.auth_opening {
   font-weight: bold;
   font-size: 30px;
   margin: 0;
   margin-bottom: 10%;
 }
-
+/* 
 h2 {
   text-align: center;
-}
+} */
 
-p {
+.auth_text {
   font-size: 14px;
   font-weight: 100;
   line-height: 20px;
@@ -136,9 +136,9 @@ p {
   margin: 20px 0 30px;
 }
 
-span {
+/* span {
   font-size: 12px;
-}
+} */
 
 /* a {
   color: #333;
@@ -147,7 +147,7 @@ span {
   margin: 15px 0;
 } */
 
-button {
+#auth_btn {
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 20px;
@@ -160,19 +160,38 @@ button {
   letter-spacing: 1px;
   text-transform: uppercase;
   width: 150px;
+  outline: none;
 }
 
 button:hover {
   opacity: 1;
 }
 
-button:focus {
+#signUp {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  border: 1px solid #ff4b2b;
+  background-color: none;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  width: 150px;
   outline: none;
+  border: 2px solid white;
 }
 
-button.ghost {
-  background-color: transparent;
-  border-color: #ffffff;
+form .social button {
+  width: 150px;
+  margin: 10px 0;
+  height: 50px;
+  /* font-size: 14px;
+  font-weight: 200; */
+  text-transform: capitalize;
+  /* letter-spacing: 1px; */
 }
 
 form {
@@ -201,7 +220,7 @@ form {
   font-size: 20px;
 }
 
-input {
+.auth_input {
   background-color: none;
   border: none;
   /* padding: 10px 10px; */

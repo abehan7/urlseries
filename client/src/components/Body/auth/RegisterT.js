@@ -95,7 +95,7 @@ function RegisterT() {
       <div class="container" id="container">
         <div class="form-container sign-in-container">
           <form onSubmit={handleSubmit}>
-            <h1>회원가입 </h1>
+            <h1 className="auth_opening">회원가입 </h1>
 
             {err && showErrMsg(err)}
             {success && showSuccessMsg(success)}
@@ -103,6 +103,7 @@ function RegisterT() {
               <RiUser3Line className="icon" />
               <input
                 type="text"
+                className="auth_input"
                 placeholder="아이디를 입력해주세요"
                 value={user_id}
                 name="user_id"
@@ -113,6 +114,7 @@ function RegisterT() {
               <RiMailLine className="icon" />
               <input
                 type="text"
+                className="auth_input"
                 placeholder="이메일을 입력해주세요"
                 value={email}
                 name="email"
@@ -124,6 +126,7 @@ function RegisterT() {
               <RiLockPasswordLine className="icon" />
               <input
                 type="password"
+                className="auth_input"
                 placeholder="비밀번호를 입력해주세요"
                 value={password}
                 name="password"
@@ -135,6 +138,7 @@ function RegisterT() {
               <RiLockPasswordLine className="icon" />
               <input
                 type="password"
+                className="auth_input"
                 placeholder="비밀번호를 확인해주세요"
                 value={cf_password}
                 name="cf_password"
@@ -142,7 +146,9 @@ function RegisterT() {
               ></input>
             </div>
 
-            <button type="submit">회원가입</button>
+            <button id="auth_btn" type="submit">
+              회원가입
+            </button>
             <button className="response_register" onClick={goSignUp}>
               로그인
             </button>
@@ -152,9 +158,9 @@ function RegisterT() {
         <div class="overlay-container">
           <div class="overlay">
             <div class="overlay-panel overlay-right">
-              <h1>환영합니다!</h1>
-              <p>기존 아이디가 있다면 로그인해주세요!</p>
-              <button class="ghost" id="signIn">
+              <h1 className="auth_opening">환영합니다!</h1>
+              <p className="auth_text">기존 아이디가 있다면 로그인해주세요!</p>
+              <button class="ghost" id="signUp">
                 <Link to="/logintest">로그인</Link>
               </button>
             </div>
