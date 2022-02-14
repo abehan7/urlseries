@@ -2,8 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { FcFolder, FcOpenedFolder } from "react-icons/fc";
 import { TiBackspaceOutline } from "react-icons/ti";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { actions } from "../../store/reducers/FolderItems";
 import { FolderContext } from "./FolderModalWindow";
 import Container from "./styled/Container.styled";
 import Icon from "./styled/Icon.styled";
@@ -98,16 +99,14 @@ const IconContainer = styled.div`
 
 const IconEl = styled(Icon)``;
 
-const FolderDisplay = () => {
+const FolderDisplay = ({ handleGetId }) => {
   const folders = useSelector((state) => state.folders.folders);
-  const {
-    selectedFolder,
-    setSelectedFolder,
-    setIsFolderPage,
-    setOriginalItemsIds,
-  } = useContext(FolderContext);
+  const { selectedFolder, setSelectedFolder, setIsFolderPage } =
+    useContext(FolderContext);
 
   const [isSelected, setIsSelected] = useState(false);
+
+  // const folderItems = useSelector((state) => state.folderItems);
 
   const onClickFolder = (folder, e) => {
     if (folder?._id === selectedFolder?._id) {
@@ -117,14 +116,6 @@ const FolderDisplay = () => {
       // click folder that is not selected
       setSelectedFolder(folder);
     }
-  };
-
-  const handleGetId = (urls) => {
-    const processed = urls.map((url) => {
-      return url._id;
-    });
-    console.log(processed);
-    setOriginalItemsIds(processed);
   };
 
   const onClickConfirm = () => {
@@ -165,6 +156,7 @@ const FolderDisplay = () => {
           {folders.map((folder) => {
             return (
               <Folder
+                key={folder._id}
                 folder={folder}
                 selectedFolder={selectedFolder}
                 onClick={onClickFolder}

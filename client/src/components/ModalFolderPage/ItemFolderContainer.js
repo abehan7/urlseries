@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Bar, ImgContainer, ItemContainerEl, Title } from "./ItemUrlContainer";
 
@@ -11,16 +11,9 @@ const Image = styled.img`
   padding: 0.4rem;
 `;
 
-const ItemFolderContainer = ({
-  value,
-  key,
-  handleClickUrl,
-  handleUnClickUrl,
-}) => {
-  const [isChecked, setIsChecked] = useState(false);
+const ItemFolderContainer = ({ value, handleUnClickUrl }) => {
   const onClick = (value) => {
-    setIsChecked(!isChecked);
-    isChecked ? handleUnClickUrl(value) : handleClickUrl(value);
+    handleUnClickUrl(value);
   };
 
   // setIsChecked(true);
@@ -28,7 +21,7 @@ const ItemFolderContainer = ({
   return (
     <ItemFolderContainerEl
       className="searched-Stuff"
-      key={key}
+      key={value._id}
       onClick={() => onClick(value)}
     >
       <ImgContainer>

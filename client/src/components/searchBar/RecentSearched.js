@@ -49,9 +49,9 @@ const RecentWrapper = styled.div`
   }
 `;
 
-const RecentSearched = ({ recentSearched, setRecentSearch, url, key }) => {
+const RecentSearched = ({ recentSearched, setRecentSearch, url }) => {
   return (
-    <RecentWrapper key={key}>
+    <RecentWrapper key={url._id}>
       <div className="url-and-delete">
         <div
           className="recent-searched-Stuff"

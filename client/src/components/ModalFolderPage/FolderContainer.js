@@ -1,9 +1,11 @@
 import { debounce } from "lodash";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { TiBackspaceOutline } from "react-icons/ti";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { KeywordNormalize, SearchNotByDB } from "../../Hooks/SearchHook";
 import { MainStates } from "../../routers/MainPage";
+import { actions } from "../../store/reducers/FolderItems";
 import { FolderContext } from "./FolderModalWindow";
 import ItemFolderContainer from "./ItemFolderContainer";
 import ItemUrlContainer from "./ItemUrlContainer";
@@ -76,7 +78,7 @@ const doDebounce = debounce((fn) => {
   fn();
 }, 200);
 
-const FolderContainer = () => {
+const FolderContainer = ({ handleGetId }) => {
   const { realTotalUrls } = useContext(MainStates);
   const [isFolderContents, setIsFolderContents] = useState(true);
   const [scrollTarget, setScrollTarget] = useState(null);
@@ -87,18 +89,22 @@ const FolderContainer = () => {
     setFilterdItems,
     keyword,
     setKeyword,
-    originalItemsIds,
   } = useContext(FolderContext);
 
-  const [Items, setItems] = useState(originalItemsIds);
+  const dispatch = useDispatch();
+  const items = useSelector((state) => state.folderItems.items);
+
   // url클릭
   const handleClickUrl = (url) => {
-    setItems((prev) => [...prev, url._id]);
+    const processed = [...items, url._id];
+    dispatch(actions.setItems(processed));
   };
 
   // url클릭 해제
   const handleUnClickUrl = (url) => {
-    setItems((prev) => prev.filter((item) => item !== url._id));
+    // setItems((prev) => prev.filter((item) => item !== url._id));
+    const processed = items.filter((item) => item !== url._id);
+    dispatch(actions.setItems(processed));
   };
 
   // 스크롤 초기화
@@ -110,7 +116,8 @@ const FolderContainer = () => {
   const onClickSubTitle = () => {
     setIsFolderContents(!isFolderContents);
     handleScrollUp();
-    setItems(originalItemsIds);
+    setKeyword("");
+    handleGetId(selectedFolder.folderContents);
   };
 
   // 인풋 키워드
@@ -120,10 +127,8 @@ const FolderContainer = () => {
   };
 
   useEffect(() => {
-    console.log(Items);
-  }, [Items]);
-
-  useEffect(() => {}, []);
+    console.log(items);
+  }, []);
 
   // 검색
   useEffect(() => {
@@ -185,7 +190,6 @@ const FolderContainer = () => {
 
 const FolderItems = ({ FolderContents, handleClickUrl, handleUnClickUrl }) => {
   return FolderContents.map((url, index) => {
-    console.log();
     return (
       <ItemFolderContainer
         value={url}
@@ -201,8 +205,9 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
   const [contentsNum, setContentsNum] = useState(20);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-
   const { keyword, filterdItems } = useContext(FolderContext);
+
+  const folderItems = useSelector((state) => state.folderItems);
 
   // 무한스크롤
   const getNextItems = () => {
@@ -245,10 +250,11 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
           }
           return (
             <ItemUrlContainer
-              value={url}
               key={url._id}
+              value={url}
               handleClickUrl={handleClickUrl}
               handleUnClickUrl={handleUnClickUrl}
+              items={folderItems.items}
             />
           );
         })}
@@ -257,10 +263,11 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
         filterdItems.map((url, index) => {
           return (
             <ItemUrlContainer
-              value={url}
               key={url._id}
+              value={url}
               handleClickUrl={handleClickUrl}
               handleUnClickUrl={handleUnClickUrl}
+              items={folderItems.items}
             />
           );
         })}

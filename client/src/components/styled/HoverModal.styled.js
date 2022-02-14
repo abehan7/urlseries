@@ -29,15 +29,15 @@ const Hashtags = styled.div``;
 const Content = styled.span``;
 const HoverModal = ({ value, Height }) => {
   return (
-    <HoverModalEl>
+    <HoverModalEl key={value._id}>
       <Wrapper Height={Height} isDarkMode={false}>
         <Hashtags>
           {value.url_hashTags.map((tag) => {
-            return <Content>{tag + " "}</Content>;
+            return <Content key={tag}>{tag + " "}</Content>;
           })}
         </Hashtags>
         {value.url_memo.length !== 0 && (
-          <Memo>
+          <Memo key={value._id}>
             <Content>{value.url_memo}</Content>
           </Memo>
         )}

@@ -61,7 +61,12 @@ export const SelectBox = styled.div`
   }
 `;
 
-const ItemUrlContainer = ({ value, key, handleClickUrl, handleUnClickUrl }) => {
+const ItemUrlContainer = ({
+  value,
+  handleClickUrl,
+  handleUnClickUrl,
+  items,
+}) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const onClick = (value) => {
@@ -69,12 +74,14 @@ const ItemUrlContainer = ({ value, key, handleClickUrl, handleUnClickUrl }) => {
     isChecked ? handleUnClickUrl(value) : handleClickUrl(value);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    items.includes(value._id) && setIsChecked(true);
+  }, []);
 
   return (
     <ItemContainerEl
       className="searched-Stuff"
-      key={key}
+      key={value._id}
       onClick={() => onClick(value)}
     >
       <ImgContainer>

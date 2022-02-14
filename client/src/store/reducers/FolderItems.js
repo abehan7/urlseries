@@ -1,8 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const folderItems = {
+  // 바꾸기전 아이템들
   originalItems: [],
+  // 바꾼 후 아이템들
   items: [],
+  // 검색 후 아이템들
   filterdItems: [],
 };
 

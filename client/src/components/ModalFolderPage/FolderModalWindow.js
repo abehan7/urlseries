@@ -7,7 +7,8 @@ import FolderContainer from "./FolderContainer";
 import { IoArrowBackOutline } from "react-icons/io5";
 import FolderDisplay from "./FolderDisplay";
 import { PopupEnable } from "../../Hooks/stopScroll";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { actions } from "../../store/reducers/FolderItems";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
@@ -87,6 +88,19 @@ const FolderModalWindow = () => {
     setOriginalItemsIds,
   };
 
+  const dispatch = useDispatch();
+
+  const handleFillFolderItemsInit = (folderItems) => {
+    dispatch(actions.setItems(folderItems));
+  };
+
+  const handleGetId = (urls) => {
+    const processed = urls.map((url) => {
+      return url._id;
+    });
+    handleFillFolderItemsInit(processed);
+  };
+
   useEffect(() => {
     PopupEnable();
   }, []);
@@ -103,15 +117,15 @@ const FolderModalWindow = () => {
             <IoArrowBackOutline />
           </Icon>
           <EditorContainer />
-          {isFolderPage ? <FolderDisplay /> : <SelectUrlContainer />}
+          {isFolderPage ? (
+            <FolderDisplay handleGetId={handleGetId} />
+          ) : (
+            <FolderContainer handleGetId={handleGetId} />
+          )}
         </ModalWindow>
       </FolderModalOverlayEl>
     </FolderContext.Provider>
   );
-};
-
-const SelectUrlContainer = () => {
-  return <FolderContainer />;
 };
 
 export default FolderModalWindow;
