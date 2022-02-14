@@ -139,7 +139,7 @@ const Get21Urls = async (req, res) => {
 };
 
 const AddUrl = async (req, res) => {
-  const { user_id } = req.user;
+  const { user_id } = req.decodedData;
   console.log(user);
   const { url, title, hashTags, memo } = req.body;
   const NewUrl = new db.Urls({

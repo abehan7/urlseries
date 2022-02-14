@@ -50,7 +50,7 @@ function HeaderT() {
     <header>
       <div className="logo">
         <h1>
-          <Link to="/">URurl</Link>
+          <Link to="/">URLseries</Link>
         </h1>
       </div>
 

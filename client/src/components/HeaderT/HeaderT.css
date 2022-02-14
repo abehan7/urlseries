@@ -44,6 +44,9 @@ header ul li img {
   position: relative;
   padding: 10px 0;
 }
+.drop-nav img {
+  padding-right: 5px;
+}
 .drop-nav a {
   text-transform: capitalize;
   overflow: hidden;

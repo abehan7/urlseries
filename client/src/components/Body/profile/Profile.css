@@ -33,15 +33,16 @@
   left: 0;
   width: 100%;
   height: 80%;
-  background: none;
+  background: rgb(23, 23, 23, 0.5);
   text-align: center;
   font-weight: 400;
   text-transform: uppercase;
   color: rgb(255, 140, 45);
   transition: 0.3s ease-in-out;
 }
+
 .profile_page .col-left .avatar:hover span {
-  bottom: -15%;
+  bottom: 7%;
 }
 .profile_page .col-left #file_up {
   position: absolute;
@@ -74,7 +75,7 @@
   padding: 0 5px;
 }
 .profile_page .col-left button {
-  background: #333;
+  background: #ff4b2b;
   color: white;
   padding: 10px 25px;
   text-transform: uppercase;
