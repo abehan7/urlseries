@@ -31,6 +31,7 @@ const AboutPage = () => {
             {/* <img className="slides" src="img/aboutsearch.gif" /> */}
             <img className="image" src="img/aboutImage.jpg" />
           </div>
+
           <div className="maindetail_two">
             <img className="image" src="img/abouthashtag.jpg" />
             {/* <div className="slides">페이지이미지</div> */}

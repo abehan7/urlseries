@@ -1,6 +1,6 @@
 .mainText {
   padding-top: 50px;
-  padding-left: 300px;
+  padding-left: 30%;
   height: 150px;
   /* text-align: center; */
   line-height: 150px;
@@ -14,22 +14,27 @@
   flex-direction: column;
   align-content: center;
   text-align: center;
+  /* flex-wrap: wrap; */
 }
 
 .maindetail_one,
 .maindetail_two {
   display: flex;
   flex-direction: row;
-  height: 450px;
+  height: 500px;
   justify-content: center;
   align-items: center;
+  flex-grow: 0;
+  gap: 10px;
 }
 .maindetail_one {
   background-color: #e9ecef;
+  flex-wrap: wrap-reverse;
 }
 
 .maindetail_two {
   background-color: #f6f6f6;
+  flex-wrap: wrap;
 }
 
 .text {
@@ -37,6 +42,7 @@
   width: 400px;
   font-size: 25px;
   font-weight: normal;
+  height: max-content;
 }
 
 .image {

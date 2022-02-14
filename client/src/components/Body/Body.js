@@ -9,6 +9,7 @@ import ResetPassword from "./auth/ResetPassword";
 import Profile from "./profile/Profile";
 import EditUser from "./profile/EditUser";
 import Mainpage from "../../routers/MainPage";
+import Aboutpage from "../AboutPage/AboutPage";
 
 import { useSelector } from "react-redux";
 import MainPage from "../../routers/MainPage";
@@ -21,6 +22,8 @@ function Body() {
     <section>
       <Routes>
         <Route path="/" element={<MainPage />} />
+
+        <Route path="/about" element={<Aboutpage />} />
 
         <Route
           path="/logintest"

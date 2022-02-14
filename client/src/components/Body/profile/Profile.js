@@ -15,7 +15,13 @@ import {
 import "./Profile.css";
 
 import { AiTwotoneCamera } from "react-icons/ai";
-import { VscCheck, VscChromeClose, VscEdit, VscTrash } from "react-icons/vsc";
+import {
+  VscCheck,
+  VscChromeClose,
+  VscEdit,
+  VscTrash,
+  VscDeviceCamera,
+} from "react-icons/vsc";
 
 const initialState = {
   user_id: "",
@@ -178,8 +184,9 @@ function Profile() {
           <div className="avatar">
             <img src={avatar ? avatar : user.avatar} alt="" />
             <span>
-              <i className="fas fa-camera"></i>
-              <p>Change</p>
+              <p>
+                <VscDeviceCamera size="30" /> <br></br>프로필사진변경
+              </p>
               <input
                 type="file"
                 name="file"
@@ -237,9 +244,8 @@ function Profile() {
           </div>
 
           <div>
-            <em style={{ color: "crimson" }}>
-              * If you update your password here, you will not be able to login
-              quickly using google and facebook.
+            <em style={{ color: "red" }}>
+              * 구글아이디로 로그인한 경우 비밀번호 변경에 유의해주세요!
             </em>
           </div>
 
@@ -247,49 +253,58 @@ function Profile() {
             Update
           </button>
         </div>
+        {isAdmin ? (
+          <div className="col-right">
+            <h2>{isAdmin ? "Users" : "MyOrders"}</h2>
 
-        <div className="col-right">
-          <h2>{isAdmin ? "Users" : "MyOrders"}</h2>
-
-          <div style={{ overFlowX: "auto" }}>
-            <table className="customers">
-              <thead>
-                <tr>
-                  <th>USERNUM</th>
-                  <th>USERID</th>
-                  <th>Email</th>
-                  <th>Admin</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {users.map((user) => (
-                  <tr key={user._id}>
-                    <td>{user._id}</td>
-                    <td>{user.user_id}</td>
-                    <td>{user.email}</td>
-                    <td>
-                      {user.role === 1 ? (
-                        <VscCheck color="green" />
-                      ) : (
-                        <VscChromeClose color="red" />
-                      )}
-                    </td>
-                    <td>
-                      <Link to={`/edit_user/${user._id}`}>
-                        <VscEdit color="black" />
-                      </Link>
-                      <button onClick={() => handleDelete(user._id)}>
-                        <VscTrash />
-                      </button>
-                    </td>
+            <div style={{ overFlowX: "auto" }}>
+              <table className="customers">
+                <thead>
+                  <tr>
+                    <th>USERNUM</th>
+                    <th>USERID</th>
+                    <th>Email</th>
+                    <th>Admin</th>
+                    <th>Action</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+
+                <tbody>
+                  {users.map((user) => (
+                    <tr key={user._id}>
+                      <td>{user._id}</td>
+                      <td>{user.user_id}</td>
+                      <td>{user.email}</td>
+                      <td>
+                        {user.role === 1 ? (
+                          <VscCheck color="green" />
+                        ) : (
+                          <VscChromeClose color="red" />
+                        )}
+                      </td>
+                      <td>
+                        <Link to={`/edit_user/${user._id}`}>
+                          <VscEdit color="black" size="20" />
+                        </Link>
+                        {/* <button
+                        className="deleteBtn"
+                        onClick={() => handleDelete(user._id)}
+                      > */}
+                        <VscTrash
+                          className="deleteBtn"
+                          cursor="pointer"
+                          size="20"
+                          onClick={() => handleDelete(user._id)}
+                        />
+                        {/* </button> */}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </div>
+        ) : null}
       </div>
     </>
   );

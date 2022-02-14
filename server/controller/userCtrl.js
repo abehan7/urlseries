@@ -61,9 +61,9 @@ const userCtrl = {
 
       //가입 이메일과 url을 받아 sendMail 실행
 
-      sendMail(email, url, "이메일 인증을 진행하세요 ");
+      sendMail(email, url, "이메일 인증하기 ");
 
-      res.json({ msg: "가입성공, pless activate your email to start" });
+      res.json({ msg: "가입성공, 이메일 인증을 진행해주세요" });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -160,8 +160,8 @@ const userCtrl = {
       const access_token = createAccessToken({ id: user.id });
       const url = `${CLIENT_URL}/user/reset/${access_token}`;
 
-      sendMail(email, url, "비밀번호를 재설정 해주세요");
-      res.json({ msg: "임시비밀번호를 전송하였습니다. 메일로 확인해주세요 " });
+      sendMail(email, url, "비밀번호를 재설정 하기");
+      res.json({ msg: "비밀번호 변경을 위해 메일을 확인해주세요 " });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -293,7 +293,7 @@ const userCtrl = {
         res.json({ msg: "로그인 성공" });
       } else {
         const newUser = new Users({
-          user_id: email,
+          user_id: name,
           email,
           password: passwordHash,
           avatar: picture,

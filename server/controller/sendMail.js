@@ -45,20 +45,21 @@ const sendEmail = (to, url, txt) => {
   const mailOptions = {
     from: SENDER_EMAIL_ADDRESS,
     to: to,
-    subject: "URurl",
+    subject: "URURL",
     html: `
-            <div style="max-width: 700px; margin:auto; border: 10px solid #ddd; padding: 50px 20px; font-size: 110%;">
-            <h2 style="text-align: center; text-transform: uppercase;color: teal;">URurl에 가입하신걸 환영합니다!</h2>
-            <p>Congratulations! You're almost set to start using DEVAT✮SHOP.
-                Just click the button below to validate your email address.
-            </p>
-            
-            <a href=${url} style="background: crimson; text-decoration: none; color: white; padding: 10px 20px; margin: 10px 0; display: inline-block;">${txt}</a>
-        
-            <p>If the button doesn't work for any reason, you can also click on the link below:</p>
-        
-            <div>${url}</div>
-            </div>
+           <div style="max-width: 700px; margin:auto; border-radius : 10px; padding: 50px 20px; padding-top: 10px; background : #ff416c;">
+                <h2 style="text-align :center; color: white;  font-size: 40px;  font-weight:bold;">URurl</h2>
+                <div style=" text-align :center; margin: auto; font-weight:right; color: white;">URurl을 이용해주셔서 감사합니다!
+                </div>
+                <div style=" text-align :center; margin: auto; margin-top:5px; margin-bottom:5px; ">
+                    <a href=${url} style=" border-radius : 10px; border : 1px solid white; background: #ff416c; text-decoration: none; color: white; padding: 10px 20px; margin: auto; display: inline-block;">${txt}</a>
+                </div>
+                <div style=" text-align :center; margin: auto;  font-weight:right; color: white; ">버튼이 눌리지 않는다면 아래 링크를 클릭해주세요!
+                </div>
+                <div style="width : 200px; margin : auto; margin-top: 5px; ">
+                  <a href=${url} style=" color: white; ">${url}</a>
+                </div>
+           </div>
         `,
   };
 
