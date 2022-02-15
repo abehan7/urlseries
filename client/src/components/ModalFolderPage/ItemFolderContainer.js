@@ -11,9 +11,9 @@ const Image = styled.img`
   padding: 0.4rem;
 `;
 
-const ItemFolderContainer = ({ value, handleUnClickUrl }) => {
+const ItemFolderContainer = ({ value }) => {
   const onClick = (value) => {
-    handleUnClickUrl(value);
+    console.log("value from ItemFolderContainer", value);
   };
 
   // setIsChecked(true);

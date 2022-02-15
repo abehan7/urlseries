@@ -9,6 +9,10 @@ import { IoSearchOutline } from "react-icons/io5";
 import { FolderContext } from "./FolderModalWindow";
 import { MdChecklist } from "react-icons/md";
 
+const UrlSearchedIcon = styled(Icon)``;
+
+const UrlConfirmIcon = styled(Icon)``;
+
 const IconWrapper = styled.div`
   padding-top: 1rem;
   display: flex;
@@ -24,6 +28,10 @@ const EditorContainerEl = styled.div`
   width: 50px;
   height: 85%;
   border-radius: 10px;
+
+  ${UrlSearchedIcon} {
+    display: ${({ isUrlEditing }) => (isUrlEditing ? "flex" : "none")};
+  }
 `;
 
 const SearchIcon = styled(Icon)`
@@ -48,10 +56,14 @@ const EditorContainer = () => {
     handleSetItems,
     handleSetFolderItems,
     setIsConfirmed,
+    setModalInfo,
+    isUrlEditing,
+    setIsUrlEditing,
+    handleClickAllExcept,
   } = useContext(FolderContext);
 
   return (
-    <EditorContainerEl>
+    <EditorContainerEl isUrlEditing={isUrlEditing}>
       <IconWrapper>
         {isFolderPage ? (
           <EditorFolder />
@@ -64,6 +76,10 @@ const EditorContainer = () => {
             handleSetItems={handleSetItems}
             handleSetFolderItems={handleSetFolderItems}
             setIsConfirmed={setIsConfirmed}
+            setModalInfo={setModalInfo}
+            isUrlEditing={isUrlEditing}
+            setIsUrlEditing={setIsUrlEditing}
+            handleClickAllExcept={handleClickAllExcept}
           />
         )}
       </IconWrapper>
@@ -110,11 +126,34 @@ const EditorUrls = ({
   handleSetItems,
   handleSetFolderItems,
   setIsConfirmed,
+  setModalInfo,
+  isUrlEditing,
+  setIsUrlEditing,
+  handleClickAllExcept,
 }) => {
+  // #FIXME: 뒤로가기
   const onClickBack = () => {
-    setIsFolderPage(true);
-    setClickedSearch(false);
+    const fn = () => {
+      setIsFolderPage(true);
+      setClickedSearch(false);
+
+      setModalInfo({
+        message: "",
+        type: "",
+        handleClickConfirm: () => {},
+        isOpen: false,
+      });
+    };
+
+    setModalInfo({
+      message: "변경사항을 취소하시겠습니까?",
+      type: "click",
+      handleClickConfirm: fn,
+      isOpen: true,
+    });
   };
+
+  // #FIXME: 검색하기
   const onClickSearch = () => {
     setClickedSearch((prev) => !prev);
   };
@@ -123,14 +162,32 @@ const EditorUrls = ({
     const filterd = filterdItems.map((item) => {
       return item._id;
     });
+    filterd.length === 0 && handleClickAllExcept();
+
     console.log(filterd);
-    handleSetItems(filterd);
+    filterd.length !== 0 && handleSetItems(filterd);
     // 이제 이거를 item 리덕스에 넣기
   };
 
+  // #FIXME: 확인하기
   const onClickConfirm = () => {
-    handleSetFolderItems();
-    setIsConfirmed(true);
+    const fn = () => {
+      handleSetFolderItems();
+      setIsConfirmed(true);
+      setModalInfo({
+        message: "",
+        type: "",
+        handleClickConfirm: () => {},
+        isOpen: false,
+      });
+    };
+
+    setModalInfo({
+      message: "변경사항을 저장하시겠습니까?",
+      type: "click",
+      handleClickConfirm: fn,
+      isOpen: true,
+    });
   };
 
   return (
@@ -144,19 +201,21 @@ const EditorUrls = ({
         {/* <url>  검색 */}
       </SearchIcon>
 
-      <Icon>
-        <FiEdit2 />
-        {/* 폴더 편집 */}
-      </Icon>
-      <Icon onClick={onClickCheckAll}>
-        <MdChecklist />
-        {/* <url> 전체선택 */}
-      </Icon>
+      {/* <Icon> */}
+      {/* <FiEdit2 /> */}
+      {/* 폴더 편집 */}
+      {/* </Icon> */}
 
       <Icon onClick={onClickConfirm}>
         <AiOutlineCheck />
         {/* <url> 저장 확인하기 */}
       </Icon>
+
+      {/* url선택하기 클릭하면 여기 나오게 하기 */}
+      <UrlSearchedIcon onClick={onClickCheckAll}>
+        <MdChecklist />
+        {/* <url> 전체선택 */}
+      </UrlSearchedIcon>
     </>
   );
 };

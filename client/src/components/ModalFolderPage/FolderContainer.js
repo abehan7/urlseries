@@ -87,11 +87,14 @@ const FolderContainer = ({ handleGetId }) => {
     clickedSearch,
     selectedFolder,
     setFilterdItems,
+    filterdItems,
     keyword,
     setKeyword,
     setClickedSearch,
     isConfirmed,
     setIsConfirmed,
+    isUrlEditing,
+    setIsUrlEditing,
   } = useContext(FolderContext);
 
   const dispatch = useDispatch();
@@ -169,6 +172,15 @@ const FolderContainer = ({ handleGetId }) => {
     setIsConfirmed(false);
   }, [isConfirmed]);
 
+  // url수정 페이지로 이동하는 경우
+  // 여기는 검색창 아래부분에 아이콘 나오게 하는 기능들
+
+  useEffect(() => {
+    !clickedSearch && setIsUrlEditing(false);
+    isFolderContents && setIsUrlEditing(false);
+    !isFolderContents && clickedSearch && setIsUrlEditing(true);
+  }, [isFolderContents, clickedSearch]);
+
   return (
     <FolderContainerEl>
       <ContentsWrapper>
@@ -215,7 +227,7 @@ const FolderContainer = ({ handleGetId }) => {
   );
 };
 
-const FolderItems = ({ FolderContents, handleClickUrl, handleUnClickUrl }) => {
+const FolderItems = ({ FolderContents }) => {
   const [contentsNum, setContentsNum] = useState(20);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -265,21 +277,16 @@ const FolderItems = ({ FolderContents, handleClickUrl, handleUnClickUrl }) => {
             <ItemFolderContainer
               key={url._id}
               value={url}
-              handleClickUrl={handleClickUrl}
-              handleUnClickUrl={handleUnClickUrl}
               items={folderItems.items}
             />
           );
         })}
-
       {keyword.length > 0 &&
         filterdItems.map((url, index) => {
           return (
             <ItemFolderContainer
               key={url._id}
               value={url}
-              handleClickUrl={handleClickUrl}
-              handleUnClickUrl={handleUnClickUrl}
               items={folderItems.items}
             />
           );

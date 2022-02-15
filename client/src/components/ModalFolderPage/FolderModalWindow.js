@@ -13,7 +13,7 @@ import { PopupEnable } from "../../Hooks/stopScroll";
 import { useDispatch, useSelector } from "react-redux";
 import { addItems, setItems } from "../../store/reducers/FolderItems";
 import { SetFolderContents } from "../../store/reducers/Folders";
-import ConfirmModal from "./ConfirmModal";
+import AlertModal from "./AlertModal";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
@@ -55,19 +55,6 @@ const Icon = styled.div`
   cursor: pointer;
 `;
 
-const ChooseWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  row-gap: 1rem;
-  height: 90%;
-  > div {
-    padding: 0;
-    margin: 0;
-  }
-`;
-
 export const FolderContext = createContext(null);
 
 const FolderModalWindow = () => {
@@ -77,6 +64,16 @@ const FolderModalWindow = () => {
   const [filterdItems, setFilterdItems] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
+  // 모달창에서 사용할 useState
+  const [modalInfo, setModalInfo] = useState({
+    message: "",
+    type: "",
+    handleClickConfirm: () => {},
+    isOpen: false,
+  });
+
+  // url 선택하기 클릭한 경우 전체선택이랑 확인하기 버튼 나오게하기
+  const [isUrlEditing, setIsUrlEditing] = useState(false);
 
   const { realTotalUrls } = useContext(MainStates);
 
@@ -117,6 +114,19 @@ const FolderModalWindow = () => {
     dispatch(SetFolderContents({ folderId, urls }));
   };
 
+  const handleModalCancel = () => {
+    setModalInfo({ isOpen: false });
+  };
+
+  const handleClickAllExcept = () => {
+    // 검색어를 입력후 이용해주세요
+    setModalInfo({
+      message: "검색어를 입력후 이용해주세요",
+      type: "noCancel",
+      isOpen: true,
+    });
+  };
+
   useEffect(() => {
     PopupEnable();
   }, []);
@@ -136,6 +146,11 @@ const FolderModalWindow = () => {
     handleSetFolderItems,
     isConfirmed,
     setIsConfirmed,
+    modalInfo,
+    setModalInfo,
+    isUrlEditing,
+    setIsUrlEditing,
+    handleClickAllExcept,
   };
 
   return (
@@ -151,7 +166,13 @@ const FolderModalWindow = () => {
           ) : (
             <FolderContainer handleGetId={handleGetId} />
           )}
-          <ConfirmModal message="저장되었습니다 :)" isOpen={false} />
+          <AlertModal
+            message={modalInfo.message}
+            isOpen={modalInfo.isOpen}
+            type={modalInfo.type}
+            handleClickConfirm={modalInfo.handleClickConfirm}
+            handleModalCancel={handleModalCancel}
+          />
         </ModalWindow>
       </FolderModalOverlayEl>
     </FolderContext.Provider>
