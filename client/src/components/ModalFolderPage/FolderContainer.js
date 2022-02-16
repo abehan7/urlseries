@@ -95,7 +95,6 @@ const FolderContainer = ({ handleGetId }) => {
     isConfirmed,
     setIsConfirmed,
     setIsUrlEditing,
-    setIsConfirmPopup,
     setModalInfo,
     CheckChanges,
     setIsSearching,
@@ -226,8 +225,6 @@ const FolderContainer = ({ handleGetId }) => {
   }, [isFolderContents, clickedSearch]);
 
   useEffect(() => {
-    !isFolderContents && setIsConfirmPopup(true);
-    isFolderContents && setIsConfirmPopup(false);
     isOnlyFolderContents && setIsOnlyFolderContents(false);
   }, [isFolderContents]);
 
@@ -282,8 +279,7 @@ const FolderItems = ({ FolderContents }) => {
   const [contentsNum, setContentsNum] = useState(20);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const { keyword, filterdItems, isSearching, isOnlyFolderContents } =
-    useContext(FolderContext);
+  const { keyword, filterdItems, isSearching } = useContext(FolderContext);
   const folderItems = useSelector((state) => state.folderItems);
 
   // 무한스크롤
@@ -313,6 +309,10 @@ const FolderItems = ({ FolderContents }) => {
     }
     return () => observer && observer.disconnect();
   }, [target]);
+
+  useEffect(() => {
+    contentsNum !== 20 && setContentsNum(20);
+  }, [filterdItems]);
 
   return (
     <>
@@ -399,7 +399,7 @@ const UrlItems = ({
 
   useEffect(() => {
     contentsNum !== 20 && setContentsNum(20);
-  }, [filterdItems]);
+  }, [filterdItems, isOnlyFolderContents]);
 
   return (
     <>

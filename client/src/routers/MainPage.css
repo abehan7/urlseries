@@ -370,7 +370,7 @@ h3 {
   transition: 0.2s;
 }
 .urlFavicon {
-  padding-left: 10px;
+  padding: 0.1rem 0.3rem;
 }
 .T-url,
 .url {

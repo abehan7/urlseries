@@ -1,31 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const ModalOverlay = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 100ms;
-  ${({ isOpen }) => {
-    if (isOpen) {
-      return `
-        visibility: visible;
-        opacity: 1;
-      `;
-    } else {
-      return `
-        visibility: hidden;
-        opacity: 0;
-        `;
-    }
-  }}
-`;
-
 const ConfirmModalEl = styled.div`
   width: 170px;
   height: 110px;
@@ -63,15 +38,76 @@ const ButtonContainer = styled.div`
 
 const MsgContainer = styled.div`
   flex: 1;
+
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
   font-weight: 200;
 `;
+const Description = styled(MsgContainer)`
+  color: #868e96;
+  font-size: 1rem;
+  display: block;
+`;
+
+const ModalOverlay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 200ms;
+  ${({ isOpen }) => {
+    if (isOpen) {
+      return `
+        visibility: visible;
+        opacity: 1;
+      `;
+    } else {
+      return `
+        visibility: hidden;
+        opacity: 0;
+        `;
+    }
+  }}
+
+  ${MsgContainer} {
+    ${({ message }) => {
+      if (message === "변경사항을 저장하시겠습니까?") {
+        return `
+        flex : 1;
+        align-items: flex-end;
+        padding-top: 0.5rem;
+        padding-bottom:0.4rem;
+      `;
+      }
+    }}
+  }
+
+  ${Description} {
+    ${({ message }) => {
+      if (message === "변경사항을 저장하시겠습니까?") {
+        return `
+        padding:0;
+
+        display : block;
+        flex : 1;
+      `;
+      } else {
+        return `
+        display : none`;
+      }
+    }}
+  }
+`;
 
 const AlertModal = ({
   message,
+  description,
   isOpen,
   type,
   handleClickConfirm,
@@ -83,13 +119,19 @@ const AlertModal = ({
   };
 
   return (
-    <ModalOverlay isOpen={isOpen} ref={setTarget} onMouseDown={onClickOverlay}>
+    <ModalOverlay
+      isOpen={isOpen}
+      ref={setTarget}
+      onMouseDown={onClickOverlay}
+      message={message}
+    >
       {type === "confirm" && <ConfirmModal message={message} />}
       {type === "click" && (
         <ClickModal
           message={message}
           handleClickConfirm={handleClickConfirm}
           handleModalCancel={handleModalCancel}
+          description={description}
         />
       )}
       {type === "noCancel" && (
@@ -110,10 +152,16 @@ const ConfirmModal = ({ message }) => {
   );
 };
 
-const ClickModal = ({ message, handleClickConfirm, handleModalCancel }) => {
+const ClickModal = ({
+  message,
+  description,
+  handleClickConfirm,
+  handleModalCancel,
+}) => {
   return (
     <ClickModalEl>
       <MsgContainer>{message}</MsgContainer>
+      <Description>{description}</Description>
       <ButtonContainer>
         <Button onClick={handleClickConfirm} style={{ color: "red" }}>
           확인

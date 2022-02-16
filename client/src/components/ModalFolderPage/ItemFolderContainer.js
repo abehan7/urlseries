@@ -13,7 +13,7 @@ const Image = styled.img`
 
 const ItemFolderContainer = ({ value }) => {
   const onClick = (value) => {
-    console.log("value from ItemFolderContainer", value);
+    window.open(value.url);
   };
 
   // setIsChecked(true);

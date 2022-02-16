@@ -8,6 +8,8 @@ import { actions } from "../../store/reducers/FolderItems";
 import { FolderContext } from "./FolderModalWindow";
 import Container from "./styled/Container.styled";
 import Icon from "./styled/Icon.styled";
+import Input from "./styled/Input.styled";
+import InputWrapper from "./styled/InputWrapper.styled";
 import Title from "./styled/Title.styled";
 
 const FolderTitle = styled(Title)`
@@ -16,6 +18,7 @@ const FolderTitle = styled(Title)`
   align-items: center;
   border-bottom: 1px solid #e5e5e5;
   padding-bottom: 0.5rem;
+  gap: 2rem;
 `;
 
 const FolderDisplayEl = styled(Container)`
@@ -99,10 +102,26 @@ const IconContainer = styled.div`
 
 const IconEl = styled(Icon)``;
 
+const InputWrapperEl = styled(InputWrapper)`
+  width: 50%;
+  transform: translateY(-10%);
+  visibility: ${(props) => (props.clickedSearch ? "visible" : "hidden")};
+  > input {
+    font-weight: 200;
+    height: ${(props) => (props.clickedSearch ? "30px" : "0")};
+    padding: ${(props) => (props.clickedSearch ? "0.2rem 1rem" : "0")};
+  }
+`;
+
 const FolderDisplay = ({ handleGetId }) => {
   const folders = useSelector((state) => state.folders.folders);
-  const { selectedFolder, setSelectedFolder, setIsFolderPage } =
-    useContext(FolderContext);
+  const {
+    selectedFolder,
+    setSelectedFolder,
+    setIsFolderPage,
+    keyword,
+    clickedSearch,
+  } = useContext(FolderContext);
 
   const [isSelected, setIsSelected] = useState(false);
 
@@ -128,6 +147,8 @@ const FolderDisplay = ({ handleGetId }) => {
     setSelectedFolder();
   };
 
+  const onChange = (e) => {};
+
   useEffect(() => {
     if (selectedFolder?._id === undefined) {
       setIsSelected(false);
@@ -150,6 +171,9 @@ const FolderDisplay = ({ handleGetId }) => {
             {/* 확인 */}
           </IconEl>
         </IconContainer>
+        <InputWrapperEl clickedSearch={true}>
+          <Input value={keyword} onChange={onChange} />
+        </InputWrapperEl>
       </FolderTitle>
       <ContentContainer>
         <FolderWrapper>

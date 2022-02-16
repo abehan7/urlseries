@@ -239,21 +239,44 @@ const EditorUrls = ({
     filterd.length !== 0 && handleRemoveItems(filterd);
   };
 
-  // #FIXME: 확인하기
-  const onClickConfirm = () => {
-    const fn = () => {
-      handleSetFolderItems();
-      setIsConfirmed(true);
+  const ShowNoticeAlert = () => {
+    setModalInfo({
+      message: "저장되었습니다 :)",
+      type: "confirm",
+      handleClickConfirm: () => {},
+      isOpen: true,
+    });
+
+    setTimeout(() => {
       setModalInfo({
         message: "",
         type: "",
         handleClickConfirm: () => {},
         isOpen: false,
       });
+    }, 1000);
+
+    // return (
+    //   <Alert
+    //     message="선택한 항목을 삭제하시겠습니까?"
+    //     description="삭제하면 복구할 수 없습니다."
+    //     type="warning"
+    //     showIcon
+    //   />
+    // );
+  };
+
+  // #FIXME: 확인하기
+  const onClickConfirm = () => {
+    const fn = () => {
+      handleSetFolderItems();
+      setIsConfirmed(true);
+      ShowNoticeAlert();
     };
 
     setModalInfo({
       message: "변경사항을 저장하시겠습니까?",
+      description: "변경하신 후에는 복구할 수 없습니다.",
       type: "click",
       handleClickConfirm: fn,
       isOpen: true,

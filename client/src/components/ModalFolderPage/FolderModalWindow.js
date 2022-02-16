@@ -75,6 +75,7 @@ const FolderModalWindow = () => {
   // 모달창에서 사용할 useState
   const [modalInfo, setModalInfo] = useState({
     message: "",
+    description: "",
     type: "",
     handleClickConfirm: () => {},
     isOpen: false,
@@ -82,7 +83,6 @@ const FolderModalWindow = () => {
 
   // url 선택하기 클릭한 경우 전체선택이랑 확인하기 버튼 나오게하기
   const [isUrlEditing, setIsUrlEditing] = useState(false);
-  const [isConfirmPopup, setIsConfirmPopup] = useState(false);
 
   const { realTotalUrls } = useContext(MainStates);
 
@@ -198,8 +198,6 @@ const FolderModalWindow = () => {
     isUrlEditing,
     setIsUrlEditing,
     handleClickAllExcept,
-    isConfirmPopup,
-    setIsConfirmPopup,
     CheckChanges,
     handleRemoveItems,
     isSearching,
@@ -223,6 +221,7 @@ const FolderModalWindow = () => {
           )}
           <AlertModal
             message={modalInfo.message}
+            description={modalInfo.description}
             isOpen={modalInfo.isOpen}
             type={modalInfo.type}
             handleClickConfirm={modalInfo.handleClickConfirm}
