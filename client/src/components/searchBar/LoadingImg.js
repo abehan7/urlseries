@@ -9,7 +9,7 @@ const LoadingImgEl = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
 `;
 const Image = styled.img`
   width: 80px;

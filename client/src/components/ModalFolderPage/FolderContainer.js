@@ -7,6 +7,7 @@ import { KeywordNormalize, SearchNotByDB } from "../../Hooks/SearchHook";
 import { MainStates } from "../../routers/MainPage";
 import { SET_IS_FOLDER_CONTENTS } from "../../store/reducers/FolderConditions";
 import { SET_ITEMS } from "../../store/reducers/FolderItems";
+import LoadingImg from "../SearchBar/LoadingImg";
 import { FolderContext } from "./FolderModalWindow";
 import ItemFolderContainer from "./ItemFolderContainer";
 import ItemUrlContainer from "./ItemUrlContainer";
@@ -97,6 +98,10 @@ const FolderContainer = ({ handleGetId }) => {
     setIsConfirmPopup,
     setModalInfo,
     CheckChanges,
+    setIsSearching,
+    isSearching,
+    setIsOnlyFolderContents,
+    isOnlyFolderContents,
   } = useContext(FolderContext);
 
   const dispatch = useDispatch();
@@ -167,6 +172,8 @@ const FolderContainer = ({ handleGetId }) => {
   const onChange = (e) => {
     setFilterdItems([]);
     setKeyword(e.target.value);
+    setIsSearching(true);
+    console.log("isSearcing from onChange", isSearching);
   };
   // 리덕스
   const handleSetCondition = (condition) => {
@@ -185,10 +192,14 @@ const FolderContainer = ({ handleGetId }) => {
     const FindTotalUrlsFn = () => {
       const filterd = SearchNotByDB(processed, realTotalUrls);
       setFilterdItems(filterd);
+      setIsSearching(false);
+      console.log("isSearcing from NotByDB", isSearching);
     };
     const FindFolderContentsFn = () => {
       const filterd = SearchNotByDB(processed, selectedFolder.folderContents);
       setFilterdItems(filterd);
+      setIsSearching(false);
+      console.log("isSearcing from NotByDB", isSearching);
     };
 
     isFolderContents && keyword.length > 0 && doDebounce(FindFolderContentsFn);
@@ -217,6 +228,7 @@ const FolderContainer = ({ handleGetId }) => {
   useEffect(() => {
     !isFolderContents && setIsConfirmPopup(true);
     isFolderContents && setIsConfirmPopup(false);
+    isOnlyFolderContents && setIsOnlyFolderContents(false);
   }, [isFolderContents]);
 
   return (
@@ -257,6 +269,7 @@ const FolderContainer = ({ handleGetId }) => {
               realTotalUrls={realTotalUrls}
               handleClickUrl={handleClickUrl}
               handleUnClickUrl={handleUnClickUrl}
+              FolderContents={selectedFolder.folderContents}
             />
           )}
         </ContentEl>
@@ -269,7 +282,8 @@ const FolderItems = ({ FolderContents }) => {
   const [contentsNum, setContentsNum] = useState(20);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const { keyword, filterdItems } = useContext(FolderContext);
+  const { keyword, filterdItems, isSearching, isOnlyFolderContents } =
+    useContext(FolderContext);
   const folderItems = useSelector((state) => state.folderItems);
 
   // 무한스크롤
@@ -319,6 +333,7 @@ const FolderItems = ({ FolderContents }) => {
             />
           );
         })}
+
       {keyword.length > 0 &&
         filterdItems.map((url, index) => {
           return (
@@ -329,15 +344,29 @@ const FolderItems = ({ FolderContents }) => {
             />
           );
         })}
+
+      {keyword.length > 0 && filterdItems.length === 0 && !isSearching && (
+        <SearchMessage message="검색결과가 존재하지 않습니다..." />
+      )}
+
+      {keyword.length > 0 && filterdItems.length === 0 && isSearching && (
+        <LoadingImg />
+      )}
     </>
   );
 };
 
-const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
+const UrlItems = ({
+  realTotalUrls,
+  handleClickUrl,
+  handleUnClickUrl,
+  FolderContents,
+}) => {
   const [contentsNum, setContentsNum] = useState(20);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const { keyword, filterdItems } = useContext(FolderContext);
+  const { keyword, filterdItems, isSearching, isOnlyFolderContents } =
+    useContext(FolderContext);
   const folderItems = useSelector((state) => state.folderItems);
 
   // 무한스크롤
@@ -369,12 +398,13 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
   }, [target]);
 
   useEffect(() => {
-    setContentsNum(20);
+    contentsNum !== 20 && setContentsNum(20);
   }, [filterdItems]);
 
   return (
     <>
       {keyword.length === 0 &&
+        !isOnlyFolderContents &&
         realTotalUrls.slice(0, contentsNum).map((url, index) => {
           if (index === contentsNum - 1) {
             return (
@@ -383,6 +413,20 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
               </TargetEl>
             );
           }
+          return (
+            <ItemUrlContainer
+              key={url._id}
+              value={url}
+              handleClickUrl={handleClickUrl}
+              handleUnClickUrl={handleUnClickUrl}
+              items={folderItems.items}
+            />
+          );
+        })}
+
+      {keyword.length === 0 &&
+        isOnlyFolderContents &&
+        FolderContents.map((url, index) => {
           return (
             <ItemUrlContainer
               key={url._id}
@@ -406,8 +450,29 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
             />
           );
         })}
+
+      {keyword.length > 0 && filterdItems.length === 0 && !isSearching && (
+        <SearchMessage message="검색결과가 존재하지 않습니다..." />
+      )}
+
+      {keyword.length > 0 && filterdItems.length === 0 && isSearching && (
+        <LoadingImg />
+      )}
     </>
   );
+};
+
+const SearchMessageEl = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+`;
+
+const SearchMessage = ({ message }) => {
+  return <SearchMessageEl>{message}</SearchMessageEl>;
 };
 
 export default FolderContainer;

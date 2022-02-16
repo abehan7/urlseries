@@ -18,6 +18,8 @@ const UrlSearchedIcon = styled(Icon)``;
 
 const UrlConfirmIcon = styled(Icon)``;
 
+const OnlyFolderContentsIcon = styled(UrlConfirmIcon)``;
+
 const IconWrapper = styled.div`
   padding-top: 1rem;
   display: flex;
@@ -39,6 +41,18 @@ const EditorContainerEl = styled.div`
   }
   ${UrlConfirmIcon} {
     display: ${({ isFolderContents }) => (!isFolderContents ? "flex" : "none")};
+  }
+
+  ${OnlyFolderContentsIcon} {
+    ${({ isOnlyFolderContents }) => {
+      if (isOnlyFolderContents) {
+        return `
+      background: orange;
+      color: #fff;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      `;
+      }
+    }};
   }
 `;
 
@@ -70,6 +84,8 @@ const EditorContainer = () => {
     handleClickAllExcept,
     CheckChanges,
     handleRemoveItems,
+    setIsOnlyFolderContents,
+    isOnlyFolderContents,
   } = useContext(FolderContext);
 
   const { isFolderContents } = useSelector((state) => state.folderConditions);
@@ -78,6 +94,7 @@ const EditorContainer = () => {
     <EditorContainerEl
       isUrlEditing={isUrlEditing}
       isFolderContents={isFolderContents}
+      isOnlyFolderContents={isOnlyFolderContents}
     >
       <IconWrapper>
         {isFolderPage ? (
@@ -96,6 +113,7 @@ const EditorContainer = () => {
             items={items}
             CheckChanges={CheckChanges}
             handleRemoveItems={handleRemoveItems}
+            setIsOnlyFolderContents={setIsOnlyFolderContents}
           />
         )}
       </IconWrapper>
@@ -147,6 +165,7 @@ const EditorUrls = ({
   items,
   CheckChanges,
   handleRemoveItems,
+  setIsOnlyFolderContents,
 }) => {
   const { isFolderContents } = useSelector((state) => state.folderConditions);
 
@@ -241,6 +260,10 @@ const EditorUrls = ({
     });
   };
 
+  const onClickFolderContents = () => {
+    setIsOnlyFolderContents((prev) => !prev);
+  };
+
   return (
     <>
       <Icon onClick={onClickBack}>
@@ -262,10 +285,10 @@ const EditorUrls = ({
         {/* <url> 저장 확인하기 */}
       </UrlConfirmIcon>
 
-      <UrlConfirmIcon>
+      <OnlyFolderContentsIcon onClick={onClickFolderContents}>
         <BsFolderCheck />
         {/* 체크된 <url>만 보여주기 */}
-      </UrlConfirmIcon>
+      </OnlyFolderContentsIcon>
 
       {/* url선택하기 클릭하면 여기 나오게 하기 */}
       <UrlSearchedIcon onClick={onClickCheckAll}>

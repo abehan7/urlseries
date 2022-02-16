@@ -68,6 +68,10 @@ const FolderModalWindow = () => {
   const [filterdItems, setFilterdItems] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  // 폴더 안에 있는url만 보여주는 기능
+  const [isOnlyFolderContents, setIsOnlyFolderContents] = useState(false);
+
   // 모달창에서 사용할 useState
   const [modalInfo, setModalInfo] = useState({
     message: "",
@@ -162,6 +166,18 @@ const FolderModalWindow = () => {
     PopupEnable();
   }, []);
 
+  // 검색버튼 클릭하면 폴더버튼 닫히고 검색창으로 넘어가게 하기
+  useEffect(() => {
+    setKeyword("");
+    clickedSearch && setIsOnlyFolderContents(false);
+  }, [clickedSearch]);
+
+  // 폴더 버튼 누르면 검색창 닫히고 폴더url들로 넘어가게 하기
+  useEffect(() => {
+    setKeyword("");
+    isOnlyFolderContents && setClickedSearch(false);
+  }, [isOnlyFolderContents]);
+
   const initialState = {
     isFolderPage,
     setIsFolderPage,
@@ -186,6 +202,10 @@ const FolderModalWindow = () => {
     setIsConfirmPopup,
     CheckChanges,
     handleRemoveItems,
+    isSearching,
+    setIsSearching,
+    isOnlyFolderContents,
+    setIsOnlyFolderContents,
   };
 
   return (
