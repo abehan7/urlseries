@@ -11,7 +11,11 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import FolderDisplay from "./FolderDisplay";
 import { PopupEnable } from "../../Hooks/stopScroll";
 import { useDispatch, useSelector } from "react-redux";
-import { addItems, setItems } from "../../store/reducers/FolderItems";
+import {
+  ADD_ITEMS,
+  REMOVE_ITEMS,
+  SET_ITEMS,
+} from "../../store/reducers/FolderItems";
 import { SetFolderContents } from "../../store/reducers/Folders";
 import AlertModal from "./AlertModal";
 
@@ -74,6 +78,7 @@ const FolderModalWindow = () => {
 
   // url 선택하기 클릭한 경우 전체선택이랑 확인하기 버튼 나오게하기
   const [isUrlEditing, setIsUrlEditing] = useState(false);
+  const [isConfirmPopup, setIsConfirmPopup] = useState(false);
 
   const { realTotalUrls } = useContext(MainStates);
 
@@ -82,7 +87,7 @@ const FolderModalWindow = () => {
   const dispatch = useDispatch();
 
   const handleFillFolderItemsInit = (folderItems) => {
-    dispatch(setItems(folderItems));
+    dispatch(SET_ITEMS(folderItems));
   };
 
   const handleGetId = (urls) => {
@@ -92,8 +97,12 @@ const FolderModalWindow = () => {
     handleFillFolderItemsInit(processed);
   };
 
-  const handleSetItems = (items) => {
-    dispatch(addItems(items));
+  const handleAddItems = (items) => {
+    dispatch(ADD_ITEMS(items));
+  };
+
+  const handleRemoveItems = (items) => {
+    dispatch(REMOVE_ITEMS(items));
   };
 
   const getUrlFullAttr = (urlIdList) => {
@@ -127,6 +136,28 @@ const FolderModalWindow = () => {
     });
   };
 
+  // 사용자가 폴더 url변경 했는지 안했는지 알려주는 기능
+  const CheckChanges = () => {
+    const folderContentsOriginal = selectedFolder.folderContents.map((url) => {
+      return url._id;
+    });
+    const sortedItems = [...items];
+    // 같은 규칙으로 정렬해서 비교해야함
+
+    sortedItems.sort();
+    folderContentsOriginal.sort();
+
+    const isSame =
+      sortedItems.length === folderContentsOriginal.length &&
+      sortedItems.every((element, index) => {
+        return element === folderContentsOriginal[index];
+      });
+
+    console.log("isSame from FolderModalWindow: ", isSame);
+
+    return isSame;
+  };
+
   useEffect(() => {
     PopupEnable();
   }, []);
@@ -142,7 +173,7 @@ const FolderModalWindow = () => {
     setFilterdItems,
     keyword,
     setKeyword,
-    handleSetItems,
+    handleAddItems,
     handleSetFolderItems,
     isConfirmed,
     setIsConfirmed,
@@ -151,6 +182,10 @@ const FolderModalWindow = () => {
     isUrlEditing,
     setIsUrlEditing,
     handleClickAllExcept,
+    isConfirmPopup,
+    setIsConfirmPopup,
+    CheckChanges,
+    handleRemoveItems,
   };
 
   return (

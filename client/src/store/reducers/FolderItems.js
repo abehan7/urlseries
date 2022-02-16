@@ -11,18 +11,24 @@ export const folderItemsSlice = createSlice({
   name: "folderItems",
   initialState: folderItems,
   reducers: {
-    setItems: (state, action) => {
+    SET_ITEMS: (state, action) => {
       state.items = action.payload;
     },
-    addItems: (state, action) => {
+    ADD_ITEMS: (state, action) => {
       state.items = [...state.items, ...action.payload];
     },
-    setFilterdItems: (state, action) => {
+    REMOVE_ITEMS: (state, action) => {
+      state.items = state.items.filter((item) => {
+        return !action.payload.some((id) => id === item);
+      });
+    },
+    SET_FILTERED_ITEMS: (state, action) => {
       state.filterdItems = action.payload;
     },
   },
 });
 
-export const { setItems, addItems, setFilterdItems } = folderItemsSlice.actions;
+export const { SET_ITEMS, ADD_ITEMS, SET_FILTERED_ITEMS, REMOVE_ITEMS } =
+  folderItemsSlice.actions;
 
 export default folderItemsSlice.reducer;

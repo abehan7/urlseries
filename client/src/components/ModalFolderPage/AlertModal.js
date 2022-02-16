@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
 const ModalOverlay = styled.div`
@@ -77,8 +77,13 @@ const AlertModal = ({
   handleClickConfirm,
   handleModalCancel,
 }) => {
+  const [target, setTarget] = useState(null);
+  const onClickOverlay = (e) => {
+    e.target === target && handleModalCancel();
+  };
+
   return (
-    <ModalOverlay isOpen={isOpen}>
+    <ModalOverlay isOpen={isOpen} ref={setTarget} onMouseDown={onClickOverlay}>
       {type === "confirm" && <ConfirmModal message={message} />}
       {type === "click" && (
         <ClickModal

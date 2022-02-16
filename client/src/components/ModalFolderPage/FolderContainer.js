@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { KeywordNormalize, SearchNotByDB } from "../../Hooks/SearchHook";
 import { MainStates } from "../../routers/MainPage";
-import { setItems } from "../../store/reducers/FolderItems";
+import { SET_IS_FOLDER_CONTENTS } from "../../store/reducers/FolderConditions";
+import { SET_ITEMS } from "../../store/reducers/FolderItems";
 import { FolderContext } from "./FolderModalWindow";
 import ItemFolderContainer from "./ItemFolderContainer";
 import ItemUrlContainer from "./ItemUrlContainer";
@@ -87,14 +88,15 @@ const FolderContainer = ({ handleGetId }) => {
     clickedSearch,
     selectedFolder,
     setFilterdItems,
-    filterdItems,
     keyword,
     setKeyword,
     setClickedSearch,
     isConfirmed,
     setIsConfirmed,
-    isUrlEditing,
     setIsUrlEditing,
+    setIsConfirmPopup,
+    setModalInfo,
+    CheckChanges,
   } = useContext(FolderContext);
 
   const dispatch = useDispatch();
@@ -103,13 +105,13 @@ const FolderContainer = ({ handleGetId }) => {
   // url클릭
   const handleClickUrl = (url) => {
     const processed = [...items, url._id];
-    dispatch(setItems(processed));
+    dispatch(SET_ITEMS(processed));
   };
 
   // url클릭 해제
   const handleUnClickUrl = (url) => {
     const processed = items.filter((item) => item !== url._id);
-    dispatch(setItems(processed));
+    dispatch(SET_ITEMS(processed));
   };
 
   // 스크롤 초기화
@@ -132,9 +134,33 @@ const FolderContainer = ({ handleGetId }) => {
 
   // 우측 선택하기 버튼 클릭시
   const onClickSubTitle = () => {
-    setIsFolderContents(!isFolderContents);
-    handleGetId(selectedFolder.folderContents);
-    getReset();
+    const isContentsSame = CheckChanges();
+    const fn = () => {
+      setIsFolderContents(!isFolderContents);
+      handleGetId(selectedFolder.folderContents);
+      getReset();
+
+      !isFolderContents &&
+        !isContentsSame &&
+        setModalInfo({
+          message: "",
+          type: "",
+          handleClickConfirm: () => {},
+          isOpen: false,
+        });
+    };
+    isFolderContents && fn();
+
+    !isFolderContents && isContentsSame && fn();
+
+    !isFolderContents &&
+      !isContentsSame &&
+      setModalInfo({
+        message: "변경을 취소하시겠습니까?",
+        type: "click",
+        handleClickConfirm: fn,
+        isOpen: true,
+      });
   };
 
   // 인풋 키워드
@@ -142,6 +168,14 @@ const FolderContainer = ({ handleGetId }) => {
     setFilterdItems([]);
     setKeyword(e.target.value);
   };
+  // 리덕스
+  const handleSetCondition = (condition) => {
+    dispatch(SET_IS_FOLDER_CONTENTS(condition));
+  };
+
+  useEffect(() => {
+    handleSetCondition(isFolderContents);
+  }, [isFolderContents]);
 
   // 검색
   useEffect(() => {
@@ -174,12 +208,16 @@ const FolderContainer = ({ handleGetId }) => {
 
   // url수정 페이지로 이동하는 경우
   // 여기는 검색창 아래부분에 아이콘 나오게 하는 기능들
-
   useEffect(() => {
     !clickedSearch && setIsUrlEditing(false);
     isFolderContents && setIsUrlEditing(false);
     !isFolderContents && clickedSearch && setIsUrlEditing(true);
   }, [isFolderContents, clickedSearch]);
+
+  useEffect(() => {
+    !isFolderContents && setIsConfirmPopup(true);
+    isFolderContents && setIsConfirmPopup(false);
+  }, [isFolderContents]);
 
   return (
     <FolderContainerEl>
@@ -329,6 +367,10 @@ const UrlItems = ({ realTotalUrls, handleClickUrl, handleUnClickUrl }) => {
     }
     return () => observer && observer.disconnect();
   }, [target]);
+
+  useEffect(() => {
+    setContentsNum(20);
+  }, [filterdItems]);
 
   return (
     <>

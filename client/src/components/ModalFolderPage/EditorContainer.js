@@ -7,7 +7,12 @@ import { FiEdit2 } from "react-icons/fi";
 import { TiDocumentDelete } from "react-icons/ti";
 import { IoSearchOutline } from "react-icons/io5";
 import { FolderContext } from "./FolderModalWindow";
-import { MdChecklist } from "react-icons/md";
+import { BsFolderCheck } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import {
+  RiCheckboxMultipleBlankLine,
+  RiCheckboxMultipleFill,
+} from "react-icons/ri";
 
 const UrlSearchedIcon = styled(Icon)``;
 
@@ -32,6 +37,9 @@ const EditorContainerEl = styled.div`
   ${UrlSearchedIcon} {
     display: ${({ isUrlEditing }) => (isUrlEditing ? "flex" : "none")};
   }
+  ${UrlConfirmIcon} {
+    display: ${({ isFolderContents }) => (!isFolderContents ? "flex" : "none")};
+  }
 `;
 
 const SearchIcon = styled(Icon)`
@@ -53,17 +61,24 @@ const EditorContainer = () => {
     setClickedSearch,
     clickedSearch,
     filterdItems,
-    handleSetItems,
+    handleAddItems,
     handleSetFolderItems,
     setIsConfirmed,
     setModalInfo,
     isUrlEditing,
     setIsUrlEditing,
     handleClickAllExcept,
+    CheckChanges,
+    handleRemoveItems,
   } = useContext(FolderContext);
 
+  const { isFolderContents } = useSelector((state) => state.folderConditions);
+  const { items } = useSelector((state) => state.folderItems);
   return (
-    <EditorContainerEl isUrlEditing={isUrlEditing}>
+    <EditorContainerEl
+      isUrlEditing={isUrlEditing}
+      isFolderContents={isFolderContents}
+    >
       <IconWrapper>
         {isFolderPage ? (
           <EditorFolder />
@@ -73,13 +88,14 @@ const EditorContainer = () => {
             setClickedSearch={setClickedSearch}
             clickedSearch={clickedSearch}
             filterdItems={filterdItems}
-            handleSetItems={handleSetItems}
+            handleAddItems={handleAddItems}
             handleSetFolderItems={handleSetFolderItems}
             setIsConfirmed={setIsConfirmed}
             setModalInfo={setModalInfo}
-            isUrlEditing={isUrlEditing}
-            setIsUrlEditing={setIsUrlEditing}
             handleClickAllExcept={handleClickAllExcept}
+            items={items}
+            CheckChanges={CheckChanges}
+            handleRemoveItems={handleRemoveItems}
           />
         )}
       </IconWrapper>
@@ -123,34 +139,53 @@ const EditorUrls = ({
   setClickedSearch,
   clickedSearch,
   filterdItems,
-  handleSetItems,
+  handleAddItems,
   handleSetFolderItems,
   setIsConfirmed,
   setModalInfo,
-  isUrlEditing,
-  setIsUrlEditing,
   handleClickAllExcept,
+  items,
+  CheckChanges,
+  handleRemoveItems,
 }) => {
+  const { isFolderContents } = useSelector((state) => state.folderConditions);
+
   // #FIXME: 뒤로가기
+  // isFolderContents일때는 모달 안나오게 하고싶어
   const onClickBack = () => {
+    // console.log("isFolderContents from back", isFolderContents);
+    // console.log("CheckChanges from back");
+    // 사용자가 뭐 하나라도 클릭안해서 item이 안바뀐경우
+    const isContentsSame = CheckChanges();
     const fn = () => {
       setIsFolderPage(true);
       setClickedSearch(false);
 
-      setModalInfo({
-        message: "",
-        type: "",
-        handleClickConfirm: () => {},
-        isOpen: false,
-      });
+      // url클릭하는 페이지인 경우
+      // 뒤로가기 버튼을 누르면 모달이 나오는 것을 방지하기 위해
+      !isFolderContents &&
+        setModalInfo({
+          message: "",
+          type: "",
+          handleClickConfirm: () => {},
+          isOpen: false,
+        });
     };
 
-    setModalInfo({
-      message: "변경사항을 취소하시겠습니까?",
-      type: "click",
-      handleClickConfirm: fn,
-      isOpen: true,
-    });
+    // 폴더컨텐츠인 경우
+    isFolderContents && fn();
+    // 폴더 컨텐츠는 아닌데 모달 안나오게 하고 싶은 경우
+    !isFolderContents && isContentsSame && fn();
+    // url클릭하는 페이지인 경우
+    // 뒤로가기 버튼을 누르면 모달이 나오는 것을 방지하기 위해
+    !isFolderContents &&
+      !isContentsSame &&
+      setModalInfo({
+        message: "변경을 취소하시겠습니까?",
+        type: "click",
+        handleClickConfirm: fn,
+        isOpen: true,
+      });
   };
 
   // #FIXME: 검색하기
@@ -162,11 +197,27 @@ const EditorUrls = ({
     const filterd = filterdItems.map((item) => {
       return item._id;
     });
+    // 여기서 한 번 더 확인해야돼
+    // items안에 있는건지 없는건지
+    // 그래서 없으면 넣기
+
+    const getOffDuplicated = filterd.filter((rowItem) => {
+      return !items.includes(rowItem);
+    });
+
+    console.log("getOffDuplicated", getOffDuplicated);
     filterd.length === 0 && handleClickAllExcept();
 
-    console.log(filterd);
-    filterd.length !== 0 && handleSetItems(filterd);
+    filterd.length !== 0 && handleAddItems(getOffDuplicated);
     // 이제 이거를 item 리덕스에 넣기
+  };
+
+  const onClickCheckAllOff = () => {
+    const filterd = filterdItems.map((item) => {
+      return item._id;
+    });
+    filterd.length === 0 && handleClickAllExcept();
+    filterd.length !== 0 && handleRemoveItems(filterd);
   };
 
   // #FIXME: 확인하기
@@ -206,15 +257,24 @@ const EditorUrls = ({
       {/* 폴더 편집 */}
       {/* </Icon> */}
 
-      <Icon onClick={onClickConfirm}>
+      <UrlConfirmIcon onClick={onClickConfirm}>
         <AiOutlineCheck />
         {/* <url> 저장 확인하기 */}
-      </Icon>
+      </UrlConfirmIcon>
+
+      <UrlConfirmIcon>
+        <BsFolderCheck />
+        {/* 체크된 <url>만 보여주기 */}
+      </UrlConfirmIcon>
 
       {/* url선택하기 클릭하면 여기 나오게 하기 */}
       <UrlSearchedIcon onClick={onClickCheckAll}>
-        <MdChecklist />
+        <RiCheckboxMultipleFill />
         {/* <url> 전체선택 */}
+      </UrlSearchedIcon>
+      <UrlSearchedIcon onClick={onClickCheckAllOff}>
+        <RiCheckboxMultipleBlankLine />
+        {/* <url> 전체해제 */}
       </UrlSearchedIcon>
     </>
   );
