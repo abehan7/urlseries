@@ -4,11 +4,11 @@ import { FcFolder, FcOpenedFolder } from "react-icons/fc";
 import { TiBackspaceOutline } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { actions } from "../../store/reducers/FolderItems";
-import { FolderContext } from "./FolderModalWindow";
-import Container from "./styled/Container.styled";
-import Icon from "./styled/Icon.styled";
-import Title from "./styled/Title.styled";
+import { actions } from "../../../store/reducers/FolderItems";
+import { FolderContext } from "../FolderModalWindow";
+import Container from "../styled/Container.styled";
+import Icon from "../styled/Icon.styled";
+import Title from "../styled/Title.styled";
 
 const FolderTitle = styled(Title)`
   position: relative;
@@ -151,6 +151,7 @@ const FolderDisplay = ({ handleGetId }) => {
           </IconEl>
         </IconContainer>
       </FolderTitle>
+
       <ContentContainer>
         <FolderWrapper>
           {folders.map((folder) => {

@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import Icon from "./styled/Icon.styled";
+import Icon from "../styled/Icon.styled";
 import { IoIosAdd, IoIosArrowBack } from "react-icons/io";
 import { AiOutlineCheck, AiOutlineEdit, AiOutlineHeart } from "react-icons/ai";
 import { FiEdit2 } from "react-icons/fi";
 import { TiDocumentDelete } from "react-icons/ti";
 import { IoSearchOutline } from "react-icons/io5";
-import { FolderContext } from "./FolderModalWindow";
+import { FolderContext } from "../FolderModalWindow";
 import { BsCheck2All, BsCheckAll } from "react-icons/bs";
 import { MdChecklist } from "react-icons/md";
 
@@ -33,13 +33,18 @@ const EditorContainer = () => {
     setClickedSearch,
     filterdItems,
     handleSetItems,
+    handleAddFolder,
+    handleDeleteFolder,
   } = useContext(FolderContext);
 
   return (
     <EditorContainerEl>
       <IconWrapper>
         {isFolderPage ? (
-          <EditorFolder />
+          <EditorFolder
+            handleAddFolder={handleAddFolder}
+            handleDeleteFolder={handleDeleteFolder}
+          />
         ) : (
           <EditorUrls
             setIsFolderPage={setIsFolderPage}
@@ -53,10 +58,18 @@ const EditorContainer = () => {
   );
 };
 
-const EditorFolder = () => {
+const EditorFolder = ({ handleAddFolder, handleDeleteFolder }) => {
+  const folderAdd = () => {
+    handleAddFolder();
+  };
+
+  const deleteFolder = () => {
+    handleDeleteFolder();
+  };
+
   return (
     <>
-      <Icon>
+      <Icon onClick={folderAdd}>
         <IoIosAdd />
         {/* <폴더> 추가 */}
       </Icon>
@@ -76,7 +89,7 @@ const EditorFolder = () => {
         {/* <폴더> 좋아요  */}
       </Icon>
 
-      <Icon>
+      <Icon onClick={deleteFolder}>
         <TiDocumentDelete />
         {/* <폴더> 삭제 */}
       </Icon>

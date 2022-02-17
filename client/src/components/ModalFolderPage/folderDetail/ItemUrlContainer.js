@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import styled from "styled-components";
-import { FolderContext } from "./FolderModalWindow";
+import { FolderContext } from "../FolderModalWindow";
 
 export const ItemContainerEl = styled.div`
   display: flex;

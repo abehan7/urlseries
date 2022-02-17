@@ -3,18 +3,18 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 import { TiBackspaceOutline } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { KeywordNormalize, SearchNotByDB } from "../../Hooks/SearchHook";
-import { MainStates } from "../../routers/MainPage";
-import { setItems } from "../../store/reducers/FolderItems";
-import { FolderContext } from "./FolderModalWindow";
+import { KeywordNormalize, SearchNotByDB } from "../../../Hooks/SearchHook";
+import { MainStates } from "../../../routers/MainPage";
+import { setItems } from "../../../store/reducers/FolderItems";
+import { FolderContext } from "../FolderModalWindow";
 import ItemFolderContainer from "./ItemFolderContainer";
 import ItemUrlContainer from "./ItemUrlContainer";
-import Container from "./styled/Container.styled";
-import Content from "./styled/Content.styled";
-import ContentsWrapper from "./styled/ContentsWrapper.styled";
-import Input from "./styled/Input.styled";
-import InputWrapper from "./styled/InputWrapper.styled";
-import Title from "./styled/Title.styled";
+import Container from "../styled/Container.styled";
+import Content from "../styled/Content.styled";
+import ContentsWrapper from "../styled/ContentsWrapper.styled";
+import Input from "../styled/Input.styled";
+import InputWrapper from "../styled/InputWrapper.styled";
+import Title from "../styled/Title.styled";
 
 const FolderContainerEl = styled(Container)``;
 const InputWrapperEl = styled(InputWrapper)`

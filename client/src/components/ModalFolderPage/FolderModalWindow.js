@@ -4,15 +4,19 @@ import styled from "styled-components";
 import { MainStates } from "../../routers/MainPage";
 
 import ModalOverlay from "../styled/ModalOverlay.styled";
-import EditorContainer from "./EditorContainer";
-import FolderContainer from "./FolderContainer";
+import EditorContainer from "./sideBar/EditorContainer";
+import FolderContainer from "./folderDetail/FolderContainer";
 
 import { IoArrowBackOutline } from "react-icons/io5";
-import FolderDisplay from "./FolderDisplay";
+import FolderDisplay from "./folderList/FolderDisplay";
 import { PopupEnable } from "../../Hooks/stopScroll";
 import { useDispatch, useSelector } from "react-redux";
 import { setItems } from "../../store/reducers/FolderItems";
-import { SetFolderContents } from "../../store/reducers/Folders";
+import {
+  SET_FOLDER_CONTENTS,
+  ADD_FOLDER,
+  REMOVE_FOLDER,
+} from "../../store/reducers/Folders";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
@@ -105,7 +109,21 @@ const FolderModalWindow = () => {
 
   const handleSetFolderItems = (folderId, urlIdList) => {
     const urls = getUrlFullAttr(urlIdList);
-    dispatch(SetFolderContents({ folderId, urls }));
+    dispatch(SET_FOLDER_CONTENTS({ folderId, urls }));
+  };
+
+  const handleAddFolder = () => {
+    const folder = {
+      _id: "123123####gjgjg",
+      folderName: "folderName1231231",
+      folderContents: [],
+    };
+    dispatch(ADD_FOLDER(folder));
+  };
+
+  const handleDeleteFolder = () => {
+    const folder = selectedFolder._id;
+    dispatch(REMOVE_FOLDER(folder));
   };
 
   useEffect(() => {
@@ -113,8 +131,8 @@ const FolderModalWindow = () => {
   }, []);
 
   useEffect(() => {
-    // console.log(folderContentsOnlyId);
-  }, []);
+    console.log(selectedFolder);
+  }, [selectedFolder]);
 
   const initialState = {
     isFolderPage,
@@ -129,6 +147,8 @@ const FolderModalWindow = () => {
     setKeyword,
     handleSetItems,
     handleSetFolderItems,
+    handleAddFolder,
+    handleDeleteFolder,
   };
 
   return (
