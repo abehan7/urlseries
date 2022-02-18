@@ -93,11 +93,6 @@ const EditorContainer = () => {
   const { isFolderContents } = useSelector((state) => state.folderConditions);
   const { items } = useSelector((state) => state.folderItems);
 
-  // #FIXME: 검색하기
-  const onClickSearch = () => {
-    setClickedSearch((prev) => !prev);
-  };
-
   return (
     <EditorContainerEl
       isUrlEditing={isUrlEditing}
@@ -138,12 +133,17 @@ const EditorFolder = ({
   clickedSearch,
   handleClickDisplaySearchIcon,
 }) => {
+  const { handleClickEditFolder } = useContext(FolderContext);
   const onClickAddFolder = () => {
     handleClickAddFolder();
   };
 
   const onClickSearchIcon = () => {
     handleClickDisplaySearchIcon();
+  };
+
+  const onClickEditFolder = () => {
+    handleClickEditFolder();
   };
 
   return (
@@ -158,7 +158,7 @@ const EditorFolder = ({
         {/* <url>  검색 */}
       </SearchIcon>
 
-      <Icon>
+      <Icon onClick={onClickEditFolder}>
         <FiEdit2 />
         {/* 폴더 편집 */}
       </Icon>
@@ -190,7 +190,6 @@ const EditorUrls = ({
   CheckChanges,
   handleRemoveItems,
   setIsOnlyFolderContents,
-  onClickSearch,
 }) => {
   const { isFolderContents } = useSelector((state) => state.folderConditions);
 
@@ -230,6 +229,11 @@ const EditorUrls = ({
         handleClickConfirm: fn,
         isOpen: true,
       });
+  };
+
+  // #FIXME: 검색하기
+  const onClickSearch = () => {
+    setClickedSearch((prev) => !prev);
   };
 
   const onClickCheckAll = () => {

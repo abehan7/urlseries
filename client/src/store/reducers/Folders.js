@@ -223,6 +223,6 @@ export const folderSlice = createSlice({
   },
 });
 
-export const { SET_FOLDER_CONTENTS } = folderSlice.actions;
+export const { SET_FOLDER_CONTENTS, ADD_FOLDER } = folderSlice.actions;
 
 export default folderSlice.reducer;

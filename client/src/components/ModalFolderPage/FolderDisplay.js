@@ -75,6 +75,8 @@ const FolderEl = styled.div`
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+    max-width: 80px;
+    overflow-wrap: break-word;
   }
   :hover {
     background: #ffefd5;
@@ -125,7 +127,7 @@ const FolderDisplay = ({ handleGetId }) => {
     setIsFolderPage,
     setKeyword,
     keyword,
-    clickedDisplaySearch,
+    clickedSearch,
   } = useContext(FolderContext);
 
   const [isSelected, setIsSelected] = useState(false);
@@ -167,7 +169,7 @@ const FolderDisplay = ({ handleGetId }) => {
   return (
     <FolderDisplayEl>
       <FolderHeader>
-        {!clickedDisplaySearch && <FolderTitle>전체폴더</FolderTitle>}
+        {!clickedSearch && <FolderTitle>전체폴더</FolderTitle>}
         <IconContainer isSelected={isSelected}>
           <IconEl onClick={onClickCancel}>
             <TiBackspaceOutline />
@@ -178,8 +180,8 @@ const FolderDisplay = ({ handleGetId }) => {
             {/* 확인 */}
           </IconEl>
         </IconContainer>
-        {clickedDisplaySearch && (
-          <InputWrapperEl clickedDisplaySearch={true}>
+        {clickedSearch && (
+          <InputWrapperEl>
             <Input value={keyword} onChange={onChange} placeholder="search" />
           </InputWrapperEl>
         )}

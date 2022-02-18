@@ -16,7 +16,7 @@ import {
   REMOVE_ITEMS,
   SET_ITEMS,
 } from "../../store/reducers/FolderItems";
-import { SET_FOLDER_CONTENTS } from "../../store/reducers/Folders";
+import { ADD_FOLDER, SET_FOLDER_CONTENTS } from "../../store/reducers/Folders";
 import AlertModal from "./AlertModal";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
@@ -65,7 +65,6 @@ const FolderModalWindow = () => {
   const [isFolderPage, setIsFolderPage] = useState(true);
   const [selectedFolder, setSelectedFolder] = useState(null);
   const [clickedSearch, setClickedSearch] = useState(false);
-  const [clickedDisplaySearch, setClickedDisplaySearch] = useState(false);
   const [filterdItems, setFilterdItems] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -84,6 +83,9 @@ const FolderModalWindow = () => {
 
   // url 선택하기 클릭한 경우 전체선택이랑 확인하기 버튼 나오게하기
   const [isUrlEditing, setIsUrlEditing] = useState(false);
+
+  // 폴더 이름
+  const [modalFolderName, setModalFolderName] = useState("");
 
   const { realTotalUrls } = useContext(MainStates);
 
@@ -164,18 +166,83 @@ const FolderModalWindow = () => {
   };
 
   const handleClickAddFolder = () => {
+    const fn = (folderName) => {
+      if (folderName === "") {
+        setModalInfo({
+          message: "폴더 이름을 입력해주세요",
+          type: "noCancel",
+          isOpen: true,
+        });
+        return;
+      }
+
+      const folder = {
+        _id: "123",
+        folderName,
+        folderContents: [],
+      };
+      dispatch(ADD_FOLDER(folder));
+      setModalFolderName("");
+      setModalInfo({
+        isOpen: false,
+      });
+    };
     setModalInfo({
-      message: "추가하실 폴더 이름을 입력해주세요!",
-      type: "click",
+      message: "추가하실 폴더 이름을 입력해주세요",
+      type: "addFolder",
       isOpen: true,
-      handleClickConfirm: () => {},
+      handleClickConfirm: fn,
       description: "",
     });
   };
 
+  const handleAddModalCancel = () => {
+    handleModalCancel();
+    setModalFolderName("");
+  };
+
+  const handleClickEditFolder = () => {
+    const fn = (folderName) => {
+      if (folderName === "") {
+        setModalInfo({
+          message: "폴더 이름을 입력해주세요",
+          type: "noCancel",
+          isOpen: true,
+        });
+        return;
+      }
+
+      console.log("folderName: ", folderName);
+    };
+    // 이거를 selectedfolder클릭될 때마다 설정해야해
+    console.log("modalFolderName: ", modalFolderName);
+    (modalFolderName === "" || modalFolderName === undefined) &&
+      setModalInfo({
+        message: "변경하실 폴더를 선택해주세요!",
+        type: "noCancel",
+        isOpen: true,
+      });
+
+    modalFolderName !== "" &&
+      modalFolderName !== undefined &&
+      setModalInfo({
+        message: "수정하실 폴더 이름을 입력해주세요",
+        type: "addFolder",
+        isOpen: true,
+        handleClickConfirm: fn,
+        description: "",
+      });
+  };
+
   const handleClickDisplaySearchIcon = () => {
     setSelectedFolder({});
-    setClickedDisplaySearch(!clickedDisplaySearch);
+    setClickedSearch(!clickedSearch);
+  };
+
+  const handleModalOnChange = (keyword) => {
+    // console.log(keyword);
+    setModalFolderName(keyword);
+    // console.log(modalFolderName);
   };
 
   useEffect(() => {
@@ -197,8 +264,14 @@ const FolderModalWindow = () => {
   //
   useEffect(() => {
     selectedFolder?._id !== undefined &&
-      clickedDisplaySearch &&
-      setClickedDisplaySearch(false);
+      clickedSearch &&
+      setClickedSearch(false);
+  }, [selectedFolder]);
+
+  useEffect(() => {
+    selectedFolder !== undefined &&
+      setModalFolderName(selectedFolder?.folderName);
+    selectedFolder === undefined && setModalFolderName("");
   }, [selectedFolder]);
 
   const initialState = {
@@ -229,8 +302,10 @@ const FolderModalWindow = () => {
     setIsOnlyFolderContents,
     handleClickAddFolder,
     handleClickDisplaySearchIcon,
-    clickedDisplaySearch,
-    setClickedDisplaySearch,
+    handleModalOnChange,
+    modalFolderName,
+    handleClickEditFolder,
+    handleAddModalCancel,
   };
 
   return (

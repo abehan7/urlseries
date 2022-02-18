@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import { FolderContext } from "./FolderModalWindow";
 import InputWrapper from "./styled/InputWrapper.styled";
 
 const ConfirmModalEl = styled.div`
@@ -106,11 +107,18 @@ const ModalOverlay = styled.div`
   }
 `;
 
-const InputWrapperEl = styled(InputWrapper)``;
+const InputWrapperEl = styled(InputWrapper)`
+  border-top: 1px solid #e0e8e7;
+  height: 35px;
+  align-items: center;
+  justify-content: center;
+`;
 const Input = styled.input`
+  font-weight: 100;
   border: 0;
-  padding: 0;
+  padding: 0rem 1rem;
   margin: 0;
+  font-size: 17px;
 `;
 
 const AlertModal = ({
@@ -149,13 +157,13 @@ const AlertModal = ({
         />
       )}
 
-      {/* {type === "addFolder" && (
+      {type === "addFolder" && (
         <AddModal
           message={message}
           handleClickConfirm={handleClickConfirm}
           handleModalCancel={handleModalCancel}
         />
-      )} */}
+      )}
     </ModalOverlay>
   );
 };
@@ -201,21 +209,31 @@ const NoCancelModal = ({ message, handleClickConfirm }) => {
   );
 };
 
-const AddModal = ({
-  message,
-  description,
-  handleClickConfirm,
-  handleModalCancel,
-}) => {
+const AddModal = ({ message, handleClickConfirm, handleModalCancel }) => {
+  const { handleModalOnChange, modalFolderName, handleAddModalCancel } =
+    useContext(FolderContext);
+  const onChange = (e) => {
+    handleModalOnChange(e.target.value);
+  };
+  const onClickConfirm = () => {
+    // console.log(modalFolderName);
+    handleClickConfirm(modalFolderName);
+  };
   return (
     <ClickModalEl>
-      <MsgContainer>{message}</MsgContainer>
-      <Description>{description}</Description>
+      <MsgContainer style={{ paddingTop: "1rem" }}>{message}</MsgContainer>
+      <InputWrapperEl>
+        <Input
+          placeholder="새 폴더 이름"
+          onChange={onChange}
+          value={modalFolderName}
+        />
+      </InputWrapperEl>
       <ButtonContainer>
-        <Button onClick={handleClickConfirm} style={{ color: "red" }}>
+        <Button onClick={onClickConfirm} style={{ color: "red" }}>
           확인
         </Button>
-        <Button onClick={handleModalCancel}>취소</Button>
+        <Button onClick={handleAddModalCancel}>취소</Button>
       </ButtonContainer>
     </ClickModalEl>
   );
