@@ -86,10 +86,18 @@ const EditorContainer = () => {
     handleRemoveItems,
     setIsOnlyFolderContents,
     isOnlyFolderContents,
+    handleClickAddFolder,
+    handleClickDisplaySearchIcon,
   } = useContext(FolderContext);
 
   const { isFolderContents } = useSelector((state) => state.folderConditions);
   const { items } = useSelector((state) => state.folderItems);
+
+  // #FIXME: 검색하기
+  const onClickSearch = () => {
+    setClickedSearch((prev) => !prev);
+  };
+
   return (
     <EditorContainerEl
       isUrlEditing={isUrlEditing}
@@ -98,7 +106,11 @@ const EditorContainer = () => {
     >
       <IconWrapper>
         {isFolderPage ? (
-          <EditorFolder />
+          <EditorFolder
+            handleClickAddFolder={handleClickAddFolder}
+            handleClickDisplaySearchIcon={handleClickDisplaySearchIcon}
+            clickedSearch={clickedSearch}
+          />
         ) : (
           <EditorUrls
             setIsFolderPage={setIsFolderPage}
@@ -121,18 +133,30 @@ const EditorContainer = () => {
   );
 };
 
-const EditorFolder = () => {
+const EditorFolder = ({
+  handleClickAddFolder,
+  clickedSearch,
+  handleClickDisplaySearchIcon,
+}) => {
+  const onClickAddFolder = () => {
+    handleClickAddFolder();
+  };
+
+  const onClickSearchIcon = () => {
+    handleClickDisplaySearchIcon();
+  };
+
   return (
     <>
-      <Icon>
+      <Icon onClick={onClickAddFolder}>
         <IoIosAdd />
         {/* <폴더> 추가 */}
       </Icon>
 
-      <Icon>
+      <SearchIcon onClick={onClickSearchIcon} clickedSearch={clickedSearch}>
         <IoSearchOutline />
-        {/* <url> <폴더> 검색 */}
-      </Icon>
+        {/* <url>  검색 */}
+      </SearchIcon>
 
       <Icon>
         <FiEdit2 />
@@ -166,6 +190,7 @@ const EditorUrls = ({
   CheckChanges,
   handleRemoveItems,
   setIsOnlyFolderContents,
+  onClickSearch,
 }) => {
   const { isFolderContents } = useSelector((state) => state.folderConditions);
 
@@ -205,11 +230,6 @@ const EditorUrls = ({
         handleClickConfirm: fn,
         isOpen: true,
       });
-  };
-
-  // #FIXME: 검색하기
-  const onClickSearch = () => {
-    setClickedSearch((prev) => !prev);
   };
 
   const onClickCheckAll = () => {

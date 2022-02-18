@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import InputWrapper from "./styled/InputWrapper.styled";
 
 const ConfirmModalEl = styled.div`
   width: 170px;
@@ -105,6 +106,13 @@ const ModalOverlay = styled.div`
   }
 `;
 
+const InputWrapperEl = styled(InputWrapper)``;
+const Input = styled.input`
+  border: 0;
+  padding: 0;
+  margin: 0;
+`;
+
 const AlertModal = ({
   message,
   description,
@@ -140,6 +148,14 @@ const AlertModal = ({
           handleClickConfirm={handleModalCancel}
         />
       )}
+
+      {/* {type === "addFolder" && (
+        <AddModal
+          message={message}
+          handleClickConfirm={handleClickConfirm}
+          handleModalCancel={handleModalCancel}
+        />
+      )} */}
     </ModalOverlay>
   );
 };
@@ -180,6 +196,26 @@ const NoCancelModal = ({ message, handleClickConfirm }) => {
         <Button onClick={handleClickConfirm} style={{ color: "red" }}>
           확인
         </Button>
+      </ButtonContainer>
+    </ClickModalEl>
+  );
+};
+
+const AddModal = ({
+  message,
+  description,
+  handleClickConfirm,
+  handleModalCancel,
+}) => {
+  return (
+    <ClickModalEl>
+      <MsgContainer>{message}</MsgContainer>
+      <Description>{description}</Description>
+      <ButtonContainer>
+        <Button onClick={handleClickConfirm} style={{ color: "red" }}>
+          확인
+        </Button>
+        <Button onClick={handleModalCancel}>취소</Button>
       </ButtonContainer>
     </ClickModalEl>
   );

@@ -12,13 +12,18 @@ import Input from "./styled/Input.styled";
 import InputWrapper from "./styled/InputWrapper.styled";
 import Title from "./styled/Title.styled";
 
-const FolderTitle = styled(Title)`
+const FolderHeader = styled(Title)`
+  border-radius: 0;
   position: relative;
   display: flex;
   align-items: center;
   border-bottom: 1px solid #e5e5e5;
   padding-bottom: 0.5rem;
-  gap: 2rem;
+`;
+
+const FolderTitle = styled.span`
+  padding-left: 1rem;
+  font-weight: 100;
 `;
 
 const FolderDisplayEl = styled(Container)`
@@ -90,7 +95,7 @@ const FolderName = styled.span`
 const IconContainer = styled.div`
   display: flex;
   position: absolute;
-  right: 20px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
   column-gap: 0.7rem;
@@ -103,13 +108,12 @@ const IconContainer = styled.div`
 const IconEl = styled(Icon)``;
 
 const InputWrapperEl = styled(InputWrapper)`
-  width: 50%;
-  transform: translateY(-10%);
-  visibility: ${(props) => (props.clickedSearch ? "visible" : "hidden")};
   > input {
-    font-weight: 200;
-    height: ${(props) => (props.clickedSearch ? "30px" : "0")};
-    padding: ${(props) => (props.clickedSearch ? "0.2rem 1rem" : "0")};
+    font-weight: 100;
+    border: none;
+    ::placeholder {
+      color: orange;
+    }
   }
 `;
 
@@ -119,8 +123,9 @@ const FolderDisplay = ({ handleGetId }) => {
     selectedFolder,
     setSelectedFolder,
     setIsFolderPage,
+    setKeyword,
     keyword,
-    clickedSearch,
+    clickedDisplaySearch,
   } = useContext(FolderContext);
 
   const [isSelected, setIsSelected] = useState(false);
@@ -147,7 +152,9 @@ const FolderDisplay = ({ handleGetId }) => {
     setSelectedFolder();
   };
 
-  const onChange = (e) => {};
+  const onChange = (e) => {
+    setKeyword(e.target.value);
+  };
 
   useEffect(() => {
     if (selectedFolder?._id === undefined) {
@@ -159,8 +166,8 @@ const FolderDisplay = ({ handleGetId }) => {
 
   return (
     <FolderDisplayEl>
-      <FolderTitle>
-        전체폴더
+      <FolderHeader>
+        {!clickedDisplaySearch && <FolderTitle>전체폴더</FolderTitle>}
         <IconContainer isSelected={isSelected}>
           <IconEl onClick={onClickCancel}>
             <TiBackspaceOutline />
@@ -171,10 +178,13 @@ const FolderDisplay = ({ handleGetId }) => {
             {/* 확인 */}
           </IconEl>
         </IconContainer>
-        <InputWrapperEl clickedSearch={true}>
-          <Input value={keyword} onChange={onChange} />
-        </InputWrapperEl>
-      </FolderTitle>
+        {clickedDisplaySearch && (
+          <InputWrapperEl clickedDisplaySearch={true}>
+            <Input value={keyword} onChange={onChange} placeholder="search" />
+          </InputWrapperEl>
+        )}
+      </FolderHeader>
+
       <ContentContainer>
         <FolderWrapper>
           {folders.map((folder) => {

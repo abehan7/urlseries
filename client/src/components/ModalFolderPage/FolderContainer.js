@@ -115,7 +115,8 @@ const FolderContainer = ({ handleGetId }) => {
   // url클릭 해제
   const handleUnClickUrl = (url) => {
     const processed = items.filter((item) => item !== url._id);
-    dispatch(SET_ITEMS(processed));
+    dispatch(SET_ITEMS(processed
+      ));
   };
 
   // 스크롤 초기화

@@ -190,15 +190,15 @@ export const folderSlice = createSlice({
   name: "folders",
   initialState: { folders },
   reducers: {
-    AddFolder: (state, action) => {
+    ADD_FOLDER: (state, action) => {
       state.folders = [action.payload, ...state.folders];
     },
-    RemoveFolder: (state, action) => {
+    REMOVE_FOLDER: (state, action) => {
       state = state.filter((folder) => folder.folderName !== action.payload);
     },
 
     // 이거 하나로 끝내기? ok
-    SetFolderContents: (state, action) => {
+    SET_FOLDER_CONTENTS: (state, action) => {
       const { folderId, urls } = action.payload;
       const folder = state.folders.find((folder) => folder._id === folderId);
       folder.folderContents = urls;
@@ -207,13 +207,13 @@ export const folderSlice = createSlice({
     // 굳이 여기서 실시간으로 넣고 빼고 할 필요는 없을 듯
     // 아래도 같은 이유
     // 위에 AddFolder쪽도 여기랑 동일하게 만들기
-    AddContent: (state, action) => {
+    ADD_CONTENT: (state, action) => {
       const { folderId, urlId } = action.payload;
       const folder = state.folders.find((folder) => folder._id === folderId);
       folder.folderContents = [...urlId, ...folder.folderContents];
     },
     // setContent 테스트 후 지우기
-    RemoveContent: (state, action) => {
+    REMOVE_CONTENT: (state, action) => {
       const { folderId, urlId } = action.payload;
       const folder = state.folders.find((folder) => folder._id === folderId);
       folder.folderContents = folder.folderContents.filter(
@@ -223,6 +223,6 @@ export const folderSlice = createSlice({
   },
 });
 
-export const { SetFolderContents } = folderSlice.actions;
+export const { SET_FOLDER_CONTENTS } = folderSlice.actions;
 
 export default folderSlice.reducer;

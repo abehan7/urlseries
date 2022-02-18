@@ -16,7 +16,7 @@ import {
   REMOVE_ITEMS,
   SET_ITEMS,
 } from "../../store/reducers/FolderItems";
-import { SetFolderContents } from "../../store/reducers/Folders";
+import { SET_FOLDER_CONTENTS } from "../../store/reducers/Folders";
 import AlertModal from "./AlertModal";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
@@ -65,6 +65,7 @@ const FolderModalWindow = () => {
   const [isFolderPage, setIsFolderPage] = useState(true);
   const [selectedFolder, setSelectedFolder] = useState(null);
   const [clickedSearch, setClickedSearch] = useState(false);
+  const [clickedDisplaySearch, setClickedDisplaySearch] = useState(false);
   const [filterdItems, setFilterdItems] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [isConfirmed, setIsConfirmed] = useState(false);
@@ -124,7 +125,7 @@ const FolderModalWindow = () => {
 
     setSelectedFolder({ ...selectedFolder, folderContents: urls });
 
-    dispatch(SetFolderContents({ folderId, urls }));
+    dispatch(SET_FOLDER_CONTENTS({ folderId, urls }));
   };
 
   const handleModalCancel = () => {
@@ -162,6 +163,21 @@ const FolderModalWindow = () => {
     return isSame;
   };
 
+  const handleClickAddFolder = () => {
+    setModalInfo({
+      message: "추가하실 폴더 이름을 입력해주세요!",
+      type: "click",
+      isOpen: true,
+      handleClickConfirm: () => {},
+      description: "",
+    });
+  };
+
+  const handleClickDisplaySearchIcon = () => {
+    setSelectedFolder({});
+    setClickedDisplaySearch(!clickedDisplaySearch);
+  };
+
   useEffect(() => {
     PopupEnable();
   }, []);
@@ -177,6 +193,13 @@ const FolderModalWindow = () => {
     setKeyword("");
     isOnlyFolderContents && setClickedSearch(false);
   }, [isOnlyFolderContents]);
+
+  //
+  useEffect(() => {
+    selectedFolder?._id !== undefined &&
+      clickedDisplaySearch &&
+      setClickedDisplaySearch(false);
+  }, [selectedFolder]);
 
   const initialState = {
     isFolderPage,
@@ -204,6 +227,10 @@ const FolderModalWindow = () => {
     setIsSearching,
     isOnlyFolderContents,
     setIsOnlyFolderContents,
+    handleClickAddFolder,
+    handleClickDisplaySearchIcon,
+    clickedDisplaySearch,
+    setClickedDisplaySearch,
   };
 
   return (
