@@ -4,8 +4,8 @@ import { FolderContext } from "./FolderModalWindow";
 import InputWrapper from "./styled/InputWrapper.styled";
 
 const ConfirmModalEl = styled.div`
-  width: 170px;
-  height: 110px;
+  width: 300px;
+  height: 180px;
   background-color: #fff;
 
   display: flex;
@@ -130,8 +130,10 @@ const AlertModal = ({
   handleModalCancel,
 }) => {
   const [target, setTarget] = useState(null);
+  const { handleAddModalCancel } = useContext(FolderContext);
   const onClickOverlay = (e) => {
     e.target === target && handleModalCancel();
+    e.target === target && type === "addFolder" && handleAddModalCancel();
   };
 
   return (

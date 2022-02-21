@@ -14,6 +14,8 @@ import {
   RiCheckboxMultipleFill,
 } from "react-icons/ri";
 
+import { DELETE, LIKE } from "../../contants";
+
 const UrlSearchedIcon = styled(Icon)``;
 
 const UrlConfirmIcon = styled(Icon)``;
@@ -59,6 +61,29 @@ const EditorContainerEl = styled.div`
 const SearchIcon = styled(Icon)`
   ${({ clickedSearch }) => {
     if (clickedSearch) {
+      return `
+      background: orange;
+      color: #fff;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      `;
+    }
+  }};
+`;
+
+const LikeIcon = styled(Icon)`
+  ${({ status, mode }) => {
+    if (status && mode === LIKE) {
+      return `
+      background: orange;
+      color: #fff;
+      box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      `;
+    }
+  }};
+`;
+const DeleteIcon = styled(Icon)`
+  ${({ status, mode }) => {
+    if (status && mode === DELETE) {
       return `
       background: orange;
       color: #fff;
@@ -133,7 +158,12 @@ const EditorFolder = ({
   clickedSearch,
   handleClickDisplaySearchIcon,
 }) => {
-  const { handleClickEditFolder } = useContext(FolderContext);
+  const {
+    handleClickEditFolder,
+    handleClickDeleteFolder,
+    handleClickLikeFolder,
+    selectMode,
+  } = useContext(FolderContext);
   const onClickAddFolder = () => {
     handleClickAddFolder();
   };
@@ -144,6 +174,13 @@ const EditorFolder = ({
 
   const onClickEditFolder = () => {
     handleClickEditFolder();
+  };
+
+  const onClickDeleteFolder = () => {
+    handleClickDeleteFolder();
+  };
+  const onClickLikeFolder = () => {
+    handleClickLikeFolder();
   };
 
   return (
@@ -163,15 +200,23 @@ const EditorFolder = ({
         {/* 폴더 편집 */}
       </Icon>
 
-      <Icon>
+      <LikeIcon
+        onClick={onClickLikeFolder}
+        status={selectMode.status}
+        mode={selectMode.mode}
+      >
         <AiOutlineHeart />
         {/* <폴더> 좋아요  */}
-      </Icon>
+      </LikeIcon>
 
-      <Icon>
+      <DeleteIcon
+        onClick={onClickDeleteFolder}
+        status={selectMode.status}
+        mode={selectMode.mode}
+      >
         <TiDocumentDelete />
         {/* <폴더> 삭제 */}
-      </Icon>
+      </DeleteIcon>
     </>
   );
 };
@@ -279,15 +324,6 @@ const EditorUrls = ({
         isOpen: false,
       });
     }, 1000);
-
-    // return (
-    //   <Alert
-    //     message="선택한 항목을 삭제하시겠습니까?"
-    //     description="삭제하면 복구할 수 없습니다."
-    //     type="warning"
-    //     showIcon
-    //   />
-    // );
   };
 
   // #FIXME: 확인하기

@@ -16,8 +16,13 @@ import {
   REMOVE_ITEMS,
   SET_ITEMS,
 } from "../../store/reducers/FolderItems";
-import { ADD_FOLDER, SET_FOLDER_CONTENTS } from "../../store/reducers/Folders";
+import {
+  ADD_FOLDER,
+  SET_FOLDER_CONTENTS,
+  CHANGE_FOLDER_NAME,
+} from "../../store/reducers/Folders";
 import AlertModal from "./AlertModal";
+import { DELETE, LIKE } from "../../contants";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
@@ -84,14 +89,41 @@ const FolderModalWindow = () => {
   // url 선택하기 클릭한 경우 전체선택이랑 확인하기 버튼 나오게하기
   const [isUrlEditing, setIsUrlEditing] = useState(false);
 
-  // 폴더 이름
+  // 폴더 이름 추가하기
+  // const [modalAddFolderName, setModalAddFolderName] = useState("");
+
+  // 폴더 이름 수정하기
   const [modalFolderName, setModalFolderName] = useState("");
+
+  const [selectMode, setSelectMode] = useState({
+    status: false,
+    mode: DELETE || LIKE,
+    items: [],
+  });
 
   const { realTotalUrls } = useContext(MainStates);
 
   const items = useSelector((state) => state.folderItems.items);
 
   const dispatch = useDispatch();
+
+  const ShowNoticeAlert = (message) => {
+    setModalInfo({
+      message,
+      type: "confirm",
+      handleClickConfirm: () => {},
+      isOpen: true,
+    });
+
+    setTimeout(() => {
+      setModalInfo({
+        message: "",
+        type: "",
+        handleClickConfirm: () => {},
+        isOpen: false,
+      });
+    }, 1000);
+  };
 
   const handleFillFolderItemsInit = (folderItems) => {
     dispatch(SET_ITEMS(folderItems));
@@ -183,10 +215,17 @@ const FolderModalWindow = () => {
       };
       dispatch(ADD_FOLDER(folder));
       setModalFolderName("");
-      setModalInfo({
-        isOpen: false,
-      });
+      // setModalInfo({
+      //   isOpen: false,
+      // });
+
+      const message = "폴더가 추가되었습니다";
+      ShowNoticeAlert(message);
     };
+
+    setSelectedFolder({});
+    setModalFolderName("");
+
     setModalInfo({
       message: "추가하실 폴더 이름을 입력해주세요",
       type: "addFolder",
@@ -199,11 +238,13 @@ const FolderModalWindow = () => {
   const handleAddModalCancel = () => {
     handleModalCancel();
     setModalFolderName("");
+    setSelectedFolder({});
   };
 
   const handleClickEditFolder = () => {
     const fn = (folderName) => {
       if (folderName === "") {
+        setSelectedFolder({});
         setModalInfo({
           message: "폴더 이름을 입력해주세요",
           type: "noCancel",
@@ -212,7 +253,17 @@ const FolderModalWindow = () => {
         return;
       }
 
-      console.log("folderName: ", folderName);
+      dispatch(
+        CHANGE_FOLDER_NAME({ folderId: selectedFolder._id, folderName })
+      );
+      setModalFolderName("");
+      setSelectedFolder({});
+
+      const message = "변경되었습니다 :)";
+      ShowNoticeAlert(message);
+
+      // console.log("selectedFolder: ", selectedFolder._id);
+      // console.log("folderName: ", folderName);
     };
     // 이거를 selectedfolder클릭될 때마다 설정해야해
     console.log("modalFolderName: ", modalFolderName);
@@ -243,6 +294,24 @@ const FolderModalWindow = () => {
     // console.log(keyword);
     setModalFolderName(keyword);
     // console.log(modalFolderName);
+  };
+
+  const handleClickDeleteFolder = () => {
+    setSelectMode({
+      ...selectMode,
+      status: !selectMode.status,
+      mode: DELETE,
+    });
+
+    console.log("selectMode: ", selectMode);
+  };
+  const handleClickLikeFolder = () => {
+    setSelectMode({
+      ...selectMode,
+      status: !selectMode.status,
+      mode: LIKE,
+    });
+    console.log("selectMode: ", selectMode);
   };
 
   useEffect(() => {
@@ -306,6 +375,9 @@ const FolderModalWindow = () => {
     modalFolderName,
     handleClickEditFolder,
     handleAddModalCancel,
+    handleClickDeleteFolder,
+    handleClickLikeFolder,
+    selectMode,
   };
 
   return (

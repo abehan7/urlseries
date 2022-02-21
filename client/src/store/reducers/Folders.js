@@ -220,9 +220,15 @@ export const folderSlice = createSlice({
         (url) => url !== urlId
       );
     },
+    CHANGE_FOLDER_NAME: (state, action) => {
+      const { folderId, folderName } = action.payload;
+      const folder = state.folders.find((folder) => folder._id === folderId);
+      folder.folderName = folderName;
+    },
   },
 });
 
-export const { SET_FOLDER_CONTENTS, ADD_FOLDER } = folderSlice.actions;
+export const { SET_FOLDER_CONTENTS, ADD_FOLDER, CHANGE_FOLDER_NAME } =
+  folderSlice.actions;
 
 export default folderSlice.reducer;
