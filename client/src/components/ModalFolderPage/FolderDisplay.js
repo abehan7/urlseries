@@ -4,6 +4,7 @@ import { FcFolder, FcOpenedFolder } from "react-icons/fc";
 import { TiBackspaceOutline } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { DELETE, LIKE } from "../../contants";
 import { actions } from "../../store/reducers/FolderItems";
 import { FolderContext } from "./FolderModalWindow";
 import Container from "./styled/Container.styled";
@@ -128,13 +129,16 @@ const FolderDisplay = ({ handleGetId }) => {
     setKeyword,
     keyword,
     clickedSearch,
+    selectMode,
+    setSelectMode,
+    handleClickMultiFoldersConfirm,
   } = useContext(FolderContext);
 
   const [isSelected, setIsSelected] = useState(false);
 
   // const folderItems = useSelector((state) => state.folderItems);
 
-  const onClickFolder = (folder, e) => {
+  const onClickFolder = (folder) => {
     if (folder?._id === selectedFolder?._id) {
       // click folder that is already selected
       setSelectedFolder();
@@ -144,20 +148,54 @@ const FolderDisplay = ({ handleGetId }) => {
     }
   };
 
+  const onClickMultipleFolders = (folder) => {
+    if (selectMode.items.includes(folder._id)) {
+      // click folder that is already selected
+
+      const newItems = selectMode.items.filter((item) => item !== folder._id);
+      setSelectMode({ ...selectMode, items: newItems });
+    } else {
+      // click folder that is not selected
+      const newItems = [...selectMode.items, folder._id];
+      setSelectMode({ ...selectMode, items: newItems });
+    }
+
+    // console.log(selectMode.items);
+  };
+
+  // FIXME: 우측 체크버튼 클릭
   const onClickConfirm = () => {
-    setIsFolderPage(false);
-    handleGetId(selectedFolder.folderContents);
+    const SelectModeFn = () => {
+      handleClickMultiFoldersConfirm();
+    };
+    const NormalModeFn = () => {
+      setIsFolderPage(false);
+      handleGetId(selectedFolder.folderContents);
+    };
+    selectMode.status && SelectModeFn();
+    !selectMode.status && NormalModeFn();
   };
 
+  // FIXME: 우측 해제버튼 클릭
   const onClickCancel = () => {
-    setIsSelected(false);
-    setSelectedFolder();
+    const SelectModeFn = () => {
+      setSelectMode({ status: false, mode: "", items: [] });
+    };
+    const NormalModeFn = () => {
+      setIsSelected(false);
+      setSelectedFolder({});
+    };
+
+    selectMode.status && SelectModeFn();
+    !selectMode.status && NormalModeFn();
   };
 
+  // FIXME: 검색 onchange
   const onChange = (e) => {
     setKeyword(e.target.value);
   };
 
+  // FIXME: selectedFolder 없으면 isSelected false되서 우측 체크 안보이게 됨
   useEffect(() => {
     if (selectedFolder?._id === undefined) {
       setIsSelected(false);
@@ -166,10 +204,26 @@ const FolderDisplay = ({ handleGetId }) => {
     }
   }, [selectedFolder]);
 
+  // selectMode일때 item들 tracking하기
+  useEffect(() => {
+    console.log("selectMode Items: ", selectMode.items);
+  }, [selectMode]);
+
+  // FIXME: 삭제나 좋아요 클릭하면 우측 체크 아이콘 보이게하기
+  useEffect(() => {
+    // console.log("selectMode.status: ", selectMode.status);
+    selectMode.status && setIsSelected(true);
+    !selectMode.status && setIsSelected(false);
+  }, [selectMode]);
+
   return (
     <FolderDisplayEl>
       <FolderHeader>
-        {!clickedSearch && <FolderTitle>전체폴더</FolderTitle>}
+        {!clickedSearch && (
+          <FolderTitle>
+            {selectMode.status ? "폴더를 선택해주세요" : "전체폴더"}
+          </FolderTitle>
+        )}
         <IconContainer isSelected={isSelected}>
           <IconEl onClick={onClickCancel}>
             <TiBackspaceOutline />
@@ -189,16 +243,29 @@ const FolderDisplay = ({ handleGetId }) => {
 
       <ContentContainer>
         <FolderWrapper>
-          {folders.map((folder) => {
-            return (
-              <Folder
-                key={folder._id}
-                folder={folder}
-                selectedFolder={selectedFolder}
-                onClick={onClickFolder}
-              />
-            );
-          })}
+          {!selectMode.status &&
+            folders.map((folder) => {
+              return (
+                <Folder
+                  key={folder._id}
+                  folder={folder}
+                  selectedFolder={selectedFolder}
+                  onClick={onClickFolder}
+                />
+              );
+            })}
+
+          {selectMode.status &&
+            folders.map((folder) => {
+              return (
+                <MultiFolder
+                  key={folder._id}
+                  folder={folder}
+                  selectedFolderId={selectMode.items}
+                  onClick={onClickMultipleFolders}
+                />
+              );
+            })}
         </FolderWrapper>
       </ContentContainer>
     </FolderDisplayEl>
@@ -208,14 +275,34 @@ const FolderDisplay = ({ handleGetId }) => {
 const Folder = ({ folder, selectedFolder, onClick }) => {
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
-    setIsOpen(selectedFolder?._id === folder._id);
+    const isSelected = selectedFolder?._id === folder._id;
+    setIsOpen(isSelected);
   }, [selectedFolder]);
   return (
-    <FolderEl
-      key={folder._id}
-      onClick={(e) => onClick(folder, e)}
-      isOpen={isOpen}
-    >
+    <FolderEl key={folder._id} onClick={() => onClick(folder)} isOpen={isOpen}>
+      {isOpen ? <FcOpenedFolder /> : <FcFolder />}
+      <FolderName>{folder.folderName}</FolderName>
+    </FolderEl>
+  );
+};
+
+const MultiFolder = ({ folder, selectedFolderId, onClick }) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // FIXME: folderWindow에서 해결해야할듯 329번줄
+
+  // useEffect(() => {
+  //   console.log("folder.like: ", folder.like);
+  //   selectMode.mode === LIKE && folder.like && getLikeModeInit();
+  //   selectMode.mode === DELETE && getItemsEmpty();
+  // }, [selectMode.mode, selectMode.status]);
+
+  useEffect(() => {
+    const isSelected = selectedFolderId?.includes(folder._id);
+    setIsOpen(isSelected);
+  }, [selectedFolderId]);
+  return (
+    <FolderEl key={folder._id} onClick={() => onClick(folder)} isOpen={isOpen}>
       {isOpen ? <FcOpenedFolder /> : <FcFolder />}
       <FolderName>{folder.folderName}</FolderName>
     </FolderEl>

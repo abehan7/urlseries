@@ -19,7 +19,8 @@ import {
 import {
   ADD_FOLDER,
   SET_FOLDER_CONTENTS,
-  CHANGE_FOLDER_NAME,
+  GET_CHANGE_FOLDER_NAME,
+  SET_LIKE,
 } from "../../store/reducers/Folders";
 import AlertModal from "./AlertModal";
 import { DELETE, LIKE } from "../../contants";
@@ -97,13 +98,14 @@ const FolderModalWindow = () => {
 
   const [selectMode, setSelectMode] = useState({
     status: false,
-    mode: DELETE || LIKE,
+    mode: "",
     items: [],
   });
 
   const { realTotalUrls } = useContext(MainStates);
 
   const items = useSelector((state) => state.folderItems.items);
+  const folders = useSelector((state) => state.folders.folders);
 
   const dispatch = useDispatch();
 
@@ -254,7 +256,7 @@ const FolderModalWindow = () => {
       }
 
       dispatch(
-        CHANGE_FOLDER_NAME({ folderId: selectedFolder._id, folderName })
+        GET_CHANGE_FOLDER_NAME({ folderId: selectedFolder._id, folderName })
       );
       setModalFolderName("");
       setSelectedFolder({});
@@ -297,21 +299,86 @@ const FolderModalWindow = () => {
   };
 
   const handleClickDeleteFolder = () => {
-    setSelectMode({
-      ...selectMode,
-      status: !selectMode.status,
-      mode: DELETE,
-    });
+    // 현재 클릭된 folder초기화
+    setSelectedFolder({});
+    selectMode.status &&
+      selectMode.mode === LIKE &&
+      setSelectMode({
+        items: [],
+        status: true,
+        mode: DELETE,
+      });
 
-    console.log("selectMode: ", selectMode);
+    selectMode.status &&
+      selectMode.mode === DELETE &&
+      setSelectMode({
+        items: [],
+        status: false,
+        mode: "",
+      });
+
+    selectMode.mode === "" &&
+      setSelectMode({
+        items: [],
+        status: true,
+        mode: DELETE,
+      });
+
+    // console.log("selectMode: ", selectMode);
   };
-  const handleClickLikeFolder = () => {
-    setSelectMode({
-      ...selectMode,
-      status: !selectMode.status,
-      mode: LIKE,
+
+  // FIXME: selectMode에서 사용할 Hook
+  const getLikeModeInit = () => {
+    const newItems = folders.filter((folder) => {
+      return folder.like;
     });
-    console.log("selectMode: ", selectMode);
+    const newItemsId = newItems.map((folder) => {
+      return folder._id;
+    });
+    // console.log(newItemsId);
+    return newItemsId;
+  };
+  // FIXME: 이쪽에서 폴더에 한꺼번에 넣는 기능 만들어야됌
+  const handleClickLikeFolder = () => {
+    // 현재 클릭된 folder초기화
+
+    setSelectedFolder({});
+
+    // 현재 like item들 init
+    const InitItemList = getLikeModeInit();
+    selectMode.status &&
+      selectMode.mode === DELETE &&
+      setSelectMode({
+        items: InitItemList,
+        status: true,
+        mode: LIKE,
+      });
+
+    selectMode.status &&
+      selectMode.mode === LIKE &&
+      setSelectMode({
+        items: [],
+        status: false,
+        mode: "",
+      });
+
+    selectMode.mode === "" &&
+      setSelectMode({
+        items: InitItemList,
+        status: true,
+        mode: LIKE,
+      });
+  };
+
+  const handleClickMultiFoldersConfirm = () => {
+    const likedFolderIdList = selectMode.items;
+    console.log("likedFolderIdList: ", likedFolderIdList);
+    dispatch(SET_LIKE({ likedFolderIdList }));
+    setSelectMode({
+      items: [],
+      status: false,
+      mode: "",
+    });
   };
 
   useEffect(() => {
@@ -378,6 +445,8 @@ const FolderModalWindow = () => {
     handleClickDeleteFolder,
     handleClickLikeFolder,
     selectMode,
+    setSelectMode,
+    handleClickMultiFoldersConfirm,
   };
 
   return (

@@ -4,6 +4,7 @@ const folders = [
   {
     _id: "5f0f8f9b9c8f8b3f8c8b8b8b",
     folderName: "crypto",
+    like: false,
     folderContents: [
       {
         url_search: {
@@ -97,6 +98,7 @@ const folders = [
   {
     _id: "5f0f8f9b9c8f8b3f8c8b8b8c",
     folderName: "punk",
+    like: true,
     folderContents: [
       {
         url_search: {
@@ -177,11 +179,13 @@ const folders = [
   {
     _id: "5f0f8f9b9c8f8b3f8c8b8b8d",
     folderName: "nft",
+    like: false,
     folderContents: [],
   },
   {
     _id: "5f0f8f9b9c8f8b3f8c8b8b8e",
     folderName: "bored Apes bored Apes bored Apes",
+    like: false,
     folderContents: [],
   },
 ];
@@ -220,15 +224,26 @@ export const folderSlice = createSlice({
         (url) => url !== urlId
       );
     },
-    CHANGE_FOLDER_NAME: (state, action) => {
+    GET_CHANGE_FOLDER_NAME: (state, action) => {
       const { folderId, folderName } = action.payload;
       const folder = state.folders.find((folder) => folder._id === folderId);
       folder.folderName = folderName;
     },
+    SET_LIKE: (state, action) => {
+      const { likedFolderIdList } = action.payload;
+      state.folders.forEach((folder) => {
+        likedFolderIdList.includes(folder._id) && (folder.like = true);
+        !likedFolderIdList.includes(folder._id) && (folder.like = false);
+      });
+    },
   },
 });
 
-export const { SET_FOLDER_CONTENTS, ADD_FOLDER, CHANGE_FOLDER_NAME } =
-  folderSlice.actions;
+export const {
+  SET_FOLDER_CONTENTS,
+  ADD_FOLDER,
+  GET_CHANGE_FOLDER_NAME,
+  SET_LIKE,
+} = folderSlice.actions;
 
 export default folderSlice.reducer;
