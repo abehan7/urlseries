@@ -3,6 +3,12 @@ import styled from "styled-components";
 import { FolderContext } from "./FolderModalWindow";
 import InputWrapper from "./styled/InputWrapper.styled";
 
+const wordsList = [
+  "변경사항을 저장하시겠습니까?",
+  "삭제하시겠습니까?",
+  "폴더를 삭제하시겠습니까?",
+];
+
 const ConfirmModalEl = styled.div`
   width: 300px;
   height: 180px;
@@ -79,7 +85,7 @@ const ModalOverlay = styled.div`
 
   ${MsgContainer} {
     ${({ message }) => {
-      if (message === "변경사항을 저장하시겠습니까?") {
+      if (wordsList.includes(message)) {
         return `
         flex : 1;
         align-items: flex-end;
@@ -92,7 +98,7 @@ const ModalOverlay = styled.div`
 
   ${Description} {
     ${({ message }) => {
-      if (message === "변경사항을 저장하시겠습니까?") {
+      if (wordsList.includes(message)) {
         return `
         padding:0;
 

@@ -198,7 +198,10 @@ export const folderSlice = createSlice({
       state.folders = [action.payload, ...state.folders];
     },
     REMOVE_FOLDER: (state, action) => {
-      state = state.filter((folder) => folder.folderName !== action.payload);
+      const FolderList = action.payload;
+      state.folders = state.folders.filter(
+        (folder) => !FolderList.includes(folder._id)
+      );
     },
 
     // 이거 하나로 끝내기? ok
@@ -244,6 +247,7 @@ export const {
   ADD_FOLDER,
   GET_CHANGE_FOLDER_NAME,
   SET_LIKE,
+  REMOVE_FOLDER,
 } = folderSlice.actions;
 
 export default folderSlice.reducer;

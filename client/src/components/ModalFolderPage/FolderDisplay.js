@@ -44,7 +44,7 @@ const ContentContainer = styled.div`
 
 const FolderWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(4, 80px);
   grid-template-rows: auto;
   align-items: center;
   justify-content: center;
@@ -163,7 +163,7 @@ const FolderDisplay = ({ handleGetId }) => {
     // console.log(selectMode.items);
   };
 
-  // FIXME: 우측 체크버튼 클릭
+  // FIXME: 우측 체크버튼 클릭 //folderModalWindow 373번줄 참조
   const onClickConfirm = () => {
     const SelectModeFn = () => {
       handleClickMultiFoldersConfirm();
@@ -214,7 +214,7 @@ const FolderDisplay = ({ handleGetId }) => {
     // console.log("selectMode.status: ", selectMode.status);
     selectMode.status && setIsSelected(true);
     !selectMode.status && setIsSelected(false);
-  }, [selectMode]);
+  }, [selectMode, clickedSearch]);
 
   return (
     <FolderDisplayEl>

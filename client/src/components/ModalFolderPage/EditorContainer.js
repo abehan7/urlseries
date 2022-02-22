@@ -241,8 +241,6 @@ const EditorUrls = ({
   // #FIXME: 뒤로가기
   // isFolderContents일때는 모달 안나오게 하고싶어
   const onClickBack = () => {
-    // console.log("isFolderContents from back", isFolderContents);
-    // console.log("CheckChanges from back");
     // 사용자가 뭐 하나라도 클릭안해서 item이 안바뀐경우
     const isContentsSame = CheckChanges();
     const fn = () => {

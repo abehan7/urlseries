@@ -21,6 +21,7 @@ import {
   SET_FOLDER_CONTENTS,
   GET_CHANGE_FOLDER_NAME,
   SET_LIKE,
+  REMOVE_FOLDER,
 } from "../../store/reducers/Folders";
 import AlertModal from "./AlertModal";
 import { DELETE, LIKE } from "../../contants";
@@ -371,14 +372,46 @@ const FolderModalWindow = () => {
   };
 
   const handleClickMultiFoldersConfirm = () => {
-    const likedFolderIdList = selectMode.items;
-    console.log("likedFolderIdList: ", likedFolderIdList);
-    dispatch(SET_LIKE({ likedFolderIdList }));
-    setSelectMode({
-      items: [],
-      status: false,
-      mode: "",
-    });
+    const likeModeFn = () => {
+      const likedFolderIdList = selectMode.items;
+      dispatch(SET_LIKE({ likedFolderIdList }));
+      setSelectMode({
+        items: [],
+        status: false,
+        mode: "",
+      });
+      const message = "변경이 완료되었습니다 :)";
+      ShowNoticeAlert(message);
+    };
+    const deleteModeFn = () => {
+      dispatch(REMOVE_FOLDER(selectMode.items));
+      setSelectMode({
+        items: [],
+        status: false,
+        mode: "",
+      });
+      const message = "변경이 완료되었습니다 :)";
+      ShowNoticeAlert(message);
+    };
+
+    // 좋아요 mode일때
+    selectMode.mode === LIKE &&
+      setModalInfo({
+        message: "변경사항을 저장하시겠습니까?",
+        description: "변경하신 후에는 복구할 수 없습니다.",
+        type: "click",
+        handleClickConfirm: likeModeFn,
+        isOpen: true,
+      });
+    // 삭제하기 mode일때
+    selectMode.mode === DELETE &&
+      setModalInfo({
+        message: "폴더를 삭제하시겠습니까?",
+        description: "변경하신 후에는 복구할 수 없습니다.",
+        type: "click",
+        handleClickConfirm: deleteModeFn,
+        isOpen: true,
+      });
   };
 
   useEffect(() => {
