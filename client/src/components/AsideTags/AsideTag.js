@@ -12,9 +12,6 @@ const AsideTag = ({
   assignedTags,
 }) => {
   // ====== 리덕스 folderItems 가지고오는 곳 START ======
-  const {
-    page3Storage: { folderItems },
-  } = useSelector((state) => state);
 
   // ====== 리덕스 folderItems 가지고오는 곳 END ======
 
@@ -86,7 +83,7 @@ const AsideTag = ({
 
       {/* 폴더 공간 */}
       {/* FIXME:12/30(목) 마지막 작업 제대로 하기 */}
-      {folderItems?.map((folder) => {
+      {/* {folderItems?.map((folder) => {
         return (
           <FolderMap
             FirstOpacity={FirstOpacity}
@@ -94,7 +91,7 @@ const AsideTag = ({
             folder={folder}
           />
         );
-      })}
+      })} */}
     </>
   );
 };

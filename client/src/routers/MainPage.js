@@ -26,13 +26,13 @@ import GridHeader from "../components/GridHeader";
 import Loader from "../components/SearchBar/Loader";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { Page3Actions } from "../store/reducers/editModalP3";
 // API
-import { GetTotalUrls, Get21Urls, TotalAfter } from "../components/Api";
+import { GetTotalUrls, TotalAfter } from "../components/Api";
 import styled from "styled-components";
 import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
 import ModalHashtag from "../components/ModalHashtag/ModalHashtag";
 import FolderModalWindow from "../components/ModalFolderPage/FolderModalWindow";
+// import ModalPage from "./ModalPage";
 
 export const MainStates = createContext(null);
 
@@ -93,12 +93,9 @@ const MainPage = () => {
   const [target, setTarget] = useState(null);
 
   // FIXME: 리덕스
+  // const isModalWindowOpen = useSelector((state) => state.modal.isModalOpen);
 
   const dispatch = useDispatch();
-
-  const setFolderItemRedux = () => {
-    dispatch(Page3Actions.GetFolderItems());
-  };
 
   // url 클릭하면 그 디테일들 리덕스에 저장하는 기능
   const setUrlDetail = (detail) => {
@@ -112,7 +109,6 @@ const MainPage = () => {
   // FIXME: 폴더 가지고 오기
   useEffect(() => {
     if (token) {
-      setFolderItemRedux();
     }
   }, [token]);
 
@@ -158,22 +154,6 @@ const MainPage = () => {
       });
     }
   }, [token]);
-
-  const {
-    page3Storage: { nowFolder2, nowPage2, folderItems },
-  } = useSelector((state) => state);
-
-  useEffect(() => {
-    setTotalTags(
-      totalTags.map((val) => {
-        nowFolder2?.folder_contents?.includes(val.name) //여기 표현식 써야할 듯
-          ? (val.folderAssigned = 1)
-          : (val.folderAssigned = 0);
-        val.folderAssigned === 1 && console.log(val);
-        return val;
-      })
-    );
-  }, [nowPage2]);
 
   // totalurl 변하면 전체 tag 뽑은 다음에 users에 있는 totaltags수정하기 axios해서
   // FIXME: 문제의 원인이 여기였어
@@ -435,7 +415,7 @@ const MainPage = () => {
           {/* ======================================== 그리드 컨테이너  END  ========================================*/}
           {/* ======================================== 날개 START ========================================*/}
           {/* aside설명 : 여기는 오른쪽 색깔있는 해쉬태그 버튼들 공간 */}
-          {(folderItems?.length !== 0 || assignedTags?.length !== 0) && (
+          {assignedTags?.length !== 0 && (
             <div className="aside">
               <div className="for-filling"></div>
               <div className="aside-tags">
@@ -471,7 +451,6 @@ const MainPage = () => {
               setRealTotalUrls={setRealTotalUrls}
             />
           </div>
-          <div className="shareUrl-container"></div>
           <div className="top-moreUrls-container">
             <TopMore
               likedUrls={likedUrls}
@@ -490,8 +469,8 @@ const MainPage = () => {
           </div>
           <div className="folderModal-container">
             <FolderModalWindow />
+            {/* <ModalPage /> */}
           </div>
-
           {/* ======================================== 모달들 END ======================================== */}
         </MainEl>
         {/* )} */}

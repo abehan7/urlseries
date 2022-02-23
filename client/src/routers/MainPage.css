@@ -186,35 +186,31 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  column-gap: 0.5rem;
 }
+
 .right-icons div {
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 40%;
+  border-radius: 25%;
   padding: 3px;
-  margin-left: 0.3rem;
-  border: 3px solid #fff;
-
-  background-color: #e9ecef;
-}
-
-.right-icons div:hover {
-  /* background-color: #fff; */
-
-  transition: 500ms;
+  border: 2px solid #fff;
+  font-weight: 100;
 }
 
 .right-icons div:active {
-  background-color: rgba(0, 0, 0, 0.05);
-  transition: 500ms;
+  background-color: #fff;
+  transition: 300ms;
 }
 .right-icons div svg {
+  font-weight: 100;
+
   padding: 0;
 }
 .right-icons div.folder-icon svg {
   padding: 0.2rem;
-  font-weight: 800;
+  /* font-weight: 800; */
 }
 
 .addUrl-icon {
@@ -225,17 +221,12 @@ h3 {
   padding: 0.2rem;
 }
 
-.share-write svg:active {
-  color: black;
-}
-
 .delete-mode-click-container {
   display: flex;
   flex-direction: row;
   align-items: center;
   visibility: hidden;
   gap: 10px;
-  opacity: 0;
   /* transform: translate(-40px); */
   /* transform: scale(0); */
   transition: 200ms ease-in-out;
@@ -251,15 +242,11 @@ h3 {
 /* 3개 아이콘 허버되면 투명도 낮아지는거 */
 .delete-mode-click-container div:hover {
   transition: 200ms ease-in-out;
-  /* opacity: 0.4; */
-  /* background-color: rgba(0, 0, 0, 0.07); */
-  /* transition: 200ms; */
 }
 
 /* 속에 있는 작은 아이콘들까지 따로따로 투명도 중첩으로 낮아지는거 방지 */
 .delete-mode-click-container div div:hover,
 .delete-mode-click-container div svg:hover {
-  opacity: 1;
 }
 
 /* .delete-ment {
@@ -273,15 +260,18 @@ h3 {
 }
 
 .delete-icon svg {
-  border-radius: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 25%;
   padding: 3px;
-  border: 3px solid #f3f3f3;
-  background-color: #e9ecef;
+  border: 2px solid #fff;
+  font-weight: 100;
 }
 
-.delete-icon svg:hover {
+.delete-icon svg:active {
   background-color: #fff;
-  transition: 500ms;
+  transition: 300ms;
 }
 
 .delete-icon > div {
@@ -497,7 +487,8 @@ h3 {
 .editUrl-container,
 .shareUrl-container,
 .top-moreUrls-container,
-.hashtagModal-container {
+.hashtagModal-container,
+.folderModal-container {
   display: none;
 }
 

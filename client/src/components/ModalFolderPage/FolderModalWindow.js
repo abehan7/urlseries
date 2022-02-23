@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import styled from "styled-components";
 
 import { MainStates } from "../../routers/MainPage";
@@ -9,7 +15,7 @@ import FolderContainer from "./FolderContainer";
 
 import { IoArrowBackOutline } from "react-icons/io5";
 import FolderDisplay from "./FolderDisplay";
-import { PopupEnable } from "../../Hooks/stopScroll";
+import { PopupEnable, PopupDisable } from "../../Hooks/stopScroll";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ADD_ITEMS,
@@ -25,6 +31,7 @@ import {
 } from "../../store/reducers/Folders";
 import AlertModal from "./AlertModal";
 import { DELETE, LIKE } from "../../contants";
+import { CLOSE_MODAL } from "../../store/reducers/Modal";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
@@ -32,6 +39,10 @@ const FolderModalOverlayEl = styled(ModalOverlay)`
 `;
 
 const ModalWindow = styled.div`
+  transform: ${(props) =>
+    props.isModalWindowOpen ? "translateY(0)" : "translateY(100%)"};
+
+  transition: transform 0.3s ease-in-out;
   position: relative;
   display: flex;
   align-items: center;
@@ -44,17 +55,6 @@ const ModalWindow = styled.div`
   position: relative;
   transition: 300ms;
   cursor: default;
-  column-gap: 1rem;
-`;
-
-const Wrapper = styled.div`
-  display: flex;
-  border-radius: 20px;
-  align-items: center;
-  justify-content: center;
-  width: 1000px;
-  height: 95%;
-  background: #e0e8e7;
   column-gap: 1rem;
 `;
 
@@ -78,6 +78,8 @@ const FolderModalWindow = () => {
   const [isSearching, setIsSearching] = useState(false);
   // 폴더 안에 있는url만 보여주는 기능
   const [isOnlyFolderContents, setIsOnlyFolderContents] = useState(false);
+  // 현재 모달이 열려있는지 여부
+  // const [modalWindowOpen, setModalWindowOpen] = useState(false);
 
   // 모달창에서 사용할 useState
   const [modalInfo, setModalInfo] = useState({
@@ -107,6 +109,7 @@ const FolderModalWindow = () => {
 
   const items = useSelector((state) => state.folderItems.items);
   const folders = useSelector((state) => state.folders.folders);
+  const isModalWindowOpen = useSelector((state) => state.modal.isModalOpen);
 
   const dispatch = useDispatch();
 
@@ -407,15 +410,44 @@ const FolderModalWindow = () => {
     selectMode.mode === DELETE &&
       setModalInfo({
         message: "폴더를 삭제하시겠습니까?",
-        description: "변경하신 후에는 복구할 수 없습니다.",
+        description: "삭제하신 후에는 복구할 수 없습니다.",
         type: "click",
         handleClickConfirm: deleteModeFn,
         isOpen: true,
       });
   };
 
+  const onClickShutModal = () => {
+    const fn = () => {
+      document.querySelector(".folderModal-container").style.display = "none";
+      PopupDisable();
+      setModalInfo({ isOpen: false });
+      dispatch(CLOSE_MODAL());
+      setIsFolderPage(true);
+      setSelectedFolder({});
+      setSelectMode({
+        items: [],
+        status: false,
+        mode: "",
+      });
+      // setModalWindowOpen(false);
+    };
+    setModalInfo({
+      message: "폴더변경을 취소하시겠습니까?",
+      type: "click",
+      handleClickConfirm: fn,
+      isOpen: true,
+    });
+  };
+
   useEffect(() => {
     PopupEnable();
+  }, []);
+
+  useEffect(() => {
+    // setModalWindowOpen(true);
+    // transform: translateY(100%);
+    // modalWindowRef.current.style.
   }, []);
 
   // 검색버튼 클릭하면 폴더버튼 닫히고 검색창으로 넘어가게 하기
@@ -482,11 +514,17 @@ const FolderModalWindow = () => {
     handleClickMultiFoldersConfirm,
   };
 
+  const target = useRef();
+
+  const onClickOutside = (e) => {
+    e.target === target.current && onClickShutModal();
+  };
+
   return (
     <FolderContext.Provider value={initialState}>
-      <FolderModalOverlayEl>
-        <ModalWindow>
-          <Icon>
+      <FolderModalOverlayEl ref={target} onClick={onClickOutside}>
+        <ModalWindow isModalWindowOpen={isModalWindowOpen}>
+          <Icon onClick={onClickShutModal}>
             <IoArrowBackOutline />
           </Icon>
           <EditorContainer />

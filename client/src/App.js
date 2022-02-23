@@ -4,6 +4,7 @@ import Join from "./components/Join/Join";
 import Login from "./components/Login/Login";
 import HeadNav from "./components/Navigator/HeadNav";
 import MainPage from "./routers/MainPage";
+// import ModalPage from "./routers/ModalPage";
 
 export const UserContext = createContext(null);
 
@@ -14,6 +15,9 @@ const App = () => {
     loginUser,
     setLoginUser,
   };
+
+  // const background = location.state && location.state.background;
+
   return (
     <Router>
       <UserContext.Provider value={initialState}>
@@ -22,7 +26,9 @@ const App = () => {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Join />} />
-          <Route path="/" exact={true} element={<MainPage />} />
+          <Route path="/" element={<MainPage />} />
+
+          {/* </Route> */}
         </Routes>
       </UserContext.Provider>
     </Router>
