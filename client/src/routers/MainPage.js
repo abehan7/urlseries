@@ -32,6 +32,7 @@ import styled from "styled-components";
 import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
 import ModalHashtag from "../components/ModalHashtag/ModalHashtag";
 import FolderModalWindow from "../components/ModalFolderPage/FolderModalWindow";
+import { SET_FOLDERS } from "../store/reducers/Folders";
 // import ModalPage from "./ModalPage";
 
 export const MainStates = createContext(null);
@@ -116,6 +117,8 @@ const MainPage = () => {
 
   // const { loginUser } = useContext(UserContext);
 
+  useEffect(() => {}, []);
+
   useEffect(() => {
     // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
     // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
@@ -129,6 +132,7 @@ const MainPage = () => {
         await setRecentSearch(response.data.recentSearched);
         // console.log(response.data);
       });
+      dispatch(SET_FOLDERS());
     }
   }, [token]);
 
@@ -168,7 +172,6 @@ const MainPage = () => {
     setIsLoaded(true);
     await new Promise((resolve) => setTimeout(resolve, 1));
     setItemNum(itemNum + 100);
-
     setIsLoaded(false);
   };
 

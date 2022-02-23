@@ -15,7 +15,7 @@ import FolderContainer from "./FolderContainer";
 
 import { IoArrowBackOutline } from "react-icons/io5";
 import FolderDisplay from "./FolderDisplay";
-import { PopupEnable, PopupDisable } from "../../Hooks/stopScroll";
+import { PopupDisable } from "../../Hooks/stopScroll";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ADD_ITEMS,
@@ -23,15 +23,17 @@ import {
   SET_ITEMS,
 } from "../../store/reducers/FolderItems";
 import {
-  ADD_FOLDER,
   SET_FOLDER_CONTENTS,
   GET_CHANGE_FOLDER_NAME,
   SET_LIKE,
   REMOVE_FOLDER,
+  ADD_FOLDER,
 } from "../../store/reducers/Folders";
 import AlertModal from "./AlertModal";
 import { DELETE, LIKE } from "../../contants";
 import { CLOSE_MODAL } from "../../store/reducers/Modal";
+import { DeleteFolder, updateFolderLike, updateFolderName } from "../Api";
+// import { AddFolder } from "../Api";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
@@ -51,7 +53,7 @@ const ModalWindow = styled.div`
   border-top-right-radius: 20px;
   background-color: #e9ecef;
   height: 75%;
-  width: 100%;
+  width: 700px;
   position: relative;
   transition: 300ms;
   cursor: default;
@@ -163,7 +165,7 @@ const FolderModalWindow = () => {
     const urls = getUrlFullAttr(urlIdList);
     const folderId = selectedFolder._id;
 
-    setSelectedFolder({ ...selectedFolder, folderContents: urls });
+    setSelectedFolder({ ...selectedFolder, folder_contents: urls });
 
     dispatch(SET_FOLDER_CONTENTS({ folderId, urls }));
   };
@@ -183,9 +185,11 @@ const FolderModalWindow = () => {
 
   // 사용자가 폴더 url변경 했는지 안했는지 알려주는 기능
   const CheckChanges = () => {
-    const folderContentsOriginal = selectedFolder.folderContents.map((url) => {
-      return url._id;
-    });
+    const folderContentsOriginal = selectedFolder?.folder_contents?.map(
+      (url) => {
+        return url?._id;
+      }
+    );
     const sortedItems = [...items];
     // 같은 규칙으로 정렬해서 비교해야함
 
@@ -204,8 +208,8 @@ const FolderModalWindow = () => {
   };
 
   const handleClickAddFolder = () => {
-    const fn = (folderName) => {
-      if (folderName === "") {
+    const fn = async (folder_name) => {
+      if (folder_name === "") {
         setModalInfo({
           message: "폴더 이름을 입력해주세요",
           type: "noCancel",
@@ -214,12 +218,21 @@ const FolderModalWindow = () => {
         return;
       }
 
-      const folder = {
-        _id: "123",
-        folderName,
-        folderContents: [],
-      };
-      dispatch(ADD_FOLDER(folder));
+      // const { data } = await AddFolder(folderName);
+
+      // const folder = data;
+
+      // console.log("folder from api", folder);
+
+      // const folder = {
+      //   _id: data._id,
+      //   user_id: data.user_id,
+      //   folderName: data.folder_name,
+      //   folderContents: [],
+      // };
+
+      // dispatch(ADD_FOLDER(folderName));
+      dispatch(ADD_FOLDER(folder_name));
       setModalFolderName("");
       // setModalInfo({
       //   isOpen: false,
@@ -248,8 +261,8 @@ const FolderModalWindow = () => {
   };
 
   const handleClickEditFolder = () => {
-    const fn = (folderName) => {
-      if (folderName === "") {
+    const fn = async (folder_name) => {
+      if (folder_name === "") {
         setSelectedFolder({});
         setModalInfo({
           message: "폴더 이름을 입력해주세요",
@@ -258,18 +271,16 @@ const FolderModalWindow = () => {
         });
         return;
       }
-
       dispatch(
-        GET_CHANGE_FOLDER_NAME({ folderId: selectedFolder._id, folderName })
+        GET_CHANGE_FOLDER_NAME({ folderId: selectedFolder._id, folder_name })
       );
+      updateFolderName(folder_name, selectedFolder._id);
+
       setModalFolderName("");
       setSelectedFolder({});
 
       const message = "변경되었습니다 :)";
       ShowNoticeAlert(message);
-
-      // console.log("selectedFolder: ", selectedFolder._id);
-      // console.log("folderName: ", folderName);
     };
     // 이거를 selectedfolder클릭될 때마다 설정해야해
     console.log("modalFolderName: ", modalFolderName);
@@ -378,6 +389,7 @@ const FolderModalWindow = () => {
     const likeModeFn = () => {
       const likedFolderIdList = selectMode.items;
       dispatch(SET_LIKE({ likedFolderIdList }));
+      updateFolderLike(likedFolderIdList);
       setSelectMode({
         items: [],
         status: false,
@@ -385,9 +397,11 @@ const FolderModalWindow = () => {
       });
       const message = "변경이 완료되었습니다 :)";
       ShowNoticeAlert(message);
+      // console.log(folders);
     };
     const deleteModeFn = () => {
       dispatch(REMOVE_FOLDER(selectMode.items));
+      DeleteFolder(selectMode.items);
       setSelectMode({
         items: [],
         status: false,
@@ -440,16 +454,6 @@ const FolderModalWindow = () => {
     });
   };
 
-  useEffect(() => {
-    PopupEnable();
-  }, []);
-
-  useEffect(() => {
-    // setModalWindowOpen(true);
-    // transform: translateY(100%);
-    // modalWindowRef.current.style.
-  }, []);
-
   // 검색버튼 클릭하면 폴더버튼 닫히고 검색창으로 넘어가게 하기
   useEffect(() => {
     setKeyword("");
@@ -471,7 +475,7 @@ const FolderModalWindow = () => {
 
   useEffect(() => {
     selectedFolder !== undefined &&
-      setModalFolderName(selectedFolder?.folderName);
+      setModalFolderName(selectedFolder?.folder_name);
     selectedFolder === undefined && setModalFolderName("");
   }, [selectedFolder]);
 
@@ -519,6 +523,10 @@ const FolderModalWindow = () => {
   const onClickOutside = (e) => {
     e.target === target.current && onClickShutModal();
   };
+
+  useEffect(() => {
+    console.log(selectedFolder);
+  }, [selectedFolder]);
 
   return (
     <FolderContext.Provider value={initialState}>

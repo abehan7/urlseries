@@ -25,7 +25,7 @@ const FolderSchema = new mongoose.Schema({
     required: true,
     default: getCurrentDate(),
   },
-  folder_liked: {
+  like: {
     type: Boolean,
     required: true,
     default: false,

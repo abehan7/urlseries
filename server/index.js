@@ -25,6 +25,7 @@ const {
   SignUp,
   Login,
   SearchDeleteAll,
+  updateFolderName,
 } = require("./controller/main");
 
 const auth = require("./middleware/auth");
@@ -45,7 +46,7 @@ const corsOptions = {
       callback(new Error("Not Allowed Origin!"));
     }
   },
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   credentials: true,
 };
 
@@ -106,6 +107,8 @@ app.post("/login", Login);
 // [1] ==================================== url수정 용도 put ====================================
 
 app.put("/editUrl", auth, EditUrl);
+
+app.patch("/updateFolderName/:id", auth, updateFolderName);
 
 // [2] ==================================== 태그 수정 put ====================================
 

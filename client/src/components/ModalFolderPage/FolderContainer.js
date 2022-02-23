@@ -115,8 +115,7 @@ const FolderContainer = ({ handleGetId }) => {
   // url클릭 해제
   const handleUnClickUrl = (url) => {
     const processed = items.filter((item) => item !== url._id);
-    dispatch(SET_ITEMS(processed
-      ));
+    dispatch(SET_ITEMS(processed));
   };
 
   // 스크롤 초기화
@@ -142,7 +141,7 @@ const FolderContainer = ({ handleGetId }) => {
     const isContentsSame = CheckChanges();
     const fn = () => {
       setIsFolderContents(!isFolderContents);
-      handleGetId(selectedFolder.folderContents);
+      handleGetId(selectedFolder.folder_contents);
       getReset();
 
       !isFolderContents &&
@@ -196,7 +195,7 @@ const FolderContainer = ({ handleGetId }) => {
       console.log("isSearcing from NotByDB", isSearching);
     };
     const FindFolderContentsFn = () => {
-      const filterd = SearchNotByDB(processed, selectedFolder.folderContents);
+      const filterd = SearchNotByDB(processed, selectedFolder.folder_contents);
       setFilterdItems(filterd);
       setIsSearching(false);
       console.log("isSearcing from NotByDB", isSearching);
@@ -235,7 +234,7 @@ const FolderContainer = ({ handleGetId }) => {
         <TitleEl>
           <TitleName isFolderContents={isFolderContents}>
             {isFolderContents
-              ? selectedFolder?.folderName
+              ? selectedFolder?.folder_name
               : "폴더에 추가할 url을 선택해주세요"}
           </TitleName>
           <SubTitle>
@@ -245,7 +244,7 @@ const FolderContainer = ({ handleGetId }) => {
               ) : (
                 <Description>
                   <TiBackspaceOutline />
-                  <DescTitle>{selectedFolder?.folderName}</DescTitle>
+                  <DescTitle>{selectedFolder?.folder_name}</DescTitle>
                 </Description>
               )}
             </SubTitleEl>
@@ -258,7 +257,7 @@ const FolderContainer = ({ handleGetId }) => {
           {isFolderContents ? (
             // 폴더 url 선택
             <FolderItems
-              FolderContents={selectedFolder.folderContents}
+              FolderContents={selectedFolder.folder_contents}
               handleClickUrl={handleClickUrl}
               handleUnClickUrl={handleUnClickUrl}
             />
@@ -267,7 +266,7 @@ const FolderContainer = ({ handleGetId }) => {
               realTotalUrls={realTotalUrls}
               handleClickUrl={handleClickUrl}
               handleUnClickUrl={handleUnClickUrl}
-              FolderContents={selectedFolder.folderContents}
+              FolderContents={selectedFolder.folder_contents}
             />
           )}
         </ContentEl>
@@ -318,7 +317,7 @@ const FolderItems = ({ FolderContents }) => {
   return (
     <>
       {keyword.length === 0 &&
-        FolderContents.slice(0, contentsNum).map((url, index) => {
+        FolderContents?.slice(0, contentsNum).map((url, index) => {
           if (index === contentsNum - 1) {
             return (
               <TargetEl ref={setTarget} key="thisIsTarget">

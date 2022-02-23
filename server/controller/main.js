@@ -158,9 +158,10 @@ const AddUrl = async (req, res) => {
 
 const AddFolder = async (req, res) => {
   const { user_id } = req.decodedData;
-  const { folder } = req.body;
+  const { folder_name } = req.body;
+  console.log(folder_name);
   const newFolder = new db.Folders({
-    ...folder,
+    folder_name,
     user_id,
   });
 
@@ -304,23 +305,43 @@ const FolderContentsChanged = (req, res) => {
 
 const FolderLiked = (req, res) => {
   const { user_id } = req.decodedData;
-  const { ModifiedList } = req.body;
+  const { folders } = req.body;
+  // folders _id들만 배열로 받아옴
+  const likeQuery = { user_id, _id: { $in: folders } };
+  const dislikeQuery = { user_id, _id: { $nin: folders } };
 
+  const likeOption = {
+    $set: {
+      like: true,
+    },
+  };
+
+  const dislikeOption = {
+    $set: {
+      like: false,
+    },
+  };
   try {
-    ModifiedList.forEach(async (val) => {
-      const query = { _id: val._id, user_id };
-      const option = {
-        $set: {
-          folder_liked: val.folder_liked,
-        },
-      };
-      await db.Folders.updateOne(query, option).exec();
-    });
+    db.Folders.updateMany(likeQuery, likeOption).exec();
+    db.Folders.updateMany(dislikeQuery, dislikeOption).exec();
     console.log("Like Modified!");
   } catch (err) {
     console.log(err);
     res.json(err);
   }
+};
+
+const updateFolderName = async (req, res) => {
+  const { user_id } = req.decodedData;
+  const { id } = req.params;
+  const { folder_name } = req.body;
+
+  const query = { _id: id, user_id };
+  await db.Folders.findById(query, (error, doc) => {
+    doc.folder_name = folder_name;
+    doc.url_updatedDate = getCurrentDate();
+    doc.save();
+  }).clone();
 };
 
 // FIXME: delete
@@ -345,6 +366,7 @@ const DeleteFolder = async (req, res) => {
   const { idList } = req.body;
 
   const query = { _id: idList, user_id };
+
   try {
     await db.Folders.deleteMany(query).exec();
     console.log(`${idList} Folder Deleted!`);
@@ -548,4 +570,5 @@ module.exports = {
   Crawling,
   Login,
   SearchDeleteAll,
+  updateFolderName,
 };

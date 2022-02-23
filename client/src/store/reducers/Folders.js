@@ -1,202 +1,32 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  AddFolder,
+  getFolderItems,
+  updateFolderName,
+} from "../../components/Api";
 
-const folders = [
-  {
-    _id: "5f0f8f9b9c8f8b3f8c8b8b8b",
-    folderName: "crypto",
-    like: false,
-    folderContents: [
-      {
-        url_search: {
-          url_searchClicked: 0,
-          url_searchedDate: "2022-02-12T15:39:57.519Z",
-        },
-        _id: "6207565d8c5d95a8de4f1c85",
-        url: "123123",
-        url_title: "123123",
-        url_hashTags: [],
-        url_memo: "",
-        url_likedUrl: 0,
-        url_clickedNumber: 0,
-        url_firstDate: "2022-02-12T15:39:57.518Z",
-        url_updatedDate: "2022-02-12T15:39:57.519Z",
-        user_id: "61dab50ad3063e55d1d781c3",
-        url_id: 961,
-      },
-      {
-        url_search: {
-          url_searchClicked: 0,
-          url_searchedDate: "2022-02-10T11:59:21.651Z",
-        },
-        _id: "6204ff36f18de3b7078077b8",
-        url: "https://www.youtube.com/watch?v=kDo_MdyNJzI",
-        url_title:
-          "Master Blockchain Programming With JavaScript - Web3.js - YouTube",
-        url_hashTags: ["#유튜브", "#DappUniversity"],
-        url_memo: "",
-        url_likedUrl: 0,
-        url_clickedNumber: 0,
-        url_firstDate: "2022-02-10T11:59:21.650Z",
-        url_updatedDate: "2022-02-10T11:59:21.651Z",
-        user_id: "61dab50ad3063e55d1d781c3",
-        url_id: 960,
-      },
-      {
-        url_search: {
-          url_searchClicked: 0,
-          url_searchedDate: "2022-02-10T11:59:21.651Z",
-        },
-        _id: "6204fe21f18de3b7078077b5",
-        url: "https://youtu.be/8rhueOcTu8k?t=7199",
-        url_title:
-          "Code an Instagram Clone with Blockchain - Ethereum, Solidity, Web3.js, React - YouTube",
-        url_hashTags: ["#유튜브", "#DappUniversity"],
-        url_memo: "",
-        url_likedUrl: 0,
-        url_clickedNumber: 0,
-        url_firstDate: "2022-02-10T11:59:21.650Z",
-        url_updatedDate: "2022-02-10T11:59:21.651Z",
-        user_id: "61dab50ad3063e55d1d781c3",
-        url_id: 959,
-      },
-      {
-        url_search: {
-          url_searchClicked: 0,
-          url_searchedDate: "2022-02-09T13:27:13.036Z",
-        },
-        _id: "6203c144230fce28a60c16c9",
-        url: "https://www.dappuniversity.com/",
-        url_title: "Become An In-Demand Blockchain Master | Dapp University",
-        url_hashTags: ["#dappuniversity"],
-        url_memo: "",
-        url_likedUrl: 0,
-        url_clickedNumber: 0,
-        url_firstDate: "2022-02-09T13:27:13.035Z",
-        url_updatedDate: "2022-02-09T13:27:13.036Z",
-        user_id: "61dab50ad3063e55d1d781c3",
-        url_id: 958,
-      },
-      {
-        url_search: {
-          url_searchClicked: 0,
-          url_searchedDate: "2022-02-09T05:01:56.747Z",
-        },
-        _id: "62034ad350810ea6f5b88fb0",
-        url: "https://www.youtube.com/watch?v=61qUZgdH-aI",
-        url_title: "Cartoon Character Design for Beginners - YouTube",
-        url_hashTags: ["#유튜브", "#ChristopherHart"],
-        url_memo: "",
-        url_likedUrl: 0,
-        url_clickedNumber: 0,
-        url_firstDate: "2022-02-09T05:01:56.747Z",
-        url_updatedDate: "2022-02-09T05:01:56.747Z",
-        user_id: "61dab50ad3063e55d1d781c3",
-        url_id: 957,
-      },
-    ],
-  },
-  {
-    _id: "5f0f8f9b9c8f8b3f8c8b8b8c",
-    folderName: "punk",
-    like: true,
-    folderContents: [
-      {
-        url_search: {
-          url_searchClicked: 0,
-          url_searchedDate: "2022-02-13T13:57:04.753Z",
-        },
-        _id: "620890726874596592b8596b",
-        url: "https://youtu.be/a543mfiz4M8",
-        url_title:
-          "부자 VS 가난한자의 마음가짐 차이 (동기부여, 인생수업, 로버트 기요사키) - YouTube",
-        url_hashTags: ["#유튜브", "#죠쓰JAWWS"],
-        url_memo: "",
-        url_likedUrl: 0,
-        url_clickedNumber: 0,
-        url_firstDate: "2022-02-13T13:57:04.752Z",
-        url_updatedDate: "2022-02-13T13:57:04.753Z",
-        user_id: "61dab50ad3063e55d1d781c3",
-        url_id: 964,
-        __v: 0,
-      },
-      {
-        url_search: {
-          url_searchClicked: 0,
-          url_searchedDate: "2022-02-13T13:57:04.753Z",
-        },
-        _id: "620890536874596592b85968",
-        url: "https://youtu.be/DoA_D6tmo6o",
-        url_title:
-          "UI Design a Dark Mode NFT app in Figma from scratch - YouTube",
-        url_hashTags: ["#유튜브", "#DesignCode"],
-        url_memo: "",
-        url_likedUrl: 0,
-        url_clickedNumber: 0,
-        url_firstDate: "2022-02-13T13:57:04.752Z",
-        url_updatedDate: "2022-02-13T13:57:04.753Z",
-        user_id: "61dab50ad3063e55d1d781c3",
-        url_id: 963,
-        __v: 0,
-      },
-      {
-        url_search: {
-          url_searchClicked: 0,
-          url_searchedDate: "2022-02-13T13:57:04.753Z",
-        },
-        _id: "620890276874596592b8595e",
-        url: "https://youtu.be/eMsko1rvEj4",
-        url_title: "NFT로 1,000억 번 사업가가 알려주는 비밀 무기 - YouTube",
-        url_hashTags: ["#유튜브", "#게리바이너척GaryVaynerchukKorean"],
-        url_memo: "",
-        url_likedUrl: 0,
-        url_clickedNumber: 0,
-        url_firstDate: "2022-02-13T13:57:04.752Z",
-        url_updatedDate: "2022-02-13T13:57:04.753Z",
-        user_id: "61dab50ad3063e55d1d781c3",
-        url_id: 962,
-        __v: 0,
-      },
-      {
-        url_search: {
-          url_searchClicked: 0,
-          url_searchedDate: "2022-02-12T15:39:57.519Z",
-        },
-        _id: "6207565d8c5d95a8de4f1c85",
-        url: "123123",
-        url_title: "123123",
-        url_hashTags: [],
-        url_memo: "",
-        url_likedUrl: 0,
-        url_clickedNumber: 0,
-        url_firstDate: "2022-02-12T15:39:57.518Z",
-        url_updatedDate: "2022-02-12T15:39:57.519Z",
-        user_id: "61dab50ad3063e55d1d781c3",
-        url_id: 961,
-        __v: 0,
-      },
-    ],
-  },
-  {
-    _id: "5f0f8f9b9c8f8b3f8c8b8b8d",
-    folderName: "nft",
-    like: false,
-    folderContents: [],
-  },
-  {
-    _id: "5f0f8f9b9c8f8b3f8c8b8b8e",
-    folderName: "bored Apes bored Apes bored Apes",
-    like: false,
-    folderContents: [],
-  },
-];
+const folders = [];
+
+export const ADD_FOLDER = createAsyncThunk(
+  "folders/ADD_FOLDER", // 액션 이름을 정의해 주도록 합니다.
+  async (folder_name) => {
+    const response = await AddFolder(folder_name);
+    return response.data;
+  }
+);
+
+export const SET_FOLDERS = createAsyncThunk(
+  "folders/SET_FOLDERS", // 액션 이름을 정의해 주도록 합니다.
+  async () => {
+    const response = await getFolderItems();
+    return response.data;
+  }
+);
 
 export const folderSlice = createSlice({
   name: "folders",
   initialState: { folders },
   reducers: {
-    ADD_FOLDER: (state, action) => {
-      state.folders = [action.payload, ...state.folders];
-    },
     REMOVE_FOLDER: (state, action) => {
       const FolderList = action.payload;
       state.folders = state.folders.filter(
@@ -204,33 +34,28 @@ export const folderSlice = createSlice({
       );
     },
 
-    // 이거 하나로 끝내기? ok
     SET_FOLDER_CONTENTS: (state, action) => {
       const { folderId, urls } = action.payload;
       const folder = state.folders.find((folder) => folder._id === folderId);
-      folder.folderContents = urls;
+      folder.folder_contents = urls;
     },
-    // setContent 테스트 후 지우기
-    // 굳이 여기서 실시간으로 넣고 빼고 할 필요는 없을 듯
-    // 아래도 같은 이유
-    // 위에 AddFolder쪽도 여기랑 동일하게 만들기
+
     ADD_CONTENT: (state, action) => {
       const { folderId, urlId } = action.payload;
       const folder = state.folders.find((folder) => folder._id === folderId);
-      folder.folderContents = [...urlId, ...folder.folderContents];
+      folder.folder_contents = [...urlId, ...folder.folder_contents];
     },
-    // setContent 테스트 후 지우기
     REMOVE_CONTENT: (state, action) => {
       const { folderId, urlId } = action.payload;
       const folder = state.folders.find((folder) => folder._id === folderId);
-      folder.folderContents = folder.folderContents.filter(
+      folder.folder_contents = folder.folder_contents.filter(
         (url) => url !== urlId
       );
     },
     GET_CHANGE_FOLDER_NAME: (state, action) => {
-      const { folderId, folderName } = action.payload;
+      const { folderId, folder_name } = action.payload;
       const folder = state.folders.find((folder) => folder._id === folderId);
-      folder.folderName = folderName;
+      folder.folder_name = folder_name;
     },
     SET_LIKE: (state, action) => {
       const { likedFolderIdList } = action.payload;
@@ -240,11 +65,23 @@ export const folderSlice = createSlice({
       });
     },
   },
+
+  extraReducers: {
+    [ADD_FOLDER.fulfilled]: (state, action) => {
+      // console.log(action.payload);
+      const newFolder = action.payload;
+      state.folders = [newFolder, ...state.folders];
+    },
+    [SET_FOLDERS.fulfilled]: (state, action) => {
+      const newFolder = action.payload;
+      console.log("newFolder from set folders", newFolder);
+      state.folders = newFolder;
+    },
+  },
 });
 
 export const {
   SET_FOLDER_CONTENTS,
-  ADD_FOLDER,
   GET_CHANGE_FOLDER_NAME,
   SET_LIKE,
   REMOVE_FOLDER,

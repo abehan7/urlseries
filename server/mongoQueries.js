@@ -526,3 +526,28 @@ db.folders.updateMany(
     },
   }
 );
+
+db.folders.updateMany(
+  { user_id: "hanjk123@gmail.com" },
+  {
+    $set: {
+      user_id: ObjectId("61dab50ad3063e55d1d781c3"),
+    },
+  }
+);
+
+// $set: {
+//   url_memo: "",
+//   url_clickedNumber: "0",
+//   url_likedUrl: 0,
+// },
+
+// 필드 이름 바꾸기
+db.folders.updateMany(
+  {},
+  {
+    $rename: {
+      folder_liked: "like",
+    },
+  }
+);

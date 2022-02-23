@@ -32,17 +32,13 @@ export const Get21Urls = (lastId) => API.post("/get21Urls", { lastId });
 
 export const getFolderItems = () => API.get("/folderItems");
 
-export const LikeConfirmPutAPI = (ModifiedList) =>
-  API.put("/FolderLiked", { ModifiedList });
-
 export const AddUrl = (url, title, hashTags, memo) =>
   API.post("/addUrl", { url, title, hashTags, memo });
 
 export const AddFolder = (folder_name) =>
-  API.post("/addFolder", { folder: { folder_name } });
+  API.post("/addFolder", { folder_name });
 
-export const DeleteFolderAPI = (idList) =>
-  API.post("/deleteFolder", { idList });
+export const DeleteFolder = (idList) => API.post("/deleteFolder", { idList });
 
 export const EditUrlAPI = (url) => API.put("/editUrl", { ...url });
 
@@ -56,6 +52,12 @@ export const FolderContentsChangedAPI = (nowFolder2) =>
 
 export const ChangedAssignedTagAPI = (oneLineTags) =>
   API.put("/ChangedAssignedTag", { oneLineTags });
+
+export const updateFolderName = (folder_name, folder_id) =>
+  API.patch(`/updateFolderName/${folder_id}`, { folder_name });
+
+export const updateFolderLike = (folders) =>
+  API.put("/FolderLiked", { folders });
 
 export const DeleteUrlAPI = (_id) => API.delete(`/deleteUrl/${_id}`);
 

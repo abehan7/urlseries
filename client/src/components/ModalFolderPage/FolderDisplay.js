@@ -170,7 +170,7 @@ const FolderDisplay = ({ handleGetId }) => {
     };
     const NormalModeFn = () => {
       setIsFolderPage(false);
-      handleGetId(selectedFolder.folderContents);
+      handleGetId(selectedFolder.folder_contents);
     };
     selectMode.status && SelectModeFn();
     !selectMode.status && NormalModeFn();
@@ -281,7 +281,7 @@ const Folder = ({ folder, selectedFolder, onClick }) => {
   return (
     <FolderEl key={folder._id} onClick={() => onClick(folder)} isOpen={isOpen}>
       {isOpen ? <FcOpenedFolder /> : <FcFolder />}
-      <FolderName>{folder.folderName}</FolderName>
+      <FolderName>{folder.folder_name}</FolderName>
     </FolderEl>
   );
 };
@@ -304,7 +304,7 @@ const MultiFolder = ({ folder, selectedFolderId, onClick }) => {
   return (
     <FolderEl key={folder._id} onClick={() => onClick(folder)} isOpen={isOpen}>
       {isOpen ? <FcOpenedFolder /> : <FcFolder />}
-      <FolderName>{folder.folderName}</FolderName>
+      <FolderName>{folder.folder_name}</FolderName>
     </FolderEl>
   );
 };

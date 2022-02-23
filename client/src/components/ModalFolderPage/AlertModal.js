@@ -234,7 +234,7 @@ const AddModal = ({ message, handleClickConfirm, handleModalCancel }) => {
         <Input
           placeholder="새 폴더 이름"
           onChange={onChange}
-          value={modalFolderName}
+          value={modalFolderName || ""}
         />
       </InputWrapperEl>
       <ButtonContainer>
