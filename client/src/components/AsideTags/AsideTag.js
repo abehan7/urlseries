@@ -4,7 +4,6 @@ import BoxTagControler from "./BoxTagControler";
 import FolderMap from "./FolderMap";
 
 const AsideTag = ({
-  editMode,
   BoxTags_First,
   setBoxTags_First,
   BoxTags,
@@ -31,21 +30,24 @@ const AsideTag = ({
   const handleClickFolderTag = ({ e, folder }) => {
     setFirstOpacity();
     e.target.classList.toggle("aside-folder-clicked");
-    if (e.target.classList[2] === "aside-folder-clicked") {
+
+    const clickedOnceFn = () => {
       // 여기는 한번 클릭됬을때
       setBoxTags((val) => [...val, ...folder.folder_contents]);
       setBoxTags_First(false);
-    } else {
+    };
+    const clickedSecondFn = () => {
       // 클릭 2번했을 때
       setBoxTags((val) => [...val, ...folder.folder_contents]);
       setBoxTags(
         BoxTags.filter(
-          (tag) => !folder.folder_contents.some((ftag) => ftag === tag)
+          (tag) =>
+            !folder.folder_contents.some((folderTag) => folderTag === tag)
         )
       );
 
       let tmp = BoxTags.filter(
-        (tag) => !folder.folder_contents.some((ftag) => ftag === tag)
+        (tag) => !folder.folder_contents.some((FolderTag) => FolderTag === tag)
       );
       // 이거 되면 전체 해쉬태그 풀려
       tmp.length === 0 && setBoxTags_First(true);
@@ -57,9 +59,10 @@ const AsideTag = ({
       // 그리고 다시 색깔 1로 바꾸기
       tmp.length === 0 && (e.target.style.opacity = "1");
       // tmp.length === 0 && e.target.classList.remove("aside-folder-clicked");
-    }
+    };
 
-    // setBoxTags
+    e.target.classList[2] === "aside-folder-clicked" && clickedOnceFn();
+    e.target.classList[2] !== "aside-folder-clicked" && clickedSecondFn();
   };
 
   return (

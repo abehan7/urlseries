@@ -53,6 +53,7 @@ export const folderSlice = createSlice({
       const folder = state.folders.find((folder) => folder._id === folderId);
       folder.folder_name = folder_name;
     },
+
     SET_LIKE: (state, action) => {
       const { likedFolderIdList } = action.payload;
       state.folders.forEach((folder) => {

@@ -85,7 +85,6 @@ const MainPage = () => {
   const [realTotalUrls, setRealTotalUrls] = useState([]);
   const [deleteMode, setDeleteMode] = useState(false);
   const [topMoreWhat, setTopMoreWhat] = useState(true);
-
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   // 무한스크롤
@@ -295,7 +294,7 @@ const MainPage = () => {
                 deleteMode={deleteMode}
               />
             </div>
-            {BoxTags_First ? (
+            {BoxTags_First && (
               <>
                 <div
                   className="Rectangle left-top RectColor"
@@ -308,7 +307,7 @@ const MainPage = () => {
                       setIsDarkMode(!isDarkMode);
                     }}
                   >
-                    즐겨찾기{" "}
+                    즐겨찾기
                   </h3>
                   <div
                     className="text-container"
@@ -347,8 +346,6 @@ const MainPage = () => {
                   </div>
                 </div>
               </>
-            ) : (
-              <></>
             )}
 
             {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
@@ -384,7 +381,7 @@ const MainPage = () => {
                 <h3>HashTag</h3>
               )}
               <div className="text-three-container">
-                {BoxTags_First ? (
+                {BoxTags_First && (
                   // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
                   <>
                     <TotalUrlMap
@@ -401,7 +398,9 @@ const MainPage = () => {
                       </div>
                     )}
                   </>
-                ) : (
+                )}
+
+                {!BoxTags_First && (
                   // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
                   <UrlsByHashTag
                     realTotalUrls={realTotalUrls}
