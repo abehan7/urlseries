@@ -32,7 +32,12 @@ import {
 import AlertModal from "./AlertModal";
 import { DELETE, LIKE } from "../../contants";
 import { CLOSE_MODAL } from "../../store/reducers/Modal";
-import { DeleteFolder, updateFolderLike, updateFolderName } from "../Api";
+import {
+  DeleteFolder,
+  updateFolderLike,
+  updateFolderName,
+  updateFolderContents,
+} from "../Api";
 // import { AddFolder } from "../Api";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
@@ -166,6 +171,10 @@ const FolderModalWindow = () => {
     const folderId = selectedFolder._id;
 
     setSelectedFolder({ ...selectedFolder, folder_contents: urls });
+
+    console.log("urls from", urls);
+
+    updateFolderContents(folderId, urls);
 
     dispatch(SET_FOLDER_CONTENTS({ folderId, urls }));
   };

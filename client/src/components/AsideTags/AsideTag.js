@@ -11,11 +11,25 @@ const AsideTag = ({
   setBoxTags,
   assignedTags,
 }) => {
-  // ====== 리덕스 folderItems 가지고오는 곳 START ======
+  // FIXME: set redux
+  const folders = useSelector((state) => state.folders.folders);
+  // console.log("folders from asideTags", folders);
 
-  // ====== 리덕스 folderItems 가지고오는 곳 END ======
+  // FIXME: functions
 
-  const ClickFolderTag = ({ e, folder }) => {
+  const setFirstOpacity = () => {
+    // 처음에 한번 누르면 전체 투명도 낮아지는 거
+    if (BoxTags_First) {
+      document.querySelectorAll(".tag").forEach((one) => {
+        one.style.opacity = "0.3";
+        one?.classList?.remove("aside-folder-clicked");
+      });
+      setBoxTags_First(false);
+    }
+  };
+
+  const handleClickFolderTag = ({ e, folder }) => {
+    setFirstOpacity();
     e.target.classList.toggle("aside-folder-clicked");
     if (e.target.classList[2] === "aside-folder-clicked") {
       // 여기는 한번 클릭됬을때
@@ -48,17 +62,6 @@ const AsideTag = ({
     // setBoxTags
   };
 
-  const FirstOpacity = () => {
-    // 처음에 한번 누르면 전체 투명도 낮아지는 거
-    if (BoxTags_First) {
-      document.querySelectorAll(".tag").forEach((one) => {
-        one.style.opacity = "0.3";
-        one?.classList?.remove("aside-folder-clicked");
-      });
-      setBoxTags_First(false);
-    }
-  };
-
   return (
     <>
       {/* 태그 공간 */}
@@ -83,15 +86,14 @@ const AsideTag = ({
 
       {/* 폴더 공간 */}
       {/* FIXME:12/30(목) 마지막 작업 제대로 하기 */}
-      {/* {folderItems?.map((folder) => {
+      {folders?.map((folder) => {
         return (
           <FolderMap
-            FirstOpacity={FirstOpacity}
-            ClickFolderTag={ClickFolderTag}
+            handleClickFolderTag={handleClickFolderTag}
             folder={folder}
           />
         );
-      })} */}
+      })}
     </>
   );
 };

@@ -13,11 +13,10 @@ const {
   AddUrl,
   AddFolder,
   EditUrl,
-  ChangedAssignedTag,
   SearchedUrlBYE,
   ClickedSeachedURL,
   ClickedURLInBox,
-  FolderContentsChanged,
+  updateFolderContents,
   FolderLiked,
   DeleteUrl,
   DeleteFolder,
@@ -29,6 +28,8 @@ const {
 } = require("./controller/main");
 
 const auth = require("./middleware/auth");
+
+const hashtagRouter = require("./routes/hashtags");
 
 dotenv.config({ path: "./.env" });
 // const PORT = process.env.PORT || 3001;
@@ -55,6 +56,7 @@ const app = express();
 app.use(cors(corsOptions));
 // app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
 // const UrlModel = require("./models/Urls");
 // const UsersModel = require("./models/users");
@@ -64,6 +66,10 @@ mongoose.connect(process.env.DATABASE_URL, {
   useUnifiedTopology: true,
 });
 
+// app.use("/folder",);
+app.use("/hashtag", hashtagRouter);
+// app.use("/url");
+// app.use("/user");
 // [1] ==================================== 테스트용도 get ====================================
 app.get("/hithere", async (req, res) => {
   console.log("hi there");
@@ -108,11 +114,11 @@ app.post("/login", Login);
 
 app.put("/editUrl", auth, EditUrl);
 
+// FIXME: 폴더이름 수정
 app.patch("/updateFolderName/:id", auth, updateFolderName);
 
-// [2] ==================================== 태그 수정 put ====================================
-
-app.put("/ChangedAssignedTag", auth, ChangedAssignedTag);
+// FIXME: 태그수정
+// app.patch("/hashtags", auth, updateLikeTags);
 
 // [3] ==================================== 검색어 클릭한거 삭제  (1에서 0으로 수정) put ====================================
 app.put("/searchedUrlBYE", SearchedUrlBYE);
@@ -123,7 +129,7 @@ app.put("/clickedSeachedURL/:_id", ClickedSeachedURL);
 app.put("/clickedURLInBox", ClickedURLInBox);
 
 // [6] ====================================   폴더 해쉬태그 contents 수정하는 put ====================================
-app.put("/folderContentsChanged", auth, FolderContentsChanged);
+app.patch("/folder/contents/:id", auth, updateFolderContents);
 
 // [7] ==================================== 폴더 좋아요 된거 수정 ====================================
 app.put("/FolderLiked", auth, FolderLiked);

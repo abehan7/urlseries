@@ -47,11 +47,11 @@ export const ClickUrl = (url) => API.put("/clickedURLInBox", { url });
 export const ClickedSeachedUrlAPI = (_id) =>
   API.put(`/clickedSeachedURL/${_id}`);
 
-export const FolderContentsChangedAPI = (nowFolder2) =>
-  API.put("/folderContentsChanged", { nowFolder2 });
+export const updateFolderContents = (id, folder_contents) =>
+  API.patch(`/folder/contents/${id}`, { folder_contents });
 
-export const ChangedAssignedTagAPI = (oneLineTags) =>
-  API.put("/ChangedAssignedTag", { oneLineTags });
+export const updateHashtag = (oneLineTags) =>
+  API.patch("/hashtag", { oneLineTags });
 
 export const updateFolderName = (folder_name, folder_id) =>
   API.patch(`/updateFolderName/${folder_id}`, { folder_name });

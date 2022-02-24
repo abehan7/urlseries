@@ -5,7 +5,7 @@ import { HashtagModalScrollUp } from "../../Hooks/ScrollUp";
 import ItemLeft from "./ItemLeft";
 import ItemRight from "./ItemRight";
 import styled from "styled-components";
-import { ChangedAssignedTagAPI } from "../Api";
+import { updateHashtag } from "../Api";
 import ModalWindowEl from "../styled/ModalWindowEl.styled";
 
 const Button = styled.button``;
@@ -140,7 +140,7 @@ const ModalWindow = ({
     const processed = assignedTags.map((tag) => {
       return tag.name;
     });
-    await ChangedAssignedTagAPI(processed);
+    await updateHashtag(processed);
   }, [assignedTags, totalTags]);
 
   const onClickEditBtn = useCallback(async () => {

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const HanshTags2Schema = new mongoose.Schema({
+const HanshTagsSchema = new mongoose.Schema({
   user_id: {
     type: mongoose.Types.ObjectId,
     require: true,
@@ -11,5 +11,5 @@ const HanshTags2Schema = new mongoose.Schema({
   },
 });
 
-const Hashtags2 = mongoose.model("hashtags2", HanshTags2Schema);
-module.exports = Hashtags2;
+const Hashtags = mongoose.model("hashtags2", HanshTagsSchema);
+module.exports = Hashtags;

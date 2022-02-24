@@ -30,7 +30,7 @@ const TotalAfter = async (req, res) => {
 
   totalAfter = await db.Urls.find(query).sort({ _id: -1 });
 
-  const { hashtag_assigned } = await db.Hashtags2.findOne(query, {
+  const { hashtag_assigned } = await db.Hashtags.findOne(query, {
     hashtag_assigned: 1,
   });
 
@@ -192,26 +192,6 @@ const EditUrl = async (req, res) => {
   }
 };
 
-const ChangedAssignedTag = async (req, res) => {
-  const { oneLineTags } = req.body;
-  console.log(oneLineTags);
-  try {
-    await db.Hashtags2.updateOne(
-      { user_id: "hanjk123@gmail.com" },
-      {
-        $set: {
-          hashtag_assigned: oneLineTags,
-        },
-      }
-    ).then((response) => {
-      console.log(response);
-      console.log("data changed seccessfully!");
-    });
-  } catch (err) {
-    console.log(err);
-  }
-};
-
 const SearchedUrlBYE = async (req, res) => {
   const { url } = req.body;
   try {
@@ -275,14 +255,15 @@ const ClickedURLInBox = async (req, res) => {
   }
 };
 
-const FolderContentsChanged = (req, res) => {
-  const {
-    nowFolder2: { _id, folder_contents },
-  } = req.body;
+const updateFolderContents = async (req, res) => {
+  const { folder_contents } = req.body;
   const { user_id } = req.decodedData;
-  console.log(_id, folder_contents);
+  const { id } = req.params;
 
-  const query = { _id: _id, user_id };
+  const urlTitles = folder_contents.map((url) => url.url_title); // 그냥 확인용
+  console.log(urlTitles);
+
+  const query = { _id: id, user_id };
 
   const update = {
     $set: {
@@ -293,9 +274,8 @@ const FolderContentsChanged = (req, res) => {
   const options = { returnOriginal: false };
 
   try {
-    db.Folders.findOneAndUpdate(query, update, options).exec();
+    await db.Folders.findOneAndUpdate(query, update, options).exec();
     console.log("contents changed successfully!");
-    res.send("contents changed successfully!");
   } catch (err) {
     console.log("contents NOT changed");
     console.log(err);
@@ -303,7 +283,7 @@ const FolderContentsChanged = (req, res) => {
   }
 };
 
-const FolderLiked = (req, res) => {
+const FolderLiked = async (req, res) => {
   const { user_id } = req.decodedData;
   const { folders } = req.body;
   // folders _id들만 배열로 받아옴
@@ -321,9 +301,10 @@ const FolderLiked = (req, res) => {
       like: false,
     },
   };
+
   try {
-    db.Folders.updateMany(likeQuery, likeOption).exec();
-    db.Folders.updateMany(dislikeQuery, dislikeOption).exec();
+    await db.Folders.updateMany(likeQuery, likeOption).exec();
+    await db.Folders.updateMany(dislikeQuery, dislikeOption).exec();
     console.log("Like Modified!");
   } catch (err) {
     console.log(err);
@@ -487,7 +468,7 @@ const SignUp = async (req, res) => {
     user_id,
   });
 
-  const InitHashtags = new db.Hashtags2({
+  const InitHashtags = new db.Hashtags({
     user_id,
   });
 
@@ -559,11 +540,10 @@ module.exports = {
   AddUrl,
   AddFolder,
   EditUrl,
-  ChangedAssignedTag,
   SearchedUrlBYE,
   ClickedSeachedURL,
   ClickedURLInBox,
-  FolderContentsChanged,
+  updateFolderContents,
   FolderLiked,
   DeleteUrl,
   DeleteFolder,

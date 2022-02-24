@@ -1,9 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {
-  AddFolder,
-  getFolderItems,
-  updateFolderName,
-} from "../../components/Api";
+import { AddFolder, getFolderItems } from "../../components/Api";
 
 const folders = [];
 
