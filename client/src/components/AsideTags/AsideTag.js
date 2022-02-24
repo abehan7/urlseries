@@ -1,5 +1,11 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { getFolders } from "../../store/reducers/Folders";
+import {
+  getFolderTagItems,
+  REMOVE_FOLDER_TAGS,
+  SET_FOLDER_TAGS,
+} from "../../store/reducers/Tags";
 import BoxTagControler from "./BoxTagControler";
 import FolderMap from "./FolderMap";
 
@@ -11,7 +17,11 @@ const AsideTag = ({
   assignedTags,
 }) => {
   // FIXME: set redux
-  const folders = useSelector((state) => state.folders.folders);
+
+  const folders = useSelector(getFolders);
+  const folderTagItems = useSelector(getFolderTagItems);
+
+  const dispatch = useDispatch();
   // console.log("folders from asideTags", folders);
 
   // FIXME: functions
@@ -27,42 +37,16 @@ const AsideTag = ({
     }
   };
 
-  const handleClickFolderTag = ({ e, folder }) => {
-    setFirstOpacity();
-    e.target.classList.toggle("aside-folder-clicked");
-
+  const handleClickFolderTag = (folder) => {
     const clickedOnceFn = () => {
-      // 여기는 한번 클릭됬을때
-      setBoxTags((val) => [...val, ...folder.folder_contents]);
-      setBoxTags_First(false);
+      dispatch(SET_FOLDER_TAGS(folder._id));
     };
     const clickedSecondFn = () => {
-      // 클릭 2번했을 때
-      setBoxTags((val) => [...val, ...folder.folder_contents]);
-      setBoxTags(
-        BoxTags.filter(
-          (tag) =>
-            !folder.folder_contents.some((folderTag) => folderTag === tag)
-        )
-      );
-
-      let tmp = BoxTags.filter(
-        (tag) => !folder.folder_contents.some((FolderTag) => FolderTag === tag)
-      );
-      // 이거 되면 전체 해쉬태그 풀려
-      tmp.length === 0 && setBoxTags_First(true);
-      // 하나도 업승면 전체 찐하게
-      tmp.length === 0 &&
-        document.querySelectorAll(".tag").forEach((one) => {
-          one.style.opacity = "1";
-        });
-      // 그리고 다시 색깔 1로 바꾸기
-      tmp.length === 0 && (e.target.style.opacity = "1");
-      // tmp.length === 0 && e.target.classList.remove("aside-folder-clicked");
+      dispatch(REMOVE_FOLDER_TAGS(folder._id));
     };
-
-    e.target.classList[2] === "aside-folder-clicked" && clickedOnceFn();
-    e.target.classList[2] !== "aside-folder-clicked" && clickedSecondFn();
+    console.log(folder);
+    !folderTagItems.includes(folder?._id) && clickedOnceFn();
+    folderTagItems.includes(folder?._id) && clickedSecondFn();
   };
 
   return (
@@ -90,10 +74,12 @@ const AsideTag = ({
       {/* 폴더 공간 */}
       {/* FIXME:12/30(목) 마지막 작업 제대로 하기 */}
       {folders?.map((folder) => {
+        const clicked = folderTagItems.includes(folder._id);
         return (
           <FolderMap
             handleClickFolderTag={handleClickFolderTag}
             folder={folder}
+            clicked={clicked}
           />
         );
       })}

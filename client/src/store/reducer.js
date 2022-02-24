@@ -7,6 +7,7 @@ import folderItemsReducer from "./reducers/FolderItems";
 import SearchResults from "./reducers/SearchResults";
 import folderConditionsReducer from "./reducers/FolderConditions";
 import modalReducer from "./reducers/Modal";
+import tagReducer from "./reducers/Tags";
 
 const rootReducer = combineReducers({
   edit: filterdTags,
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   folderItems: folderItemsReducer,
   folderConditions: folderConditionsReducer,
   modal: modalReducer,
+  tags: tagReducer,
 });
 
 export default rootReducer;

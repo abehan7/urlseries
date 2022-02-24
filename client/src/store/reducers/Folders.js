@@ -84,4 +84,7 @@ export const {
   REMOVE_FOLDER,
 } = folderSlice.actions;
 
+// Selectors
+export const getFolders = (state) => state.folders.folders;
+
 export default folderSlice.reducer;

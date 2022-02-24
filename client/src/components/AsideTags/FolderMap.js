@@ -1,35 +1,34 @@
 import React from "react";
 import { AiOutlineFolder } from "react-icons/ai";
+import styled from "styled-components";
 
-const FolderMap = ({ handleClickFolderTag, folder }) => {
-  const folderIconStyle_v2 = {
-    pointerEvents: "none",
-    display: "flex",
-    paddingRight: "3px",
-  };
-  const folderTagStyle = {};
+const FolderMapEl = styled.span`
+  opacity: ${(props) => (props.clicked ? "0.3" : "1")};
+  transition: 100ms;
+`;
+const Icon = styled.div`
+  pointer-events: "none";
+  display: flex;
+  padding-right: 3px;
+`;
 
-  const onClick = (e) => {
-    // BoxTags_First가 true면 아직 클릭 안했다는 의미
-    // FirstOpacity();
-    // 선택에 따라서 색깔변화
-    e.target.style.opacity === "0.3" && (e.target.style.opacity = "1");
-    e.target.style.opacity !== "0.3" && (e.target.style.opacity = "0.3");
-    handleClickFolderTag({ e, folder });
+const FolderMap = ({ handleClickFolderTag, folder, clicked }) => {
+  const onClick = () => {
+    handleClickFolderTag(folder);
   };
   return (
     <>
       {folder.like && (
-        <span
+        <FolderMapEl
           className="tag folder-tag"
-          style={folderTagStyle}
           onClick={onClick}
+          clicked={clicked}
         >
-          <div className="folder-tag-icon" style={folderIconStyle_v2}>
+          <Icon className="folder-tag-icon">
             <AiOutlineFolder />
-          </div>
+          </Icon>
           {folder.folder_name}
-        </span>
+        </FolderMapEl>
       )}
     </>
   );
