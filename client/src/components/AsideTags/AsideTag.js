@@ -1,41 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import { getFolders } from "../../store/reducers/Folders";
 import {
   getFolderTagItems,
+  getIsClicked,
+  getMetaTagItems,
   REMOVE_FOLDER_TAGS,
+  REMOVE_META_TAGS,
+  SET_CLICKED,
   SET_FOLDER_TAGS,
+  SET_META_TAGS,
 } from "../../store/reducers/Tags";
-import BoxTagControler from "./BoxTagControler";
-import FolderMap from "./FolderMap";
+import FolderTag from "./FolderTag";
 
-const AsideTag = ({
-  BoxTags_First,
-  setBoxTags_First,
-  BoxTags,
-  setBoxTags,
-  assignedTags,
-}) => {
+const Tag = styled.span`
+  ${({ isClicked }) => !isClicked && `opacity: 1;`}
+  ${({ isClicked, clicked }) => isClicked && !clicked && `opacity: 0.3;`}
+  ${({ isClicked, clicked }) => isClicked && clicked && `opacity: 1;`}
+
+  transition: 100ms;
+`;
+
+const AsideTag = ({ assignedTags }) => {
+  // const [isClicked, setisClicked] = useState(false);
   // FIXME: set redux
 
   const folders = useSelector(getFolders);
   const folderTagItems = useSelector(getFolderTagItems);
+  const metaTagItems = useSelector(getMetaTagItems);
+  const isClicked = useSelector(getIsClicked);
 
   const dispatch = useDispatch();
-  // console.log("folders from asideTags", folders);
 
   // FIXME: functions
-
-  const setFirstOpacity = () => {
-    // 처음에 한번 누르면 전체 투명도 낮아지는 거
-    if (BoxTags_First) {
-      document.querySelectorAll(".tag").forEach((one) => {
-        one.style.opacity = "0.3";
-        one?.classList?.remove("aside-folder-clicked");
-      });
-      setBoxTags_First(false);
-    }
-  };
 
   const handleClickFolderTag = (folder) => {
     const clickedOnceFn = () => {
@@ -44,42 +42,64 @@ const AsideTag = ({
     const clickedSecondFn = () => {
       dispatch(REMOVE_FOLDER_TAGS(folder._id));
     };
-    console.log(folder);
+    // console.log(folder);
     !folderTagItems.includes(folder?._id) && clickedOnceFn();
     folderTagItems.includes(folder?._id) && clickedSecondFn();
   };
+
+  const handleClickMetaTag = (metaTag) => {
+    const clickedOnceFn = () => {
+      dispatch(SET_META_TAGS(metaTag));
+    };
+    const clickedSecondFn = () => {
+      dispatch(REMOVE_META_TAGS(metaTag));
+    };
+    // console.log(metaTag);
+    !metaTagItems.includes(metaTag) && clickedOnceFn();
+    metaTagItems.includes(metaTag) && clickedSecondFn();
+  };
+
+  const handleSetClicked = (boolean) => {
+    dispatch(SET_CLICKED(boolean));
+  };
+
+  useEffect(() => {
+    metaTagItems.length === 0 &&
+      folderTagItems.length === 0 &&
+      handleSetClicked(false);
+
+    (metaTagItems.length !== 0 || folderTagItems.length !== 0) &&
+      handleSetClicked(true);
+  }, [metaTagItems, folderTagItems]);
 
   return (
     <>
       {/* 태그 공간 */}
       {assignedTags.map((tag) => {
+        const clicked = metaTagItems.includes(tag.name);
         return (
-          <span
+          <Tag
             className="tag"
-            onClick={(e) => {
-              BoxTagControler({
-                e,
-                BoxTags_First,
-                setBoxTags_First,
-                BoxTags,
-                setBoxTags,
-              });
-            }}
+            onClick={() => handleClickMetaTag(tag.name)}
+            key={tag.name}
+            clicked={clicked}
+            isClicked={isClicked}
           >
             {tag.name}
-          </span>
+          </Tag>
         );
       })}
 
       {/* 폴더 공간 */}
-      {/* FIXME:12/30(목) 마지막 작업 제대로 하기 */}
       {folders?.map((folder) => {
         const clicked = folderTagItems.includes(folder._id);
         return (
-          <FolderMap
+          <FolderTag
             handleClickFolderTag={handleClickFolderTag}
             folder={folder}
             clicked={clicked}
+            key={folder._id}
+            isClicked={isClicked}
           />
         );
       })}

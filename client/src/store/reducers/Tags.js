@@ -11,7 +11,7 @@ const TagSlice = createSlice({
   initialState: tags,
   reducers: {
     SET_META_TAGS: (state, action) => {
-      state.metaTagItems = action.payload;
+      state.metaTagItems.push(action.payload);
       state.isMetaTag = true;
     },
     SET_FOLDER_TAGS: (state, action) => {
@@ -26,6 +26,11 @@ const TagSlice = createSlice({
         (item) => item !== action.payload
       );
     },
+    REMOVE_META_TAGS: (state, action) => {
+      state.metaTagItems = state.metaTagItems.filter(
+        (item) => item !== action.payload
+      );
+    },
   },
 });
 
@@ -35,6 +40,7 @@ export const {
   SET_FOLDER_TAGS,
   SET_CLICKED,
   REMOVE_FOLDER_TAGS,
+  REMOVE_META_TAGS,
 } = TagSlice.actions;
 
 // Selectors

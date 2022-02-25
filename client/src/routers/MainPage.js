@@ -33,6 +33,7 @@ import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
 import ModalHashtag from "../components/ModalHashtag/ModalHashtag";
 import FolderModalWindow from "../components/ModalFolderPage/FolderModalWindow";
 import { SET_FOLDERS } from "../store/reducers/Folders";
+import { getIsClicked } from "../store/reducers/Tags";
 // import ModalPage from "./ModalPage";
 
 export const MainStates = createContext(null);
@@ -102,6 +103,7 @@ const MainPage = () => {
     dispatch(UrlDetailActions.SetClickedUrl(detail));
   };
 
+  const tagIsClicked = useSelector(getIsClicked);
   // FIXME: 토큰 있으면 데이터 가져오기
 
   const token = localStorage.getItem("accessToken");
@@ -294,12 +296,12 @@ const MainPage = () => {
                 deleteMode={deleteMode}
               />
             </div>
-            {BoxTags_First && (
+            {!tagIsClicked && (
               <>
                 <div
                   className="Rectangle left-top RectColor"
                   style={
-                    BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                    !tagIsClicked && !editMode ? MkColorTopRect : emptyStyle
                   }
                 >
                   <h3
@@ -326,7 +328,7 @@ const MainPage = () => {
                 <div
                   className="Rectangle right-top RectColor"
                   style={
-                    BoxTags_First && !editMode ? MkColorTopRect : emptyStyle
+                    !tagIsClicked && !editMode ? MkColorTopRect : emptyStyle
                   }
                 >
                   <h3>최근기록</h3>
@@ -351,14 +353,7 @@ const MainPage = () => {
             {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
             <div className="minisize-tags aside-tags">
               {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
-              <AsideTag
-                editMode={editMode}
-                BoxTags_First={BoxTags_First}
-                setBoxTags_First={setBoxTags_First}
-                BoxTags={BoxTags}
-                setBoxTags={setBoxTags}
-                assignedTags={assignedTags}
-              />
+              <AsideTag assignedTags={assignedTags} />
             </div>
             <div
               className="Big_Rect RectColor"
@@ -370,18 +365,18 @@ const MainPage = () => {
               {/* 전체 URL이라는 h3가 HashTag라고 바뀜  */}
               {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
               {editMode ? (
-                BoxTags_First ? (
+                !tagIsClicked ? (
                   <GridHeader />
                 ) : (
                   <h3>HashTag</h3>
                 )
-              ) : BoxTags_First ? (
+              ) : !tagIsClicked ? (
                 <h3>에디터모드입니다</h3>
               ) : (
                 <h3>HashTag</h3>
               )}
               <div className="text-three-container">
-                {BoxTags_First && (
+                {!tagIsClicked && (
                   // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
                   <>
                     <TotalUrlMap
@@ -400,12 +395,11 @@ const MainPage = () => {
                   </>
                 )}
 
-                {!BoxTags_First && (
+                {tagIsClicked && (
                   // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
                   <UrlsByHashTag
                     realTotalUrls={realTotalUrls}
                     setRealTotalUrls={setRealTotalUrls}
-                    BoxTags={BoxTags}
                     editMode={editMode}
                     deleteMode={deleteMode}
                     setMyFav={setMyFav}
@@ -421,15 +415,8 @@ const MainPage = () => {
             <div className="aside">
               <div className="for-filling"></div>
               <div className="aside-tags">
-                {/* 전체 url들의 해쉬태그들 뿌려주는 공간*/}
-                <AsideTag
-                  editMode={editMode}
-                  BoxTags_First={BoxTags_First}
-                  setBoxTags_First={setBoxTags_First}
-                  BoxTags={BoxTags}
-                  setBoxTags={setBoxTags}
-                  assignedTags={assignedTags}
-                />
+                {/* 전체 url들의 해쉬태그들 매핑하는 공간*/}
+                <AsideTag assignedTags={assignedTags} />
               </div>
             </div>
           )}
@@ -471,11 +458,9 @@ const MainPage = () => {
           </div>
           <div className="folderModal-container">
             <FolderModalWindow />
-            {/* <ModalPage /> */}
           </div>
           {/* ======================================== 모달들 END ======================================== */}
         </MainEl>
-        {/* )} */}
       </MainStates.Provider>
     </>
   );

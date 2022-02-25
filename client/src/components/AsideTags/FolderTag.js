@@ -2,36 +2,41 @@ import React from "react";
 import { AiOutlineFolder } from "react-icons/ai";
 import styled from "styled-components";
 
-const FolderMapEl = styled.span`
-  opacity: ${(props) => (props.clicked ? "0.3" : "1")};
+const FolderTagEl = styled.span`
+  ${({ isClicked }) => !isClicked && `opacity: 1;`}
+  ${({ isClicked, clicked }) => isClicked && !clicked && `opacity: 0.3;`}
+  ${({ isClicked, clicked }) => isClicked && clicked && `opacity: 1;`}
+
   transition: 100ms;
 `;
 const Icon = styled.div`
   pointer-events: "none";
   display: flex;
   padding-right: 3px;
+  font-weight: 100;
 `;
 
-const FolderMap = ({ handleClickFolderTag, folder, clicked }) => {
+const FolderTag = ({ handleClickFolderTag, folder, clicked, isClicked }) => {
   const onClick = () => {
     handleClickFolderTag(folder);
   };
   return (
     <>
       {folder.like && (
-        <FolderMapEl
+        <FolderTagEl
           className="tag folder-tag"
           onClick={onClick}
           clicked={clicked}
+          isClicked={isClicked}
         >
           <Icon className="folder-tag-icon">
             <AiOutlineFolder />
           </Icon>
           {folder.folder_name}
-        </FolderMapEl>
+        </FolderTagEl>
       )}
     </>
   );
 };
 
-export default FolderMap;
+export default FolderTag;

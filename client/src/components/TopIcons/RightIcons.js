@@ -8,7 +8,7 @@ import styled from "styled-components";
 import { TopTwoRectsEditModeScrollUp } from "../../Hooks/ScrollUp";
 import { PopupEnable } from "../../Hooks/stopScroll";
 
-import { RefreshBtn } from "../AsideTags/BoxTagControler";
+// import { RefreshBtn } from "../AsideTags/BoxTagControler";
 import { useDispatch } from "react-redux";
 
 import { OPEN_MODAL } from "../../store/reducers/Modal";
@@ -48,7 +48,7 @@ const RightIcons = ({
     // #@#@#@#@#@#@#@#@#@#@여기가 전체 태그 풀어주는 곳 START #@#@#@#@#@#@#@#@#@#@
     // BoxTags_First 처음값 true
     if (!BoxTags_First) {
-      RefreshBtn({ setBoxTags_First, setBoxTags });
+      // RefreshBtn({ setBoxTags_First, setBoxTags });
       return;
     }
     // #@#@#@#@#@#@#@#@#@#@여기가 전체 태그 풀어주는 곳 END #@#@#@#@#@#@#@#@#@#@
