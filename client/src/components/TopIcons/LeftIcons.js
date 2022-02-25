@@ -5,158 +5,43 @@ import {
   IoCheckmarkCircleSharp,
 } from "react-icons/io5";
 import { MdOutlineDeleteForever } from "react-icons/md";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { MainStates } from "../../routers/MainPage";
 
-const LeftIcons = ({
-  editMode,
-  deleteMode,
-  setDeleteMode,
-  getUrls,
-  setGetUrls,
-  realTotalUrls,
-  setRealTotalUrls,
-  BoxTags_First,
-}) => {
-  const { edit } = useSelector((state) => state);
-  const { likedUrls, setLikedUrls, mostClickedUrls, setMostClickedUrls } =
-    useContext(MainStates);
+import styled from "styled-components";
+import {
+  ADD_TAG_FILTERD_ITEMS,
+  getTagTotalItems,
+  GET_CLEAR_TAG_FILTERD_ITEMS,
+} from "../../store/reducers/urls";
 
+const LeftIcons = ({ editMode, deleteMode, setDeleteMode, realTotalUrls }) => {
+  const tagTotalItems = useSelector(getTagTotalItems);
+  const dispatch = useDispatch();
   // FIXME: 클릭된 URL들 콘솔
-  useEffect(() => {
-    // console.log("props테스트");
-    // console.log(edit);
-    AllReset();
-  }, [edit]);
 
   // FIXME: 전체 클릭 버튼
   const handleClickTotal = () => {
-    if (!BoxTags_First) {
-      realTotalUrls.forEach((val) => {
-        edit.includes(val._id) && (val.clicked = true);
-      });
-      setRealTotalUrls([...realTotalUrls]);
-    } else {
-      getUrls.forEach((val) => {
-        val.clicked = true;
-      });
-      setGetUrls([...getUrls]);
-    }
+    dispatch(ADD_TAG_FILTERD_ITEMS(tagTotalItems));
   };
 
   // FIXME: 전체 클릭 풀기 버튼
   const handleClickOff = () => {
-    if (!BoxTags_First) {
-      realTotalUrls.forEach((val) => {
-        val.clicked = false;
-      });
-      setRealTotalUrls([...realTotalUrls]);
-    } else {
-      getUrls.forEach((val) => {
-        val.clicked = false;
-      });
-      setGetUrls([...getUrls]);
-    }
+    dispatch(GET_CLEAR_TAG_FILTERD_ITEMS());
   };
 
   // FIXME: 삭제하기
 
-  // 삭제할 리스트들 뽑기
-  const FilterdId = () => {
-    let DeleteList = [];
+  const handleDelete = () => {};
 
-    const methodDelete = (urlList) => {
-      urlList.forEach((val) => {
-        val.clicked === true && DeleteList.push(val._id);
-      });
-    };
-
-    // 태그 클릭 안된경우
-    BoxTags_First && methodDelete(getUrls);
-    // 태그 클릭 된경우
-    !BoxTags_First && methodDelete(realTotalUrls);
-
-    return DeleteList;
-  };
-
-  // 삭제하기
-  const MakeDelete = (deleteList) => {
-    for (const element of [
-      [setRealTotalUrls, realTotalUrls],
-      [setGetUrls, getUrls],
-      [setLikedUrls, likedUrls],
-      [setMostClickedUrls, mostClickedUrls],
-    ]) {
-      element[0](
-        element[1].filter((val) => {
-          return !deleteList.includes(val._id);
-        })
-      );
-    }
-
-    // setRealTotalUrls(
-    //   realTotalUrls.filter((val) => {
-    //     return !deleteList.includes(val._id);
-    //   })
-    // );
-  };
-
-  const handleDelete = () => {
-    let DeleteList = FilterdId();
-    DeleteList.length > 0 && MakeDelete(DeleteList);
-    // console.log(DeleteList);
-
-    // realTotalUrls
-  };
-
-  // FIXME: 클릭한거 리셋
-
-  // 전체 리스트 리셋
-  const AllReset = useCallback(() => {
-    realTotalUrls.forEach((val) => {
-      val.clicked = false;
-    });
-    setRealTotalUrls([...realTotalUrls]);
-    getUrls.forEach((val) => {
-      val.clicked = false;
-    });
-    setGetUrls([...getUrls]);
-  }, [realTotalUrls, getUrls]);
-
-  // delete모드 풀리면 클릭 리셋
-  useEffect(() => {
-    !deleteMode && AllReset();
-  }, [deleteMode]);
-
-  // 태그 클릭한 리스트들만 리셋
-  const ResetTags = useCallback(() => {
-    realTotalUrls.forEach((val) => {
-      val.clicked = false;
-    });
-  }, [realTotalUrls]);
-
-  // 태그 클릭 안한 상태 리셋
-  const ResetBigRect = useCallback(() => {
-    getUrls.forEach((val) => {
-      val.clicked = false;
-    });
-  }, [getUrls]);
-
-  useEffect(() => {
-    !editMode && deleteMode && BoxTags_First && ResetTags();
-    !editMode && deleteMode && !BoxTags_First && ResetBigRect();
-  }, [BoxTags_First]);
+  console.log();
 
   // FIXME: 리셋
   // 스타일
   const TrashCanSlideStyle = {
     display: "flex",
     visibility: "visible",
-    // transform: "translate(0px)",
-    // transform: scale(0)
-
     opacity: "1",
-
     borderRadius: "20px",
   };
   const style2 = {};

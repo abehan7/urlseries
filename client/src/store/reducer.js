@@ -8,6 +8,7 @@ import SearchResults from "./reducers/SearchResults";
 import folderConditionsReducer from "./reducers/FolderConditions";
 import modalReducer from "./reducers/Modal";
 import tagReducer from "./reducers/Tags";
+import urlReducer from "./reducers/urls";
 
 const rootReducer = combineReducers({
   edit: filterdTags,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   folderConditions: folderConditionsReducer,
   modal: modalReducer,
   tags: tagReducer,
+  urls: urlReducer,
 });
 
 export default rootReducer;

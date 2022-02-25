@@ -12,7 +12,7 @@ export const duplicateUrlChecker = (duplicatedList) => {
     !duplicateCheck(url) && filterd.push(url);
   });
 
-  console.log("filterd", filterd);
-
   return filterd;
 };
+
+export const duplicateListChecker = (duplicatedList) => {};
