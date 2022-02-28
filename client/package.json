@@ -71,6 +71,10 @@
     "webpack-dev-server": "^4.7.3",
     "webpack-manifest-plugin": "^4.1.1",
     "workbox-webpack-plugin": "^6.4.2"
+
+
+
+    
   },
   "scripts": {
     "start": "react-scripts start",
