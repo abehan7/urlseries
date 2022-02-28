@@ -32,9 +32,11 @@ const TotalAfter = async (req, res) => {
 
   totalAfter = await db.Urls.find(query).sort({ _id: -1 });
 
-  const { hashtag_assigned } = await db.Hashtags.findOne(query, {
+  const tags = await db.Hashtags.findOne(query, {
     hashtag_assigned: 1,
   });
+
+  const hashtag_assigned = tags?.hashtag_assigned;
 
   res.json({
     totalAfter,
@@ -76,7 +78,7 @@ const TotalURL = async (req, res) => {
 };
 
 const FolderItems = async (req, res) => {
-  const { user_id } = req.user;
+  const user_id = req.user.id;
   await db.Folders.find({ user_id })
     .sort({ _id: -1 })
     .then((response) => {
@@ -125,7 +127,7 @@ const SearchDeleteAll = async (req, res) => {
 };
 
 const Get21Urls = async (req, res) => {
-  const { user_id } = req.user;
+  const user_id = req.user.id;
   console.log(user_id);
   await db.Urls.find({
     user_id: user_id,
@@ -163,7 +165,9 @@ const AddUrl = async (req, res) => {
 };
 
 const AddFolder = async (req, res) => {
-  const { user_id } = req.user;
+  const user_id = req.user.id;
+  console.log("user_id: ", user_id);
+
   const { folder_name } = req.body;
   console.log(folder_name);
   const newFolder = new db.Folders({
@@ -176,7 +180,7 @@ const AddFolder = async (req, res) => {
 };
 
 const EditUrl = async (req, res) => {
-  const { user_id } = req.user;
+  const user_id = req.user.id;
   console.log(user_id);
   console.log(req.body);
 
@@ -263,7 +267,7 @@ const ClickedURLInBox = async (req, res) => {
 
 const updateFolderContents = async (req, res) => {
   const { folder_contents } = req.body;
-  const { user_id } = req.user;
+  const user_id = req.user.id;
   const { id } = req.params;
 
   const urlTitles = folder_contents.map((url) => url.url_title); // 그냥 확인용
@@ -290,7 +294,7 @@ const updateFolderContents = async (req, res) => {
 };
 
 const FolderLiked = async (req, res) => {
-  const { user_id } = req.user;
+  const user_id = req.user.id;
   const { folders } = req.body;
   // folders _id들만 배열로 받아옴
   const likeQuery = { user_id, _id: { $in: folders } };
@@ -349,7 +353,7 @@ const DeleteUrl = async (req, res) => {
 };
 
 const DeleteFolder = async (req, res) => {
-  const { user_id } = req.user;
+  const user_id = req.user.id;
   const { idList } = req.body;
 
   const query = { _id: idList, user_id };
