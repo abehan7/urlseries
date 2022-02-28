@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+
+import { API } from "../../Api";
 import {
   showErrMsg,
   showSuccessMsg,
@@ -15,7 +16,7 @@ function ActivationEmail() {
     if (activation_token) {
       const activationEmail = async () => {
         try {
-          const res = await axios.post("/user/activation", {
+          const res = await API.post("/user/activation", {
             activation_token,
           });
           setSuccess(res.data.msg);

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { VscAccount, VscLayers, VscChevronDown } from "react-icons/vsc";
 import "./HeaderT.css";
 import { useSelector } from "react-redux";
-import axios from "axios";
+import { API } from "../Api";
 
 function HeaderT() {
   const auth = useSelector((state) => state.auth);
@@ -12,7 +12,7 @@ function HeaderT() {
 
   const handleLogout = async () => {
     try {
-      await axios.get("/user/logout");
+      await API.get("/user/logout");
       localStorage.removeItem("firstLogin");
       window.location.href = "/";
     } catch (err) {

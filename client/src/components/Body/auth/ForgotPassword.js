@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { API } from "../../Api";
 import { isEmail } from "../../Utils/validation/Validation";
 import {
   showErrMsg,
@@ -31,7 +31,7 @@ function ForgotPassword() {
       return setData({ ...data, err: "Invalid emails.", success: "" });
 
     try {
-      const res = await axios.post("/user/forgot", { user_id, email });
+      const res = await API.post("/user/forgot", { user_id, email });
 
       return setData({ ...data, err: "", success: res.data.msg });
     } catch (err) {

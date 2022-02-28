@@ -1,8 +1,8 @@
 import ACTIONS from "./index";
-import axios from "axios";
+import { API } from "../../components/Api";
 
 export const fetchAllUsers = async (token) => {
-  const res = await axios.get("/user/all_infor", {
+  const res = await API.get("/user/all_infor", {
     headers: { Authorization: token },
   });
   return res;

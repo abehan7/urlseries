@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import "./Register.css";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { SignUp } from "../Api";
+import { API, SignUp } from "../Api";
 import styled from "styled-components";
 
 const JoinEl = styled.div`
@@ -42,7 +41,7 @@ const Register = () => {
         // data?.token &&
         //   localStorage.setItem("accessToken", JSON.stringify(data.token));
         // data?.token && history("/");
-        axios.post("http://localhost:3001/signup", user).then((res) => {
+        API.post("http://localhost:3001/signup", user).then((res) => {
           console.log(res);
           alert(res.data.message);
           history("/login");

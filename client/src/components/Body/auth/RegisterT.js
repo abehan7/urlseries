@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import {
   showErrMsg,
   showSuccessMsg,
@@ -14,6 +13,7 @@ import {
 } from "../../Utils/validation/Validation";
 
 import { RiUser3Line, RiLockPasswordLine, RiMailLine } from "react-icons/ri";
+import { API } from "../../Api";
 
 const initialState = {
   user_id: "",
@@ -64,7 +64,7 @@ function RegisterT() {
         success: "",
       });
     try {
-      const res = await axios.post("/user/register", {
+      const res = await API.post("/user/register", {
         user_id,
         email,
         password,

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import axios from "axios";
+
 import {
   showSuccessMsg,
   showErrMsg,
@@ -9,6 +9,7 @@ import {
 
 import "./Profile.css";
 import { VscArrowLeft } from "react-icons/vsc";
+import { API } from "../../Api";
 
 function EditUser() {
   const { id } = useParams();
@@ -39,7 +40,7 @@ function EditUser() {
   const handleUpdate = async () => {
     try {
       if (num % 2 !== 0) {
-        const res = await axios.patch(
+        const res = await API.patch(
           `/user/update_role/${editUser._id}`,
           {
             role: checkAdmin ? 1 : 0,

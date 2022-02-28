@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { isLength, isMatch } from "../../Utils/validation/Validation";
@@ -22,6 +21,7 @@ import {
   VscTrash,
   VscDeviceCamera,
 } from "react-icons/vsc";
+import { API } from "../../Api";
 
 const initialState = {
   user_id: "",
@@ -66,7 +66,7 @@ function Profile() {
   };
   const updateInfor = () => {
     try {
-      axios.patch(
+      API.patch(
         "/user/update",
         {
           user_id: user_id ? user_id : user.user_id,
@@ -95,7 +95,7 @@ function Profile() {
       return setData({ ...data, err: "Password did not match.", success: "" });
 
     try {
-      axios.post(
+      API.post(
         "/user/reset",
         { password },
         {
@@ -139,7 +139,7 @@ function Profile() {
       formData.append("file", file);
 
       setLoading(true);
-      const res = await axios.post("/apitest/upload_avatar", formData, {
+      const res = await API.post("/apitest/upload_avatar", formData, {
         headers: {
           "content-type": "multipart/form-data",
           Authorization: token,
@@ -158,7 +158,7 @@ function Profile() {
       if (user._id !== id) {
         if (window.confirm("정말 이 계정을 삭제하시겠습니까?")) {
           setLoading(true);
-          await axios.delete(`/user/delete/${id}`, {
+          await API.delete(`/user/delete/${id}`, {
             headers: { Authorization: token },
           });
           setLoading(false);

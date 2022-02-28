@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import EditMode_ModalFunc from "../editModeFucs/EditMode_ModalFunc";
-import Axios from "axios";
 import MoreBtn from "./MoreBtn";
 import HoverModal from "../styled/HoverModal.styled";
 import styled from "styled-components";
 import UrlRectWrapper from "../styled/UrlRectWrapper.styled";
 import { modalHover } from "./TotalUrlMap";
 import { MainStates } from "../../routers/MainPage";
+import { API } from "../Api";
 
 const FiveUrlsLeftEl = styled(UrlRectWrapper)`
   border-radius: 10px;
@@ -25,7 +25,7 @@ const FiveUrlsLeft = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
 
   const WhenNormal = ({ url: value }) => {
     window.open(value.url);
-    Axios.put("http://localhost:3001/clickedURLInBox", {
+    API.put("http://localhost:3001/clickedURLInBox", {
       url: value,
     });
   };

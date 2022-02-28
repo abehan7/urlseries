@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { API } from "../../Api";
 import {
   showErrMsg,
   showSuccessMsg,
@@ -32,7 +32,7 @@ function LoginT() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("/user/logintest", { user_id, password });
+      const res = await API.post("/user/logintest", { user_id, password });
       setUser({ ...user, err: "", success: res.data.msg });
 
       localStorage.setItem("firstLogin", true);
@@ -52,7 +52,7 @@ function LoginT() {
   const responseGoogle = async (response) => {
     console.log(response);
     try {
-      const res = await axios.post("/user/google_login", {
+      const res = await API.post("/user/google_login", {
         tokenId: response.tokenId,
       });
 

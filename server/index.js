@@ -37,11 +37,7 @@ const hashtagRouter = require("./routes/hashtags");
 
 dotenv.config({ path: "./.env" });
 // const PORT = process.env.PORT || 3001;
-const whitelist = [
-  "http://localhost:3000",
-  "https://61e609ea9d39fc0007234cee--inspiring-lewin-5ee272.netlify.app",
-  "https://inspiring-lewin-5ee272.netlify.app",
-];
+const whitelist = ["https://localhost:3000", "https://urlseries.com"];
 
 const corsOptions = {
   origin: (origin, callback) => {

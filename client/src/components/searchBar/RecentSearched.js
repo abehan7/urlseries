@@ -1,7 +1,7 @@
 import React from "react";
 import { CgCloseR } from "react-icons/cg";
 import styled from "styled-components";
-import Axios from "axios";
+import { API } from "../Api";
 
 const RecentWrapper = styled.div`
   .url-and-delete {
@@ -78,7 +78,7 @@ const RecentSearched = ({ recentSearched, setRecentSearch, url }) => {
             );
             url.url_search.url_searchClicked = 0;
             // url.url_search.url_searchClicked
-            await Axios.put("http://localhost:3001/searchedUrlBYE", {
+            await API.put("/searchedUrlBYE", {
               url: url,
             });
           }}

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import { API } from "../../Api";
 import { useParams } from "react-router-dom";
 import {
   showErrMsg,
@@ -40,7 +40,7 @@ function ResetPassword() {
       return setData({ ...data, err: "Password did not match.", success: "" });
 
     try {
-      const res = await axios.post(
+      const res = await API.post(
         "/user/reset",
         { password },
         {
