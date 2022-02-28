@@ -35,6 +35,8 @@ const EditorContainer = () => {
     handleSetItems,
     handleAddFolder,
     handleDeleteFolder,
+    handleTestAddFolder,
+    handleTestRemoveFolder,
   } = useContext(FolderContext);
 
   return (
@@ -44,6 +46,8 @@ const EditorContainer = () => {
           <EditorFolder
             handleAddFolder={handleAddFolder}
             handleDeleteFolder={handleDeleteFolder}
+            handleTestAddFolder={handleTestAddFolder}
+            handleTestRemoveFolder={handleTestRemoveFolder}
           />
         ) : (
           <EditorUrls
@@ -58,13 +62,20 @@ const EditorContainer = () => {
   );
 };
 
-const EditorFolder = ({ handleAddFolder, handleDeleteFolder }) => {
+const EditorFolder = ({
+  handleAddFolder,
+  handleDeleteFolder,
+  handleTestAddFolder,
+  handleTestRemoveFolder,
+}) => {
   const folderAdd = () => {
-    handleAddFolder();
+    handleTestAddFolder();
+    // handleAddFolder();
   };
 
   const deleteFolder = () => {
-    handleDeleteFolder();
+    handleTestRemoveFolder();
+    // handleDeleteFolder();
   };
 
   return (

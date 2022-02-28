@@ -25,9 +25,13 @@ const {
   SignUp,
   Login,
   SearchDeleteAll,
+  EditFolderName,
 } = require("./controller/main");
 
 const auth = require("./middleware/auth");
+// FIXME:
+// const { EditFolderName } = require("../client/src/components/Api");
+// 이쪽이 문제인거같아요!
 
 dotenv.config({ path: "./.env" });
 // const PORT = process.env.PORT || 3001;
@@ -95,6 +99,9 @@ app.post("/get21Urls", auth, Get21Urls);
 app.post("/addUrl", auth, AddUrl);
 // [4] ==================================== 폴더 추가 ====================================
 app.post("/addFolder", auth, AddFolder);
+// [4-1] ==================================== 폴더 이름변경 ====================================
+
+app.post("/editFolderName", auth, EditFolderName);
 
 // [5]==================================== 로그인 post ====================================
 // #FIXME: 회원가입

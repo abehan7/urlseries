@@ -6,6 +6,7 @@ import { MainStates } from "../../routers/MainPage";
 import ModalOverlay from "../styled/ModalOverlay.styled";
 import EditorContainer from "./sideBar/EditorContainer";
 import FolderContainer from "./folderDetail/FolderContainer";
+import Input from "./styled/Input.styled";
 
 import { IoArrowBackOutline } from "react-icons/io5";
 import FolderDisplay from "./folderList/FolderDisplay";
@@ -17,6 +18,8 @@ import {
   ADD_FOLDER,
   REMOVE_FOLDER,
 } from "../../store/reducers/Folders";
+
+import { DeleteFolderAPI } from "../Api/index";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
@@ -32,7 +35,7 @@ const ModalWindow = styled.div`
   border-top-right-radius: 20px;
   background-color: #e9ecef;
   height: 75%;
-  width: 100%;
+  width: 700px;
   position: relative;
   transition: 300ms;
   cursor: default;
@@ -71,16 +74,85 @@ const ChooseWrapper = styled.div`
   }
 `;
 
+const RemoveSelectAlert = styled.div`
+  display: ${({ removeSelectAlert }) => (removeSelectAlert ? "flex" : "none")};
+  flex-direction: column;
+  background-color: whitesmoke;
+  position: absolute;
+  width: 300px;
+  height: max-content;
+  padding: 10px;
+  align-items: center;
+  border-radius: 10px;
+`;
+
+const RemoveAlertModal = styled.div`
+  display: ${({ removeAlert }) => (removeAlert ? "flex" : "none")};
+  flex-direction: column;
+  background-color: whitesmoke;
+  position: absolute;
+  width: 300px;
+  height: max-content;
+  padding: 10px;
+  align-items: center;
+  border-radius: 10px;
+`;
+
+const AlertModal = styled.div`
+  display: ${({ isAlertOpen }) => (isAlertOpen ? "flex" : "none")};
+  flex-direction: column;
+  background-color: whitesmoke;
+  position: absolute;
+  width: 300px;
+  height: max-content;
+  padding: 10px;
+  align-items: center;
+  border-radius: 10px;
+`;
+
+const AlertAddMessage = styled.div`
+  color: black;
+  font-size: 20px;
+  font-weight: lighter;
+  text-align: center;
+`;
+
+const AlertInputAddMessage = styled(Input)`
+  width: max-content;
+  margin-top: 10px;
+`;
+
+const Button = styled.button`
+  border: none;
+  border-radius: 10px;
+  padding: 5px;
+  background-color: gray;
+  color: white;
+  margin-top: 10px;
+  width: 100px;
+  font-weight: lighter;
+`;
+
+const ButtonCancel = styled(Button)`
+  background-color: white;
+  color: red;
+`;
+
 export const FolderContext = createContext(null);
 
 const FolderModalWindow = () => {
   const [isFolderPage, setIsFolderPage] = useState(true);
+
   const [selectedFolder, setSelectedFolder] = useState(null);
   const [clickedSearch, setClickedSearch] = useState(false);
   const [filterdItems, setFilterdItems] = useState([]);
   const [keyword, setKeyword] = useState("");
+  const [folderTitle, setFolderTitle] = useState("");
 
   const { realTotalUrls } = useContext(MainStates);
+  const [isAlertOpen, setIsAlertOpen] = useState(false);
+  const [removeAlert, setRemoveAlert] = useState(false);
+  const [removeSelectAlert, setRemoveSelectAlert] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -112,17 +184,64 @@ const FolderModalWindow = () => {
     dispatch(SET_FOLDER_CONTENTS({ folderId, urls }));
   };
 
-  const handleAddFolder = () => {
-    const folder = {
-      _id: "123123####gjgjg",
-      folderName: "folderName1231231",
-      folderContents: [],
-    };
-    dispatch(ADD_FOLDER(folder));
+  //폴더 추가 로직
+
+  //일단 사이드바에서 클릭하면 Alert창이 뜸
+  const handleTestAddFolder = () => {
+    setIsAlertOpen((prev) => !prev);
   };
 
-  const handleDeleteFolder = () => {
+  //확인버튼을 클릭하면 폴더추가 함수가 실행되게 함
+  const onClickAlertConfirm = () => {
+    handleAddFolder();
+    setIsAlertOpen((prev) => !prev);
+  };
+
+  const handleAddFolder = () => {
+    const folder = {
+      _id: "dd",
+      folderName: folderTitle,
+      folderContents: [],
+    };
+
+    // dispatch(ADD_FOLDER(folder)); 수정 전
+    dispatch(ADD_FOLDER(folder)); // 수정 후
+  };
+
+  const onChangeFolderTitle = (e) => {
+    // console.log("123123123123");
+    setFolderTitle(e.target.value);
+    // console.log("value : " + e.target.value);
+  };
+
+  //폴더 삭제 로직
+
+  const handleTestRemoveFolder = () => {
+    // console.log(setSelectedFolder);
+    console.log(selectedFolder?._id); //변경
+    // if (selectedFolder._id === null) { =>변경    // if (selectedFolder?._id === null) { =>
+
+    // null => undefine으로 변경
+    if (selectedFolder?._id === undefined) {
+      setRemoveSelectAlert((prev) => !prev);
+      // if (selectedFolder?._id !== undefined) {
+      //   setRemoveSelectAlert((prev) => !prev);
+      // }
+    } else {
+      setRemoveAlert((prev) => !prev);
+    }
+
+    // setRemoveAlert((prev) => !prev);
+  };
+
+  const onClickRemoveConfirm = () => {
+    handleDeleteFolder();
+    setRemoveAlert((prev) => !prev);
+  };
+
+  const handleDeleteFolder = async () => {
     const folder = selectedFolder._id;
+    await DeleteFolderAPI(folder);
     dispatch(REMOVE_FOLDER(folder));
   };
 
@@ -149,6 +268,8 @@ const FolderModalWindow = () => {
     handleSetFolderItems,
     handleAddFolder,
     handleDeleteFolder,
+    handleTestAddFolder,
+    handleTestRemoveFolder,
   };
 
   return (
@@ -164,6 +285,26 @@ const FolderModalWindow = () => {
           ) : (
             <FolderContainer handleGetId={handleGetId} />
           )}
+
+          <AlertModal isAlertOpen={isAlertOpen}>
+            <AlertAddMessage>폴더 이름을 입력해주세요</AlertAddMessage>
+            <AlertInputAddMessage
+              value={folderTitle}
+              onChange={onChangeFolderTitle}
+            />
+            <Button onClick={onClickAlertConfirm}>생성</Button>
+          </AlertModal>
+
+          <RemoveAlertModal removeAlert={removeAlert}>
+            <AlertAddMessage>정말 삭제하시겠습니까?</AlertAddMessage>
+            <Button onClick={onClickRemoveConfirm}>삭제</Button>
+          </RemoveAlertModal>
+
+          <RemoveSelectAlert removeSelectAlert={removeSelectAlert}>
+            <AlertAddMessage>
+              삭제하고자 하는 폴더를 선택해주세요
+            </AlertAddMessage>
+          </RemoveSelectAlert>
         </ModalWindow>
       </FolderModalOverlayEl>
     </FolderContext.Provider>

@@ -168,6 +168,23 @@ const AddFolder = async (req, res) => {
   res.json(newFolder);
 };
 
+const EditFolderName = async (req, res) => {
+  try {
+    const { user_id } = req.decodedData;
+
+    const { folder_name } = req.body;
+
+    await db.Folders.findOneAndUpdate(
+      { _id: user_id },
+      { folder_name: folder_name }
+    );
+
+    res.json({ msg: "update success" });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
+};
+
 const EditUrl = async (req, res) => {
   const { user_id } = req.decodedData;
   console.log(user_id);
@@ -548,4 +565,5 @@ module.exports = {
   Crawling,
   Login,
   SearchDeleteAll,
+  EditFolderName,
 };

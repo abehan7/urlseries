@@ -41,6 +41,9 @@ export const AddUrl = (url, title, hashTags, memo) =>
 export const AddFolder = (folder_name) =>
   API.post("/addFolder", { folder: { folder_name } });
 
+export const EditFolderName = (folder_name) =>
+  API.post("/editFolderName", { folder_name });
+
 export const DeleteFolderAPI = (idList) =>
   API.post("/deleteFolder", { idList });
 

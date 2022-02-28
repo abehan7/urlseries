@@ -35,7 +35,7 @@ const ContentContainer = styled.div`
 
 const FolderWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(4, 80px);
   grid-template-rows: auto;
   align-items: center;
   justify-content: center;
@@ -50,6 +50,8 @@ const FolderEl = styled.div`
   justify-content: center;
   width: 80px;
   height: 80px;
+  background-color: ${({ testRemoveFolder }) =>
+    testRemoveFolder ? "red" : "none"};
   /* background-color: #e0e8e7; */
   border-radius: 10px;
   cursor: pointer;
