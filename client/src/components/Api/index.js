@@ -10,10 +10,11 @@ export const StopAPI = () => controller.abort();
 API.interceptors.request.use(
   (req) => {
     const token = localStorage.getItem("accessToken");
-    console.log(token);
     if (token) {
-      req.headers.authorization = `Bearer ${JSON.parse(token)}`;
-      // req.headers["Access-Control-Allow-Origin"] = "http://localhost:3000";
+      // req.headers.Authorization = token;
+      req.headers.Authorization = token;
+
+      // req.header["Authorization"] = `Bearer ${token}`;
     }
     return req;
   },

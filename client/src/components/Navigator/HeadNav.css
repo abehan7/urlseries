@@ -7,7 +7,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #fff;
+  background: white;
   padding: 8px 50px;
   border: 1px solid #e9ecef57;
 }
@@ -31,7 +31,7 @@
 
 .navbar__menu {
   margin-left: 20px;
-  font-size: 20px;
+  font-size: 15px;
   display: flex;
   list-style: none;
   padding-left: 0;
@@ -54,7 +54,7 @@
 .navbar__icons {
   font-size: 30px;
   list-style: none;
-  color: rgb(194, 192, 192);
+  color: orangered;
   display: flex;
   padding-left: 0;
   margin-right: 0.8rem;

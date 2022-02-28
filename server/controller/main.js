@@ -3,6 +3,7 @@ const puppeteer = require("puppeteer");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
+const { Users } = require("../models");
 
 dotenv.config({ path: "../.env" });
 
@@ -21,7 +22,8 @@ const getCurrentDate = () => {
 };
 
 const TotalAfter = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { id } = req.user;
+  const user_id = id;
   let totalAfter = [];
 
   // console.log("decodedData", req.decodedData);
@@ -41,9 +43,10 @@ const TotalAfter = async (req, res) => {
 };
 
 const TotalURL = async (req, res) => {
-  console.log(req.decodedData);
-  const { user_id } = req.decodedData;
-  console.log(user_id);
+  console.log("total url");
+  const { id } = req.user;
+  const user_id = id;
+  console.log(id);
   // const { authorization } = req.headers;
   // console.log(authorization);
   //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
@@ -54,7 +57,7 @@ const TotalURL = async (req, res) => {
 
   const query = { user_id };
 
-  totalURL = await db.Urls.find(query).limit(42).sort({ _id: -1 });
+  totalURL = await db.Urls.find(query).limit(40).sort({ _id: -1 });
 
   leftURL = await db.Urls.find({ url_likedUrl: 1, user_id }).sort({
     "url_search.url_searchedDate": -1,
@@ -73,7 +76,7 @@ const TotalURL = async (req, res) => {
 };
 
 const FolderItems = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   await db.Folders.find({ user_id })
     .sort({ _id: -1 })
     .then((response) => {
@@ -122,7 +125,7 @@ const SearchDeleteAll = async (req, res) => {
 };
 
 const Get21Urls = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   console.log(user_id);
   await db.Urls.find({
     user_id: user_id,
@@ -137,10 +140,13 @@ const Get21Urls = async (req, res) => {
 };
 
 const AddUrl = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { id } = req.user;
+  const user_id = id;
+
+  console.log("addURl user_id : ", user_id);
   const { url, title, hashTags, memo } = req.body;
   const NewUrl = new db.Urls({
-    url: url,
+    url,
     url_title: title,
     url_hashTags: hashTags,
     url_memo: memo,
@@ -157,7 +163,7 @@ const AddUrl = async (req, res) => {
 };
 
 const AddFolder = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   const { folder_name } = req.body;
   console.log(folder_name);
   const newFolder = new db.Folders({
@@ -170,7 +176,7 @@ const AddFolder = async (req, res) => {
 };
 
 const EditUrl = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   console.log(user_id);
   console.log(req.body);
 
@@ -257,7 +263,7 @@ const ClickedURLInBox = async (req, res) => {
 
 const updateFolderContents = async (req, res) => {
   const { folder_contents } = req.body;
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   const { id } = req.params;
 
   const urlTitles = folder_contents.map((url) => url.url_title); // 그냥 확인용
@@ -284,7 +290,7 @@ const updateFolderContents = async (req, res) => {
 };
 
 const FolderLiked = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   const { folders } = req.body;
   // folders _id들만 배열로 받아옴
   const likeQuery = { user_id, _id: { $in: folders } };
@@ -328,10 +334,10 @@ const updateFolderName = async (req, res) => {
 // FIXME: delete
 
 const DeleteUrl = async (req, res) => {
-  const { user_id } = req.decodedData;
-  const id = req.params.id;
-  console.log(id);
-  const query = { _id: id, user_id };
+  const { id } = req.user;
+  const user_id = id;
+  const url_id = req.params.id;
+  const query = { _id: url_id, user_id };
   try {
     await db.Urls.findOneAndRemove(query).exec();
     res.send("item deleted");
@@ -343,7 +349,7 @@ const DeleteUrl = async (req, res) => {
 };
 
 const DeleteFolder = async (req, res) => {
-  const { user_id } = req.decodedData;
+  const { user_id } = req.user;
   const { idList } = req.body;
 
   const query = { _id: idList, user_id };
@@ -452,36 +458,69 @@ const generateAccessToken1 = async (user) => {
 };
 
 // FIXME: 로그인 회원가입
+
 const SignUp = async (req, res) => {
-  console.log(req.body);
-  const { user_id, password, email } = req.body;
+  const { user_id, email, password } = req.body;
+  db.Users.findOne({ user_id: user_id }, (err, user) => {
+    if (user) {
+      res.send({ message: "User already registerd" });
+    } else {
+      const user = new db.Users({
+        user_id,
+        email,
+        password,
+      });
 
-  const newUser = new db.Users({
-    user_id,
-    password,
-    email,
-  });
-
-  const InitUrl = new db.Urls({
-    url: "http://localhost:3000",
-    url_title: "유알유알엘입니다 :)",
-    user_id,
-  });
-
-  const InitHashtags = new db.Hashtags({
-    user_id,
-  });
-
-  InitUrl.save();
-  InitHashtags.save();
-
-  newUser.save(async (err, userInfo) => {
-    if (err) return res.json({ success: false, err });
-    console.log("user inserted");
-    const token = await generateAccessToken1(newUser);
-    return res.status(200).json({ success: true, token: token });
+      user.save(async (err, userInfo) => {
+        if (err) return res.json({ success: false, err });
+        console.log("user inserted");
+        console.log(userInfo);
+        const token = await generateAccessToken1(user);
+        return res
+          .status(200)
+          .json({ success: true, message: "가입이 되었습니다", token: token });
+      });
+      // user.save(async (err) => {
+      //   if (err) {
+      //     res.send(err);
+      //   } else {
+      //     res.send({ message: "Successfully Registered, Please login now." });
+      //   }
+      // });
+    }
   });
 };
+
+// const SignUp = async (req, res) => {
+//   console.log(req.body);
+//   const { user_id, password, email } = req.body;
+
+//   const newUser = new db.Users({
+//     user_id,
+//     password,
+//     email,
+//   });
+
+//   newUser.save(async (err, userInfo) => {
+//     if (err) return res.json({ success: false, err });
+//     console.log("user inserted");
+//     const token = await generateAccessToken1(newUser);
+//     return res.status(200).json({ success: true, token: token });
+//   });
+
+//   const InitUrl = new db.Urls({
+//     url: "http://localhost:3000",
+//     url_title: "유알유알엘입니다 :)",
+//     user_id,
+//   });
+
+//   const InitHashtags = new db.Hashtags2({
+//     user_id,
+//   });
+
+//   InitUrl.save();
+//   InitHashtags.save();
+// };
 
 const Login = async (req, res) => {
   //로그인을할때 아이디와 비밀번호를 받는다

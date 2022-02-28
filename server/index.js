@@ -4,6 +4,10 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const db = require("./models");
 
+const cookieParser = require("cookie-parser");
+const fileUpload = require("express-fileupload");
+const path = require("path");
+
 const {
   TotalAfter,
   TotalURL,
@@ -27,7 +31,7 @@ const {
   updateFolderName,
 } = require("./controller/main");
 
-const auth = require("./middleware/auth");
+const authtest = require("./middleware/authtest");
 
 const hashtagRouter = require("./routes/hashtags");
 
@@ -53,10 +57,23 @@ const corsOptions = {
 
 const app = express();
 
-app.use(cors(corsOptions));
+app.use(cors());
 // app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
+// app.use(express.urlencoded());
+
+app.use(cookieParser());
+app.use(
+  fileUpload({
+    useTempFiles: true,
+  })
+);
+
+//Routes
+
+app.use("/user", require("./routes/userRouter"));
+app.use("/apitest", require("./routes/upload"));
 
 // const UrlModel = require("./models/Urls");
 // const UsersModel = require("./models/users");
@@ -64,6 +81,8 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  // useCreateIndex: true,
+  // useFindAndModify: false,
 });
 
 // app.use("/folder",);
@@ -78,16 +97,16 @@ app.get("/hithere", async (req, res) => {
 
 // [2] ==================================== 해쉬태그에서 사용할 전체url get ====================================
 
-app.get("/TotalAfter", auth, TotalAfter);
+app.get("/TotalAfter", authtest, TotalAfter);
 
 // [3] ==================================== 맨 처음 접속하면 보여줄 부분들만 뽑은 get ====================================
 
-app.get("/totalURL", auth, TotalURL);
+app.get("/totalURL", authtest, TotalURL);
 // [4] ==================================== 폴더 아이템들 가지고오기 ====================================
-app.get("/folderItems", auth, FolderItems);
+app.get("/folderItems", authtest, FolderItems);
 
 // [5] ==================================== 폴더 아이템들 가지고오기 ====================================
-app.get("/search/delete/all", auth, SearchDeleteAll);
+app.get("/search/delete/all", authtest, SearchDeleteAll);
 
 // [1] ==================================== 검색어 검색하는 post ====================================
 
@@ -95,13 +114,13 @@ app.post("/search", Search);
 
 // [2] ==================================== 무한스크롤 post ====================================
 
-app.post("/get21Urls", auth, Get21Urls);
+app.post("/get21Urls", authtest, Get21Urls);
 
 // [3] ==================================== url추가 용도 post ====================================
 
-app.post("/addUrl", auth, AddUrl);
+app.post("/addUrl", authtest, AddUrl);
 // [4] ==================================== 폴더 추가 ====================================
-app.post("/addFolder", auth, AddFolder);
+app.post("/addFolder", authtest, AddFolder);
 
 // [5]==================================== 로그인 post ====================================
 // #FIXME: 회원가입
@@ -112,10 +131,10 @@ app.post("/login", Login);
 
 // [1] ==================================== url수정 용도 put ====================================
 
-app.put("/editUrl", auth, EditUrl);
+app.put("/editUrl", authtest, EditUrl);
 
 // FIXME: 폴더이름 수정
-app.patch("/updateFolderName/:id", auth, updateFolderName);
+app.patch("/updateFolderName/:id", authtest, updateFolderName);
 
 // FIXME: 태그수정
 // app.patch("/hashtags", auth, updateLikeTags);
@@ -129,17 +148,17 @@ app.put("/clickedSeachedURL/:_id", ClickedSeachedURL);
 app.put("/clickedURLInBox", ClickedURLInBox);
 
 // [6] ====================================   폴더 해쉬태그 contents 수정하는 put ====================================
-app.patch("/folder/contents/:id", auth, updateFolderContents);
+app.patch("/folder/contents/:id", authtest, updateFolderContents);
 
 // [7] ==================================== 폴더 좋아요 된거 수정 ====================================
-app.put("/FolderLiked", auth, FolderLiked);
+app.put("/FolderLiked", authtest, FolderLiked);
 
 // [1] ==================================== url삭제 delete ====================================
 
-app.delete("/deleteUrl/:id", auth, DeleteUrl);
+app.delete("/deleteUrl/:id", authtest, DeleteUrl);
 
 // [2] ==================================== 폴더삭제 ====================================
-app.post("/deleteFolder", auth, DeleteFolder);
+app.post("/deleteFolder", authtest, DeleteFolder);
 
 // [1] ====================================== 퍼펫티어 ======================================
 
@@ -161,9 +180,9 @@ app.listen(process.env.PORT || 3001, () => {
 //   return jwt.sign(user.process.env.REFRESH_TOKEN_SECRET, { expiresIn: "3d" });
 // };
 
-// const authenicateToken = (req, res, next) => {
-//   const authHeader = req.headers["authorization"];
-//   const token = authHeader && authHeader.split(" ")[1];
+// const authtestenicateToken = (req, res, next) => {
+//   const authtestHeader = req.headers["authtestorization"];
+//   const token = authtestHeader && authtestHeader.split(" ")[1];
 //   if (token === null) return res.sendStatus(401);
 //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
 //     if (err) return res.sendStatus(403);
@@ -206,6 +225,6 @@ app.listen(process.env.PORT || 3001, () => {
 //   res.sendStatus(204);
 // });
 
-// app.get("/posts", authenicateToken, (req, res) => {
+// app.get("/posts", authtestenicateToken, (req, res) => {
 //   res.json(posts.filter((post) => post.username === req.user.name));
 // });
