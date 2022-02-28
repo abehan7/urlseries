@@ -1,5 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import axios from "axios";
 
 import HeaderT from "./components/HeaderT/HeaderT";
 import Body from "./components/Body/Body";
@@ -24,7 +25,12 @@ function App() {
     const firstLogin = localStorage.getItem("firstLogin");
     if (firstLogin) {
       const getToken = async () => {
-        const res = await API.post("/user/refresh_token", null);
+        axios.defaults.withCredentials = true;
+        const res = await axios.post(
+          "https://urlstory.herokuapp.com/user/refresh_token",
+          null
+        );
+
         dispatch({ type: "GET_TOKEN", payload: res.data.access_token });
         localStorage.setItem("accessToken", res.data.access_token);
       };

@@ -33,6 +33,7 @@ function LoginT() {
     e.preventDefault();
     try {
       const res = await API.post("/user/logintest", { user_id, password });
+      console.log("firstLogin", res.data);
       setUser({ ...user, err: "", success: res.data.msg });
 
       localStorage.setItem("firstLogin", true);

@@ -10,6 +10,14 @@ const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID);
 
 const { CLIENT_URL } = process.env;
 
+const cookieConfig = {
+  domain: "http://localhost:3000",
+  httpOnly: true,
+  sameSite: "None",
+  path: "/user/refresh_token",
+  maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+};
+
 const userCtrl = {
   //회원가입 기능로직
   register: async (req, res) => {
@@ -106,6 +114,7 @@ const userCtrl = {
   login: async (req, res) => {
     try {
       const { user_id, password } = req.body;
+      console.log(user_id, password);
       const user = await Users.findOne({ user_id });
       if (!user) {
         return res.status(400).json({ msg: "아이디가 존재하지 않습니다" });
@@ -120,11 +129,15 @@ const userCtrl = {
 
       console.log(user);
       const refresh_token = createRefreshToken({ id: user._id });
-      res.cookie("refreshtoken", refresh_token, {
+      const cookieConfig = {
         httpOnly: true,
+        sameSite: "None",
         path: "/user/refresh_token",
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      });
+      };
+      console.log("로그인 성공");
+
+      res.cookie("refreshtoken", refresh_token, cookieConfig);
 
       res.json({ msg: "로그인 성공" });
     } catch (err) {
@@ -135,7 +148,8 @@ const userCtrl = {
   getAccessToken: (req, res) => {
     try {
       const rf_token = req.cookies.refreshtoken;
-      console.log(req.cookies);
+      // console.log("rf_token", rf_token);
+      // console.log("✝✝✝✝✝✝✝");
       if (!rf_token) {
         return res.status(400).json({ msg: "지금로그인해주세요" });
       }
@@ -146,7 +160,6 @@ const userCtrl = {
         }
         const access_token = createAccessToken({ id: user.id });
         res.json({ access_token });
-        // console.log(user);
       });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -287,13 +300,9 @@ const userCtrl = {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch)
           return res.status(400).json({ msg: "비밀번호가 올바르지 않습니다" });
-
         const refresh_token = createRefreshToken({ id: user._id });
-        res.cookie("refreshtoken", refresh_token, {
-          httpOnly: true,
-          path: "/user/refresh_token",
-          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        });
+        res.cookie("refreshtoken", refresh_token, cookieConfig);
+
         res.json({ msg: "로그인 성공" });
       } else {
         const newUser = new Users({
@@ -305,11 +314,9 @@ const userCtrl = {
 
         await newUser.save();
         const refresh_token = createRefreshToken({ id: newUser._id });
-        res.cookie("refreshtoken", refresh_token, {
-          httpOnly: true,
-          path: "/user/refresh_token",
-          maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-        });
+
+        res.cookie("refreshtoken", refresh_token, cookieConfig);
+        console.log("로그인 성공 구글로그인 else");
 
         res.json({ msg: "로그인 성공" });
       }
