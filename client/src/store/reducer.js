@@ -9,6 +9,9 @@ import folderConditionsReducer from "./reducers/FolderConditions";
 import modalReducer from "./reducers/Modal";
 import tagReducer from "./reducers/Tags";
 import urlReducer from "./reducers/urls";
+import auth from "../redux/ReducersT/authReducer";
+import token from "../redux/ReducersT/tokenReducer";
+import users from "../redux/ReducersT/usersReducer";
 
 const rootReducer = combineReducers({
   edit: filterdTags,
@@ -20,6 +23,9 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   tags: tagReducer,
   urls: urlReducer,
+  auth,
+  token,
+  users,
 });
 
 export default rootReducer;

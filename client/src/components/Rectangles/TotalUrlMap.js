@@ -83,6 +83,7 @@ const TotalUrlMap = ({
                 src={`http://www.google.com/s2/favicons?domain=${value.url}`}
                 alt=""
               />
+              {/* <div>{value.url_id}</div> */}
 
               <div className="just-bar" style={{ pointerEvents: "none" }}>
                 |

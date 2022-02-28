@@ -1,4 +1,10 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import "./MainPage.css";
 
 // Functions
@@ -6,7 +12,7 @@ import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../Hooks/keepModalsShow";
 
 // Header
-import Header from "../components/Header/Header";
+// import Header from "../components/Header/Header";
 // Rectangles
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
@@ -34,6 +40,7 @@ import ModalHashtag from "../components/ModalHashtag/ModalHashtag";
 import FolderModalWindow from "../components/ModalFolderPage/FolderModalWindow";
 import { SET_FOLDERS } from "../store/reducers/Folders";
 import { getIsClicked } from "../store/reducers/Tags";
+import { getToken } from "../redux/ReducersT/tokenReducer";
 // import ModalPage from "./ModalPage";
 
 export const MainStates = createContext(null);
@@ -101,11 +108,6 @@ const MainPage = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [target, setTarget] = useState(null);
 
-  const [token, setToken] = useState(null);
-
-  // FIXME: 리덕스
-  // const isModalWindowOpen = useSelector((state) => state.modal.isModalOpen);
-
   const dispatch = useDispatch();
 
   // url 클릭하면 그 디테일들 리덕스에 저장하는 기능
@@ -115,11 +117,14 @@ const MainPage = () => {
 
   const tagIsClicked = useSelector(getIsClicked);
   // FIXME: 토큰 있으면 데이터 가져오기
+  const token = useSelector(getToken);
 
-  useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    setToken(token);
-  }, [token]);
+  console.log(token);
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem("accessToken");
+  //   setToken(token);
+  // }, [token]);
 
   // FIXME: 맨 처음 데이터 가져오기
 
@@ -182,6 +187,16 @@ const MainPage = () => {
     setItemNum(itemNum + 100);
     setIsLoaded(false);
   };
+
+  // useState가 한번에 2번 실행되면 오류생기니까 useEffect로 바꿔줌
+  // 이게 옳은 방법
+  // 한 공간에서 useState를 2번 사용하지 말자
+  // 특히 서로 유기적으로 연관된거 사용하는 경우에는 useEffect를 사용하는 것이 좋다
+
+  useEffect(() => {
+    const data = realTotalUrls.slice(0, itemNum);
+    setGetUrls(data);
+  }, [itemNum]);
 
   // useState가 한번에 2번 실행되면 오류생기니까 useEffect로 바꿔줌
   // 이게 옳은 방법
@@ -275,12 +290,12 @@ const MainPage = () => {
           <div className="grid-container">
             {/* <HeaderNavWrapper /> */}
 
-            <Header
+            {/* <Header
               createModal2={createModal2}
               recentSearched={recentSearched}
               setRecentSearch={setRecentSearch}
               realTotalUrls={realTotalUrls}
-            />
+            /> */}
 
             <div className="share-write">
               {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}

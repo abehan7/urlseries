@@ -527,6 +527,7 @@ db.folders.updateMany(
   }
 );
 
+<<<<<<< HEAD
 db.folders.updateMany(
   { user_id: "hanjk123@gmail.com" },
   {
@@ -551,3 +552,28 @@ db.folders.updateMany(
     },
   }
 );
+=======
+db.urls.updateOne({ _id: ObjectId("61ae230e5e92a9f7c55a9c63") }, {});
+
+db.urls.updateMany(
+  { user_id: "hanjk123@gmail.com" },
+  { $set: { user_id: ObjectId("61dab50ad3063e55d1d781c3") } }
+);
+
+db.urls.find({ user_id: emailAndObjectId[3][1] });
+
+db.users.find({}).forEach((user) => {});
+
+let userList = [];
+db.urls.find({}).forEach((url) => {
+  if (typeof url.user_id === "object") {
+    if (!userList.includes(url.user_id.toString())) {
+      userList.push(url.user_id.toString());
+    }
+  } else {
+    if (!userList.includes(url.user_id)) {
+      userList.push(url.user_id);
+    }
+  }
+});
+>>>>>>> lastYOON
