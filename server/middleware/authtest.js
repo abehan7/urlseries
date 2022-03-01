@@ -9,7 +9,8 @@ const authtest = (req, res, next) => {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
       if (err)
         return res.status(400).json({ msg: "Invalid Authentication.222" });
-      console.log(user);
+      // console.log(user);
+      // console.log("authtest");
       req.user = user;
       next();
     });

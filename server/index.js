@@ -2,7 +2,6 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const db = require("./models");
 
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
@@ -60,25 +59,16 @@ const corsOptions = {
 const app = express();
 
 app.use(cors(corsOptions));
-// app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
-// app.use(express.urlencoded());
 
 app.use(cookieParser());
+
 app.use(
   fileUpload({
     useTempFiles: true,
   })
 );
-
-//Routes
-
-app.use("/user", require("./routes/userRouter"));
-app.use("/apitest", require("./routes/upload"));
-
-// const UrlModel = require("./models/Urls");
-// const UsersModel = require("./models/users");
 
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
@@ -87,14 +77,25 @@ mongoose.connect(process.env.DATABASE_URL, {
   // useFindAndModify: false,
 });
 
-// app.use("/folder",);
+//Routes
+
+app.use("/user", require("./routes/userRouter"));
+app.use("/apitest", require("./routes/upload"));
 app.use("/hashtag", hashtagRouter);
+
+// app.use("/folder",);
 // app.use("/url");
 // app.use("/user");
 // [1]  테스트용도 get
 app.get("/hithere", async (req, res) => {
+  req.session.user = "this is user";
   console.log("hi there");
   res.json("hi there");
+});
+
+app.get("/hello", async (req, res) => {
+  console.log(req.session.user);
+  res.json(req.session.user);
 });
 
 // [2]  해쉬태그에서 사용할 전체url get

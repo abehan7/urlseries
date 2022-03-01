@@ -1,4 +1,6 @@
 const router = require("express").Router();
+// const session = require("express-session");
+
 const userCtrl = require("../controller/userCtrl");
 const authtest = require("../middleware/authtest");
 const authAdmin = require("../middleware/authAdmin");
@@ -6,7 +8,7 @@ const authAdmin = require("../middleware/authAdmin");
 router.post("/register", userCtrl.register);
 router.post("/activation", userCtrl.activateEmail);
 router.post("/logintest", userCtrl.login);
-router.post("/refresh_token", userCtrl.getAccessToken);
+router.post("/refresh_token", authtest, userCtrl.getAccessToken);
 router.post("/forgot", userCtrl.forgotPassword);
 router.post("/reset", authtest, userCtrl.resetPassword);
 router.get("/infor", authtest, userCtrl.getUserInfor);

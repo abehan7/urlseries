@@ -4,6 +4,7 @@ const jwt = require("jsonwebtoken");
 const sendMail = require("./sendMail");
 
 const { google } = require("googleapis");
+const db = require("../models");
 const { OAuth2 } = google.auth;
 
 const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID);
@@ -11,10 +12,10 @@ const client = new OAuth2(process.env.MAILING_SERVICE_CLIENT_ID);
 const { CLIENT_URL } = process.env;
 
 const cookieConfig = {
-  domain: "http://localhost:3000",
+  // domain: ["http://localhost:3000", "https://urlseries.com"],
   httpOnly: true,
-  sameSite: "None",
-  path: "/user/refresh_token",
+  sameSite: "none",
+  secure: true,
   maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
 };
 
@@ -129,27 +130,25 @@ const userCtrl = {
 
       console.log(user);
       const refresh_token = createRefreshToken({ id: user._id });
-      const cookieConfig = {
-        httpOnly: true,
-        sameSite: "None",
-        path: "/user/refresh_token",
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-      };
-      console.log("로그인 성공");
 
-      res.cookie("refreshtoken", refresh_token, cookieConfig);
+      await saveToken(refresh_token, user._id);
+      const access_token = createAccessToken({ id: user.id });
 
-      res.json({ msg: "로그인 성공" });
+      res.json({ msg: "로그인 성공", access_token });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
   },
+
   //accesstoken 발급
-  getAccessToken: (req, res) => {
+  getAccessToken: async (req, res) => {
     try {
-      const rf_token = req.cookies.refreshtoken;
-      // console.log("rf_token", rf_token);
-      // console.log("✝✝✝✝✝✝✝");
+      const user_id = req.user.id;
+      console.log(user_id);
+
+      const rf_token = await getDBToken(user_id);
+      // console.log("rf_token from db", rf_token);
+
       if (!rf_token) {
         return res.status(400).json({ msg: "지금로그인해주세요" });
       }
@@ -226,7 +225,8 @@ const userCtrl = {
 
   logout: async (req, res) => {
     try {
-      res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
+      // res.clearCookie("refreshtoken", { path: "/user/refresh_token" });
+      // req.session.destroy(function (err) {});
       return res.json({ msg: "Logged out." });
     } catch (err) {
       return res.status(500).json({ msg: err.message });
@@ -301,8 +301,8 @@ const userCtrl = {
         if (!isMatch)
           return res.status(400).json({ msg: "비밀번호가 올바르지 않습니다" });
         const refresh_token = createRefreshToken({ id: user._id });
-        res.cookie("refreshtoken", refresh_token, cookieConfig);
-
+        res.cookie("refreshtoken", refresh_token);
+        console.log("JSON.stringify(req.session)", SON.stringify(req.session));
         res.json({ msg: "로그인 성공" });
       } else {
         const newUser = new Users({
@@ -315,7 +315,8 @@ const userCtrl = {
         await newUser.save();
         const refresh_token = createRefreshToken({ id: newUser._id });
 
-        res.cookie("refreshtoken", refresh_token, cookieConfig);
+        res.cookie("refreshtoken", refresh_token);
+        console.log(JSON.stringify(req.session));
         console.log("로그인 성공 구글로그인 else");
 
         res.json({ msg: "로그인 성공" });
@@ -352,6 +353,21 @@ const createRefreshToken = (payload) => {
   return jwt.sign(payload, process.env.REFRESH_TOKEN_SECRET, {
     expiresIn: "7d",
   });
+};
+
+const saveToken = async (refreshToken, user_id) => {
+  const userToken = await db.Tokens.find({ user_id });
+
+  userToken.length === 0 && (await db.Tokens.create({ refreshToken, user_id }));
+
+  userToken.length !== 0 &&
+    (await db.Tokens.updateOne({ user_id }, { refreshToken }));
+};
+
+const getDBToken = async (user_id) => {
+  const userToken = await db.Tokens.findOne({ user_id }, { refreshToken: 1 });
+  // console.log("userToken", userToken.refreshToken);
+  return userToken.refreshToken;
 };
 
 module.exports = userCtrl;

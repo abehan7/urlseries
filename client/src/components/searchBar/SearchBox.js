@@ -5,30 +5,10 @@ import SearchedStuff from "./SearchedStuff";
 import { debounce } from "lodash";
 import LoadingImg from "./LoadingImg";
 import styled from "styled-components";
-import { API, ClickedSeachedUrlAPI, SearchDeleteAll } from "../Api";
+import { ClickedSeachedUrlAPI, SearchDeleteAll } from "../Api";
 import { HeaderContext } from "../Header/Header";
 
 // FIXME: db에서 검색하주는 기능 // 이건 안쓸거같은데 일단 남겨두긴 하자
-const ApiGetSearchedList = async (e) => {
-  if (e.target.value.length === 0) {
-    return;
-  }
-
-  const typedKeyword = e.target.value.toLowerCase().replace(/(\s*)/g, "");
-
-  let results;
-  console.log(typedKeyword);
-
-  await API.post("/search", {
-    typedKeyword: typedKeyword,
-  }).then((response) => {
-    const { data } = response;
-    console.log("액시오스");
-    // console.log(response.data);
-    results = data;
-  });
-  return results;
-};
 
 // FIXME: 디바운스 기능
 const debounceSomethingFunc = debounce(

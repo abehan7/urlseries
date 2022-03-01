@@ -41,12 +41,13 @@ import FolderModalWindow from "../components/ModalFolderPage/FolderModalWindow";
 import { SET_FOLDERS } from "../store/reducers/Folders";
 import { getIsClicked } from "../store/reducers/Tags";
 import { getToken } from "../redux/ReducersT/tokenReducer";
+import Header from "../components/Header/Header";
 // import ModalPage from "./ModalPage";
 
 export const MainStates = createContext(null);
 
 const MainEl = styled.div`
-  position: relative;
+  /* position: relative; */
   transition: 400ms;
   background-color: ${(props) => (props.isDarkMode ? "#02064a" : "")};
   color: ${(props) => (props.isDarkMode ? "#fff" : "")};
@@ -251,7 +252,7 @@ const MainPage = () => {
   // StopDrag();
 
   // editmode일 때 스타일 사각형에 색깔 변하게하기
-  const bcTopRect = "#FFE4C4";
+  const bcTopRect = "#ff8b8b";
   const emptyStyle = {};
   const MkColorTopRect = {
     backgroundColor: bcTopRect,
@@ -290,12 +291,12 @@ const MainPage = () => {
           <div className="grid-container">
             {/* <HeaderNavWrapper /> */}
 
-            {/* <Header
+            <Header
               createModal2={createModal2}
               recentSearched={recentSearched}
               setRecentSearch={setRecentSearch}
               realTotalUrls={realTotalUrls}
-            /> */}
+            />
 
             <div className="share-write">
               {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}

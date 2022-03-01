@@ -34,7 +34,14 @@ function LoginT() {
     try {
       const res = await API.post("/user/logintest", { user_id, password });
       console.log("firstLogin", res.data);
+
       setUser({ ...user, err: "", success: res.data.msg });
+
+      res.data.msg === "로그인 성공" &&
+        dispatch({ type: "GET_TOKEN", payload: res.data.access_token });
+
+      res.data.msg === "로그인 성공" &&
+        localStorage.setItem("accessToken", res.data.access_token);
 
       localStorage.setItem("firstLogin", true);
 

@@ -1,8 +1,8 @@
 import axios from "axios";
 
+axios.defaults.withCredentials = true;
 export const API = axios.create({ baseURL: "https://urlstory.herokuapp.com" });
 // export const API = axios.create({ baseURL: "http://localhost:3001" });
-// axios.defaults.withCredentials = true;
 const controller = new AbortController();
 
 export const StopAPI = () => controller.abort();
@@ -12,7 +12,6 @@ API.interceptors.request.use(
     const token = localStorage.getItem("accessToken");
     if (token) {
       req.headers.Authorization = token;
-
       // req.header["Authorization"] = `Bearer ${token}`;
     }
     return req;

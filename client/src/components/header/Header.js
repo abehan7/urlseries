@@ -8,8 +8,8 @@ const HeaderEl = styled.div`
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
     rgba(0, 0, 0, 0.06) 0px 0px 0px 1px; */
   z-index: 3;
-  top: 10px;
-  margin-top: 10px;
+  /* top: 10px; */
+  /* margin-top: 10px; */
   display: flex;
   justify-content: space-between;
   align-items: center;

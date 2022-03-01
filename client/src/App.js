@@ -24,12 +24,12 @@ function App() {
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");
     if (firstLogin) {
+      console.log(token);
       const getToken = async () => {
-        axios.defaults.withCredentials = true;
-        const res = await axios.post(
-          "https://urlstory.herokuapp.com/user/refresh_token",
-          null
-        );
+        axios.defaults.withCredentials = true; // 이걸로 cookie설정하는거 됐던거같은데 또 heroku에서는 안되네
+        const res = await API.post("/user/refresh_token", null, {
+          withCredentials: true,
+        });
 
         dispatch({ type: "GET_TOKEN", payload: res.data.access_token });
         localStorage.setItem("accessToken", res.data.access_token);
