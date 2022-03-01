@@ -20,10 +20,12 @@ import {
   REMOVE_TAG_FILTERD_ITEMS,
   SET_TAG_TOTAL_ITEMS,
 } from "../../store/reducers/urls";
+import { handleClickUrl, handleEditClick } from "../../Hooks/clickUrl";
 // TODO: 12/29) UrlsByHashTag / filterdTags(리덕스) / AsiedTag
 const UrlsByHashTagEl = styled(UrlRectWrapper)`
   position: relative;
 `;
+const faviconUrl = (url) => `http://www.google.com/s2/favicons?domain=${url}`;
 
 const UrlsByHashTag = ({ realTotalUrls, setMyFav }) => {
   const [Height, setHeight] = useState(0);
@@ -82,13 +84,6 @@ const UrlsByHashTag = ({ realTotalUrls, setMyFav }) => {
     dispatch(SET_TAG_TOTAL_ITEMS(onlyIds));
   };
 
-  const handleClickUrl = (url) => {
-    window.open(url.url);
-  };
-  const handleEditClick = (url) => {
-    console.log("edit");
-  };
-
   const handleDeleteClick = (url) => {
     // 한번클릭
     !tagFilterdItems.includes(url._id) &&
@@ -96,7 +91,6 @@ const UrlsByHashTag = ({ realTotalUrls, setMyFav }) => {
     // 더블클릭
     tagFilterdItems.includes(url._id) &&
       dispatch(REMOVE_TAG_FILTERD_ITEMS(url._id));
-    console.log("delete");
   };
 
   const onMouseOut = (e) => {
@@ -141,7 +135,7 @@ const UrlsByHashTag = ({ realTotalUrls, setMyFav }) => {
                 <img
                   style={{ pointerEvents: "none" }}
                   className="urlFavicon"
-                  src={`http://www.google.com/s2/favicons?domain=${value.url}`}
+                  src={faviconUrl(value.url)}
                   alt=""
                 />
               )}

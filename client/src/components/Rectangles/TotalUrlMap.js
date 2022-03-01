@@ -1,28 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
 import whenIclickUrl from "./FuncTotalUrlMap";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import HoverModal from "../styled/HoverModal.styled";
 import styled from "styled-components";
 import UrlRectWrapper from "../styled/UrlRectWrapper.styled";
 import { debounce } from "lodash";
+import { handleClickUrl, handleEditClick } from "../../Hooks/clickUrl";
+import {
+  ADD_TAG_FILTERD_ITEMS,
+  getTagFilterdItems,
+  GET_CLEAR_TAG_FILTERD_ITEMS,
+  REMOVE_TAG_FILTERD_ITEMS,
+  SET_CLICKED_URL_INFO,
+} from "../../store/reducers/urls";
+import { getIsClicked } from "../../store/reducers/Tags";
 
 export const modalHover = debounce((e, setHeight, Height) => {
   e.target.lastChild.classList.add("hover-on");
   Height !== e.target.offsetHeight && setHeight(e.target.offsetHeight);
 }, 500);
 
-const TotalUrlMapEl = styled(UrlRectWrapper)``;
+const BoxEl = styled.div`
+  display: flex;
+  > svg {
+    padding-left: 1rem;
+    padding: 0 0.5rem;
+  }
+`;
+
+const TotalUrlMapEl = styled(UrlRectWrapper)`
+  position: relative;
+  .just-bar,
+  .valueTitle,
+  > img {
+    pointer-events: none;
+  }
+`;
+
+const faviconUrl = (url) => `http://www.google.com/s2/favicons?domain=${url}`;
+
 const TotalUrlMap = ({
   getUrls,
-  setGetUrls,
+
   editMode,
-  setMyFav,
+
   deleteMode,
 }) => {
   const [Height, setHeight] = useState(0);
   const dispatch = useDispatch();
-
+  const tagFilterdItems = useSelector(getTagFilterdItems);
+  const tagIsClicked = useSelector(getIsClicked);
   const onMouseOut = (e) => {
     modalHover.cancel();
     e.target.lastChild.classList.remove("hover-on");
@@ -37,104 +65,60 @@ const TotalUrlMap = ({
     e.preventDefault();
   };
 
-  const onClick = (value) => {
-    whenIclickUrl({
-      oneUrl: value,
-      deleteMode,
-      editMode,
-      setMyFav,
-      setGetUrls: setGetUrls,
-      getUrls: getUrls,
-      dispatch,
-    });
+  const handleDeleteClick = (url) => {
+    // 한번클릭
+    !tagFilterdItems.includes(url._id) &&
+      dispatch(ADD_TAG_FILTERD_ITEMS([url._id]));
+    // 더블클릭
+    tagFilterdItems.includes(url._id) &&
+      dispatch(REMOVE_TAG_FILTERD_ITEMS(url._id));
   };
+
+  const onClick = (url) => {
+    editMode && handleClickUrl(url);
+    !editMode && !deleteMode && handleEditClick(url);
+    !editMode && deleteMode && handleDeleteClick(url);
+
+    console.log("onClick");
+  };
+
+  useEffect(() => {
+    dispatch(GET_CLEAR_TAG_FILTERD_ITEMS());
+  }, [tagIsClicked]);
 
   return (
     <>
       {getUrls.map((value) => {
+        const clicked = tagFilterdItems.includes(value._id);
         return (
-          <>
-            <TotalUrlMapEl
-              style={{ position: "relative" }}
-              className="T-url"
-              key={value._id}
-              onClick={() => {
-                onClick(value);
-              }}
-              onMouseOut={onMouseOut}
-              onMouseOver={onMouseOver}
-              onContextMenu={onContextMenu}
-            >
-              {!editMode && deleteMode && (
-                <>
-                  <div className="select-box">
-                    {value.clicked ? (
-                      <MdCheckBox style={{ paddingLeft: "10px" }} />
-                    ) : (
-                      <MdCheckBoxOutlineBlank style={{ paddingLeft: "10px" }} />
-                    )}
-                  </div>
-                </>
-              )}
+          <TotalUrlMapEl
+            className="T-url"
+            key={value._id}
+            onClick={() => onClick(value)}
+            onMouseOut={onMouseOut}
+            onMouseOver={onMouseOver}
+            onContextMenu={onContextMenu}
+          >
+            {!editMode && deleteMode && <Box clicked={clicked} />}
 
-              <img
-                style={{ pointerEvents: "none" }}
-                className="urlFavicon"
-                src={`http://www.google.com/s2/favicons?domain=${value.url}`}
-                alt=""
-              />
-              {/* <div>{value.url_id}</div> */}
-
-              <div className="just-bar" style={{ pointerEvents: "none" }}>
-                |
-              </div>
-              <div className="valueTitle" style={{ pointerEvents: "none" }}>
-                {value.url_title}
-              </div>
-              <HoverModal Height={Height} value={value} />
-            </TotalUrlMapEl>
-          </>
+            <img className="urlFavicon" src={faviconUrl(value.url)} alt="" />
+            {/* <div>{value.url_id}</div> */}
+            <div className="just-bar">|</div>
+            <div className="valueTitle">{value.url_title}</div>
+            <HoverModal Height={Height} value={value} />
+          </TotalUrlMapEl>
         );
       })}
     </>
   );
 };
 
+const Box = ({ clicked }) => {
+  return (
+    <BoxEl className="select-box">
+      {clicked ? <MdCheckBox /> : <MdCheckBoxOutlineBlank />}
+    </BoxEl>
+  );
+};
+
 export default TotalUrlMap;
-
-{
-  /* <iframe
-                title="test"
-                width="320"
-                height="440"
-                src="https://www.instagram.com/p/CYO9ux9uEMr/embed"
-                frameborder="0"
-              /> */
-}
-{
-  /* <div className="valueId">{value.url_id}</div> */
-}
-{
-  /* <img
-                width={value.url.includes("youtu") ? "100px" : "20px"}
-                className="urlFavicon"
-                src={
-                  value.url.includes("youtu")
-                    ? `https://i.ytimg.com/vi/${imgThum}/maxresdefault.jpg`
-                    : `http://www.google.com/s2/favicons?domain=${value.url}`
-                }
-                alt=""
-              /> */
-}
-
-// window.onscroll = () => {
-//   const circle = document.querySelector(".detail-container");
-//   grabNowValue.cancel();
-//   circle.style.display = "none";
-// };
-
-// const onMouseLeave = () => {
-//   const circleㅜ   = document.querySelector(".detail-container");
-//   circle.style.display = "none";
-//   grabNowValue.cancel();
-// };

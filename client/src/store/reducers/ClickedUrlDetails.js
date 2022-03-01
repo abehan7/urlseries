@@ -1,4 +1,4 @@
-const initialState = {
+const url = {
   url: "",
   title: "",
   hashTags: "",
@@ -11,7 +11,7 @@ const SetClickedUrl = (url) => {
   return { type: SET_CLICKED, payload: url };
 };
 
-const ClickedUrlDetails = (state = initialState, action) => {
+const ClickedUrlDetails = (state = url, action) => {
   switch (action.type) {
     case SET_CLICKED:
       return { ...action.payload };
@@ -25,3 +25,7 @@ export default ClickedUrlDetails;
 export const UrlDetailActions = {
   SetClickedUrl,
 };
+
+// Slice
+
+// const
