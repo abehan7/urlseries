@@ -12,6 +12,9 @@ const methods = {
   },
 };
 
+export const scrollUp = (className) => {
+  methods.one(className);
+};
 export const TopMoreScrollUp = () => {
   methods.one("more-content");
   // console.log(scroll.scrollTop);
