@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.7",
+    "@loadable/component": "^5.15.2",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.4",
     "@reduxjs/toolkit": "^1.7.2",
     "@svgr/webpack": "^6.2.0",
@@ -156,4 +157,3 @@
     "mini-css-extract-plugin": "2.4.5"
   }
 }
-

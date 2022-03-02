@@ -6,7 +6,7 @@ import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../Hooks/keepModalsShow";
 
 // Header
-// import Header from "../components/Header/Header";
+import Header from "../components/Header/Header";
 // Rectangles
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
@@ -44,7 +44,6 @@ import {
 } from "../store/reducers/Folders";
 import { getIsClicked } from "../store/reducers/Tags";
 import { getToken } from "../redux/ReducersT/tokenReducer";
-import Header from "../components/Header/Header";
 import { getTagFilterdItems } from "../store/reducers/urls";
 // import ModalPage from "./ModalPage";
 
@@ -52,6 +51,7 @@ export const MainStates = createContext(null);
 
 const MainEl = styled.div`
   /* position: relative; */
+  /* 123 */
   transition: 400ms;
   background-color: ${(props) => (props.isDarkMode ? "#02064a" : "")};
   color: ${(props) => (props.isDarkMode ? "#fff" : "")};
