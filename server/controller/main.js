@@ -352,6 +352,22 @@ const DeleteUrl = async (req, res) => {
   }
 };
 
+const deleteUrls = async (req, res) => {
+  const { id } = req.user;
+  const user_id = id;
+  const { urls } = req.body;
+  console.log("urls from deleteUrls: ", urls);
+  const query = { _id: { $in: urls }, user_id };
+  try {
+    await db.Urls.deleteMany(query).exec();
+    res.send("items deleted");
+    console.log("items deleted");
+  } catch (err) {
+    console.log(err);
+    res.send("items NOT deleted");
+  }
+};
+
 const DeleteFolder = async (req, res) => {
   const user_id = req.user.id;
   const { idList } = req.body;
@@ -594,4 +610,5 @@ module.exports = {
   Login,
   SearchDeleteAll,
   updateFolderName,
+  deleteUrls,
 };

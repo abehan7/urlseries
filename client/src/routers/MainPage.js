@@ -33,7 +33,12 @@ import Loader from "../components/SearchBar/Loader";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 // API
-import { GetTotalUrls, TotalAfter } from "../components/Api";
+import {
+  deleteUrls,
+  GetTotalUrls,
+  TotalAfter,
+  updateFolderContents,
+} from "../components/Api";
 import styled from "styled-components";
 import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
 import ModalHashtag from "../components/ModalHashtag/ModalHashtag";
@@ -186,14 +191,15 @@ const MainPage = () => {
     [tagFilterdItems]
   );
 
-  const getEmptyFolderUrls = () => {
+  const getEmptyFolderUrls = async () => {
     // console.log(folders);
-    folders.forEach((folder) => {
+    folders.forEach(async (folder) => {
       const filterd = folder.folder_contents.filter((url) => {
         return !tagFilterdItems.includes(url._id);
       });
-      console.log(filterd);
+      // console.log(filterd);
       dispatch(SET_FOLDER_CONTENTS({ folderId: folder._id, urls: filterd }));
+      await updateFolderContents(folder._id, filterd);
     });
   };
 
@@ -203,9 +209,10 @@ const MainPage = () => {
     getEmpty(likedUrls, setLikedUrls);
     getEmpty(mostClickedUrls, setMostClickedUrls);
     getEmpty(recentSearched, setRecentSearch);
-    getEmptyFolderUrls();
+    await getEmptyFolderUrls();
+    // 폴더 안에 있는 것들도 업데이트 해줘야 함
+    await deleteUrls(tagFilterdItems);
 
-    // await
     // 폴더 비우기
   };
 

@@ -60,7 +60,7 @@ export const updateFolderLike = (folders) =>
 
 export const DeleteUrlAPI = (_id) => API.delete(`/deleteUrl/${_id}`);
 
-export const deleteUrls = (urlList) => API.delete("/deleteUrls", { urlList });
+export const deleteUrls = (urls) => API.patch(`/deleteUrls`, { urls });
 
 export const CrawlingAPI = (url) => API.post("/crawling", { url });
 

@@ -28,6 +28,7 @@ const {
   Login,
   SearchDeleteAll,
   updateFolderName,
+  deleteUrls,
 } = require("./controller/main");
 
 const authtest = require("./middleware/authtest");
@@ -159,6 +160,8 @@ app.put("/FolderLiked", authtest, FolderLiked);
 // [1]  url삭제 delete
 
 app.delete("/deleteUrl/:id", authtest, DeleteUrl);
+
+app.patch("/deleteUrls", authtest, deleteUrls);
 
 // [2]  폴더삭제
 app.post("/deleteFolder", authtest, DeleteFolder);
