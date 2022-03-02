@@ -42,7 +42,7 @@ import {
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
   cursor: pointer;
-  justify-content: flex-end;
+  justify-content: center;
 `;
 
 const ModalWindow = styled.div`
@@ -54,8 +54,8 @@ const ModalWindow = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-radius: 20px;
+
   background-color: #e9ecef;
   height: 75%;
   width: 700px;
@@ -227,25 +227,8 @@ const FolderModalWindow = () => {
         return;
       }
 
-      // const { data } = await AddFolder(folderName);
-
-      // const folder = data;
-
-      // console.log("folder from api", folder);
-
-      // const folder = {
-      //   _id: data._id,
-      //   user_id: data.user_id,
-      //   folderName: data.folder_name,
-      //   folderContents: [],
-      // };
-
-      // dispatch(ADD_FOLDER(folderName));
       dispatch(ADD_FOLDER(folder_name));
       setModalFolderName("");
-      // setModalInfo({
-      //   isOpen: false,
-      // });
 
       const message = "폴더가 추가되었습니다";
       ShowNoticeAlert(message);
@@ -453,14 +436,14 @@ const FolderModalWindow = () => {
         status: false,
         mode: "",
       });
-      // setModalWindowOpen(false);
     };
-    setModalInfo({
-      message: "폴더변경을 취소하시겠습니까?",
-      type: "click",
-      handleClickConfirm: fn,
-      isOpen: true,
-    });
+    fn();
+    // setModalInfo({
+    //   message: "폴더변경을 취소하시겠습니까?",
+    //   type: "click",
+    //   handleClickConfirm: fn,
+    //   isOpen: true,
+    // });
   };
 
   // 검색버튼 클릭하면 폴더버튼 닫히고 검색창으로 넘어가게 하기

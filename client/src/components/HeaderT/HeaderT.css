@@ -6,37 +6,44 @@ header {
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  /* padding: 0 30px; */
 }
 header a {
   color: rgb(44, 43, 43);
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
+  /* letter-spacing: 1.5px; */
   text-decoration-line: none;
 }
 
 header ul {
   padding-right: 5%;
-  transform: translateY(-5px);
+  transform: translateY(0px);
 }
 header ul li {
   display: inline-block;
   padding: 10px 20px;
   opacity: 0.7;
+  margin-left: -5px;
 }
 header ul li:hover {
   opacity: 1;
 }
 
-header ul li img {
-  width: 30px;
-  height: 30px;
-  transform: translateY(10px);
-  border-radius: 50%;
-}
-
 .logo {
   padding-left: 5%;
+}
+
+.logo a {
+  display: flex;
+  align-items: center;
+  height: 60px;
+}
+
+.logoImage {
+  width: 40px;
+  height: 40px;
+}
+
+.logo p {
+  font-size: 24px;
 }
 
 /* --------- Dropdown ---------- */
@@ -51,31 +58,63 @@ header ul li img {
   text-transform: capitalize;
   overflow: hidden;
 }
-.drop-nav .dropdown {
-  position: absolute;
-  background: #ff4b2b;
-  border-radius: 5px;
-  width: 100%;
-  height: max-content;
-  text-align: center;
-  padding: 5px;
-  padding-left: 10px;
-  /* width: calc(100% + 30px); */
-  top: 60px;
-  display: none;
-}
-.drop-nav .dropdown li {
-  display: block;
-}
-
-.drop-nav .dropdown li a {
-  color: white;
-}
-.drop-nav:hover .dropdown {
-  display: block;
-}
 
 .icon_page {
   padding-right: 5px;
   vertical-align: top;
+}
+/* Dropdown Button */
+.dropbtn {
+  background-color: none;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.profileImage {
+  width: 30px;
+  height: 30px;
+  transform: translateY(10px);
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  font-size: 15px;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 8px 12px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {
+  display: block;
 }

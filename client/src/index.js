@@ -35,20 +35,20 @@ h2 {
 
 `;
 
-// ReactDOM.render(
-//   <DataProvider>
-//     <GlobalStyle />
-//     <App />
-//   </DataProvider>,
-//   document.getElementById("ururl")
-// );
-
-// ===수정 전 코드===
-
 ReactDOM.render(
   <Provider store={store2}>
     <GlobalStyle />
     <App />
   </Provider>,
-  document.getElementById("ururl")
+  document.getElementById("urlseries")
 );
+
+// ===수정 전 코드===
+
+// ReactDOM.render(
+//   <Provider store={store2}>
+//     <GlobalStyle />
+//     <App />
+//   </Provider>,
+//   document.getElementById("ururl")
+// );

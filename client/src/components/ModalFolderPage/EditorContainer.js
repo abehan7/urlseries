@@ -164,6 +164,7 @@ const EditorFolder = ({
     handleClickLikeFolder,
     selectMode,
   } = useContext(FolderContext);
+
   const onClickAddFolder = () => {
     handleClickAddFolder();
   };

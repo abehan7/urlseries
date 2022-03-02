@@ -58,7 +58,7 @@
 }
 
 /* Dropup Button */
-.dropbtn {
+.dropbtn_footer {
   background-color: #828585;
   color: white;
   padding: 5px;
@@ -73,7 +73,7 @@
   padding-left: 10px;
 }
 
-.dropbtn:hover {
+.dropbtn_footer:hover {
   background-color: #ff4b2b;
 }
 
@@ -154,4 +154,8 @@
   opacity: 1;
   pointer-events: all;
   transform: translateY(-80px);
+}
+
+.projects a {
+  color: white;
 }
