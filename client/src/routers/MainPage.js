@@ -1,10 +1,4 @@
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useCallback, useEffect, useState } from "react";
 import "./MainPage.css";
 
 // Functions
@@ -130,8 +124,6 @@ const MainPage = () => {
   const folders = useSelector(getFolders);
   // FIXME: 토큰 있으면 데이터 가져오기
   const token = useSelector(getToken);
-
-  console.log(token);
 
   // FIXME: 맨 처음 데이터 가져오기
 

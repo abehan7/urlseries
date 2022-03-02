@@ -2,10 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { AiOutlineCheck } from "react-icons/ai";
 import { FcFolder, FcOpenedFolder } from "react-icons/fc";
 import { TiBackspaceOutline } from "react-icons/ti";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
-import { DELETE, LIKE } from "../../contants";
-import { actions } from "../../store/reducers/FolderItems";
 import { FolderContext } from "./FolderModalWindow";
 import Container from "./styled/Container.styled";
 import Icon from "./styled/Icon.styled";
@@ -206,7 +204,7 @@ const FolderDisplay = ({ handleGetId }) => {
 
   // selectMode일때 item들 tracking하기
   useEffect(() => {
-    console.log("selectMode Items: ", selectMode.items);
+    // console.log("selectMode Items: ", selectMode.items);
   }, [selectMode]);
 
   // FIXME: 삭제나 좋아요 클릭하면 우측 체크 아이콘 보이게하기

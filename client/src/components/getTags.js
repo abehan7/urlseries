@@ -8,7 +8,6 @@ export const getTotalTags = (urls, initAssigned) => {
         urls_name.push(tag);
         if (initAssigned.includes(tag)) {
           urls_tag.push({ name: tag, assigned: 1, origin: 1 });
-          console.log(tag);
         } else {
           urls_tag.push({ name: tag, assigned: 0, origin: 0 });
         }

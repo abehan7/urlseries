@@ -1,5 +1,5 @@
-import React, { createContext, useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 
 import HeaderT from "./components/HeaderT/HeaderT";
@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     const firstLogin = localStorage.getItem("firstLogin");
     if (firstLogin) {
-      console.log(token);
+      // console.log(token);
       const getToken = async () => {
         axios.defaults.withCredentials = true; // 이걸로 cookie설정하는거 됐던거같은데 또 heroku에서는 안되네
         const res = await API.post("/user/refresh_token", null, {
@@ -61,44 +61,5 @@ function App() {
     </Router>
   );
 }
-
-// ------------------------------------------------------------수정전 코드------------------------------------
-// export const UserContext = createContext(null);
-
-// const App = () => {
-//   // const [loginUser, setLoginUser] = useState({});
-
-//   // const initialState = {
-//   //   loginUser,
-//   //   setLoginUser,
-//   // };
-
-//   const [user, setLoginUser] = useState({});
-
-//   const initialState = {
-//     user,
-//     setLoginUser,
-//   };
-
-//   return (
-//     <Router>
-//       <UserContext.Provider value={initialState}>
-//         <HeadNav />
-//         <Routes>
-//           <Route path="/about" element={<AboutPage />} />
-//           <Route
-//             path="/login"
-//             element={<NewLogin setLoginUser={setLoginUser} />}
-//           />
-//           <Route path="/signup" element={<Register />} />
-
-//           {/* <Route path="/login" element={<Login />} />
-//           <Route path="/signup" element={<Join />} /> */}
-//           <Route path="/" exact={true} element={<MainPage />} />
-//         </Routes>
-//       </UserContext.Provider>
-//     </Router>
-//   );
-// };
 
 export default App;

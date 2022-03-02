@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Footer.css";
 import { Link } from "react-router-dom";
 import {
-  RiWhatsappLine,
   RiMapPinLine,
   RiPhoneLine,
   RiMailLine,
@@ -18,8 +17,8 @@ function Footer() {
   return (
     <div id="main-footer">
       <div className="footerContent">
-        <div class="projects">
-          <button class="dropbtn_footer">
+        <div className="projects">
+          <button className="dropbtn_footer">
             Phone
             <RiArrowDropDownLine className="icon" />
           </button>
@@ -31,8 +30,8 @@ function Footer() {
           </ul>
         </div>
 
-        <div class="projects">
-          <button class="dropbtn_footer">
+        <div className="projects">
+          <button className="dropbtn_footer">
             Email
             <RiArrowDropDownLine className="icon" />
           </button>
@@ -44,8 +43,8 @@ function Footer() {
           </ul>
         </div>
 
-        <div class="projects">
-          <button class="dropbtn_footer">
+        <div className="projects">
+          <button className="dropbtn_footer">
             Address
             <RiArrowDropDownLine className="icon" />
           </button>
@@ -57,8 +56,8 @@ function Footer() {
           </ul>
         </div>
 
-        <div class="projects">
-          <button class="dropbtn_footer">
+        <div className="projects">
+          <button className="dropbtn_footer">
             <Link to="/userauth">개인정보 처리방침</Link>
             <RiArrowDropDownLine className="icon" />
           </button>

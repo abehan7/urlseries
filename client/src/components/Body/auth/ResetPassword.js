@@ -7,7 +7,7 @@ import {
 } from "../../Utils/notification/Notification";
 import { isLength, isMatch } from "../../Utils/validation/Validation";
 import { Link, useNavigate } from "react-router-dom";
-import { RiUser3Line, RiLockPasswordLine, RiMailLine } from "react-icons/ri";
+import { RiLockPasswordLine } from "react-icons/ri";
 
 const initialState = {
   password: "",

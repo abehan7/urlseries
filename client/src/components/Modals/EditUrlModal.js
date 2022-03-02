@@ -24,7 +24,7 @@ const EditUrlModal = ({
 
   const { ClickedUrl } = useSelector((state) => state);
   useEffect(() => {
-    console.log(ClickedUrl);
+    // console.log(ClickedUrl);
     setMemo(ClickedUrl.memo);
   }, [ClickedUrl]);
 

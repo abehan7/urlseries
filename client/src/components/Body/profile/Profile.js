@@ -13,7 +13,6 @@ import {
 
 import "./Profile.css";
 
-import { AiTwotoneCamera } from "react-icons/ai";
 import {
   VscCheck,
   VscChromeClose,

@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from "react-icons/md";
-import whenIclickUrl from "./FuncTotalUrlMap";
 import { useDispatch, useSelector } from "react-redux";
 import HoverModal from "../styled/HoverModal.styled";
 import styled from "styled-components";
@@ -10,11 +9,8 @@ import { handleClickUrl, handleEditClick } from "../../Hooks/clickUrl";
 import {
   ADD_TAG_FILTERD_ITEMS,
   getTagFilterdItems,
-  GET_CLEAR_TAG_FILTERD_ITEMS,
   REMOVE_TAG_FILTERD_ITEMS,
-  SET_CLICKED_URL_INFO,
 } from "../../store/reducers/urls";
-import { getIsClicked } from "../../store/reducers/Tags";
 
 export const modalHover = debounce((e, setHeight, Height) => {
   e.target.lastChild.classList.add("hover-on");

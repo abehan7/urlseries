@@ -517,7 +517,7 @@ const FolderModalWindow = () => {
   };
 
   useEffect(() => {
-    console.log(selectedFolder);
+    // console.log(selectedFolder);
   }, [selectedFolder]);
 
   return (

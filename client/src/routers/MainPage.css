@@ -92,7 +92,7 @@ h3 {
   display: none;
   position: absolute;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   margin-top: 370px;
   width: 400px;
@@ -245,9 +245,6 @@ h3 {
 }
 
 /* 속에 있는 작은 아이콘들까지 따로따로 투명도 중첩으로 낮아지는거 방지 */
-.delete-mode-click-container div div:hover,
-.delete-mode-click-container div svg:hover {
-}
 
 /* .delete-ment {
   font-size: 14px;
@@ -367,7 +364,7 @@ h3 {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   width: 100%;
   height: auto;
   padding: 0.4rem 0 0.4rem 0;
@@ -389,20 +386,6 @@ h3 {
   transition: 0;
 }
 
-.T-url > .valueTitle {
-  /* word-break: break-all; */
-
-  /* white-space: nowrap;
-  text-overflow: ellipsis;
-  overflow: hidden; */
-
-  /* display: -webkit-box;
-  word-wrap: break-word;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis; */
-}
 .url > .valueTitle {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -432,8 +415,8 @@ h3 {
 .aside {
   display: flex;
   flex-direction: column;
-  align-items: start;
-  justify-content: start;
+  align-items: flex-start;
+  justify-content: flex-start;
   position: sticky;
   word-break: break-all;
   /* margin-top: -500px; */
@@ -552,10 +535,6 @@ h3 {
 }
 
 @media (max-width: 870px) {
-  .grid-container {
-    /* padding-top: 2rem; */
-  }
-
   .delete-mode-click-container div {
     width: 30px;
   }

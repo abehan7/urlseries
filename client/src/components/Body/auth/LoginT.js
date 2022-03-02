@@ -9,7 +9,7 @@ import "./Auth.css";
 import { dispatchLogin } from "../../../redux/Actions/authAction";
 import { useDispatch } from "react-redux";
 import { GoogleLogin } from "react-google-login";
-import { RiUser3Line, RiLockPasswordLine, RiMailLine } from "react-icons/ri";
+import { RiUser3Line, RiLockPasswordLine } from "react-icons/ri";
 
 const initialState = {
   user_id: "",

@@ -1,9 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import { AiOutlineEdit, AiOutlineFolder, AiTwotoneEdit } from "react-icons/ai";
 
 import { FiPlusSquare } from "react-icons/fi";
 import { MdOutlineTag } from "react-icons/md";
-import { createSearchParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { TopTwoRectsEditModeScrollUp } from "../../Hooks/ScrollUp";
 import { PopupEnable } from "../../Hooks/stopScroll";
@@ -20,8 +19,6 @@ const RightIcons = ({
   editMode,
   shareMode,
   BoxTags_First,
-  setBoxTags_First,
-  setBoxTags,
   setEditMode,
   setDeleteMode,
   deleteMode,

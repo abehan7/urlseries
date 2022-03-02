@@ -1,5 +1,5 @@
 import React from "react";
-import { Router, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import LoginT from "./auth/LoginT";
 import RegisterT from "./auth/RegisterT";
 import ActivationEmail from "./auth/ActivationEmail";

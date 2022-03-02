@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { VscAccount, VscLayers, VscChevronDown } from "react-icons/vsc";
 import "./HeaderT.css";
 import { useSelector } from "react-redux";
-import axios from "axios";
 
 function HeaderT() {
   const auth = useSelector((state) => state.auth);
@@ -42,12 +41,12 @@ function HeaderT() {
 
   const userLink = () => {
     return (
-      <div class="dropdown">
-        <button onClick={myFunction} class="dropbtn">
+      <div className="dropdown">
+        <button onClick={myFunction} className="dropbtn">
           <img className="profileImage" src={user.avatar} alt="" />
           {user.user_id} <VscChevronDown />
         </button>
-        <div id="myDropdown" class="dropdown-content">
+        <div id="myDropdown" className="dropdown-content">
           <Link to="profile">Profile</Link>
           <Link to="/" onClick={handleLogout}>
             Logout
@@ -66,7 +65,11 @@ function HeaderT() {
       <div className="logo">
         <h1>
           <Link to="/">
-            <img className="logoImage" src="img/logotest2.png"></img>
+            <img
+              className="logoImage"
+              src="img/logotest2.png"
+              alt="logoImage"
+            />
             <p>Urlseries</p>
           </Link>
         </h1>

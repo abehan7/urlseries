@@ -5,7 +5,7 @@ import "./index.css";
 import { Provider } from "react-redux";
 import store2 from "./store/store2";
 import { createGlobalStyle } from "styled-components";
-import DataProvider from "./redux/StoreT";
+// import DataProvider from "./redux/StoreT";
 
 const GlobalStyle = createGlobalStyle`
 

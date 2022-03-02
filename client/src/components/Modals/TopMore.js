@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import React from "react";
 import { IoArrowBack } from "react-icons/io5";
 import "./AddUrlModal.css";
 import { PopupDisable } from "../../Hooks/stopScroll";
 import "./TopMore.css";
-import { ModalInfos } from "../../routers/MainPage";
 import { TopMoreScrollUp } from "../../Hooks/ScrollUp";
 
 const TopMore = ({
@@ -32,13 +31,7 @@ const TopMore = ({
   const handleClickOutside = (e) => {
     document.querySelector(".topmore-overlay") === e.target && handleCloseBtn();
   };
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setModalInfo({
-  //     ...modalInfo,
-  //     [name]: value,
-  //   });
-  // };
+
   return (
     <>
       <div
@@ -65,6 +58,7 @@ const TopMore = ({
                     onClick={() => {
                       NormalMode(value);
                     }}
+                    key={value.url_id}
                   >
                     <img
                       className="urlFavicon"

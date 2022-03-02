@@ -105,7 +105,6 @@ const EditorContainer = () => {
     setIsConfirmed,
     setModalInfo,
     isUrlEditing,
-    setIsUrlEditing,
     handleClickAllExcept,
     CheckChanges,
     handleRemoveItems,

@@ -6,7 +6,7 @@ import {
   showSuccessMsg,
 } from "../../Utils/notification/Notification";
 import { Link, useNavigate } from "react-router-dom";
-import { RiUser3Line, RiLockPasswordLine, RiMailLine } from "react-icons/ri";
+import { RiUser3Line, RiMailLine } from "react-icons/ri";
 
 const initialState = {
   user_id: "",

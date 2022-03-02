@@ -71,7 +71,6 @@ export const folderSlice = createSlice({
     },
     [SET_FOLDERS.fulfilled]: (state, action) => {
       const newFolder = action.payload;
-      console.log("newFolder from set folders", newFolder);
       state.folders = newFolder;
     },
   },

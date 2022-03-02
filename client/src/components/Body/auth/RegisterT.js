@@ -92,8 +92,8 @@ function RegisterT() {
 
   return (
     <center>
-      <div class="container" id="container">
-        <div class="form-container sign-in-container">
+      <div className="container" id="container">
+        <div className="form-container sign-in-container">
           <form onSubmit={handleSubmit}>
             <h1 className="auth_opening">회원가입 </h1>
 
@@ -155,12 +155,12 @@ function RegisterT() {
           </form>
         </div>
 
-        <div class="overlay-container">
-          <div class="overlay">
-            <div class="overlay-panel overlay-right">
+        <div className="overlay-container">
+          <div className="overlay">
+            <div className="overlay-panel overlay-right">
               <h1 className="auth_opening">환영합니다!</h1>
               <p className="auth_text">기존 아이디가 있다면 로그인해주세요!</p>
-              <button class="ghost" id="signUp">
+              <button className="ghost" id="signUp">
                 <Link to="/logintest">로그인</Link>
               </button>
             </div>
