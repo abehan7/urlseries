@@ -327,6 +327,6 @@ form {
   }
 
   .response_register {
-    display: block;
+    display: none;
   }
 }

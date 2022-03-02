@@ -45,11 +45,11 @@ const sendEmail = (to, url, txt) => {
   const mailOptions = {
     from: SENDER_EMAIL_ADDRESS,
     to: to,
-    subject: "URURL",
+    subject: "Urlseries",
     html: `
            <div style="max-width: 700px; margin:auto; border-radius : 10px; padding: 50px 20px; padding-top: 10px; background : #ff416c;">
                 <h2 style="text-align :center; color: white;  font-size: 40px;  font-weight:bold;">URurl</h2>
-                <div style=" text-align :center; margin: auto; font-weight:right; color: white;">URurl을 이용해주셔서 감사합니다!
+                <div style=" text-align :center; margin: auto; font-weight:right; color: white;">Urlseries을 이용해주셔서 감사합니다!
                 </div>
                 <div style=" text-align :center; margin: auto; margin-top:5px; margin-bottom:5px; ">
                     <a href=${url} style=" border-radius : 10px; border : 1px solid white; background: #ff416c; text-decoration: none; color: white; padding: 10px 20px; margin: auto; display: inline-block;">${txt}</a>

@@ -40,7 +40,7 @@ ReactDOM.render(
     <GlobalStyle />
     <App />
   </DataProvider>,
-  document.getElementById("ururl")
+  document.getElementById("urlseries")
 );
 
 // ===수정 전 코드===

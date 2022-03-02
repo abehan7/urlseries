@@ -82,6 +82,8 @@
   letter-spacing: 1.4px;
   margin: 10px 0;
   border: none;
+  font-size: 15px;
+  border-radius: 10px;
 }
 
 /* ----------- Col Right----------- */
@@ -106,7 +108,8 @@
 .customers th {
   border: 1px solid #ddd;
   padding: 8px;
-  min-width: 100px;
+  min-width: max-content;
+  text-align: center;
 }
 .customers tr:nth-child(even) {
   background: #f2f2f2;
