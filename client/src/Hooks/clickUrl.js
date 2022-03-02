@@ -5,7 +5,6 @@ export const handleClickUrl = (url) => {
 export const handleEditClick = (url) => {
   console.log("edit");
   const oneLineTags = url.url_hashTags.join("");
-
   document.querySelector(".editUrl-container").style.display = "block";
   document.querySelector(".editUrl-container .put-url > input").value = url.url;
   document.querySelector(".editUrl-container .put-title > input").value =

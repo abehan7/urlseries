@@ -40,17 +40,10 @@ const TotalUrlMapEl = styled(UrlRectWrapper)`
 
 const faviconUrl = (url) => `http://www.google.com/s2/favicons?domain=${url}`;
 
-const TotalUrlMap = ({
-  getUrls,
-
-  editMode,
-
-  deleteMode,
-}) => {
+const TotalUrlMap = ({ getUrls, editMode, deleteMode }) => {
   const [Height, setHeight] = useState(0);
   const dispatch = useDispatch();
   const tagFilterdItems = useSelector(getTagFilterdItems);
-  const tagIsClicked = useSelector(getIsClicked);
   const onMouseOut = (e) => {
     modalHover.cancel();
     e.target.lastChild.classList.remove("hover-on");
@@ -81,10 +74,6 @@ const TotalUrlMap = ({
 
     console.log("onClick");
   };
-
-  useEffect(() => {
-    dispatch(GET_CLEAR_TAG_FILTERD_ITEMS());
-  }, [tagIsClicked]);
 
   return (
     <>

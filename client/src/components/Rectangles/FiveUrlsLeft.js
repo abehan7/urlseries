@@ -25,9 +25,7 @@ const FiveUrlsLeft = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
 
   const WhenNormal = ({ url: value }) => {
     window.open(value.url);
-    API.put("http://localhost:3001/clickedURLInBox", {
-      url: value,
-    });
+    API.put("/clickedURLInBox", { url: value });
   };
 
   return (

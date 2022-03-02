@@ -110,7 +110,7 @@ const UrlsByHashTag = ({ realTotalUrls, setMyFav }) => {
 
   useEffect(() => {
     isClicked && getCombinedItems();
-  }, [metaTagItems, folderTagItems]);
+  }, [metaTagItems, folderTagItems, folders]);
 
   useEffect(() => {
     console.log("tagFilterdItems: ", tagFilterdItems);

@@ -12,6 +12,7 @@ import {
   SET_FOLDER_TAGS,
   SET_META_TAGS,
 } from "../../store/reducers/Tags";
+import { GET_CLEAR_TAG_FILTERD_ITEMS } from "../../store/reducers/urls";
 import FolderTag from "./FolderTag";
 
 const Tag = styled.span`
@@ -32,6 +33,8 @@ const AsideTag = ({ assignedTags }) => {
   const isClicked = useSelector(getIsClicked);
 
   const dispatch = useDispatch();
+
+  const tagIsClicked = useSelector(getIsClicked);
 
   // FIXME: functions
 
@@ -71,6 +74,10 @@ const AsideTag = ({ assignedTags }) => {
     (metaTagItems.length !== 0 || folderTagItems.length !== 0) &&
       handleSetClicked(true);
   }, [metaTagItems, folderTagItems]);
+
+  useEffect(() => {
+    dispatch(GET_CLEAR_TAG_FILTERD_ITEMS());
+  }, [tagIsClicked]);
 
   return (
     <>

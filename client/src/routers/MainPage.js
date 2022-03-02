@@ -38,10 +38,15 @@ import styled from "styled-components";
 import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
 import ModalHashtag from "../components/ModalHashtag/ModalHashtag";
 import FolderModalWindow from "../components/ModalFolderPage/FolderModalWindow";
-import { SET_FOLDERS } from "../store/reducers/Folders";
+import {
+  getFolders,
+  SET_FOLDERS,
+  SET_FOLDER_CONTENTS,
+} from "../store/reducers/Folders";
 import { getIsClicked } from "../store/reducers/Tags";
 import { getToken } from "../redux/ReducersT/tokenReducer";
 import Header from "../components/Header/Header";
+import { getTagFilterdItems } from "../store/reducers/urls";
 // import ModalPage from "./ModalPage";
 
 export const MainStates = createContext(null);
@@ -110,22 +115,18 @@ const MainPage = () => {
   const [target, setTarget] = useState(null);
 
   const dispatch = useDispatch();
-
+  const tagFilterdItems = useSelector(getTagFilterdItems);
   // url 클릭하면 그 디테일들 리덕스에 저장하는 기능
   const setUrlDetail = (detail) => {
     dispatch(UrlDetailActions.SetClickedUrl(detail));
   };
 
   const tagIsClicked = useSelector(getIsClicked);
+  const folders = useSelector(getFolders);
   // FIXME: 토큰 있으면 데이터 가져오기
   const token = useSelector(getToken);
 
   console.log(token);
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("accessToken");
-  //   setToken(token);
-  // }, [token]);
 
   // FIXME: 맨 처음 데이터 가져오기
 
@@ -173,36 +174,48 @@ const MainPage = () => {
     }
   }, [token]);
 
-  // totalurl 변하면 전체 tag 뽑은 다음에 users에 있는 totaltags수정하기 axios해서
-  // FIXME: 문제의 원인이 여기였어
-  //        이거 바꾸기 또 귀찮으니까 아니 이거를 수정 해볼려면 해보던지 아니면 useState하나 더 만들던지 알아서\
-  //        애초에 useMemo쓸게 아니라 useEffect안에 넣는게 옳은 방향일 수도
-  // useMemo(() => {
-  //   setTotalTags(getTotalTags(realTotalUrls));
-  // }, [realTotalUrls]);
+  // FIXME: 삭제하기 LeftIcons에서 사용할 예정
 
-  // ============================================= 여기는 Ininity Scroll START =============================================
+  const getEmpty = useCallback(
+    (urls, setUrls) => {
+      const filterd = urls.filter((url) => {
+        return !tagFilterdItems.includes(url._id);
+      });
+      setUrls(filterd);
+    },
+    [tagFilterdItems]
+  );
+
+  const getEmptyFolderUrls = () => {
+    // console.log(folders);
+    folders.forEach((folder) => {
+      const filterd = folder.folder_contents.filter((url) => {
+        return !tagFilterdItems.includes(url._id);
+      });
+      console.log(filterd);
+      dispatch(SET_FOLDER_CONTENTS({ folderId: folder._id, urls: filterd }));
+    });
+  };
+
+  const handleGetEmptyUrls = async () => {
+    getEmpty(getUrls, setGetUrls);
+    getEmpty(realTotalUrls, setRealTotalUrls);
+    getEmpty(likedUrls, setLikedUrls);
+    getEmpty(mostClickedUrls, setMostClickedUrls);
+    getEmpty(recentSearched, setRecentSearch);
+    getEmptyFolderUrls();
+
+    // await
+    // 폴더 비우기
+  };
+
+  // FIXME:  Ininity Scroll
   const getNextItems = async () => {
     setIsLoaded(true);
     await new Promise((resolve) => setTimeout(resolve, 1));
     setItemNum(itemNum + 100);
     setIsLoaded(false);
   };
-
-  // useState가 한번에 2번 실행되면 오류생기니까 useEffect로 바꿔줌
-  // 이게 옳은 방법
-  // 한 공간에서 useState를 2번 사용하지 말자
-  // 특히 서로 유기적으로 연관된거 사용하는 경우에는 useEffect를 사용하는 것이 좋다
-
-  useEffect(() => {
-    const data = realTotalUrls.slice(0, itemNum);
-    setGetUrls(data);
-  }, [itemNum]);
-
-  // useState가 한번에 2번 실행되면 오류생기니까 useEffect로 바꿔줌
-  // 이게 옳은 방법
-  // 한 공간에서 useState를 2번 사용하지 말자
-  // 특히 서로 유기적으로 연관된거 사용하는 경우에는 useEffect를 사용하는 것이 좋다
 
   useEffect(() => {
     const data = realTotalUrls.slice(0, itemNum);
@@ -216,16 +229,13 @@ const MainPage = () => {
       if (realTotalUrls.length === getUrls.length) {
         return;
       }
-
       await getNextItems();
-
       observer.observe(entry.target);
     }
   };
 
   useEffect(() => {
     let observer;
-
     if (target) {
       observer = new IntersectionObserver(onIntersect, {
         threshold: 0.5,
@@ -235,7 +245,8 @@ const MainPage = () => {
     return () => observer && observer.disconnect();
   }, [target, getUrls]);
 
-  // ============================================= Ininity Scroll END =============================================
+  // FIXME: 모달
+
   const createModal2 = () => {
     if (!clickedSearchInput) {
       document.querySelector(".Search-balloon").style.display = "flex";
@@ -251,8 +262,10 @@ const MainPage = () => {
 
   // StopDrag();
 
+  // FIXME: styles
+
   // editmode일 때 스타일 사각형에 색깔 변하게하기
-  const bcTopRect = "#ff8b8b";
+  const bcTopRect = "#E0E8E7";
   const emptyStyle = {};
   const MkColorTopRect = {
     backgroundColor: bcTopRect,
@@ -269,15 +282,14 @@ const MainPage = () => {
     setUrlDetail,
     editMode,
     deleteMode,
+    setGetUrls,
+    getUrls,
+    handleGetEmptyUrls,
   };
 
   return (
     <>
       <MainStates.Provider value={InitialContents}>
-        {/* <MainStates.Provider value={{ isDarkMode, setIsDarkMode }}> */}
-        {/* {getUrls.length === 0 ? (
-          <div className="firstLoading">yourURL</div>
-        ) : ( */}
         <MainEl
           editMode={editMode}
           isDarkMode={isDarkMode}

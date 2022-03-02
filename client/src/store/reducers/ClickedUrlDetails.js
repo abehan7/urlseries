@@ -27,5 +27,3 @@ export const UrlDetailActions = {
 };
 
 // Slice
-
-// const
