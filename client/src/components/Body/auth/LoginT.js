@@ -64,7 +64,15 @@ function LoginT() {
         tokenId: response.tokenId,
       });
 
+      console.log(res);
+
       setUser({ ...user, err: "", success: res.data.msg });
+
+      res.data.msg === "로그인 성공" &&
+        dispatch({ type: "GET_TOKEN", payload: res.data.access_token });
+
+      res.data.msg === "로그인 성공" &&
+        localStorage.setItem("accessToken", res.data.access_token);
 
       localStorage.setItem("firstLogin", true);
 
@@ -146,58 +154,6 @@ function LoginT() {
         </div>
       </div>
     </center>
-
-    // <div className="login_page">
-    //   <h2>Login</h2>
-
-    //  {err && showErrMsg(err)}
-    //  {success && showSuccessMsg(success)}
-
-    //   <form onSubmit={handleSubmit}>
-    //     <div>
-    //       <label htmlFor="user_id">ID</label>
-    //      <input
-    //          type="text"
-    //         placeholder="아이디를 입력해주세요"
-    // value={user_id}
-    //         name="user_id"
-    //         onChange={handleChangeInput}
-    //      ></input>
-    //    </div>
-
-    //     <div>
-    //       <label htmlFor="password">password</label>
-
-    //  <input
-    //    type="password"
-    //    placeholder="비밀번호를 입력해주세요"
-    //    value={password}
-    //    name="password"
-    //    onChange={handleChangeInput}
-    //  ></input>
-    //     </div>
-
-    //     <div className="row">
-    //       <button type="submit">로그인</button>
-    //       <Link to="/forgot_password">비밀번호를 잊으셨나요?</Link>
-    //     </div>
-    //   </form>
-
-    //   <div className="hr">Or Login with </div>
-
-    //  <div className="social">
-    //    <GoogleLogin
-    //      clientId="828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com"
-    //      buttonText="구글계정으로 로그인하기"
-    //      onSuccess={responseGoogle}
-    //      cookiePolicy={"single_host_origin"}
-    //    />
-    //  </div>
-
-    //   <p>
-    //     새로운 계정을 만드시겠습니까?<Link to="/registertest">회원가입</Link>
-    //   </p>
-    // </div>
   );
 }
 
