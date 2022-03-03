@@ -38,7 +38,7 @@ function Footer() {
           <ul>
             <p>
               <RiMailLine className="icon_detail" />
-              pomno3@gmail.com
+              urlseries5548@gmail.com
             </p>
           </ul>
         </div>
