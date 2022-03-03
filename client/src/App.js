@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
+import loadable from "@loadable/component";
 
 import HeaderT from "./components/HeaderT/HeaderT";
 import Body from "./components/Body/Body";
-import Footer from "./components/Footer/Footer";
+// import Footer from "./components/Footer/Footer";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -14,6 +15,9 @@ import {
 } from "./redux/Actions/authAction";
 import { API } from "./components/Api";
 
+// const HeaderT = loadable(() => import("./components/HeaderT/HeaderT"));
+// const Body = loadable(() => import("./components/Body/Body"));
+const Footer = loadable(() => import("./components/Footer/Footer"));
 //-----------------수정본 코드----------------
 
 function App() {
@@ -44,6 +48,7 @@ function App() {
         dispatch(dispatchLogin());
 
         return fetchUser(token).then((res) => {
+          console.log("getUser", res);
           dispatch(dispatchGetUser(res));
         });
       };

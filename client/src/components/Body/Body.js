@@ -1,18 +1,32 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import LoginT from "./auth/LoginT";
+// import LoginT from "./auth/LoginT";s
 import RegisterT from "./auth/RegisterT";
 import ActivationEmail from "./auth/ActivationEmail";
-import NotFound from "../Utils/NotFound/NotFound";
-import ForgotPassword from "./auth/ForgotPassword";
-import ResetPassword from "./auth/ResetPassword";
-import Profile from "./profile/Profile";
-import EditUser from "./profile/EditUser";
-import Aboutpage from "../AboutPage/AboutPage";
-import UserInfomation from "../UserInfomation/Userinfomation";
+// import NotFound from "../Utils/NotFound/NotFound";
+// import ForgotPassword from "./auth/ForgotPassword";
+// import ResetPassword from "./auth/ResetPassword";
+// import Profile from "./profile/Profile";
+// import EditUser from "./profile/EditUser";
+// import Aboutpage from "../AboutPage/AboutPage";
+// import UserInfomation from "../UserInfomation/Userinfomation";
 
 import { useSelector } from "react-redux";
 import MainPage from "../../routers/MainPage";
+
+import loadable from "@loadable/component";
+
+// const MainPage = loadable(() => import("../../routers/MainPage"));
+const Aboutpage = loadable(() => import("../AboutPage/AboutPage"));
+const UserInfomation = loadable(() =>
+  import("../UserInfomation/Userinfomation")
+);
+const NotFound = loadable(() => import("../Utils/NotFound/NotFound"));
+const LoginT = loadable(() => import("./auth/LoginT"));
+const Profile = loadable(() => import("./profile/Profile"));
+const EditUser = loadable(() => import("./profile/EditUser"));
+const ResetPassword = loadable(() => import("./auth/ResetPassword"));
+const ForgotPassword = loadable(() => import("./auth/ForgotPassword"));
 
 function Body() {
   const auth = useSelector((state) => state.auth);

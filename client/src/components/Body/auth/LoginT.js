@@ -119,10 +119,11 @@ function LoginT() {
             <button id="auth_btn" type="summit">
               로그인
             </button>
+            {/*  */}
 
             <div className="social">
               <GoogleLogin
-                clientId="828263528533-ja90a5bpsr4tve8tqm3oceacq1otkcl5.apps.googleusercontent.com"
+                clientId="1019311478641-hbkcsm5rt488pl0d5dqoo1m8b5d9jerk.apps.googleusercontent.com"
                 buttonText="Google 로그인"
                 onSuccess={responseGoogle}
                 cookiePolicy={"single_host_origin"}

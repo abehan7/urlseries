@@ -301,8 +301,8 @@ const userCtrl = {
         if (!isMatch)
           return res.status(400).json({ msg: "비밀번호가 올바르지 않습니다" });
         const refresh_token = createRefreshToken({ id: user._id });
-        res.cookie("refreshtoken", refresh_token);
-        console.log("JSON.stringify(req.session)", SON.stringify(req.session));
+        console.log(refresh_token);
+        // res.cookie("refreshtoken", refresh_token);
         res.json({ msg: "로그인 성공" });
       } else {
         const newUser = new Users({
@@ -316,7 +316,7 @@ const userCtrl = {
         const refresh_token = createRefreshToken({ id: newUser._id });
 
         res.cookie("refreshtoken", refresh_token);
-        console.log(JSON.stringify(req.session));
+        // console.log(JSON.stringify(req.session));
         console.log("로그인 성공 구글로그인 else");
 
         res.json({ msg: "로그인 성공" });

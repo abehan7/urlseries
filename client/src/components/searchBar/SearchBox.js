@@ -1,11 +1,17 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
-import RecentSearched from "./RecentSearched";
-import SearchedStuff from "./SearchedStuff";
+import loadable from "@loadable/component";
+
+// import RecentSearched from "./RecentSearched";
+// import SearchedStuff from "./SearchedStuff";
 import { debounce } from "lodash";
-import LoadingImg from "./LoadingImg";
+// import LoadingImg from "./LoadingImg";
 import styled from "styled-components";
 import { ClickedSeachedUrlAPI, SearchDeleteAll } from "../Api";
+
+const RecentSearched = loadable(() => import("./RecentSearched"));
+const SearchedStuff = loadable(() => import("./SearchedStuff"));
+const LoadingImg = loadable(() => import("./LoadingImg"));
 
 // FIXME: db에서 검색하주는 기능 // 이건 안쓸거같은데 일단 남겨두긴 하자
 
