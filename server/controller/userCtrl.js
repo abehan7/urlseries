@@ -296,14 +296,17 @@ const userCtrl = {
         return res.status(400).json({ msg: "이메일 확인에 실패하였습니다" });
 
       const user = await Users.findOne({ email });
+
       if (user) {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch)
           return res.status(400).json({ msg: "비밀번호가 올바르지 않습니다" });
+
         const refresh_token = createRefreshToken({ id: user._id });
-        console.log(refresh_token);
-        // res.cookie("refreshtoken", refresh_token);
-        res.json({ msg: "로그인 성공" });
+        await saveToken(refresh_token, user._id);
+        const access_token = createAccessToken({ id: user.id });
+
+        res.json({ msg: "로그인 성공", access_token });
       } else {
         const newUser = new Users({
           user_id: name,
@@ -313,15 +316,21 @@ const userCtrl = {
         });
 
         await newUser.save();
+
         const refresh_token = createRefreshToken({ id: newUser._id });
 
-        res.cookie("refreshtoken", refresh_token);
-        // console.log(JSON.stringify(req.session));
-        console.log("로그인 성공 구글로그인 else");
+        await saveToken(refresh_token, newUser._id);
 
-        res.json({ msg: "로그인 성공" });
+        console.log(refresh_token, newUser._id);
+
+        console.log(user);
+
+        const access_token = createAccessToken({ id: newUser.id });
+
+        res.json({ msg: "로그인 성공", access_token });
       }
     } catch (err) {
+      console.log(err);
       return res.status(500).json({ msg: err.message });
     }
   },

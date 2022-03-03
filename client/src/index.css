@@ -1,3 +1,10 @@
+@font-face {
+  font-family: "Pretendard";
+  font-weight: 500;
+  font-display: swap;
+  src: url("./fonts/woff2/Pretendard-Regular.woff2") format("woff2");
+}
+
 body {
   margin: 0;
   padding: 0;

@@ -148,7 +148,7 @@ app.put("/searchedUrlBYE", SearchedUrlBYE);
 // [4]  검색어 클릭한거 +1 AND 클릭한 시간 갱신  (1에서 0으로 수정) put
 app.put("/clickedSeachedURL/:_id", ClickedSeachedURL);
 
-// [5]  박스들에서 url클릭하면 +1 AND 클릭한 시간 갱신  (1에서 0으로 수정) put
+// [5]  박스들에서 url클릭하면 +1 AND 클릭한 시간 갱신  (1에서 0으로 수정) put 123
 app.put("/clickedURLInBox", ClickedURLInBox);
 
 // [6]    폴더 해쉬태그 contents 수정하는 put
