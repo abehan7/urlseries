@@ -6,7 +6,7 @@ import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../Hooks/keepModalsShow";
 
 // Header
-import Header from "../components/header/Header";
+import Header from "../components/Header/Header";
 // Rectangles
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
