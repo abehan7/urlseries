@@ -6,16 +6,13 @@ import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../Hooks/keepModalsShow";
 
 // Header
-import Header from "../components/Header/Header";
+import Header from "../components/header/Header";
 // Rectangles
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
 import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
 import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
 // Modals
-// import AddUrlModal from "../components/Modals/AddUrlModal";
-// import EditUrlModal from "../components/Modals/EditUrlModal";
-// import TopMore from "../components/Modals/TopMore";
 // TopIcons
 import LeftIcons from "../components/TopIcons/LeftIcons";
 import RightIcons from "../components/TopIcons/RightIcons";
