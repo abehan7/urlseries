@@ -321,10 +321,6 @@ const userCtrl = {
 
         await saveToken(refresh_token, newUser._id);
 
-        console.log(refresh_token, newUser._id);
-
-        console.log(user);
-
         const access_token = createAccessToken({ id: newUser.id });
 
         res.json({ msg: "로그인 성공", access_token });

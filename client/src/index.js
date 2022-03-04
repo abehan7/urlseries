@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import store2 from "./store/store2";
 import { createGlobalStyle } from "styled-components";
 // import DataProvider from "./redux/StoreT";
-
+import ReactGA from "react-ga";
 const GlobalStyle = createGlobalStyle`
 
 position: relative;
@@ -27,6 +27,7 @@ h2 {
 }
 
 `;
+ReactGA.initialize("UA-12341234-1");
 
 ReactDOM.render(
   <Provider store={store2}>

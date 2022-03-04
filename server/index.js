@@ -29,6 +29,7 @@ const {
   SearchDeleteAll,
   updateFolderName,
   deleteUrls,
+  getGuestUrls,
 } = require("./controller/main");
 
 const authtest = require("./middleware/authtest");
@@ -111,6 +112,8 @@ app.get("/folderItems", authtest, FolderItems);
 
 // [5]  폴더 아이템들 가지고오기
 app.get("/search/delete/all", authtest, SearchDeleteAll);
+
+app.get("/url/guest", getGuestUrls);
 
 // [1]  검색어 검색하는 post
 

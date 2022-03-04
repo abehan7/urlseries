@@ -21,23 +21,41 @@ const getCurrentDate = () => {
   );
 };
 
+const getGuestUrls = async (req, res) => {
+  const user_id = "6221ae82657b4859df4b2db2";
+  const query = { user_id };
+  const guestUrls = await db.Urls.find(query).sort({ _id: -1 });
+
+  const recentSearchedUrl = [];
+
+  const totalUrl = await db.Urls.find(query).limit(40).sort({ _id: -1 });
+
+  const leftUrl = await db.Urls.find({ url_likedUrl: 1, user_id }).sort({
+    "url_search.url_searchedDate": -1,
+  });
+
+  const rightUrl = await db.Urls.find(query)
+    .sort({ url_updatedDate: -1 })
+    .limit(20);
+
+  res.json({
+    totalUrl,
+    leftUrl,
+    rightUrl,
+    recentSearchedUrl,
+  });
+};
+
 const TotalAfter = async (req, res) => {
   const { id } = req.user;
   const user_id = id;
   let totalAfter = [];
-
-  // console.log("decodedData", req.decodedData);
-
   const query = { user_id };
-
   totalAfter = await db.Urls.find(query).sort({ _id: -1 });
-
   const tags = await db.Hashtags.findOne(query, {
     hashtag_assigned: 1,
   });
-
   const hashtag_assigned = tags?.hashtag_assigned;
-
   res.json({
     totalAfter,
     hashtag_assigned,
@@ -49,8 +67,6 @@ const TotalURL = async (req, res) => {
   const { id } = req.user;
   const user_id = id;
   console.log(id);
-  // const { authorization } = req.headers;
-  // console.log(authorization);
   //처음에는 딱 42개만 뽑아주고 이후에 무한스크롤
   var totalURL = [];
   var leftURL = [];
@@ -460,12 +476,6 @@ const Crawling = (req, res) => {
       await res.json({ title: "제목이 존재하지 않습니다.", hashtags: [""] });
     }
   })();
-  // const options = {
-  //   headless: true,
-  //   args: ["--fast-start", "--disable-extensions", "--no-sandbox"],
-  //   ignoreHTTPSErrors: true,
-  // };
-  // await puppeteer.launch(options);
 };
 
 const generateAccessToken1 = async (user) => {
@@ -479,115 +489,9 @@ const generateAccessToken1 = async (user) => {
 
 // FIXME: 로그인 회원가입
 
-const SignUp = async (req, res) => {
-  const { user_id, email, password } = req.body;
-  db.Users.findOne({ user_id: user_id }, (err, user) => {
-    if (user) {
-      res.send({ message: "User already registerd" });
-    } else {
-      const user = new db.Users({
-        user_id,
-        email,
-        password,
-      });
+const SignUp = async (req, res) => {};
 
-      user.save(async (err, userInfo) => {
-        if (err) return res.json({ success: false, err });
-        console.log("user inserted");
-        console.log(userInfo);
-        const token = await generateAccessToken1(user);
-        return res
-          .status(200)
-          .json({ success: true, message: "가입이 되었습니다", token: token });
-      });
-      // user.save(async (err) => {
-      //   if (err) {
-      //     res.send(err);
-      //   } else {
-      //     res.send({ message: "Successfully Registered, Please login now." });
-      //   }
-      // });
-    }
-  });
-};
-
-// const SignUp = async (req, res) => {
-//   console.log(req.body);
-//   const { user_id, password, email } = req.body;
-
-//   const newUser = new db.Users({
-//     user_id,
-//     password,
-//     email,
-//   });
-
-//   newUser.save(async (err, userInfo) => {
-//     if (err) return res.json({ success: false, err });
-//     console.log("user inserted");
-//     const token = await generateAccessToken1(newUser);
-//     return res.status(200).json({ success: true, token: token });
-//   });
-
-//   const InitUrl = new db.Urls({
-//     url: "http://localhost:3000",
-//     url_title: "유알유알엘입니다 :)",
-//     user_id,
-//   });
-
-//   const InitHashtags = new db.Hashtags2({
-//     user_id,
-//   });
-
-//   InitUrl.save();
-//   InitHashtags.save();
-// };
-
-const Login = async (req, res) => {
-  //로그인을할때 아이디와 비밀번호를 받는다
-
-  const { user_id, password } = req.body;
-  const query = { user_id };
-  const options = (err, user) => {
-    if (err) console.log(err);
-
-    if (user === null) {
-      return res.json({
-        loginSuccess: false,
-        message: "존재하지 않는 아이디입니다.",
-      });
-    }
-
-    user
-      .comparePassword(password)
-      .then(async (isMatch) => {
-        if (!isMatch) {
-          return res.json({
-            loginSuccess: false,
-            message: "비밀번호가 일치하지 않습니다",
-          });
-        }
-
-        // 유저 있으면 토큰 만들어서 보내기
-        const token = await generateAccessToken1(user);
-        res.status(200).json({ loginSuccess: true, user, token });
-
-        //   .then((user) => {
-        //     res.status(200).json({ loginSuccess: true, userId: user._id });
-        //   })
-        //   .catch((err) => {
-        //     res.status(400).send(err);
-        //   });
-      })
-      .catch((err) => res.json({ loginSuccess: false, err }));
-    //비밀번호가 일치하면 토큰을 생성한다
-    //해야될것: jwt 토큰 생성하는 메소드 작성
-  };
-
-  await db.Users.findOne(query, options).clone();
-  // 비밀번호는 암호화되어있기때문에 암호화해서 전송해서 비교를 해야한다 .
-  //암호화 메소드는 User.js에 작성한다.
-  //로그인 암호화 비밀번호가 일치하면 jwt 토큰을 발급한다
-};
+const Login = async (req, res) => {};
 
 module.exports = {
   SignUp,
@@ -611,4 +515,5 @@ module.exports = {
   SearchDeleteAll,
   updateFolderName,
   deleteUrls,
+  getGuestUrls,
 };

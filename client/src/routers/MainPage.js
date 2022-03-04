@@ -27,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 // API
 import {
   deleteUrls,
+  getGuestUrls,
   GetTotalUrls,
   TotalAfter,
   updateFolderContents,
@@ -89,21 +90,19 @@ const MainEl = styled.div`
   }
 `;
 
-const TitleEl = styled.h3`
-  /* padding: 10px 0; */
-`;
+const TitleEl = styled.h3``;
 
 const TitleWrapper = styled.div`
   padding: 10px 0;
 `;
 
 const MainPage = () => {
-  const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
+  // const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
 
-  const [BoxTags_First, setBoxTags_First] = useState(true);
+  // const [BoxTags_First, setBoxTags_First] = useState(true);
   const [clickedSearchInput, setClickedSearchInput] = useState(false);
   const [editMode, setEditMode] = useState(true);
-  const [shareMode, setShareMode] = useState(true);
+  // const [shareMode, setShareMode] = useState(true);
   const [getUrls, setGetUrls] = useState([]);
   const [mostClickedUrls, setMostClickedUrls] = useState([]);
   const [likedUrls, setLikedUrls] = useState([]);
@@ -140,23 +139,31 @@ const MainPage = () => {
   }, [tagIsClicked]);
 
   useEffect(() => {
-    // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
-    // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
-    // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
-    if (token) {
-      GetTotalUrls().then(async (response) => {
-        // console.log(response);
-        await setGetUrls(response.data.totalURL);
-        await setMostClickedUrls(response.data.rightURL);
-        await setLikedUrls(response.data.leftURL);
-        await setRecentSearch(response.data.recentSearched);
+    const getMemberData = async () => {
+      GetTotalUrls().then(async (res) => {
+        // console.log(res);
+        await setGetUrls(res.data.totalURL);
+        await setMostClickedUrls(res.data.rightURL);
+        await setLikedUrls(res.data.leftURL);
+        await setRecentSearch(res.data.recentSearched);
         // console.log(response.data);
       });
       dispatch(SET_FOLDERS());
-    }
+    };
+    const getGuestData = async () => {
+      const { data } = await getGuestUrls();
+      setGetUrls(data.totalUrl);
+      setMostClickedUrls(data.leftUrl);
+      setLikedUrls(data.rightUrl);
+      setRecentSearch(data?.recentSearchedUrl);
+    };
+
+    token && getMemberData();
+    !token && getGuestData();
   }, [token]);
 
   useEffect(() => {
+    // 이거 로직 바꿔야돼
     if (token) {
       let preTags = [];
       TotalAfter().then(async (response) => {
@@ -167,7 +174,6 @@ const MainPage = () => {
         await setRealTotalUrls(totalAfter);
         // 전체 태그들 뽑는 기능
         await setTotalTags(getTotalTags(totalAfter, hashtag_assigned));
-
         // 선택한 태그들 json으로 만들기 // 근데 만들 필요가 있냐? 아니 굳이 그러지 않아도 될거같아
 
         hashtag_assigned.forEach((tag) => {
@@ -327,14 +333,9 @@ const MainPage = () => {
                 setGetUrls={setGetUrls}
                 realTotalUrls={realTotalUrls}
                 setRealTotalUrls={setRealTotalUrls}
-                BoxTags_First={BoxTags_First}
               />
               <RightIcons
                 editMode={editMode}
-                shareMode={shareMode}
-                BoxTags_First={BoxTags_First}
-                setBoxTags_First={setBoxTags_First}
-                setBoxTags={setBoxTags}
                 setEditMode={setEditMode}
                 setDeleteMode={setDeleteMode}
                 deleteMode={deleteMode}
@@ -385,7 +386,6 @@ const MainPage = () => {
                     <FiveUrlsRight
                       values={mostClickedUrls}
                       editMode={editMode}
-                      shareMode={shareMode}
                       setMyFav={setMyFav}
                       setTopMoreWhat={setTopMoreWhat}
                     />
@@ -417,7 +417,6 @@ const MainPage = () => {
                       getUrls={getUrls}
                       setGetUrls={setGetUrls}
                       editMode={editMode}
-                      shareMode={shareMode}
                       setMyFav={setMyFav}
                       deleteMode={deleteMode}
                     />
