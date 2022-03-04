@@ -14,7 +14,7 @@ const getDictionaryUrls = async (req, res) => {
   const page = await gotoPage(browser, url);
   const resultUrls = [];
 
-  // loop to get urls
+  // loop to get urls from dictionary
   // 1페이지 => 15개 url 추출
   for (let i = 0; i < num; i++) {
     console.log(i);
