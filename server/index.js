@@ -60,7 +60,7 @@ const corsOptions = {
 
 const app = express();
 
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
@@ -84,6 +84,7 @@ mongoose.connect(process.env.DATABASE_URL, {
 app.use("/user", require("./routes/userRouter"));
 app.use("/apitest", require("./routes/upload"));
 app.use("/hashtag", hashtagRouter);
+app.use("/crawler", require("./routes/crawler"));
 
 // app.use("/folder",);
 // app.use("/url");

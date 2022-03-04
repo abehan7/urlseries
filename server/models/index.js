@@ -4,4 +4,5 @@ module.exports = {
   Hashtags: require("./HashTags"),
   Folders: require("./Folders"),
   Tokens: require("./Tokens"),
+  DictionaryUrls: require("./DictionaryUrls"),
 };
