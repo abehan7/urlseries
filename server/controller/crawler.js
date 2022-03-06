@@ -38,28 +38,38 @@ const getDictionaryUrls = async (req, res) => {
 };
 
 const fetchContents = async (req, res) => {
-  const { urls } = req.body;
+  const { id } = req.params;
+  const _urls = await db.DictionaryUrls.find({ _id: id });
+  const urls = _urls[0].dictionary_url_dummy;
+
   const browser = await launchBrowser();
-  const page = await gotoPage(browser);
+
+  const url = urls[0];
+  const page = await gotoPage(browser, url);
   const resultContents = [];
 
+  // for (let i = 0; i < 3; i++) {
   for (let i = 0; i < urls.length; i++) {
     console.log(i);
     await page.goto(urls[i]);
+    const url = urls[i];
     const title = await contents.getTitle(page);
     const memo = await contents.getMemo(page);
     const hashtags = await contents.getHashtags(page);
+
     resultContents.push({
-      title,
-      memo,
-      hashtags,
+      url,
+      url_title: title,
+      url_memo: memo,
+      url_hashTags: hashtags,
     });
   }
-
-  await db.Contents.create(resultContents);
+  const query = { _id: "6221faf12dff2933bfdbc0dc" };
+  const update = { $set: { url_contents: resultContents } };
+  await db.DictionaryUrls.updateOne(query, update);
   await browser.close();
   await browser.disconnect();
-  res.send("crawling done");
+  res.json(resultContents);
 };
 
 module.exports = {

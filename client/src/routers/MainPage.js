@@ -176,11 +176,11 @@ const MainPage = () => {
         await setTotalTags(getTotalTags(totalAfter, hashtag_assigned));
         // 선택한 태그들 json으로 만들기 // 근데 만들 필요가 있냐? 아니 굳이 그러지 않아도 될거같아
 
-        hashtag_assigned.forEach((tag) => {
-          preTags.push({ name: tag, assigned: 1, origin: 1 });
+        const tags = hashtag_assigned.map((tag) => {
+          return { name: tag, assigned: 1, origin: 1 };
         });
 
-        await setAssignedTags([...preTags]);
+        await setAssignedTags([...tags]);
       });
     }
   }, [token]);

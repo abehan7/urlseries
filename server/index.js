@@ -66,11 +66,7 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
 app.use(cookieParser());
 
-app.use(
-  fileUpload({
-    useTempFiles: true,
-  })
-);
+app.use(fileUpload({ useTempFiles: true }));
 
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
@@ -85,7 +81,6 @@ app.use("/user", require("./routes/userRouter"));
 app.use("/apitest", require("./routes/upload"));
 app.use("/hashtag", hashtagRouter);
 app.use("/crawler", require("./routes/crawler"));
-
 // app.use("/folder",);
 // app.use("/url");
 // app.use("/user");

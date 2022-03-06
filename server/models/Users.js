@@ -7,31 +7,16 @@ dotenv.config({ path: "./../.env" });
 const saltRounds = 10;
 
 const UserSchema = new mongoose.Schema({
-  user_id: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: [true, "Please enter your password!"],
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: Number,
-    default: 0, // 0 = user, 1 = admin
-  },
+  user_id: { type: String, required: true },
+  password: { type: String, required: [true, "Please enter your password!"] },
+  email: { type: String, required: true },
+  role: { type: Number, default: 0 }, // 0 = user, 1 = admin
   avatar: {
     type: String,
     default:
       "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png",
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const secret = process.env.REFRESH_TOKEN_SECRET;

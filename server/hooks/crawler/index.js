@@ -30,6 +30,7 @@ const gotoPage = async (browser, url) => {
 const dict = {
   getUrls: async (page) => {
     await page.waitForSelector(".list_wrap .title a");
+
     const urls = await page.evaluate(() => {
       const baseUrl = "https://terms.naver.com";
       const arr_url = document.querySelectorAll(".list_wrap .title a");
@@ -50,27 +51,57 @@ const dict = {
 
 const contents = {
   getTitle: async (page) => {
-    await page.waitForSelector(".title_area .title_text");
+    // console.log("get title");
+    await page.waitForSelector(".headword");
     const title = await page.evaluate(() => {
-      const title = document.querySelector(".title_area .title_text").innerText;
-      return title;
+      const _title = document.querySelector(".headword").innerText;
+      return _title;
     });
+    // console.log(title);
+    return title;
   },
 
   getMemo: async (page) => {
-    await page.waitForSelector(".contents_area");
-    const contents = await page.evaluate(() => {
-      const contents = document.querySelector(".contents_area").innerText;
+    try {
+      const waitOptions = { timeout: 3 * 1000 };
+      // console.log("get memo");
+      await page.waitForSelector("p.txt", waitOptions);
+      const contents = await page.evaluate(() => {
+        const _contents = document.querySelector("p.txt").innerText;
+        return _contents;
+      });
+      // console.log(contents);
+
+      return contents.slice(0, 200);
+    } catch (error) {
+      const getException = async () => {
+        console.log("get memo failed");
+        await page.waitForSelector(".section_wrap");
+        const contents = await page.evaluate(() => {
+          const _contents = document
+            .querySelector(".section_wrap")
+            .innerText.slice(0, 200);
+          return _contents;
+        });
+        return contents;
+      };
+      const contents = await getException();
       return contents;
-    });
+    }
   },
 
   getHashtags: async (page) => {
-    await page.waitForSelector(".tag_area .tag_list");
+    // console.log("get  hashtags");
+    await page.waitForSelector(".headword");
     const hashtags = await page.evaluate(() => {
-      const hashtags = document.querySelector(".tag_area .tag_list").innerText;
-      return hashtags;
+      const _hashtags = document.querySelector(".headword").innerText;
+      return _hashtags;
     });
+
+    const arr_hashtags = [`#${hashtags}`, "#네이버", "#백과사전", "#역사"];
+    // console.log(arr_hashtags);
+
+    return arr_hashtags;
   },
 };
 
