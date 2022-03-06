@@ -20,7 +20,7 @@
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
   border-radius: 20px;
   width: 400px;
-  height: 280px;
+  height: max-content;
   position: relative;
 }
 .header-Container {
@@ -41,6 +41,13 @@ h2 {
   justify-content: center;
   align-items: center;
   width: 100%;
+  font-size: 15px;
+  font-weight: lighter;
+}
+.title h2 {
+  font-size: 23px;
+  font-weight: normal;
+  color: rgb(109, 108, 108);
 }
 
 .close-area {
@@ -58,16 +65,18 @@ h2 {
   height: 200px;
   color: black;
   padding: 0;
+  align-items: center;
+  height: max-content;
 }
 
-.content > div {
+/* .content > div {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 100%;
-}
+} */
 
-input {
+/* .content input {
   border: none;
   padding: 0%;
   border-top: 1px solid rgba(0, 0, 0, 0.2);
@@ -75,17 +84,17 @@ input {
   width: 100%;
   font-size: 17px;
   padding-left: 15px;
-}
+} */
 
-.put-memo {
+/* .put-memo {
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
+} */
+/* 
 input:focus {
   outline: none;
-}
-
-button {
+} */
+/* 
+.content button {
   background-color: transparent;
   border: none;
   font-size: 20px;
@@ -105,6 +114,103 @@ textarea {
   resize: none;
   width: 100%;
   vertical-align: middle;
-  /* height: 150px; */
   overflow: auto;
+} */
+
+/* -------------------------------------- */
+
+.input-group {
+  width: 300px;
+  position: relative;
+  border: 3px solid #bbbbbb;
+  border-radius: 8px;
+  margin: 10px;
+}
+.input-group input {
+  padding: 16px 24px;
+  border: none;
+  background-color: transparent;
+  width: 250px;
+  color: #363636;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.input-group:hover,
+.input-group:focus-within {
+  border-color: #1bbeff;
+}
+
+.input-group input:focus,
+.input-group:hover input {
+  color: #2c2d2e;
+  outline: none;
+  width: 250px;
+}
+
+.input-group label {
+  position: absolute;
+  background-color: transparent;
+  padding: 16px 24px;
+  line-height: 24px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  color: #898989;
+  cursor: text;
+}
+
+.input-group:hover label {
+  color: #1bbeff;
+}
+
+.input-group:focus-within label,
+.input-group input:not(:placeholder-shown) ~ label {
+  padding: 0px 8px;
+  background-color: #ffffff;
+  top: -12px;
+  left: 16px;
+  bottom: auto;
+  color: #363636;
+}
+
+.content button {
+  align-items: center;
+  appearance: none;
+  background-color: #fff;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+    rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #3c4043;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-size: 14px;
+  font-weight: 500;
+  height: 48px;
+  justify-content: center;
+  letter-spacing: 0.25px;
+  line-height: normal;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform, opacity;
+  z-index: 0;
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+.content button:hover {
+  background: #f6f9fe;
+  color: #1bbeff;
 }

@@ -177,7 +177,7 @@ const EditUrlModal = ({
         >
           <div className="header-Container">
             <div className="close-area" onClick={handleClose}>
-              <IoArrowBack />
+              <IoArrowBack color="gray" />
             </div>
             <div className="title">
               <h2>에디터모드</h2>
@@ -190,15 +190,15 @@ const EditUrlModal = ({
 
           <div className="content">
             <div className="put-url">
-              <input placeholder="URL을 추가해주세요" style={defaultHeight} />
+              <input className="putInput" placeholder="URL을 추가해주세요" />
             </div>
             <div className="put-title">
-              <input placeholder="제목을 추가해주세요" style={defaultHeight} />
+              <input className="putInput" placeholder="제목을 추가해주세요" />
             </div>
             <div className="put-hashTag">
               <input
+                className="putInput"
                 placeholder="해쉬태그를 추가해주세요 #집밥 #인스타그램 #유튜브"
-                style={defaultHeight}
               />
             </div>
             <div className="put-memo">
@@ -208,8 +208,12 @@ const EditUrlModal = ({
               className="addUrl-btn editUrl-btn"
               style={Memo.length < 25 ? {} : { paddingTop: "5px" }}
             >
-              <button onClick={handleDeleteBtn}>삭제하기</button>
-              <button onClick={handleEditBtn}>수정하기</button>
+              <button style={{ height: "43px" }} onClick={handleDeleteBtn}>
+                삭제하기
+              </button>
+              <button style={{ height: "43px" }} onClick={handleEditBtn}>
+                수정하기
+              </button>
             </div>
           </div>
         </div>

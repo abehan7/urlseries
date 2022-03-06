@@ -2,7 +2,17 @@ import React from "react";
 import styled from "styled-components";
 
 const TextAreaEl = styled.textarea`
-  transition: 1s;
+  padding: 16px 24px;
+  border: none;
+  background-color: white;
+  width: 250px;
+  color: #363636;
+  font-size: 16px;
+  line-height: 24px;
+  outline: none;
+  border-radius: 10px;
+  /* overflow: hidden; */
+  resize: none;
 `;
 const TextArea = ({ memo, setMemo }) => {
   return (
@@ -11,7 +21,7 @@ const TextArea = ({ memo, setMemo }) => {
         memo.length < 25
           ? {
               height: "20px",
-              padding: "0.5rem 1rem",
+              padding: "16px 24px",
               paddingTop: "0.6rem",
             }
           : { height: "160px" }
