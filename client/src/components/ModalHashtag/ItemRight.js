@@ -23,12 +23,19 @@ const ItemRightBgIcon = styled.div`
 
 const ItemRightTitle = styled.div`
   display: flex;
+  height: 46.6px;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid #9b9b9b;
   > h3 {
+    border: 1px solid #9b9b9b;
+    border-radius: 10px;
+    padding: 5px;
     margin: 0%;
-    padding: 3.5px;
+    /* padding: 2px; */
+    font-weight: lighter;
+    color: gray;
+    font-size: 15px;
   }
 `;
 

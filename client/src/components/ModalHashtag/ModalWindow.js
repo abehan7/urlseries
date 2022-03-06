@@ -8,7 +8,46 @@ import styled from "styled-components";
 import { updateHashtag } from "../Api";
 import ModalWindowEl from "../styled/ModalWindowEl.styled";
 
-const Button = styled.button``;
+const Button = styled.button`
+  align-items: center;
+  appearance: none;
+  background-color: #fff;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+    rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #3c4043;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-size: 14px;
+  font-weight: 500;
+  height: 43px;
+  justify-content: center;
+  letter-spacing: 0.25px;
+  line-height: normal;
+  max-width: 100%;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform, opacity;
+  z-index: 0;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-top: 30px;
+  :hover {
+    background: #f6f9fe;
+    color: #1bbeff;
+  }
+`;
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -29,14 +68,14 @@ const Title = styled.div``;
 
 const ModalWindowHashEl = styled(ModalWindowEl)`
   width: 600px;
-  height: auto;
+  height: 380px;
   @media (max-width: 640px) {
     width: 90%;
   }
 `;
 
 const HeaderContainer = styled.div`
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
 `;
 
 const ModalWindow = ({
@@ -181,7 +220,7 @@ const ModalWindow = ({
     <ModalWindowHashEl>
       <HeaderContainer className="header-Container">
         <div className="close-area" onClick={handleCloseBtn}>
-          <IoArrowBack />
+          <IoArrowBack color="gray" />
         </div>
         <Title className="title">
           <h2>해쉬태그</h2>
