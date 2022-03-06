@@ -82,13 +82,14 @@ const AsideTag = ({ assignedTags }) => {
   return (
     <>
       {/* 태그 공간 */}
-      {assignedTags.map((tag) => {
+      {assignedTags?.map((tag) => {
         const clicked = metaTagItems.includes(tag.name);
+        const key = Math.floor(Math.random() * 100000);
         return (
           <Tag
             className="tag"
             onClick={() => handleClickMetaTag(tag.name)}
-            key={tag.name}
+            key={key}
             clicked={clicked}
             isClicked={isClicked}
           >

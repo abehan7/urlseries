@@ -1,9 +1,34 @@
 const db = require("../models");
 
+const getAssignedtags = async (req, res) => {
+  console.log("getAssignedtags");
+  const user_id = req.user.id;
+  const query = { user_id };
+  const options = { _id: 0, hashtag_assigned: 1 };
+  try {
+    const result = await db.Hashtags.findOne(query, options);
+    res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getTotalTags = async (req, res) => {
+  console.log("getTotalTags");
+  const user_id = req.user.id;
+  const query = {};
+  const options = { _id: 0, hashtag_total: 1 };
+  try {
+    const result = await db.Hashtags.findOne(query, options);
+    res.status(200).json(result);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const updateLikeTags = async (req, res) => {
   const { oneLineTags } = req.body;
-  const { user_id } = req.decodedData;
-
+  const user_id = req.user.id;
   console.log(oneLineTags);
   const query = { user_id };
   const update = {
@@ -20,4 +45,4 @@ const updateLikeTags = async (req, res) => {
   }
 };
 
-module.exports = { updateLikeTags };
+module.exports = { updateLikeTags, getAssignedtags, getTotalTags };

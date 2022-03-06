@@ -44,7 +44,8 @@ const ItemRight = ({ Title, ItemList, Item }) => {
         </ItemRightBgIcon>
         <BoxWrap>
           {ItemList?.map((item, index) => {
-            return Item({ item, index });
+            const key = Math.floor(Math.random() * 1000000);
+            return Item({ item, index: key });
           })}
         </BoxWrap>
       </ItemContainer>

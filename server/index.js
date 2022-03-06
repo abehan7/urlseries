@@ -5,7 +5,6 @@ const cors = require("cors");
 
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
-const path = require("path");
 
 const {
   TotalAfter,
@@ -37,7 +36,7 @@ const authtest = require("./middleware/authtest");
 const hashtagRouter = require("./routes/hashtags");
 
 dotenv.config({ path: "./.env" });
-// const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 const whitelist = [
   "http://localhost:3001/",
   "https://urlseries.com",
@@ -60,7 +59,7 @@ const corsOptions = {
 
 const app = express();
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
@@ -74,6 +73,8 @@ mongoose.connect(process.env.DATABASE_URL, {
   // useCreateIndex: true,
   // useFindAndModify: false,
 });
+
+// const Port = process.env.PORT || 3001
 
 //Routes
 
@@ -169,6 +170,6 @@ app.post("/deleteFolder", authtest, DeleteFolder);
 
 app.post("/crawling", Crawling);
 
-app.listen(process.env.PORT || 3001, () => {
-  console.log(`SERVER RUNNING`);
+app.listen(PORT, () => {
+  console.log(`SERVER RUNNING ON ${PORT}`);
 });

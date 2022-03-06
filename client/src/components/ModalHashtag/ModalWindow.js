@@ -7,6 +7,7 @@ import ItemRight from "./ItemRight";
 import styled from "styled-components";
 import { updateHashtag } from "../Api";
 import ModalWindowEl from "../styled/ModalWindowEl.styled";
+import { useUrl } from "../../contexts/UrlContext";
 
 const Button = styled.button``;
 
@@ -42,12 +43,16 @@ const HeaderContainer = styled.div`
 const ModalWindow = ({
   handleCloseModal,
   setAssignedTags,
-  assignedTags,
   setTotalTags,
   totalTags,
 }) => {
   const [keyword, setKeyword] = useState("");
   const [filterdTags, setFilterdTags] = useState([]);
+
+  const assignedTags = useUrl().hashtag.assignedHashtags;
+  const addAssignedTag = useUrl().addAssignedTag;
+  const removeAssignedTag = useUrl().removeAssignedTag;
+  // const assignedTags = useUrl().hashtag.assignedHashtags;
 
   // #FIXME: #1 검색필터
   const SearchFilter = useCallback(() => {
@@ -71,7 +76,8 @@ const ModalWindow = ({
       console.log(clickedTag);
 
       // assignedTags
-      setAssignedTags((tag) => [...tag, { ...clickedTag, assigned: 1 }]);
+      addAssignedTag(clickedTag);
+      // setAssignedTags((tag) => [...tag, { ...clickedTag, assigned: 1 }]);
 
       // totalTags
       const filterd = totalTags.map((tag) => {
@@ -87,10 +93,13 @@ const ModalWindow = ({
     (clickedTag) => {
       console.log("토글 해제");
       // assigned 태그
+
       const filterdAssignedTags = assignedTags.filter((tag) => {
         return tag.name !== clickedTag.name;
       });
-      setAssignedTags(filterdAssignedTags);
+
+      removeAssignedTag(filterdAssignedTags);
+      // setAssignedTags(filterdAssignedTags);
 
       // total 태그
       const processedTotalTags = totalTags.map((tag) => {
@@ -200,7 +209,6 @@ const ModalWindow = ({
 
         <ItemRight
           ItemList={assignedTags}
-          handleToggle={ToggleUnClicked}
           Item={oneItemRight}
           Title="선택된 태그"
         />

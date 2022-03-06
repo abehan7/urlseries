@@ -44,6 +44,7 @@ import {
 import { getIsClicked } from "../store/reducers/Tags";
 import { getToken } from "../redux/ReducersT/tokenReducer";
 import { getTagFilterdItems } from "../store/reducers/urls";
+import { useUrl } from "../contexts/UrlContext";
 // loadable components
 
 const AddUrlModal = loadable(() => import("../components/Modals/AddUrlModal"));
@@ -97,6 +98,7 @@ const TitleWrapper = styled.div`
 `;
 
 const MainPage = () => {
+  const { hashtag } = useUrl();
   // const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
 
   // const [BoxTags_First, setBoxTags_First] = useState(true);
@@ -107,7 +109,7 @@ const MainPage = () => {
   const [mostClickedUrls, setMostClickedUrls] = useState([]);
   const [likedUrls, setLikedUrls] = useState([]);
   const [myFav, setMyFav] = useState(false);
-  const [assignedTags, setAssignedTags] = useState([]);
+
   const [recentSearched, setRecentSearch] = useState([]);
   const [totalTags, setTotalTags] = useState([]);
   const [realTotalUrls, setRealTotalUrls] = useState([]);
@@ -165,22 +167,12 @@ const MainPage = () => {
   useEffect(() => {
     // 이거 로직 바꿔야돼
     if (token) {
-      let preTags = [];
       TotalAfter().then(async (response) => {
         const {
-          data: { totalAfter, hashtag_assigned },
+          data: { totalAfter },
         } = response;
 
         await setRealTotalUrls(totalAfter);
-        // 전체 태그들 뽑는 기능
-        await setTotalTags(getTotalTags(totalAfter, hashtag_assigned));
-        // 선택한 태그들 json으로 만들기 // 근데 만들 필요가 있냐? 아니 굳이 그러지 않아도 될거같아
-
-        const tags = hashtag_assigned.map((tag) => {
-          return { name: tag, assigned: 1, origin: 1 };
-        });
-
-        await setAssignedTags([...tags]);
       });
     }
   }, [token]);
@@ -397,7 +389,7 @@ const MainPage = () => {
             {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
             <div className="minisize-tags aside-tags">
               {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
-              <AsideTag assignedTags={assignedTags} />
+              <AsideTag />
             </div>
             <div
               className="Big_Rect RectColor"
@@ -441,12 +433,12 @@ const MainPage = () => {
           {/* ======================================== 그리드 컨테이너  END  ========================================*/}
           {/* ======================================== 날개 START ========================================*/}
           {/* aside설명 : 여기는 오른쪽 색깔있는 해쉬태그 버튼들 공간 */}
-          {assignedTags?.length !== 0 && (
+          {hashtag?.assignedHashtags?.length !== 0 && (
             <div className="aside">
               <div className="for-filling"></div>
               <div className="aside-tags">
                 {/* 전체 url들의 해쉬태그들 매핑하는 공간*/}
-                <AsideTag assignedTags={assignedTags} />
+                <AsideTag assignedTags={hashtag?.assignedHashtags} />
               </div>
             </div>
           )}
@@ -479,12 +471,7 @@ const MainPage = () => {
             />
           </div>
           <div className="hashtagModal-container">
-            <ModalHashtag
-              assignedTags={assignedTags}
-              setAssignedTags={setAssignedTags}
-              totalTags={totalTags}
-              setTotalTags={setTotalTags}
-            />
+            <ModalHashtag totalTags={totalTags} setTotalTags={setTotalTags} />
           </div>
           <div className="folderModal-container">
             <FolderModalWindow />

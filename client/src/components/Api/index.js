@@ -1,8 +1,8 @@
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
-export const API = axios.create({ baseURL: "https://urlstory.herokuapp.com" });
-// export const API = axios.create({ baseURL: "http://localhost:3001" });
+// export const API = axios.create({ baseURL: "https://urlstory.herokuapp.com" });
+export const API = axios.create({ baseURL: "http://localhost:3001" });
 const controller = new AbortController();
 
 export const StopAPI = () => controller.abort();
@@ -22,6 +22,10 @@ API.interceptors.request.use(
 );
 
 export const GetTotalUrls = () => API.get("/totalURL");
+
+export const getAssignedtags = () => API.get("/hashtag/assigned");
+
+export const getTotalTags = () => API.get("/hashtag/total");
 
 export const getGuestUrls = () => API.get("/url/guest");
 

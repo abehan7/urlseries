@@ -33,7 +33,7 @@ function LoginT() {
     e.preventDefault();
     try {
       const res = await API.post("/user/logintest", { user_id, password });
-      console.log("firstLogin", res.data);
+      // console.log("firstLogin", res.data);
 
       setUser({ ...user, err: "", success: res.data.msg });
 
@@ -48,6 +48,7 @@ function LoginT() {
       dispatch(dispatchLogin());
       navigate("/");
     } catch (err) {
+      console.log(err);
       err.response.data.msg &&
         setUser({
           ...user,

@@ -1,13 +1,17 @@
 import React from "react";
-import FolderContext from "./FolderContext";
+import { memo } from "react";
+import { FolderProvider } from "./FolderContext";
+import { ModeProvider } from "./ModeContext";
 import { UrlProvider } from "./UrlContext";
 
 const Context = ({ children }) => {
   return (
     <UrlProvider>
-      <FolderContext>{children}</FolderContext>
+      <ModeProvider>
+        <FolderProvider>{children}</FolderProvider>
+      </ModeProvider>
     </UrlProvider>
   );
 };
 
-export default Context;
+export default memo(Context);
