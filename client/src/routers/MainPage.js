@@ -48,9 +48,11 @@ import { useUrl } from "../contexts/UrlContext";
 // loadable components
 
 const AddUrlModal = loadable(() => import("../components/Modals/AddUrlModal"));
+
 const EditUrlModal = loadable(() =>
   import("../components/Modals/EditUrlModal")
 );
+
 const TopMore = loadable(() => import("../components/Modals/TopMore"));
 
 const FolderModalWindow = loadable(() =>
@@ -436,10 +438,9 @@ const MainPage = () => {
           {/* aside설명 : 여기는 오른쪽 색깔있는 해쉬태그 버튼들 공간 */}
           {hashtag?.assignedHashtags?.length !== 0 && (
             <div className="aside">
-              <div className="for-filling"></div>
               <div className="aside-tags">
                 {/* 전체 url들의 해쉬태그들 매핑하는 공간*/}
-                <AsideTag assignedTags={hashtag?.assignedHashtags} />
+                <AsideTag />
               </div>
             </div>
           )}
