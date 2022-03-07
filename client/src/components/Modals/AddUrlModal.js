@@ -256,57 +256,6 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
               <label for="text2">MEMO</label>
             </div>
 
-            {/* ------------------------------------------------- */}
-            {/* <div className="put-url">
-              <input
-                autoComplete="off"
-                name="url"
-                style={defaultHeight}
-                value={urlInfo.url}
-                placeholder="URL을 추가해주세요"
-                onChange={handleChange}
-
-                // onChange={handleCrawling}
-              />
-            </div>
-            <div className="put-title">
-              <input
-                autoComplete="off"
-                name="title"
-                value={urlInfo.title}
-                style={defaultHeight}
-                placeholder="제목을 추가해주세요"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="put-hashTag">
-              <input
-                autoComplete="off"
-                name="hashTag"
-                value={urlInfo.hashTag}
-                style={defaultHeight}
-                placeholder="해쉬태그를 추가해주세요 #집밥 #인스타그램 #유튜브"
-                onChange={handleChange}
-              />
-            </div>
-            <div className="put-memo">
-              <AddTextArea
-                autoComplete="off"
-                value={urlInfo.memo}
-                name="memo"
-                style={
-                  urlInfo.memo.length < 25
-                    ? {
-                        height: "20px",
-                        padding: "0.5rem 1rem",
-                        paddingTop: "0.6rem",
-                      }
-                    : { height: "160px" }
-                }
-                placeholder="메모할 내용을 입력해주세요"
-                onChange={handleChange}
-              />
-            </div> */}
             <div className="addUrl-btn">
               <button style={{ height: "43px" }} onClick={handleAddBtn}>
                 추가하기

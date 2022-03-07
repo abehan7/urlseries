@@ -6,21 +6,16 @@ import { Provider } from "react-redux";
 import store2 from "./store/store2";
 import { createGlobalStyle } from "styled-components";
 // import DataProvider from "./redux/StoreT";
-
+import ReactGA from "react-ga";
+import Context from "./contexts";
+import UrlContext, { UrlProvider } from "./contexts/UrlContext";
 const GlobalStyle = createGlobalStyle`
 
 position: relative;
  
-@font-face {
-  font-family: "Pretendard-Regular";
-  src: url("https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff")
-    format("woff");
-  font-weight: 400;
-  font-style: normal;
-}
 
 * {
-  font-family: "Pretendard-Regular";
+  font-family: "Pretendard";
 
   font-weight: bold;
 }
@@ -34,11 +29,14 @@ h2 {
 }
 
 `;
+ReactGA.initialize("UA-12341234-1");
 
 ReactDOM.render(
   <Provider store={store2}>
-    <GlobalStyle />
-    <App />
+    <Context>
+      <GlobalStyle />
+      <App />
+    </Context>
   </Provider>,
   document.getElementById("urlseries")
 );

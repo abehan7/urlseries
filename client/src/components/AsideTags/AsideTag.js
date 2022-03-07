@@ -14,6 +14,7 @@ import {
 } from "../../store/reducers/Tags";
 import { GET_CLEAR_TAG_FILTERD_ITEMS } from "../../store/reducers/urls";
 import FolderTag from "./FolderTag";
+import { useUrl } from "../../contexts/UrlContext";
 
 const Tag = styled.span`
   ${({ isClicked }) => !isClicked && `opacity: 1;`}
@@ -23,7 +24,8 @@ const Tag = styled.span`
   transition: 100ms;
 `;
 
-const AsideTag = ({ assignedTags }) => {
+const AsideTag = () => {
+  const assignedTags = useUrl()?.hashtag?.assignedHashtags;
   // const [isClicked, setisClicked] = useState(false);
   // FIXME: set redux
 
@@ -79,16 +81,22 @@ const AsideTag = ({ assignedTags }) => {
     dispatch(GET_CLEAR_TAG_FILTERD_ITEMS());
   }, [tagIsClicked]);
 
+  useEffect(() => {
+    console.log("assignedTags from aside tags: ", assignedTags);
+  }, [assignedTags]);
+
   return (
     <>
       {/* 태그 공간 */}
-      {assignedTags.map((tag) => {
+      {assignedTags?.map((tag, index) => {
         const clicked = metaTagItems.includes(tag.name);
+        const key = Math.floor(Math.random() * 100000);
+
         return (
           <Tag
             className="tag"
             onClick={() => handleClickMetaTag(tag.name)}
-            key={tag.name}
+            key={key}
             clicked={clicked}
             isClicked={isClicked}
           >

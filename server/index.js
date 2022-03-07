@@ -5,7 +5,6 @@ const cors = require("cors");
 
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
-const path = require("path");
 
 const {
   TotalAfter,
@@ -29,6 +28,7 @@ const {
   SearchDeleteAll,
   updateFolderName,
   deleteUrls,
+  getGuestUrls,
 } = require("./controller/main");
 
 const authtest = require("./middleware/authtest");
@@ -36,7 +36,7 @@ const authtest = require("./middleware/authtest");
 const hashtagRouter = require("./routes/hashtags");
 
 dotenv.config({ path: "./.env" });
-// const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3001;
 const whitelist = [
   "http://localhost:3001/",
   "https://urlseries.com",
@@ -65,11 +65,7 @@ app.use(express.urlencoded({ limit: "30mb", extended: true }));
 
 app.use(cookieParser());
 
-app.use(
-  fileUpload({
-    useTempFiles: true,
-  })
-);
+app.use(fileUpload({ useTempFiles: true }));
 
 mongoose.connect(process.env.DATABASE_URL, {
   useNewUrlParser: true,
@@ -78,12 +74,14 @@ mongoose.connect(process.env.DATABASE_URL, {
   // useFindAndModify: false,
 });
 
+// const Port = process.env.PORT || 3001
+
 //Routes
 
 app.use("/user", require("./routes/userRouter"));
 app.use("/apitest", require("./routes/upload"));
 app.use("/hashtag", hashtagRouter);
-
+app.use("/crawler", require("./routes/crawler"));
 // app.use("/folder",);
 // app.use("/url");
 // app.use("/user");
@@ -111,6 +109,8 @@ app.get("/folderItems", authtest, FolderItems);
 
 // [5]  폴더 아이템들 가지고오기
 app.get("/search/delete/all", authtest, SearchDeleteAll);
+
+app.get("/url/guest", getGuestUrls);
 
 // [1]  검색어 검색하는 post
 
@@ -148,7 +148,7 @@ app.put("/searchedUrlBYE", SearchedUrlBYE);
 // [4]  검색어 클릭한거 +1 AND 클릭한 시간 갱신  (1에서 0으로 수정) put
 app.put("/clickedSeachedURL/:_id", ClickedSeachedURL);
 
-// [5]  박스들에서 url클릭하면 +1 AND 클릭한 시간 갱신  (1에서 0으로 수정) put
+// [5]  박스들에서 url클릭하면 +1 AND 클릭한 시간 갱신  (1에서 0으로 수정) put 123
 app.put("/clickedURLInBox", ClickedURLInBox);
 
 // [6]    폴더 해쉬태그 contents 수정하는 put
@@ -170,6 +170,6 @@ app.post("/deleteFolder", authtest, DeleteFolder);
 
 app.post("/crawling", Crawling);
 
-app.listen(process.env.PORT || 3001, () => {
-  console.log(`SERVER RUNNING`);
+app.listen(PORT, () => {
+  console.log(`SERVER RUNNING ON ${PORT}`);
 });

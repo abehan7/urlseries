@@ -240,7 +240,7 @@ const FolderContainer = ({ handleGetId }) => {
           <SubTitle>
             <SubTitleEl onClick={onClickSubTitle}>
               {isFolderContents ? (
-                "url선택하기"
+                "URL 추가하기"
               ) : (
                 <Description>
                   <TiBackspaceOutline />

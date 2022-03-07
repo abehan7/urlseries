@@ -525,7 +525,7 @@ const FolderModalWindow = () => {
       <FolderModalOverlayEl ref={target} onClick={onClickOutside}>
         <ModalWindow isModalWindowOpen={isModalWindowOpen}>
           <Icon onClick={onClickShutModal}>
-            <IoArrowBackOutline />
+            <IoArrowBackOutline color="gray" />
           </Icon>
           <EditorContainer />
           {isFolderPage ? (

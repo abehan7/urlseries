@@ -3,64 +3,20 @@ const autoIncrement = require("mongoose-auto-increment");
 const getCurrentDate = require("./getCurrentDate");
 
 const UrlSchema = new mongoose.Schema({
-  url_id: {
-    type: Number,
-    required: false,
-  },
-  url: {
-    type: String,
-    required: false,
-  },
-  url_title: {
-    type: String,
-    required: false,
-  },
-  url_hashTags: {
-    type: Array,
-    required: false,
-    default: [],
-  },
-  url_memo: {
-    type: String,
-    required: false,
-    default: "",
-  },
-  url_likedUrl: {
-    type: Number,
-    default: 0,
-    required: false,
-  },
-
-  url_clickedNumber: {
-    type: Number,
-    default: 0,
-    required: false,
-  },
-
-  url_firstDate: {
-    type: Date,
-    default: getCurrentDate(),
-  },
-  url_updatedDate: {
-    type: Date,
-    default: getCurrentDate(),
-  },
-
+  url_id: { type: Number, required: false },
+  url: { type: String, required: false },
+  url_title: { type: String, required: false },
+  url_hashTags: { type: Array, required: false, default: [] },
+  url_memo: { type: String, required: false, default: "" },
+  url_likedUrl: { type: Number, default: 0, required: false },
+  url_clickedNumber: { type: Number, default: 0, required: false },
+  url_firstDate: { type: Date, default: getCurrentDate() },
+  url_updatedDate: { type: Date, default: getCurrentDate() },
   url_search: {
-    url_searchClicked: {
-      type: Number,
-      default: 0,
-      required: false,
-    },
-    url_searchedDate: {
-      type: Date,
-      default: getCurrentDate(),
-    },
+    url_searchClicked: { type: Number, default: 0, required: false },
+    url_searchedDate: { type: Date, default: getCurrentDate() },
   },
-  user_id: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-  },
+  user_id: { type: mongoose.Types.ObjectId, required: true },
 });
 
 const connection = mongoose.createConnection(
@@ -76,12 +32,6 @@ UrlSchema.plugin(autoIncrement.plugin, {
 });
 const Urls = mongoose.model("urls", UrlSchema);
 
-Urls.nextCount((err, count1) => {
-  // var urls = new Urls();
-  console.log(count1);
-  // urls.resetCount((err, next) => {
-  //   console.log(next);
-  // });
-});
-
-module.exports = Urls;
+// exports.UrlSchema = UrlSchema;
+// exports.Urls = Urls;
+module.exports = { Urls, UrlSchema };

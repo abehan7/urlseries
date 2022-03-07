@@ -13,9 +13,6 @@ import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
 import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
 import UrlsByHashTag from "../components/Rectangles/UrlsByHashTag";
 // Modals
-// import AddUrlModal from "../components/Modals/AddUrlModal";
-// import EditUrlModal from "../components/Modals/EditUrlModal";
-// import TopMore from "../components/Modals/TopMore";
 // TopIcons
 import LeftIcons from "../components/TopIcons/LeftIcons";
 import RightIcons from "../components/TopIcons/RightIcons";
@@ -30,6 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 // API
 import {
   deleteUrls,
+  getGuestUrls,
   GetTotalUrls,
   TotalAfter,
   updateFolderContents,
@@ -46,6 +44,7 @@ import {
 import { getIsClicked } from "../store/reducers/Tags";
 import { getToken } from "../redux/ReducersT/tokenReducer";
 import { getTagFilterdItems } from "../store/reducers/urls";
+import { useUrl } from "../contexts/UrlContext";
 // loadable components
 
 const AddUrlModal = loadable(() => import("../components/Modals/AddUrlModal"));
@@ -63,8 +62,6 @@ const ModalHashtag = loadable(() =>
 export const MainStates = createContext(null);
 
 const MainEl = styled.div`
-  /* position: relative; */
-  /* 123 */
   transition: 400ms;
   background-color: ${(props) => (props.isDarkMode ? "#02064a" : "")};
   color: ${(props) => (props.isDarkMode ? "#fff" : "")};
@@ -94,26 +91,25 @@ const MainEl = styled.div`
   }
 `;
 
-const TitleEl = styled.h3`
-  /* padding: 10px 0; */
-`;
+const TitleEl = styled.h3``;
 
 const TitleWrapper = styled.div`
   padding: 10px 0;
 `;
 
 const MainPage = () => {
-  const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
+  const { hashtag } = useUrl();
+  // const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
 
-  const [BoxTags_First, setBoxTags_First] = useState(true);
+  // const [BoxTags_First, setBoxTags_First] = useState(true);
   const [clickedSearchInput, setClickedSearchInput] = useState(false);
   const [editMode, setEditMode] = useState(true);
-  const [shareMode, setShareMode] = useState(true);
+  // const [shareMode, setShareMode] = useState(true);
   const [getUrls, setGetUrls] = useState([]);
   const [mostClickedUrls, setMostClickedUrls] = useState([]);
   const [likedUrls, setLikedUrls] = useState([]);
   const [myFav, setMyFav] = useState(false);
-  const [assignedTags, setAssignedTags] = useState([]);
+
   const [recentSearched, setRecentSearch] = useState([]);
   const [totalTags, setTotalTags] = useState([]);
   const [realTotalUrls, setRealTotalUrls] = useState([]);
@@ -145,41 +141,38 @@ const MainPage = () => {
   }, [tagIsClicked]);
 
   useEffect(() => {
-    // HashTagsUnique기능 : url들에 hashTag들이 있는데 중복되는 해쉬태그들도 있으니까
-    // 중복 없는 상태로 전체 해쉬태그들 뽑아주는 기능
-    // 그렇게 중복 없이 뽑았으면 그 값을 SethashList를 통해서 hashList에 넣어줌
-    if (token) {
-      GetTotalUrls().then(async (response) => {
-        // console.log(response);
-        await setGetUrls(response.data.totalURL);
-        await setMostClickedUrls(response.data.rightURL);
-        await setLikedUrls(response.data.leftURL);
-        await setRecentSearch(response.data.recentSearched);
+    const getMemberData = async () => {
+      GetTotalUrls().then(async (res) => {
+        // console.log(res);
+        await setGetUrls(res.data.totalURL);
+        await setMostClickedUrls(res.data.rightURL);
+        await setLikedUrls(res.data.leftURL);
+        await setRecentSearch(res.data.recentSearched);
         // console.log(response.data);
       });
       dispatch(SET_FOLDERS());
-    }
+    };
+    const getGuestData = async () => {
+      const { data } = await getGuestUrls();
+      setGetUrls(data.totalUrl);
+      setMostClickedUrls(data.leftUrl);
+      setLikedUrls(data.rightUrl);
+      setRecentSearch(data?.recentSearchedUrl);
+    };
+
+    token && getMemberData();
+    !token && getGuestData();
   }, [token]);
 
   useEffect(() => {
+    // 이거 로직 바꿔야돼
     if (token) {
-      let preTags = [];
       TotalAfter().then(async (response) => {
         const {
-          data: { totalAfter, hashtag_assigned },
+          data: { totalAfter },
         } = response;
 
         await setRealTotalUrls(totalAfter);
-        // 전체 태그들 뽑는 기능
-        await setTotalTags(getTotalTags(totalAfter, hashtag_assigned));
-
-        // 선택한 태그들 json으로 만들기 // 근데 만들 필요가 있냐? 아니 굳이 그러지 않아도 될거같아
-
-        hashtag_assigned.forEach((tag) => {
-          preTags.push({ name: tag, assigned: 1, origin: 1 });
-        });
-
-        await setAssignedTags([...preTags]);
       });
     }
   }, [token]);
@@ -332,14 +325,9 @@ const MainPage = () => {
                 setGetUrls={setGetUrls}
                 realTotalUrls={realTotalUrls}
                 setRealTotalUrls={setRealTotalUrls}
-                BoxTags_First={BoxTags_First}
               />
               <RightIcons
                 editMode={editMode}
-                shareMode={shareMode}
-                BoxTags_First={BoxTags_First}
-                setBoxTags_First={setBoxTags_First}
-                setBoxTags={setBoxTags}
                 setEditMode={setEditMode}
                 setDeleteMode={setDeleteMode}
                 deleteMode={deleteMode}
@@ -390,7 +378,6 @@ const MainPage = () => {
                     <FiveUrlsRight
                       values={mostClickedUrls}
                       editMode={editMode}
-                      shareMode={shareMode}
                       setMyFav={setMyFav}
                       setTopMoreWhat={setTopMoreWhat}
                     />
@@ -402,7 +389,7 @@ const MainPage = () => {
             {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
             <div className="minisize-tags aside-tags">
               {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
-              <AsideTag assignedTags={assignedTags} />
+              <AsideTag />
             </div>
             <div
               className="Big_Rect RectColor"
@@ -422,7 +409,6 @@ const MainPage = () => {
                       getUrls={getUrls}
                       setGetUrls={setGetUrls}
                       editMode={editMode}
-                      shareMode={shareMode}
                       setMyFav={setMyFav}
                       deleteMode={deleteMode}
                     />
@@ -447,12 +433,12 @@ const MainPage = () => {
           {/* ======================================== 그리드 컨테이너  END  ========================================*/}
           {/* ======================================== 날개 START ========================================*/}
           {/* aside설명 : 여기는 오른쪽 색깔있는 해쉬태그 버튼들 공간 */}
-          {assignedTags?.length !== 0 && (
+          {hashtag?.assignedHashtags?.length !== 0 && (
             <div className="aside">
               <div className="for-filling"></div>
               <div className="aside-tags">
                 {/* 전체 url들의 해쉬태그들 매핑하는 공간*/}
-                <AsideTag assignedTags={assignedTags} />
+                <AsideTag assignedTags={hashtag?.assignedHashtags} />
               </div>
             </div>
           )}
@@ -485,12 +471,7 @@ const MainPage = () => {
             />
           </div>
           <div className="hashtagModal-container">
-            <ModalHashtag
-              assignedTags={assignedTags}
-              setAssignedTags={setAssignedTags}
-              totalTags={totalTags}
-              setTotalTags={setTotalTags}
-            />
+            <ModalHashtag totalTags={totalTags} setTotalTags={setTotalTags} />
           </div>
           <div className="folderModal-container">
             <FolderModalWindow />

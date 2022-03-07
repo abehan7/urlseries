@@ -1,5 +1,7 @@
 import rootReducer from "./reducer";
 import { createPromise } from "redux-promise-middleware";
+import { createLogger } from "redux-logger";
+
 import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 
 const pm = createPromise({
@@ -7,9 +9,11 @@ const pm = createPromise({
   typeDelimiter: "/",
 });
 
+const logger = createLogger();
+
 const store2 = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), pm],
+  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), logger, pm],
 });
 export default store2;
 

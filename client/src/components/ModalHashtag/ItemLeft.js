@@ -37,6 +37,7 @@ const ItemLeft = ({
             required
             value={keyword}
             onChange={onChange}
+            autoComplete="off"
           />
           <label for="name" class="form__label">
             hashtag 검색하기
