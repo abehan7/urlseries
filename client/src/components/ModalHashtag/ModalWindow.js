@@ -127,33 +127,18 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
 
   // FIXME: #2 ItemLeft토글 클릭
   const toggleClicked = useCallback(
-    (clickedTag) => {
-      console.log(clickedTag);
-      // assignedTags
-      addAssignedTag(clickedTag);
-      // setAssignedTags((tag) => [...tag, { ...clickedTag, assigned: 1 }]);
-      // totalTags
-      // const filterd = totalTags.map((tag) => {
-      //   return tag.name === clickedTag.name ? { ...tag, assigned: 1 } : tag;
-      // });
-      // setTotalTags(filterd);
-    },
+    (clickedTag) => addAssignedTag(clickedTag),
     [totalTags, assignedTags]
   );
 
   // FIXME: #3 ItemLeft토글 해제
   const toggleUnClicked = useCallback(
     (clickedTag) => {
-      console.log("토글 해제");
       // assigned 태그
-
       const filterdAssignedTags = assignedTags.filter((tag) => {
         return tag.name !== clickedTag.name;
       });
-      // return tag.name === clickedTag.name ? { ...tag, assigned: 0 } : tag;
-
       removeAssignedTag(filterdAssignedTags);
-      // setAssignedTags(filterdAssignedTags);
 
       // total 태그
       const processedTotalTags = totalTags.map((tag) => {

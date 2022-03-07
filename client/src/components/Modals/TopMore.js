@@ -50,28 +50,26 @@ const TopMore = ({
           </div>
 
           <div className="content more-content">
-            <div className="more-urls-contents">
-              {(topMoreWhat ? likedUrls : mostClickedUrls).map((value) => {
-                return (
-                  <div
-                    className="url more-url"
-                    onClick={() => {
-                      NormalMode(value);
-                    }}
-                    key={value.url_id}
-                  >
-                    <img
-                      className="urlFavicon"
-                      src={`http://www.google.com/s2/favicons?domain=${value.url}`}
-                      alt=""
-                    />
-                    {/* <div className="valueId">{value.url_id}</div> */}
-                    <div className="just-bar">|</div>
-                    <div className="valueTitle">{value.url_title}</div>
-                  </div>
-                );
-              })}
-            </div>
+            {(topMoreWhat ? likedUrls : mostClickedUrls).map((value) => {
+              return (
+                <div
+                  className="url more-url"
+                  onClick={() => {
+                    NormalMode(value);
+                  }}
+                  key={value.url_id}
+                >
+                  <img
+                    className="urlFavicon"
+                    src={`http://www.google.com/s2/favicons?domain=${value.url}`}
+                    alt=""
+                  />
+                  {/* <div className="valueId">{value.url_id}</div> */}
+                  <div className="just-bar">|</div>
+                  <div className="valueTitle">{value.url_title}</div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
