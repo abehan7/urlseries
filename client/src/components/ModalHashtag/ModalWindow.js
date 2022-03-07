@@ -4,13 +4,52 @@ import { PopupDisable } from "../../Hooks/stopScroll";
 import { HashtagModalScrollUp } from "../../Hooks/ScrollUp";
 import ItemLeft from "./ItemLeft";
 import ItemRight from "./ItemRight";
-import styled from "styled-components";
-import { updateHashtag } from "../Api";
+import styled, { css } from "styled-components";
+// import { updateHashtag } from "../Api";
 import ModalWindowEl from "../styled/ModalWindowEl.styled";
 import { useUrl } from "../../contexts/UrlContext";
 import { debounce } from "lodash";
 
-const Button = styled.button``;
+const Button = styled.button`
+  align-items: center;
+  appearance: none;
+  background-color: #fff;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+    rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #3c4043;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-size: 14px;
+  font-weight: 500;
+  height: 43px;
+  justify-content: center;
+  letter-spacing: 0.25px;
+  line-height: normal;
+  max-width: 100%;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform, opacity;
+  z-index: 0;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-top: 30px;
+  :hover {
+    background: #f6f9fe;
+    color: #1bbeff;
+  }
+`;
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -31,14 +70,24 @@ const Title = styled.div``;
 
 const ModalWindowHashEl = styled(ModalWindowEl)`
   width: 600px;
-  height: auto;
+  height: 380px;
   @media (max-width: 640px) {
     width: 90%;
   }
 `;
 
 const HeaderContainer = styled.div`
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
+`;
+
+const Tag = styled.div`
+  ${({ isClicked }) =>
+    isClicked &&
+    css`
+      background-color: bisque;
+      transition: 200ms;
+      border-radius: 5px;
+    `}
 `;
 
 const debounceFn = debounce((fn) => fn(), 300);
@@ -54,7 +103,6 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
   const { handleEditModify } = useUrl();
 
   const assignedTagNames = assignedTags.map((tag) => tag.name);
-  useEffect(() => {}, []);
   // const assignedTags = useUrl().hashtag.assignedHashtags;
 
   // #FIXME: #1 검색필터
@@ -85,10 +133,10 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
       addAssignedTag(clickedTag);
       // setAssignedTags((tag) => [...tag, { ...clickedTag, assigned: 1 }]);
       // totalTags
-      const filterd = totalTags.map((tag) => {
-        return tag.name === clickedTag.name ? { ...tag, assigned: 1 } : tag;
-      });
-      setTotalTags(filterd);
+      // const filterd = totalTags.map((tag) => {
+      //   return tag.name === clickedTag.name ? { ...tag, assigned: 1 } : tag;
+      // });
+      // setTotalTags(filterd);
     },
     [totalTags, assignedTags]
   );
@@ -99,9 +147,10 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
       console.log("토글 해제");
       // assigned 태그
 
-      const filterdAssignedTags = assignedTags.map((tag) => {
-        return tag.name === clickedTag.name ? { ...tag, assigned: 0 } : tag;
+      const filterdAssignedTags = assignedTags.filter((tag) => {
+        return tag.name !== clickedTag.name;
       });
+      // return tag.name === clickedTag.name ? { ...tag, assigned: 0 } : tag;
 
       removeAssignedTag(filterdAssignedTags);
       // setAssignedTags(filterdAssignedTags);
@@ -119,11 +168,10 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
 
   // FIXME: #4 ItemLeft토글기능
   const handleToggle = useCallback(
-    (e, val) => {
-      e.target.classList.toggle("clicked");
-      e.target.classList[2] === "clicked"
-        ? toggleClicked(val)
-        : toggleUnClicked(val);
+    (tag) => {
+      !assignedTagNames.includes(tag.name)
+        ? toggleClicked(tag)
+        : toggleUnClicked(tag);
     },
     [assignedTags, totalTags]
   );
@@ -149,24 +197,17 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
     handleEditModify();
   }, [handleEditModify]);
 
-  // FIXME:   className === clicked면 색깔 노랑
-  const isColored = (isClicked) => {
-    return isClicked
-      ? "oneHash total-oneHash clicked"
-      : "oneHash total-oneHash";
-  };
-
   const oneItemLeft = ({ item, index }) => {
-    const isClicked = item.assigned === 1;
-    isClicked && console.log(item);
+    const isClicked = assignedTagNames.includes(item.name);
     return (
-      <div
+      <Tag
         key={index}
-        className={isColored(isClicked)}
-        onClick={(e) => handleToggle(e, item)}
+        className="oneHash total-oneHash"
+        onClick={() => handleToggle(item)}
+        isClicked={isClicked}
       >
         {item.name}
-      </div>
+      </Tag>
     );
   };
 

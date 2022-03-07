@@ -39,7 +39,7 @@ export const UrlProvider = ({ children }) => {
   const [hashtag, setHashtag] = useState({
     totalHashtags: [],
     assignedHashtags: [],
-    assignedTagNames: [],
+    tmpTags: [],
   });
 
   const [loading, setLoading] = useState(true);
@@ -93,20 +93,9 @@ export const UrlProvider = ({ children }) => {
     document.querySelector(".hashtagModal-container").style.display = "none";
 
     // reset assigned hashtag
-
-    const _resetedAssignedTags = hashtag.assignedHashtags.filter((tag) => {
+    const resetedAssignedTags = hashtag.totalHashtags.filter((tag) => {
       return tag.origin === 1;
     });
-
-    const resetedAssignedTags = _resetedAssignedTags.map((tag) => {
-      return { ...tag, assigned: 1 };
-    });
-
-    console.log("resetedAssignedTags: ", resetedAssignedTags);
-
-    // const resetedAssignedTags = hashtag.assignedHashtags.map((tag) => {
-    //   return { ...tag, assigned: tag.origin };
-    // });
 
     // reset total hashtag
     const resetedTotalTags = hashtag.totalHashtags.map((tag) => {
@@ -139,8 +128,9 @@ export const UrlProvider = ({ children }) => {
     const processed = hashtag?.assignedHashtags.map((tag) => {
       return tag.name;
     });
+    //FIXME: 아직은 주석처리
 
-    await updateHashtag(processed);
+    // await updateHashtag(processed);
   }, [hashtag]);
 
   useEffect(() => {
@@ -169,12 +159,6 @@ export const UrlProvider = ({ children }) => {
   useEffect(() => {
     url && setLoading(false);
   }, [url]);
-
-  // useEffect(() => {
-  //   const processed = hashtag.assignedHashtags.map((tag) => tag.name);
-  //   // console.log(processed);
-  //   setHashtag({ ...hashtag, assignedTagNames: processed });
-  // }, []);
 
   const value = {
     url,
