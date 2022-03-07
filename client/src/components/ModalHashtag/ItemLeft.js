@@ -29,19 +29,13 @@ const ItemLeft = ({
       </InputContainer>
       <ItemContainer>
         <BoxWrap>
-          {keyword?.length === 0 ? (
-            <>
-              {itemList?.map((item, index) => {
+          {keyword?.length === 0
+            ? itemList?.map((item, index) => {
+                return Item({ item, index });
+              })
+            : filterdList?.map((item, index) => {
                 return Item({ item, index });
               })}
-            </>
-          ) : (
-            <>
-              {filterdList?.map((item, index) => {
-                return Item({ item, index });
-              })}
-            </>
-          )}
         </BoxWrap>
       </ItemContainer>
     </ItemLeftEl>

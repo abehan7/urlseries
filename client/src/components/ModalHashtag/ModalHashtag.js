@@ -1,5 +1,6 @@
 import React, { useCallback, useRef } from "react";
 import styled from "styled-components";
+import { useUrl } from "../../contexts/UrlContext";
 import { HashtagModalScrollUp } from "../../Hooks/ScrollUp";
 import { PopupDisable } from "../../Hooks/stopScroll";
 import ModalOverlay from "../styled/ModalOverlay.styled";
@@ -31,28 +32,14 @@ const ModalHashtag = ({
 }) => {
   // FIXME: handler
   // 1P에서 사용하는 back
-  const handleCloseModal = useCallback(() => {
-    document.querySelector(".hashtagModal-container").style.display = "none";
-
-    const resetedAssignedTags = totalTags.filter((tag) => {
-      return tag.origin === 1;
-    });
-
-    const resetedTotalTags = totalTags.map((tag) => {
-      return { ...tag, assigned: tag.origin };
-    });
-    // console.log(resetedAssignedTags);
-
-    setAssignedTags(resetedAssignedTags);
-    setTotalTags(resetedTotalTags);
-  }, [totalTags, assignedTags]);
+  const { handleCloseEditModal } = useUrl();
 
   const outSideRef = useRef(null);
 
   const onClickOutSide = (e) => {
     if (e.target === outSideRef.current) {
       HashtagModalScrollUp();
-      handleCloseModal();
+      handleCloseEditModal();
       PopupDisable();
     }
   };
@@ -63,7 +50,7 @@ const ModalHashtag = ({
   return (
     <ModalHashtagEl onMouseDown={onClickOutSide} ref={outSideRef}>
       <ModalWindow
-        handleCloseModal={handleCloseModal}
+        handleCloseEditModal={handleCloseEditModal}
         setAssignedTags={setAssignedTags}
         assignedTags={assignedTags}
         setTotalTags={setTotalTags}

@@ -11,13 +11,16 @@ import { PopupEnable } from "../../Hooks/stopScroll";
 import { useDispatch } from "react-redux";
 
 import { OPEN_MODAL } from "../../store/reducers/Modal";
+import { useUrl } from "../../contexts/UrlContext";
 const ShareIcon = styled.div`
   font-size: 1.3rem;
 `;
 
 const RightIcons = ({ editMode, setEditMode, setDeleteMode, deleteMode }) => {
   const dispatch = useDispatch();
-  // const context = useContext(MainStates);
+
+  const { handleGetTotalTags } = useUrl();
+
   const onClickAddIcon = () => {
     if (!editMode) {
       return;
@@ -34,12 +37,8 @@ const RightIcons = ({ editMode, setEditMode, setDeleteMode, deleteMode }) => {
     // EditModeRectsFunc(editMode);
   };
 
-  const onClickhashIcon = () => {
-    // #@#@#@#@#@#@#@#@#@#@여기가 전체 태그 풀어주는 곳 START #@#@#@#@#@#@#@#@#@#@
-    // BoxTags_First 처음값 true
-
-    // #@#@#@#@#@#@#@#@#@#@여기가 전체 태그 풀어주는 곳 END #@#@#@#@#@#@#@#@#@#@
-
+  const onClickhashIcon = async () => {
+    await handleGetTotalTags();
     document.querySelector(".hashtagModal-container").style.display = "block";
     PopupEnable();
   };

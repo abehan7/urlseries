@@ -25,7 +25,7 @@ export const GetTotalUrls = () => API.get("/totalURL");
 
 export const getAssignedtags = () => API.get("/hashtag/assigned");
 
-export const getTotalTags = () => API.get("/hashtag/total");
+// export const getTotalTags = () => API.get("/hashtag/total");
 
 export const getGuestUrls = () => API.get("/url/guest");
 

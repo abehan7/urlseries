@@ -41,17 +41,19 @@ const HeaderContainer = styled.div`
 `;
 
 const ModalWindow = ({
-  handleCloseModal,
+  handleCloseEditModal,
   setAssignedTags,
   setTotalTags,
-  totalTags,
 }) => {
   const [keyword, setKeyword] = useState("");
   const [filterdTags, setFilterdTags] = useState([]);
 
-  const assignedTags = useUrl().hashtag.assignedHashtags;
-  const addAssignedTag = useUrl().addAssignedTag;
-  const removeAssignedTag = useUrl().removeAssignedTag;
+  const totalTags = useUrl()?.hashtag?.totalHashtags;
+  const assignedTags = useUrl()?.hashtag?.assignedHashtags;
+  const addAssignedTag = useUrl()?.addAssignedTag;
+  const removeAssignedTag = useUrl()?.removeAssignedTag;
+
+  const assignedTagNames = assignedTags.map((tag) => tag.name);
   // const assignedTags = useUrl().hashtag.assignedHashtags;
 
   // #FIXME: #1 검색필터
@@ -71,14 +73,12 @@ const ModalWindow = ({
   }, [SearchFilter]);
 
   // FIXME: #2 ItemLeft토글 클릭
-  const ToggleClicked = useCallback(
+  const toggleClicked = useCallback(
     (clickedTag) => {
       console.log(clickedTag);
-
       // assignedTags
       addAssignedTag(clickedTag);
       // setAssignedTags((tag) => [...tag, { ...clickedTag, assigned: 1 }]);
-
       // totalTags
       const filterd = totalTags.map((tag) => {
         return tag.name === clickedTag.name ? { ...tag, assigned: 1 } : tag;
@@ -89,7 +89,7 @@ const ModalWindow = ({
   );
 
   // FIXME: #3 ItemLeft토글 해제
-  const ToggleUnClicked = useCallback(
+  const toggleUnClicked = useCallback(
     (clickedTag) => {
       console.log("토글 해제");
       // assigned 태그
@@ -117,8 +117,8 @@ const ModalWindow = ({
     (e, val) => {
       e.target.classList.toggle("clicked");
       e.target.classList[2] === "clicked"
-        ? ToggleClicked(val)
-        : ToggleUnClicked(val);
+        ? toggleClicked(val)
+        : toggleUnClicked(val);
     },
     [assignedTags, totalTags]
   );
@@ -128,10 +128,10 @@ const ModalWindow = ({
     // 모달 스크롤 올리기
     HashtagModalScrollUp();
     // 모달 display: none
-    handleCloseModal();
+    handleCloseEditModal();
     // 전체 스크롤 가능하게 하기
     PopupDisable();
-  }, [handleCloseModal]);
+  }, [handleCloseEditModal]);
 
   // #FIXME: #7 수정하기 버튼
   const handleEditModify = useCallback(async () => {
@@ -164,24 +164,27 @@ const ModalWindow = ({
   }, [handleEditModify]);
 
   // FIXME:   className === clicked면 색깔 노랑
-  const totalMapColor = useCallback((val) => {
-    return val.assigned === 1
+  const isColored = useCallback((isClicked) => {
+    return isClicked
       ? "oneHash total-oneHash clicked"
       : "oneHash total-oneHash";
   }, []);
 
-  const oneItemLeft = ({ item, index }) => (
-    <div
-      key={index}
-      className={totalMapColor(item)}
-      onClick={(e) => handleToggle(e, item)}
-    >
-      {item.name}
-    </div>
-  );
+  const oneItemLeft = ({ item, index }) => {
+    const isClicked = assignedTagNames.includes(item?.name);
+    return (
+      <div
+        key={index}
+        className={isColored(isClicked)}
+        onClick={(e) => handleToggle(e, item)}
+      >
+        {item.name}
+      </div>
+    );
+  };
 
   const oneItemRight = ({ item, index }) => (
-    <div key={index} className="oneHash" onClick={() => ToggleUnClicked(item)}>
+    <div key={index} className="oneHash" onClick={() => toggleUnClicked(item)}>
       {item.name}
     </div>
   );
