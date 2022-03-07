@@ -13,42 +13,30 @@ const ItemLeftEl = styled.div`
 
 const Input = styled.input``;
 
-const ItemLeft = ({
-  keyword,
-  setKeyword,
-  filterdList,
-  itemList,
-  Item,
-  placeholder,
-}) => {
+const ItemLeft = ({ keyword, setKeyword, filterdList, itemList, Item }) => {
   // FIXME: 검색창에서 사용할 onChange
   const onChange = useCallback((e) => setKeyword(e.target.value), [itemList]);
 
   return (
     <>
       <ItemLeftEl>
-        <div class="form__group field">
+        <div className="form__group field">
           <input
             type="input"
-            class="form__field"
+            className="form__field"
             placeholder=" "
             name="name"
             id="name"
             required
             value={keyword}
             onChange={onChange}
+            autoComplete="off"
           />
-          <label for="name" class="form__label">
+          <label htmlFor="name" className="form__label">
             hashtag 검색하기
           </label>
         </div>
-        {/* <InputContainer>
-          <Input
-            value={keyword}
-            placeholder={placeholder}
-            onChange={onChange}
-          />
-        </InputContainer> */}
+
         <ItemContainer>
           <BoxWrap>
             {keyword?.length === 0 ? (

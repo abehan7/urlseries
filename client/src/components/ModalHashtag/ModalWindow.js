@@ -10,46 +10,7 @@ import ModalWindowEl from "../styled/ModalWindowEl.styled";
 import { useUrl } from "../../contexts/UrlContext";
 import { debounce } from "lodash";
 
-const Button = styled.button`
-  align-items: center;
-  appearance: none;
-  background-color: #fff;
-  border-radius: 24px;
-  border-style: none;
-  box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
-    rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
-  box-sizing: border-box;
-  color: #3c4043;
-  cursor: pointer;
-  display: inline-flex;
-  fill: currentcolor;
-  font-size: 14px;
-  font-weight: 500;
-  height: 43px;
-  justify-content: center;
-  letter-spacing: 0.25px;
-  line-height: normal;
-  max-width: 100%;
-  padding: 2px 24px;
-  position: relative;
-  text-align: center;
-  text-transform: none;
-  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
-    opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: auto;
-  will-change: transform, opacity;
-  z-index: 0;
-  margin-bottom: 10px;
-  margin-right: 10px;
-  margin-top: 30px;
-  :hover {
-    background: #f6f9fe;
-    color: #1bbeff;
-  }
-`;
+const Button = styled.button``;
 
 const ButtonWrapper = styled.div`
   display: flex;
@@ -70,14 +31,14 @@ const Title = styled.div``;
 
 const ModalWindowHashEl = styled(ModalWindowEl)`
   width: 600px;
-  height: 380px;
+  height: auto;
   @media (max-width: 640px) {
     width: 90%;
   }
 `;
 
 const HeaderContainer = styled.div`
-  /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 `;
 
 const debounceFn = debounce((fn) => fn(), 300);
@@ -93,6 +54,7 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
   const { handleEditModify } = useUrl();
 
   const assignedTagNames = assignedTags.map((tag) => tag.name);
+  useEffect(() => {}, []);
   // const assignedTags = useUrl().hashtag.assignedHashtags;
 
   // #FIXME: #1 검색필터
@@ -137,8 +99,8 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
       console.log("토글 해제");
       // assigned 태그
 
-      const filterdAssignedTags = assignedTags.filter((tag) => {
-        return tag.name !== clickedTag.name;
+      const filterdAssignedTags = assignedTags.map((tag) => {
+        return tag.name === clickedTag.name ? { ...tag, assigned: 0 } : tag;
       });
 
       removeAssignedTag(filterdAssignedTags);
@@ -176,11 +138,6 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
     PopupDisable();
   }, [handleCloseEditModal]);
 
-  // #FIXME: #7 수정하기 버튼
-  // const handleEditModify = useCallback(async () => {
-  //   handleEditModify();
-  // }, [assignedTags, totalTags]);
-
   const onClickEditBtn = useCallback(async () => {
     // 전체 스크롤 가능하게 하기
     PopupDisable();
@@ -193,14 +150,15 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
   }, [handleEditModify]);
 
   // FIXME:   className === clicked면 색깔 노랑
-  const isColored = useCallback((isClicked) => {
+  const isColored = (isClicked) => {
     return isClicked
       ? "oneHash total-oneHash clicked"
       : "oneHash total-oneHash";
-  }, []);
+  };
 
   const oneItemLeft = ({ item, index }) => {
-    const isClicked = assignedTagNames.includes(item?.name);
+    const isClicked = item.assigned === 1;
+    isClicked && console.log(item);
     return (
       <div
         key={index}
@@ -222,7 +180,7 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
     <ModalWindowHashEl>
       <HeaderContainer className="header-Container">
         <div className="close-area" onClick={handleCloseBtn}>
-          <IoArrowBack color="gray" />
+          <IoArrowBack />
         </div>
         <Title className="title">
           <h2>해쉬태그</h2>

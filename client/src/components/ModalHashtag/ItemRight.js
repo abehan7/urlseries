@@ -49,7 +49,7 @@ const ItemRight = ({ Title, ItemList, Item }) => {
         <BoxWrap>
           {ItemList?.map((item) => {
             const key = Math.floor(Math.random() * 1000000);
-            return Item({ item, index: key });
+            return item.assigned === 1 && Item({ item, index: key });
           })}
         </BoxWrap>
       </ItemContainer>
