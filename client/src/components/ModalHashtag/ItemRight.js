@@ -8,7 +8,6 @@ import ItemContainer from "../styled/ItemContainer.styled";
 const ItemRightEl = styled.div`
   flex: 1;
 `;
-
 const ItemRightBgIcon = styled.div`
   position: absolute;
   display: flex;
@@ -20,18 +19,23 @@ const ItemRightBgIcon = styled.div`
   pointer-events: none;
   opacity: 0.1;
 `;
-
 const ItemRightTitle = styled.div`
   display: flex;
+  height: 46.6px;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  border-bottom: 2px solid #9b9b9b;
   > h3 {
+    border: 1px solid #9b9b9b;
+    border-radius: 10px;
+    padding: 5px;
     margin: 0%;
-    padding: 3.5px;
+    /* padding: 2px; */
+    font-weight: lighter;
+    color: gray;
+    font-size: 15px;
   }
 `;
-
 const ItemRight = ({ Title, ItemList, Item }) => {
   return (
     <ItemRightEl>
@@ -43,7 +47,7 @@ const ItemRight = ({ Title, ItemList, Item }) => {
           <MdOutlineTag />
         </ItemRightBgIcon>
         <BoxWrap>
-          {ItemList?.map((item, index) => {
+          {ItemList?.map((item) => {
             const key = Math.floor(Math.random() * 1000000);
             return Item({ item, index: key });
           })}

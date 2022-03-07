@@ -6,7 +6,12 @@ import React, {
   useCallback,
 } from "react";
 import { useSelector } from "react-redux";
-import { getAssignedtags, GetTotalUrls, TotalAfter } from "../components/Api";
+import {
+  getAssignedtags,
+  GetTotalUrls,
+  TotalAfter,
+  updateHashtag,
+} from "../components/Api";
 import { getToken } from "../redux/ReducersT/tokenReducer";
 // import { getComments } from "../Api";
 
@@ -60,12 +65,6 @@ export const UrlProvider = ({ children }) => {
     const processedTags = uniqueTags.map((name) => {
       return { name, assigned: 0, origin: 0 };
     });
-    // const isAssigned = hashtag.assignedHashtags.some(
-    //   (tag) => name === tag.name
-    // );
-    // console.log(isAssigned);
-
-    // console.log(processedTags);
     return processedTags;
   };
 
@@ -100,6 +99,30 @@ export const UrlProvider = ({ children }) => {
     });
   };
 
+  // 해쉬태그모달 수정버튼
+  const handleEditModify = useCallback(async () => {
+    // 전체태그 => origin을 assigned로 바꿈
+    const processedTotal = hashtag?.totalHashtags.map((tag) => {
+      return { ...tag, origin: tag.assigned };
+    });
+    // 선택된 태그 => assigned === 0인 것만 전체태그에서 제거
+    const filterdAssigned = hashtag?.assignedHashtags.filter((tag) => {
+      return tag.assigned === 1;
+    });
+
+    setHashtag({
+      assignedHashtags: filterdAssigned,
+      totalHashtags: processedTotal,
+    });
+
+    //api call
+    const processed = hashtag?.assignedHashtags.map((tag) => {
+      return tag.name;
+    });
+
+    await updateHashtag(processed);
+  }, [hashtag]);
+
   useEffect(() => {
     const startfn = async () => {
       //get assignedTags
@@ -117,12 +140,8 @@ export const UrlProvider = ({ children }) => {
 
   useEffect(() => {
     const fn = async () => {
-      // get total urls
-      const {
-        data: { totalAfter },
-      } = await TotalAfter();
-      console.log(totalAfter);
-      setUrl({ ...url, totalUrls: totalAfter });
+      const { data } = await TotalAfter();
+      setUrl({ ...url, totalUrls: data.totalAfter });
     };
     token && fn();
   }, [token]);
@@ -139,6 +158,7 @@ export const UrlProvider = ({ children }) => {
     removeAssignedTag,
     handleGetTotalTags,
     handleCloseEditModal,
+    handleEditModify,
   };
 
   return <UrlContext.Provider value={value}>{children}</UrlContext.Provider>;
