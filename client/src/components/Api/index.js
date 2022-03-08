@@ -11,8 +11,7 @@ API.interceptors.request.use(
   (req) => {
     const token = localStorage.getItem("accessToken");
     if (token) {
-      req.headers.Authorization = token;
-      // req.header["Authorization"] = `Bearer ${token}`;
+      req.headers.Authorization = token; // req.header["Authorization"] = `Bearer ${token}`;
     }
     return req;
   },
@@ -24,8 +23,6 @@ API.interceptors.request.use(
 export const GetTotalUrls = () => API.get("/totalURL");
 
 export const getAssignedtags = () => API.get("/hashtag/assigned");
-
-// export const getTotalTags = () => API.get("/hashtag/total");
 
 export const getGuestUrls = () => API.get("/url/guest");
 

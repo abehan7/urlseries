@@ -34,18 +34,25 @@ const updateLikeTags = async (req, res) => {
   const user_id = req.user.id;
   console.log(oneLineTags);
   const query = { user_id };
-  const update = {
-    $set: {
-      hashtag_assigned: oneLineTags,
-    },
+
+  const hashtagInfo = await db.Hashtags.find({ user_id });
+
+  const createDoc = async () => {
+    await db.Hashtags.create({ user_id, hashtag_assigned: oneLineTags });
+  };
+  const updateDoc = async () => {
+    await db.Hashtags.updateOne(query, { hashtag_assigned: oneLineTags });
   };
 
-  try {
-    await db.Hashtags.updateOne(query, update);
-    console.log("changed assigned tag");
-  } catch (err) {
-    console.log(err);
-  }
+  hashtagInfo.length === 0 ? await createDoc() : await updateDoc();
+
+  // const update = {
+  //   $set: {
+  //     hashtag_assigned: oneLineTags,
+  //   },
+  // };
+  // await db.Hashtags.updateOne(query, update);
+  console.log("changed assigned tag");
 };
 
 module.exports = { updateLikeTags, getAssignedtags };
