@@ -25,19 +25,12 @@ import UrlContainer from "../components/UrlContainer/UrlContainer";
 export const MainStates = createContext(null);
 
 const MainEl = styled.div`
+  position: inherit;
+  z-index: 1;
   height: calc(100vh - 100px);
   display: flex;
-`;
-
-const TitleEl = styled.h3``;
-
-const TitleWrapper = styled.div`
-  padding: 10px 0;
-`;
-
-const MainWrapper = styled.div`
-  height: calc(100vh - 100px);
-  overflow-y: scroll;
+  /* background: linear-gradient(blue, pink); */
+  /* background-color: linear-gradient(#c282ff, pink); ; */
 `;
 
 const MainPage = () => {
@@ -115,47 +108,6 @@ const MainPage = () => {
       {/* 태그 */}
       {/* 모달 */}
     </MainEl>
-  );
-};
-
-const CardHeader = ({ tagIsClicked, editMode }) => {
-  return (
-    <>
-      {editMode && !tagIsClicked && <GridHeader />}
-      {editMode && tagIsClicked && <Title>HashTag</Title>}
-      {!editMode && !tagIsClicked && <Title>에디터모드입니다</Title>}
-      {!editMode && tagIsClicked && <Title>HashTag</Title>}
-    </>
-  );
-};
-
-const Title = ({ children }) => {
-  return (
-    <TitleWrapper>
-      <TitleEl>{children}</TitleEl>
-    </TitleWrapper>
-  );
-};
-
-const TopLeftBox = () => {
-  return (
-    <div className="Rectangle left-top RectColor">
-      <h3>즐겨찾기</h3>
-      <div className="text-container">
-        <FiveUrlsLeft />
-      </div>
-    </div>
-  );
-};
-
-const TopRightBox = () => {
-  return (
-    <div className="Rectangle right-top RectColor">
-      <h3>최근기록</h3>
-      <div className="text-container">
-        <FiveUrlsRight />
-      </div>
-    </div>
   );
 };
 

@@ -4,6 +4,8 @@ import { ItemConatiner } from "./styled/ItemContainer";
 import { useUrl } from "../../contexts/UrlContext";
 import Url from "./Url";
 import { Title } from "./styled/Title.styled";
+import { TitleWrapper } from "./styled/TitleWrapper.styled";
+import Indicator from "./Indicator";
 
 const LeftBoxEl = styled.div`
   flex: 2;
@@ -11,6 +13,8 @@ const LeftBoxEl = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  /* padding: 1rem; */
 `;
 
 const FlexContainer = styled(ItemConatiner)`
@@ -20,10 +24,11 @@ const FlexContainer = styled(ItemConatiner)`
   align-items: center;
   justify-content: flex-start;
   gap: 1px;
-  height: calc(100% - 130px);
-  max-height: calc(100% - 130px);
+  height: calc(100% - 130px - 1rem - 30px);
+  max-height: calc(100% - 130px - 1rem - 30px);
   width: 90%;
   background-color: #f7f8fa;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
   overflow-y: scroll;
 
@@ -38,7 +43,10 @@ const LeftBox = () => {
 
   return (
     <LeftBoxEl>
-      <Title>전체 북마크</Title>
+      <TitleWrapper>
+        <Title>전체 북마크</Title>
+      </TitleWrapper>
+      <Indicator />
       <FlexContainer>
         {totalUrls.slice(0, 14).map((url, key) => (
           <Url url={url.url} title={url.url_title} key={key} />

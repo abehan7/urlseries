@@ -54,10 +54,10 @@ const UrlEl = styled.div`
 
   transition: all 0.3s ease-in-out;
   :hover {
-    transform: translateY(-2px) scale(1.02);
+    transform: translateY(-1px) scale(1.02);
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     ${Line} {
-      background-color: orange;
+      background-color: #c282ff;
     }
   }
 `;

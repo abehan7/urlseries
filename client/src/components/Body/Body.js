@@ -5,6 +5,7 @@ import RegisterT from "./auth/RegisterT";
 import ActivationEmail from "./auth/ActivationEmail";
 import { useSelector } from "react-redux";
 import MainPage from "../../routers/MainPage";
+import styled from "styled-components";
 
 import loadable from "@loadable/component";
 const Aboutpage = loadable(() => import("../AboutPage/AboutPage"));
@@ -18,6 +19,7 @@ const EditUser = loadable(() => import("./profile/EditUser"));
 const ResetPassword = loadable(() => import("./auth/ResetPassword"));
 const ForgotPassword = loadable(() => import("./auth/ForgotPassword"));
 
+const Section = styled.section``;
 function Body() {
   const auth = useSelector((state) => state.auth);
   const { isLogged, isAdmin } = auth;
@@ -29,7 +31,7 @@ function Body() {
   // });
 
   return (
-    <section>
+    <Section>
       <Routes>
         {/* <RouteChangeTracker /> */}
         <Route path="/" element={<MainPage />} />
@@ -64,7 +66,7 @@ function Body() {
           element={isAdmin ? <EditUser /> : <NotFound />}
         />
       </Routes>
-    </section>
+    </Section>
   );
 }
 

@@ -5,7 +5,6 @@ export const Title = styled.span`
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-  padding-top: 1rem;
-  margin-left: 2rem;
+  padding: 1rem 1.5rem;
   color: gray;
 `;
