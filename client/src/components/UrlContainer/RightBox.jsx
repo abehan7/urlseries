@@ -20,7 +20,7 @@ const FlexContainer = styled(ItemConatiner)`
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  gap: 1.3rem;
+  gap: 1rem;
 
   height: calc(100% - 130px);
   max-height: calc(100% - 130px);

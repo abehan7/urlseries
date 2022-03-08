@@ -13,6 +13,13 @@ const HeaderEl = styled.header`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   z-index: 2;
   position: inherit;
+  h1 p {
+    font-family: "Sansita Swashed", cursive;
+    font-weight: 600;
+  }
+  img {
+    padding-right: 0.7rem;
+  }
 `;
 
 function HeaderT() {
@@ -76,11 +83,11 @@ function HeaderT() {
       <div className="logo">
         <h1>
           <Link to="/">
-            <img
+            {/* <img
               className="logoImage"
               src="img/logotest2.png"
               alt="logoImage"
-            />
+            /> */}
             <p>Urlseries</p>
           </Link>
         </h1>

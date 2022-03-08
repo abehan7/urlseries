@@ -69,10 +69,45 @@ const TagWrapper = styled.div`
 
   /* border-left: 2px solid #e9ecef; */
 `;
+const Img = styled.img`
+  width: 40px;
+  filter: drop-shadow(15px 5px 5px rgba(0, 0, 0, 0.5));
+  padding-bottom: 0.5rem;
+`;
+
+const FaviconWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+`;
+
+const ImgWrapper = styled.div`
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 0;
+
+  width: 80%;
+  height: 100%;
+  flex-direction: column;
+`;
+const Ment = styled.span`
+  font-size: 1.1rem;
+  color: gray;
+  padding-top: 0.3rem;
+`;
 
 const SideBar = () => {
   return (
     <SideBarEl>
+      <FaviconWrapper>
+        <ImgWrapper>
+          <Img src="img/logotest2.png" alt="logoImage" />
+          <Ment>Welcome!</Ment>
+        </ImgWrapper>
+      </FaviconWrapper>
       <Item name="추가하기">
         <HiOutlineDocumentAdd />
       </Item>

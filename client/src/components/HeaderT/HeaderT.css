@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@300;400;500&display=swap");
+
 header {
   width: 100%;
   min-height: 100px;
@@ -29,7 +31,7 @@ header ul li:hover {
 }
 
 .logo {
-  padding-left: 5%;
+  padding-left: 3%;
 }
 
 .logo a {
