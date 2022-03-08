@@ -7,8 +7,7 @@ function PlayerModal({ closeModal }) {
       <div className="modalContainer">
         <div className="titleCloseBtn">
           <button className="colseBtn" onClick={() => closeModal(false)}>
-            {" "}
-            X{" "}
+            X
           </button>
         </div>
         <div className="title">
@@ -19,12 +18,6 @@ function PlayerModal({ closeModal }) {
             <img className="video" src="img/aboutsearch.gif" />
           </div>
         </div>
-        {/* <div className="footer">
-          <button id="cancelBtn" onClick={() => closeModal(false)}>
-            Cancle
-          </button>
-          <button>Continue</button>
-        </div> */}
       </div>
     </div>
   );

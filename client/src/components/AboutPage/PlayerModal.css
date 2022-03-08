@@ -33,6 +33,9 @@
 
 .colseBtn {
   width: 20px;
+  outline: none;
+  border: none;
+  background: none;
 }
 
 /* .modalContainer .footer button {
