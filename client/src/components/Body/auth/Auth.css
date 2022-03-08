@@ -140,6 +140,7 @@ h2 {
 } */
 
 #auth_btn {
+  cursor: pointer;
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 20px;
@@ -163,8 +164,8 @@ button:hover {
   margin-top: 10px;
   margin-bottom: 10px;
   border-radius: 20px;
-  border: 1px solid #ff4b2b;
-  background-color: none;
+  border: 2px solid #fff;
+  background-color: transparent;
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
@@ -302,6 +303,19 @@ form {
 }
 .response_register {
   display: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 20px;
+  border: 1px solid #ff4b2b;
+  background-color: #ff4b2b;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 12px 45px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  width: 150px;
+  outline: none;
 }
 
 @media screen and (max-width: 900px) {
@@ -319,6 +333,6 @@ form {
   }
 
   .response_register {
-    display: none;
+    display: block;
   }
 }
