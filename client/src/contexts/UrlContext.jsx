@@ -130,7 +130,8 @@ export const UrlProvider = ({ children }) => {
     });
     //FIXME: 아직은 주석처리
 
-    // await updateHashtag(processed);
+    console.log("processed: ", processed);
+    await updateHashtag(processed);
   }, [hashtag]);
 
   useEffect(() => {
