@@ -143,42 +143,7 @@ const MainPage = () => {
     tagIsClicked && setItemNum(40);
   }, [tagIsClicked]);
 
-  useEffect(() => {
-    const getMemberData = async () => {
-      GetTotalUrls().then(async (res) => {
-        // console.log(res);
-        await setGetUrls(res.data.totalURL);
-        await setMostClickedUrls(res.data.rightURL);
-        await setLikedUrls(res.data.leftURL);
-        await setRecentSearch(res.data.recentSearched);
-        // console.log(response.data);
-      });
-      dispatch(SET_FOLDERS());
-    };
-    const getGuestData = async () => {
-      const { data } = await getGuestUrls();
-      setGetUrls(data.totalUrl);
-      setMostClickedUrls(data.leftUrl);
-      setLikedUrls(data.rightUrl);
-      setRecentSearch(data?.recentSearchedUrl);
-    };
-
-    token && getMemberData();
-    !token && getGuestData();
-  }, [token]);
-
-  useEffect(() => {
-    // 이거 로직 바꿔야돼
-    if (token) {
-      TotalAfter().then(async (response) => {
-        const {
-          data: { totalAfter },
-        } = response;
-
-        await setRealTotalUrls(totalAfter);
-      });
-    }
-  }, [token]);
+  // FIXME: url에서 totaltags랑 40개 url들 context로 이동
 
   // FIXME: 삭제하기 LeftIcons에서 사용할 예정
 

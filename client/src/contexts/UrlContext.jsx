@@ -8,9 +8,9 @@ import React, {
 import { useSelector } from "react-redux";
 import {
   getAssignedtags,
+  getGuestUrls,
   GetTotalUrls,
   TotalAfter,
-  updateHashtag,
 } from "../components/Api";
 import { getToken } from "../redux/ReducersT/tokenReducer";
 // import { getComments } from "../Api";
@@ -23,6 +23,9 @@ export const UrlProvider = ({ children }) => {
   const [url, setUrl] = useState({
     displayUrls: [],
     totalUrls: [],
+    searchedUrls: [],
+    recentClickedUrls: [],
+    likedUrls: [],
     currentUrl: {
       url: "",
       urlId: "",
@@ -31,9 +34,6 @@ export const UrlProvider = ({ children }) => {
       urlTitle: "",
       url_likedUrl: "",
     },
-    searchedUrls: [],
-    recentClickedUrls: [],
-    likedUrls: [],
   });
 
   const [hashtag, setHashtag] = useState({
@@ -132,6 +132,33 @@ export const UrlProvider = ({ children }) => {
 
     // await updateHashtag(processed);
   }, [hashtag]);
+
+  // FIXME: 초반 url
+  useEffect(() => {
+    const getMemberData = async () => {
+      const { data } = await GetTotalUrls();
+      setUrl({
+        displayUrls: data.totalURL,
+        searchedUrls: data.recentSearched,
+        recentClickedUrls: data.rightURL,
+        likedUrls: data.leftURL,
+      });
+    };
+    const getGuestData = async () => {
+      const { data } = await getGuestUrls();
+
+      setUrl({
+        displayUrls: data.totalUrl,
+        searchedUrls: data.recentSearchedUrl,
+        recentClickedUrls: data.rightUrl,
+        likedUrls: data.leftUrl,
+      });
+    };
+    token && getMemberData();
+    !token && getGuestData();
+  }, [token]);
+
+  // FIXME: 전체 url
 
   useEffect(() => {
     const startfn = async () => {
