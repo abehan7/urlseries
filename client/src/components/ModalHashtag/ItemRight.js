@@ -26,13 +26,13 @@ const ItemRightTitle = styled.div`
   align-items: center;
   border-bottom: 2px solid #9b9b9b;
   > h3 {
-    border: 1px solid #9b9b9b;
+    border: 3px solid #bbbbbb;
     border-radius: 10px;
     padding: 5px;
     margin: 0%;
     /* padding: 2px; */
-    font-weight: lighter;
-    color: gray;
+    /* font-weight: lighter; */
+    color: black;
     font-size: 15px;
   }
 `;

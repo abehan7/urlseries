@@ -5,6 +5,7 @@ const ItemContainer = styled.div`
   height: auto;
   min-height: 205px;
   margin: 0;
+  /* padding-bottom: 2px; */
 `;
 
 export default ItemContainer;

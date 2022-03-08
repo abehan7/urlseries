@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { FolderContext } from "./FolderModalWindow";
 import InputWrapper from "./styled/InputWrapper.styled";
+import { VscFolderActive, VscNewFolder, VscClose } from "react-icons/vsc";
 
 const wordsList = [
   "변경사항을 저장하시겠습니까?",
@@ -31,17 +32,50 @@ const ClickModalEl = styled(ConfirmModalEl)`
 `;
 
 const Button = styled.button`
-  border-top: 1px solid #e0e8e7;
-  font-weight: 400;
-  padding: 0.3rem;
-  :active {
-    background-color: #e9ecef;
+  border-radius: 10px;
+  font-size: 16px;
+  padding: 0;
+  width: 100px;
+  cursor: pointer;
+  transition: 0.3s ease;
+  background: rgba(120, 113, 130, 0.9);
+  color: #fff;
+  border: 2px solid transparent;
+  margin: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  :hover {
+    position: relative;
+    color: rgba(120, 113, 130, 0.9);
+    background: #fff;
+    border: 2px solid rgba(120, 113, 130, 0.9);
+  }
+  > .btn__text {
+    padding: 6px 8px;
+  }
+  > .btn__icon {
+    background: #787182;
+    color: #fff;
+    height: 25px;
+    align-items: center;
+    display: flex;
+    padding: 6px 12px;
+    transition: 0.3s ease;
+  }
+  :hover .btn__icon {
+    background: #f9f9f9;
+    color: rgba(120, 113, 130, 0.9);
   }
 `;
 const ButtonContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
   width: 100%;
+  gap: 10px;
+  padding-bottom: 10px;
 `;
 
 const MsgContainer = styled.div`
@@ -114,10 +148,11 @@ const ModalOverlay = styled.div`
 `;
 
 const InputWrapperEl = styled(InputWrapper)`
-  border-top: 1px solid #e0e8e7;
+  border: 1px solid #e0e8e7;
   height: 35px;
   align-items: center;
   justify-content: center;
+  margin-bottom: 10px;
 `;
 const Input = styled.input`
   font-weight: 100;
@@ -125,6 +160,7 @@ const Input = styled.input`
   padding: 0rem 1rem;
   margin: 0;
   font-size: 17px;
+  outline: none;
 `;
 
 const AlertModal = ({
@@ -195,10 +231,18 @@ const ClickModal = ({
       <MsgContainer>{message}</MsgContainer>
       <Description>{description}</Description>
       <ButtonContainer>
-        <Button onClick={handleClickConfirm} style={{ color: "red" }}>
-          확인
+        <Button onClick={handleClickConfirm} style={{}}>
+          <span className="btn__text">저장</span>
+          <span className="btn__icon">
+            <VscFolderActive />
+          </span>
         </Button>
-        <Button onClick={handleModalCancel}>취소</Button>
+        <Button onClick={handleModalCancel}>
+          <span className="btn__text">취소</span>
+          <span className="btn__icon">
+            <VscClose />
+          </span>
+        </Button>
       </ButtonContainer>
     </ClickModalEl>
   );
@@ -209,8 +253,11 @@ const NoCancelModal = ({ message, handleClickConfirm }) => {
     <ClickModalEl>
       <MsgContainer>{message}</MsgContainer>
       <ButtonContainer>
-        <Button onClick={handleClickConfirm} style={{ color: "red" }}>
-          확인
+        <Button onClick={handleClickConfirm} style={{}}>
+          <span className="btn__text">확인</span>
+          <span className="btn__icon">
+            <VscFolderActive />
+          </span>
         </Button>
       </ButtonContainer>
     </ClickModalEl>
@@ -238,10 +285,18 @@ const AddModal = ({ message, handleClickConfirm, handleModalCancel }) => {
         />
       </InputWrapperEl>
       <ButtonContainer>
-        <Button onClick={onClickConfirm} style={{ color: "red" }}>
-          확인
+        <Button onClick={onClickConfirm} style={{}}>
+          <span className="btn__text">저장</span>
+          <span className="btn__icon">
+            <VscNewFolder />
+          </span>
         </Button>
-        <Button onClick={handleAddModalCancel}>취소</Button>
+        <Button onClick={handleAddModalCancel}>
+          <span className="btn__text">취소</span>
+          <span className="btn__icon">
+            <VscClose />
+          </span>
+        </Button>
       </ButtonContainer>
     </ClickModalEl>
   );

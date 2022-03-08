@@ -18,32 +18,50 @@ const ItemLeft = ({ keyword, setKeyword, filterdList, itemList, Item }) => {
   const onChange = useCallback((e) => setKeyword(e.target.value), [itemList]);
 
   return (
-    <ItemLeftEl>
-      <div className="form__group field">
-        <input
-          type="input"
-          className="form__field"
-          placeholder=" "
-          name="name"
-          id="name"
-          required
-          value={keyword}
-          onChange={onChange}
-          autoComplete="off"
-        />
-        <label htmlFor="name" className="form__label">
-          hashtag 검색하기
-        </label>
-      </div>
-
-      <ItemContainer>
-        <BoxWrap>
-          {keyword?.length === 0
-            ? itemList?.map((item, index) => Item({ item, index }))
-            : filterdList?.map((item, index) => Item({ item, index }))}
-        </BoxWrap>
-      </ItemContainer>
-    </ItemLeftEl>
+    <>
+      <ItemLeftEl>
+        <div class="form__group field">
+          <input
+            type="input"
+            class="form__field"
+            placeholder=" "
+            name="name"
+            id="name"
+            required
+            value={keyword}
+            onChange={onChange}
+            autoComplete="off"
+          />
+          <label for="name" class="form__label">
+            hashtag 검색하기
+          </label>
+        </div>
+        {/* <InputContainer>
+          <Input
+            value={keyword}
+            placeholder={placeholder}
+            onChange={onChange}
+          />
+        </InputContainer> */}
+        <ItemContainer>
+          <BoxWrap>
+            {keyword?.length === 0 ? (
+              <>
+                {itemList?.map((item, index) => {
+                  return Item({ item, index });
+                })}
+              </>
+            ) : (
+              <>
+                {filterdList?.map((item, index) => {
+                  return Item({ item, index });
+                })}
+              </>
+            )}
+          </BoxWrap>
+        </ItemContainer>
+      </ItemLeftEl>
+    </>
   );
 };
 

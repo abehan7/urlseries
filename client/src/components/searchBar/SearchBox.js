@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaSearch } from "react-icons/fa";
+import { IoSearchOutline } from "react-icons/io5";
 import loadable from "@loadable/component";
 
 // import RecentSearched from "./RecentSearched";
@@ -156,7 +156,7 @@ const SearchBox = ({
           onChange={onDebounceChange}
         />
         {/* <NewSearchBar /> */}
-        <FaSearch />
+        <IoSearchOutline />
 
         <div className="Search-balloon">
           <div

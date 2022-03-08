@@ -10,6 +10,7 @@ const BoxWrap = styled.div`
   overflow-y: auto;
   max-height: 200px;
   padding-top: 5px;
+  padding-bottom: 5px;
 `;
 
 export default BoxWrap;

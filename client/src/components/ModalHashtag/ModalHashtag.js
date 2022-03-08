@@ -9,16 +9,30 @@ import ModalWindow from "./ModalWindow";
 const ModalHashtagEl = styled(ModalOverlay)`
   .oneHash {
     cursor: pointer;
+    display: block;
+    font-size: 12px;
+    padding: 3px;
+    margin: 1px;
+    text-transform: uppercase;
+    border: 3px solid #bbbbbb;
+    border-radius: 1em;
+    transition: transform 0.2s;
+    transition-timing-function: cubic-bezier(0.45, -0.85, 0.55, -0.45);
   }
 
   .oneHash:hover {
-    background-color: bisque;
+    /* background-color: bisque; */
     transition: 200ms;
-    border-radius: 5px;
+    border-radius: 1em;
+    transform: scale(1.2);
+    background: linear-gradient(to right, #ff8a00, #da1b60);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
   .clicked {
-    background-color: bisque;
+    background-color: #ff4b2b;
+    color: white;
     transition: 200ms;
     border-radius: 5px;
   }
