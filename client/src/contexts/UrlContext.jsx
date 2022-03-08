@@ -201,9 +201,9 @@ export const UrlProvider = ({ children }) => {
     token && !loading && startfn();
   }, [token, loading]);
 
-  useEffect(() => {
-    console.log("url:", url);
-  }, [url]);
+  // useEffect(() => {
+  //   console.log("url:", url);
+  // }, [url]);
 
   const value = {
     url,

@@ -21,13 +21,15 @@ import {
   SET_TAG_TOTAL_ITEMS,
 } from "../../store/reducers/urls";
 import { handleClickUrl, handleEditClick } from "../../Hooks/clickUrl";
+import { useUrl } from "../../contexts/UrlContext";
 // TODO: 12/29) UrlsByHashTag / filterdTags(리덕스) / AsiedTag
 const UrlsByHashTagEl = styled(UrlRectWrapper)`
   position: relative;
 `;
 const faviconUrl = (url) => `http://www.google.com/s2/favicons?domain=${url}`;
 
-const UrlsByHashTag = ({ realTotalUrls, setMyFav }) => {
+const UrlsByHashTag = () => {
+  const totalUrls = useUrl().url.totalUrls;
   const [Height, setHeight] = useState(0);
   const [filterdUrls, setFilterdUrls] = useState([]);
 
@@ -43,7 +45,7 @@ const UrlsByHashTag = ({ realTotalUrls, setMyFav }) => {
   const tagFilterdItems = useSelector(getTagFilterdItems);
 
   const getMetaTagUrls = () => {
-    const filterd = realTotalUrls.filter((url) => {
+    const filterd = totalUrls.filter((url) => {
       return metaTagItems.some((tag) => {
         return url.url_hashTags.includes(tag);
       });

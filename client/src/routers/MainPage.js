@@ -363,13 +363,7 @@ const MainPage = () => {
                 {!tagIsClicked && (
                   // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
                   <>
-                    <TotalUrlMap
-                      getUrls={getUrls}
-                      setGetUrls={setGetUrls}
-                      editMode={editMode}
-                      setMyFav={setMyFav}
-                      deleteMode={deleteMode}
-                    />
+                    <TotalUrlMap />
                     {url?.totalUrls?.length > 40 && (
                       <div ref={setTarget} className="Target-Element">
                         {isLoaded && <Loader />}
@@ -377,9 +371,7 @@ const MainPage = () => {
                     )}
                   </>
                 )}
-
                 {tagIsClicked && (
-                  // 여기는 선택된 색깔있는 해쉬태그들 (BoxTags)을 포함하는 url들만 선별해서 뿌려주는 컴포넌트
                   <UrlsByHashTag
                     realTotalUrls={realTotalUrls}
                     setMyFav={setMyFav}

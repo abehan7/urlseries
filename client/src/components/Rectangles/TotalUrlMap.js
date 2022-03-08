@@ -11,6 +11,7 @@ import {
   getTagFilterdItems,
   REMOVE_TAG_FILTERD_ITEMS,
 } from "../../store/reducers/urls";
+import { useUrl } from "../../contexts/UrlContext";
 
 export const modalHover = debounce((e, setHeight, Height) => {
   e.target.lastChild.classList.add("hover-on");
@@ -36,7 +37,8 @@ const TotalUrlMapEl = styled(UrlRectWrapper)`
 
 const faviconUrl = (url) => `http://www.google.com/s2/favicons?domain=${url}`;
 
-const TotalUrlMap = ({ getUrls, editMode, deleteMode }) => {
+const TotalUrlMap = () => {
+  const displayUrls = useUrl().url.displayUrls;
   const [Height, setHeight] = useState(0);
   const dispatch = useDispatch();
   const tagFilterdItems = useSelector(getTagFilterdItems);
@@ -64,33 +66,34 @@ const TotalUrlMap = ({ getUrls, editMode, deleteMode }) => {
   };
 
   const onClick = (url) => {
-    editMode && handleClickUrl(url);
-    !editMode && !deleteMode && handleEditClick(url);
-    !editMode && deleteMode && handleDeleteClick(url);
+    // TODO: 여기는 다시 복귀시켜야함
+    // editMode && handleClickUrl(url);
+    // !editMode && !deleteMode && handleEditClick(url);
+    // !editMode && deleteMode && handleDeleteClick(url);
 
     console.log("onClick");
   };
 
   return (
     <>
-      {getUrls.map((value) => {
-        const clicked = tagFilterdItems.includes(value._id);
+      {displayUrls.map((url) => {
+        const clicked = tagFilterdItems.includes(url._id);
         return (
           <TotalUrlMapEl
             className="T-url"
-            key={value._id}
-            onClick={() => onClick(value)}
+            key={url._id}
+            onClick={() => onClick(url)}
             onMouseOut={onMouseOut}
             onMouseOver={onMouseOver}
             onContextMenu={onContextMenu}
           >
-            {!editMode && deleteMode && <Box clicked={clicked} />}
+            {/* {!editMode && deleteMode && <Box clicked={clicked} />} */}
 
-            <img className="urlFavicon" src={faviconUrl(value.url)} alt="" />
+            <img className="urlFavicon" src={faviconUrl(url.url)} alt="" />
             {/* <div>{value.url_id}</div> */}
             <div className="just-bar">|</div>
-            <div className="valueTitle">{value.url_title}</div>
-            <HoverModal Height={Height} value={value} />
+            <div className="valueTitle">{url.url_title}</div>
+            <HoverModal Height={Height} value={url} />
           </TotalUrlMapEl>
         );
       })}

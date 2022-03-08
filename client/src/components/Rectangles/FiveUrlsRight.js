@@ -7,19 +7,26 @@ import UrlRectWrapper from "../styled/UrlRectWrapper.styled";
 import { modalHover } from "./TotalUrlMap";
 import { MainStates } from "../../routers/MainPage";
 import { API } from "../Api";
+import { useUrl } from "../../contexts/UrlContext";
 
 const FiveUrlsRightEl = styled(UrlRectWrapper)`
+  position: relative;
   border-radius: 10px;
+  img,
+  div {
+    pointer-events: none;
+  }
 `;
-const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
+const FiveUrlsRight = () => {
+  const recentClickedUrls = useUrl().url.recentClickedUrls;
   const [Height, setHeight] = useState(0);
-  const fiveStuffs = values.slice(0, 6);
+  const fiveStuffs = recentClickedUrls.slice(0, 6);
 
   const { setUrlDetail } = useContext(MainStates);
 
   const WhenEditMode = ({ url: value }) => {
     EditMode_ModalFunc(value, setUrlDetail);
-    setMyFav(value.url_likedUrl === 1);
+    // setMyFav(value.url_likedUrl === 1);
     console.log("에디터모드입니다");
   };
 
@@ -30,50 +37,35 @@ const FiveUrlsRight = ({ values, editMode, setMyFav, setTopMoreWhat }) => {
     });
   };
   const RightOnClick = ({ url: value }) => {
-    !editMode ? WhenEditMode({ url: value }) : WhenNormal({ url: value });
+    // !editMode ? WhenEditMode({ url: value }) : WhenNormal({ url: value });
   };
 
+  const onMouseOut = (e) => {
+    modalHover.cancel();
+    e.target.lastChild.classList.remove("hover-on");
+  };
+
+  const onMouseOver = (e) => modalHover(e, setHeight, Height);
   return (
     <>
-      {(editMode ? fiveStuffs : values).map((value) => {
+      {fiveStuffs.map((url) => {
+        const src = `https://www.google.com/s2/favicons?domain=${url.url}`;
         return (
           <FiveUrlsRightEl
-            style={{ position: "relative" }}
             className="url"
-            onClick={() => RightOnClick({ url: value })}
-            onMouseOut={(e) => {
-              modalHover.cancel();
-              e.target.lastChild.classList.remove("hover-on");
-            }}
-            onMouseOver={(e) => {
-              modalHover(e, setHeight, Height);
-            }}
-            onContextMenu={(e) => {
-              console.log("우클릭");
-              e.preventDefault();
-            }}
-            key={value.url_id}
+            onClick={() => RightOnClick(url)}
+            onMouseOut={onMouseOut}
+            onMouseOver={onMouseOver}
+            key={url.url_id}
           >
-            <img
-              style={{ pointerEvents: "none" }}
-              className="urlFavicon"
-              src={`http://www.google.com/s2/favicons?domain=${value.url}`}
-              alt=""
-            />
-
-            <div className="just-bar" style={{ pointerEvents: "none" }}>
-              |
-            </div>
-            <div className="valueTitle" style={{ pointerEvents: "none" }}>
-              {value.url_title}
-            </div>
-            {editMode && <HoverModal Height={Height} value={value} />}
+            <img className="urlFavicon" src={src} alt="" />
+            <div className="just-bar">|</div>
+            <div className="valueTitle">{url.url_title}</div>
+            <HoverModal Height={Height} value={url} />
           </FiveUrlsRightEl>
         );
       })}
-      {values.length > 6 && editMode && (
-        <MoreBtn setTopMoreWhat={setTopMoreWhat} where="Right" />
-      )}
+      {recentClickedUrls.length > 6 && <MoreBtn />}
     </>
   );
 };
