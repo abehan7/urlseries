@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 import { VscAccount, VscLayers, VscChevronDown } from "react-icons/vsc";
 import "./HeaderT.css";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
+
+const DropdownBtn = styled.div`
+  background-color: transparent;
+`;
 
 function HeaderT() {
   const auth = useSelector((state) => state.auth);
@@ -42,10 +47,10 @@ function HeaderT() {
   const userLink = () => {
     return (
       <div className="dropdown">
-        <button onClick={myFunction} className="dropbtn">
+        <DropdownBtn onClick={myFunction} className="dropbtn">
           <img className="profileImage" src={user.avatar} alt="" />
           {user.user_id} <VscChevronDown />
-        </button>
+        </DropdownBtn>
         <div id="myDropdown" className="dropdown-content">
           <Link to="profile">Profile</Link>
           <Link to="/" onClick={handleLogout}>

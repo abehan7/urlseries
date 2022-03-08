@@ -229,11 +229,6 @@ const MainPage = () => {
   // FIXME: styles
 
   // editmode일 때 스타일 사각형에 색깔 변하게하기
-  const bcTopRect = "#E0E8E7";
-  const emptyStyle = {};
-  const MkColorTopRect = {
-    backgroundColor: bcTopRect,
-  };
 
   // FIXME: useContext
   const InitialContents = {
