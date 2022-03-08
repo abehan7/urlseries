@@ -5,7 +5,8 @@ axios.defaults.withCredentials = true;
 export const API = axios.create({ baseURL: "http://localhost:3001" });
 const controller = new AbortController();
 
-export const StopAPI = () => controller.abort();
+export const getAbort = () => controller.abort();
+const option = { signal: controller.signal };
 
 API.interceptors.request.use(
   (req) => {
@@ -27,7 +28,7 @@ export const getAssignedtags = () => API.get("/hashtag/assigned");
 
 // export const getTotalTags = () => API.get("/hashtag/total");
 
-export const getGuestUrls = () => API.get("/url/guest");
+export const getGuestUrls = () => API.get("/url/guest", option);
 
 export const TotalAfter = () => API.get("/TotalAfter");
 

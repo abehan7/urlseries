@@ -10,6 +10,7 @@ import {
   getAssignedtags,
   getGuestUrls,
   GetTotalUrls,
+  getAbort,
   TotalAfter,
 } from "../components/Api";
 import { getToken } from "../redux/ReducersT/tokenReducer";
@@ -20,12 +21,15 @@ const UrlContext = createContext();
 export const useUrl = () => useContext(UrlContext);
 
 export const UrlProvider = ({ children }) => {
+  // console.log("UrlProvider");
+
   const [url, setUrl] = useState({
     displayUrls: [],
     totalUrls: [],
     searchedUrls: [],
     recentClickedUrls: [],
     likedUrls: [],
+
     currentUrl: {
       url: "",
       urlId: "",
@@ -35,6 +39,8 @@ export const UrlProvider = ({ children }) => {
       url_likedUrl: "",
     },
   });
+
+  // const [totalUrls, setTotalUrls] = useState([]);
 
   const [hashtag, setHashtag] = useState({
     totalHashtags: [],
@@ -133,33 +139,53 @@ export const UrlProvider = ({ children }) => {
     // await updateHashtag(processed);
   }, [hashtag]);
 
+  // FIXME: 전체 url
+  useEffect(() => {
+    const fn = async () => {
+      console.log("!23");
+      const { data } = await TotalAfter();
+      setUrl({ ...url, totalUrls: data.totalAfter });
+      // console.log("totalUrls: ", data.totalAfter);
+    };
+    token && !loading && fn();
+  }, [token, loading]);
+
   // FIXME: 초반 url
   useEffect(() => {
     const getMemberData = async () => {
+      setLoading(true);
+      await getAbort();
       const { data } = await GetTotalUrls();
+      // console.log(data);
+
       setUrl({
+        ...url,
         displayUrls: data.totalURL,
         searchedUrls: data.recentSearched,
         recentClickedUrls: data.rightURL,
         likedUrls: data.leftURL,
       });
+      setLoading(false);
+      // console.log(data);
     };
+
     const getGuestData = async () => {
       const { data } = await getGuestUrls();
-
+      console.log(data);
       setUrl({
+        ...url,
         displayUrls: data.totalUrl,
         searchedUrls: data.recentSearchedUrl,
         recentClickedUrls: data.rightUrl,
         likedUrls: data.leftUrl,
       });
     };
-    token && getMemberData();
+
+    token && url.displayUrls.length === 0 && getMemberData();
     !token && getGuestData();
   }, [token]);
 
-  // FIXME: 전체 url
-
+  // FIXME: 해시태그
   useEffect(() => {
     const startfn = async () => {
       //get assignedTags
@@ -172,25 +198,16 @@ export const UrlProvider = ({ children }) => {
       setHashtag({ ...hashtag, assignedHashtags });
       // console.log("data from urlContext", data.);
     };
-    token && hashtag.assignedHashtags.length === 0 && startfn();
-  }, [token]);
+    token && !loading && startfn();
+  }, [token, loading]);
 
   useEffect(() => {
-    const fn = async () => {
-      const { data } = await TotalAfter();
-      setUrl({ ...url, totalUrls: data.totalAfter });
-    };
-    token && fn();
-  }, [token]);
-
-  useEffect(() => {
-    url && setLoading(false);
+    console.log("url:", url);
   }, [url]);
 
   const value = {
     url,
     hashtag,
-    loading,
     addAssignedTag,
     removeAssignedTag,
     handleGetTotalTags,

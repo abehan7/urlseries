@@ -120,6 +120,8 @@ const MainPage = () => {
   const [topMoreWhat, setTopMoreWhat] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(false);
 
+  const { url } = useUrl();
+
   // 무한스크롤
   const [itemNum, setItemNum] = useState(40);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -135,7 +137,6 @@ const MainPage = () => {
   const tagIsClicked = useSelector(getIsClicked);
   const folders = useSelector(getFolders);
   // FIXME: 토큰 있으면 데이터 가져오기
-  const token = useSelector(getToken);
 
   // FIXME: 맨 처음 데이터 가져오기
 
@@ -309,13 +310,7 @@ const MainPage = () => {
                     !tagIsClicked && !editMode ? MkColorTopRect : emptyStyle
                   }
                 >
-                  <h3
-                    onClick={() => {
-                      setIsDarkMode(!isDarkMode);
-                    }}
-                  >
-                    즐겨찾기
-                  </h3>
+                  <h3>즐겨찾기</h3>
                   <div
                     className="text-container"
                     style={
@@ -354,9 +349,7 @@ const MainPage = () => {
               </>
             )}
 
-            {/* minisize-tags 는 반응형으로 사이즈 줄이면 태그 나타나는 공간 */}
             <div className="minisize-tags aside-tags">
-              {/* map함수 : 해쉬태그 전체 뿌려주는 기능 jsp에서 for문 돌려주는 느낌 */}
               <AsideTag />
             </div>
             <div
@@ -365,9 +358,6 @@ const MainPage = () => {
             >
               {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
               {/* 값은 true false 이렇게 두가지인데  */}
-              {/* 맨 처음에 한번 클릭하면 전체 오퍼시티 0.6으로 만들어주고   */}
-              {/* 전체 URL이라는 h3가 HashTag라고 바뀜  */}
-              {/* <h3>전체 URL</h3> : <h3>HashTag</h3> 여기서 true면 왼쪽 false면 오른쪽  */}
               <CardHeader tagIsClicked={tagIsClicked} editMode={editMode} />
               <div className="text-three-container">
                 {!tagIsClicked && (
@@ -380,7 +370,7 @@ const MainPage = () => {
                       setMyFav={setMyFav}
                       deleteMode={deleteMode}
                     />
-                    {realTotalUrls.length > 40 && (
+                    {url?.totalUrls?.length > 40 && (
                       <div ref={setTarget} className="Target-Element">
                         {isLoaded && <Loader />}
                       </div>

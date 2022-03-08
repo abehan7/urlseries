@@ -45,7 +45,7 @@ function App() {
         dispatch(dispatchLogin());
 
         return fetchUser(token).then((res) => {
-          console.log("getUser", res);
+          // console.log("getUser", res);
           dispatch(dispatchGetUser(res));
         });
       };

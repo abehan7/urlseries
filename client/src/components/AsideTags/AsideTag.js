@@ -82,7 +82,7 @@ const AsideTag = () => {
   }, [tagIsClicked]);
 
   useEffect(() => {
-    console.log("assignedTags from aside tags: ", assignedTags);
+    // console.log("assignedTags from aside tags: ", assignedTags);
   }, [assignedTags]);
 
   return (
