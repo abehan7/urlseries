@@ -5,7 +5,7 @@ import { ItemConatiner } from "./styled/ItemContainer";
 const RightBoxEl = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   flex: 1;
 `;
 const ItemContainerEl = styled(ItemConatiner)``;
