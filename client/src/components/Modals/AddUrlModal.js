@@ -199,7 +199,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
           </div>
 
           <div className="content">
-            <div class="input-group">
+            <div className="input-group">
               <input
                 type="text"
                 autoComplete="off"
@@ -209,7 +209,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
                 id="URL"
                 placeholder=" "
               />
-              <label for="text1">URL</label>
+              <label htmlFor="text1">URL</label>
             </div>
 
             <div className="input-group">
@@ -221,7 +221,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
                 placeholder=" "
                 onChange={handleChange}
               />
-              <label for="text2">TITLE</label>
+              <label htmlFor="text2">TITLE</label>
             </div>
 
             <div className="input-group">
@@ -233,7 +233,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
                 placeholder=" "
                 onChange={handleChange}
               />
-              <label for="text2">#HASHTAG</label>
+              <label htmlFor="text2">#HASHTAG</label>
             </div>
 
             <div className="input-group">
@@ -253,7 +253,7 @@ const AddUrlModal = ({ setGetUrls, getUrls }) => {
                 placeholder=" "
                 onChange={handleChange}
               />
-              <label for="text2">MEMO</label>
+              <label htmlFor="text2">MEMO</label>
             </div>
 
             <div className="addUrl-btn">

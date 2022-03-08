@@ -39,6 +39,7 @@ export const UrlProvider = ({ children }) => {
   const [hashtag, setHashtag] = useState({
     totalHashtags: [],
     assignedHashtags: [],
+    tmpTags: [],
   });
 
   const [loading, setLoading] = useState(true);
@@ -56,6 +57,8 @@ export const UrlProvider = ({ children }) => {
   };
 
   const getTotalTags = () => {
+    const _assignedTagNames = hashtag.assignedHashtags.map((tag) => tag.name);
+
     const _hashtags = url.totalUrls.map((url) => {
       return url?.url_hashTags;
     });
@@ -63,7 +66,9 @@ export const UrlProvider = ({ children }) => {
     const uniqueTags = [...new Set(flatten)];
 
     const processedTags = uniqueTags.map((name) => {
-      return { name, assigned: 0, origin: 0 };
+      return _assignedTagNames.includes(name)
+        ? { name, assigned: 1, origin: 1 }
+        : { name, assigned: 0, origin: 0 };
     });
     return processedTags;
   };
@@ -71,21 +76,25 @@ export const UrlProvider = ({ children }) => {
   const handleGetTotalTags = useCallback(() => {
     const fn = () => {
       const totalTags = getTotalTags();
-
-      console.log("totalTags from getTotalTags", totalTags);
+      console.log("totalTags from getTotalTags: ", totalTags);
       setHashtag({ ...hashtag, totalHashtags: totalTags });
     };
     console.log(hashtag.totalHashtags.length);
     hashtag.totalHashtags.length === 0 && fn();
   }, [url.totalUrls, hashtag.totalHashtags]);
 
+  // const setAssignedtagsName = () => {
+  //   const _assignedTagNames = hashtag.assignedHashtags.map((tag) => tag.name);
+  //   setHashtag({ ...hashtag, assignedTagNames: _assignedTagNames });
+  // };
+
   const handleCloseEditModal = () => {
     // close modal
     document.querySelector(".hashtagModal-container").style.display = "none";
 
     // reset assigned hashtag
-    const resetedAssignedTags = hashtag.assignedHashtags.map((tag) => {
-      return { ...tag, assigned: 1 };
+    const resetedAssignedTags = hashtag.totalHashtags.filter((tag) => {
+      return tag.origin === 1;
     });
 
     // reset total hashtag
@@ -119,8 +128,9 @@ export const UrlProvider = ({ children }) => {
     const processed = hashtag?.assignedHashtags.map((tag) => {
       return tag.name;
     });
+    //FIXME: 아직은 주석처리
 
-    await updateHashtag(processed);
+    // await updateHashtag(processed);
   }, [hashtag]);
 
   useEffect(() => {

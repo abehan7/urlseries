@@ -4,8 +4,8 @@ import { PopupDisable } from "../../Hooks/stopScroll";
 import { HashtagModalScrollUp } from "../../Hooks/ScrollUp";
 import ItemLeft from "./ItemLeft";
 import ItemRight from "./ItemRight";
-import styled from "styled-components";
-import { updateHashtag } from "../Api";
+import styled, { css } from "styled-components";
+// import { updateHashtag } from "../Api";
 import ModalWindowEl from "../styled/ModalWindowEl.styled";
 import { useUrl } from "../../contexts/UrlContext";
 import { debounce } from "lodash";
@@ -80,6 +80,16 @@ const HeaderContainer = styled.div`
   /* border-bottom: 1px solid rgba(0, 0, 0, 0.2); */
 `;
 
+const Tag = styled.div`
+  ${({ isClicked }) =>
+    isClicked &&
+    css`
+      background-color: bisque;
+      transition: 200ms;
+      border-radius: 5px;
+    `}
+`;
+
 const debounceFn = debounce((fn) => fn(), 300);
 
 const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
@@ -117,32 +127,18 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
 
   // FIXME: #2 ItemLeft토글 클릭
   const toggleClicked = useCallback(
-    (clickedTag) => {
-      console.log(clickedTag);
-      // assignedTags
-      addAssignedTag(clickedTag);
-      // setAssignedTags((tag) => [...tag, { ...clickedTag, assigned: 1 }]);
-      // totalTags
-      const filterd = totalTags.map((tag) => {
-        return tag.name === clickedTag.name ? { ...tag, assigned: 1 } : tag;
-      });
-      setTotalTags(filterd);
-    },
+    (clickedTag) => addAssignedTag(clickedTag),
     [totalTags, assignedTags]
   );
 
   // FIXME: #3 ItemLeft토글 해제
   const toggleUnClicked = useCallback(
     (clickedTag) => {
-      console.log("토글 해제");
       // assigned 태그
-
       const filterdAssignedTags = assignedTags.filter((tag) => {
         return tag.name !== clickedTag.name;
       });
-
       removeAssignedTag(filterdAssignedTags);
-      // setAssignedTags(filterdAssignedTags);
 
       // total 태그
       const processedTotalTags = totalTags.map((tag) => {
@@ -157,11 +153,10 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
 
   // FIXME: #4 ItemLeft토글기능
   const handleToggle = useCallback(
-    (e, val) => {
-      e.target.classList.toggle("clicked");
-      e.target.classList[2] === "clicked"
-        ? toggleClicked(val)
-        : toggleUnClicked(val);
+    (tag) => {
+      !assignedTagNames.includes(tag.name)
+        ? toggleClicked(tag)
+        : toggleUnClicked(tag);
     },
     [assignedTags, totalTags]
   );
@@ -176,11 +171,6 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
     PopupDisable();
   }, [handleCloseEditModal]);
 
-  // #FIXME: #7 수정하기 버튼
-  // const handleEditModify = useCallback(async () => {
-  //   handleEditModify();
-  // }, [assignedTags, totalTags]);
-
   const onClickEditBtn = useCallback(async () => {
     // 전체 스크롤 가능하게 하기
     PopupDisable();
@@ -192,23 +182,17 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
     handleEditModify();
   }, [handleEditModify]);
 
-  // FIXME:   className === clicked면 색깔 노랑
-  const isColored = useCallback((isClicked) => {
-    return isClicked
-      ? "oneHash total-oneHash clicked"
-      : "oneHash total-oneHash";
-  }, []);
-
   const oneItemLeft = ({ item, index }) => {
-    const isClicked = assignedTagNames.includes(item?.name);
+    const isClicked = assignedTagNames.includes(item.name);
     return (
-      <div
+      <Tag
         key={index}
-        className={isColored(isClicked)}
-        onClick={(e) => handleToggle(e, item)}
+        className="oneHash total-oneHash"
+        onClick={() => handleToggle(item)}
+        isClicked={isClicked}
       >
         {item.name}
-      </div>
+      </Tag>
     );
   };
 
@@ -222,7 +206,7 @@ const ModalWindow = ({ handleCloseEditModal, setTotalTags }) => {
     <ModalWindowHashEl>
       <HeaderContainer className="header-Container">
         <div className="close-area" onClick={handleCloseBtn}>
-          <IoArrowBack color="gray" />
+          <IoArrowBack />
         </div>
         <Title className="title">
           <h2>해쉬태그</h2>

@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
+import { memo } from "react";
 import styled from "styled-components";
 import BoxWrap from "../styled/BoxWrap.styled";
-import InputContainer from "../styled/InputContainer.styled";
 import ItemContainer from "../styled/ItemContainer.styled";
 import "./ModalHashtag.css";
 
@@ -11,16 +11,9 @@ const ItemLeftEl = styled.div`
   flex: 1;
 `;
 
-const Input = styled.input``;
+// const Input = styled.input``;
 
-const ItemLeft = ({
-  keyword,
-  setKeyword,
-  filterdList,
-  itemList,
-  Item,
-  placeholder,
-}) => {
+const ItemLeft = ({ keyword, setKeyword, filterdList, itemList, Item }) => {
   // FIXME: 검색창에서 사용할 onChange
   const onChange = useCallback((e) => setKeyword(e.target.value), [itemList]);
 
@@ -72,4 +65,4 @@ const ItemLeft = ({
   );
 };
 
-export default ItemLeft;
+export default memo(ItemLeft);

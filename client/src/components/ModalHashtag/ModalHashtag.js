@@ -49,6 +49,7 @@ const ModalHashtag = ({
   const { handleCloseEditModal } = useUrl();
 
   const outSideRef = useRef(null);
+  // outSideRef.style.cursor = "pointer";
 
   const onClickOutSide = (e) => {
     if (e.target === outSideRef.current) {
