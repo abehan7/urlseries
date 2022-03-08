@@ -14,3 +14,5 @@ const SideBar = () => {
 };
 
 export default SideBar;
+
+//  Q space => git branch -a 탈출하는 방법
