@@ -54,8 +54,9 @@ const UrlEl = styled.div`
 
   transition: all 0.3s ease-in-out;
   :hover {
-    transform: translateY(-1px) scale(1.02);
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    background-color: #a597fe1a;
+    /* transform: translateY(-1px) scale(1.02); */
+    /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
     ${Line} {
       background-color: #c282ff;
     }

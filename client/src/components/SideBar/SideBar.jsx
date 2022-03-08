@@ -53,6 +53,23 @@ const Icon = styled.div`
   padding-right: 0.5rem;
 `;
 
+const TagWrapper = styled.div`
+  padding-left: 2rem;
+  position: relative;
+  > div {
+    ::before {
+      background-color: #ddd;
+      left: 0;
+      content: "";
+      height: 100%;
+      width: 2px;
+      position: absolute;
+    }
+  }
+
+  /* border-left: 2px solid #e9ecef; */
+`;
+
 const SideBar = () => {
   return (
     <SideBarEl>
@@ -65,12 +82,16 @@ const SideBar = () => {
       <Item name="수정하기">
         <CgEditBlackPoint />
       </Item>
-      <Item name="해시태그설정">
-        <CgHashtag />
-      </Item>
-      <Item name="폴더설정">
-        <HiOutlineFolderAdd />
-      </Item>
+      <TagWrapper>
+        <Item name="해시태그설정">
+          <CgHashtag />
+        </Item>
+      </TagWrapper>
+      <TagWrapper>
+        <Item name="폴더설정">
+          <HiOutlineFolderAdd />
+        </Item>
+      </TagWrapper>
     </SideBarEl>
   );
 };
