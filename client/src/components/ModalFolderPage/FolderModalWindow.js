@@ -38,6 +38,7 @@ import {
   updateFolderName,
   updateFolderContents,
 } from "../Api";
+import { useUrl } from "../../contexts/UrlContext";
 // import { AddFolder } from "../Api";
 
 const FolderModalOverlayEl = styled(ModalOverlay)`
@@ -112,7 +113,7 @@ const FolderModalWindow = () => {
     items: [],
   });
 
-  const { realTotalUrls } = useContext(MainStates);
+  const totalUrls = useUrl().url.totalUrls;
 
   const items = useSelector((state) => state.folderItems.items);
   const folders = useSelector((state) => state.folders.folders);
@@ -158,7 +159,7 @@ const FolderModalWindow = () => {
   };
 
   const getUrlFullAttr = (urlIdList) => {
-    const processed = realTotalUrls.filter((url) => {
+    const processed = totalUrls.filter((url) => {
       return urlIdList.includes(url._id);
     });
     console.log(processed);

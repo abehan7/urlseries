@@ -5,7 +5,7 @@ import React, {
   createContext,
   useCallback,
 } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getAssignedtags,
   getGuestUrls,
@@ -14,6 +14,7 @@ import {
   TotalAfter,
 } from "../components/Api";
 import { getToken } from "../redux/ReducersT/tokenReducer";
+import { SET_FOLDERS } from "../store/reducers/Folders";
 // import { getComments } from "../Api";
 
 const UrlContext = createContext();
@@ -50,6 +51,7 @@ export const UrlProvider = ({ children }) => {
 
   const [loading, setLoading] = useState(true);
   const token = useSelector(getToken);
+  const dispatch = useDispatch();
 
   const addAssignedTag = (tag) => {
     setHashtag({
@@ -170,6 +172,8 @@ export const UrlProvider = ({ children }) => {
         likedUrls: data.leftURL,
       });
       setLoading(false);
+
+      dispatch(SET_FOLDERS());
       // console.log(data);
     };
 

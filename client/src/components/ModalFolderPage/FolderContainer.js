@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { TiBackspaceOutline } from "react-icons/ti";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useUrl } from "../../contexts/UrlContext";
 import { KeywordNormalize, SearchNotByDB } from "../../Hooks/SearchHook";
 import { MainStates } from "../../routers/MainPage";
 import { SET_IS_FOLDER_CONTENTS } from "../../store/reducers/FolderConditions";
@@ -81,7 +82,8 @@ const doDebounce = debounce((fn) => {
 }, 200);
 
 const FolderContainer = ({ handleGetId }) => {
-  const { realTotalUrls } = useContext(MainStates);
+  // const { totalUrls } = useContext(MainStates);
+  const totalUrls = useUrl().url.totalUrls;
   const [isFolderContents, setIsFolderContents] = useState(true);
   const [scrollTarget, setScrollTarget] = useState(null);
 
@@ -189,7 +191,7 @@ const FolderContainer = ({ handleGetId }) => {
     const processed = KeywordNormalize(keyword);
     // 이쪽만 살짝 바꿔주면 될 듯한데...
     const FindTotalUrlsFn = () => {
-      const filterd = SearchNotByDB(processed, realTotalUrls);
+      const filterd = SearchNotByDB(processed, totalUrls);
       setFilterdItems(filterd);
       setIsSearching(false);
       console.log("isSearcing from NotByDB", isSearching);
@@ -263,7 +265,7 @@ const FolderContainer = ({ handleGetId }) => {
             />
           ) : (
             <UrlItems
-              realTotalUrls={realTotalUrls}
+              totalUrls={totalUrls}
               handleClickUrl={handleClickUrl}
               handleUnClickUrl={handleUnClickUrl}
               FolderContents={selectedFolder.folder_contents}
@@ -357,7 +359,7 @@ const FolderItems = ({ FolderContents }) => {
 };
 
 const UrlItems = ({
-  realTotalUrls,
+  totalUrls,
   handleClickUrl,
   handleUnClickUrl,
   FolderContents,
@@ -377,7 +379,7 @@ const UrlItems = ({
   const onIntersect = async ([entry], observer) => {
     if (entry.isIntersecting && !isLoaded) {
       observer.unobserve(entry.target);
-      if (realTotalUrls.length === contentsNum) {
+      if (totalUrls.length === contentsNum) {
         return;
       }
       await getNextItems();
@@ -405,7 +407,7 @@ const UrlItems = ({
     <>
       {keyword.length === 0 &&
         !isOnlyFolderContents &&
-        realTotalUrls.slice(0, contentsNum).map((url, index) => {
+        totalUrls.slice(0, contentsNum).map((url, index) => {
           if (index === contentsNum - 1) {
             return (
               <TargetEl ref={setTarget} key="thisIsTarget">
