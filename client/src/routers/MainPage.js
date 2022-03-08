@@ -25,24 +25,13 @@ import Loader from "../components/SearchBar/Loader";
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 // API
-import {
-  deleteUrls,
-  getGuestUrls,
-  GetTotalUrls,
-  TotalAfter,
-  updateFolderContents,
-} from "../components/Api";
+import { deleteUrls, updateFolderContents } from "../components/Api";
 import styled from "styled-components";
 import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
 // import ModalHashtag from "../components/ModalHashtag/ModalHashtag";
 // import FolderModalWindow from "../components/ModalFolderPage/FolderModalWindow";
-import {
-  getFolders,
-  SET_FOLDERS,
-  SET_FOLDER_CONTENTS,
-} from "../store/reducers/Folders";
+import { getFolders, SET_FOLDER_CONTENTS } from "../store/reducers/Folders";
 import { getIsClicked } from "../store/reducers/Tags";
-import { getToken } from "../redux/ReducersT/tokenReducer";
 import { getTagFilterdItems } from "../store/reducers/urls";
 import { useUrl } from "../contexts/UrlContext";
 // loadable components
@@ -102,12 +91,9 @@ const TitleWrapper = styled.div`
 
 const MainPage = () => {
   const { hashtag } = useUrl();
-  // const [BoxTags, setBoxTags] = useState([]); // 오른쪽에 있는 색깔있는 해쉬태그 버튼이 클릭되면 리스트로 들어가는 공간
-
-  // const [BoxTags_First, setBoxTags_First] = useState(true);
   const [clickedSearchInput, setClickedSearchInput] = useState(false);
   const [editMode, setEditMode] = useState(true);
-  // const [shareMode, setShareMode] = useState(true);
+
   const [getUrls, setGetUrls] = useState([]);
   const [mostClickedUrls, setMostClickedUrls] = useState([]);
   const [likedUrls, setLikedUrls] = useState([]);
@@ -121,6 +107,9 @@ const MainPage = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const { url } = useUrl();
+  const totalUrls = useUrl().url.totalUrls;
+  const displayUrls = useUrl().url.displayUrls;
+  const handleGetInfiniteScrollItems = useUrl().handleGetInfiniteScrollItems;
 
   // 무한스크롤
   const [itemNum, setItemNum] = useState(40);
@@ -192,7 +181,8 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    const data = realTotalUrls.slice(0, itemNum);
+    const data = totalUrls.slice(0, itemNum);
+    handleGetInfiniteScrollItems(data);
     setGetUrls(data);
   }, [itemNum]);
 
@@ -200,7 +190,7 @@ const MainPage = () => {
     if (entry.isIntersecting && !isLoaded) {
       observer.unobserve(entry.target);
 
-      if (realTotalUrls.length === getUrls.length) {
+      if (totalUrls.length === displayUrls.length) {
         return;
       }
       await getNextItems();
@@ -285,7 +275,6 @@ const MainPage = () => {
             />
 
             <div className="share-write">
-              {/* Link to="/search" : 클릭히면 /search 이 쪽 페이지로 넘어가게 해주는 기능  */}
               <LeftIcons
                 editMode={editMode}
                 deleteMode={deleteMode}
@@ -302,81 +291,26 @@ const MainPage = () => {
                 deleteMode={deleteMode}
               />
             </div>
-            {!tagIsClicked && (
-              <>
-                <div
-                  className="Rectangle left-top RectColor"
-                  style={
-                    !tagIsClicked && !editMode ? MkColorTopRect : emptyStyle
-                  }
-                >
-                  <h3>즐겨찾기</h3>
-                  <div
-                    className="text-container"
-                    style={
-                      !editMode ? { maxHeight: "205px", overflow: "auto" } : {}
-                    }
-                  >
-                    <FiveUrlsLeft
-                      values={likedUrls}
-                      editMode={editMode}
-                      setMyFav={setMyFav}
-                      setTopMoreWhat={setTopMoreWhat}
-                    />
-                  </div>
-                </div>
-                <div
-                  className="Rectangle right-top RectColor"
-                  style={
-                    !tagIsClicked && !editMode ? MkColorTopRect : emptyStyle
-                  }
-                >
-                  <h3>최근기록</h3>
-                  <div
-                    className="text-container"
-                    style={
-                      !editMode ? { maxHeight: "205px", overflow: "auto" } : {}
-                    }
-                  >
-                    <FiveUrlsRight
-                      values={mostClickedUrls}
-                      editMode={editMode}
-                      setMyFav={setMyFav}
-                      setTopMoreWhat={setTopMoreWhat}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
+
+            {!tagIsClicked && <TopLeftBox />}
+            {!tagIsClicked && <TopRightBox />}
 
             <div className="minisize-tags aside-tags">
               <AsideTag />
             </div>
-            <div
-              className="Big_Rect RectColor"
-              style={!editMode ? MkColorTopRect : emptyStyle}
-            >
+
+            <div className="Big_Rect RectColor">
               {/* BoxTags_First : 색깔있는 오른쪽 해쉬태그 박스 클릭 했는지 안했는지 알려주는 변수 */}
               {/* 값은 true false 이렇게 두가지인데  */}
               <CardHeader tagIsClicked={tagIsClicked} editMode={editMode} />
               <div className="text-three-container">
-                {!tagIsClicked && (
-                  // 전체 url을 map함수로 뿌려주는 component(이 부분을 따로 분리해서 component에 넣음. 안그러면 코드가 너무 길어져서. 모듈같은 느낌)
-                  <>
-                    <TotalUrlMap />
-                    {url?.totalUrls?.length > 40 && (
-                      <div ref={setTarget} className="Target-Element">
-                        {isLoaded && <Loader />}
-                      </div>
-                    )}
-                  </>
+                {!tagIsClicked && <TotalUrlMap />}
+                {!tagIsClicked && url?.totalUrls?.length > 40 && (
+                  <div ref={setTarget} className="Target-Element">
+                    {isLoaded && <Loader />}
+                  </div>
                 )}
-                {tagIsClicked && (
-                  <UrlsByHashTag
-                    realTotalUrls={realTotalUrls}
-                    setMyFav={setMyFav}
-                  />
-                )}
+                {tagIsClicked && <UrlsByHashTag />}
               </div>
             </div>
           </div>
@@ -448,6 +382,28 @@ const Title = ({ children }) => {
     <TitleWrapper>
       <TitleEl>{children}</TitleEl>
     </TitleWrapper>
+  );
+};
+
+const TopLeftBox = () => {
+  return (
+    <div className="Rectangle left-top RectColor">
+      <h3>즐겨찾기</h3>
+      <div className="text-container">
+        <FiveUrlsLeft />
+      </div>
+    </div>
+  );
+};
+
+const TopRightBox = () => {
+  return (
+    <div className="Rectangle right-top RectColor">
+      <h3>최근기록</h3>
+      <div className="text-container">
+        <FiveUrlsRight />
+      </div>
+    </div>
   );
 };
 

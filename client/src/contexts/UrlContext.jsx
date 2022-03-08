@@ -139,6 +139,10 @@ export const UrlProvider = ({ children }) => {
     // await updateHashtag(processed);
   }, [hashtag]);
 
+  const handleGetInfiniteScrollItems = (urls) => {
+    setUrl({ ...url, displayUrls: urls });
+  };
+
   // FIXME: 전체 url
   useEffect(() => {
     const fn = async () => {
@@ -213,6 +217,7 @@ export const UrlProvider = ({ children }) => {
     handleGetTotalTags,
     handleCloseEditModal,
     handleEditModify,
+    handleGetInfiniteScrollItems,
   };
 
   return <UrlContext.Provider value={value}>{children}</UrlContext.Provider>;

@@ -17,6 +17,7 @@ const FiveUrlsLeftEl = styled(UrlRectWrapper)`
   }
   border-radius: 10px;
 `;
+
 const FiveUrlsLeft = () => {
   const likedUrls = useUrl().url.likedUrls;
 
