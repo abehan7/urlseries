@@ -1,6 +1,7 @@
 header {
   width: 100%;
   min-height: 100px;
+  height: 100px;
   background: #f7f7f7;
   display: flex;
   justify-content: space-between;

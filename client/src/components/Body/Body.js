@@ -1,16 +1,12 @@
-import React, { useContext } from "react";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import React from "react";
+import { Route, Routes } from "react-router-dom";
 // import LoginT from "./auth/LoginT";s
 import RegisterT from "./auth/RegisterT";
 import ActivationEmail from "./auth/ActivationEmail";
-import ReactGA from "react-ga";
 import { useSelector } from "react-redux";
 import MainPage from "../../routers/MainPage";
 
 import loadable from "@loadable/component";
-// import RouteChangeTracker from "../GoogleAnalitics/RouteChangeTracker";
-import { UNSAFE_NavigationContext } from "react-router-dom";
-// const MainPage = loadable(() => import("../../routers/MainPage"));
 const Aboutpage = loadable(() => import("../AboutPage/AboutPage"));
 const UserInfomation = loadable(() =>
   import("../UserInfomation/Userinfomation")

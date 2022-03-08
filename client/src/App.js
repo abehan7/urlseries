@@ -58,7 +58,7 @@ function App() {
       <div className="App">
         <HeaderT />
         <Body />
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </Router>
   );

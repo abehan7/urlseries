@@ -9,6 +9,10 @@ const DropdownBtn = styled.div`
   background-color: transparent;
 `;
 
+const HeaderEl = styled.header`
+  
+`;
+
 function HeaderT() {
   const auth = useSelector((state) => state.auth);
 
@@ -66,7 +70,7 @@ function HeaderT() {
   };
 
   return (
-    <header>
+    <HeaderEl>
       <div className="logo">
         <h1>
           <Link to="/">
@@ -97,7 +101,7 @@ function HeaderT() {
           </li>
         )}
       </ul>
-    </header>
+    </HeaderEl>
   );
 }
 
