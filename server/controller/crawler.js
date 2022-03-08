@@ -7,6 +7,8 @@ const {
 } = require("../hooks/crawler");
 const db = require("../models");
 
+const mongoose = require("mongoose");
+
 const getDictionaryUrls = async (req, res) => {
   const { num } = req.params;
   const { url, resource } = req.body;
@@ -72,7 +74,30 @@ const fetchContents = async (req, res) => {
   res.json(resultContents);
 };
 
+const fetchUrls = async (req, res) => {
+  const _doc = await db.DictionaryUrls.find({
+    _id: "6221faf12dff2933bfdbc0dc",
+  });
+  const doc = _doc[0].url_contents;
+
+  const fn = async (url, index) => {
+    const urlDoc = await new db.Urls({
+      url_title: url.url_title,
+      url: url.url,
+      url_memo: url.url_memo,
+      url_hashTags: url.url_hashTags,
+      user_id: "6221ae82657b4859df4b2db2",
+    });
+    console.log(url.url_title);
+    await urlDoc.save();
+  };
+
+  await doc.forEach(async (url, index) => await fn(url, index));
+  res.send("done");
+};
+
 module.exports = {
   getDictionaryUrls,
   fetchContents,
+  fetchUrls,
 };

@@ -527,7 +527,6 @@ db.folders.updateMany(
   }
 );
 
-<<<<<<< HEAD
 db.folders.updateMany(
   { user_id: "hanjk123@gmail.com" },
   {
@@ -552,28 +551,32 @@ db.folders.updateMany(
     },
   }
 );
-=======
-db.urls.updateOne({ _id: ObjectId("61ae230e5e92a9f7c55a9c63") }, {});
 
-db.urls.updateMany(
-  { user_id: "hanjk123@gmail.com" },
-  { $set: { user_id: ObjectId("61dab50ad3063e55d1d781c3") } }
-);
+// 게스트아이디에 user_id넣긴
+let _id = ObjectId("6221faf12dff2933bfdbc0dc");
+const query = { _id };
+db.dictionary_urls.find(query).forEach((doc) => {
+  console.log(doc.url_contents);
 
-db.urls.find({ user_id: emailAndObjectId[3][1] });
+  const newContents = doc.url_contents.map((content) => {
+    return { ...content, user_id: ObjectId("6221ae82657b4859df4b2db2") };
+  });
+  const newDoc = { ...doc, url_contents: newContents };
 
-db.users.find({}).forEach((user) => {});
-
-let userList = [];
-db.urls.find({}).forEach((url) => {
-  if (typeof url.user_id === "object") {
-    if (!userList.includes(url.user_id.toString())) {
-      userList.push(url.user_id.toString());
-    }
-  } else {
-    if (!userList.includes(url.user_id)) {
-      userList.push(url.user_id);
-    }
-  }
+  const update = { $set: newDoc };
+  db.dictionary_urls.updateOne(query, update);
 });
->>>>>>> lastYOON
+
+let data = [];
+db.dictionary_urls
+  .find({ _id: ObjectId("6221faf12dff2933bfdbc0dc") })
+  .forEach((doc) => {
+    data = doc.url_contents;
+    console.log(data.lenght);
+    res.json(data.lenght);
+    // data.forEach((content) => {
+
+    // let _id = ObjectId();
+    // db.urls.insert({ ...content, url_id: _id });
+    // });
+  });

@@ -157,6 +157,7 @@ const MainPage = () => {
     };
     const getGuestData = async () => {
       const { data } = await getGuestUrls();
+      console.log(data);
       setGetUrls(data.totalUrl);
       setMostClickedUrls(data.leftUrl);
       setLikedUrls(data.rightUrl);

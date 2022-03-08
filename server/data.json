@@ -1,0 +1,2591 @@
+{
+  "_id": { "$oid": "6221faf12dff2933bfdbc0dc" },
+  "dictionary_url_dummy": [
+    "https://terms.naver.com/entry.naver?docId=942660&cid=43087&categoryId=43087",
+    "https://terms.naver.com/entry.naver?docId=2845156&cid=56778&categoryId=56778",
+    "https://terms.naver.com/entry.naver?docId=986122&cid=42920&categoryId=42920",
+    "https://terms.naver.com/entry.naver?docId=1005666&cid=43026&categoryId=43026",
+    "https://terms.naver.com/entry.naver?docId=3348535&cid=58229&categoryId=58229",
+    "https://terms.naver.com/entry.naver?docId=2829304&cid=55653&categoryId=55653",
+    "https://terms.naver.com/entry.naver?docId=3334521&cid=58145&categoryId=58145",
+    "https://terms.naver.com/entry.naver?docId=942634&cid=43087&categoryId=43087",
+    "https://terms.naver.com/entry.naver?docId=942635&cid=43087&categoryId=43087",
+    "https://terms.naver.com/entry.naver?docId=1639036&cid=43065&categoryId=43065",
+    "https://terms.naver.com/entry.naver?docId=2845155&cid=56778&categoryId=56778",
+    "https://terms.naver.com/entry.naver?docId=3348534&cid=58229&categoryId=58229",
+    "https://terms.naver.com/entry.naver?docId=1005720&cid=43026&categoryId=43026",
+    "https://terms.naver.com/entry.naver?docId=1826277&cid=43027&categoryId=43027",
+    "https://terms.naver.com/entry.naver?docId=919500&cid=42958&categoryId=42958",
+    "https://terms.naver.com/entry.naver?docId=1384505&cid=42929&categoryId=42930",
+    "https://terms.naver.com/entry.naver?docId=3410284&cid=58405&categoryId=58405",
+    "https://terms.naver.com/entry.naver?docId=800342&cid=43082&categoryId=43082",
+    "https://terms.naver.com/entry.naver?docId=1006218&cid=43054&categoryId=43054",
+    "https://terms.naver.com/entry.naver?docId=986052&cid=42920&categoryId=42920",
+    "https://terms.naver.com/entry.naver?docId=3351912&cid=58180&categoryId=58306",
+    "https://terms.naver.com/entry.naver?docId=1836060&cid=43073&categoryId=43073",
+    "https://terms.naver.com/entry.naver?docId=2053995&cid=43116&categoryId=43116",
+    "https://terms.naver.com/entry.naver?docId=1627844&cid=42952&categoryId=42952",
+    "https://terms.naver.com/entry.naver?docId=2845153&cid=56778&categoryId=56778",
+    "https://terms.naver.com/entry.naver?docId=3334525&cid=58145&categoryId=58145",
+    "https://terms.naver.com/entry.naver?docId=2845150&cid=56778&categoryId=56778",
+    "https://terms.naver.com/entry.naver?docId=2842269&cid=56757&categoryId=56757",
+    "https://terms.naver.com/entry.naver?docId=800318&cid=43082&categoryId=43082",
+    "https://terms.naver.com/entry.naver?docId=3560133&cid=58669&categoryId=58672",
+    "https://terms.naver.com/entry.naver?docId=3508868&cid=58487&categoryId=58487",
+    "https://terms.naver.com/entry.naver?docId=1582698&cid=43070&categoryId=43070",
+    "https://terms.naver.com/entry.naver?docId=942649&cid=43087&categoryId=43087",
+    "https://terms.naver.com/entry.naver?docId=2829968&cid=57618&categoryId=58146",
+    "https://terms.naver.com/entry.naver?docId=920557&cid=42958&categoryId=42958",
+    "https://terms.naver.com/entry.naver?docId=3410318&cid=58405&categoryId=58405",
+    "https://terms.naver.com/entry.naver?docId=3410319&cid=58405&categoryId=58405",
+    "https://terms.naver.com/entry.naver?docId=4180062&cid=59299&categoryId=59569",
+    "https://terms.naver.com/entry.naver?docId=1846163&cid=43114&categoryId=43114",
+    "https://terms.naver.com/entry.naver?docId=3326620&cid=56790&categoryId=58124",
+    "https://terms.naver.com/entry.naver?docId=942674&cid=43087&categoryId=43087",
+    "https://terms.naver.com/entry.naver?docId=2842291&cid=56757&categoryId=56757",
+    "https://terms.naver.com/entry.naver?docId=1384614&cid=42929&categoryId=42930",
+    "https://terms.naver.com/entry.naver?docId=3584126&cid=59299&categoryId=59300",
+    "https://terms.naver.com/entry.naver?docId=2783089&cid=55573&categoryId=55573",
+    "https://terms.naver.com/entry.naver?docId=800168&cid=43082&categoryId=43082",
+    "https://terms.naver.com/entry.naver?docId=2852079&cid=56790&categoryId=56791",
+    "https://terms.naver.com/entry.naver?docId=3326643&cid=56790&categoryId=58124",
+    "https://terms.naver.com/entry.naver?docId=1624665&cid=42941&categoryId=42941",
+    "https://terms.naver.com/entry.naver?docId=2845151&cid=56778&categoryId=56778",
+    "https://terms.naver.com/entry.naver?docId=942538&cid=43087&categoryId=43087",
+    "https://terms.naver.com/entry.naver?docId=3560134&cid=58669&categoryId=58672",
+    "https://terms.naver.com/entry.naver?docId=3334522&cid=58145&categoryId=58145",
+    "https://terms.naver.com/entry.naver?docId=3326616&cid=56790&categoryId=58124",
+    "https://terms.naver.com/entry.naver?docId=2845154&cid=56778&categoryId=56778",
+    "https://terms.naver.com/entry.naver?docId=920677&cid=42958&categoryId=42958",
+    "https://terms.naver.com/entry.naver?docId=3560695&cid=58669&categoryId=58687",
+    "https://terms.naver.com/entry.naver?docId=3352938&cid=58180&categoryId=58321",
+    "https://terms.naver.com/entry.naver?docId=3566392&cid=56777&categoryId=56777",
+    "https://terms.naver.com/entry.naver?docId=942242&cid=43087&categoryId=43087",
+    "https://terms.naver.com/entry.naver?docId=3352987&cid=58180&categoryId=58322",
+    "https://terms.naver.com/entry.naver?docId=3326608&cid=56790&categoryId=58124",
+    "https://terms.naver.com/entry.naver?docId=942661&cid=43087&categoryId=43087",
+    "https://terms.naver.com/entry.naver?docId=1837278&cid=42924&categoryId=42924",
+    "https://terms.naver.com/entry.naver?docId=942563&cid=43087&categoryId=43087",
+    "https://terms.naver.com/entry.naver?docId=3326637&cid=56790&categoryId=58124",
+    "https://terms.naver.com/entry.naver?docId=3348537&cid=58229&categoryId=58229",
+    "https://terms.naver.com/entry.naver?docId=1921811&cid=42942&categoryId=42942",
+    "https://terms.naver.com/entry.naver?docId=919763&cid=42958&categoryId=42958",
+    "https://terms.naver.com/entry.naver?docId=1833034&cid=42976&categoryId=42976",
+    "https://terms.naver.com/entry.naver?docId=1004551&cid=43023&categoryId=43023",
+    "https://terms.naver.com/entry.naver?docId=3560686&cid=58669&categoryId=58687",
+    "https://terms.naver.com/entry.naver?docId=2070741&cid=43055&categoryId=43055",
+    "https://terms.naver.com/entry.naver?docId=919020&cid=42957&categoryId=42957",
+    "https://terms.naver.com/entry.naver?docId=3560512&cid=58669&categoryId=58688",
+    "https://terms.naver.com/entry.naver?docId=3326589&cid=56790&categoryId=58124",
+    "https://terms.naver.com/entry.naver?docId=3560655&cid=58669&categoryId=58687",
+    "https://terms.naver.com/entry.naver?docId=985937&cid=42920&categoryId=42920",
+    "https://terms.naver.com/entry.naver?docId=3352071&cid=58180&categoryId=58309",
+    "https://terms.naver.com/entry.naver?docId=942605&cid=43087&categoryId=43087",
+    "https://terms.naver.com/entry.naver?docId=3584082&cid=59299&categoryId=59300",
+    "https://terms.naver.com/entry.naver?docId=799833&cid=43082&categoryId=43082",
+    "https://terms.naver.com/entry.naver?docId=3584083&cid=59299&categoryId=59300",
+    "https://terms.naver.com/entry.naver?docId=919497&cid=42958&categoryId=42958",
+    "https://terms.naver.com/entry.naver?docId=3560604&cid=58669&categoryId=58687",
+    "https://terms.naver.com/entry.naver?docId=1624675&cid=42941&categoryId=42941",
+    "https://terms.naver.com/entry.naver?docId=3334523&cid=58145&categoryId=58145",
+    "https://terms.naver.com/entry.naver?docId=1631198&cid=42955&categoryId=42955",
+    "https://terms.naver.com/entry.naver?docId=3352608&cid=58180&categoryId=58314",
+    "https://terms.naver.com/entry.naver?docId=1005690&cid=43026&categoryId=43026",
+    "https://terms.naver.com/entry.naver?docId=1826201&cid=43027&categoryId=43027",
+    "https://terms.naver.com/entry.naver?docId=1837179&cid=42924&categoryId=42924",
+    "https://terms.naver.com/entry.naver?docId=3330763&cid=56790&categoryId=56798",
+    "https://terms.naver.com/entry.naver?docId=985958&cid=42920&categoryId=42920",
+    "https://terms.naver.com/entry.naver?docId=3533834&cid=58542&categoryId=58542",
+    "https://terms.naver.com/entry.naver?docId=1007555&cid=43010&categoryId=43010",
+    "https://terms.naver.com/entry.naver?docId=3584081&cid=59299&categoryId=59300",
+    "https://terms.naver.com/entry.naver?docId=1384441&cid=42929&categoryId=42930",
+    "https://terms.naver.com/entry.naver?docId=919802&cid=42958&categoryId=42958",
+    "https://terms.naver.com/entry.naver?docId=2426804&cid=51397&categoryId=51397",
+    "https://terms.naver.com/entry.naver?docId=3538063&cid=56777&categoryId=56777",
+    "https://terms.naver.com/entry.naver?docId=3560509&cid=58669&categoryId=58688",
+    "https://terms.naver.com/entry.naver?docId=1720372&cid=43113&categoryId=43113",
+    "https://terms.naver.com/entry.naver?docId=1846908&cid=42990&categoryId=42990",
+    "https://terms.naver.com/entry.naver?docId=1532608&cid=43109&categoryId=43109",
+    "https://terms.naver.com/entry.naver?docId=2324279&cid=51343&categoryId=51343",
+    "https://terms.naver.com/entry.naver?docId=1397830&cid=43107&categoryId=43107",
+    "https://terms.naver.com/entry.naver?docId=3560510&cid=58669&categoryId=58688",
+    "https://terms.naver.com/entry.naver?docId=3584103&cid=59299&categoryId=59300",
+    "https://terms.naver.com/entry.naver?docId=3334524&cid=58145&categoryId=58145",
+    "https://terms.naver.com/entry.naver?docId=3348531&cid=58229&categoryId=58229",
+    "https://terms.naver.com/entry.naver?docId=3560518&cid=58669&categoryId=58687",
+    "https://terms.naver.com/entry.naver?docId=3326578&cid=56790&categoryId=58124",
+    "https://terms.naver.com/entry.naver?docId=942384&cid=43087&categoryId=43087",
+    "https://terms.naver.com/entry.naver?docId=800165&cid=43082&categoryId=43082",
+    "https://terms.naver.com/entry.naver?docId=1582365&cid=43106&categoryId=43106",
+    "https://terms.naver.com/entry.naver?docId=3613770&cid=59303&categoryId=59423",
+    "https://terms.naver.com/entry.naver?docId=3348503&cid=58229&categoryId=58229",
+    "https://terms.naver.com/entry.naver?docId=1719165&cid=43110&categoryId=43110",
+    "https://terms.naver.com/entry.naver?docId=3410237&cid=58405&categoryId=58405",
+    "https://terms.naver.com/entry.naver?docId=1826205&cid=43027&categoryId=43027",
+    "https://terms.naver.com/entry.naver?docId=1833284&cid=43072&categoryId=43072",
+    "https://terms.naver.com/entry.naver?docId=3584215&cid=59299&categoryId=59301",
+    "https://terms.naver.com/entry.naver?docId=1699789&cid=42981&categoryId=42981",
+    "https://terms.naver.com/entry.naver?docId=3560047&cid=58669&categoryId=58670",
+    "https://terms.naver.com/entry.naver?docId=1007983&cid=42997&categoryId=42997",
+    "https://terms.naver.com/entry.naver?docId=1003719&cid=43039&categoryId=43039",
+    "https://terms.naver.com/entry.naver?docId=3560710&cid=58669&categoryId=58687",
+    "https://terms.naver.com/entry.naver?docId=3350075&cid=58249&categoryId=58249",
+    "https://terms.naver.com/entry.naver?docId=2426714&cid=51397&categoryId=51397",
+    "https://terms.naver.com/entry.naver?docId=1582770&cid=43070&categoryId=43070",
+    "https://terms.naver.com/entry.naver?docId=1532631&cid=43109&categoryId=43109",
+    "https://terms.naver.com/entry.naver?docId=1392735&cid=49805&categoryId=49840",
+    "https://terms.naver.com/entry.naver?docId=1624731&cid=42941&categoryId=42941",
+    "https://terms.naver.com/entry.naver?docId=4180098&cid=59299&categoryId=59569",
+    "https://terms.naver.com/entry.naver?docId=1004698&cid=43049&categoryId=43049",
+    "https://terms.naver.com/entry.naver?docId=3508869&cid=58487&categoryId=58487",
+    "https://terms.naver.com/entry.naver?docId=3352467&cid=58180&categoryId=58312",
+    "https://terms.naver.com/entry.naver?docId=3537805&cid=56777&categoryId=56777",
+    "https://terms.naver.com/entry.naver?docId=5695698&cid=60403&categoryId=60403",
+    "https://terms.naver.com/entry.naver?docId=919459&cid=42958&categoryId=42958",
+    "https://terms.naver.com/entry.naver?docId=3537866&cid=56777&categoryId=56777",
+    "https://terms.naver.com/entry.naver?docId=2808755&cid=55623&categoryId=55623",
+    "https://terms.naver.com/entry.naver?docId=3326641&cid=56790&categoryId=58124",
+    "https://terms.naver.com/entry.naver?docId=3613817&cid=59303&categoryId=59424",
+    "https://terms.naver.com/entry.naver?docId=2843690&cid=56773&categoryId=56773",
+    "https://terms.naver.com/entry.naver?docId=3610088&cid=59299&categoryId=59311",
+    "https://terms.naver.com/entry.naver?docId=955904&cid=42962&categoryId=44343",
+    "https://terms.naver.com/entry.naver?docId=1833245&cid=43072&categoryId=43072",
+    "https://terms.naver.com/entry.naver?docId=1833258&cid=43072&categoryId=43072"
+  ],
+  "date": { "$date": "2022-03-04T11:41:22.467Z" },
+  "resource": "네이버 지식백과 1~10p까지",
+  "start_url": "https://terms.naver.com/list.naver?cid=41703&categoryId=41703",
+  "__v": 0,
+  "url_contents": [
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=942660&cid=43087&categoryId=43087",
+      "url_title": "나토",
+      "url_hashTags": ["#나토", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "서유럽과 미국 사이에 체결된 북대서양 조약에 바탕을 둔 지역적 집단 안전 보장 기구로, 북대서양 조약 기구라고 부른다. NATO는 'North Atlantic Treaty Organization'의 약자이다. 1949년 4월 유럽의 여러 국가와 미국, 캐나다 간에 서유럽에 대한 군사적 · 경제적 원조를 내용으로 하는 조약이 체결되어 출범하였다. 최고 기관은",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39906" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2845156&cid=56778&categoryId=56778",
+      "url_title": "조선 왕 계보",
+      "url_hashTags": ["#조선 왕 계보", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "역대 왕 계보\n\n조선 왕 계보\n\n1392~1910, 519년\n\n요약\n 유교적 민본주의를 바탕으로 근세사회를 열었던 조선 왕조의 계보. 태조 이성계가 고려를 멸망시키며 건국한 조선은 1910년 순종을 마지막으로 27명의 왕이 승계하면서 519년간 존속되었다.\n1대 태조\n1392-1398\n이성계, 조선의 제 1대왕\n2대 정종\n1398-1400\n1대 태조의 둘째",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39907" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=986122&cid=42920&categoryId=42920",
+      "url_title": "조선의 왕",
+      "url_hashTags": ["#조선의 왕", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "고교생이 알아야 할 한국사 스페셜\n\n조선의 왕\n\n참고자료\n네이버캐스트 : 역대 조선 왕\n관련이미지 7\n   \n  \n  \n  \n  \n  \n이미지 이전\n\n이미지 갤러리\n\n출처: 테마리스트\n\n1/7\n이미지 다음\n\n위 이미지에 대한 권리는 출처사이트 게시자에게 있으며, 이를 무단 사용할 경우 법적 책임을 질 수 있습니다.\n\n출처\n제공처 정보\n고교생이 알아야 할 한",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39908" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1005666&cid=43026&categoryId=43026",
+      "url_title": "소련의 해체",
+      "url_hashTags": ["#소련의 해체", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "대통령으로의 권력 이동의 마지막 부분에서 고르바초프가 개혁파와 보수파의 협공 속에 보수로 회귀하는 경향을 보여 주었음을 살폈다. 이 과정에서 발트 3국의 독립 요구에 어떻게 대처해야 하느냐의 문제가 심각하게 제기되었다. 발트 3국의 독립을 허용하는 경우, 그 영향은 다른 구성공화국들에게 미쳐 그들 또한 독립을 요구하게 될 것이며, 그렇게 될 때 소련이라는 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39909" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3348535&cid=58229&categoryId=58229",
+      "url_title": "제2차 세계 대전",
+      "url_hashTags": ["#제2차 세계 대전", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "제1차 세계 대전에서 패배한 독일은 일자리가 줄고 물가가 치솟아 경제적으로 어려움을 겪었어요. 게다가 여러 정당들이 싸움을 벌여 정치도 혼란스러웠지요. 그때 한 사람이 나타나 독일을 자기 손아귀에 움켜쥐었어요. 바로 아돌프 히틀러예요.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3990a" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2829304&cid=55653&categoryId=55653",
+      "url_title": "학생들 시위에 나서다",
+      "url_hashTags": [
+        "#학생들 시위에 나서다",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "1960년 2월 28일 오후 1시경 대구 경북고 학생위원회 부위원장 이대우가 운동장 조회단에서 결의문을 읽은 뒤 8백여 학생들이 교문을 나서서 “횃불을 밝혀라, 동방의 별들아”, “학원의 자유를 달라”, “학원을 정치도구화하지 말라”, “학원 내에 미치는 정치세력 배제하자” 등의 구호를 외치며 시위를 벌였다.\n\n경북고 학생들의 2·28시위는 새로운 학생운동",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3990b" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3334521&cid=58145&categoryId=58145",
+      "url_title": "장영실",
+      "url_hashTags": ["#장영실", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "1. 장영실의 아버지, 장성휘\n장영실의 아버지는 중국에서 온 귀화인. 아버지 집안은 노비 출신이 아니나, 어머니 신분을 따라서 장영실은 동래현의 관노로 태어났다. 더보기",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3990c" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=942634&cid=43087&categoryId=43087",
+      "url_title": "제2차 세계 대전",
+      "url_hashTags": ["#제2차 세계 대전", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "1939년 9월, 독일의 폴란드 침공으로 시작되어 1941년 12월, 태평양 전쟁 개시와 함께 세계 전쟁으로 발전한 추축국과 연합국 사이의 대전쟁을 말한다. 1945년 5월에 독일이, 같은 해 8월에 일본이 무조건 항복으로써 이 대전쟁은 종결되었다. 제1차 세계 대전과 마찬가지로 제국주의 전쟁으로 시작되었으나, 한편으로는 파시즘과 민주주의의 전쟁, 식민지 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3990d" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=942635&cid=43087&categoryId=43087",
+      "url_title": "제1차 세계 대전",
+      "url_hashTags": ["#제1차 세계 대전", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "1914년 사라예보 사건을 계기로 7월에 오스트리아의 대 세르비아 선전 포고로 시작되어, 동맹국들과 협상국들 간의 전쟁으로 발전한 제국주의 전쟁을 말한다. 개전 1주일 만에 이탈리아를 제외한 유럽의 모든 열강들이 참가하는 대전쟁으로 확대되었다. 많은 물자와 인원이 동원되고 신병기가 출현하였으며, 1,000만 명 이상의 인명이 살상되었다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3990e" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1639036&cid=43065&categoryId=43065",
+      "url_title": "십이지신",
+      "url_hashTags": ["#십이지신", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "땅을 지키는 12신장(神將)으로, 십이신장(十二神將) 또는 십이신왕(十二神王)이라고도 한다. 『약사경(藥師經)』을 외우는 불교인을 지키는 신장(神將)이다. 이들은 12방위(方位)에 맞추어서 호랑이·토끼·용·뱀·말·소·원숭이·닭·돼지·개·쥐·양 등의 얼굴 모습을 가지며 몸은 사람으로 나타난다. 이것은 도교(道敎)의 방위신앙에서 강한 영향을 입은 것으로 보인다",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3990f" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2845155&cid=56778&categoryId=56778",
+      "url_title": "고려 왕 계보",
+      "url_hashTags": ["#고려 왕 계보", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "역대 왕 계보\n\n고려 왕 계보\n\n918~1392\n\n1대 태조\n918-943\n왕건, 고려의 시조. 북진정책, 혼인관계를 통해 호족세력을 포섭함(왕권 안정).\n2대 혜종\n943-945\n1대 태조 왕건의 맏아들. 이복동생들과 왕위 다툼에 시달림.\n3대 정종\n945-949\n1대 태조 왕건의 아들이자 혜종의 이복동생. 서경(평양)으로 수도를 옮기려고 했으나 실패함.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39910" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3348534&cid=58229&categoryId=58229",
+      "url_title": "제1차 세계 대전",
+      "url_hashTags": ["#제1차 세계 대전", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "제1차 세계 대전은 약 천만 명이 죽고 약 2천만 명이 부상을 당한 큰 싸움이었어요. 이 전쟁은 유럽의 제국주의 국가들 사이에서 일어났지요. '세계 대전'은 여러 나라들이 한꺼번에 전쟁에 참가해서 붙은 이름이랍니다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39911" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1005720&cid=43026&categoryId=43026",
+      "url_title": "러시아연방의 역대 주요인사",
+      "url_hashTags": [
+        "#러시아연방의 역대 주요인사",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "러시아사\n\n러시아연방의 역대 주요인사\n\n러시아 연방\n러시아 연방\n대통령\n\n\n\n1991~1996\n\n\t\n\n옐친\n\n\n\n\n1996~1999\n\n\t\n\n옐친\n\n\n\n\n1999~2000\n\n\t\n\n푸틴(권한대행)\n\n\n\n\n2000~2004\n\n\t\n\n푸틴\n\n\n\n\n2004~현재\n\n\t\n\n푸틴\n\n\n\n부통령\n\n\n\n1991~1993\n\n\t\n\n루츠코이\n\n\n\n총리\n\n\n\n1991~1992\n\n\t\n\n",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39912" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1826277&cid=43027&categoryId=43027",
+      "url_title": "러시아가 소련으로",
+      "url_hashTags": ["#러시아가 소련으로", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "제정시대의 러시아 제국은 겉으로 보아 강력한 통일체를 이루고 있었다. 그러나 그 통일은 서로 다른 언어 · 관습 · 문화 등등, 여러 민족의 고유한 특성들을 폭력으로 눌러서 유지해온 통일이었다. 제국 내에 있는 각 민족의 자유로운 발전을 저해해온 이러한 '통일'은 마땅히 타파돼야 했다.\n\n소비에트 정부는 10월혁명을 성공시킨 뒤 2주 후에 〈러시아 내 모든",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39913" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=919500&cid=42958&categoryId=42958",
+      "url_title": "태극기",
+      "url_hashTags": ["#태극기", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "우리나라의 국기.\n\n우리나라에서 국기제정에 대한 논의가 처음 있었던 것은 1876년(고종 13) 1월이었다. 운양호사건을 계기로 한 · 일 사이에 강화도조약 체결이 논의되는 동안, 일본 측은 「운양호에는 엄연히 일본국기가 게양되어 있었는데, 왜 포격했느냐?」면서 트집을 잡았지만, 조선 측에서는 <국기>가 무엇을 뜻하는지 알 수 없었다.\n\n이 일이 계기가 되",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39914" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1384505&cid=42929&categoryId=42930",
+      "url_title": "발해는 어떻게 만들어졌나요?",
+      "url_hashTags": [
+        "#발해는 어떻게 만들어졌나요?",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "우리는 지금 이 순간에도 발해사를 우리 민족의 역사로 믿어 의심치 않고 있어. 그러나 중국은 발해를 ‘당나라의 지방 정권’이라고 하면서 그들의 역사 속에 편입시키려 하고 있지. 중국이 이처럼 무대포식으로 나오는 이유는 현재 자신들의 영역인 만주에 세워졌던 나라이고, 또 발해 사람들 대다수가 말갈족1)이었기 때문이야.\n\n그러나 발해는 분명히 우리 민족이 세운",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39915" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3410284&cid=58405&categoryId=58405",
+      "url_title": "태조",
+      "url_hashTags": ["#태조", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "조선의 초대 왕이 된 이성계의 첫 번째 미션은 고려와는 다른 브랜드의 국가를 만드는 거였습니다. 이름부터 바꿔야죠. 고려가 아니라 고조선을 계승한 국가란 의미에서 조선이라고 국호를 짓습니다. 또 자신이 멸망시킨 국가의 수도에 계속 있을 수 없겠죠? 개경에서 한양으로 수도를 옮깁니다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39916" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=800342&cid=43082&categoryId=43082",
+      "url_title": "소비에트 연방 최후의 날",
+      "url_hashTags": [
+        "#소비에트 연방 최후의 날",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "단 한 장의 간단한 성명서와 함께 소련이 역사의 뒤안길로 사라진다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39917" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1006218&cid=43054&categoryId=43054",
+      "url_title": "미국 역대 대통령",
+      "url_hashTags": ["#미국 역대 대통령", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "미국사\n\n미국 역대 대통령\n\n대\n\t\n대통령\n\t\n생존 연도\n\t\n\n재임 기간\n\n\t\n소속 정당\n\t\n부통령\n\n\n\n1\n\n\t\n\n조지 워싱턴(George Washington)\n\n\t\n\n1732~1799\n\n\t\n\n1789~1797\n\n\t\n\n없음.\n\n\t\n\n존 애덤스(John Adams)\n\n\n\n\n2\n\n\t\n\n존 애덤스(John Adams)\n\n\t\n\n1735~1826\n\n\t\n\n1797~",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39918" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=986052&cid=42920&categoryId=42920",
+      "url_title": "고려의 왕",
+      "url_hashTags": ["#고려의 왕", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "고교생이 알아야 할 한국사 스페셜\n\n고려의 왕\n\n참고자료\n네이버캐스트 : 역대 고려 왕\n관련이미지 10\n이미지목록 이전\n   \n  \n  \n  \n  \n  \n     \n이미지목록 다음\n이미지 이전\n\n이미지 갤러리\n\n출처: 테마리스트\n\n1/10\n이미지 다음\n\n위 이미지에 대한 권리는 출처사이트 게시자에게 있으며, 이를 무단 사용할 경우 법적 책임을 질 수 있습니",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39919" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3351912&cid=58180&categoryId=58306",
+      "url_title": "이토 히로부미",
+      "url_hashTags": ["#이토 히로부미", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "이토 히로부미는 1841년 9월 2일 조슈(長州) 번의 스오(周防) 국 쿠마게(熊毛) 군 쓰카리무라(束荷村)에서 농민 하야시 주조(林十蔵)의 장남으로 태어났다. 아버지 주조는 새로운 생활을 개척하고자 가족을 데리고 하기 지역의 번화가로 이사하였고, 히로부미는 1854년 조슈 번의 하급 병사인 이토 나오에몬(伊藤直右衛門)의 양자가 되었다. 이때부터 집안은 이",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3991a" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1836060&cid=43073&categoryId=43073",
+      "url_title": "미국의 반격과 일본의 패망",
+      "url_hashTags": [
+        "#미국의 반격과 일본의 패망",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "태평양전쟁 초기에 일본은 그들이 원하던 섬들을 점령하는 데 성공했으나, 연합군 해공군력을 완전히 분쇄한 것은 아니었다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3991b" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2053995&cid=43116&categoryId=43116",
+      "url_title": "봄을 알리는 매화",
+      "url_hashTags": ["#봄을 알리는 매화", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "장미과의 갈잎 중간 키 나무인 매화는 꽃을 강조한 이름이다. 열매를 강조하면 매실나무이다. 잎보다 꽃이 먼저 피는 매화는 다른 나무보다 꽃이 일찍 핀다. 그래서 매실나무를 꽃의 우두머리를 의미하는 ‘화괴(花魁)’라 한다.\n\n매화나무는 꽃이 피는 시기에 따라 일찍 피기에 ‘조매(早梅)’, 추운 날씨에 핀다고 ‘동매(冬梅)’, 눈 속에 핀다고 ‘설중매(雪中梅)",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3991c" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1627844&cid=42952&categoryId=42952",
+      "url_title": "반야심경",
+      "url_hashTags": ["#반야심경", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "불교경전 가운데 가장 많이 알려지고 또 가장 많이 유통되는 것이 바로 「반야심경」이다. 정확한 명칭은 「마하반야바라밀다심경」으로서 보통 「반야심경」이라 줄여서 부르고 있다.\n\n「반야심경」은 불과 260자밖에 되지 않는 짧은 경문이지만, 대·소승 경전의 내용을 간결하고도 풍부하게 응축하고 있어서, 예불이나 각종 의식에는 물론 식사 때에도 지송하고 있을 뿐 아",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3991d" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2845153&cid=56778&categoryId=56778",
+      "url_title": "신라 왕 계보",
+      "url_hashTags": ["#신라 왕 계보", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "역대 왕 계보\n\n신라 왕 계보\n\nB.C.57 ~ A.D.935, 삼국사기 기준\n\n1대 혁거세 거서간\nB.C. 57 - A.D. 4\n신라 최초의 왕, 박씨의 시조\n2대 남해차차웅\n4 - 24\n1대 혁거세의 맏아들(박씨)\n3대 유리이사금\n24 - 57\n2대 남해차차웅의 아들(박씨). 석탈해에게 왕위를 양보하려 했다는 이야기가 전해짐.\n4대 탈해이사금\n57 - ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3991e" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3334525&cid=58145&categoryId=58145",
+      "url_title": "장영실과 세종의 결별",
+      "url_hashTags": [
+        "#장영실과 세종의 결별",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "장영실에 관한 공식적인 기록은 20여 년 간에 걸친 공적 활동에만 국한되어 있다. 출신 배경도 의문이지만, 1442년에 대호군 자리에서 파면된 이후로 그의 말년 생애에 대해서는 알려진 바가 없다.\n\n1442년(세종 24)에 장영실은 임금이 탈 가마를 만드는 일에 참여했다. 장영실의 임무는 제작 감독이었다. 그러나 그 가마는 세종이 타기도 전에 부서져 버렸다",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3991f" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2845150&cid=56778&categoryId=56778",
+      "url_title": "고구려 왕 계보",
+      "url_hashTags": ["#고구려 왕 계보", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "역대 왕 계보\n\n고구려 왕 계보\n\nB.C.37 ~ A.D.668\n\n1대 동명성왕\nB.C. 37 - B.C. 19\n고구려의 시조\n2대 유리왕\nB.C. 19 - A.D. 18\n1대 동명성왕의 맏아들. 유리왕 22년, 수도를 졸본에서 국내성으로 옮김.\n3대 대무신왕\n18-44\n2대 유리왕의 셋째 아들. <광개토대왕릉비문>에 '나라의 기틀을 다진 왕'으로 기록되어",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39920" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2842269&cid=56757&categoryId=56757",
+      "url_title": "왜 일본의 군대는 자위대인가요?",
+      "url_hashTags": [
+        "#왜 일본의 군대는 자위대인가요?",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "제2차 세계 대전을 일으켰던 일본은 1945년부터 1952년까지 미국이 중심이 된 연합국 최고 사령부의 통치를 받아야 했어요. 전쟁을 일으킨 일본의 책임을 묻고 전쟁 후 처리를 위해 연합국 최고 사령부가 일본을 다스린 것이지요.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39921" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=800318&cid=43082&categoryId=43082",
+      "url_title": "체르노빌 원전 사고",
+      "url_hashTags": ["#체르노빌 원전 사고", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "우크라이나에서 체르노빌 핵 원자로가 폭발하여 대량의 방사능이 누출된다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39922" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3560133&cid=58669&categoryId=58672",
+      "url_title": "IMF 경제 위기",
+      "url_hashTags": ["#IMF 경제 위기", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "1970년대와 1980년대 한국과 동남아시아는 미국이나 유럽보다 빠르게 발전했다. 1990년대에는 많은 외국 자본이 아시아로 흘러들었다. 우리나라도 금융 자유화와 금융 시장 개방 등으로 인해 외국 자본이 빠르게 늘어났다. 금융 기관들은 이 자본을 빌려 기업이 발행한 어음을 사들였고, 자연스럽게 외국에 진 빚도 늘어났다. 그런데 어음을 발행한 기업이 부도가 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39923" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3508868&cid=58487&categoryId=58487",
+      "url_title": "천안함 피격",
+      "url_hashTags": ["#천안함 피격", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "1987년 건조되어 1999년 6월 15일 제1차 연평해전에도 참가했던 역전의 초계함 천안함이 2010년 3월 26일 21:22경 북한 잠수함의 어뢰공격으로 침몰되었습니다. 당시 북한의 불법 기습공격으로 이창기 준위를 비롯한 46명의 젊은 용사들이 희생되었으며, 구조과정에서 한주호 준위가 순직하였습니다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39924" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1582698&cid=43070&categoryId=43070",
+      "url_title": "세 대륙에 걸친 나라, 오스만 제국",
+      "url_hashTags": [
+        "#세 대륙에 걸친 나라, 오스만 제국",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "티무르 제국에 당한 패배를 거울삼아 오스만 제국은 재기에 나섰다. 강력한 해군과 정예 군대를 길러 유럽 연합군을 누르고 바다를 장악하더니, 비잔티움 제국을 공격하여 성공의 발판을 마련하였다. 술레이만 대제 이래 오스만 제국은 북아프리카와 유럽 일부, 서아시아를 거느린 대제국으로 발돋움하였다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39925" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=942649&cid=43087&categoryId=43087",
+      "url_title": "파시스트",
+      "url_hashTags": ["#파시스트", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "이탈리아의 국가주의 · 전체주의적인 정치 단체로, 1921년 11월에 전투 파쇼를 개조하여 결성하였다. 1922년 10월에는 나폴리에서 당 대회를 개최하여 정권 탈취를 결의, ‘로마 진군’을 강행하였고, 국왕은 무솔리니에게 조각(組閣)을 명령하였다. 내각을 조직한 뒤 당 최고 기관으로서 파시스트 대평의회를 설치하였다. 당의 ‘검은 셔츠 부대’를 정부 승인 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39926" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2829968&cid=57618&categoryId=58146",
+      "url_title": "참전국",
+      "url_hashTags": ["#참전국", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "유럽 대륙에 위치한 국가로는 프랑스 · 네덜란드 · 벨기에가 보병대대급 부대를 파견했다. 프랑스 대대는 줄곧 미 제2사단 제23연대와 함께 작전을 수행했는데, 특히 1951년 2월의 지평리 전투에서 우수한 전투력을 유감없이 보여 주어, 미 제23연대 장병들이 프랑스군을 높이 평가하는 계기가 됐다.\n\n당시 프랑스군의 대대장 몽클라르 중령은 특이한 경력의 소유",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39927" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=920557&cid=42958&categoryId=42958",
+      "url_title": "임수경 평양축전참가사건",
+      "url_hashTags": [
+        "#임수경 평양축전참가사건",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "1989년 6월 30일 전대협 대표 임수경(외국어대 불어과 4년)이 단신으로 평양에 도착, <제13차 세계청년학생축전>에 참가한 뒤 8월 15일 판문점을 통해 돌아온 사건.\n\n당초 평양축전 참가를 허용할 것처럼 보이던 정부가 문목사 방북사건 이후 돌연 태도를 바꿔 참가봉쇄방침으로 돌아서자 전대협은 극비리에 임수경 대표를 제3국을 통해 평양축전에 파견했다. ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39928" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3410318&cid=58405&categoryId=58405",
+      "url_title": "사도세자",
+      "url_hashTags": ["#사도세자", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "영조에게는 모두 6명의 아내가 있었습니다. 그런데 아들 복이 없어서 영조의 나이 42살에야 아들을 얻어요(첫째 아들인 효장세자는 병으로 일찍 죽었습니다). 늘그막에 얻은 너무나도 귀한 아들이라 영조는 이듬해 그 아이를 왕세자로 책봉합니다. 그가 바로 사도세자죠.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39929" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3410319&cid=58405&categoryId=58405",
+      "url_title": "정조",
+      "url_hashTags": ["#정조", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "그렇게 정조는 14년이라는 긴 세손생활을 견뎌냅니다. 영조가 죽은 후 엿새 후에 정조는 경희궁에서 즉위하면서 이렇게 말해요.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3992a" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=4180062&cid=59299&categoryId=59569",
+      "url_title": "을사늑약",
+      "url_hashTags": ["#을사늑약", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "시기 ▶ 1905년\n사건 요약 ▶ 일본이 대한 제국의 외교권을 빼앗기 위해 강제로 조약을 체결함\n사건 진행자 ▶ 을사오적이라는 친일파 관리\n백성의 반응 ▶ 차라리 죽음을 달라! 이완용 나쁜 놈!\n백성들의 말말말 ▶ 을사늑약은 정말 을씨년스럽군.\n역사적 중요도 ▶ ★★★☆☆\n시험 출제 빈도 ▶ 보통",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3992b" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1846163&cid=43114&categoryId=43114",
+      "url_title": "유대인",
+      "url_hashTags": ["#유대인", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "전 세계 유대인의 수는 1,600만 명으로 추산된다. 이스라엘에 600만 명이 살고, 다른 나라들에 1,000만 명이 산다. 유대인들의 세계 분산을 가리켜 디아스포라(diaspora)라고 한다. 오늘날 이 개념은 유대인들과 같이 어떤 특정 장소를 준거로 결집된 것은 아니라 하더라도 강한 정서적·민족적 공동체를 형성하는 현상을 총칭하는 개념으로 사용되고 있다",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3992c" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3326620&cid=56790&categoryId=58124",
+      "url_title": "엘리자베스 1세",
+      "url_hashTags": ["#엘리자베스 1세", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "메리 여왕의 잔인한 종교적 반동으로 국민이 받은 충격이 너무 컸기 때문에 다음 왕을 선정하는 일은 신중을 기해야 할 문제였다. 이런 분위기에서 프로테스탄트적 교육을 받은 온화한 성품의 엘리자베스 1세(1558~1603년)가 여왕으로 등극하였다.\n\n엘리자베스는 어머니 앤 볼린이 딸을 낳았다는 이유로 아버지 헨리 8세로부터 냉대를 받다 결국 형장의 이슬로 생을",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3992d" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=942674&cid=43087&categoryId=43087",
+      "url_title": "바르샤바 조약 기구",
+      "url_hashTags": ["#바르샤바 조약 기구", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "1955년 5월 14일, 소련과 동유럽 7개국이 체결한 조약으로, 정식 명칭은 우호 협력 상호 원조 조약이다. 서유럽 연합 결성(1954년)과 서독의 북대서양 조약 기구 가입(1955년)을 직접적인 계기로, 바르샤바 조약의 체결과 동시에 발족하였다. 조약국은 알바니아 · 불가리아 · 헝가리 · 동독 · 폴란드 · 루마니아 · 체코슬로바키아 · 소련이었다. ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3992e" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2842291&cid=56757&categoryId=56757",
+      "url_title": "미국과 이라크는 왜 싸웠어요?",
+      "url_hashTags": [
+        "#미국과 이라크는 왜 싸웠어요?",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "아프가니스탄에서 탈레반 정부를 몰아낸 뒤 미국은 2003년 3월에 이라크를 공격했어요. 미국은 이라크의 수도 바그다드에 폭격을 가했지요. 전쟁은 한 달도 안 되어 이라크의 패배로 끝났어요. 이로써 25년 동안 이라크를 다스렸던 독재자 사담 후세인 대통령도 최후를 맞았지요.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3992f" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1384614&cid=42929&categoryId=42930",
+      "url_title": "역사돋보기 | 영조의 어머니는 천민이었다",
+      "url_hashTags": [
+        "#역사돋보기 | 영조의 어머니는 천민이었다",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "52년 동안 왕위에 있었던 영조의 혈통은 조금 남달랐어. 그의 어머니는 궁궐 안에서 우물물을 길어 나르던 무수리 최씨였어. 그녀는 임금인 숙종의 눈에 들어 아들을 낳았는데 그가 바로 영조였어.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39930" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3584126&cid=59299&categoryId=59300",
+      "url_title": "인물 연표 및 관계 분석 - 성종",
+      "url_hashTags": [
+        "#인물 연표 및 관계 분석 - 성종",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "세조의 첫째 아들인 의경 세자와 어머니 인수 대비 한씨 사이에서 둘째 아들로 태어나다",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39931" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2783089&cid=55573&categoryId=55573",
+      "url_title": "수에즈 운하",
+      "url_hashTags": ["#수에즈 운하", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "해상실크로드의 연결 운하. 지중해와 홍해, 인도양을 연결하는 수에즈 운하는 유라시아의 해상실크로드를 연결하고 거리를 단축하는 데 있어 매우 중요한 의미를 갖는다. 항로의 단축을 위해 수에즈 지협(地峽)을 운하로 항해하려는 시도는 오래 전부터 있었다. 기원전 1380년경 나일강과 홍해를 잇는 운하가 개굴(開掘)된 후 운하는 천재와 전쟁 등으로 인해 매몰되었지",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39932" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=800168&cid=43082&categoryId=43082",
+      "url_title": "히로시마 원폭",
+      "url_hashTags": ["#히로시마 원폭", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "미군 폭격기가 일본의 도시 상공에 핵폭탄을 떨어뜨린다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39933" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2852079&cid=56790&categoryId=56791",
+      "url_title": "루이 14세",
+      "url_hashTags": ["#루이 14세", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "루이 14세는 루이 13세와 안 도트리슈 사이에서 뒤늦게 태어난 장남으로 1643년 루이 13세가 갑자기 사망하자 다섯 살 밖에 안 되는 나이에 왕위에 올랐다. 모후 안 도트리슈가 섭정직을 맡았으나 사실 모든 국정은 리슐리외의 후계자인 마자랭이 물려받아 리슐리외의 노선대로 이끌어 나가고 있었다. 루이 14세는 어려서부터 라틴어, 역사, 수학, 이탈리아어 등",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39934" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3326643&cid=56790&categoryId=58124",
+      "url_title": "엘리자베스 2세",
+      "url_hashTags": ["#엘리자베스 2세", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "엘리자베스는 1926년 4월 21일에 태어났다. 그녀가 10살이 되었을 때 부친이 조지 6세로 즉위하자 그녀는 차기 왕위를 이어받을 1순위에 놓였다. 그리고 이때부터 엘리자베스는 통치자 수업을 받기 시작했다. 엘리자베스의 교육에는 특히 어머니가 크게 신경을 썼다고 알려졌다. 어머니는 딸을 교육시킬 때 학문적 성장뿐만 아니라 미래의 군주로서 갖춰야 할 사회성",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39935" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1624665&cid=42941&categoryId=42941",
+      "url_title": "퇴계 이황",
+      "url_hashTags": ["#퇴계 이황", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "퇴계 이황(退溪 李滉, 1501~1570년)이 살아간 16세기는 조선 지성사에서 볼 때 사림(士林)의 성장기로 규정할 수 있다. 계속적인 사화를 겪는 과정에서 사림의 학문은 성숙하고, 학문하는 과정의 치열성은 사림의 세를 전국적으로 확장하게 만든 것이다. 사(士)란 성리학을 전공하여 그 이념을 자기화하고 실천하는 선비이며, 사림이란 선비의 복수 개념이다. ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39936" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2845151&cid=56778&categoryId=56778",
+      "url_title": "백제 왕 계보",
+      "url_hashTags": ["#백제 왕 계보", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "역대 왕 계보\n\n백제 왕 계보\n\nB.C.18 ~ A.D.660, 삼국사기 기준\n\n1대 온조왕\nB.C. 18-A.D. 28\n고구려의 셋째 왕자인 온조, 백제를 세우다\n2대 다루왕\n28-77\n1대 온조왕의 맏아들\n3대 기루왕\n77-128\n2대 다루왕의 맏아들\n4대 개루왕\n128-166\n3대 기루왕의 맏아들\n5대 초고왕\n166-214\n4대 개루왕의 맏아들\n6대 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39937" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=942538&cid=43087&categoryId=43087",
+      "url_title": "청",
+      "url_hashTags": ["#청", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "중국 대륙의 마지막 왕조로, 기간은 1616년부터 1912년까지이다. 1616년 누르하치가 여진족을 통합하여 후금국을 세우고, 1636년 태종 때 국호를 대청으로 개칭하였다. 명나라가 망하는 틈을 타서 중국에 침입, 순치~강희 연간에는 명나라의 유족, 삼번(三蕃)의 난, 대만의 정씨(鄭氏) 등을 평정하고 전국 지배에 성공하였다. 강희 · 옹정 · 건륭의 3",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39938" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3560134&cid=58669&categoryId=58672",
+      "url_title": "안시성 싸움",
+      "url_hashTags": ["#안시성 싸움", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "수나라에 이어 중국 대륙의 주인이 된 당은 호시탐탐 고구려 침략의 기회를 노리고 있었다. 그러다 고구려에서 연개소문이 제27대 임금인 영류왕을 죽이고 권력을 차지했다는 소식을 들은 뒤, 이를 트집 잡아 쳐들어왔다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39939" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3334522&cid=58145&categoryId=58145",
+      "url_title": "장영실의 아버지, 장성휘",
+      "url_hashTags": [
+        "#장영실의 아버지, 장성휘",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "장영실이 태종과 세종대에 살았던 인물인 것은 틀림없지만, 정확한 생몰 연대는 알려지지 않는다. 그의 과학적 업적은 「조선왕조실록」에도 여러 번 등장할 정도로 유명하지만, 정작 장영실의 출생과 말년 활동에 대한 기록이 거의 없어 일생이 베일에 가려져 있다.\n\n그 까닭은 그의 출생 배경에서 비롯된 것이다. 세종의 아낌없는 사랑을 받았다고 전해지는 장영실의 출생",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3993a" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3326616&cid=56790&categoryId=58124",
+      "url_title": "헨리 8세",
+      "url_hashTags": ["#헨리 8세", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "헨리 8세는 장미전쟁이 끝난 6년 후인 1485년 헨리 7세와 엘리자베스의 둘째 아들로 태어났다. 헨리는 이미 유년기부터 부왕의 자리가 확고부동하지 않음을 인지하며 자라왔다. 1497년 당시 콘월의 반란군이 그리니치에서 얼마 떨어지지 않은 블랙히스까지 쳐들어왔을 때, 당시 5살이었던 어린 헨리는 모친과 함께 반란이 진압될 때까지 런던탑에 피신해 있었다.\n\n",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3993b" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2845154&cid=56778&categoryId=56778",
+      "url_title": "발해 왕 계보",
+      "url_hashTags": ["#발해 왕 계보", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "역대 왕 계보\n\n발해 왕 계보\n\n698~926\n\n1대 고왕\n698-719\n발해를 건국한 대조영\n2대 무왕\n719-737\n1대 고왕 대조영의 아들. 중국 당나라와 대립함.\n3대 문왕\n737-793\n2대 무왕의 아들. 당과 친선관계를 맺고 당의 문물을 받아들임.\n4대 대원의\n793-793\n즉위한지 1년도 채 되지 않아 죽임을 당함.\n5대 성왕\n793-794\n3",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3993c" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=920677&cid=42958&categoryId=42958",
+      "url_title": "연쇄 살인범 유영철 사건",
+      "url_hashTags": [
+        "#연쇄 살인범 유영철 사건",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "서울 지역을 공포 속으로 몰아넣은 연쇄 살인범 유영철의 살인사건. 유영철은 2003년 9월부터 부유층 노인들을 잇달아 살해한데 이어 2004년 7월까지 보도방과 출장마사지 여성 11명 등 모두 21명의 생명을 무참히 살해하고 시체를 토막 내어 암매장하는 등 엽기적인 연쇄살인을 저질렀다. 그는 체포된 후 100명까지 살해하려 했다고 말해 세상을 경악케 했다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3993d" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3560695&cid=58669&categoryId=58687",
+      "url_title": "을사오적",
+      "url_hashTags": ["#을사오적", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "19세기 후반부터 일본은 조선의 지배권을 차지하기 위해 이웃 나라들과 전쟁을 벌였다. 1894년에는 청일 전쟁, 1904년에는 러일 전쟁을 일으켰다. 두 전쟁에서 모두 승리한 이후에는 본격적으로 침략의 야욕을 드러냈다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3993e" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3352938&cid=58180&categoryId=58321",
+      "url_title": "요시다 쇼인",
+      "url_hashTags": ["#요시다 쇼인", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "요시다 쇼인은 1830년 8월 4일 나가토 국(현재 야마구치 현)의 하기(萩) 근교인 마츠모토 마을에서 태어났다. 하기 번의 하급무사 스기(杉) 유리노스케 츠네미치(百合之助 常道)의 3남 4녀 중 두 번째인 차남으로 출생한 그의 이름은 토라지로이며 쇼인은 아호이다. 1834년 요시다가로 양자를 간 숙부 요시다 다이스케의 양자가 된 그는 이듬해 양부의 죽음으",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3993f" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3566392&cid=56777&categoryId=56777",
+      "url_title": "초선",
+      "url_hashTags": ["#초선", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "정식 역사서에는 초선이란 여성의 기록은 없다. 『삼국지』 「여포전(呂布傳)」에 “동탁이 여포로 하여금 중각(中閣)을 지키게 하였는데, 여포가 동탁의 시종과 사사로이 정분을 통하여 발각될까봐 두려워 마음이 불안했다.”는 기록이 나오는데, 이 시종을 두고 추측하기도 하지만 기록에는 그녀가 초선이라고 확실하게 명시되지 않았다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39940" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=942242&cid=43087&categoryId=43087",
+      "url_title": "키예프 공국",
+      "url_hashTags": ["#키예프 공국", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "류리크의 일족인 올레크가 노브고르트에서 남하하여 키예프 지방에 세운 나라를 말한다. 10세기 이후 슬라브 인에 동화되면서 그리스 정교로 개종하였다. 11세기에 전성기를 맞았으나, 키예프 제공(諸公)의 정치적 분쟁, 드네프르 상업로의 국제적 역할의 저하, 포로베츠 인과의 전투 등으로 12세기 후반부터 쇠퇴하기 시작하여 1240년 몽골에 정복되었다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39941" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3352987&cid=58180&categoryId=58322",
+      "url_title": "정한론",
+      "url_hashTags": ["#정한론", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "에도 후기에 국학이나 후기 미토학(일본에서 파생된 유학사상)의 입장에서 막부의 대조선 우호정책을 비판하는 의견이 등장했는데, 이들은 야마토 정권이 조선을 지배했다는 『고사기(古事記)』와 『일본서기(日本書紀)』의 기술을 토대로 조선 침략을 주장했다. 하지만 이들의 주장은 정치적 영향력을 발휘할 정도까지는 아니었다.\n\n정한론이 정치적 주장으로 제시된 것은 에도",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39942" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3326608&cid=56790&categoryId=58124",
+      "url_title": "헨리 5세",
+      "url_hashTags": ["#헨리 5세", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "헨리 5세는 1387년 헨리 4세의 맏아들로 태어났다. 1398년 부친은 군주의 자리에 오르기 직전 리처드 2세의 박해를 피해 망명했지만 어린 헨리는 잉글랜드에 남았다. 그는 삼촌인 윈체스터 주교 헨리 보퍼트에게 교육을 받았다. 그는 음악과 독서를 좋아하는 소년이었다. 특히 독서를 통해 영어로 읽고 쓰는 것을 쉽게 익혔다. 헨리 4세의 뒤를 이어 1413년",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39943" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=942661&cid=43087&categoryId=43087",
+      "url_title": "냉전",
+      "url_hashTags": ["#냉전", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "제2차 세계 대전 뒤 미국을 비롯한 서유럽 블록과 소련 블록 사이에 적대 상태가 존재하지만 군사적인 침략 행위는 없는 상태를 표현하는 용어이다. 대전 말기부터 미국 · 소련 양국은 동유럽의 정치 체제, 원자력 관리를 둘러싸고 대립하여 미국이 1948년 마셜 계획, 1949년 북대서양 조약 기구(NATO)를 결성하여 냉전은 절정에 달하였다. 이에 맞서 소련 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39944" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1837278&cid=42924&categoryId=42924",
+      "url_title": "모란 - 들어가는 말",
+      "url_hashTags": ["#모란 - 들어가는 말", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "모란은 꽃이 화려하고 풍염(豊艶)하여 위엄과 품위를 갖추고 있는 꽃이다. 그래서 부귀화(富貴花)라고 하기도 하고, 또 화중왕(花中王)이라고 하기도 한다.\n\n모란은 장미와 함께 인간이 긴 세월에 걸쳐 만들어 낸 최고의 예술품이다. 그것도 살아 있는 예술품인 것이다. 호화현란(豪華絢爛)한 아름다움과 기품에 있어서는 서로 비견되지만 풍려(豊麗)함으로는 모란이 단",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39945" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=942563&cid=43087&categoryId=43087",
+      "url_title": "나치스",
+      "url_hashTags": ["#나치스", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "독일 노동자 당이 1920년에 개칭한 이름으로, 지지 기반은 기존 정당 · 노조에 불만을 품은 중간층과 실업자였다. 하지만 사회주의 운동에 위협을 느낀 경영자 단체의 원조를 받아 풍부한 자금으로 선전 활동을 시작하면서 선거를 통한 정권의 쟁취를 꾀하였다. 1932년에 제1당이 되고, 1933년에 재계와 군부의 지지 아래 히틀러 정권을 실현하였다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39946" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3326637&cid=56790&categoryId=58124",
+      "url_title": "빅토리아 여왕",
+      "url_hashTags": ["#빅토리아 여왕", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "빅토리아 여왕은 조지 3세의 넷째 아들인 켄트 스트래선 공작 에드워드 어거스투스와 작센-코부르크-잘펠트 공작의 딸인 빅토리아 공주 사이에서 1819년 5월 24일에 태어났다. 빅토리아의 어머니 켄트 공작부인은 딸이 왕위에 즉위하면 섭정공이 되려는 야심을 품고 당시 비서였던 콘로이와 함께 빅토리아 여왕을 어린 시절부터 길들이기 시작했다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39947" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3348537&cid=58229&categoryId=58229",
+      "url_title": "베트남 전쟁",
+      "url_hashTags": ["#베트남 전쟁", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "베트남은 1883년부터 프랑스의 식민지였어요. 제2차 세계 대전 중에는 일본의 지배를 받기도 했지요. 그런데 일본이 전쟁에서 패배한 다음 해인 1946년, 프랑스는 다시 베트남을 자기네 식민지로 삼았어요. 베트남은 독립을 위해 프랑스와 전쟁을 벌였지요.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39948" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1921811&cid=42942&categoryId=42942",
+      "url_title": "고구려 왕 계보도",
+      "url_hashTags": ["#고구려 왕 계보도", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "인물로 보는 고구려사\n\n고구려 왕 계보도\n\n(삼국사기에 의거함)\n\n관련이미지 5\n   \n  \n  \n  \n   \n이미지 이전\n\n고구려의 왕\n\n이미지 갤러리\n\n출처: 고교생이 알아야 할 한국사 스페셜\n\n1/5\n이미지 다음\n\n위 이미지에 대한 권리는 출처사이트 게시자에게 있으며, 이를 무단 사용할 경우 법적 책임을 질 수 있습니다.\n\n연관목차\n인물로 보는 고구려",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39949" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=919763&cid=42958&categoryId=42958",
+      "url_title": "일제강점기",
+      "url_hashTags": ["#일제강점기", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "1910~1945 한일합방으로 대한제국(조선왕조)이 망한 이후부터 45년 8월 15열의 광복에 이르기까지 35년 동안 일본이 한국을 식민지로 통치한 시기.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3994a" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1833034&cid=42976&categoryId=42976",
+      "url_title": "아편전쟁",
+      "url_hashTags": ["#아편전쟁", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "영국이 중국에 아편을 밀수출하기 시작한 것은 18세기로 거슬러 올라간다. 옹정제 초기인 1729년에 이미 첫 번째 아편 금지령이 내려졌다. 그러나 19세기에 이르러 폭발적인 성장세를 보인다. 강희 · 옹정 · 건륭제의 통치기, 이른바 3대의 황금기는 끝났다. 부패한 관료들에게 늘어난 인구를 부양할만한 생산성의 향상이나 제도적 보완책을 기대하기는 어려웠다. ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3994b" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1004551&cid=43023&categoryId=43023",
+      "url_title": "1 · 2차 발칸 전쟁과 사라예보 사건",
+      "url_hashTags": [
+        "#1 · 2차 발칸 전쟁과 사라예보 사건",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "두 차례에 걸친 모로코 위기를 겪으면서 유럽 열강은 전쟁의 위기를 가까스로 넘겼지만, 이러한 사건들로 유럽의 여론은 전면적인 전쟁의 발발이 멀지 않았음을 인식하기 시작하였다. 그러나 그들은 그러한 전쟁이 적어도 유럽이 아닌 다른 지역에서 일어날 것이라고 생각하였다. 불행하게도 당시 유럽 인들의 생각이 오산이었음을 보여 주는 사건이 이미 유럽의 끝자락에 위치",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3994c" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3560686&cid=58669&categoryId=58687",
+      "url_title": "왕건(태조)",
+      "url_hashTags": ["#왕건(태조)", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "왕건은 877년에 송악(지금의 개성 지방)에서 태어났다. 송악의 호족이었던 왕건의 아버지 왕륭은 후고구려를 세운 궁예에게 충성을 맹세하고 지방 장관으로 임명되었다. 아버지를 따라 궁예의 신하가 된 왕건은 전쟁터에 나가 공을 세우고 궁예로부터 신임을 얻으며 자신의 세력을 키워 갔다. 이후 궁예가 난폭한 행동을 일삼자 918년에 홍유, 신숭겸, 복지겸, 배현경",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3994d" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2070741&cid=43055&categoryId=43055",
+      "url_title": "테러, 또 하나의 전쟁",
+      "url_hashTags": [
+        "#테러, 또 하나의 전쟁",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "2001년 9월 11일 화요일 아침, 사람들은 텔레비전 화면에 비치는 믿을 수 없는 광경에 경악했다. 두 대의 대형 여객기가 뉴욕 맨해튼에 있는 세계무역센터 빌딩에 충돌하여 거대한 쌍둥이 빌딩이 화염에 휩싸이고 있었다. 1시간 후 높이 100여 층의 빌딩은 마치 거짓말처럼, 거대한 흙먼지와 함께 천천히 위로부터 무너져 내렸다. 같은 시각 버지니아 알링턴 소",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3994e" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=919020&cid=42957&categoryId=42957",
+      "url_title": "홍길동",
+      "url_hashTags": ["#홍길동", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "1500년(연산군 6)을 전후하여 서울 근처에서 활약하던 농민무장대의 지도자. 양반지주층을 중심으로 토지소유가 확대되면서, 토지를 잃고 지배층의 착취에 시달리던 농민들은 자기가 살던 곳에서 도망쳤다. 이들은 산속으로 피해 무장대의 기본성원이 되어 양반지주나 관청을 습격했는데, 지배층들은 이들을 「도적」이라 했다. 15세기 말에서 16세기 초 연산군 통치기간",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3994f" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3560512&cid=58669&categoryId=58688",
+      "url_title": "일제 강점기",
+      "url_hashTags": ["#일제 강점기", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "김구 | 독립운동가이자 정치가이다. 일제 강점기에는 주로 대한민국 임시 정부에서 활동했으며, 8 · 15 광복 후에는 자주적인 통일 정부를 세우기 위해 노력했다. 1949년에 안두희에 의해 암살당했다. 임시 정부에서 활동하는 동안 쓴 일기인 《백범일지》가 남아 있다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39950" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3326589&cid=56790&categoryId=58124",
+      "url_title": "크누트 대왕",
+      "url_hashTags": ["#크누트 대왕", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "크누트(Cnut, 985?년 ~ 1035년 11월 12일, 재위 1016년 ~ 1035년)는 덴마크와 잉글랜드 왕 스웨인의 아들이며, 북해제국(앵글로 스칸디나비아 제국)을 일군 대왕이다. 데인족 왕인 크누트는 엄격하고 잔인한 정복자인 동시에 지적이며 온건한 통치자였다.\n\n그는 정복자가 아닌 합법적인 통치자로서 잉글랜드에 내적인 평화와 번영을 가져다 준 가장",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39951" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3560655&cid=58669&categoryId=58687",
+      "url_title": "세조(수양 대군)",
+      "url_hashTags": ["#세조(수양 대군)", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "세조는 1417년에 조선의 제4대 임금인 세종의 둘째 아들로 태어났다. 왕자 시절에는 수양 대군이라고 불렀으며, 그는 어릴 때부터 학문과 무예에 뛰어났다고 한다. 아버지인 세종의 명을 받아 토지 제도 개혁을 이끌었고, 형인 문종 때에도 나랏일을 도왔다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39952" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=985937&cid=42920&categoryId=42920",
+      "url_title": "고구려의 왕",
+      "url_hashTags": ["#고구려의 왕", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "고교생이 알아야 할 한국사 스페셜\n\n고구려의 왕\n\n참고자료\n네이버캐스트 : 역대 고구려왕\n관련이미지 5\n   \n  \n  \n  \n   \n이미지 이전\n\n고구려 왕 계보도\n(삼국사기에 의거함)\n\n이미지 갤러리\n\n출처: 인물로 보는 고구려사\n\n1/5\n이미지 다음\n\n위 이미지에 대한 권리는 출처사이트 게시자에게 있으며, 이를 무단 사용할 경우 법적 책임을 질 수 있",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39953" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3352071&cid=58180&categoryId=58309",
+      "url_title": "도요토미 히데요시",
+      "url_hashTags": ["#도요토미 히데요시", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "히데요시의 출생과 관련해서는 3가지 설이 있다. 1536년 1월 1일로 기록하고 있는 『태합소성기(太閤素性記)』와 『명량홍범(明良洪範)』, 1536년 6월 15일의 『조부물어(祖父物語)』, 1537년 2월 6일의 『천정기(天正記)』 「관백임관기(關白任官記)」 · 『풍감(豊鑑)』 · 『당대기(當代記)』이다. 이들 자료 이외에 사료 가치가 높은 『공경보임(公卿",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39954" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=942605&cid=43087&categoryId=43087",
+      "url_title": "사라예보 사건",
+      "url_hashTags": ["#사라예보 사건", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "1914년 6월 28일, 오스트리아 · 헝가리 제국의 황위 계승자인 F. 페르디난트 대공과 그의 부인이 피격, 암살당한 사건으로, 제1차 세계 대전의 불씨를 당겼기 때문에 역사적으로 중요한 의미를 갖는다. 페르디난트 대공 부처는 육군 연습을 독려하기 위하여 1908년 이래 오스트리아에 병합되어 있는 보스니아의 도시인 사라예보를 방문하였다. 암살에 참가한 청",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39955" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3584082&cid=59299&categoryId=59300",
+      "url_title": "동생의 죽음을 밟고 왕이 된 이방원",
+      "url_hashTags": [
+        "#동생의 죽음을 밟고 왕이 된 이방원",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "안녕하세요? 오늘은 태종이 왕위에 오르는 즉위식이 있는 날입니다. ‘1차 왕자의 난’으로 불리게 된 사건이 있은 지 2년 만의 일인데요.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39956" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=799833&cid=43082&categoryId=43082",
+      "url_title": "크림반도 병합",
+      "url_hashTags": ["#크림반도 병합", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "야시 조약에 따라 오스만 제국은 크림의 지배권을 러시아에 양도한다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39957" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3584083&cid=59299&categoryId=59300",
+      "url_title": "이방간, 이방원 두 형제의 이야기",
+      "url_hashTags": [
+        "#이방간, 이방원 두 형제의 이야기",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "안녕하세요? 오늘 이 자리에는 이방간, 이방원 형제가 나와 계십니다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39958" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=919497&cid=42958&categoryId=42958",
+      "url_title": "임오군란",
+      "url_hashTags": ["#임오군란", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "1882년(고종 19) 6월 9일 구식군대가 일으킨 병란.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39959" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3560604&cid=58669&categoryId=58687",
+      "url_title": "김수로왕",
+      "url_hashTags": ["#김수로왕", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "가야는 고구려와 신라, 백제가 고대 국가의 기틀을 갖추기 시작할 무렵부터 낙동강 주변 평야 지역에서 성장한 작은 나라들을 통틀어 부르는 이름이다. 《삼국유사》에는 가야의 건국 설화를 다음과 같이 전하고 있다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3995a" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1624675&cid=42941&categoryId=42941",
+      "url_title": "율곡 이이",
+      "url_hashTags": ["#율곡 이이", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "율곡 이이(栗谷 李珥, 1536~1584년)는 퇴계 이황과 함께 16세기를 대표하는 사림(士林)이다. 흔히 퇴계를 영남학파, 율곡을 기호학파의 대표라 하여 경쟁 관계로 여기는데, 이는 퇴계의 영남학파가 동인 정파로, 율곡의 기호학파가 서인 정파로 전환되어 정쟁을 한 데서 생긴 오해이다. 이들은 35년의 나이 차이가 있었지만 성리학에 대한 열정과 공감대 때문",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3995b" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3334523&cid=58145&categoryId=58145",
+      "url_title": "장영실, 태종의 발탁과 명나라 유학",
+      "url_hashTags": [
+        "#장영실, 태종의 발탁과 명나라 유학",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "동래현의 관노로 있던 장영실이 어떤 계기로 한양에 입성하여 왕의 사랑을 받는 인물로 성장하였을까?",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3995c" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1631198&cid=42955&categoryId=42955",
+      "url_title": "대동여지도",
+      "url_hashTags": ["#대동여지도", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "도판의 지도는 전체 22층 가운데 13층에 해당하는 부분으로 원래의 『대동여지도(大東輿地圖)』는 흑백의 목판 인쇄본인데 독도의 편리를 위해 채색을 가미하였다.\n\n『대동여지도』는 22첩으로 구성된 절첩식 지도이다. 즉, 우리나라를 남북으로 120리 간격으로 구분하여 22층을 만들고, 동서로 80리 간격을 한 면으로 했는데 두 면이 한판으로 구성되어 각 층의 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3995d" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3352608&cid=58180&categoryId=58314",
+      "url_title": "도쿠가와 이에야스",
+      "url_hashTags": ["#도쿠가와 이에야스", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "도쿠가와 이에야스는 1542년 12월 26일 마쓰다이라 히로타다의 아들로 태어났으며, 어렸을 때 이름은 다케치요다. 어머니는 미카와 국의 가리야 성의 성주 미즈노 다다마사의 딸로 이름은 오다이다. 지방 호족이었던 마쓰다이라 가문은 이에야스의 조부 기요야스 시기에 부흥기를 이루었다. 그러나 기요야스가 부하의 배신으로 오와리 모리야마에서 사망한 이후 마쓰다이라",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3995e" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1005690&cid=43026&categoryId=43026",
+      "url_title": "체첸공화국의 문제",
+      "url_hashTags": ["#체첸공화국의 문제", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "우리는 체첸공화국의 독립 문제에 대해 간단히 살폈다. 다음에서 이 문제에 대해 자세히 살피기로 한다. 우선 명백히 지적하고자 하는 것은 체첸공화국은 러시아연방의 일원이지 독립국가연합의 일원이 아니라는 사실이다. 따라서, 러시아연방과 체첸공화국 사이의 문제는 러시아연방의 국내 문제이지 대외 문제가 아니다. 그러나 이 문제는 독립국가연합을 구성하는 회원국들에 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3995f" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1826201&cid=43027&categoryId=43027",
+      "url_title": "러시아, 러시아인, 러시아 역사",
+      "url_hashTags": [
+        "#러시아, 러시아인, 러시아 역사",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "러시아의 역사에 들어가기에 앞서 먼저 '러시아'라는 이름으로 불리는 세계에 대해 정확히 알아둘 필요가 있다. 시대가 흐르면서 러시아의 세계가 점점 확대된데다가, 좁은 의미의 러시아와 넓은 의미의 러시아가 두루 혼용되고 있기 때문이다.\n\n슬라브인 이전의 시대는 일단 접어두고 그 후의 역사만 볼 때, 맨 먼저 '루시의 나라'라고 불린 동슬라브인의 국가가 있었다",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39960" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1837179&cid=42924&categoryId=42924",
+      "url_title": "매화 - 들어가는 말",
+      "url_hashTags": ["#매화 - 들어가는 말", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "매화는 서리와 눈을 두려워하지 아니하고 언 땅 위에 고운 꽃을 피워 맑은 향기를 뿜어낸다. 매화는 온갖 꽃이 미처 피기도 전에 맨 먼저 피어나서 봄소식을 가장 먼저 알려 준다. 매화는 창연한 고전미가 있고 말할 수 없이 청고(淸高)하여 가장 동양적인 인상을 주는 꽃으로 많은 사람들의 사랑을 받아왔다. 특히 추위를 이기고 꽃을 피운다 하여 불의에 굴하지 않는",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39961" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3330763&cid=56790&categoryId=56798",
+      "url_title": "니콜라이 2세",
+      "url_hashTags": ["#니콜라이 2세", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "니콜라이 2세는 알렉산드르 3세의 장남으로 1868년 5월 6일 태어났다. 니콜라이는 가정교사를 통해 폭넓은 인문 교육을 받았다. 그는 생각이 많고 낯을 가리는 아이였지만 자신의 의사를 고집하는 면도 강했다. 어릴 때부터 신앙심이 깊었던 니콜라이는 교회의 성상 앞에 촛불을 켜고 기도하는 시간을 좋아했다. 전반적으로 온순하고 겸손했던 그의 성품은 유약함으로 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39962" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=985958&cid=42920&categoryId=42920",
+      "url_title": "백제의 왕",
+      "url_hashTags": ["#백제의 왕", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "고교생이 알아야 할 한국사 스페셜\n\n백제의 왕\n\n참고자료\n네이버캐스트 : 역대 백제 왕\n관련이미지 5\n   \n  \n  \n  \n   \n이미지 이전\n\n이미지 갤러리\n\n출처: 테마리스트\n\n1/5\n이미지 다음\n\n위 이미지에 대한 권리는 출처사이트 게시자에게 있으며, 이를 무단 사용할 경우 법적 책임을 질 수 있습니다.\n\n출처\n제공처 정보\n고교생이 알아야 할 한국사",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39963" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3533834&cid=58542&categoryId=58542",
+      "url_title": "셰익스피어",
+      "url_hashTags": ["#셰익스피어", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "잉글랜드 스트랫퍼드어폰에이번에서 부유한 상인의 아들로 태어난 셰익스피어는 학교 공부에 별로 흥미를 느끼지 못했다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39964" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1007555&cid=43010&categoryId=43010",
+      "url_title": "최종 해결",
+      "url_hashTags": ["#최종 해결", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "유대인들에 대한 독일인의 박해는 식을 줄 몰랐다. 그들은 계속하여 전 중 · 서부 유럽의 유대인들을 괴롭혔다. 그들은 길가에서, 집에서, 발견되는 유대인들을 닥치는 대로 체포하여 수용소로 보냈다. 베를린에서는 수십만의 유대인이 정처 없이 떠났으며, 프랑스에서는 13,000명의 유대인들을 체포하여 아우슈비츠 수용소로 보냈다. 네덜란드과 슬로바키아, 그리스의 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39965" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3584081&cid=59299&categoryId=59300",
+      "url_title": "태종 이방원",
+      "url_hashTags": ["#태종 이방원", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "시대 ▶ 1367년~1422년\n재위 기간 ▶ 1400년~1418년\n국정 운영 스타일 ▶ 강한 왕만이 나라를 잘 이끌 수 있다.\n모든 권력은 왕에게로!\n라이벌 ▶ 정도전\n상반된 평가 ▶ 비정한 군주 VS 조선의 초석을 다진 군주\n역사적 중요도 ▶ ★★★★★\n시험 출제 빈도 ▶ 매우 높음",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39966" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1384441&cid=42929&categoryId=42930",
+      "url_title": "고구려는 어떻게 나라의 기틀을 마련했나요?",
+      "url_hashTags": [
+        "#고구려는 어떻게 나라의 기틀을 마련했나요?",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "고구려, 백제, 신라 중에서 가장 먼저 고대 국가의 모습을 갖춘 나라는?\n\n고구려!?!\n\n그래 맞아. 그런데 고구려를 세운 세력은 부여에서 내려온 이주민들이었다고 하던데, 정말일까? 그래, 그것도 맞는 말이야. 고구려를 세운 사람은 주몽이었어.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39967" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=919802&cid=42958&categoryId=42958",
+      "url_title": "민족대표 33인",
+      "url_hashTags": ["#민족대표 33인", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "3·1운동 때 <독립선언서>에 서명한 33명의 민족대표. 1919년 2월 초 독립선언에 관한 일을 의논하기 위해 권동진·오세창·최린 등이 손병희를 만나 상의한 데 이어, 송진우·현상윤(玄相允)·최린·최남선 등이 독립선언 진행방법 등을 검토, 천도교·기독교·구한말의 유지를 조선민족대표로 하여 그 이름으로 독립을 선언하고, <독립이유서>를 각국에 보내기로 결정",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39968" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2426804&cid=51397&categoryId=51397",
+      "url_title": "주기진",
+      "url_hashTags": ["#주기진", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "명(明)나라 영종(英宗)의 이름으로 명나라 6대 황제이다. 명선종(明宣宗) 주첨기(朱瞻基)의 장남이고, 명대종(明代宗) 주기옥(朱祁鈺)의 이복형이며, 명헌종(明憲宗) 주견심(朱見深)의 부친이다. 9세의 나이로 황제에 등극했기 때문에 태황태후(太皇太后) 장씨(張氏)가 수렴청정(垂簾聽政)을 하였다. 이때에 양사기(楊士奇), 양영(楊榮), 양부(楊溥) 등 ‘삼양",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39969" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3538063&cid=56777&categoryId=56777",
+      "url_title": "왕소군",
+      "url_hashTags": ["#왕소군", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "남군(南郡) 자귀1) 사람으로 이름은 장(嬙), 자는 소군(昭君)이다. 진(晉)나라 황제 사마소의 이름에 ‘소’자를 피하여 명군(明君), 명비(明妃)라고도 일컬어진다. 한나라 원제 때의 궁녀이다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3996a" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3560509&cid=58669&categoryId=58688",
+      "url_title": "고려 시대",
+      "url_hashTags": ["#고려 시대", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "왕건 | 고려를 세우고 후삼국을 통일한 임금이다. 원래는 송악(개경) 지방의 호족이었으나 후고구려를 세운 임금인 궁예를 몰아내고 고려를 세웠다. 이후 신라와 후백제를 정복해 한반도의 최고 통치자가 되었으며, 불교 장려 정책 등으로 나라를 안정시켰다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3996b" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1720372&cid=43113&categoryId=43113",
+      "url_title": "세계 유산에 관한 부다페스트 선언",
+      "url_hashTags": [
+        "#세계 유산에 관한 부다페스트 선언",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "〈세계 유산에 관한 부다페스트 선언〉은 2002년 헝가리 부다페스트에서 열린 세계 유산 위원회에서 국제 연합이 2002년을 문화유산의 해로 지정하고 채택한 선언이다. 이 선언은 1972년에 성립된 세계 문화유산과 자연유산 보호에 관한 협약 30주년을 기념하면서 발표되었다.\n\n1960년 이집트 정부가 나일 강1)의 상류에 아스완 하이 댐2)을 건설하기로 함에",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3996c" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1846908&cid=42990&categoryId=42990",
+      "url_title": "진시황",
+      "url_hashTags": ["#진시황", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "진(秦)나라의 36대 군주로 장양왕의 아들이며 본명은 정(政). B.C.247년에 부친 장양왕이 서거한 후 열세 살의 어린 나이로 즉위하여 초기에는 승상(丞相) 여불위의 보필을 받았으나 장성하면서부터 점차 강력한 통치력을 발휘했음. 중국 역사상 가장 의욕적이고 명민하며 위대한 군주의 한 사람으로서 내로라 하는 문무 관료들을 적재적소에 잘 활용하면서 전국 말",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3996d" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1532608&cid=43109&categoryId=43109",
+      "url_title": "바빌론",
+      "url_hashTags": ["#바빌론", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "고대 오리엔트 세계의 중심, 바빌론",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3996e" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2324279&cid=51343&categoryId=51343",
+      "url_title": "위구르족",
+      "url_hashTags": ["#위구르족", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "중국의 위구르족 인구는 2000년 현재 8,399,393명이며, 중국 내 소수민족 가운데 인구규모가 장족(壯族), 만주족, 회족 및 묘족에 이어 다섯째로 크다. (2000년 중국 인구조사통계)",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3996f" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1397830&cid=43107&categoryId=43107",
+      "url_title": "직지심체요절",
+      "url_hashTags": ["#직지심체요절", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "우리나라는 세계가 인정하는 인쇄 강국이에요. 통일 신라 시대 때 만들어진 ‘무구 정광 대다라니경’은 현재 존재하는 목판 인쇄물로는 세계에서 가장 오래된 것이에요. 비단 이것뿐만이 아니에요. 고려 시대 때 만들어진 팔만대장경의 방대함은 세계 사람들의 감탄을 자아내게 하고 있어요.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39970" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3560510&cid=58669&categoryId=58688",
+      "url_title": "조선 시대",
+      "url_hashTags": ["#조선 시대", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "태조 이성계 | 조선을 건국하고 수도를 한양으로 옮겨 나라의 기틀을 다진 임금이다. 궁궐과 도성을 건립하는 한편, 국가 제도 전반을 개혁했으며 억불 정책을 시행했다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39971" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3584103&cid=59299&categoryId=59300",
+      "url_title": "한스러운 삶을 살았던 단종의 비, 정순 왕후",
+      "url_hashTags": [
+        "#한스러운 삶을 살았던 단종의 비, 정순 왕후",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "나는 단종 비 송씨로, 후대에 정순 왕후라고 불린다. 어린 남편이 왕위에 오르자 수양 대군은 마치 조카를 위하는 양 결혼을 추진하여 나를 왕비로 선택했다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39972" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3334524&cid=58145&categoryId=58145",
+      "url_title": "장영실, 노비 신분에서 종3품에 이르다",
+      "url_hashTags": [
+        "#장영실, 노비 신분에서 종3품에 이르다",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "노비신분에서 벗어나기 전 「세종실록」에는 장영실을 궁노비, 관노 등으로 지칭하고 있다. 이는 장영실이 동래현의 관노비로 있다가 임금이 사는 궁궐의 궁노비로 이동했기 때문이다.\n\n세종은 장영실이 1422년 명나라에서 돌아오자 곧바로 노비 신분에서 벗어나게 해 주고 싶었다. 1422년과 1423년 두 차례에 걸쳐 세종은 장영실에게 상의원 별좌라는 관직을 주려 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39973" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3348531&cid=58229&categoryId=58229",
+      "url_title": "미국 남북 전쟁",
+      "url_hashTags": ["#미국 남북 전쟁", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "미국은 1783년에 영국으로부터 독립했어요. 그 뒤 남부와 북부는 서로 다른 방향으로 발전했지요. 남부는 흑인들을 노예로 부려 면화를 재배하는 농업 중심의 사회가 되었어요. 이에 비해 북부는 공장에서 물건을 만드는 제조업이 발달했답니다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39974" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3560518&cid=58669&categoryId=58687",
+      "url_title": "가야",
+      "url_hashTags": ["#가야", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "고구려, 백제, 신라 등 3국이 국가의 모습을 갖추어 나갈 무렵 낙동강 중 · 하류 지역에서는 여러 작은 나라들이 자리를 잡아 갔다. 이들은 고구려, 백제 신라처럼 통일된 국가 체계를 갖추지는 못한 채 ‘간’이라는 부족장들이 각각 자신의 영역을 다스리고 있었다. 그런데 《삼국유사》에 따르면 이곳에서 신비한 일이 일어나 왕국을 세울 수 있었다고 한다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39975" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3326578&cid=56790&categoryId=58124",
+      "url_title": "에드먼드",
+      "url_hashTags": ["#에드먼드", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "에드먼드는 웨섹스를 기반으로 영국 전체를 호령한 에델스탄의 동생이다. 939년 10월 27일 에델스탄이 사망하자, 그의 이복동생 에드먼드는 열여덟 살의 나이에 왕위에 올랐다. 에델스탄은 머시아를 통합하고 요크 지역을 점령하였으며, 스코틀랜드와 스트래스클라이드까지 영향력을 넓혔다. 하지만 에델스탄이 사망하고 얼마 되지 않아 그가 이룩한 거대한 왕국은 순식간에",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39976" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=942384&cid=43087&categoryId=43087",
+      "url_title": "잉카",
+      "url_hashTags": ["#잉카", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "안데스 문명 최후의 국명 및 그 지배 계층을 잉카라고 한다. 중앙 안데스에서는 기원전 1000년경 옥수수 농경이 확립되었고, 종교의 힘도 있어 사회의 계층화가 진전되어 1200년경에는 지방적 왕국과 수장적(首長的)인 정치 조직이 성립되었다. 잉카는 그 하나로서 15세기 중엽부터 주변 민족을 정복하여 15세기 말에는 남북 4,000킬로미터의 대영역을 지배하였",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39977" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=800165&cid=43082&categoryId=43082",
+      "url_title": "히틀러 자살",
+      "url_hashTags": ["#히틀러 자살", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "소련군이 총통의 벙커로 시시각각 진격해오고 있는 사이 히틀러와 그의 부인이 스스로 목숨을 끊는다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39978" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1582365&cid=43106&categoryId=43106",
+      "url_title": "아우슈비츠 강제 수용소",
+      "url_hashTags": [
+        "#아우슈비츠 강제 수용소",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "폴란드에 있는 아우슈비츠 강제 수용소는 인류 최초로 산업적인 수단을 이용한 인종 학살이 이루어졌던 곳이에요. 인간의 잔혹성과 야만성이 얼마나 무서운 결과를 가져오는지 잘 보여 주는 곳이지요.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39979" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3613770&cid=59303&categoryId=59423",
+      "url_title": "사회주의 정부의 탄생",
+      "url_hashTags": [
+        "#사회주의 정부의 탄생",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "소비에트 정부가 들어선 그해 11월 25일(율리우스력 11월 12일), 보통 선거1)가 실시되었어요. 헌법을 만들 의회를 구성하기 위한 총선거였지요.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3997a" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3348503&cid=58229&categoryId=58229",
+      "url_title": "병자호란",
+      "url_hashTags": ["#병자호란", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "17세기 초, 만주에는 누르하치가 여진족을 통일하고 후금을 세웠어요. 당시 중국 땅을 차지하고 있던 명나라는 임진왜란 때 5만의 군사를 보내어 조선을 도와준 후 힘이 약해지고 농민의 반란이 일어나 멸망의 길을 걷고 있었지요.\n\n힘을 키워 명나라를 위협하던 후금은 조선에 형제 관계를 요구하며 정묘호란을 일으켰어요.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3997b" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1719165&cid=43110&categoryId=43110",
+      "url_title": "경성(京城), 식민지 근대 서울",
+      "url_hashTags": [
+        "#경성(京城), 식민지 근대 서울",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "1904년 러일전쟁을 극적인 승리로 이끈 일본은 이듬해 을사늑약을 통해 조선의 외교권을 강탈하고 마침내 1910년 조선을 강제 병합하여 식민지로 복속시켰다. 서양 열강과 비교해 봤을 때 일본 제국주의는 유색인종 제국주의, 후발 제국주의, 근린 제국주의, 군사 제국주의 등의 독특한 성격을 띠는데, 주로 1930년대 이후의 일이지만 대대적으로 식민지 공업화 정",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3997c" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3410237&cid=58405&categoryId=58405",
+      "url_title": "태조 왕건",
+      "url_hashTags": ["#태조 왕건", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "태조가 고려를 세우고 해야만 했던 일이 뭐였을까요? 역사를 잘하려면 어떻게 해야 한다고 했죠? 그렇죠. 그 인물이 되었다고 생각하고 감정이입을 해야 합니다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3997d" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1826205&cid=43027&categoryId=43027",
+      "url_title": "'루시의 나라' 세워지다",
+      "url_hashTags": [
+        "#'루시의 나라' 세워지다",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "12세기 초에 편찬된 《원초 연대기-지나간 세월의 이야기》는 최초의 루시 국가인 키예프 러시아의 건국 배경에 대해 이렇게 쓰고 있다. 이른바 862년 류리크의 노브고로트 정착 이야기다. 이 전설은 882년 류리크의 한 측근인 올레크의 키예프 건국으로 이어진다. 여기서 노르만 초빙 건국설이 강력하게 대두됐다.\n\n그러나 후세의 연구에서 당시 '루시의 나라'가 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3997e" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1833284&cid=43072&categoryId=43072",
+      "url_title": "공산주의의 몰락",
+      "url_hashTags": ["#공산주의의 몰락", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "1991년 12월 8일, 역사에 크게 기록될 사건이 발생하였다. 공산주의의 맹주였던 소비에트 연방이 해체된 것이다. 보리스 옐친 러시아 공화국 대통령을 주축으로 하여, 크라프추크 우크라이나 공화국 대통령과 슈시케비치 벨로루시 백러시아 최고회의 의장 등 3명은 '독립 국가 공동체'의 창립을 선언하였다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3997f" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3584215&cid=59299&categoryId=59301",
+      "url_title": "숙종의 맏아들, 불행했던 운명의 경종",
+      "url_hashTags": [
+        "#숙종의 맏아들, 불행했던 운명의 경종",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "오늘은 죄인이 된 어머니 장희빈과 많은 사람을 휘어잡는 능력을 가진 아버지 숙종 사이에서 태어난 경종을 모시고 인터뷰를 진행하겠습니다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39980" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1699789&cid=42981&categoryId=42981",
+      "url_title": "고점리",
+      "url_hashTags": ["#고점리", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "전국 시대 말기 연(燕)나라 사람. 축(筑, 비파와 비슷한 현악기)의 명수였다. 형가(荊軻)의 친구로, 형가와 함께 진시황(秦始皇)을 살해하려는 음모에 가담했다. 형가가 죽자 성명을 바꾸고 용보(傭保)가 되었지만 발각되었다. 진시황이 격을 잘 친다 하여 눈만 멀게 하고 죽이지는 않았다. 얼마 뒤 진시황을 위해 축을 연주하다 축 속에 넣어둔 쇠망치로 진시황을",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39981" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3560047&cid=58669&categoryId=58670",
+      "url_title": "한일 신협약(정미 7조약)",
+      "url_hashTags": [
+        "#한일 신협약(정미 7조약)",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "대한 제국이 출범한 이후인 1905년 일제가 을사조약을 맺고 외교권을 박탈하자, 당시 황제였던 고종은 이 조약의 부당함을 세계에 알리기 위해 1907년 네덜란드 헤이그에서 열린 만국 평화 회의에 이상설, 이준, 이위종 등 특사를 파견했다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39982" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1007983&cid=42997&categoryId=42997",
+      "url_title": "명성황후 시해 사건",
+      "url_hashTags": ["#명성황후 시해 사건", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "청·일 전쟁 중에 조선에서의 내정 개혁(갑오개혁)을 주도했던 일본의 이노우에 공사는 삼국 간섭에 의해 국제적으로 일본의 위상이 저하된 것을 계기로 조선에서의 주도권 행사가 여의치 않게 되었다. '300만 엔 차관' 제공 등의 회유책도 열매를 맺지 못하고 러시아의 영향력이 증대하자 조선에서는 1895년 7월 이른바 친러파 정권이 성립되었다. 러시아가 일본과 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39983" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1003719&cid=43039&categoryId=43039",
+      "url_title": "장미 전쟁",
+      "url_hashTags": ["#장미 전쟁", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "프랑스는 헨리 5세와의 전투였던 아쟁쿠르 전투에서 대부분의 종친 및 대귀족들이 사망하자 샤를 7세 때부터 쉽게 왕권을 강화할 수 있었으나 잉글랜드의 경우는 그렇지 못했다. 백년 전쟁 후 영토가 축소되었음에도 불구하고 종친 및 대귀족들은 거의 살아 있었기에 이들은 서로의 영토를 둘러싸고 부딪칠 수밖에 없었으며, 왕권에 대한 다툼도 예외는 아니었다. 게다가 백",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39984" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3560710&cid=58669&categoryId=58687",
+      "url_title": "이승만",
+      "url_hashTags": ["#이승만", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "이승만은 1895년 배재 학당에서 신학문을 배웠다. 그러다 미국에서 돌아온 서재필이 만든 협성회에 참여해 활동했고, 독립 협회에 가입한 뒤에는 애국 계몽 운동에 앞장섰다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39985" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3350075&cid=58249&categoryId=58249",
+      "url_title": "수원화성",
+      "url_hashTags": ["#수원화성", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "수원화성은 조선왕조 제22대 정조대왕이 세자에 책봉되었으나 당쟁에 휘말려 왕위에 오르지 못하고 뒤주 속에서 생을 마감한 아버지 사도세자의 능침을 양주 배봉산에서 조선 최대의 명당인 수원 화산으로 천봉하고 화산 부근에 있던 읍치를 수원 팔달산 아래 지금의 위치로 옮기면서 축성되었다.\n\n수원화성은 정조의 효심이 축성의 근본이 되었을 뿐만 아니라 당쟁에 의한 당",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39986" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2426714&cid=51397&categoryId=51397",
+      "url_title": "조운",
+      "url_hashTags": ["#조운", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "상산(常山) 진정(真定) 사람으로 자는 자룡(子龍)이다. 삼국(三國)시대 촉한(蜀漢)의 무장(武將)으로 본래 백마장군(白馬將軍) 공손찬(公孫瓚)의 휘하에서 유비(劉備)를 만나 그를 평생 동안 섬겼다. 유비를 따라 30여 년 동안에 박망파(博望坡)전투, 장판파(長阪坡)전투, 강남평정(江南平定)전투 등에 참여했고, 단독으로 천(川), 한수(漢水), 기곡(箕穀)",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39987" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1582770&cid=43070&categoryId=43070",
+      "url_title": "유럽 전체가 전쟁에 휩싸이다",
+      "url_hashTags": [
+        "#유럽 전체가 전쟁에 휩싸이다",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "제 1차 세계 대전은 제국주의 전쟁이었다. 제국주의에 반대하는 에마 골드만은 군사력을 위한 전쟁, 돈을 위한 전쟁, 수십 년 동안 애써 얻은 약간의 자유마저 짓밟는 이 전쟁을 거부하자고 목소리를 높였다. 하지만 인류는 전쟁의 고통 속에 빠져들었다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39988" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1532631&cid=43109&categoryId=43109",
+      "url_title": "폼페이",
+      "url_hashTags": ["#폼페이", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "화산 폭발로 멸망한 도시\n\n79년 8월 24일 정오. 이탈리아 남부 나폴리 연안에 우뚝 솟아 있는 베수비오 화산이 돌연 폭발하는 놀라운 일이 일어났다. 거대한 폭발과 함께 검은 구름이 분출되면서 화산이 분화하기 시작했던 것이다. 화산은 엄청난 양의 화산재와 화산암을 뿜어내면서 인근 도시로 쏟아져내렸다.\n\n나폴리 남동부에 자리잡고 있던 폼페이는 이 화산 폭발",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39989" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1392735&cid=49805&categoryId=49840",
+      "url_title": "그랜드 캐니언 국립공원",
+      "url_hashTags": [
+        "#그랜드 캐니언 국립공원",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "그랜드 캐니언은 계속 진행되는 지구의 지질학적 장관을 연출하는 곳이다. 그 광대함은 충격적일 뿐만 아니라 지구 역사에 대한 증거로는 가치를 헤아릴 수 없을 정도이다. 1.5㎞(0.9마일)로 깊게 팬 협곡 지대는 너비가 500m에서 30㎞(0.3~18.6마일)에 이른다. 445㎞(276.5마일)를 구불구불 돌아가는 협곡은 융기된 지각 위에서 6,000,000",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3998a" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1624731&cid=42941&categoryId=42941",
+      "url_title": "추사 김정희",
+      "url_hashTags": ["#추사 김정희", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "추사 김정희(秋史 金正喜, 1786~1856년)는 18세기 말에 태어나서 19세기 외척 세도 정치기에 활동한 조선 예원의 마지막 불꽃 같은 존재이다. 조선이 고유 문화를 꽃피운 진경시대의 세계화에 성공한 예술가일 뿐만 아니라, 진경시대의 학문 조류인 북학 사상을 본궤도에 진입시킴으로써 조선 사회의 변화 논리에 힘을 실어준 장본인이다.\n\n그는 영조가 지극히 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3998b" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=4180098&cid=59299&categoryId=59569",
+      "url_title": "3.1 운동",
+      "url_hashTags": ["#3.1 운동", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "시기 ▶ 1919년 3월 1일\n사건 장소 ▶ 서울 종로에서 시작\n참가자 ▶ 조선의 남녀노소 모두\n사건을 한마디로 표현하자면 ▶ 독립을 위한 평화로운 대규모 만세 운동\n해외의 반응 ▶ 정말 위대한 운동이군. 코리아 파이팅!\n역사적 중요도 ▶ ★★★★☆\n시험 출제 빈도 ▶ 높음",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3998c" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1004698&cid=43049&categoryId=43049",
+      "url_title": "마야 문명",
+      "url_hashTags": ["#마야 문명", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "한편, 기원전 수 세기 전부터 멕시코와 중미 지역에서 마야 족(Mayas)이 벨리세 지역의 이사파(Izapa) 문명을 받아들여 독자적으로 발전하면서 고대 마야 제국을 건설하였다. 이들은 A.D. 1세기경에 과테말라, 그 후에는 멕시코의 유카탄 반도 남부의 치첸이트사(Chichen Itzá)를 중심으로 5세기를 전후로 하여 최고의 전성기를 구가하였다. 그러나",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3998d" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3508869&cid=58487&categoryId=58487",
+      "url_title": "연평도 포격",
+      "url_hashTags": ["#연평도 포격", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "2010년 11월 23일 북한은 우리의 평화로운 섬마을 연평도에 170여 발의 포탄을 퍼부었습니다. ‘서울을 불바다로 만들겠다’고 위협해오던 북한이 우리나라를 공격할 빌미를 만들기 위해 국군과 주한 미군의 육·해·공군 연합 호국훈련을 핑계로 평화로운 연평도를 포격했던 것입니다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3998e" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3352467&cid=58180&categoryId=58312",
+      "url_title": "다자이 오사무",
+      "url_hashTags": ["#다자이 오사무", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "다자이 오사무는 1909년 6월 19일 아오모리 현 기타쓰가루 군(郡) 가나기 마을의 대지주인 쓰시마 가문에서 여섯째 아들로 태어났다. 11남매 중에서 10번째였다. 그의 아버지 겐에몬은 기즈쿠리 마을의 부농인 마쓰모토 가문에서 온 데릴사위이며, 현회 의원, 중의원 의원, 귀족원 의원 등을 지낸 지역의 명사였다. 쓰시마 가문은 가나기에서 영향력 있던 유지 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3998f" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3537805&cid=56777&categoryId=56777",
+      "url_title": "마초",
+      "url_hashTags": ["#마초", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "부풍(扶風) 무릉(茂陵, 현 산시(陝西)성 싱핑(興平) 동북) 사람으로 자는 맹기(孟起)이다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39990" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=5695698&cid=60403&categoryId=60403",
+      "url_title": "순조",
+      "url_hashTags": ["#순조", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "순조는 1790년에 조선 제22대 왕인 정조의 둘째 아들로 태어났어. 순조가 태어나기 전, 궁중 사람들이 용꿈을 꾸는 등 매우 좋은 징조가 보였었대. 순조는 어릴 적 아버지 품에 안겨 책을 읽는 걸 좋아했는데, 책을 보다가 병풍에 있는 것과 같은 글자가 나오면 짚어 내는 총명함을 보였지. 정조는 자신을 빼닮은 순조를 매우 아껴서 본인의 뒤를 이어 임금이 될",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39991" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=919459&cid=42958&categoryId=42958",
+      "url_title": "안동김씨",
+      "url_hashTags": ["#안동김씨", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "우리 근세사에서는 조선 말 순조 · 헌종 · 철종 3대 60년에 걸쳐 왕의 외척으로서 조정의 요직을 독점하고 세도정치를 행한 안동김씨 일가를 가리킨다. 세도정치는 원래 정조 때 홍국영(洪國榮)에 의해 시작되었는데, 순조 이후 잇달아 어린 임금이 왕위에 오름에 따라 세도정치가 더욱 본격화되었다.\n\n순조가 11살로 즉위하자 정순왕후(貞純王后)가 후견하고 김조순",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39992" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3537866&cid=56777&categoryId=56777",
+      "url_title": "사마염",
+      "url_hashTags": ["#사마염", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "진(晉)나라의 개국 황제인 진 무제의 이름이다. 시호는 무황제(武皇帝), 묘호는 세조(世祖)이다. 자는 안세(安世)이며, 하내(河內) 온현1) 출신이다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39993" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2808755&cid=55623&categoryId=55623",
+      "url_title": "아방가르드",
+      "url_hashTags": ["#아방가르드", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "제1차 세계대전 이후의 전세계적 위기상황에서 비롯된 20세기 초의 혁신적인 예술경향을 일컫는 용어가 바로 아방가르드 혹은 전위주의이다. 이러한 경향은 근대성에 대한 환멸에서 비롯되어 비이성주의에 근거하고 있으며 회화, 음악, 문학 분야에서 다양한 예술운동으로 나타났다. 유럽의 아방가르드 운동으로 가장 대표적인 것이 표현주의, 입체주의, 미래주의, 다다이즘 ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39994" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3326641&cid=56790&categoryId=58124",
+      "url_title": "에드워드 8세",
+      "url_hashTags": ["#에드워드 8세", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "에드워드 8세는 조지 5세의 장남으로 1936년에 왕위에 올랐지만, 동생 조지 6세에게 양위하고 1년 만에 물러났다. 엄격하고 검소한 부모 밑에서 자랐으나 자유로운 삶을 지향했다. 이혼한 미국 여성을 사랑했으나 왕실과 영연방 전체에서 미국 출신 왕비를 반대하자, 왕위마저 버리고 사랑하는 여인과 평생 전 세계를 여행하며 살았다. “무거운 책임을 맡는 일도, ",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39995" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3613817&cid=59303&categoryId=59424",
+      "url_title": "인류 최악의 과학 기술, 원자 폭탄",
+      "url_hashTags": [
+        "#인류 최악의 과학 기술, 원자 폭탄",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "인류는 20세기에 두 번의 세계 대전을 거치며 수많은 무기를 만들어 냈어요. 그중에서도 최악의 무기로 꼽히는 게 있어요. 바로 원자 폭탄 같은 핵무기예요.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39996" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=2843690&cid=56773&categoryId=56773",
+      "url_title": "미국 항공우주국, 나사(NASA)가 궁금해요!",
+      "url_hashTags": [
+        "#미국 항공우주국, 나사(NASA)가 궁금해요!",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "미국 항공우주국 나사(NASA, National Aeronautics & Space Administration)는 미국의 우주 개발에 대한 모든 일을 맡고 있는 국가 기관이에요. 우주선을 만들어 발사하고 우주선이 보내온 데이터를 분석하는 일을 하고, 또 우주 비행사들을 키우고 우주를 관측하는 임무를 맡고 있지요.\n\n나사의 본부는 미국의 수도인 워싱턴에 있어",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39997" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=3610088&cid=59299&categoryId=59311",
+      "url_title": "고조선",
+      "url_hashTags": ["#고조선", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "시대 ▶ 기원전 2333년~기원전 108년\n고조선 건국 이야기 ▶ 단군왕검 이야기\n고조선 건국이념 ▶ 홍익인간\n고조선 대표적 유물 ▶ 미송리식 토기, 비파형 동검, 탁자식 고인돌\n고조선에서 죄를 지으면 ▶ 8조법으로 다스린다.\n역사적 중요도 ▶ ★★★★☆\n시험 출제 빈도 ▶ 높음",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39998" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=955904&cid=42962&categoryId=44343",
+      "url_title": "선사시대",
+      "url_hashTags": ["#선사시대", "#네이버", "#백과사전", "#역사"],
+      "url_memo": "원시인들이 사용한 연모로 나누는 시대 구분",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab39999" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1833245&cid=43072&categoryId=43072",
+      "url_title": "\"지구가 태양의 주위를 돌고 있다\"",
+      "url_hashTags": [
+        "#\"지구가 태양의 주위를 돌고 있다\"",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "'코페르니쿠스적 전환'이라는 말이 있다. 지금까지 주장해온 학설과 정반대가 되든가, 지금까지와의 생각과는 정반대로 변화하는 경우 쓰는 말이다. 전환이란 말은 영어로 '레벌루션(revolution)'으로서, '혁명'이라고 번역할 수도 있다. 이는 코페르니쿠스의 생각이 실로 혁명적이었다는 것을 의미한다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3999a" }
+    },
+    {
+      "url": "https://terms.naver.com/entry.naver?docId=1833258&cid=43072&categoryId=43072",
+      "url_title": "철혈 재상 비스마르크",
+      "url_hashTags": [
+        "#철혈 재상 비스마르크",
+        "#네이버",
+        "#백과사전",
+        "#역사"
+      ],
+      "url_memo": "독일은 중세 이래로 신성 로마 제국이라는 이름 아래 서유럽에서 가장 큰 영토를 차지하고 있었으나, 사실은 크고 작은 연방 국가의 연합체에 지나지 않았고, 19세기에 이르러서도 통일 국가를 형성하지 못하고 있었다. 독일 내부에서는 활발하게 독일 통일 운동이 전개되고 있었는데, 그 결과 독일 통일의 앞날에 두 개의 길이 열렸다.",
+      "url_likedUrl": 0,
+      "url_clickedNumber": 0,
+      "url_firstDate": { "$date": "2022-03-06T19:26:35.346Z" },
+      "url_updatedDate": { "$date": "2022-03-06T19:26:35.372Z" },
+      "url_search": {
+        "url_searchClicked": 0,
+        "url_searchedDate": { "$date": "2022-03-06T19:26:35.372Z" }
+      },
+      "_id": { "$oid": "62248d8d715ff3196ab3999b" }
+    }
+  ]
+}

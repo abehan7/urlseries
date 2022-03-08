@@ -4,8 +4,8 @@ const getCurrentDate = require("./getCurrentDate");
 
 const UrlSchema = new mongoose.Schema({
   url_id: { type: Number, required: false },
-  url: { type: String, required: false },
-  url_title: { type: String, required: false },
+  url: { type: String, required: true },
+  url_title: { type: String, required: true },
   url_hashTags: { type: Array, required: false, default: [] },
   url_memo: { type: String, required: false, default: "" },
   url_likedUrl: { type: Number, default: 0, required: false },

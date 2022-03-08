@@ -34,9 +34,7 @@ const getGuestUrls = async (req, res) => {
     "url_search.url_searchedDate": -1,
   });
 
-  const rightUrl = await db.Urls.find(query)
-    .sort({ url_updatedDate: -1 })
-    .limit(20);
+  const rightUrl = await db.Urls.find(query).sort({ _id: -1 }).limit(20);
 
   res.json({
     totalUrl,
