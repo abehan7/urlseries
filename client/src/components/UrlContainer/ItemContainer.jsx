@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { useEffect } from "react";
 import Loader from "../Utils/Loader/Loader";
+import { InfiniteScroll } from "../Utils/InfiniteScroll/InfiniteScroll";
 import Url from "./Url";
 
 const ItemContainer = ({ urls }) => {
@@ -17,33 +17,8 @@ const ItemContainer = ({ urls }) => {
     setIsLoaded(false);
   };
 
-  const onIntersect = async ([entry], observer) => {
-    if (entry.isIntersecting && !isLoaded) {
-      observer.unobserve(entry.target);
-      if (urls.length === contentsNum) {
-        return;
-      }
-
-      await getNextItems();
-
-      observer.observe(entry.target);
-    }
-  };
-
-  useEffect(() => {
-    let observer;
-    if (target) {
-      observer = new IntersectionObserver(onIntersect, {
-        threshold: 0.4,
-      });
-      observer.observe(target);
-    }
-    return () => observer && observer.disconnect();
-  }, [target]);
-
-  useEffect(() => {
-    // contentsNum !== 50 && setContentsNum(50);
-  }, [filterdItems]);
+  const stopCondition = urls.length === contentsNum;
+  InfiniteScroll({ isLoaded, getNextItems, target, stopCondition });
 
   return filterdItems.map((url, index) => {
     if (index === contentsNum - 1)

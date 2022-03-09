@@ -15,7 +15,7 @@ const Img = styled.img`
   width: 17px;
   padding: 0.5rem 0.4rem;
   padding-top: 0.3rem;
-  align-self: flex-start;
+  align-self: center;
   /* align-self: flex-start; */
   border-radius: 10px;
   vertical-align: middle;

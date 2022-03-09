@@ -15,13 +15,15 @@ const InputSearch = styled.input`
   color: transparent;
   margin-right: 5px;
   margin-top: 3.5px;
+  padding-left: 1rem;
 
   :focus {
     width: 300px;
     color: #535151;
-    border-radius: 0px;
-    background-color: transparent;
-    border-bottom: 1px solid rgba(114, 114, 114, 0.5);
+    border-radius: 10px;
+    background-color: #a597fe1a;
+    border-bottom: 1px solid #c4c4c4;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
   }
 `;
@@ -42,12 +44,17 @@ const BtnSearch = styled.button`
   pointer-events: painted;
   :focus ~ input {
     color: #535151;
-
     width: 300px;
-    border-radius: 0px;
-    background-color: transparent;
-    border-bottom: 1px solid rgba(78, 76, 76, 0.5);
+    background-color: #a597fe1a;
+    border-radius: 10px;
+    border-bottom: 1px solid #c4c4c4;
     transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+
+  svg {
+    color: gray;
+    transition: all 0.3s ease-in-out;
   }
 `;
 
@@ -59,13 +66,13 @@ const SearchBarEl = styled.div`
   margin-top: 1%;
 `;
 
-const SearchBar = () => {
+const SearchBar = ({ onChange = () => {}, keyword = "" }) => {
   return (
     <SearchBarEl>
       <BtnSearch>
-        <IoSearchCircleOutline size="35px" color="gray" />
+        <IoSearchCircleOutline size="35px" />
       </BtnSearch>
-      <InputSearch type="text" />
+      <InputSearch type="text" onChange={onChange} value={keyword} />
     </SearchBarEl>
   );
 };
