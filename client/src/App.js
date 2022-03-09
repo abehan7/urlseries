@@ -15,7 +15,6 @@ import {
 import { API } from "./components/Api";
 import styled from "styled-components";
 
-const Footer = loadable(() => import("./components/Footer/Footer"));
 //-----------------수정본 코드----------------
 const AppEl = styled.div`
   position: relative;
@@ -62,7 +61,6 @@ function App() {
       <AppEl className="App">
         <HeaderT />
         <Body />
-        {/* <Footer /> */}
       </AppEl>
     </Router>
   );

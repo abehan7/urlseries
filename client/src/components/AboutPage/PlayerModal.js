@@ -19,12 +19,6 @@ function PlayerModal({ closeModal }) {
             <img className="video" src="img/aboutsearch.gif" />
           </div>
         </div>
-        {/* <div className="footer">
-          <button id="cancelBtn" onClick={() => closeModal(false)}>
-            Cancle
-          </button>
-          <button>Continue</button>
-        </div> */}
       </div>
     </div>
   );

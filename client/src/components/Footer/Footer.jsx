@@ -73,7 +73,7 @@ const FooterDetail = styled.div`
 
 const CopyRight = styled.div`
   font-size: 10px;
-  color: gray;
+  color: #ddd;
   text-align: left;
   padding: 1rem 0.4rem;
   padding-bottom: 0.4rem;

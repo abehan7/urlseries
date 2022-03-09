@@ -5,10 +5,8 @@ import {
   HiOutlineDocumentRemove,
   HiOutlineFolderAdd,
 } from "react-icons/hi";
-import { RiMailLine, RiArrowDropDownLine } from "react-icons/ri";
 import { CgEditBlackPoint, CgHashtag } from "react-icons/cg";
-import { Link } from "react-router-dom";
-import Footer from "../Footer/Footer";
+import Footer from "../Footer/Footer.jsx";
 
 // import {} from "react-icons"
 
