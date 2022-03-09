@@ -78,8 +78,8 @@ const UrlEl = styled.div`
 
 const Index = styled.div`
   position: absolute;
-  top: 100%;
-  right: 0;
+  top: 101%;
+  right: 0.4rem;
   font-size: 0.8rem;
   color: #c4c4c4;
   font-weight: 100;
