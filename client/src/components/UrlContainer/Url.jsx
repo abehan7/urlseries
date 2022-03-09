@@ -2,6 +2,7 @@ import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
 const Line = styled.div`
   width: 4px;
+  /* min-width: 4px; */
   height: 76%;
   border-radius: 10px;
   background-color: #ddd;

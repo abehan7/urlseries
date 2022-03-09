@@ -12,7 +12,7 @@ const SideBarEl = styled.div`
   @keyframes fadeInUp {
     0% {
       opacity: 0;
-      transform: translateY(200%);
+      transform: translateY(100%);
     }
     to {
       opacity: 1;
@@ -36,19 +36,22 @@ const Button = styled.div`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   position: relative;
-  overflow-y: hidden;
+
+  ::before {
+    background-color: #fff;
+    left: 0;
+    content: "";
+    height: 100%;
+    width: 2px;
+    position: absolute;
+    transition: all 0.2s ease-in-out;
+  }
 
   :hover {
     background-color: #a597fe1a;
     color: black;
     ::before {
       background-color: #a597fe;
-      left: 0;
-      content: "";
-      height: 100%;
-      width: 2px;
-      position: absolute;
-      animation: fadeInUp 0.2s ease-in-out;
     }
   }
 `;
@@ -70,6 +73,7 @@ const TagWrapper = styled.div`
   position: relative;
   > div {
     ::before {
+      transition: all 0.2s ease-in-out;
       background-color: #ddd;
       left: 0;
       content: "";

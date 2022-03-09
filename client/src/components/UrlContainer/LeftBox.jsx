@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { ItemConatiner } from "./styled/ItemContainer";
 import { useUrl } from "../../contexts/UrlContext";
@@ -6,18 +6,19 @@ import Url from "./Url";
 import { Title } from "./styled/Title.styled";
 import { TitleWrapper } from "./styled/TitleWrapper.styled";
 import Indicator from "./Indicator";
-
+import Marker from "./Marker";
+import { throttle } from "lodash";
 const LeftBoxEl = styled.div`
   flex: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-
-  /* padding: 1rem; */
 `;
 
 const FlexContainer = styled(ItemConatiner)`
+  position: relative;
+
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -40,7 +41,30 @@ const FlexContainer = styled(ItemConatiner)`
 `;
 
 const LeftBox = () => {
+  const [isScroll, setIsScroll] = useState(false);
+  const [scrollTop, setScrollTop] = useState(0);
+  const scrollRef = useRef(null);
   const totalUrls = useUrl().url.totalUrls;
+
+  const throttled = useRef(
+    throttle((newValue, scrollTop) => {
+      setScrollTop(newValue);
+      // TODO: 이거 저장 현재 퍼센트 매우매우 중요
+      // const scrollPercent = newValue / (totalUrls.length * 50);
+      const diff = newValue - scrollTop; //음수면 위로 양수면 아래로
+      console.log("diff: ", diff);
+      diff > 0 ? setIsScroll(true) : setIsScroll(false);
+    }, 500)
+  );
+
+  const onScroll = (e) => {
+    throttled.current(e.target.scrollTop, scrollTop);
+  };
+
+  const handleScrollUp = () => {
+    const option = { top: 0, left: 0, behavior: "smooth" };
+    scrollRef.current.scrollTo(option);
+  };
 
   return (
     <LeftBoxEl>
@@ -48,7 +72,7 @@ const LeftBox = () => {
         <Title>전체 북마크</Title>
       </TitleWrapper>
       <Indicator />
-      <FlexContainer>
+      <FlexContainer onScroll={onScroll} ref={scrollRef}>
         {totalUrls.slice(0, 100).map((url, index) => (
           <Url
             url={url.url}
@@ -59,6 +83,7 @@ const LeftBox = () => {
             totalUrlNum={totalUrls.length}
           />
         ))}
+        <Marker isScroll={isScroll} onClick={handleScrollUp} />
       </FlexContainer>
     </LeftBoxEl>
   );
