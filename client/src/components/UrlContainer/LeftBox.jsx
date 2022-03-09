@@ -8,6 +8,8 @@ import { TitleWrapper } from "./styled/TitleWrapper.styled";
 import Indicator from "./Indicator";
 import Marker from "./Marker";
 import { throttle } from "lodash";
+import Loader from "../Utils/Loader/Loader";
+import ItemContainer from "./ItemContainer";
 const LeftBoxEl = styled.div`
   flex: 2;
   display: flex;
@@ -43,6 +45,7 @@ const FlexContainer = styled(ItemConatiner)`
 const LeftBox = () => {
   const [isScroll, setIsScroll] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
+  // const []
   const scrollRef = useRef(null);
   const totalUrls = useUrl().url.totalUrls;
 
@@ -66,6 +69,7 @@ const LeftBox = () => {
     scrollRef.current.scrollTo(option);
   };
 
+  const isTagClicked = false;
   return (
     <LeftBoxEl>
       <TitleWrapper>
@@ -73,16 +77,9 @@ const LeftBox = () => {
       </TitleWrapper>
       <Indicator />
       <FlexContainer onScroll={onScroll} ref={scrollRef}>
-        {totalUrls.slice(0, 100).map((url, index) => (
-          <Url
-            url={url.url}
-            title={url.url_title}
-            key={url._id}
-            id={url._id}
-            index={index}
-            totalUrlNum={totalUrls.length}
-          />
-        ))}
+        {!isTagClicked && <ItemContainer urls={totalUrls} />}
+        {isTagClicked && <ItemContainer urls={totalUrls} />}
+        {totalUrls.length === 0 && <Loader />}
         <Marker isScroll={isScroll} onClick={handleScrollUp} />
       </FlexContainer>
     </LeftBoxEl>

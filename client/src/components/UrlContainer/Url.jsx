@@ -12,9 +12,9 @@ const Line = styled.div`
 `;
 
 const Img = styled.img`
-  width: 20px;
-  /* height: 20px; */
+  width: 17px;
   padding: 0.5rem 0.4rem;
+  padding-top: 0.3rem;
   align-self: flex-start;
   border-radius: 10px;
 `;
@@ -25,34 +25,45 @@ const Text = styled.span`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  /* word-break: keep-all; */
+  word-wrap: break-word;
 `;
 
 const TextWrapper = styled.div`
-  width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   padding: 0 0.4rem;
+  flex: 1;
+  max-width: calc(100% - 30px - 30px - 30px);
 `;
 
 const Icon = styled.div`
+  height: 100%;
+  /* padding: 0.5rem 0.4rem; */
+
   padding: 0.5rem 0.4rem;
+  padding-right: 0.2rem;
+
   font-size: 1.4rem;
-  align-self: flex-start;
   color: #ffc64b;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
 `;
 
 const UrlEl = styled.div`
+  padding: 0.3rem;
   position: relative;
-  width: 97%;
+  width: 100%;
   height: 60px;
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #fff;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   cursor: pointer;
 
   transition: all 0.3s ease-in-out;

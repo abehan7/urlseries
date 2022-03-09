@@ -1,13 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import "./MainPage.css";
 
-// Rectangles
-import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
-import FiveUrlsLeft from "../components/Rectangles/FiveUrlsLeft";
-// Modals
-import GridHeader from "../components/GridHeader";
-// SearchArea
-
 // REDUX
 import { useDispatch, useSelector } from "react-redux";
 // API
