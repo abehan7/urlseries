@@ -54,7 +54,7 @@ const RightBox = () => {
       // TODO: 이거 저장 현재 퍼센트 매우매우 중요
       // const scrollPercent = newValue / (totalUrls.length * 50);
       const diff = newValue - scrollTop; //음수면 위로 양수면 아래로
-      console.log("diff: ", diff);
+      // console.log("diff: ", diff);
       diff > 0 ? setIsScroll(true) : setIsScroll(false);
     }, 500)
   );

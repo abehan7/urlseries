@@ -62,7 +62,10 @@ const UrlEl = styled.div`
   padding: 0.3rem;
   position: relative;
   width: 100%;
-  height: 60px;
+  /* height: 50px; */
+  height: 40px;
+  max-height: 40px;
+  min-height: 40px;
   border: 1px solid #ddd;
   border-radius: 10px;
   background-color: #fff;
