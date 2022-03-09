@@ -1,3 +1,4 @@
+import { debounce } from "lodash";
 import React, {
   useContext,
   useEffect,
@@ -20,6 +21,8 @@ import { SET_FOLDERS } from "../store/reducers/Folders";
 const UrlContext = createContext();
 
 export const useUrl = () => useContext(UrlContext);
+
+const debounceFn = debounce((fn) => fn(), 500);
 
 export const UrlProvider = ({ children }) => {
   // console.log("UrlProvider");
@@ -148,7 +151,6 @@ export const UrlProvider = ({ children }) => {
   // FIXME: 전체 url
   useEffect(() => {
     const fn = async () => {
-      console.log("!23");
       const { data } = await TotalAfter();
       setUrl({ ...url, totalUrls: data.totalAfter });
       // console.log("totalUrls: ", data.totalAfter);
@@ -159,6 +161,7 @@ export const UrlProvider = ({ children }) => {
   // FIXME: 초반 url
   useEffect(() => {
     const getMemberData = async () => {
+      // console.log("getMemberData");
       setLoading(true);
       await getAbort();
       const { data } = await GetTotalUrls();
@@ -189,7 +192,7 @@ export const UrlProvider = ({ children }) => {
       });
     };
 
-    token && url.displayUrls.length === 0 && getMemberData();
+    token && debounceFn(getMemberData);
     !token && getGuestData();
   }, [token]);
 

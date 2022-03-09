@@ -12,6 +12,7 @@ import ItemContainer from "./ItemContainer";
 import SearchBar from "../SearchBar/SearchBar";
 import { KeywordNormalize, SearchNotByDB } from "../Utils/Search";
 import { useEffect } from "react";
+import { useCallback } from "react";
 
 const LeftBoxEl = styled.div`
   flex: 2;
@@ -56,21 +57,29 @@ const LeftBox = () => {
   const [filterdUrls, setFilterdUrls] = useState([]);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
   // const [option]
+  // console.log("totalUrls", totalUrls);
 
-  const _getFilterdUrls = (keyword) => {
-    const pKeyword = KeywordNormalize(keyword);
-    const filterd = SearchNotByDB(pKeyword, totalUrls);
-    setFilterdUrls(filterd);
-    setIsSearchLoading(false);
-  };
+  const _getFilterdUrls = useCallback(
+    (keyword) => {
+      const pKeyword = KeywordNormalize(keyword);
+      const filterd = SearchNotByDB(pKeyword, totalUrls);
+      setFilterdUrls(filterd);
+      setIsSearchLoading(false);
+    },
+    [totalUrls]
+  );
 
-  const onChange = async (e) => {
-    debounceFn.cancel();
-    setIsSearchLoading(true);
-    const _keyword = e.target.value;
-    setKeyword(_keyword);
-    e.target.value.length > 0 && (await debounceFn(_getFilterdUrls, _keyword));
-  };
+  const onChange = useCallback(
+    async (e) => {
+      debounceFn.cancel();
+      setIsSearchLoading(true);
+      const _keyword = e.target.value;
+      setKeyword(_keyword);
+      e.target.value.length > 0 &&
+        (await debounceFn(_getFilterdUrls, _keyword));
+    },
+    [keyword]
+  );
 
   useEffect(() => setFilterdUrls([]), [keyword]);
   useEffect(
@@ -88,12 +97,15 @@ const LeftBox = () => {
     }, 500)
   );
 
-  const onScroll = (e) => throttled.current(e.target.scrollTop, scrollTop);
+  const onScroll = useCallback(
+    (e) => throttled.current(e.target.scrollTop, scrollTop),
+    [scrollTop]
+  );
 
-  const handleScrollUp = () => {
+  const handleScrollUp = useCallback(() => {
     const option = { top: 0, left: 0, behavior: "smooth" };
     scrollRef.current.scrollTo(option);
-  };
+  }, []);
 
   const isTagClicked = false;
   const isSearch = keyword.length > 0;
@@ -114,7 +126,7 @@ const LeftBox = () => {
         {/* 검색 url */}
         {isSearch && <ItemContainer urls={filterdUrls} />}
         {/* url 검색중 */}
-        {isSearchLoading && <Loader />}
+        {isSearch && isSearchLoading && <Loader />}
         {/* url없을때 component만들기*/}
 
         {/* 맨 처음 로딩 */}

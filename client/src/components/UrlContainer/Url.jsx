@@ -93,9 +93,8 @@ const Index = styled.div`
   font-weight: 100;
 `;
 
-const Url = ({ url, title, id, index, totalUrlNum }) => {
+const Url = ({ url, title, id, index, totalUrlNum, isLiked }) => {
   const src = `http://www.google.com/s2/favicons?domain=${url}`;
-  const isClicked = false;
 
   return (
     <UrlEl key={id}>
@@ -104,7 +103,7 @@ const Url = ({ url, title, id, index, totalUrlNum }) => {
       <TextWrapper>
         <Text>{title}</Text>
       </TextWrapper>
-      <Icon>{isClicked ? <AiFillStar /> : <AiOutlineStar />}</Icon>
+      <Icon>{isLiked ? <AiFillStar /> : <AiOutlineStar />}</Icon>
       <Index>
         {totalUrlNum - index}/{totalUrlNum}
       </Index>

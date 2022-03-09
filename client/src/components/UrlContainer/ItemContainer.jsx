@@ -20,6 +20,9 @@ const ItemContainer = ({ urls }) => {
   const stopCondition = urls.length === contentsNum;
   InfiniteScroll({ isLoaded, getNextItems, target, stopCondition });
 
+  const onClickUrl = () => {};
+  const onClickStar = () => {};
+
   return filterdItems.map((url, index) => {
     if (index === contentsNum - 1)
       return <Loader key={"thisIsLoader"} target={setTarget} />;
@@ -31,6 +34,7 @@ const ItemContainer = ({ urls }) => {
         id={url._id}
         index={index}
         totalUrlNum={urls.length}
+        isLiked={url.url_likedUrl === 1}
       />
     );
   });

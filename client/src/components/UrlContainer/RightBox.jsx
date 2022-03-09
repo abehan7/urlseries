@@ -44,7 +44,9 @@ const FlexContainer = styled(ItemConatiner)`
   }
 `;
 const RightBox = () => {
-  const totalUrls = useUrl().url.totalUrls;
+  // const totalUrls = useUrl().url.totalUrls;
+  const likedUrls = useUrl().url.likedUrls;
+  const searchedUrls = useUrl().url.searchedUrls;
   const [isScroll, setIsScroll] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
   const scrollRef = useRef(null);
@@ -75,9 +77,9 @@ const RightBox = () => {
         <Title>즐겨찾기</Title>
       </TitleWrapper>
       <FlexContainer onScroll={onScroll} ref={scrollRef}>
-        {!isLikeUrls && <ItemContainer urls={totalUrls} />}
-        {isLikeUrls && <ItemContainer urls={totalUrls} />}
-        {totalUrls.length === 0 && <Loader />}
+        {!isLikeUrls && <ItemContainer urls={searchedUrls} />}
+        {isLikeUrls && <ItemContainer urls={likedUrls} />}
+        {likedUrls.length === 0 && <Loader />}
         <Marker isScroll={isScroll} onClick={handleScrollUp} />
       </FlexContainer>
     </RightBoxEl>
