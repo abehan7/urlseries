@@ -16,7 +16,9 @@ const Img = styled.img`
   padding: 0.5rem 0.4rem;
   padding-top: 0.3rem;
   align-self: flex-start;
+  /* align-self: flex-start; */
   border-radius: 10px;
+  vertical-align: middle;
 `;
 
 const Text = styled.span`
@@ -51,6 +53,9 @@ const Icon = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  /* align-self: flex-start; */
+  /* color: #ffc64b; */
+  /* vertical-align: middle; */
 `;
 
 const UrlEl = styled.div`
