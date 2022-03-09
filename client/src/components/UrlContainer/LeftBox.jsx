@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components";
 import { ItemConatiner } from "./styled/ItemContainer";
 import { useUrl } from "../../contexts/UrlContext";
-import Url from "./Url";
 import { Title } from "./styled/Title.styled";
 import { TitleWrapper } from "./styled/TitleWrapper.styled";
 import Indicator from "./Indicator";
@@ -10,6 +9,17 @@ import Marker from "./Marker";
 import { throttle } from "lodash";
 import Loader from "../Utils/Loader/Loader";
 import ItemContainer from "./ItemContainer";
+import SearchBar from "../SearchBar/SearchBar";
+
+const TitleWrapperEl = styled(TitleWrapper)`
+  justify-content: flex-start;
+`;
+
+const TitleEl = styled(Title)`
+  /* flex: 0; */
+
+  width: 100px;
+`;
 const LeftBoxEl = styled.div`
   flex: 2;
   display: flex;
@@ -45,7 +55,6 @@ const FlexContainer = styled(ItemConatiner)`
 const LeftBox = () => {
   const [isScroll, setIsScroll] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
-  // const []
   const scrollRef = useRef(null);
   const totalUrls = useUrl().url.totalUrls;
 
@@ -72,9 +81,10 @@ const LeftBox = () => {
   const isTagClicked = false;
   return (
     <LeftBoxEl>
-      <TitleWrapper>
-        <Title>전체 북마크</Title>
-      </TitleWrapper>
+      <TitleWrapperEl>
+        <TitleEl>전체 북마크</TitleEl>
+        <SearchBar />
+      </TitleWrapperEl>
       <Indicator />
       <FlexContainer onScroll={onScroll} ref={scrollRef}>
         {!isTagClicked && <ItemContainer urls={totalUrls} />}

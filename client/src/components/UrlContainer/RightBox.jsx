@@ -20,11 +20,6 @@ const RightBoxEl = styled.div`
 
   flex-direction: column;
   padding-right: 1rem;
-  .urlContainer--line {
-    min-width: 3.7px;
-  }
-  .urlContainer--textWrapper {
-  }
 `;
 const FlexContainer = styled(ItemConatiner)`
   position: relative;
