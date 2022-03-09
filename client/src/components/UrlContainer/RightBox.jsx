@@ -37,14 +37,22 @@ const FlexContainer = styled(ItemConatiner)`
 `;
 const RightBox = () => {
   const totalUrls = useUrl().url.totalUrls;
+  // console.log(totalUrls.length);
   return (
     <RightBoxEl>
       <TitleWrapper>
-        <Title>좋아요 북마크</Title>
+        <Title>즐겨찾기</Title>
       </TitleWrapper>
       <FlexContainer>
-        {totalUrls.slice(0, 14).map((url, key) => (
-          <Url url={url.url} title={url.url_title} key={key} />
+        {totalUrls.slice(0, 14).map((url, index) => (
+          <Url
+            url={url.url}
+            title={url.url_title}
+            key={url._id}
+            id={url._id}
+            index={index}
+            totalUrlNum={totalUrls.length}
+          />
         ))}
       </FlexContainer>
     </RightBoxEl>

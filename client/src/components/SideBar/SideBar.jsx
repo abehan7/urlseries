@@ -9,6 +9,16 @@ import { CgEditBlackPoint, CgHashtag } from "react-icons/cg";
 // import {} from "react-icons"
 
 const SideBarEl = styled.div`
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(200%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
   height: 100%;
   width: 200px;
   background-color: #fff;
@@ -26,6 +36,7 @@ const Button = styled.div`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   position: relative;
+  overflow-y: hidden;
 
   :hover {
     background-color: #a597fe1a;
@@ -37,6 +48,7 @@ const Button = styled.div`
       height: 100%;
       width: 2px;
       position: absolute;
+      animation: fadeInUp 0.2s ease-in-out;
     }
   }
 `;
@@ -66,8 +78,6 @@ const TagWrapper = styled.div`
       position: absolute;
     }
   }
-
-  /* border-left: 2px solid #e9ecef; */
 `;
 const Img = styled.img`
   width: 40px;

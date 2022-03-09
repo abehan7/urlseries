@@ -49,8 +49,15 @@ const LeftBox = () => {
       </TitleWrapper>
       <Indicator />
       <FlexContainer>
-        {totalUrls.slice(0, 14).map((url, key) => (
-          <Url url={url.url} title={url.url_title} key={key} />
+        {totalUrls.slice(0, 100).map((url, index) => (
+          <Url
+            url={url.url}
+            title={url.url_title}
+            key={url._id}
+            id={url._id}
+            index={index}
+            totalUrlNum={totalUrls.length}
+          />
         ))}
       </FlexContainer>
     </LeftBoxEl>

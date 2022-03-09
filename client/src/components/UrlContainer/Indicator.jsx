@@ -33,7 +33,7 @@ const Indicator = () => {
     <IndicatorEl>
       <TagWrapper>
         {hashtags.map((tag, key) => (
-          <Tag tag={tag} />
+          <Tag tag={tag} key={tag} />
         ))}
       </TagWrapper>
     </IndicatorEl>
