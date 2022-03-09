@@ -78,42 +78,6 @@
   background-color: #ff4b2b;
 }
 
-/* The container <div> - needed to position the dropup content */
-.dropup {
-  position: relative;
-  display: inline-block;
-}
-
-/* Dropup content (Hidden by Default) */
-.dropup-content {
-  border-radius: 10px;
-  display: none;
-  position: absolute;
-  bottom: 35px;
-  background-color: #f1f1f1;
-  width: max-content;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  font-weight: lighter;
-}
-
-/* Links inside the dropup */
-.dropup-content p {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-}
-
-/* Show the dropup menu on hover */
-.dropup:hover .dropup-content {
-  display: block;
-}
-
-/* Change the background color of the dropup button when the dropup content is shown */
-.dropup:hover .dropbtn {
-  background-color: #ff4b2b;
-}
 /*=================================================== */
 
 .projects {

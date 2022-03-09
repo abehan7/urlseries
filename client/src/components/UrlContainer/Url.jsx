@@ -15,8 +15,9 @@ const Img = styled.img`
   width: 20px;
   /* height: 20px; */
   padding: 0.5rem 0.4rem;
-  align-self: flex-start;
+  /* align-self: flex-start; */
   border-radius: 10px;
+  vertical-align: middle;
 `;
 
 const Text = styled.span`
@@ -39,8 +40,9 @@ const TextWrapper = styled.div`
 const Icon = styled.div`
   padding: 0.5rem 0.4rem;
   font-size: 1.4rem;
-  align-self: flex-start;
+  /* align-self: flex-start; */
   color: #ffc64b;
+  vertical-align: middle;
 `;
 
 const UrlEl = styled.div`
