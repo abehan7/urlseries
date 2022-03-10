@@ -124,19 +124,22 @@ const Indicator = () => {
   );
 
   const onWheel = useCallback((e) => {
-    // const isScrollUp = e.deltaY > 0;
-    // throttled.current(isScrollUp);
-    console.log(e);
+    console.log(e.target.offsetWidth);
+
+    const isScrollUp = e.deltaY > 0;
+    throttled.current(isScrollUp);
+    // console.log(e.deltaY);
+    // console.log(e);
     const getScrollUp = () => {
-      const left = scrollRef.current.scrollLeft + 40;
+      const left = scrollRef.current.scrollLeft + 300;
       scrollToFn(left);
     };
     const getScrollDown = () => {
-      const left = scrollRef.current.scrollLeft - 40;
+      const left = scrollRef.current.scrollLeft - 300;
       scrollToFn(left);
     };
 
-    e.deltaY > 0 ? getScrollUp() : getScrollDown();
+    // e.deltaY > 0 ? getScrollUp() : getScrollDown();
   }, []);
 
   const hashtagMap = () => {
