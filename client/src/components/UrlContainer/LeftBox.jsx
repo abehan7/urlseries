@@ -46,6 +46,30 @@ const FlexContainer = styled(ItemConatiner)`
   }
 `;
 
+const SearchTitle = styled(Title)`
+  width: 40px;
+  cursor: pointer;
+  margin-left: 1rem;
+  border-radius: 10px;
+  padding: 0.5rem;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  background-color: #a597fe;
+  color: #fff;
+  :hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+`;
+
+const TitleContainerEl = styled.div`
+  flex: 1;
+  display: flex;
+  height: 100%;
+  align-items: center;
+
+  /* justify-content: center; */
+`;
+
 const debounceFn = debounce((fn, keyword) => fn(keyword), 400);
 
 const LeftBox = () => {
@@ -56,6 +80,7 @@ const LeftBox = () => {
   const [keyword, setKeyword] = useState("");
   const [filterdUrls, setFilterdUrls] = useState([]);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
+  const loading = useUrl().loading;
   // const [option]
   // console.log("totalUrls", totalUrls);
 
@@ -109,12 +134,16 @@ const LeftBox = () => {
 
   const isTagClicked = false;
   const isSearch = keyword.length > 0;
+
+  const onClickSearchTitle = () => setKeyword("");
   return (
     <LeftBoxEl>
       <TitleWrapper>
-        {!isTagClicked && !isSearch && <Title>전체 북마크</Title>}
-        {isTagClicked && <Title>태그</Title>}
-        {isSearch && <Title>검색</Title>}
+        <TitleContainer
+          isTagClicked={isTagClicked}
+          isSearch={isSearch}
+          onClickSearchTitle={onClickSearchTitle}
+        />
         <SearchBar onChange={onChange} keyword={keyword} />
       </TitleWrapper>
       <Indicator />
@@ -130,7 +159,7 @@ const LeftBox = () => {
         {/* url없을때 component만들기*/}
 
         {/* 맨 처음 로딩 */}
-        {totalUrls.length === 0 && <Loader />}
+        {loading.isTotalUrl && <Loader />}
         <Marker isScroll={isScroll} onClick={handleScrollUp} />
       </FlexContainer>
     </LeftBoxEl>
@@ -138,3 +167,15 @@ const LeftBox = () => {
 };
 
 export default LeftBox;
+
+const TitleContainer = ({ isTagClicked, isSearch, onClickSearchTitle }) => {
+  return (
+    <TitleContainerEl>
+      {!isTagClicked && !isSearch && <Title>전체 북마크</Title>}
+      {isTagClicked && <Title>태그</Title>}
+      {isSearch && (
+        <SearchTitle onClick={onClickSearchTitle}>#검색</SearchTitle>
+      )}
+    </TitleContainerEl>
+  );
+};

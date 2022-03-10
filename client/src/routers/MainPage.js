@@ -5,9 +5,6 @@ import "./MainPage.css";
 import { useDispatch, useSelector } from "react-redux";
 // API
 import styled from "styled-components";
-import { UrlDetailActions } from "../store/reducers/ClickedUrlDetails";
-// import ModalHashtag from "../components/ModalHashtag/ModalHashtag";
-// import FolderModalWindow from "../components/ModalFolderPage/FolderModalWindow";
 import { getFolders } from "../store/reducers/Folders";
 import { getIsClicked } from "../store/reducers/Tags";
 import { getTagFilterdItems } from "../store/reducers/urls";
@@ -42,9 +39,6 @@ const MainPage = () => {
   const dispatch = useDispatch();
   const tagFilterdItems = useSelector(getTagFilterdItems);
   // url 클릭하면 그 디테일들 리덕스에 저장하는 기능
-  const setUrlDetail = (detail) => {
-    dispatch(UrlDetailActions.SetClickedUrl(detail));
-  };
 
   const tagIsClicked = useSelector(getIsClicked);
   const folders = useSelector(getFolders);

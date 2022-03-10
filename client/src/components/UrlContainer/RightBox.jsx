@@ -49,6 +49,7 @@ const RightBox = () => {
   const searchedUrls = useUrl().url.searchedUrls;
   const [isScroll, setIsScroll] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
+  const loading = useUrl().loading;
   const scrollRef = useRef(null);
   const throttled = useRef(
     throttle((newValue, scrollTop) => {
@@ -79,7 +80,7 @@ const RightBox = () => {
       <FlexContainer onScroll={onScroll} ref={scrollRef}>
         {!isLikeUrls && <ItemContainer urls={searchedUrls} />}
         {isLikeUrls && <ItemContainer urls={likedUrls} />}
-        {likedUrls.length === 0 && <Loader />}
+        {loading.isLikedUrl && <Loader />}
         <Marker isScroll={isScroll} onClick={handleScrollUp} />
       </FlexContainer>
     </RightBoxEl>

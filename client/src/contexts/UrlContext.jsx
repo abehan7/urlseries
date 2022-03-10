@@ -52,7 +52,10 @@ export const UrlProvider = ({ children }) => {
     tmpTags: [],
   });
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState({
+    isTotalUrl: true,
+    isLikedUrl: true,
+  });
   const token = useSelector(getToken);
   const dispatch = useDispatch();
 
@@ -148,22 +151,75 @@ export const UrlProvider = ({ children }) => {
     setUrl({ ...url, displayUrls: urls });
   };
 
+  const handleEditUrl = (urlId, newUrl) => {
+    const newTotalUrl = url.totalUrl.map((_url) =>
+      _url._id === urlId ? newUrl : _url
+    );
+    // displayUrl은 useState라서 자동으로 될 수도 있을꺼같으니 우선 나두자
+    const update = { ...url, totalUrl: newTotalUrl };
+    setUrl(update);
+    // api call
+  };
+
+  const handleAddUrl = async (_url) => {
+    // api call
+    const addUrl = () => {};
+    const newUrl = await addUrl(_url);
+    setUrl({ ...url, totalUrl: [newUrl, ...url.totalUrls] });
+  };
+
+  const handleDeleteUrl = async (urlId) => {
+    // api call
+    const deleteUrl = () => {};
+    await deleteUrl(urlId);
+    const newUrl = url.totalUrls.filter((_url) => _url._id !== urlId);
+    setUrl({ ...url, totalUrl: newUrl });
+  };
+
+  // FIXME: 좋아요 기능
+  const handleClickStar = (urlId) => {
+    const newUrl = url.totalUrls.find((_url) => _url._id === urlId);
+    // totalUrls displayUrls
+    const update =
+      newUrl.url_likedUrl === 0
+        ? { ...newUrl, url_likedUrl: 1 }
+        : { ...newUrl, url_likedUrl: 0 };
+    const updateUrl = (urls) => {
+      return urls.map((_url) => (_url._id === urlId ? update : _url));
+    };
+    const totalUrls = updateUrl(url.totalUrls);
+    const displayUrls = updateUrl(url.displayUrls);
+    // likedUrls
+    const isLiked = update.url_likedUrl === 1;
+    const addLike = [update, ...url.likedUrls];
+    const filterLike = url.likedUrls.filter((_url) => _url._id !== urlId);
+    const likedUrls = isLiked ? addLike : filterLike;
+
+    // const updateUrlState = { ...url, totalUrls, displayUrls };
+    setUrl({ ...url, displayUrls, totalUrls, likedUrls });
+
+    // api call
+  };
+
   // FIXME: 전체 url
   useEffect(() => {
     const fn = async () => {
+      setLoading({ ...loading, isTotalUrl: true });
       const { data } = await TotalAfter();
       setUrl({ ...url, totalUrls: data.totalAfter });
+      setLoading({ ...loading, isTotalUrl: false });
+
       // console.log("totalUrls: ", data.totalAfter);
     };
-    token && !loading && fn();
-  }, [token, loading]);
+    token && !loading.isLikedUrl && fn();
+  }, [token, loading.isLikedUrl]);
 
   // FIXME: 초반 url
   useEffect(() => {
     const getMemberData = async () => {
-      // console.log("getMemberData");
-      setLoading(true);
+      console.log("getMemberData");
       await getAbort();
+      setLoading({ ...loading, isLikedUrl: true });
       const { data } = await GetTotalUrls();
       // console.log(data);
 
@@ -174,7 +230,7 @@ export const UrlProvider = ({ children }) => {
         recentClickedUrls: data.rightURL,
         likedUrls: data.leftURL,
       });
-      setLoading(false);
+      setLoading({ ...loading, isLikedUrl: false });
 
       dispatch(SET_FOLDERS());
       // console.log(data);
@@ -192,7 +248,7 @@ export const UrlProvider = ({ children }) => {
       });
     };
 
-    token && debounceFn(getMemberData);
+    token && getMemberData();
     !token && getGuestData();
   }, [token]);
 
@@ -210,7 +266,7 @@ export const UrlProvider = ({ children }) => {
       // console.log("data from urlContext", data.);
     };
     token && !loading && startfn();
-  }, [token, loading]);
+  }, [token, loading.isLikedUrl]);
 
   // useEffect(() => {
   //   console.log("url:", url);
@@ -225,6 +281,11 @@ export const UrlProvider = ({ children }) => {
     handleCloseEditModal,
     handleEditModify,
     handleGetInfiniteScrollItems,
+    handleEditUrl,
+    handleAddUrl,
+    handleDeleteUrl,
+    handleClickStar,
+    loading,
   };
 
   return <UrlContext.Provider value={value}>{children}</UrlContext.Provider>;

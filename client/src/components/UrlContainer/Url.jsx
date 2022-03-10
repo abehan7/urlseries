@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
 const Line = styled.div`
@@ -53,6 +54,9 @@ const Icon = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+
+  z-index: 2;
+  /* background-color: #fff; */
   /* align-self: flex-start; */
   /* color: #ffc64b; */
   /* vertical-align: middle; */
@@ -93,17 +97,37 @@ const Index = styled.div`
   font-weight: 100;
 `;
 
-const Url = ({ url, title, id, index, totalUrlNum, isLiked }) => {
+const Url = ({
+  url,
+  title,
+  id,
+  index,
+  totalUrlNum,
+  isLiked,
+  onClick,
+  onClickStar,
+}) => {
   const src = `http://www.google.com/s2/favicons?domain=${url}`;
+  const starWrapRef = useRef(null);
+
+  const onClickUrl = (e) => {
+    const svg = starWrapRef.current.querySelector("svg");
+    const path = svg.querySelector("path");
+    const blackList = [path, svg, starWrapRef.current];
+    if (blackList.includes(e.target)) return;
+    onClick();
+  };
 
   return (
-    <UrlEl key={id}>
+    <UrlEl key={id} onClick={onClickUrl}>
       <Line />
       <Img src={src} />
       <TextWrapper>
         <Text>{title}</Text>
       </TextWrapper>
-      <Icon>{isLiked ? <AiFillStar /> : <AiOutlineStar />}</Icon>
+      <Icon onClick={onClickStar} ref={starWrapRef}>
+        {isLiked ? <AiFillStar /> : <AiOutlineStar />}
+      </Icon>
       <Index>
         {totalUrlNum - index}/{totalUrlNum}
       </Index>

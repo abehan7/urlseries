@@ -4,12 +4,16 @@ const ModeContext = createContext();
 
 export const useMode = () => useContext(ModeContext);
 
+const NORMAL = "NORMAL";
+const EDIT = "EDIT";
+const ADD = "ADD";
+const DELETE = "DELETE";
+
+export const constants = { NORMAL, EDIT, ADD, DELETE };
+
 export const ModeProvider = ({ children }) => {
-  const [mode, setMode] = useState({
-    isDarkMode: false,
-    isEditMode: false,
-    isDeleteMode: false,
-  });
+  // isDarkMode isEditMode isDeleteMode isNormalMode
+  const [mode, setMode] = useState(NORMAL);
 
   const [loading, setLoading] = useState(true);
 
