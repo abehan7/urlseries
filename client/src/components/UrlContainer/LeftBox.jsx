@@ -103,13 +103,7 @@ const LeftBox = () => {
       e.target.value.length > 0 &&
         (await debounceFn(_getFilterdUrls, _keyword));
     },
-    [keyword]
-  );
-
-  useEffect(() => setFilterdUrls([]), [keyword]);
-  useEffect(
-    () => console.log("isSearchLoading: ", isSearchLoading),
-    [isSearchLoading]
+    [keyword, _getFilterdUrls]
   );
 
   const throttled = useRef(
@@ -136,6 +130,17 @@ const LeftBox = () => {
   const isSearch = keyword.length > 0;
 
   const onClickSearchTitle = () => setKeyword("");
+
+  useEffect(() => setFilterdUrls([]), [keyword]);
+  useEffect(
+    () => console.log("isSearchLoading: ", isSearchLoading),
+    [isSearchLoading]
+  );
+
+  useEffect(() => {
+    isSearch && _getFilterdUrls(keyword);
+  }, [totalUrls]);
+
   return (
     <LeftBoxEl>
       <TitleWrapper>

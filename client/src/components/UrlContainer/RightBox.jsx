@@ -16,18 +16,22 @@ const RightBoxEl = styled.div`
   @keyframes urlIn {
     from {
       transform: translateX(-50%);
+      opacity: 0.3;
     }
     to {
       transform: translateX(0%);
+      opacity: 1;
     }
   }
 
   @keyframes urlOut {
     from {
       transform: translate(0%, 0%);
+      opacity: 1;
     }
     to {
       transform: translate(-60%, 0px);
+      opacity: 0.3;
     }
   }
 

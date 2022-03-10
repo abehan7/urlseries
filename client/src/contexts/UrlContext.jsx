@@ -184,16 +184,20 @@ export const UrlProvider = ({ children }) => {
       newUrl.url_likedUrl === 0
         ? { ...newUrl, url_likedUrl: 1 }
         : { ...newUrl, url_likedUrl: 0 };
+
     const updateUrl = (urls) => {
       return urls.map((_url) => (_url._id === urlId ? update : _url));
     };
+
     const totalUrls = updateUrl(url.totalUrls);
     const displayUrls = updateUrl(url.displayUrls);
+    // const searchedUrls = updateUrl(url.searchedUrls);
     // likedUrls
     const isLiked = update.url_likedUrl === 1;
     const addLike = [update, ...url.likedUrls];
     const filterLike = url.likedUrls.filter((_url) => _url._id !== urlId);
     const likedUrls = isLiked ? addLike : filterLike;
+    // searchedUrls
 
     // const updateUrlState = { ...url, totalUrls, displayUrls };
     setUrl({ ...url, displayUrls, totalUrls, likedUrls });
