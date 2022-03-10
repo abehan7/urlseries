@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 import loadable from "@loadable/component";
 
-import HeaderT from "./components/HeaderT/HeaderT";
+import Header from "./components/Header/Header";
 import Body from "./components/Body/Body";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -59,7 +59,7 @@ function App() {
   return (
     <Router>
       <AppEl className="App">
-        <HeaderT />
+        <Header />
         <Body />
       </AppEl>
     </Router>

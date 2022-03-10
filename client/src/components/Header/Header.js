@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { VscAccount, VscLayers, VscChevronDown } from "react-icons/vsc";
-import "./HeaderT.css";
+import "./Header.css";
 import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 
@@ -81,7 +81,7 @@ const DropDownContent = styled.div`
   }
 `;
 
-function HeaderT() {
+function Header() {
   const auth = useSelector((state) => state.auth);
 
   const { user, isLogged } = auth;
@@ -166,4 +166,4 @@ function HeaderT() {
   );
 }
 
-export default HeaderT;
+export default Header;
