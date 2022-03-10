@@ -161,7 +161,6 @@ const Indicator = () => {
     const clickedSecondFn = () => {
       dispatch(REMOVE_FOLDER_TAGS(folder._id));
     };
-    // console.log(folder);
     !folderTagItems.includes(folder?._id) && clickedOnceFn();
     folderTagItems.includes(folder?._id) && clickedSecondFn();
   };
