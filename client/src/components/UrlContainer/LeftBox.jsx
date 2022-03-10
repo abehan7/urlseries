@@ -82,7 +82,6 @@ const LeftBox = () => {
   const [isSearchLoading, setIsSearchLoading] = useState(false);
   const loading = useUrl().loading;
   // const [option]
-  // console.log("totalUrls", totalUrls);
 
   const _getFilterdUrls = useCallback(
     (keyword) => {
