@@ -6,7 +6,7 @@ import { getTotalTags } from "../components/getTags";
 import { clickOutSide } from "../Hooks/keepModalsShow";
 
 // Header
-import Header from "../components/Header/Header";
+import Header from "../components/header/Header";
 // Rectangles
 import TotalUrlMap from "../components/Rectangles/TotalUrlMap";
 import FiveUrlsRight from "../components/Rectangles/FiveUrlsRight";
@@ -20,7 +20,7 @@ import RightIcons from "../components/TopIcons/RightIcons";
 import AsideTag from "../components/AsideTags/AsideTag";
 import GridHeader from "../components/GridHeader";
 // SearchArea
-import Loader from "../components/SearchBar/Loader";
+import Loader from "../components/searchBar/Loader";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux";

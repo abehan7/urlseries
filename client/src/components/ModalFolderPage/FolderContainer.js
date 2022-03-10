@@ -7,7 +7,7 @@ import { KeywordNormalize, SearchNotByDB } from "../../Hooks/SearchHook";
 import { MainStates } from "../../routers/MainPage";
 import { SET_IS_FOLDER_CONTENTS } from "../../store/reducers/FolderConditions";
 import { SET_ITEMS } from "../../store/reducers/FolderItems";
-import LoadingImg from "../SearchBar/LoadingImg";
+import LoadingImg from "../searchBar/LoadingImg";
 import { FolderContext } from "./FolderModalWindow";
 import ItemFolderContainer from "./ItemFolderContainer";
 import ItemUrlContainer from "./ItemUrlContainer";
