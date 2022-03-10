@@ -13,6 +13,13 @@ import SearchBar from "../SearchBar/SearchBar";
 import { KeywordNormalize, SearchNotByDB } from "../Utils/Search";
 import { useEffect } from "react";
 import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getIsClicked,
+  RESET_TAGS,
+  SET_CLICKED,
+} from "../../store/reducers/Tags";
+import { useFolder } from "../../contexts/FolderContext";
 
 const LeftBoxEl = styled.div`
   flex: 2;
@@ -80,7 +87,10 @@ const LeftBox = () => {
   const [keyword, setKeyword] = useState("");
   const [filterdUrls, setFilterdUrls] = useState([]);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
-  const loading = useUrl().loading;
+  const { loading } = useUrl();
+  const tagIsClicked = useSelector(getIsClicked);
+  const combinedTagItems = useFolder().combinedTagItems.urls;
+  const dispatch = useDispatch();
   // const [option]
 
   const _getFilterdUrls = useCallback(
@@ -125,12 +135,25 @@ const LeftBox = () => {
     scrollRef.current.scrollTo(option);
   }, []);
 
-  const isTagClicked = false;
   const isSearch = keyword.length > 0;
 
   const onClickSearchTitle = () => setKeyword("");
 
-  useEffect(() => setFilterdUrls([]), [keyword]);
+  // 검색시 setting
+
+  // const handleSetClicked = (boolean) => {
+  //   dispatch(SET_CLICKED(boolean));
+  // };
+
+  useEffect(() => {
+    const fn = () => {
+      //태그들 비우기
+      tagIsClicked && dispatch(RESET_TAGS());
+      setFilterdUrls([]);
+    };
+    fn();
+  }, [keyword]);
+
   useEffect(
     () => console.log("isSearchLoading: ", isSearchLoading),
     [isSearchLoading]
@@ -140,11 +163,29 @@ const LeftBox = () => {
     isSearch && _getFilterdUrls(keyword);
   }, [totalUrls]);
 
+  // 태그 하나라도 클릭되면 setting
+  // 아 여기서 약간 이벤트가 이상해
+  // TODO: 여기 수정하기
+  // 검색어 있는 상태에서 태그 누르면 이상하게 풀려
+  // 그리고 태그 안나온다
+  useEffect(() => {
+    const fn = () => {
+      // TODO: 애니메이션 넣기
+      setFilterdUrls([]);
+      // setKeyword("");
+      setTimeout(() => {
+        setFilterdUrls(combinedTagItems);
+      }, [300]);
+    };
+    keyword.length > 0 && setKeyword("");
+    keyword.length === 0 && tagIsClicked && fn();
+  }, [tagIsClicked, combinedTagItems]);
+
   return (
     <LeftBoxEl>
       <TitleWrapper>
         <TitleContainer
-          isTagClicked={isTagClicked}
+          tagIsClicked={tagIsClicked}
           isSearch={isSearch}
           onClickSearchTitle={onClickSearchTitle}
         />
@@ -153,14 +194,15 @@ const LeftBox = () => {
       <Indicator />
       <FlexContainer onScroll={onScroll} ref={scrollRef}>
         {/* 전체url */}
-        {!isTagClicked && !isSearch && <ItemContainer urls={totalUrls} />}
+        {!tagIsClicked && !isSearch && <ItemContainer urls={totalUrls} />}
         {/* 태그별 url */}
-        {isTagClicked && <ItemContainer urls={filterdUrls} />}
+        {tagIsClicked && <ItemContainer urls={filterdUrls} />}
         {/* 검색 url */}
         {isSearch && <ItemContainer urls={filterdUrls} />}
         {/* url 검색중 */}
         {isSearch && isSearchLoading && <Loader />}
         {/* url없을때 component만들기*/}
+        {/* {tagIsClicked && !isSearch && <NoUrl />} */}
 
         {/* 맨 처음 로딩 */}
         {loading.isTotalUrl && <Loader />}
@@ -172,11 +214,11 @@ const LeftBox = () => {
 
 export default LeftBox;
 
-const TitleContainer = ({ isTagClicked, isSearch, onClickSearchTitle }) => {
+const TitleContainer = ({ tagIsClicked, isSearch, onClickSearchTitle }) => {
   return (
     <TitleContainerEl>
-      {!isTagClicked && !isSearch && <Title>전체 북마크</Title>}
-      {isTagClicked && <Title>태그</Title>}
+      {!tagIsClicked && !isSearch && <Title>전체 북마크</Title>}
+      {tagIsClicked && <Title>태그</Title>}
       {isSearch && (
         <SearchTitle onClick={onClickSearchTitle}>#검색</SearchTitle>
       )}

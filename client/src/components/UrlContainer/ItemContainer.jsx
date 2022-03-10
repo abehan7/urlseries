@@ -10,7 +10,7 @@ const ItemContainer = ({ urls }) => {
   const [contentsNum, setContentsNum] = useState(50);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const filterdItems = urls.slice(0, contentsNum);
+  const filterdItems = urls?.slice(0, contentsNum);
   const mode = useMode().mode;
   const handleClickStar = useUrl().handleClickStar;
   const handleSetCurrentUrl = useUrl().handleSetCurrentUrl;

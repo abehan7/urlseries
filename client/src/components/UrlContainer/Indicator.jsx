@@ -21,6 +21,7 @@ import {
 } from "../../store/reducers/Tags";
 import { AiOutlineFolder } from "react-icons/ai";
 import { throttle } from "lodash";
+import { useEffect } from "react";
 const IndicatorEl = styled.div`
   position: relative;
   height: fit-content;
@@ -122,7 +123,7 @@ const Indicator = () => {
   const dispatch = useDispatch();
 
   // hooks
-
+  // FIXME: Scroll side
   const scrollToFn = (left) => {
     const option = scrollRef.current.scrollTo({
       left,
@@ -139,7 +140,7 @@ const Indicator = () => {
     scrollToFn(left);
   };
 
-  // 글자 태그 클릭
+  // FIXME: 글자 태그 클릭
   const handleClickMetaTag = (metaTag) => {
     console.log("handleClickMetaTag", metaTag);
     const clickedOnceFn = () => {
@@ -153,7 +154,7 @@ const Indicator = () => {
     metaTagItems.includes(metaTag) && clickedSecondFn();
   };
 
-  // 폴더 태그 클릭
+  //FIXME: 폴더 태그 클릭
   const handleClickFolderTag = (folder) => {
     const clickedOnceFn = () => {
       dispatch(SET_FOLDER_TAGS(folder._id));
@@ -165,7 +166,21 @@ const Indicator = () => {
     folderTagItems.includes(folder?._id) && clickedSecondFn();
   };
 
-  // 맵핑
+  // FIXME: 태그 하나라도 클릭했는 지 알려줌
+  const handleSetClicked = (boolean) => {
+    dispatch(SET_CLICKED(boolean));
+  };
+
+  useEffect(() => {
+    metaTagItems.length === 0 &&
+      folderTagItems.length === 0 &&
+      handleSetClicked(false);
+
+    (metaTagItems.length !== 0 || folderTagItems.length !== 0) &&
+      handleSetClicked(true);
+  }, [metaTagItems, folderTagItems]);
+
+  // FIXME: 맵핑
   const hashtagMap = () => {
     return assignedHashtags.map((tag, index) => {
       const clicked = metaTagItems.includes(tag.name);
