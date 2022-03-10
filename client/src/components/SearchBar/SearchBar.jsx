@@ -22,7 +22,7 @@ const InputSearch = styled.input`
     color: #535151;
     border-radius: 0px;
     background-color: transparent;
-    border-bottom: 1px solid rgba(114, 114, 114, 0.5);
+    border-bottom: 1px solid rgba(78, 76, 76, 0.5);
     transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
   }
 `;

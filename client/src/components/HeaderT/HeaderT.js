@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { VscAccount, VscLayers, VscChevronDown } from "react-icons/vsc";
 import "./HeaderT.css";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const DropdownBtn = styled.div`
   background-color: transparent;
@@ -22,10 +22,75 @@ const HeaderEl = styled.header`
   }
 `;
 
+const DropDownContent = styled.div`
+  @keyframes slideDown {
+    0% {
+      transform: translateY(-30px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
+  }
+
+  @keyframes slideUp {
+    0% {
+      transform: translateY(0px);
+    }
+    100% {
+      transform: translateY(-30px);
+    }
+  }
+
+  /* Dropdown Content (Hidden by Default) */
+  ${(props) =>
+    props.isOpen
+      ? css`
+          visibility: visible;
+          animation: slideDown 0.1s;
+          opacity: 1;
+        `
+      : css`
+          visibility: hidden;
+          animation: slideUp 0.1s;
+          transition: 0.1s;
+          opacity: 0;
+        `}
+
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  border-radius: 10px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  font-size: 15px;
+  right: 0;
+
+  /* Links inside the dropdown */
+  a {
+    color: black;
+    padding: 8px 12px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    transition: all 0.1s ease-in-out;
+  }
+
+  /* Change color of dropdown links on hover */
+  a:hover {
+    background-color: #f1f1f1;
+    border-radius: 10px;
+  }
+`;
+
 function HeaderT() {
   const auth = useSelector((state) => state.auth);
 
   const { user, isLogged } = auth;
+  const [isOpen, setIsOpen] = useState(false);
+
+  const onClickDropDown = () => {
+    console.log("clicked");
+    setIsOpen(!isOpen);
+  };
 
   const handleLogout = async () => {
     try {
@@ -39,37 +104,24 @@ function HeaderT() {
     }
   };
 
-  function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
-
-  // Close the dropdown menu if the user clicks outside of it
-  window.onclick = function (event) {
-    if (!event.target.matches(".dropbtn")) {
-      var dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains("show")) {
-          openDropdown.classList.remove("show");
-        }
-      }
-    }
-  };
-
   const userLink = () => {
     return (
       <div className="dropdown">
-        <DropdownBtn onClick={myFunction} className="dropbtn">
+        <DropdownBtn onClick={onClickDropDown} className="dropbtn">
           <img className="profileImage" src={user.avatar} alt="" />
           {user.user_id} <VscChevronDown />
         </DropdownBtn>
-        <div id="myDropdown" className="dropdown-content">
+
+        <DropDownContent
+          id="myDropdown"
+          className="dropdown-content"
+          isOpen={isOpen}
+        >
           <Link to="profile">Profile</Link>
           <Link to="/" onClick={handleLogout}>
             Logout
           </Link>
-        </div>
+        </DropDownContent>
       </div>
     );
   };
