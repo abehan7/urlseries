@@ -89,7 +89,7 @@ const UrlEl = styled.div`
   /* animation-fill-mode: forwards; */
   padding: 0.3rem;
   position: relative;
-  width: 100%;
+  width: 98%;
   /* height: 50px; */
   height: 40px;
   max-height: 40px;

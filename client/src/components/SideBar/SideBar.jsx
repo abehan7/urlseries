@@ -22,12 +22,13 @@ const SideBarEl = styled.div`
     }
   }
   height: 100%;
-  width: 200px;
+  width: 20%;
   background-color: #fff;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   @media screen and (max-width: 1018px) {
     /* height: calc(100vh - 100px); */
     /* height: calc(100vh+100px); */
+    /* width: 100px; */
     height: 100%;
   }
 `;

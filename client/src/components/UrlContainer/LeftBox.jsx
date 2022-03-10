@@ -22,6 +22,7 @@ const LeftBoxEl = styled.div`
   flex-direction: column;
   @media screen and (max-width: 1018px) {
     max-width: 100vw;
+    padding: 0;
     width: 100%;
   }
 `;

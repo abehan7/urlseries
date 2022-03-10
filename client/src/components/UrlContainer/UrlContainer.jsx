@@ -4,7 +4,7 @@ import LeftBox from "./LeftBox";
 import RightBox from "./RightBox";
 
 const UrlContainerEl = styled.div`
-  width: 100vw;
+  width: 80%;
   height: 100%;
   flex: 1;
   display: flex;

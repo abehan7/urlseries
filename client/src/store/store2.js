@@ -13,7 +13,7 @@ const logger = createLogger();
 
 const store2 = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), pm],
+  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), logger, pm],
 });
 export default store2;
 

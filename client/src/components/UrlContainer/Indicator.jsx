@@ -1,21 +1,31 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
+// import ScrollHorizontal from "react-scroll-horizontal";
 import { useTag } from "../../contexts/TagContext";
 import {
   MdOutlineKeyboardArrowLeft,
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import { useCallback } from "react";
+import { useSelector } from "react-redux";
+import { getFolders } from "../../store/reducers/Folders";
+import { getIsClicked, getMetaTagItems } from "../../store/reducers/Tags";
+import { AiOutlineFolder } from "react-icons/ai";
+import { throttle } from "lodash";
 const IndicatorEl = styled.div`
   position: relative;
   height: fit-content;
-  padding: 0.5rem;
   display: flex;
   width: 80%;
+  height: 40px;
   align-items: center;
+  justify-content: flex-start;
+  padding: 0.5rem 0;
 `;
 const TagWrapper = styled.div`
   overflow-x: scroll;
+  position: absolute;
+
   ::-webkit-scrollbar {
     display: none;
   }
@@ -24,6 +34,7 @@ const TagWrapper = styled.div`
   column-gap: 1.5rem;
   align-items: center;
   justify-content: flex-start;
+  max-width: 100%;
 `;
 const TagEl = styled.span`
   color: gray;
@@ -57,30 +68,33 @@ const RightIcon = styled(Icon)`
   right: -2rem;
 `;
 
-const IconWrapper = styled.div``;
-const hashtags = [
-  "#해시태그",
-  "#페드로테크",
-  "#유튜브",
-  "#해시태1그",
-  "#페드로테2크",
-  "#유3튜브",
-  "#해시태4그",
-  "#페드로테크5",
-  "#유6튜브",
-];
-const Indicator = () => {
-  const scrollRef = useRef(null);
-  // const
-  // console.log("totalUrls", totalUrls);
-  // scrollTarget?.scrollTop !== 0 && scrollTarget?.scrollTo(0, 0);
-  // const option = { top: 0, left: 0, behavior: "smooth" };
-  // scrollRef.current.scrollTo(option);
+// const FolderTagEl = styled(TagEl)``;
 
-  // const onScroll = useCallback(
-  //   (e) => throttled.current(e.target.scrollTop, scrollTop),
-  //   [scrollTop]
-  // );
+const FolderTagEl = styled(TagEl)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${({ isClicked }) => !isClicked && `opacity: 1;`}
+  ${({ isClicked, clicked }) => isClicked && !clicked && `opacity: 0.3;`}
+  ${({ isClicked, clicked }) => isClicked && clicked && `opacity: 1;`}
+  transition: 100ms;
+`;
+const FolderIcon = styled.div`
+  pointer-events: "none";
+  display: flex;
+  padding-right: 3px;
+  font-weight: 100;
+`;
+
+const Indicator = () => {
+  // states
+  const assignedHashtags = useTag().hashtag.assignedHashtags;
+  const folders = useSelector(getFolders);
+  const tagIsClicked = useSelector(getIsClicked);
+  const metaTagItems = useSelector(getMetaTagItems);
+  const scrollRef = useRef(null);
+
+  // hooks
 
   const scrollToFn = (left) => {
     const option = scrollRef.current.scrollTo({
@@ -98,17 +112,69 @@ const Indicator = () => {
     scrollToFn(left);
   };
 
-  const assignedHashtags = useTag().hashtag.assignedHashtags;
-  // const names = assignedHashtags.map((tag) => tag.name);
+  const handleClickMetaTag = () => {};
+
+  const handleClickFolderTag = () => {};
+
+  // 좌우 스크롤
+  const throttled = useRef(
+    throttle((isScrollUp) => {
+      isScrollUp ? onClickRightArrow() : onClickLeftArrow();
+    }, 500)
+  );
+
+  const onWheel = useCallback((e) => {
+    // const isScrollUp = e.deltaY > 0;
+    // throttled.current(isScrollUp);
+    console.log(e);
+    const getScrollUp = () => {
+      const left = scrollRef.current.scrollLeft + 40;
+      scrollToFn(left);
+    };
+    const getScrollDown = () => {
+      const left = scrollRef.current.scrollLeft - 40;
+      scrollToFn(left);
+    };
+
+    e.deltaY > 0 ? getScrollUp() : getScrollDown();
+  }, []);
+
+  const hashtagMap = () => {
+    return assignedHashtags.map((tag, index) => {
+      const clicked = metaTagItems.includes(tag.name);
+      const key = Math.floor(Math.random() * 100000);
+      return (
+        <MetaTag
+          tag={tag.name}
+          key={key}
+          onClick={() => handleClickMetaTag(tag)}
+          clicked={clicked}
+        />
+      );
+    });
+  };
+
+  const folderMap = () => {
+    return folders.map((folder, key) => {
+      const clicked = false;
+      return (
+        <FolderTag
+          handleClickFolderTag={handleClickFolderTag}
+          folder={folder}
+          clicked={clicked}
+        />
+      );
+    });
+  };
+
   return (
     <IndicatorEl>
       <LeftIcon onClick={onClickLeftArrow}>
         <MdOutlineKeyboardArrowLeft />
       </LeftIcon>
-      <TagWrapper ref={scrollRef}>
-        {assignedHashtags.map((tag, key) => (
-          <Tag tag={tag.name} key={tag.name} />
-        ))}
+      <TagWrapper ref={scrollRef} onWheel={onWheel}>
+        {folderMap()}
+        {hashtagMap()}
       </TagWrapper>
       <RightIcon onClick={onClickRightArrow}>
         <MdOutlineKeyboardArrowRight />
@@ -119,6 +185,20 @@ const Indicator = () => {
 
 export default Indicator;
 
-const Tag = ({ tag }) => {
+const MetaTag = ({ tag }) => {
   return <TagEl>{tag}</TagEl>;
+};
+
+const FolderTag = ({ handleClickFolderTag, folder, clicked }) => {
+  const onClick = () => handleClickFolderTag(folder);
+  return (
+    folder.like && (
+      <FolderTagEl onClick={onClick} clicked={clicked}>
+        <FolderIcon>
+          <AiOutlineFolder />
+        </FolderIcon>
+        {folder.folder_name}
+      </FolderTagEl>
+    )
+  );
 };

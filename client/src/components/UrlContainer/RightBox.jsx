@@ -53,6 +53,7 @@ const RightBoxEl = styled.div`
   }
   @media screen and (max-width: 1018px) {
     max-width: 100vw;
+    padding-right: 0;
     width: 100%;
   }
 `;
