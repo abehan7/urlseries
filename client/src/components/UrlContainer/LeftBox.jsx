@@ -20,6 +20,10 @@ const LeftBoxEl = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  @media screen and (max-width: 1018px) {
+    max-width: 100vw;
+    width: 100%;
+  }
 `;
 
 const FlexContainer = styled(ItemConatiner)`

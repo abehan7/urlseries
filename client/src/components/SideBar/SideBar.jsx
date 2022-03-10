@@ -25,6 +25,11 @@ const SideBarEl = styled.div`
   width: 200px;
   background-color: #fff;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  @media screen and (max-width: 1018px) {
+    /* height: calc(100vh - 100px); */
+    /* height: calc(100vh+100px); */
+    height: 100%;
+  }
 `;
 
 const Button = styled.div`

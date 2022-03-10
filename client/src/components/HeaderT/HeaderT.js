@@ -13,12 +13,16 @@ const HeaderEl = styled.header`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   z-index: 2;
   position: inherit;
+  width: 100vw;
   h1 p {
     font-family: "Sansita Swashed", cursive;
     font-weight: 600;
   }
   img {
     padding-right: 0.7rem;
+  }
+  @media screen and (max-width: 1018px) {
+    width: 100vw;
   }
 `;
 

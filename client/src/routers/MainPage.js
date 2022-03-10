@@ -17,7 +17,9 @@ export const MainStates = createContext(null);
 const MainEl = styled.div`
   position: inherit;
   z-index: 1;
+  width: 100vw;
   height: calc(100vh - 100px);
+  /* height: 100%; */
   display: flex;
   /* background: linear-gradient(blue, pink); */
   /* background-color: linear-gradient(#c282ff, pink); ; */

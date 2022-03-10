@@ -144,7 +144,7 @@ const Url = ({
     const blackList = [path, svg, starWrapRef.current];
     if (blackList.includes(e.target)) return;
 
-    setTimeout(() => onClick(), 3000);
+    setTimeout(() => onClick());
     // onClick();
   };
 

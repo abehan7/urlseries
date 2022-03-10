@@ -51,6 +51,10 @@ const RightBoxEl = styled.div`
     animation: urlOut 0.2s ease-in-out;
     animation-fill-mode: forwards;
   }
+  @media screen and (max-width: 1018px) {
+    max-width: 100vw;
+    width: 100%;
+  }
 `;
 const FlexContainer = styled(ItemConatiner)`
   position: relative;
@@ -72,6 +76,12 @@ const FlexContainer = styled(ItemConatiner)`
   scrollbar-width: 0;
   ::-webkit-scrollbar {
     display: none;
+  }
+
+  @media screen and (max-width: 1018px) {
+    width: 90%;
+    height: max-content;
+    max-height: max-content;
   }
 `;
 const RightBox = () => {

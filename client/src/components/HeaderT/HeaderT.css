@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@300;400;500&display=swap");
 
 header {
-  width: 100%;
+  width: 100vw;
   min-height: 100px;
   height: 100px;
   background: #f7f7f7;
@@ -120,4 +120,10 @@ header ul li:hover {
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {
   display: block;
+}
+
+@media screen and (max-width: 1018px) {
+  li:first-child {
+    display: none;
+  }
 }
