@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
+import ScrollHorizontal from "react-scroll-horizontal";
 import { useTag } from "../../contexts/TagContext";
 import {
   MdOutlineKeyboardArrowLeft,
@@ -8,7 +9,9 @@ import {
 import { useCallback } from "react";
 import { useSelector } from "react-redux";
 import { getFolders } from "../../store/reducers/Folders";
-import { getIsClicked } from "../../store/reducers/Tags";
+import { getIsClicked, getMetaTagItems } from "../../store/reducers/Tags";
+import { AiOutlineFolder } from "react-icons/ai";
+import { throttle } from "lodash";
 const IndicatorEl = styled.div`
   position: relative;
   height: fit-content;
@@ -65,22 +68,34 @@ const RightIcon = styled(Icon)`
   right: -2rem;
 `;
 
-const IconWrapper = styled.div``;
-const hashtags = [
-  "#해시태그",
-  "#페드로테크",
-  "#유튜브",
-  "#해시태1그",
-  "#페드로테2크",
-];
+// const FolderTagEl = styled(TagEl)``;
+
+const FolderTagEl = styled(TagEl)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  ${({ isClicked }) => !isClicked && `opacity: 1;`}
+  ${({ isClicked, clicked }) => isClicked && !clicked && `opacity: 0.3;`}
+  ${({ isClicked, clicked }) => isClicked && clicked && `opacity: 1;`}
+  transition: 100ms;
+`;
+const FolderIcon = styled.div`
+  pointer-events: "none";
+  display: flex;
+  padding-right: 3px;
+  font-weight: 100;
+`;
+
 const Indicator = () => {
   // states
   const assignedHashtags = useTag().hashtag.assignedHashtags;
   const folders = useSelector(getFolders);
   const tagIsClicked = useSelector(getIsClicked);
+  const metaTagItems = useSelector(getMetaTagItems);
   const scrollRef = useRef(null);
 
   // hooks
+
   const scrollToFn = (left) => {
     const option = scrollRef.current.scrollTo({
       left,
@@ -99,35 +114,67 @@ const Indicator = () => {
 
   const handleClickMetaTag = () => {};
 
-  // const names = assignedHashtags.map((tag) => tag.name);
+  const handleClickFolderTag = () => {};
+
+  // 좌우 스크롤
+  const throttled = useRef(
+    throttle((isScrollUp) => {
+      isScrollUp ? onClickRightArrow() : onClickLeftArrow();
+    }, 500)
+  );
+
+  const onWheel = useCallback((e) => {
+    // const isScrollUp = e.deltaY > 0;
+    // throttled.current(isScrollUp);
+    console.log(e);
+    const getScrollUp = () => {
+      const left = scrollRef.current.scrollLeft + 40;
+      scrollToFn(left);
+    };
+    const getScrollDown = () => {
+      const left = scrollRef.current.scrollLeft - 40;
+      scrollToFn(left);
+    };
+
+    e.deltaY > 0 ? getScrollUp() : getScrollDown();
+  }, []);
+
+  const hashtagMap = () => {
+    return assignedHashtags.map((tag, index) => {
+      const clicked = metaTagItems.includes(tag.name);
+      const key = Math.floor(Math.random() * 100000);
+      return (
+        <MetaTag
+          tag={tag.name}
+          key={key}
+          onClick={() => handleClickMetaTag(tag)}
+          clicked={clicked}
+        />
+      );
+    });
+  };
+
+  const folderMap = () => {
+    return folders.map((folder, key) => {
+      const clicked = false;
+      return (
+        <FolderTag
+          handleClickFolderTag={handleClickFolderTag}
+          folder={folder}
+          clicked={clicked}
+        />
+      );
+    });
+  };
+
   return (
     <IndicatorEl>
       <LeftIcon onClick={onClickLeftArrow}>
         <MdOutlineKeyboardArrowLeft />
       </LeftIcon>
-      <TagWrapper ref={scrollRef}>
-        {assignedHashtags.map((tag, key) => {
-          const clicked = false;
-          return (
-            <Tag
-              tag={tag.name}
-              key={tag.name}
-              onClick={() => handleClickMetaTag(tag)}
-              clicked={clicked}
-            />
-          );
-        })}
-        {folders.map((folder, key) => {
-          const clicked = false;
-          return (
-            <Tag
-              tag={folder.folder_name}
-              key={folder._id}
-              onClick={() => handleClickMetaTag(folder)}
-              clicked={clicked}
-            />
-          );
-        })}
+      <TagWrapper ref={scrollRef} onWheel={onWheel}>
+        {folderMap()}
+        {hashtagMap()}
       </TagWrapper>
       <RightIcon onClick={onClickRightArrow}>
         <MdOutlineKeyboardArrowRight />
@@ -138,11 +185,20 @@ const Indicator = () => {
 
 export default Indicator;
 
-const Tag = ({ tag }) => {
+const MetaTag = ({ tag }) => {
   return <TagEl>{tag}</TagEl>;
 };
 
-const FolderTagEl = styled.div``;
-const FolderTag = ({}) => {
-  return <></>;
+const FolderTag = ({ handleClickFolderTag, folder, clicked }) => {
+  const onClick = () => handleClickFolderTag(folder);
+  return (
+    folder.like && (
+      <FolderTagEl onClick={onClick} clicked={clicked}>
+        <FolderIcon>
+          <AiOutlineFolder />
+        </FolderIcon>
+        {folder.folder_name}
+      </FolderTagEl>
+    )
+  );
 };
