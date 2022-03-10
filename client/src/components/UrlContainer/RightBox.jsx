@@ -11,7 +11,26 @@ import Marker from "./Marker";
 import { ItemConatiner } from "./styled/ItemContainer";
 import { Title } from "./styled/Title.styled";
 import { TitleWrapper } from "./styled/TitleWrapper.styled";
+
 const RightBoxEl = styled.div`
+  @keyframes urlIn {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0%);
+    }
+  }
+
+  @keyframes urlOut {
+    from {
+      transform: translate(0%, 0%);
+    }
+    to {
+      transform: translate(-60%, 0px);
+    }
+  }
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,6 +39,14 @@ const RightBoxEl = styled.div`
 
   flex-direction: column;
   padding-right: 1rem;
+  .newItem {
+    animation: urlIn 0.3s ease-in-out;
+    animation-fill-mode: forwards;
+  }
+  .removeItem {
+    animation: urlOut 0.2s ease-in-out;
+    animation-fill-mode: forwards;
+  }
 `;
 const FlexContainer = styled(ItemConatiner)`
   position: relative;

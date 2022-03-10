@@ -4,7 +4,7 @@ import { InfiniteScroll } from "../Utils/InfiniteScroll/InfiniteScroll";
 import Url from "./Url";
 import { constants, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
-import { useRef } from "react";
+import { useEffect } from "react";
 
 const ItemContainer = ({ urls }) => {
   const [contentsNum, setContentsNum] = useState(50);
@@ -13,6 +13,9 @@ const ItemContainer = ({ urls }) => {
   const filterdItems = urls.slice(0, contentsNum);
   const mode = useMode().mode;
   const handleClickStar = useUrl().handleClickStar;
+  const handleSetCurrentUrl = useUrl().handleSetCurrentUrl;
+  // const currentUrl = useUrl().currentUrl;
+  // console.log("currentUrl from ItemContainer ", currentUrl);
 
   // 무한스크롤
   const getNextItems = async () => {
@@ -37,14 +40,18 @@ const ItemContainer = ({ urls }) => {
   };
   const onClickStar = async (url) => {
     // console.log(url);
-    await handleClickStar(url);
+    handleSetCurrentUrl(url);
+    url.url_likedUrl === 1 && setTimeout(() => handleClickStar(url._id), 200);
+    url.url_likedUrl === 0 && handleClickStar(url._id);
+    // handleClickStar(url._id);
   };
 
   return filterdItems.map((url, index) => {
     if (index === contentsNum - 1)
       return <Loader key={"thisIsLoader"} target={setTarget} />;
     const onClick = () => onClickUrl(url);
-    const _onClickStar = () => onClickStar(url._id);
+    const _onClickStar = () => onClickStar(url);
+
     return (
       <Url
         item={url}

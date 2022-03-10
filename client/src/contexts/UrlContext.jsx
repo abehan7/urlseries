@@ -33,15 +33,15 @@ export const UrlProvider = ({ children }) => {
     searchedUrls: [],
     recentClickedUrls: [],
     likedUrls: [],
+  });
 
-    currentUrl: {
-      url: "",
-      urlId: "",
-      memo: "",
-      hashtag: "",
-      urlTitle: "",
-      url_likedUrl: "",
-    },
+  const [currentUrl, setCurrentUrl] = useState({
+    url: "",
+    urlId: "",
+    memo: "",
+    hashtag: "",
+    urlTitle: "",
+    url_likedUrl: "",
   });
 
   // const [totalUrls, setTotalUrls] = useState([]);
@@ -201,6 +201,11 @@ export const UrlProvider = ({ children }) => {
     // api call
   };
 
+  const handleSetCurrentUrl = (url) => {
+    // console.log("url: ", url);
+    setCurrentUrl(url);
+  };
+
   // FIXME: 전체 url
   useEffect(() => {
     const fn = async () => {
@@ -275,6 +280,7 @@ export const UrlProvider = ({ children }) => {
   const value = {
     url,
     hashtag,
+    currentUrl,
     addAssignedTag,
     removeAssignedTag,
     handleGetTotalTags,
@@ -285,6 +291,7 @@ export const UrlProvider = ({ children }) => {
     handleAddUrl,
     handleDeleteUrl,
     handleClickStar,
+    handleSetCurrentUrl,
     loading,
   };
 

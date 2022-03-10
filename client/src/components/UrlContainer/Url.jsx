@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
+import { useUrl } from "../../contexts/UrlContext";
 const Line = styled.div`
   width: 4px;
   /* min-width: 4px; */
@@ -63,6 +64,29 @@ const Icon = styled.div`
 `;
 
 const UrlEl = styled.div`
+  @keyframes urlIn {
+    from {
+      transform: translateX(-50%);
+    }
+    to {
+      transform: translateX(0%);
+    }
+  }
+
+  @keyframes urlOut {
+    from {
+      transform: translateX(0%);
+    }
+    to {
+      transform: translateX(50%);
+    }
+  }
+
+  /* transition: all 0.3s ease-in-out; */
+  /* translate: translateX(50px); */
+
+  /* animation: urlIn 0.3s ease-in-out; */
+  /* animation-fill-mode: forwards; */
   padding: 0.3rem;
   position: relative;
   width: 100%;
@@ -109,17 +133,32 @@ const Url = ({
 }) => {
   const src = `http://www.google.com/s2/favicons?domain=${url}`;
   const starWrapRef = useRef(null);
+  // const currentUrlRef = useRef(null);
+  const currentUrl = useUrl().currentUrl;
+  // console.log("currentUrl", currentUrl);
 
-  const onClickUrl = (e) => {
+  const onClickUrl = async (e) => {
+    // console.log("123123123");
     const svg = starWrapRef.current.querySelector("svg");
     const path = svg.querySelector("path");
     const blackList = [path, svg, starWrapRef.current];
     if (blackList.includes(e.target)) return;
-    onClick();
+
+    setTimeout(() => onClick(), 3000);
+    // onClick();
+  };
+
+  // const className = currentUrl._id === id ? "newItem" : "";
+  const className = {
+    isNewItem: () => {
+      if (currentUrl._id !== id) return "";
+      const nowItem = currentUrl.url_likedUrl === 0 ? "newItem" : "removeItem";
+      return nowItem;
+    },
   };
 
   return (
-    <UrlEl key={id} onClick={onClickUrl}>
+    <UrlEl key={id} onClick={onClickUrl} className={className.isNewItem()}>
       <Line />
       <Img src={src} />
       <TextWrapper>
