@@ -6,16 +6,23 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import { useCallback } from "react";
+import { useSelector } from "react-redux";
+import { getFolders } from "../../store/reducers/Folders";
+import { getIsClicked } from "../../store/reducers/Tags";
 const IndicatorEl = styled.div`
   position: relative;
   height: fit-content;
-  padding: 0.5rem;
   display: flex;
   width: 80%;
+  height: 40px;
   align-items: center;
+  justify-content: flex-start;
+  padding: 0.5rem 0;
 `;
 const TagWrapper = styled.div`
   overflow-x: scroll;
+  position: absolute;
+
   ::-webkit-scrollbar {
     display: none;
   }
@@ -24,6 +31,7 @@ const TagWrapper = styled.div`
   column-gap: 1.5rem;
   align-items: center;
   justify-content: flex-start;
+  max-width: 100%;
 `;
 const TagEl = styled.span`
   color: gray;
@@ -64,24 +72,15 @@ const hashtags = [
   "#유튜브",
   "#해시태1그",
   "#페드로테2크",
-  "#유3튜브",
-  "#해시태4그",
-  "#페드로테크5",
-  "#유6튜브",
 ];
 const Indicator = () => {
+  // states
+  const assignedHashtags = useTag().hashtag.assignedHashtags;
+  const folders = useSelector(getFolders);
+  const tagIsClicked = useSelector(getIsClicked);
   const scrollRef = useRef(null);
-  // const
-  // console.log("totalUrls", totalUrls);
-  // scrollTarget?.scrollTop !== 0 && scrollTarget?.scrollTo(0, 0);
-  // const option = { top: 0, left: 0, behavior: "smooth" };
-  // scrollRef.current.scrollTo(option);
 
-  // const onScroll = useCallback(
-  //   (e) => throttled.current(e.target.scrollTop, scrollTop),
-  //   [scrollTop]
-  // );
-
+  // hooks
   const scrollToFn = (left) => {
     const option = scrollRef.current.scrollTo({
       left,
@@ -98,7 +97,8 @@ const Indicator = () => {
     scrollToFn(left);
   };
 
-  const assignedHashtags = useTag().hashtag.assignedHashtags;
+  const handleClickMetaTag = () => {};
+
   // const names = assignedHashtags.map((tag) => tag.name);
   return (
     <IndicatorEl>
@@ -106,9 +106,28 @@ const Indicator = () => {
         <MdOutlineKeyboardArrowLeft />
       </LeftIcon>
       <TagWrapper ref={scrollRef}>
-        {assignedHashtags.map((tag, key) => (
-          <Tag tag={tag.name} key={tag.name} />
-        ))}
+        {assignedHashtags.map((tag, key) => {
+          const clicked = false;
+          return (
+            <Tag
+              tag={tag.name}
+              key={tag.name}
+              onClick={() => handleClickMetaTag(tag)}
+              clicked={clicked}
+            />
+          );
+        })}
+        {folders.map((folder, key) => {
+          const clicked = false;
+          return (
+            <Tag
+              tag={folder.folder_name}
+              key={folder._id}
+              onClick={() => handleClickMetaTag(folder)}
+              clicked={clicked}
+            />
+          );
+        })}
       </TagWrapper>
       <RightIcon onClick={onClickRightArrow}>
         <MdOutlineKeyboardArrowRight />
@@ -121,4 +140,9 @@ export default Indicator;
 
 const Tag = ({ tag }) => {
   return <TagEl>{tag}</TagEl>;
+};
+
+const FolderTagEl = styled.div``;
+const FolderTag = ({}) => {
+  return <></>;
 };

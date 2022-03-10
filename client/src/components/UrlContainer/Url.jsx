@@ -138,13 +138,13 @@ const Url = ({
   // console.log("currentUrl", currentUrl);
 
   const onClickUrl = async (e) => {
-    // console.log("123123123");
+    // 별 누르면 클릭 안되게하기
     const svg = starWrapRef.current.querySelector("svg");
     const path = svg.querySelector("path");
     const blackList = [path, svg, starWrapRef.current];
     if (blackList.includes(e.target)) return;
 
-    setTimeout(() => onClick(), 3000);
+    onClick();
     // onClick();
   };
 

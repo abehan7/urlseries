@@ -38,7 +38,7 @@ function App() {
         dispatch({ type: "GET_TOKEN", payload: res.data.access_token });
         localStorage.setItem("accessToken", res.data.access_token);
       };
-      getToken();
+      !token && getToken();
     }
   }, [auth.isLogged, dispatch]);
 
