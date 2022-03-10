@@ -96,6 +96,14 @@ const TitleContainerEl = styled.div`
   /* justify-content: center; */
 `;
 
+const NoUrlEl = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const NoUrlTitle = styled(Title)``;
+
 const debounceFn = debounce((fn, keyword) => fn(keyword), 400);
 
 const LeftBox = () => {
@@ -228,8 +236,12 @@ const LeftBox = () => {
         {isSearch && <ItemContainer urls={filterdUrls} />}
         {/* url 검색중 */}
         {isSearch && isSearchLoading && <Loader />}
-        {/* url없을때 component만들기*/}
-        {/* {tagIsClicked && !isSearch && <NoUrl />} */}
+        {/* 태그 url없을때 */}
+        {tagIsClicked &&
+          !combinedItemsloading &&
+          combinedTagItems.length === 0 && <NoUrl />}
+        {/* 검색창 url없을 때 */}
+        {isSearch && !isSearchLoading && filterdUrls.length === 0 && <NoUrl />}
 
         {tagIsClicked && combinedItemsloading && <Loader />}
 
@@ -259,5 +271,13 @@ const TitleContainer = ({
         </SearchTitle>
       )}
     </TitleContainerEl>
+  );
+};
+
+const NoUrl = () => {
+  return (
+    <NoUrlEl>
+      <NoUrlTitle>아직 북마크가 없습니다.</NoUrlTitle>
+    </NoUrlEl>
   );
 };
