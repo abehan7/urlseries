@@ -30,8 +30,8 @@ const RightBoxEl = styled.div`
       opacity: 1;
     }
     to {
-      transform: translate(-60%, 0px);
-      opacity: 0.3;
+      transform: translate(-100%, 0px);
+      opacity: 0.1;
     }
   }
 

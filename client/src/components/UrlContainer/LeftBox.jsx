@@ -63,16 +63,35 @@ const SearchTitle = styled(Title)`
   position: relative;
   background-color: #a597fe;
   color: #fff;
+  ${({ tagIsClicked }) => tagIsClicked && `display: none;`}
   :hover {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
 `;
 
+const TagTitle = styled(SearchTitle)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const TitleContainerEl = styled.div`
+  @keyframes jaehee {
+    0% {
+      transform: translate3d(-200px, 0, 0);
+    }
+    100% {
+      transform: translate3d(0px, 0, 0);
+    }
+  }
   flex: 1;
   display: flex;
   height: 100%;
   align-items: center;
+
+  > span {
+    animation: jaehee 0.3s ease-in-out;
+  }
 
   /* justify-content: center; */
 `;
@@ -91,6 +110,8 @@ const LeftBox = () => {
   const tagIsClicked = useSelector(getIsClicked);
   const combinedTagItems = useFolder().combinedTagItems.urls;
   const dispatch = useDispatch();
+  const handleSetCombinedItemLoading = useFolder().handleSetCombinedItemLoading;
+  const combinedItemsloading = useFolder().loading;
   // const [option]
 
   const _getFilterdUrls = useCallback(
@@ -139,11 +160,9 @@ const LeftBox = () => {
 
   const onClickSearchTitle = () => setKeyword("");
 
-  // 검색시 setting
+  const onClickTagTitle = () => dispatch(RESET_TAGS());
 
-  // const handleSetClicked = (boolean) => {
-  //   dispatch(SET_CLICKED(boolean));
-  // };
+  // 검색시 setting
 
   useEffect(() => {
     const fn = () => {
@@ -153,11 +172,6 @@ const LeftBox = () => {
     };
     fn();
   }, [keyword]);
-
-  useEffect(
-    () => console.log("isSearchLoading: ", isSearchLoading),
-    [isSearchLoading]
-  );
 
   useEffect(() => {
     isSearch && _getFilterdUrls(keyword);
@@ -172,14 +186,26 @@ const LeftBox = () => {
     const fn = () => {
       // TODO: 애니메이션 넣기
       setFilterdUrls([]);
+      handleSetCombinedItemLoading(true);
       // setKeyword("");
       setTimeout(() => {
         setFilterdUrls(combinedTagItems);
-      }, [300]);
+        handleSetCombinedItemLoading(false);
+      }, [200]);
     };
-    keyword.length > 0 && setKeyword("");
+    keyword.length > 0 && tagIsClicked && setKeyword("");
     keyword.length === 0 && tagIsClicked && fn();
   }, [tagIsClicked, combinedTagItems]);
+
+  useEffect(() => {
+    const fn = () => {
+      const newCombinedTagItems = totalUrls.filter((newItem) =>
+        combinedTagItems.some((item) => item._id === newItem._id)
+      );
+      setFilterdUrls(newCombinedTagItems);
+    };
+    tagIsClicked && fn();
+  }, [totalUrls]);
 
   return (
     <LeftBoxEl>
@@ -188,6 +214,7 @@ const LeftBox = () => {
           tagIsClicked={tagIsClicked}
           isSearch={isSearch}
           onClickSearchTitle={onClickSearchTitle}
+          onClickTagTitle={onClickTagTitle}
         />
         <SearchBar onChange={onChange} keyword={keyword} />
       </TitleWrapper>
@@ -204,6 +231,8 @@ const LeftBox = () => {
         {/* url없을때 component만들기*/}
         {/* {tagIsClicked && !isSearch && <NoUrl />} */}
 
+        {tagIsClicked && combinedItemsloading && <Loader />}
+
         {/* 맨 처음 로딩 */}
         {loading.isTotalUrl && <Loader />}
         <Marker isScroll={isScroll} onClick={handleScrollUp} />
@@ -214,13 +243,20 @@ const LeftBox = () => {
 
 export default LeftBox;
 
-const TitleContainer = ({ tagIsClicked, isSearch, onClickSearchTitle }) => {
+const TitleContainer = ({
+  tagIsClicked,
+  isSearch,
+  onClickSearchTitle,
+  onClickTagTitle,
+}) => {
   return (
-    <TitleContainerEl>
+    <TitleContainerEl isSearch={isSearch} tagIsClicked={tagIsClicked}>
       {!tagIsClicked && !isSearch && <Title>전체 북마크</Title>}
-      {tagIsClicked && <Title>태그</Title>}
+      {tagIsClicked && <TagTitle onClick={onClickTagTitle}>#태그</TagTitle>}
       {isSearch && (
-        <SearchTitle onClick={onClickSearchTitle}>#검색</SearchTitle>
+        <SearchTitle onClick={onClickSearchTitle} tagIsClicked={tagIsClicked}>
+          #검색
+        </SearchTitle>
       )}
     </TitleContainerEl>
   );

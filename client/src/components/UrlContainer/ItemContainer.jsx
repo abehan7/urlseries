@@ -38,9 +38,11 @@ const ItemContainer = ({ urls }) => {
     constants.EDIT === mode && editClick(url);
     constants.DELETE === mode && deleteClick(url);
   };
+
   const onClickStar = async (url) => {
     // console.log(url);
     handleSetCurrentUrl(url);
+
     url.url_likedUrl === 1 && setTimeout(() => handleClickStar(url._id), 200);
     url.url_likedUrl === 0 && handleClickStar(url._id);
     // handleClickStar(url._id);

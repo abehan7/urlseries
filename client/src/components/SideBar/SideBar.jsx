@@ -21,6 +21,7 @@ const SideBarEl = styled.div`
       transform: translateY(0);
     }
   }
+  z-index: 2;
   height: 100%;
   width: 200px;
   background-color: #fff;

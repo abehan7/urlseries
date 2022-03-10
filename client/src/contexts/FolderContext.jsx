@@ -72,6 +72,8 @@ export const FolderProvider = ({ children }) => {
     setCombinedTagItems({ urls: filterd, urlIds: onlyIds });
   };
 
+  const handleSetCombinedItemLoading = (boolean) => setLoading(boolean);
+
   useEffect(() => {
     const getFolder = async () => {
       dispatch(SET_FOLDERS);
@@ -88,7 +90,7 @@ export const FolderProvider = ({ children }) => {
     console.log("metaTagItems :", metaTagItems);
   }, [metaTagItems]);
 
-  const value = { loading, combinedTagItems };
+  const value = { loading, combinedTagItems, handleSetCombinedItemLoading };
 
   return (
     <FolderContext.Provider value={value}>{children}</FolderContext.Provider>
