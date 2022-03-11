@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { constants, normalModeList, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 const Line = styled.div`
@@ -106,10 +106,23 @@ const UrlEl = styled.div`
   transition: all 0.3s ease-in-out;
 
   :hover {
-    background-color: #a597fe1a;
-    ${Line} {
-      background-color: #c282ff;
-    }
+    ${(props) =>
+      props.mode === constants.DELETE &&
+      css`
+        background-color: #ffcccb7a;
+        ${Line} {
+          background-color: tomato;
+        }
+      `}
+
+    ${(props) =>
+      props.mode !== constants.DELETE &&
+      css`
+        background-color: #a597fe1a;
+        ${Line} {
+          background-color: #c282ff;
+        }
+      `}
   }
 `;
 
@@ -154,7 +167,7 @@ const Url = ({
 
   // TODO: deleteItemIds만들기
   const deleteItemIds = [];
-  const className = {
+  const classNameMethod = {
     isNewItem: () => {
       if (currentUrl._id !== id) return "";
       const nowItem = currentUrl.url_likedUrl === 0 ? "newItem" : "removeItem";
@@ -168,9 +181,13 @@ const Url = ({
       return nowItem;
     },
   };
+  const classNameFn = () => {
+    if (normalModeList.includes(mode)) return classNameMethod.isNewItem();
+    if (mode === constants.DELETE) return classNameMethod.isDeleteItem();
+  };
 
   return (
-    <UrlEl key={id} onClick={onClickUrl} className={className.isNewItem()}>
+    <UrlEl key={id} onClick={onClickUrl} className={classNameFn()} mode={mode}>
       <Line />
       <Img src={src} />
       <TextWrapper>

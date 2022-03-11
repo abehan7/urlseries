@@ -10,6 +10,7 @@ import { useUrl } from "../../contexts/UrlContext";
 import Loader from "../Utils/Loader/Loader";
 import ItemContainer from "./ItemContainer";
 import Marker from "./Marker";
+import NoUrl from "./NoUrl";
 import { ItemConatiner } from "./styled/ItemContainer";
 import { Title } from "./styled/Title.styled";
 import { TitleWrapper } from "./styled/TitleWrapper.styled";
@@ -155,14 +156,22 @@ const DeleteMode = () => {
   useEffect(() => {
     return () => clearTimeout(timer);
   });
-  const LoadingWindow = () => {
-    return (
-      loading && (
-        <LoaderWrapper>
-          <Loader />
-        </LoaderWrapper>
-      )
-    );
-  };
-  return <>{LoadingWindow()}</>;
+
+  const filterdUrl = [];
+
+  return (
+    <>
+      {loading && <LoadingWindow />}
+      <ItemContainer urls={filterdUrl} />
+      {!loading && filterdUrl.length === 0 && <NoUrl />}
+    </>
+  );
+};
+
+const LoadingWindow = () => {
+  return (
+    <LoaderWrapper>
+      <Loader />
+    </LoaderWrapper>
+  );
 };

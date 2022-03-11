@@ -22,7 +22,7 @@ const UrlContext = createContext();
 
 export const useUrl = () => useContext(UrlContext);
 
-const debounceFn = debounce((fn) => fn(), 500);
+// const debounceFn = debounce((fn) => fn(), 500);
 
 export const UrlProvider = ({ children }) => {
   // console.log("UrlProvider");
@@ -33,6 +33,7 @@ export const UrlProvider = ({ children }) => {
     searchedUrls: [],
     recentClickedUrls: [],
     likedUrls: [],
+    deleteUrls: [],
   });
 
   const [currentUrl, setCurrentUrl] = useState({
@@ -96,11 +97,6 @@ export const UrlProvider = ({ children }) => {
     console.log(hashtag.totalHashtags.length);
     hashtag.totalHashtags.length === 0 && fn();
   }, [url.totalUrls, hashtag.totalHashtags]);
-
-  // const setAssignedtagsName = () => {
-  //   const _assignedTagNames = hashtag.assignedHashtags.map((tag) => tag.name);
-  //   setHashtag({ ...hashtag, assignedTagNames: _assignedTagNames });
-  // };
 
   const handleCloseEditModal = () => {
     // close modal

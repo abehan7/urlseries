@@ -20,6 +20,7 @@ import {
   SET_CLICKED,
 } from "../../store/reducers/Tags";
 import { useFolder } from "../../contexts/FolderContext";
+import NoUrl from "./NoUrl";
 
 const LeftBoxEl = styled.div`
   flex: 2;
@@ -95,14 +96,6 @@ const TitleContainerEl = styled.div`
 
   /* justify-content: center; */
 `;
-
-const NoUrlEl = styled.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
-const NoUrlTitle = styled(Title)``;
 
 const debounceFn = debounce((fn, keyword) => fn(keyword), 400);
 
@@ -271,13 +264,5 @@ const TitleContainer = ({
         </SearchTitle>
       )}
     </TitleContainerEl>
-  );
-};
-
-const NoUrl = () => {
-  return (
-    <NoUrlEl>
-      <NoUrlTitle>아직 북마크가 없습니다.</NoUrlTitle>
-    </NoUrlEl>
   );
 };

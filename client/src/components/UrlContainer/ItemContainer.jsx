@@ -4,7 +4,6 @@ import { InfiniteScroll } from "../Utils/InfiniteScroll/InfiniteScroll";
 import Url from "./Url";
 import { constants, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
-import { useEffect } from "react";
 
 const ItemContainer = ({ urls }) => {
   const [contentsNum, setContentsNum] = useState(50);
@@ -31,7 +30,7 @@ const ItemContainer = ({ urls }) => {
   const normalClick = (url) => window.open(url.url);
 
   const editClick = (url) => {};
-  const deleteClick = (url) => {};
+  const deleteClick = (urlId) => {};
 
   const onClickUrl = (url) => {
     constants.NORMAL === mode && normalClick(url);
