@@ -206,8 +206,10 @@ export const UrlProvider = ({ children }) => {
     setCurrentUrl(url);
   };
 
-  const handleAddDeleteUrl = (url) => {
-    setUrl({ ...url, deleteUrls: [url, ...url.deleteUrls] });
+  const handleAddDeleteUrl = (_url) => {
+    // console.log("url?.deleteUrls: ", url);
+
+    setUrl({ ...url, deleteUrls: [_url, ...url?.deleteUrls] });
   };
 
   const handleRemoveDeleteUrl = (urlId) => {

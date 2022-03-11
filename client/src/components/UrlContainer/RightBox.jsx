@@ -150,6 +150,7 @@ const NormalMode = ({ isLikeUrls, loading, isScroll, handleScrollUp }) => {
 
 const DeleteMode = () => {
   const [loading, setLoading] = useState(true);
+  const deleteUrls = useUrl().url.deleteUrls;
   const timer = setTimeout(() => {
     setLoading(false);
   }, 300);
@@ -157,13 +158,11 @@ const DeleteMode = () => {
     return () => clearTimeout(timer);
   });
 
-  const filterdUrl = [];
-
   return (
     <>
       {loading && <LoadingWindow />}
-      <ItemContainer urls={filterdUrl} />
-      {!loading && filterdUrl.length === 0 && <NoUrl />}
+      <ItemContainer urls={deleteUrls} />
+      {!loading && deleteUrls.length === 0 && <NoUrl />}
     </>
   );
 };

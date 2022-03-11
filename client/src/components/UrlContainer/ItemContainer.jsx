@@ -16,6 +16,11 @@ const ItemContainer = ({ urls }) => {
   const handleClickStar = useUrl().handleClickStar;
   const handleSetCurrentUrl = useUrl().handleSetCurrentUrl;
   const deleteUrls = useUrl().url.deleteUrls;
+  const handleAddDeleteUrl = useUrl().handleAddDeleteUrl;
+  const handleRemoveDeleteUrl = useUrl().handleRemoveDeleteUrl;
+  // handleAddDeleteUrl,
+  // handleRemoveDeleteUrl
+  // console.log(deleteUrls);
 
   // const currentUrl = useUrl().currentUrl;
   // console.log("currentUrl from ItemContainer ", currentUrl);
@@ -39,7 +44,8 @@ const ItemContainer = ({ urls }) => {
   // 아이디만 있는 경우에는 전체를 얻기위해서 복잡해서 이렇게 해야함
 
   const deleteClick = (url) => {
-    deleteUrls.includes(url._id);
+    deleteUrlIds.includes(url._id) && handleRemoveDeleteUrl(url._id);
+    !deleteUrlIds.includes(url._id) && handleAddDeleteUrl(url);
   };
 
   const onClickUrl = (url) => {
@@ -61,6 +67,7 @@ const ItemContainer = ({ urls }) => {
     const fn = () => {
       const _deleteUrlIds = deleteUrls.map((url) => url._id);
       setDeleteUrlIds(_deleteUrlIds);
+      console.log(deleteUrls);
     };
     mode === constants.DELETE && fn();
   }, [deleteUrls]);
