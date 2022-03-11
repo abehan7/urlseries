@@ -25,8 +25,9 @@ const SaveBtn = styled(FooterBtn)`
   }
 `;
 
-const BackBtn = styled(SaveBtn)`
+const BackBtn = styled(FooterBtn)`
   margin-left: 10px;
+  border: none;
 `;
 const BtnContainer = styled.div`
   flex: 1;
@@ -95,6 +96,15 @@ const ModalBodyEl = styled(ModalBody)`
 `;
 
 const ModalContentEl = styled(ModalContent)`
+  @keyframes popup {
+    0% {
+      transform: translateY(40%);
+    }
+    100% {
+      transform: translateY(0%);
+    }
+  }
+  animation: popup 0.3s ease-in-out;
   height: 330px;
   width: 400px;
 `;
@@ -102,6 +112,7 @@ const ModalContentEl = styled(ModalContent)`
 const Input = styled.input`
   flex: 1;
   padding: 0 1rem;
+  color: black;
 `;
 
 const InputContainer = styled.div`
@@ -121,7 +132,7 @@ const InputContainer = styled.div`
     border: none;
     background-color: transparent;
     width: 100%;
-    color: gray;
+    /* color: gray; */
     font-size: 16px;
     line-height: 24px;
   }
@@ -133,7 +144,7 @@ const InputContainer = styled.div`
 
   input:focus,
   :hover input {
-    color: gray;
+    /* color: gray; */
     outline: none;
     width: 250px;
   }
@@ -191,7 +202,8 @@ const TextArea = styled.textarea`
   height: 100%;
   padding: 0 1rem;
   font-size: 16px;
-  color: gray;
+
+  /* color: gray; */
 
   /* margin: 1rem; */
   /* padding: 1rem; */
@@ -220,11 +232,21 @@ const TextAreaContainer = styled.div`
       color: #6d27e8;
     }
   }
+
+  :focus-within label,
+  textarea:not(:placeholder-shown) ~ label {
+    //형제 태그 사용할 때 ~이거 사용하는거 같아
+    background-color: #fff;
+    top: -4px;
+    left: 6px;
+    bottom: auto;
+    color: #946be5;
+  }
 `;
 
 const MemoLabel = styled(Label)`
   left: 10px;
-  top: 0;
+  top: 20px;
   background-color: #fff;
   width: fit-content;
   height: 20px;
