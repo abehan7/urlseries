@@ -8,8 +8,10 @@ const NORMAL = "NORMAL";
 const EDIT = "EDIT";
 const ADD = "ADD";
 const DELETE = "DELETE";
+const HASHTAG = "HASHTAG";
+const FOLDER = "FOLDER";
 
-export const constants = { NORMAL, EDIT, ADD, DELETE };
+export const constants = { NORMAL, EDIT, ADD, DELETE, HASHTAG, FOLDER };
 
 export const ModeProvider = ({ children }) => {
   // isDarkMode isEditMode isDeleteMode isNormalMode
@@ -22,7 +24,7 @@ export const ModeProvider = ({ children }) => {
     fn();
   }, []);
 
-  const value = { mode, loading };
+  const value = { mode, setMode, loading };
 
   return <ModeContext.Provider value={value}>{children}</ModeContext.Provider>;
 };

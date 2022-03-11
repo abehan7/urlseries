@@ -10,7 +10,7 @@ const ItemContainer = ({ urls }) => {
   const [contentsNum, setContentsNum] = useState(50);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const filterdItems = urls.slice(0, contentsNum);
+  const filterdItems = urls?.slice(0, contentsNum);
   const mode = useMode().mode;
   const handleClickStar = useUrl().handleClickStar;
   const handleSetCurrentUrl = useUrl().handleSetCurrentUrl;
@@ -38,9 +38,11 @@ const ItemContainer = ({ urls }) => {
     constants.EDIT === mode && editClick(url);
     constants.DELETE === mode && deleteClick(url);
   };
+
   const onClickStar = async (url) => {
     // console.log(url);
     handleSetCurrentUrl(url);
+
     url.url_likedUrl === 1 && setTimeout(() => handleClickStar(url._id), 200);
     url.url_likedUrl === 0 && handleClickStar(url._id);
     // handleClickStar(url._id);

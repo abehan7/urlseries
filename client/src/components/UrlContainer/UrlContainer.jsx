@@ -6,7 +6,7 @@ import RightBox from "./RightBox";
 const UrlContainerEl = styled.div`
   width: 80%;
   height: 100%;
-  min-height: 653px;
+  /* min-height: 500px; */
 
   flex: 1;
   display: flex;

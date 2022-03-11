@@ -13,6 +13,13 @@ import SearchBar from "../SearchBar/SearchBar";
 import { KeywordNormalize, SearchNotByDB } from "../Utils/Search";
 import { useEffect } from "react";
 import { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getIsClicked,
+  RESET_TAGS,
+  SET_CLICKED,
+} from "../../store/reducers/Tags";
+import { useFolder } from "../../contexts/FolderContext";
 
 const LeftBoxEl = styled.div`
   flex: 2;
@@ -20,8 +27,8 @@ const LeftBoxEl = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  height: 100%;
-  min-height: 100%;
+  height: 95%;
+  /* min-height: 550px; */
   @media screen and (max-width: 1018px) {
     max-width: 100%;
     padding: 0;
@@ -42,7 +49,7 @@ const FlexContainer = styled(ItemConatiner)`
   /* height: calc(100% - 130px - 1rem - 30px); */
   height: 100%;
   /* max-height: calc(100% - 130px - 1rem - 30px); */
-  min-height: 480px;
+  min-height: 200px;
   width: 90%;
   background-color: #f7f8fa;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -65,19 +72,46 @@ const SearchTitle = styled(Title)`
   position: relative;
   background-color: #a597fe;
   color: #fff;
+  ${({ tagIsClicked }) => tagIsClicked && `display: none;`}
   :hover {
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   }
 `;
 
+const TagTitle = styled(SearchTitle)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const TitleContainerEl = styled.div`
+  @keyframes jaehee {
+    0% {
+      transform: translate3d(-200px, 0, 0);
+    }
+    100% {
+      transform: translate3d(0px, 0, 0);
+    }
+  }
   flex: 1;
   display: flex;
   height: 100%;
   align-items: center;
 
+  > span {
+    animation: jaehee 0.3s ease-in-out;
+  }
+
   /* justify-content: center; */
 `;
+
+const NoUrlEl = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const NoUrlTitle = styled(Title)``;
 
 const debounceFn = debounce((fn, keyword) => fn(keyword), 400);
 
@@ -89,7 +123,12 @@ const LeftBox = () => {
   const [keyword, setKeyword] = useState("");
   const [filterdUrls, setFilterdUrls] = useState([]);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
-  const loading = useUrl().loading;
+  const { loading } = useUrl();
+  const tagIsClicked = useSelector(getIsClicked);
+  const combinedTagItems = useFolder().combinedTagItems.urls;
+  const dispatch = useDispatch();
+  const handleSetCombinedItemLoading = useFolder().handleSetCombinedItemLoading;
+  const combinedItemsloading = useFolder().loading;
   // const [option]
 
   const _getFilterdUrls = useCallback(
@@ -134,42 +173,86 @@ const LeftBox = () => {
     scrollRef.current.scrollTo(option);
   }, []);
 
-  const isTagClicked = false;
   const isSearch = keyword.length > 0;
 
   const onClickSearchTitle = () => setKeyword("");
 
-  useEffect(() => setFilterdUrls([]), [keyword]);
-  useEffect(
-    () => console.log("isSearchLoading: ", isSearchLoading),
-    [isSearchLoading]
-  );
+  const onClickTagTitle = () => dispatch(RESET_TAGS());
+
+  // 검색시 setting
+
+  useEffect(() => {
+    const fn = () => {
+      //태그들 비우기
+      tagIsClicked && dispatch(RESET_TAGS());
+      setFilterdUrls([]);
+    };
+    fn();
+  }, [keyword]);
 
   useEffect(() => {
     isSearch && _getFilterdUrls(keyword);
+  }, [totalUrls]);
+
+  // 태그 하나라도 클릭되면 setting
+  // 아 여기서 약간 이벤트가 이상해
+  // TODO: 여기 수정하기
+  // 검색어 있는 상태에서 태그 누르면 이상하게 풀려
+  // 그리고 태그 안나온다
+  useEffect(() => {
+    const fn = () => {
+      // TODO: 애니메이션 넣기
+      setFilterdUrls([]);
+      handleSetCombinedItemLoading(true);
+      // setKeyword("");
+      setTimeout(() => {
+        setFilterdUrls(combinedTagItems);
+        handleSetCombinedItemLoading(false);
+      }, [200]);
+    };
+    keyword.length > 0 && tagIsClicked && setKeyword("");
+    keyword.length === 0 && tagIsClicked && fn();
+  }, [tagIsClicked, combinedTagItems]);
+
+  useEffect(() => {
+    const fn = () => {
+      const newCombinedTagItems = totalUrls.filter((newItem) =>
+        combinedTagItems.some((item) => item._id === newItem._id)
+      );
+      setFilterdUrls(newCombinedTagItems);
+    };
+    tagIsClicked && fn();
   }, [totalUrls]);
 
   return (
     <LeftBoxEl>
       <TitleWrapper>
         <TitleContainer
-          isTagClicked={isTagClicked}
+          tagIsClicked={tagIsClicked}
           isSearch={isSearch}
           onClickSearchTitle={onClickSearchTitle}
+          onClickTagTitle={onClickTagTitle}
         />
         <SearchBar onChange={onChange} keyword={keyword} />
       </TitleWrapper>
       <Indicator />
       <FlexContainer onScroll={onScroll} ref={scrollRef}>
         {/* 전체url */}
-        {!isTagClicked && !isSearch && <ItemContainer urls={totalUrls} />}
+        {!tagIsClicked && !isSearch && <ItemContainer urls={totalUrls} />}
         {/* 태그별 url */}
-        {isTagClicked && <ItemContainer urls={filterdUrls} />}
+        {tagIsClicked && <ItemContainer urls={filterdUrls} />}
         {/* 검색 url */}
         {isSearch && <ItemContainer urls={filterdUrls} />}
         {/* url 검색중 */}
         {isSearch && isSearchLoading && <Loader />}
-        {/* url없을때 component만들기*/}
+        {/* 태그 url없을때 */}
+        {tagIsClicked &&
+          !combinedItemsloading &&
+          combinedTagItems.length === 0 && <NoUrl />}
+        {/* 검색창 url없을 때 */}
+        {isSearch && !isSearchLoading && filterdUrls.length === 0 && <NoUrl />}
+
+        {tagIsClicked && combinedItemsloading && <Loader />}
 
         {/* 맨 처음 로딩 */}
         {loading.isTotalUrl && <Loader />}
@@ -181,14 +264,29 @@ const LeftBox = () => {
 
 export default LeftBox;
 
-const TitleContainer = ({ isTagClicked, isSearch, onClickSearchTitle }) => {
+const TitleContainer = ({
+  tagIsClicked,
+  isSearch,
+  onClickSearchTitle,
+  onClickTagTitle,
+}) => {
   return (
-    <TitleContainerEl>
-      {!isTagClicked && !isSearch && <Title>전체 목록</Title>}
-      {isTagClicked && <Title>태그</Title>}
+    <TitleContainerEl isSearch={isSearch} tagIsClicked={tagIsClicked}>
+      {!tagIsClicked && !isSearch && <Title>전체 북마크</Title>}
+      {tagIsClicked && <TagTitle onClick={onClickTagTitle}>#태그</TagTitle>}
       {isSearch && (
-        <SearchTitle onClick={onClickSearchTitle}>#검색</SearchTitle>
+        <SearchTitle onClick={onClickSearchTitle} tagIsClicked={tagIsClicked}>
+          #검색
+        </SearchTitle>
       )}
     </TitleContainerEl>
+  );
+};
+
+const NoUrl = () => {
+  return (
+    <NoUrlEl>
+      <NoUrlTitle>아직 북마크가 없습니다.</NoUrlTitle>
+    </NoUrlEl>
   );
 };

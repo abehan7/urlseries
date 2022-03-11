@@ -11,10 +11,10 @@ const pm = createPromise({
 
 const logger = createLogger();
 
-const store2 = configureStore({
+const store = configureStore({
   reducer: rootReducer,
-  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), logger, pm],
+  middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), pm],
 });
-export default store2;
+export default store;
 
 //middleware: (getDefaultMiddleware) => [...getDefaultMiddleware(), logger, pm],
