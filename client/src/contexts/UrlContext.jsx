@@ -22,7 +22,7 @@ const UrlContext = createContext();
 
 export const useUrl = () => useContext(UrlContext);
 
-const debounceFn = debounce((fn) => fn(), 500);
+// const debounceFn = debounce((fn) => fn(), 500);
 
 export const UrlProvider = ({ children }) => {
   // console.log("UrlProvider");
@@ -33,6 +33,7 @@ export const UrlProvider = ({ children }) => {
     searchedUrls: [],
     recentClickedUrls: [],
     likedUrls: [],
+    deleteUrls: [],
   });
 
   const [currentUrl, setCurrentUrl] = useState({
@@ -96,11 +97,6 @@ export const UrlProvider = ({ children }) => {
     console.log(hashtag.totalHashtags.length);
     hashtag.totalHashtags.length === 0 && fn();
   }, [url.totalUrls, hashtag.totalHashtags]);
-
-  // const setAssignedtagsName = () => {
-  //   const _assignedTagNames = hashtag.assignedHashtags.map((tag) => tag.name);
-  //   setHashtag({ ...hashtag, assignedTagNames: _assignedTagNames });
-  // };
 
   const handleCloseEditModal = () => {
     // close modal
@@ -168,7 +164,7 @@ export const UrlProvider = ({ children }) => {
     setUrl({ ...url, totalUrl: [newUrl, ...url.totalUrls] });
   };
 
-  const handleDeleteUrl = async (urlId) => {
+  const handleClickDeleteUrlBtn = async (urlId) => {
     // api call
     const deleteUrl = () => {};
     await deleteUrl(urlId);
@@ -208,6 +204,17 @@ export const UrlProvider = ({ children }) => {
   const handleSetCurrentUrl = (url) => {
     // console.log("url: ", url);
     setCurrentUrl(url);
+  };
+
+  const handleAddDeleteUrl = (_url) => {
+    // console.log("url?.deleteUrls: ", url);
+
+    setUrl({ ...url, deleteUrls: [_url, ...url?.deleteUrls] });
+  };
+
+  const handleRemoveDeleteUrl = (urlId) => {
+    const newDeleteUrls = url.deleteUrls.filter((_url) => _url._id !== urlId);
+    setUrl({ ...url, deleteUrls: newDeleteUrls });
   };
 
   // FIXME: 전체 url
@@ -301,9 +308,11 @@ export const UrlProvider = ({ children }) => {
     handleGetInfiniteScrollItems,
     handleEditUrl,
     handleAddUrl,
-    handleDeleteUrl,
+    handleClickDeleteUrlBtn,
     handleClickStar,
     handleSetCurrentUrl,
+    handleAddDeleteUrl,
+    handleRemoveDeleteUrl,
     loading,
   };
 
