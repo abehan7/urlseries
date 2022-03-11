@@ -161,7 +161,7 @@ const DeleteMode = () => {
   return (
     <>
       {loading && <LoadingWindow />}
-      <ItemContainer urls={deleteUrls} />
+      {!loading && <ItemContainer urls={deleteUrls} />}
       {!loading && deleteUrls.length === 0 && <NoUrl />}
     </>
   );

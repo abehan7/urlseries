@@ -106,23 +106,10 @@ const UrlEl = styled.div`
   transition: all 0.3s ease-in-out;
 
   :hover {
-    ${(props) =>
-      props.mode === constants.DELETE &&
-      css`
-        background-color: #ffcccb7a;
-        ${Line} {
-          background-color: tomato;
-        }
-      `}
-
-    ${(props) =>
-      props.mode !== constants.DELETE &&
-      css`
-        background-color: #a597fe1a;
-        ${Line} {
-          background-color: #c282ff;
-        }
-      `}
+    background-color: #a597fe1a;
+    ${Line} {
+      background-color: #c282ff;
+    }
   }
 `;
 
@@ -149,7 +136,6 @@ const Url = ({
   const starWrapRef = useRef(null);
   const currentUrl = useUrl().currentUrl;
   const mode = useMode().mode;
-  const whiteList = [constants.ADD, constants.NORMAL];
 
   const onClickUrl = async (e) => {
     // 별 누르면 클릭 안되게하기
@@ -167,7 +153,6 @@ const Url = ({
 
   // TODO: deleteItemIds만들기
   // 우선은 url을 담은 다음에 그 후에 Ids그걸로 map해서 넣기
-  const deleteItemIds = [];
 
   // current Id쪽을 어떻게 잘 해봐야 할듯
   // 예를들어서 {...url, isNewItem: true} 이런식으로 해야할듯
@@ -177,32 +162,24 @@ const Url = ({
       const nowItem = currentUrl.url_likedUrl === 0 ? "newItem" : "removeItem";
       return nowItem;
     },
-    isDeleteItem: () => {
-      if (currentUrl._id !== id) return "";
-      const nowItem = currentUrl.isNewItem ? "newItem" : "removeItem";
-      return nowItem;
-    },
-  };
-  const classNameFn = () => {
-    if (normalModeList.includes(mode)) return classNameMethod.isNewItem();
-    if (mode === constants.DELETE) return classNameMethod.isDeleteItem();
   };
 
   return (
-    <UrlEl key={id} onClick={onClickUrl} className={classNameFn()} mode={mode}>
+    <UrlEl
+      key={id}
+      onClick={onClickUrl}
+      className={classNameMethod.isNewItem()}
+      mode={mode}
+    >
       <Line />
       <Img src={src} />
       <TextWrapper>
         <Text>{title}</Text>
       </TextWrapper>
 
-      {whiteList.includes(mode) && (
-        <StarIcon
-          onClickStar={onClickStar}
-          starWrapRef={starWrapRef}
-          isLiked={isLiked}
-        />
-      )}
+      <Icon onClick={onClickStar} ref={starWrapRef}>
+        {isLiked ? <AiFillStar /> : <AiOutlineStar />}
+      </Icon>
 
       <Index>
         {totalUrlNum - index}/{totalUrlNum}
@@ -212,11 +189,3 @@ const Url = ({
 };
 
 export default Url;
-
-const StarIcon = ({ onClickStar, starWrapRef, isLiked }) => {
-  return (
-    <Icon onClick={onClickStar} ref={starWrapRef}>
-      {isLiked ? <AiFillStar /> : <AiOutlineStar />}
-    </Icon>
-  );
-};
