@@ -70,7 +70,7 @@ const ItemContainer = ({ urls }) => {
     const fn = () => {
       const _deleteUrlIds = deleteUrls.map((url) => url._id);
       setDeleteUrlIds(_deleteUrlIds);
-      console.log(_deleteUrlIds);
+      // console.log(_deleteUrlIds);
     };
     mode === constants.DELETE && fn();
   }, [deleteUrls]);

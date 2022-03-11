@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getIsClicked, RESET_TAGS } from "../../store/reducers/Tags";
 import { useFolder } from "../../contexts/FolderContext";
 import NoUrl from "./NoUrl";
+import { constants, useMode } from "../../contexts/ModeContext";
 
 const LeftBoxEl = styled.div`
   flex: 2;
@@ -101,7 +102,7 @@ const LeftBox = () => {
   const scrollRef = useRef(null);
   const totalUrls = useUrl().url.totalUrls;
   const [keyword, setKeyword] = useState("");
-  const [filterdUrls, setFilterdUrls] = useState([]);
+  // const [filterdUrls, setFilterdUrls] = useState([]);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
   const { loading } = useUrl();
   const tagIsClicked = useSelector(getIsClicked);
@@ -109,29 +110,30 @@ const LeftBox = () => {
   const dispatch = useDispatch();
   const handleSetCombinedItemLoading = useFolder().handleSetCombinedItemLoading;
   const combinedItemsloading = useFolder().loading;
+  const filterdUrls = useUrl().url.filterdUrls;
+  const handleSetFilterdUrls = useUrl().handleSetFilterdUrls;
   // const [option]
 
+  // 디펜던시 말 잘듣자
+  // 안그러면 과거로 돌아간다
+  // 없던걸로 돌아가버려
   const _getFilterdUrls = useCallback(
     (keyword) => {
       const pKeyword = KeywordNormalize(keyword);
       const filterd = SearchNotByDB(pKeyword, totalUrls);
-      setFilterdUrls(filterd);
+      handleSetFilterdUrls(filterd);
       setIsSearchLoading(false);
     },
-    [totalUrls]
+    [totalUrls, handleSetFilterdUrls]
   );
 
-  const onChange = useCallback(
-    async (e) => {
-      debounceFn.cancel();
-      setIsSearchLoading(true);
-      const _keyword = e.target.value;
-      setKeyword(_keyword);
-      e.target.value.length > 0 &&
-        (await debounceFn(_getFilterdUrls, _keyword));
-    },
-    [keyword, _getFilterdUrls]
-  );
+  const onChange = async (e) => {
+    debounceFn.cancel();
+    setIsSearchLoading(true);
+    const _keyword = e.target.value;
+    setKeyword(_keyword);
+    e.target.value.length > 0 && (await debounceFn(_getFilterdUrls, _keyword));
+  };
 
   const throttled = useRef(
     throttle((newValue, scrollTop) => {
@@ -157,7 +159,10 @@ const LeftBox = () => {
 
   const onClickSearchTitle = () => setKeyword("");
 
-  const onClickTagTitle = () => dispatch(RESET_TAGS());
+  const onClickTagTitle = () => {
+    handleSetFilterdUrls([]);
+    dispatch(RESET_TAGS());
+  };
 
   // 검색시 setting
 
@@ -165,7 +170,7 @@ const LeftBox = () => {
     const fn = () => {
       //태그들 비우기
       tagIsClicked && dispatch(RESET_TAGS());
-      setFilterdUrls([]);
+      handleSetFilterdUrls([]);
     };
     fn();
   }, [keyword]);
@@ -175,23 +180,19 @@ const LeftBox = () => {
   }, [totalUrls]);
 
   // 태그 하나라도 클릭되면 setting
-  // 아 여기서 약간 이벤트가 이상해
-  // TODO: 여기 수정하기
-  // 검색어 있는 상태에서 태그 누르면 이상하게 풀려
-  // 그리고 태그 안나온다
   useEffect(() => {
     const fn = () => {
-      // TODO: 애니메이션 넣기
-      setFilterdUrls([]);
+      handleSetFilterdUrls([]);
       handleSetCombinedItemLoading(true);
       // setKeyword("");
       setTimeout(() => {
-        setFilterdUrls(combinedTagItems);
+        handleSetFilterdUrls(combinedTagItems);
         handleSetCombinedItemLoading(false);
       }, [200]);
     };
     keyword.length > 0 && tagIsClicked && setKeyword("");
     keyword.length === 0 && tagIsClicked && fn();
+    !tagIsClicked && handleSetFilterdUrls([]);
   }, [tagIsClicked, combinedTagItems]);
 
   useEffect(() => {
@@ -199,7 +200,7 @@ const LeftBox = () => {
       const newCombinedTagItems = totalUrls.filter((newItem) =>
         combinedTagItems.some((item) => item._id === newItem._id)
       );
-      setFilterdUrls(newCombinedTagItems);
+      handleSetFilterdUrls(newCombinedTagItems);
     };
     tagIsClicked && fn();
   }, [totalUrls]);

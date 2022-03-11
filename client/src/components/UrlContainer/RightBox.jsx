@@ -127,7 +127,9 @@ const RightBox = () => {
             handleScrollUp={handleScrollUp}
           />
         )}
-        {mode === constants.DELETE && <DeleteMode />}
+        {mode === constants.DELETE && (
+          <DeleteMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
+        )}
       </FlexContainer>
     </RightBoxEl>
   );
@@ -148,7 +150,7 @@ const NormalMode = ({ isLikeUrls, loading, isScroll, handleScrollUp }) => {
   );
 };
 
-const DeleteMode = () => {
+const DeleteMode = ({ isScroll, handleScrollUp }) => {
   const [loading, setLoading] = useState(true);
   const deleteUrls = useUrl().url.deleteUrls;
   const timer = setTimeout(() => {
@@ -163,6 +165,7 @@ const DeleteMode = () => {
       {loading && <LoadingWindow />}
       {!loading && <ItemContainer urls={deleteUrls} />}
       {!loading && deleteUrls.length === 0 && <NoUrl />}
+      <Marker isScroll={isScroll} onClick={handleScrollUp} />
     </>
   );
 };

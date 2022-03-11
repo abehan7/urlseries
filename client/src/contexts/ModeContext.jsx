@@ -26,7 +26,7 @@ export const ModeProvider = ({ children }) => {
     // 현재 url 초기화
     handleSetCurrentUrl({});
     // deleteUrls 초기화
-    handleResetDeleteUrl();
+    // handleResetDeleteUrl();
   }, [mode]);
 
   const value = { mode, setMode, loading };

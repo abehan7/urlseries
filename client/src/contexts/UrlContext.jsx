@@ -14,6 +14,7 @@ import {
   getAbort,
   TotalAfter,
 } from "../components/Api";
+import { duplicateUrlChecker } from "../components/Utils/Urls/checkDuplicate";
 import { getToken } from "../redux/ReducersT/tokenReducer";
 import { SET_FOLDERS } from "../store/reducers/Folders";
 // import { getComments } from "../Api";
@@ -34,6 +35,7 @@ export const UrlProvider = ({ children }) => {
     recentClickedUrls: [],
     likedUrls: [],
     deleteUrls: [],
+    filterdUrls: [],
   });
 
   const [currentUrl, setCurrentUrl] = useState({
@@ -144,7 +146,7 @@ export const UrlProvider = ({ children }) => {
 
     // await updateHashtag(processed);
   }, [hashtag]);
-
+  // FIXME: 무한스크롤
   const handleGetInfiniteScrollItems = (urls) => {
     setUrl({ ...url, displayUrls: urls });
   };
@@ -203,15 +205,23 @@ export const UrlProvider = ({ children }) => {
     // api call
   };
 
+  //FIXME: 가장 최신에 클릭한 URL
   const handleSetCurrentUrl = (url) => {
     // console.log("url: ", url);
     setCurrentUrl(url);
   };
 
+  // FIXME: 삭제탭 기능
   const handleAddDeleteUrl = (_url) => {
     // console.log("url?.deleteUrls: ", url);
 
     setUrl({ ...url, deleteUrls: [_url, ...url?.deleteUrls] });
+  };
+
+  const handleAddDeleteUrlList = (newUrls) => {
+    const duplicatedList = [...newUrls, ...url.deleteUrls];
+    const filterd = duplicateUrlChecker(duplicatedList);
+    setUrl({ ...url, deleteUrls: filterd });
   };
 
   const handleRemoveDeleteUrl = (urlId) => {
@@ -219,7 +229,13 @@ export const UrlProvider = ({ children }) => {
     setUrl({ ...url, deleteUrls: newDeleteUrls });
   };
 
-  const handleResetDeleteUrl = () => setUrl({ ...url, deleteUrls: [] });
+  const handleResetDeleteUrl = () => {
+    setUrl({ ...url, deleteUrls: [] });
+    setCurrentUrl({});
+  };
+
+  // FIXME: BOX들에 보여질 filterd
+  const handleSetFilterdUrls = (filterdUrls) => setUrl({ ...url, filterdUrls });
 
   // FIXME: 전체 url
   useEffect(() => {
@@ -318,6 +334,8 @@ export const UrlProvider = ({ children }) => {
     handleAddDeleteUrl,
     handleRemoveDeleteUrl,
     handleResetDeleteUrl,
+    handleAddDeleteUrlList,
+    handleSetFilterdUrls,
     loading,
   };
 

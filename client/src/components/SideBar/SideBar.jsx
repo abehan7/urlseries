@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import {
   HiOutlineDocumentAdd,
@@ -13,6 +13,7 @@ import {
   useMode,
 } from "../../contexts/ModeContext.jsx";
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
+import { useUrl } from "../../contexts/UrlContext.jsx";
 
 // import {} from "react-icons"
 
@@ -182,6 +183,7 @@ const NormalModeItems = () => {
   const setMode = useMode().setMode;
   const onClickAdd = () => setMode(constants.ADD);
   const onClickDelete = () => setMode(constants.DELETE);
+
   return (
     <NormalWrapper>
       <Item name="추가하기" onClick={onClickAdd}>
@@ -209,7 +211,24 @@ const NormalModeItems = () => {
 
 const DeleteModeItems = () => {
   const setMode = useMode().setMode;
+  const filterdUrls = useUrl().url.filterdUrls;
+  const handleAddDeleteUrlList = useUrl().handleAddDeleteUrlList;
+  const handleResetDeleteUrl = useUrl().handleResetDeleteUrl;
+  const totalUrls = useUrl().url.totalUrls;
+
   const onClickBack = () => setMode(constants.NORMAL);
+  const onClickAll = () => {
+    console.log(filterdUrls);
+    // 검색 하나라도 했을 때만 실행
+    filterdUrls.length !== 0 && handleAddDeleteUrlList(filterdUrls);
+    // 검색도 안하고 태그도 클릭 안했을 때
+    filterdUrls.length === 0 && handleAddDeleteUrlList(totalUrls);
+  };
+  const onUnClickAll = () => handleResetDeleteUrl();
+
+  // useEffect(() => {
+  // console.log("filterdUrls from sidebar:", filterdUrls);
+  // }, [filterdUrls]);
 
   return (
     <DeleteWrapper>
@@ -220,13 +239,13 @@ const DeleteModeItems = () => {
         <HiOutlineDocumentRemove />
       </Item>
       <TagWrapper>
-        <Item name="전체선택">
+        <Item name="전체선택" onClick={onClickAll}>
           <MdRadioButtonChecked />
         </Item>
       </TagWrapper>
 
       <TagWrapper>
-        <Item name="전체해제">
+        <Item name="전체해제" onClick={onUnClickAll}>
           <MdRadioButtonUnchecked />
         </Item>
       </TagWrapper>
