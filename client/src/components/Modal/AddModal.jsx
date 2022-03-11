@@ -98,7 +98,7 @@ const ModalBodyEl = styled(ModalBody)`
 const ModalContentEl = styled(ModalContent)`
   @keyframes popup {
     0% {
-      transform: translateY(40%);
+      transform: translateY(50%);
     }
     100% {
       transform: translateY(0%);

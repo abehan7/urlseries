@@ -12,17 +12,13 @@ const HASHTAG = "HASHTAG";
 const FOLDER = "FOLDER";
 
 export const constants = { NORMAL, EDIT, ADD, DELETE, HASHTAG, FOLDER };
+export const normalModeList = [ADD, NORMAL, HASHTAG];
 
 export const ModeProvider = ({ children }) => {
   // isDarkMode isEditMode isDeleteMode isNormalMode
   const [mode, setMode] = useState(NORMAL);
 
   const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fn = async () => {};
-    fn();
-  }, []);
 
   const value = { mode, setMode, loading };
 

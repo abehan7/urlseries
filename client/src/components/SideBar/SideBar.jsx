@@ -5,23 +5,29 @@ import {
   HiOutlineDocumentRemove,
   HiOutlineFolderAdd,
 } from "react-icons/hi";
-import { CgEditBlackPoint, CgHashtag } from "react-icons/cg";
+import { CgBackspace, CgEditBlackPoint, CgHashtag } from "react-icons/cg";
 import Footer from "../Footer/Footer.jsx";
-import { constants, useMode } from "../../contexts/ModeContext.jsx";
+import {
+  constants,
+  normalModeList,
+  useMode,
+} from "../../contexts/ModeContext.jsx";
+import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
 
 // import {} from "react-icons"
 
 const SideBarEl = styled.div`
-  @keyframes fadeInUp {
+  @keyframes fadeIn {
     0% {
       opacity: 0;
-      transform: translateY(100%);
+      transform: translateX(-50%);
     }
     to {
       opacity: 1;
-      transform: translateY(0);
+      transform: translateX(0);
     }
   }
+
   z-index: 2;
   height: 100%;
   width: 200px;
@@ -117,9 +123,27 @@ const Ment = styled.span`
   padding-top: 0.3rem;
 `;
 
+const TapsWrapper = styled.div`
+  animation: fadeIn 0.5s ease-in-out;
+`;
+const DeleteWrapper = styled(TapsWrapper)`
+  > div:last-child {
+    pointer-events: none;
+  }
+  > div:nth-child(2) {
+    :hover {
+      background-color: #ffcccb7a;
+      ::before {
+        background-color: tomato;
+      }
+    }
+  }
+`;
+
+const NormalWrapper = styled(TapsWrapper)``;
+
 const SideBar = () => {
-  const setMode = useMode().setMode;
-  const onClickAdd = () => setMode(constants.ADD);
+  const mode = useMode().mode;
 
   return (
     <SideBarEl>
@@ -129,10 +153,41 @@ const SideBar = () => {
           <Ment>Welcome!</Ment>
         </ImgWrapper>
       </FaviconWrapper>
+      {/* 탭 맵핑 */}
+      {normalModeList.includes(mode) && <NormalModeItems />}
+      {constants.DELETE === mode && <DeleteModeItems />}
+      <Footer />
+    </SideBarEl>
+  );
+};
+
+export default SideBar;
+
+//  Q space => git branch -a 탈출하는 방법
+
+const Item = ({ children, name, onClick }) => {
+  return (
+    <Button onClick={onClick}>
+      <IconWrapper>
+        <Icon>{children}</Icon>
+      </IconWrapper>
+      <TextWrapper>
+        <Text>{name}</Text>
+      </TextWrapper>
+    </Button>
+  );
+};
+
+const NormalModeItems = () => {
+  const setMode = useMode().setMode;
+  const onClickAdd = () => setMode(constants.ADD);
+  const onClickDelete = () => setMode(constants.DELETE);
+  return (
+    <NormalWrapper>
       <Item name="추가하기" onClick={onClickAdd}>
         <HiOutlineDocumentAdd />
       </Item>
-      <Item name="삭제하기">
+      <Item name="삭제하기" onClick={onClickDelete}>
         <HiOutlineDocumentRemove />
       </Item>
       <Item name="수정하기">
@@ -148,24 +203,34 @@ const SideBar = () => {
           <HiOutlineFolderAdd />
         </Item>
       </TagWrapper>
-      <Footer />
-    </SideBarEl>
+    </NormalWrapper>
   );
 };
 
-const Item = ({ children, name, onClick }) => {
+const DeleteModeItems = () => {
+  const setMode = useMode().setMode;
+  const onClickBack = () => setMode(constants.NORMAL);
+
   return (
-    <Button onClick={onClick}>
-      <IconWrapper>
-        <Icon>{children}</Icon>
-      </IconWrapper>
-      <TextWrapper>
-        <Text>{name}</Text>
-      </TextWrapper>
-    </Button>
+    <DeleteWrapper>
+      <Item name="뒤로가기" onClick={onClickBack}>
+        <CgBackspace />
+      </Item>
+      <Item name="삭제하기">
+        <HiOutlineDocumentRemove />
+      </Item>
+      <TagWrapper>
+        <Item name="전체선택">
+          <MdRadioButtonChecked />
+        </Item>
+      </TagWrapper>
+
+      <TagWrapper>
+        <Item name="전체해제">
+          <MdRadioButtonUnchecked />
+        </Item>
+      </TagWrapper>
+      <Item name=""></Item>
+    </DeleteWrapper>
   );
 };
-
-export default SideBar;
-
-//  Q space => git branch -a 탈출하는 방법

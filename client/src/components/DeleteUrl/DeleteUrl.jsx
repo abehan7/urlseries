@@ -1,7 +1,6 @@
 import { useRef } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled from "styled-components";
-import { constants, normalModeList, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 const Line = styled.div`
   width: 4px;
@@ -100,7 +99,7 @@ const UrlEl = styled.div`
   background-color: #fff;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: flex-end;
   cursor: pointer;
 
   transition: all 0.3s ease-in-out;
@@ -122,7 +121,7 @@ const Index = styled.div`
   font-weight: 100;
 `;
 
-const Url = ({
+const DeleteUrl = ({
   url,
   title,
   id,
@@ -134,37 +133,26 @@ const Url = ({
 }) => {
   const src = `http://www.google.com/s2/favicons?domain=${url}`;
   const starWrapRef = useRef(null);
+  // const currentUrlRef = useRef(null);
   const currentUrl = useUrl().currentUrl;
-  const mode = useMode().mode;
-  const whiteList = [constants.ADD, constants.NORMAL];
+  // console.log("currentUrl", currentUrl);
 
   const onClickUrl = async (e) => {
     // 별 누르면 클릭 안되게하기
-    const svg = starWrapRef?.current?.querySelector("svg");
-    const path = svg?.querySelector("path");
+    const svg = starWrapRef.current.querySelector("svg");
+    const path = svg.querySelector("path");
     const blackList = [path, svg, starWrapRef.current];
-    if (blackList?.includes(e.target)) return false;
-
-    // whiteList.includes(mode) && nomalModeFn();
-    // 노멀모드일때
+    if (blackList.includes(e.target)) return;
 
     onClick();
-    // 삭제모드일때
+    // onClick();
   };
 
-  // TODO: deleteItemIds만들기
-  const deleteItemIds = [];
+  // const className = currentUrl._id === id ? "newItem" : "";
   const className = {
     isNewItem: () => {
       if (currentUrl._id !== id) return "";
       const nowItem = currentUrl.url_likedUrl === 0 ? "newItem" : "removeItem";
-      return nowItem;
-    },
-    isDeleteItem: () => {
-      if (currentUrl._id !== id) return "";
-      const nowItem = !deleteItemIds.includes(currentUrl._id)
-        ? "newItem"
-        : "removeItem";
       return nowItem;
     },
   };
@@ -176,15 +164,9 @@ const Url = ({
       <TextWrapper>
         <Text>{title}</Text>
       </TextWrapper>
-
-      {whiteList.includes(mode) && (
-        <StarIcon
-          onClickStar={onClickStar}
-          starWrapRef={starWrapRef}
-          isLiked={isLiked}
-        />
-      )}
-
+      <Icon onClick={onClickStar} ref={starWrapRef}>
+        {isLiked ? <AiFillStar /> : <AiOutlineStar />}
+      </Icon>
       <Index>
         {totalUrlNum - index}/{totalUrlNum}
       </Index>
@@ -192,12 +174,4 @@ const Url = ({
   );
 };
 
-export default Url;
-
-const StarIcon = ({ onClickStar, starWrapRef, isLiked }) => {
-  return (
-    <Icon onClick={onClickStar} ref={starWrapRef}>
-      {isLiked ? <AiFillStar /> : <AiOutlineStar />}
-    </Icon>
-  );
-};
+export default DeleteUrl;
