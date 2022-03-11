@@ -7,20 +7,30 @@ import {
   MdOutlineKeyboardArrowRight,
 } from "react-icons/md";
 import { useCallback } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getFolders } from "../../store/reducers/Folders";
-import { getIsClicked, getMetaTagItems } from "../../store/reducers/Tags";
+import {
+  getFolderTagItems,
+  getIsClicked,
+  getMetaTagItems,
+  REMOVE_FOLDER_TAGS,
+  REMOVE_META_TAGS,
+  SET_CLICKED,
+  SET_FOLDER_TAGS,
+  SET_META_TAGS,
+} from "../../store/reducers/Tags";
 import { AiOutlineFolder } from "react-icons/ai";
 import { throttle } from "lodash";
+import { useEffect } from "react";
 const IndicatorEl = styled.div`
   position: relative;
   height: fit-content;
   display: flex;
   width: 80%;
-  height: 40px;
+  height: 50px;
   align-items: center;
   justify-content: flex-start;
-  padding: 0.5rem 0;
+  /* padding: 0.5rem 0; */
 `;
 const TagWrapper = styled.div`
   overflow-x: scroll;
@@ -29,13 +39,15 @@ const TagWrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-  /* padding: 0 1.5rem; */
+  padding: 1rem 0;
+
   display: flex;
   column-gap: 1.5rem;
   align-items: center;
   justify-content: flex-start;
   max-width: 100%;
 `;
+
 const TagEl = styled.span`
   color: gray;
   border-radius: 10px;
@@ -44,6 +56,7 @@ const TagEl = styled.span`
   width: fit-content;
   min-width: fit-content;
   cursor: pointer;
+
   :hover {
     background-color: #a597fe;
     color: #fff;
@@ -74,10 +87,23 @@ const FolderTagEl = styled(TagEl)`
   display: flex;
   align-items: center;
   justify-content: center;
-  ${({ isClicked }) => !isClicked && `opacity: 1;`}
-  ${({ isClicked, clicked }) => isClicked && !clicked && `opacity: 0.3;`}
-  ${({ isClicked, clicked }) => isClicked && clicked && `opacity: 1;`}
-  transition: 100ms;
+  ${({ clicked }) =>
+    clicked &&
+    `
+  background-color: #a597fe; 
+  color: #fff; 
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  `};
+`;
+
+const MetaTagEl = styled(TagEl)`
+  ${({ clicked }) =>
+    clicked &&
+    `
+  background-color: #a597fe; 
+  color: #fff; 
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  `};
 `;
 const FolderIcon = styled.div`
   pointer-events: "none";
@@ -92,10 +118,12 @@ const Indicator = () => {
   const folders = useSelector(getFolders);
   const tagIsClicked = useSelector(getIsClicked);
   const metaTagItems = useSelector(getMetaTagItems);
+  const folderTagItems = useSelector(getFolderTagItems);
   const scrollRef = useRef(null);
+  const dispatch = useDispatch();
 
   // hooks
-
+  // FIXME: Scroll side
   const scrollToFn = (left) => {
     const option = scrollRef.current.scrollTo({
       left,
@@ -112,42 +140,56 @@ const Indicator = () => {
     scrollToFn(left);
   };
 
-  const handleClickMetaTag = () => {};
-
-  const handleClickFolderTag = () => {};
-
-  // 좌우 스크롤
-  const throttled = useRef(
-    throttle((isScrollUp) => {
-      isScrollUp ? onClickRightArrow() : onClickLeftArrow();
-    }, 500)
-  );
-
-  const onWheel = useCallback((e) => {
-    // const isScrollUp = e.deltaY > 0;
-    // throttled.current(isScrollUp);
-    console.log(e);
-    const getScrollUp = () => {
-      const left = scrollRef.current.scrollLeft + 40;
-      scrollToFn(left);
+  // FIXME: 글자 태그 클릭
+  const handleClickMetaTag = (metaTag) => {
+    console.log("handleClickMetaTag", metaTag);
+    const clickedOnceFn = () => {
+      dispatch(SET_META_TAGS(metaTag));
     };
-    const getScrollDown = () => {
-      const left = scrollRef.current.scrollLeft - 40;
-      scrollToFn(left);
+    const clickedSecondFn = () => {
+      dispatch(REMOVE_META_TAGS(metaTag));
     };
+    // console.log(metaTag);
+    !metaTagItems.includes(metaTag) && clickedOnceFn();
+    metaTagItems.includes(metaTag) && clickedSecondFn();
+  };
 
-    e.deltaY > 0 ? getScrollUp() : getScrollDown();
-  }, []);
+  //FIXME: 폴더 태그 클릭
+  const handleClickFolderTag = (folder) => {
+    const clickedOnceFn = () => {
+      dispatch(SET_FOLDER_TAGS(folder._id));
+    };
+    const clickedSecondFn = () => {
+      dispatch(REMOVE_FOLDER_TAGS(folder._id));
+    };
+    !folderTagItems.includes(folder?._id) && clickedOnceFn();
+    folderTagItems.includes(folder?._id) && clickedSecondFn();
+  };
 
+  // FIXME: 태그 하나라도 클릭했는 지 알려줌
+  const handleSetClicked = (boolean) => {
+    dispatch(SET_CLICKED(boolean));
+  };
+
+  useEffect(() => {
+    metaTagItems.length === 0 &&
+      folderTagItems.length === 0 &&
+      handleSetClicked(false);
+
+    (metaTagItems.length !== 0 || folderTagItems.length !== 0) &&
+      handleSetClicked(true);
+  }, [metaTagItems, folderTagItems]);
+
+  // FIXME: 맵핑
   const hashtagMap = () => {
     return assignedHashtags.map((tag, index) => {
       const clicked = metaTagItems.includes(tag.name);
-      const key = Math.floor(Math.random() * 100000);
+      const key = index;
       return (
         <MetaTag
           tag={tag.name}
           key={key}
-          onClick={() => handleClickMetaTag(tag)}
+          onClick={() => handleClickMetaTag(tag.name)}
           clicked={clicked}
         />
       );
@@ -156,12 +198,13 @@ const Indicator = () => {
 
   const folderMap = () => {
     return folders.map((folder, key) => {
-      const clicked = false;
+      const clicked = folderTagItems.includes(folder._id);
       return (
         <FolderTag
           handleClickFolderTag={handleClickFolderTag}
           folder={folder}
           clicked={clicked}
+          key={folder._id}
         />
       );
     });
@@ -172,7 +215,7 @@ const Indicator = () => {
       <LeftIcon onClick={onClickLeftArrow}>
         <MdOutlineKeyboardArrowLeft />
       </LeftIcon>
-      <TagWrapper ref={scrollRef} onWheel={onWheel}>
+      <TagWrapper ref={scrollRef}>
         {folderMap()}
         {hashtagMap()}
       </TagWrapper>
@@ -185,8 +228,12 @@ const Indicator = () => {
 
 export default Indicator;
 
-const MetaTag = ({ tag }) => {
-  return <TagEl>{tag}</TagEl>;
+const MetaTag = ({ tag, onClick, clicked }) => {
+  return (
+    <MetaTagEl onClick={onClick} clicked={clicked}>
+      {tag}
+    </MetaTagEl>
+  );
 };
 
 const FolderTag = ({ handleClickFolderTag, folder, clicked }) => {

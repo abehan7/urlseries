@@ -30,8 +30,8 @@ const RightBoxEl = styled.div`
       opacity: 1;
     }
     to {
-      transform: translate(-60%, 0px);
-      opacity: 0.3;
+      transform: translate(-100%, 0px);
+      opacity: 0.1;
     }
   }
 
@@ -40,8 +40,7 @@ const RightBoxEl = styled.div`
   justify-content: center;
   flex: 1;
   max-width: 450px;
-  height: 100%;
-  min-height: 100%;
+  height: 95%;
 
   flex-direction: column;
   padding-right: 1rem;

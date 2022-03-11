@@ -246,19 +246,27 @@ export const UrlProvider = ({ children }) => {
     };
 
     const getGuestData = async () => {
+      setLoading({ ...loading, isLikedUrl: true });
       const { data } = await getGuestUrls();
       console.log(data);
+      console.log("getGuestData");
+
       setUrl({
         ...url,
+        totalUrls: data.totalUrl,
         displayUrls: data.totalUrl,
         searchedUrls: data.recentSearchedUrl,
         recentClickedUrls: data.rightUrl,
         likedUrls: data.leftUrl,
       });
+      setLoading({ ...loading, isLikedUrl: false });
     };
 
+    let timer;
+
     token && getMemberData();
-    !token && getGuestData();
+    !token && (timer = setTimeout(getGuestData, 1000));
+    return () => clearTimeout(timer);
   }, [token]);
 
   // FIXME: 해시태그

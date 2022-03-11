@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import RegisterT from "./Auth/RegisterT";
 import ActivationEmail from "./Auth/ActivationEmail";
 import { useSelector } from "react-redux";
-import MainPage from "../../routers/MainPage";
+import MainPage from "../../pages/MainPage";
 import styled from "styled-components";
 
 import loadable from "@loadable/component";

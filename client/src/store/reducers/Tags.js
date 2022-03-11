@@ -31,6 +31,12 @@ const TagSlice = createSlice({
         (item) => item !== action.payload
       );
     },
+    RESET_TAGS: (state) => {
+      state.metaTagItems = [];
+      state.folderTagItems = [];
+      state.isClicked = false;
+      state.isMetaTag = null;
+    },
   },
 });
 
@@ -41,6 +47,7 @@ export const {
   SET_CLICKED,
   REMOVE_FOLDER_TAGS,
   REMOVE_META_TAGS,
+  RESET_TAGS,
 } = TagSlice.actions;
 
 // Selectors

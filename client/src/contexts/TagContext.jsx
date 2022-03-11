@@ -22,6 +22,7 @@ export const TagProvider = ({ children }) => {
   const token = useSelector(getToken);
 
   const url = useUrl().url;
+  const totalUrls = url.totalUrls;
 
   const addAssignedTag = (tag) => {
     setHashtag({
@@ -59,11 +60,6 @@ export const TagProvider = ({ children }) => {
     console.log(hashtag.totalHashtags.length);
     hashtag.totalHashtags.length === 0 && fn();
   }, [url.totalUrls, hashtag.totalHashtags]);
-
-  // const setAssignedtagsName = () => {
-  //   const _assignedTagNames = hashtag.assignedHashtags.map((tag) => tag.name);
-  //   setHashtag({ ...hashtag, assignedTagNames: _assignedTagNames });
-  // };
 
   const handleCloseEditModal = () => {
     // close modal
@@ -125,11 +121,6 @@ export const TagProvider = ({ children }) => {
     };
     token && hashtag.assignedHashtags.length === 0 && startfn();
   }, [token]);
-
-  useEffect(() => {
-    const fn = async () => {};
-    fn();
-  }, []);
 
   const value = {
     hashtag,
