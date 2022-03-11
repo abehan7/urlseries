@@ -7,6 +7,7 @@ import {
 } from "react-icons/hi";
 import { CgEditBlackPoint, CgHashtag } from "react-icons/cg";
 import Footer from "../Footer/Footer.jsx";
+import { constants, useMode } from "../../contexts/ModeContext.jsx";
 
 // import {} from "react-icons"
 
@@ -117,6 +118,9 @@ const Ment = styled.span`
 `;
 
 const SideBar = () => {
+  const setMode = useMode().setMode;
+  const onClickAdd = () => setMode(constants.ADD);
+
   return (
     <SideBarEl>
       <FaviconWrapper>
@@ -125,7 +129,7 @@ const SideBar = () => {
           <Ment>Welcome!</Ment>
         </ImgWrapper>
       </FaviconWrapper>
-      <Item name="추가하기">
+      <Item name="추가하기" onClick={onClickAdd}>
         <HiOutlineDocumentAdd />
       </Item>
       <Item name="삭제하기">
@@ -149,9 +153,9 @@ const SideBar = () => {
   );
 };
 
-const Item = ({ children, name }) => {
+const Item = ({ children, name, onClick }) => {
   return (
-    <Button>
+    <Button onClick={onClick}>
       <IconWrapper>
         <Icon>{children}</Icon>
       </IconWrapper>

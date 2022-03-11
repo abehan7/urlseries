@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
+import { constants, useMode } from "../../contexts/ModeContext";
 import { BodyContent } from "./styled/BodyContent.styled";
 import { Footer } from "./styled/Footer.styled";
 import { FooterBtn } from "./styled/FooterBtn.styled";
@@ -229,9 +230,11 @@ const MemoLabel = styled(Label)`
 
 const AddModal = () => {
   const [isInput, setIsInput] = useState(true);
+  const setMode = useMode().setMode;
   const onClickBack = () => setIsInput(true);
   const onClickNext = () => setIsInput(false);
   const onClickSubmit = () => {};
+  const onClickCancel = () => setMode(constants.NORMAL);
   return (
     <ModalContentEl>
       <ModalHeader>
@@ -247,7 +250,7 @@ const AddModal = () => {
             <BackBtn onClick={onClickBack}>Back</BackBtn>
           </BtnContainer>
         )}
-        <CancelBtn>Cancel</CancelBtn>
+        <CancelBtn onClick={onClickCancel}>Cancel</CancelBtn>
         {isInput && <SaveBtn onClick={onClickNext}>NEXT</SaveBtn>}
         {!isInput && <SaveBtn onClick={onClickSubmit}>Submit</SaveBtn>}
       </FooterEl>

@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { constants, useMode } from "../../contexts/ModeContext";
 import AddModal from "./AddModal";
 const ModalEl = styled.div`
   width: 100vw;
@@ -14,10 +15,14 @@ const ModalEl = styled.div`
   align-items: center;
 `;
 const Modals = () => {
+  const mode = useMode().mode;
+  console.log(mode);
   return (
-    <ModalEl>
-      <AddModal />
-    </ModalEl>
+    mode === constants.ADD && (
+      <ModalEl>
+        <AddModal />
+      </ModalEl>
+    )
   );
 };
 
