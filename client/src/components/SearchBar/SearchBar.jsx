@@ -18,12 +18,13 @@ const InputSearch = styled.input`
   padding-left: 1rem;
 
   :focus {
-    width: 300px;
+    width: 100px;
     color: #535151;
     border-radius: 0px;
     background-color: transparent;
     border-bottom: 1px solid rgba(114, 114, 114, 0.5);
     transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+    padding-right: 35px;
   }
 `;
 
@@ -43,11 +44,12 @@ const BtnSearch = styled.button`
   pointer-events: painted;
   :focus ~ input {
     color: #535151;
-    width: 300px;
+    width: 100px;
     border-radius: 0px;
     background-color: transparent;
     border-bottom: 1px solid rgba(78, 76, 76, 0.5);
     transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+    padding-right: 35px;
   }
   :focus svg {
     color: #fff;

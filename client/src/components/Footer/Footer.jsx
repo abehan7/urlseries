@@ -12,6 +12,9 @@ const MainFooter = styled.div`
   width: 100%;
   background: transparent;
   color: rgb(3, 3, 3);
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const FooterContent = styled.div`

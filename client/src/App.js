@@ -17,6 +17,7 @@ import styled from "styled-components";
 
 //-----------------수정본 코드----------------
 const AppEl = styled.div`
+  height: 100%;
   position: relative;
 `;
 

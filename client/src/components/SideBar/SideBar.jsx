@@ -21,15 +21,20 @@ const SideBarEl = styled.div`
       transform: translateY(0);
     }
   }
-  height: 100%;
-  width: 20%;
+
+  height: auto;
+  min-height: 653px;
+  width: 180px;
   background-color: #fff;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   @media screen and (max-width: 1018px) {
     /* height: calc(100vh - 100px); */
     /* height: calc(100vh+100px); */
     /* width: 100px; */
-    height: 100%;
+    height: auto;
+  }
+  @media screen and (max-width: 600px) {
+    width: 80px;
   }
 `;
 
@@ -62,10 +67,19 @@ const Button = styled.div`
       background-color: #a597fe;
     }
   }
+
+  @media screen and (max-width: 600px) {
+    justify-content: center;
+    right: 5px;
+  }
 `;
 
 const IconWrapper = styled.div``;
-const TextWrapper = styled.div``;
+const TextWrapper = styled.div`
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+`;
 const Text = styled.span``;
 const Icon = styled.div`
   font-size: 1.4rem;
@@ -74,6 +88,9 @@ const Icon = styled.div`
   justify-content: center;
   padding-left: 1rem;
   padding-right: 0.5rem;
+  @media screen and (max-width: 600px) {
+    font-size: 1.6rem;
+  }
 `;
 
 const TagWrapper = styled.div`
@@ -119,6 +136,9 @@ const Ment = styled.span`
   font-size: 1.1rem;
   color: gray;
   padding-top: 0.3rem;
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const SideBar = () => {

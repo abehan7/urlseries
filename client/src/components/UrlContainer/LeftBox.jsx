@@ -20,8 +20,9 @@ const LeftBoxEl = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  height: 100%;
   @media screen and (max-width: 1018px) {
-    max-width: 100vw;
+    max-width: 100%;
     padding: 0;
     width: 100%;
   }
@@ -180,7 +181,7 @@ export default LeftBox;
 const TitleContainer = ({ isTagClicked, isSearch, onClickSearchTitle }) => {
   return (
     <TitleContainerEl>
-      {!isTagClicked && !isSearch && <Title>전체 북마크</Title>}
+      {!isTagClicked && !isSearch && <Title>전체 목록</Title>}
       {isTagClicked && <Title>태그</Title>}
       {isSearch && (
         <SearchTitle onClick={onClickSearchTitle}>#검색</SearchTitle>

@@ -4,9 +4,12 @@
   font-display: swap;
   src: url("./fonts/woff2/Pretendard-Regular.woff2") format("woff2");
 }
-
+html {
+  height: 100%;
+}
 body {
   margin: 0;
   padding: 0;
   background: #e9ecef;
+  min-height: 100%;
 }

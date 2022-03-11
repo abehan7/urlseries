@@ -15,11 +15,11 @@ import UrlContainer from "../components/UrlContainer/UrlContainer";
 export const MainStates = createContext(null);
 
 const MainEl = styled.div`
-  position: inherit;
+  position: relative;
   z-index: 1;
   width: 100%;
-  height: calc(100vh - 100px);
-  /* height: 100%; */
+  /* height: calc(100vh - 100px); */
+  height: 100%;
   display: flex;
   /* padding: 0; */
   /* background: linear-gradient(blue, pink); */

@@ -19,7 +19,9 @@ const EditUser = loadable(() => import("./profile/EditUser"));
 const ResetPassword = loadable(() => import("./auth/ResetPassword"));
 const ForgotPassword = loadable(() => import("./auth/ForgotPassword"));
 
-const Section = styled.section``;
+const Section = styled.section`
+  position: relative;
+`;
 function Body() {
   const auth = useSelector((state) => state.auth);
   const { isLogged, isAdmin } = auth;
