@@ -76,8 +76,8 @@ const FlexContainer = styled(ItemConatiner)`
 `;
 const RightBox = () => {
   // const totalUrls = useUrl().url.totalUrls;
-  const likedUrls = useUrl().url.likedUrls;
-  const searchedUrls = useUrl().url.searchedUrls;
+  // const likedUrls = useUrl().url.likedUrls;
+  // const searchedUrls = useUrl().url.searchedUrls;
   const [isScroll, setIsScroll] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
   const loading = useUrl().loading;
@@ -108,14 +108,40 @@ const RightBox = () => {
       <TitleWrapper>
         <Title>즐겨찾기</Title>
       </TitleWrapper>
-      <FlexContainer onScroll={onScroll} ref={scrollRef}>
-        {!isLikeUrls && <ItemContainer urls={searchedUrls} />}
-        {isLikeUrls && <ItemContainer urls={likedUrls} />}
-        {loading.isLikedUrl && <Loader />}
-        <Marker isScroll={isScroll} onClick={handleScrollUp} />
-      </FlexContainer>
+      <NormalMode
+        onScroll={onScroll}
+        scrollRef={scrollRef}
+        isLikeUrls={isLikeUrls}
+        loading={loading}
+        isScroll={isScroll}
+        handleScrollUp={handleScrollUp}
+      />
     </RightBoxEl>
   );
 };
 
 export default RightBox;
+
+const NormalMode = ({
+  onScroll,
+  scrollRef,
+  isLikeUrls,
+  loading,
+  isScroll,
+  handleScrollUp,
+}) => {
+  const likedUrls = useUrl().url.likedUrls;
+  const searchedUrls = useUrl().url.searchedUrls;
+  return (
+    <FlexContainer onScroll={onScroll} ref={scrollRef}>
+      {!isLikeUrls && <ItemContainer urls={searchedUrls} />}
+      {isLikeUrls && <ItemContainer urls={likedUrls} />}
+      {loading.isLikedUrl && <Loader />}
+      <Marker isScroll={isScroll} onClick={handleScrollUp} />
+    </FlexContainer>
+  );
+};
+
+const DeleteMode = () => {
+  return <div>DeleteMode</div>;
+};
