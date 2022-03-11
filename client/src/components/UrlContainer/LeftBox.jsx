@@ -14,11 +14,7 @@ import { KeywordNormalize, SearchNotByDB } from "../Utils/Search";
 import { useEffect } from "react";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getIsClicked,
-  RESET_TAGS,
-  SET_CLICKED,
-} from "../../store/reducers/Tags";
+import { getIsClicked, RESET_TAGS } from "../../store/reducers/Tags";
 import { useFolder } from "../../contexts/FolderContext";
 import NoUrl from "./NoUrl";
 

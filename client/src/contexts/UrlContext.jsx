@@ -45,6 +45,8 @@ export const UrlProvider = ({ children }) => {
     url_likedUrl: "",
   });
 
+  const [urlIds, setUrlIds] = useState({ deleteUrlIds: [] });
+
   // const [totalUrls, setTotalUrls] = useState([]);
 
   const [hashtag, setHashtag] = useState({
