@@ -63,16 +63,18 @@ const InputContentEl = styled(BodyContentEl)`
     }
   }
 
-  transition: 0.3s ease-in-out all;
-  ${({ isInput }) =>
-    isInput
-      ? css`
-          display: flex;
-          animation: fadeInInput 0.3s ease-in-out;
-        `
-      : css`
-          display: none;
-        `}
+  /* transition: 0.3s ease-in-out all; */
+  ${({ count, isInput }) =>
+    count > 0
+      ? isInput
+        ? css`
+            display: flex;
+            animation: fadeInInput 0.3s ease-in-out;
+          `
+        : css`
+            display: none;
+          `
+      : ""}
 `;
 const TextAreaContentEl = styled(BodyContentEl)`
   ${({ isInput }) =>
@@ -230,18 +232,25 @@ const MemoLabel = styled(Label)`
 
 const AddModal = () => {
   const [isInput, setIsInput] = useState(true);
+  const [count, setCount] = useState(0);
   const setMode = useMode().setMode;
   const onClickBack = () => setIsInput(true);
-  const onClickNext = () => setIsInput(false);
+  const onClickNext = () => {
+    setIsInput(false);
+    setCount(count + 1);
+  };
   const onClickSubmit = () => {};
-  const onClickCancel = () => setMode(constants.NORMAL);
+  const onClickCancel = () => {
+    setMode(constants.NORMAL);
+    setCount(0);
+  };
   return (
     <ModalContentEl>
       <ModalHeader>
         <ModalTitle>북마크 추가하기</ModalTitle>
       </ModalHeader>
       <ModalBodyEl>
-        <InputContent isInput={isInput} />
+        <InputContent isInput={isInput} count={count} />
         <TextAreaContent isInput={isInput} />
       </ModalBodyEl>
       <FooterEl>
@@ -260,9 +269,9 @@ const AddModal = () => {
 
 export default AddModal;
 
-const InputContent = ({ isInput }) => {
+const InputContent = ({ isInput, count }) => {
   return (
-    <InputContentEl isInput={isInput}>
+    <InputContentEl isInput={isInput} count={count}>
       <InputContainer>
         <Input type="text" autoComplete="off" name="url" placeholder=" " />
         <Label htmlFor="text1">URL</Label>
