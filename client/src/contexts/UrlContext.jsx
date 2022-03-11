@@ -164,7 +164,7 @@ export const UrlProvider = ({ children }) => {
     setUrl({ ...url, totalUrl: [newUrl, ...url.totalUrls] });
   };
 
-  const handleDeleteUrl = async (urlId) => {
+  const handleClickDeleteUrlBtn = async (urlId) => {
     // api call
     const deleteUrl = () => {};
     await deleteUrl(urlId);
@@ -204,6 +204,15 @@ export const UrlProvider = ({ children }) => {
   const handleSetCurrentUrl = (url) => {
     // console.log("url: ", url);
     setCurrentUrl(url);
+  };
+
+  const handleAddDeleteUrl = (url) => {
+    setUrl({ ...url, deleteUrls: [url, ...url.deleteUrls] });
+  };
+
+  const handleRemoveDeleteUrl = (urlId) => {
+    const newDeleteUrls = url.deleteUrls.filter((_url) => _url._id !== urlId);
+    setUrl({ ...url, deleteUrls: newDeleteUrls });
   };
 
   // FIXME: 전체 url
@@ -297,9 +306,11 @@ export const UrlProvider = ({ children }) => {
     handleGetInfiniteScrollItems,
     handleEditUrl,
     handleAddUrl,
-    handleDeleteUrl,
+    handleClickDeleteUrlBtn,
     handleClickStar,
     handleSetCurrentUrl,
+    handleAddDeleteUrl,
+    handleRemoveDeleteUrl,
     loading,
   };
 

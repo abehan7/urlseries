@@ -166,6 +166,7 @@ const Url = ({
   };
 
   // TODO: deleteItemIds만들기
+  // 우선은 url을 담은 다음에 그 후에 Ids그걸로 map해서 넣기
   const deleteItemIds = [];
   const classNameMethod = {
     isNewItem: () => {

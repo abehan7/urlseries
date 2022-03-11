@@ -4,15 +4,19 @@ import { InfiniteScroll } from "../Utils/InfiniteScroll/InfiniteScroll";
 import Url from "./Url";
 import { constants, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
+import { useEffect } from "react";
 
 const ItemContainer = ({ urls }) => {
   const [contentsNum, setContentsNum] = useState(50);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [deleteUrlIds, setDeleteUrlIds] = useState([]);
   const filterdItems = urls?.slice(0, contentsNum);
   const mode = useMode().mode;
   const handleClickStar = useUrl().handleClickStar;
   const handleSetCurrentUrl = useUrl().handleSetCurrentUrl;
+  const deleteUrls = useUrl().url.deleteUrls;
+
   // const currentUrl = useUrl().currentUrl;
   // console.log("currentUrl from ItemContainer ", currentUrl);
 
@@ -30,7 +34,13 @@ const ItemContainer = ({ urls }) => {
   const normalClick = (url) => window.open(url.url);
 
   const editClick = (url) => {};
-  const deleteClick = (urlId) => {};
+  //최대한 큰 범위를 넣는게 맞아 그래야 선택의 범위가 넓어져
+  // 그냥 id만 가지는건 매핑해서 얻을 수 있지만
+  // 아이디만 있는 경우에는 전체를 얻기위해서 복잡해서 이렇게 해야함
+
+  const deleteClick = (url) => {
+    deleteUrls.includes(url._id);
+  };
 
   const onClickUrl = (url) => {
     constants.NORMAL === mode && normalClick(url);
@@ -46,6 +56,14 @@ const ItemContainer = ({ urls }) => {
     url.url_likedUrl === 0 && handleClickStar(url._id);
     // handleClickStar(url._id);
   };
+
+  useEffect(() => {
+    const fn = () => {
+      const _deleteUrlIds = deleteUrls.map((url) => url._id);
+      setDeleteUrlIds(_deleteUrlIds);
+    };
+    mode === constants.DELETE && fn();
+  }, [deleteUrls]);
 
   return filterdItems.map((url, index) => {
     if (index === contentsNum - 1)
