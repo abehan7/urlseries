@@ -19,10 +19,15 @@ export const ModeProvider = ({ children }) => {
   // isDarkMode isEditMode isDeleteMode isNormalMode
   const [mode, setMode] = useState(NORMAL);
   const handleSetCurrentUrl = useUrl().handleSetCurrentUrl;
-
+  const handleResetDeleteUrl = useUrl().handleResetDeleteUrl;
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => handleSetCurrentUrl({}), [mode]);
+  useEffect(() => {
+    // 현재 url 초기화
+    handleSetCurrentUrl({});
+    // deleteUrls 초기화
+    handleResetDeleteUrl();
+  }, [mode]);
 
   const value = { mode, setMode, loading };
 

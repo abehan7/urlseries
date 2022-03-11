@@ -219,6 +219,8 @@ export const UrlProvider = ({ children }) => {
     setUrl({ ...url, deleteUrls: newDeleteUrls });
   };
 
+  const handleResetDeleteUrl = () => setUrl({ ...url, deleteUrls: [] });
+
   // FIXME: 전체 url
   useEffect(() => {
     const fn = async () => {
@@ -315,6 +317,7 @@ export const UrlProvider = ({ children }) => {
     handleSetCurrentUrl,
     handleAddDeleteUrl,
     handleRemoveDeleteUrl,
+    handleResetDeleteUrl,
     loading,
   };
 
