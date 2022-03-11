@@ -168,6 +168,9 @@ const Url = ({
   // TODO: deleteItemIds만들기
   // 우선은 url을 담은 다음에 그 후에 Ids그걸로 map해서 넣기
   const deleteItemIds = [];
+
+  // current Id쪽을 어떻게 잘 해봐야 할듯
+  // 예를들어서 {...url, isNewItem: true} 이런식으로 해야할듯
   const classNameMethod = {
     isNewItem: () => {
       if (currentUrl._id !== id) return "";
@@ -176,9 +179,7 @@ const Url = ({
     },
     isDeleteItem: () => {
       if (currentUrl._id !== id) return "";
-      const nowItem = !deleteItemIds.includes(currentUrl._id)
-        ? "newItem"
-        : "removeItem";
+      const nowItem = currentUrl.isNewItem ? "newItem" : "removeItem";
       return nowItem;
     },
   };

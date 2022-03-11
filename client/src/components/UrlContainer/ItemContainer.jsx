@@ -44,8 +44,16 @@ const ItemContainer = ({ urls }) => {
   // 아이디만 있는 경우에는 전체를 얻기위해서 복잡해서 이렇게 해야함
 
   const deleteClick = (url) => {
-    deleteUrlIds.includes(url._id) && handleRemoveDeleteUrl(url._id);
-    !deleteUrlIds.includes(url._id) && handleAddDeleteUrl(url);
+    if (deleteUrlIds.includes(url._id)) {
+      handleSetCurrentUrl({ ...url, isNewItem: false });
+
+      setTimeout(() => handleRemoveDeleteUrl(url._id), 200);
+    }
+
+    if (!deleteUrlIds.includes(url._id)) {
+      handleAddDeleteUrl(url);
+      handleSetCurrentUrl({ ...url, isNewItem: true });
+    }
   };
 
   const onClickUrl = (url) => {
