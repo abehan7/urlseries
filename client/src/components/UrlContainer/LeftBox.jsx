@@ -21,6 +21,7 @@ const LeftBoxEl = styled.div`
   justify-content: center;
   flex-direction: column;
   height: 100%;
+  min-height: 100%;
   @media screen and (max-width: 1018px) {
     max-width: 100%;
     padding: 0;
@@ -38,8 +39,10 @@ const FlexContainer = styled(ItemConatiner)`
   justify-content: flex-start;
   /* gap: 1.3rem; */
   gap: 1rem;
-  height: calc(100% - 130px - 1rem - 30px);
-  max-height: calc(100% - 130px - 1rem - 30px);
+  /* height: calc(100% - 130px - 1rem - 30px); */
+  height: 100%;
+  /* max-height: calc(100% - 130px - 1rem - 30px); */
+  min-height: 480px;
   width: 90%;
   background-color: #f7f8fa;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;

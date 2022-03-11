@@ -41,6 +41,7 @@ const RightBoxEl = styled.div`
   flex: 1;
   max-width: 450px;
   height: 100%;
+  min-height: 100%;
 
   flex-direction: column;
   padding-right: 1rem;
