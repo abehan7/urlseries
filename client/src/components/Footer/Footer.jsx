@@ -60,6 +60,7 @@ const FooterDetail = styled.div`
     text-align: center;
     padding-left: 10px;
     margin-top: 3px;
+    cursor: pointer;
   }
   > button:focus + ul {
     opacity: 1;

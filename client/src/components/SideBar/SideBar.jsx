@@ -183,6 +183,7 @@ const NormalModeItems = () => {
   const setMode = useMode().setMode;
   const onClickAdd = () => setMode(constants.ADD);
   const onClickDelete = () => setMode(constants.DELETE);
+  const onClickHashtag = () => setMode(constants.HASHTAG);
 
   return (
     <NormalWrapper>
@@ -195,14 +196,16 @@ const NormalModeItems = () => {
       <Item name="수정하기">
         <CgEditBlackPoint />
       </Item>
-      <TagWrapper>
-        <Item name="해시태그설정">
-          <CgHashtag />
-        </Item>
-      </TagWrapper>
+
       <TagWrapper>
         <Item name="폴더설정">
           <HiOutlineFolderAdd />
+        </Item>
+      </TagWrapper>
+
+      <TagWrapper onClick={onClickHashtag}>
+        <Item name="해시태그설정">
+          <CgHashtag />
         </Item>
       </TagWrapper>
     </NormalWrapper>

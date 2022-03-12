@@ -1,7 +1,9 @@
 import React from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 import { constants, useMode } from "../../contexts/ModeContext";
 import AddModal from "./AddModal";
+import HashtagModal from "./HashtagModal";
 const ModalEl = styled.div`
   width: 100vw;
   height: 100vh;
@@ -9,20 +11,25 @@ const ModalEl = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 100;
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
-const Modals = () => {
-  const mode = useMode().mode;
-  console.log(mode);
+const Modals = ({ mode }) => {
+  const ref = useRef(null);
+  // const mode = useMode().mode;
+  const setMode = useMode().setMode;
+  const onClickOutside = (e) => {
+    e.target === ref.current && setMode(constants.NORMAL);
+  };
+  // console.log(mode);
   return (
-    mode === constants.ADD && (
-      <ModalEl>
-        <AddModal />
-      </ModalEl>
-    )
+    <ModalEl onClick={onClickOutside} ref={ref}>
+      {mode === constants.ADD && <AddModal />}
+      {mode === constants.HASHTAG && <HashtagModal />}
+    </ModalEl>
   );
 };
 

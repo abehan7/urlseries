@@ -112,6 +112,7 @@ const LeftBox = () => {
   const combinedItemsloading = useFolder().loading;
   const filterdUrls = useUrl().url.filterdUrls;
   const handleSetFilterdUrls = useUrl().handleSetFilterdUrls;
+  const mode = useMode().mode;
   // const [option]
 
   // 디펜던시 말 잘듣자

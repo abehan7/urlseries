@@ -6,6 +6,7 @@ import styled from "styled-components";
 import SideBar from "../components/SideBar/SideBar";
 import UrlContainer from "../components/UrlContainer/UrlContainer";
 import Modals from "../components/Modal/Modals";
+import { constants, useMode } from "../contexts/ModeContext";
 
 const MainEl = styled.div`
   position: inherit;
@@ -14,7 +15,10 @@ const MainEl = styled.div`
   display: flex;
 `;
 
+const modalWhiteList = [constants.ADD, constants.HASHTAG];
+
 const MainPage = () => {
+  const mode = useMode().mode;
   return (
     <MainEl>
       {/* 사이드바 */}
@@ -22,7 +26,7 @@ const MainPage = () => {
       {/* 그리드 컨테이너 */}
       <UrlContainer />
       {/* 모달 */}
-      <Modals />
+      {modalWhiteList.includes(mode) && <Modals mode={mode} />}
     </MainEl>
   );
 };

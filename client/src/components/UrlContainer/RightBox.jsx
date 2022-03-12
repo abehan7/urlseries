@@ -116,7 +116,9 @@ const RightBox = () => {
     <RightBoxEl>
       <TitleWrapper>
         {normalModeList.includes(mode) && <Title>즐겨찾기</Title>}
-        {mode === constants.DELETE && <Title>삭제할 북마크 목록</Title>}
+        {mode === constants.DELETE && (
+          <Title style={{ color: "tomato" }}>삭제할 북마크 목록</Title>
+        )}
       </TitleWrapper>
       <FlexContainer onScroll={onScroll} ref={scrollRef}>
         {normalModeList.includes(mode) && (

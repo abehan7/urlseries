@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import styled, { css } from "styled-components";
-import { constants, normalModeList, useMode } from "../../contexts/ModeContext";
+import styled from "styled-components";
+import { useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 const Line = styled.div`
   width: 4px;
@@ -58,6 +58,7 @@ const Icon = styled.div`
   justify-content: flex-start;
 
   z-index: 2;
+
   /* background-color: #fff; */
   /* align-self: flex-start; */
   /* color: #ffc64b; */
@@ -151,11 +152,6 @@ const Url = ({
     // 삭제모드일때
   };
 
-  // TODO: deleteItemIds만들기
-  // 우선은 url을 담은 다음에 그 후에 Ids그걸로 map해서 넣기
-
-  // current Id쪽을 어떻게 잘 해봐야 할듯
-  // 예를들어서 {...url, isNewItem: true} 이런식으로 해야할듯
   const classNameMethod = {
     isNewItem: () => {
       if (currentUrl._id !== id) return "";

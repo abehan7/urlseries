@@ -221,6 +221,7 @@ export const UrlProvider = ({ children }) => {
   const handleAddDeleteUrlList = (newUrls) => {
     const duplicatedList = [...newUrls, ...url.deleteUrls];
     const filterd = duplicateUrlChecker(duplicatedList);
+    setCurrentUrl({});
     setUrl({ ...url, deleteUrls: filterd });
   };
 
