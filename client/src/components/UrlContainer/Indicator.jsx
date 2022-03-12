@@ -231,7 +231,7 @@ export default Indicator;
 const MetaTag = ({ tag, onClick, clicked }) => {
   return (
     <MetaTagEl onClick={onClick} clicked={clicked}>
-      {tag}
+      {tag.toUpperCase()}
     </MetaTagEl>
   );
 };
@@ -244,7 +244,7 @@ const FolderTag = ({ handleClickFolderTag, folder, clicked }) => {
         <FolderIcon>
           <AiOutlineFolder />
         </FolderIcon>
-        {folder.folder_name}
+        {folder.folder_name.toUpperCase()}
       </FolderTagEl>
     )
   );

@@ -10,6 +10,7 @@ import { dispatchLogin } from "../../../redux/Actions/authAction";
 import { useDispatch } from "react-redux";
 import { GoogleLogin } from "react-google-login";
 import { RiUser3Line, RiLockPasswordLine } from "react-icons/ri";
+import { useUrl } from "../../../contexts/UrlContext";
 
 const initialState = {
   user_id: "",
@@ -32,6 +33,8 @@ function LoginT() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // guest url들 초기화
+
       const res = await API.post("/user/logintest", { user_id, password });
       // console.log("firstLogin", res.data);
 

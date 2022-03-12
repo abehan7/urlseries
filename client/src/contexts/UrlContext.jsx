@@ -238,14 +238,24 @@ export const UrlProvider = ({ children }) => {
   // FIXME: BOX들에 보여질 filterd
   const handleSetFilterdUrls = (filterdUrls) => setUrl({ ...url, filterdUrls });
 
+  const handleResetAllUrl = () =>
+    setUrl({
+      totalUrls: [],
+      displayUrls: [],
+      searchedUrls: [],
+      recentClickedUrls: [],
+      likedUrls: [],
+    });
+
   // FIXME: 전체 url
   useEffect(() => {
     const fn = async () => {
+      // 전체 url
+      console.log("전체 url");
       setLoading({ ...loading, isTotalUrl: true });
       const { data } = await TotalAfter();
       setUrl({ ...url, totalUrls: data.totalAfter });
       setLoading({ ...loading, isTotalUrl: false });
-
       // console.log("totalUrls: ", data.totalAfter);
     };
     token && !loading.isLikedUrl && fn();
@@ -293,8 +303,8 @@ export const UrlProvider = ({ children }) => {
     let timer;
 
     token && getMemberData();
-    !token && (timer = setTimeout(getGuestData, 1000));
-    return () => clearTimeout(timer);
+    // !token && (timer = setTimeout(getGuestData, 1000));
+    // return () => clearTimeout(timer);
   }, [token]);
 
   // FIXME: 해시태그
@@ -337,6 +347,7 @@ export const UrlProvider = ({ children }) => {
     handleResetDeleteUrl,
     handleAddDeleteUrlList,
     handleSetFilterdUrls,
+    handleResetAllUrl,
     loading,
   };
 

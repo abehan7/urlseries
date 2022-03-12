@@ -81,6 +81,11 @@ const Tag = styled.span`
   :hover {
     background-color: #a597fe1a;
   }
+  ${({ isClicked }) =>
+    isClicked &&
+    css`
+      background-color: #a597fe1a;
+    `}
 `;
 
 const InputContainerEl = styled(InputContainer)`
@@ -266,22 +271,17 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
       />
       <Label htmlFor="text1">HASHTAG</Label>
       <SearchedTagsContainer isInputClicked={isInputClicked}>
-        <TagWrapper>
-          <Tag>
-            <ClickedIcon>
-              <RiCheckFill />
-            </ClickedIcon>
-            <Text>PEDROTECH</Text>
-          </Tag>
-        </TagWrapper>
-        <TagWrapper>
-          <Tag>
-            <ClickedIcon>
-              <RiCheckFill />
-            </ClickedIcon>
-            <Text>PEDROTECH</Text>
-          </Tag>
-        </TagWrapper>
+        {selectedTagsData.map((tag, index) => {
+          const isClicked = index % 2 === 0;
+          return (
+            <TagWrapper key={index}>
+              <Tag isClicked={isClicked}>
+                <ClickedIcon>{isClicked && <RiCheckFill />}</ClickedIcon>
+                <Text>{tag.slice(1, tag.length).toUpperCase()}</Text>
+              </Tag>
+            </TagWrapper>
+          );
+        })}
       </SearchedTagsContainer>
     </InputContainerEl>
   );
