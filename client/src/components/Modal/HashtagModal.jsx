@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { BodyContent } from "./styled/BodyContent.styled";
 import { ColoredFooterBtn } from "./styled/ColoredFooterBtn.styled";
 import { Footer } from "./styled/Footer.styled";
@@ -11,26 +11,30 @@ import { ModalContent } from "./styled/ModalContent.styled";
 import { ModalHeader } from "./styled/ModalHeader.styled";
 import { ModalTitle } from "./styled/ModalTitle.styled";
 import { RiCheckFill } from "react-icons/ri";
+import { useState } from "react";
+import { useRef } from "react";
 
+//FIXME: TopBox
 const Input = styled.input`
   flex: 1;
   padding: 0 1rem;
   color: black;
+  background-color: #fff;
 `;
 
-const SearchContainer = styled.div`
-  @keyframes fold {
-    0% {
-      height: 0;
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-      height: calc(200px - 47px - 15px);
-    }
-  }
+const SearchedTagsContainer = styled.div`
+  transition: all 0.2s ease-in-out;
 
-  animation: fold 0.3s ease-in-out;
+  ${({ isInputClicked }) =>
+    isInputClicked
+      ? css`
+          height: calc(200px - 47px - 15px);
+          visibility: visible;
+        `
+      : css`
+          height: 0;
+          visibility: hidden;
+        `}
 
   z-index: 1;
 
@@ -41,7 +45,6 @@ const SearchContainer = styled.div`
   }
   top: 45px;
   width: 100%;
-  height: calc(200px - 47px - 15px);
   background-color: #fff;
   border: 3px solid #bbbbbb;
 
@@ -49,19 +52,10 @@ const SearchContainer = styled.div`
   border-top-left-radius: 0;
   border-top-right-radius: 0;
 
-  display: none;
-  /* display: flex; */
   align-items: center;
   justify-content: flex-start;
 
   flex-direction: column;
-  :active,
-  :hover,
-  :focus-within,
-  :focus,
-  :checked {
-    display: flex;
-  }
 `;
 
 const TagWrapper = styled.div`
@@ -93,53 +87,10 @@ const InputContainerEl = styled(InputContainer)`
   /* 클릭하면 이렇게되기 */
   transition: all 0.2s ease-in-out;
 
-  input:active ~ ${SearchContainer} {
-    display: flex;
-  }
-
-  :focus-within {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    ${SearchContainer} {
-      display: flex;
-    }
-  }
-`;
-
-const SelectedTag = styled.div`
-  position: relative;
-  background-color: #a597fe1a;
-  max-width: 50%;
-  width: fit-content;
-  height: 22px;
-  padding: 0.31rem;
-  border-radius: 20px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  cursor: pointer;
-  color: #6d27e8;
-`;
-
-const SelectedItems = styled.div`
-  flex: 1;
-  max-height: 130px;
-  width: 100%;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
-
-const FlexWrapContainer = styled.div`
-  /* 태그 한줄에 최대 2개로 잡자 */
-  gap: 0.5rem;
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-items: flex-start;
-  justify-content: center;
+  border-bottom-left-radius: ${(props) =>
+    props.isInputClicked ? "0" : "15px"};
+  border-bottom-right-radius: ${(props) =>
+    props.isInputClicked ? "0" : "15px"};
 `;
 
 const Icon = styled.div`
@@ -166,6 +117,35 @@ const Text = styled.span`
   padding: 0 0.7rem;
 `;
 
+//FIXME: BottomBox
+
+const FlexWrapContainer = styled.div`
+  /* 태그 한줄에 최대 2개로 잡자 */
+  gap: 0.5rem;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+`;
+
+const SelectedTag = styled.div`
+  position: relative;
+  background-color: #a597fe1a;
+  max-width: 50%;
+  width: fit-content;
+  height: 22px;
+  padding: 0.31rem;
+  border-radius: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  cursor: pointer;
+  color: #6d27e8;
+  transition: all 0.2s ease-in-out;
+`;
+
 const Circle = styled.span`
   width: 23px;
   height: 23px;
@@ -186,24 +166,17 @@ const TagName = styled.span`
   padding: 0 0.3rem;
 `;
 
-const HashtagModal = () => {
-  return (
-    <ModalContent>
-      <ModalHeader>
-        <ModalTitle>해시태그설정</ModalTitle>
-      </ModalHeader>
-      <ModalBody>
-        <SelectedHashtagContainer />
-      </ModalBody>
-      <Footer>
-        <FooterBtn style={{ border: "none" }}>Cancel</FooterBtn>
-        <ColoredFooterBtn>Save</ColoredFooterBtn>
-      </Footer>
-    </ModalContent>
-  );
-};
-
-export default HashtagModal;
+const SelectedItems = styled.div`
+  flex: 1;
+  max-height: 130px;
+  width: 100%;
+  overflow-y: scroll;
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const selectedTagsData = [
   "#아이유",
@@ -221,34 +194,84 @@ const selectedTagsData = [
   "#marvel",
   "#로버트기요사키123123",
 ];
-
-const SelectedHashtagContainer = () => {
+const HashtagModal = () => {
+  const [isInputClicked, setIsInputClicked] = useState(false);
+  const TopBoxRef = useRef(null);
+  const onClickInput = () => setIsInputClicked(true);
+  const handleFoldUp = () => setIsInputClicked(false);
+  const onClickWindow = (e) => {
+    const blackList = [
+      ...TopBoxRef.current.querySelectorAll("input"),
+      ...TopBoxRef.current.querySelectorAll("div"),
+      ...TopBoxRef.current.querySelectorAll("label"),
+      ...TopBoxRef.current.querySelectorAll("span"),
+      ...TopBoxRef.current.querySelectorAll("svg"),
+      ...TopBoxRef.current.querySelectorAll("path"),
+    ];
+    if (blackList.includes(e.target)) return;
+    handleFoldUp();
+  };
   return (
-    <BodyContent>
-      <InputContainerEl>
-        <Input type="text" autoComplete="off" name="url" placeholder=" " />
-        <Label htmlFor="text1">HASHTAG</Label>
-        <SearchContainer>
-          <TagWrapper>
-            <Tag>
-              <ClickedIcon>
-                <RiCheckFill />
-              </ClickedIcon>
-              <Text>#pedrotech</Text>
-            </Tag>
-          </TagWrapper>
-        </SearchContainer>
-      </InputContainerEl>
-      <SelectedItems>
-        <FlexWrapContainer>
-          {selectedTagsData.map((tag) => (
-            <SelectedTag>
-              <Circle>{tag.slice(1, 2)}</Circle>
-              <TagName>{tag}</TagName>
-            </SelectedTag>
-          ))}
-        </FlexWrapContainer>
-      </SelectedItems>
-    </BodyContent>
+    <ModalContent onClick={onClickWindow}>
+      <ModalHeader>
+        <ModalTitle>해시태그설정</ModalTitle>
+      </ModalHeader>
+      <ModalBody>
+        <BodyContent>
+          <TopBox
+            isInputClicked={isInputClicked}
+            onClickInput={onClickInput}
+            TopBoxRef={TopBoxRef}
+          />
+          <BottomBox />
+        </BodyContent>
+      </ModalBody>
+      <Footer>
+        <FooterBtn style={{ border: "none" }}>Cancel</FooterBtn>
+        <ColoredFooterBtn>Save</ColoredFooterBtn>
+      </Footer>
+    </ModalContent>
+  );
+};
+
+export default HashtagModal;
+
+const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
+  return (
+    <InputContainerEl isInputClicked={isInputClicked} ref={TopBoxRef}>
+      <Input
+        type="text"
+        autoComplete="off"
+        name="url"
+        placeholder=" "
+        onClick={onClickInput}
+      />
+      <Label htmlFor="text1">HASHTAG</Label>
+      <SearchedTagsContainer isInputClicked={isInputClicked}>
+        <TagWrapper>
+          <Tag>
+            <ClickedIcon>
+              <RiCheckFill />
+            </ClickedIcon>
+            <Text>#pedrotech</Text>
+          </Tag>
+        </TagWrapper>
+      </SearchedTagsContainer>
+    </InputContainerEl>
+  );
+};
+
+const BottomBox = () => {
+  return (
+    <SelectedItems>
+      <FlexWrapContainer>
+        {selectedTagsData.map((tag, index) => (
+          <SelectedTag key={index}>
+            <Circle>{tag.slice(1, 2).toUpperCase()}</Circle>
+            <TagName>{tag.slice(1, tag.length).toUpperCase()}</TagName>
+          </SelectedTag>
+        ))}
+      </FlexWrapContainer>
+    </SelectedItems>
   );
 };
