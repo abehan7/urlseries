@@ -127,6 +127,11 @@ const UnClickedIcon = styled(Icon)``;
 
 const Text = styled.span`
   padding: 0 0.7rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  max-width: 250px;
 `;
 
 //FIXME: BottomBox
@@ -266,7 +271,7 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
             <ClickedIcon>
               <RiCheckFill />
             </ClickedIcon>
-            <Text>#pedrotech</Text>
+            <Text>PEDROTECH</Text>
           </Tag>
         </TagWrapper>
         <TagWrapper>
@@ -274,7 +279,7 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
             <ClickedIcon>
               <RiCheckFill />
             </ClickedIcon>
-            <Text>#pedrotech</Text>
+            <Text>PEDROTECH</Text>
           </Tag>
         </TagWrapper>
       </SearchedTagsContainer>
