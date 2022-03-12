@@ -29,6 +29,7 @@ const SearchedTagsContainer = styled.div`
   ${({ isInputClicked }) =>
     isInputClicked
       ? css`
+          transition-delay: 0.2s;
           height: calc(200px - 47px - 15px);
           visibility: visible;
         `
@@ -94,6 +95,14 @@ const InputContainerEl = styled(InputContainer)`
     props.isInputClicked ? "0" : "15px"};
   border-bottom-right-radius: ${(props) =>
     props.isInputClicked ? "0" : "15px"};
+  /* transition-delay: 0.2s; */
+
+  ${({ isInputClicked }) =>
+    isInputClicked
+      ? css``
+      : css`
+          transition-delay: 0.2s;
+        `}
 `;
 
 const Icon = styled.div`
