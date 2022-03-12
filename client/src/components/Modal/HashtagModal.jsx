@@ -23,6 +23,7 @@ const Input = styled.input`
 `;
 
 const SearchedTagsContainer = styled.div`
+  display: flex;
   transition: all 0.2s ease-in-out;
 
   ${({ isInputClicked }) =>
@@ -60,6 +61,8 @@ const SearchedTagsContainer = styled.div`
 
 const TagWrapper = styled.div`
   display: flex;
+  align-items: center;
+  justify-content: center;
   width: 95%;
   border-bottom: 1px solid #e9ecef;
 `;
@@ -200,6 +203,7 @@ const HashtagModal = () => {
   const onClickInput = () => setIsInputClicked(true);
   const handleFoldUp = () => setIsInputClicked(false);
   const onClickWindow = (e) => {
+    // 해시태그 저장할때 무조건 대문자로 저장시키기
     const blackList = [
       ...TopBoxRef.current.querySelectorAll("input"),
       ...TopBoxRef.current.querySelectorAll("div"),
@@ -248,6 +252,14 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
       />
       <Label htmlFor="text1">HASHTAG</Label>
       <SearchedTagsContainer isInputClicked={isInputClicked}>
+        <TagWrapper>
+          <Tag>
+            <ClickedIcon>
+              <RiCheckFill />
+            </ClickedIcon>
+            <Text>#pedrotech</Text>
+          </Tag>
+        </TagWrapper>
         <TagWrapper>
           <Tag>
             <ClickedIcon>
