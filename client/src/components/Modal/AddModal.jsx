@@ -139,7 +139,7 @@ const AddModal = () => {
         memo: "",
       };
 
-    const oneLineTag = editUrl?.url_hashTags?.join(" ");
+    const oneLineTag = editUrl?.url_hashTags?.join(" ").toUpperCase();
 
     if (mode === constants.EDIT_MODAL_UP)
       return {
