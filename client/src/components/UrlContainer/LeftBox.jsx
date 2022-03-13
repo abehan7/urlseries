@@ -21,7 +21,7 @@ import { constants, useMode } from "../../contexts/ModeContext";
 import LoadingCenter from "../Utils/Loader/LoaderCenter";
 import { getToken } from "../../redux/ReducersT/tokenReducer";
 
-const LeftBoxEl = styled.div`
+export const LeftBoxEl = styled.div`
   flex: 2;
   display: flex;
   align-items: center;
@@ -210,6 +210,37 @@ const LeftBox = () => {
     tagIsClicked && fn();
   }, [totalUrls]);
 
+  //FIXME: DOM MAPPING
+  //전체 북마크
+  const TotalUrlMap = () =>
+    !tagIsClicked && !isSearch && <ItemContainer urls={totalUrls} />;
+
+  //검색 북마크
+  const SearchUrlMap = () => isSearch && <ItemContainer urls={filterdUrls} />;
+
+  //검색중일 때 로딩창
+  const SearchLoader = () => isSearch && isSearchLoading && <LoadingCenter />;
+
+  //검색창에 북마크 없을 때
+  const SearchNoUrl = () =>
+    isSearch && !isSearchLoading && filterdUrls.length === 0 && <NoUrl />;
+
+  //태그 북마크
+  const TagUrlMap = () => tagIsClicked && <ItemContainer urls={filterdUrls} />;
+
+  // 태그 북마크 없을 때
+  const TagNoUrl = () =>
+    tagIsClicked &&
+    !combinedItemsloading &&
+    combinedTagItems.length === 0 && <NoUrl />;
+
+  // 태그 북마크 로딩중
+  const TagSearchingLoader = () =>
+    tagIsClicked && combinedItemsloading && <LoadingCenter />;
+
+  //맨 처음 로딩중
+  const FirstLoader = () => loading.isTotalUrl && <LoadingCenter />;
+
   return (
     <LeftBoxEl>
       <TitleWrapper>
@@ -223,25 +254,22 @@ const LeftBox = () => {
       </TitleWrapper>
       <Indicator />
       <FlexContainer onScroll={onScroll} ref={scrollRef}>
-        {/* 전체url */}
-        {!tagIsClicked && !isSearch && <ItemContainer urls={totalUrls} />}
-        {/* 태그별 url */}
-        {tagIsClicked && <ItemContainer urls={filterdUrls} />}
-        {/* 검색 url */}
-        {isSearch && <ItemContainer urls={filterdUrls} />}
-        {/* url 검색중 */}
-        {isSearch && isSearchLoading && <LoadingCenter />}
-        {/* 태그 url없을때 */}
-        {tagIsClicked &&
-          !combinedItemsloading &&
-          combinedTagItems.length === 0 && <NoUrl />}
-        {/* 검색창 url없을 때 */}
-        {isSearch && !isSearchLoading && filterdUrls.length === 0 && <NoUrl />}
-
-        {tagIsClicked && combinedItemsloading && <LoadingCenter />}
-
         {/* 맨 처음 로딩 */}
-        {loading.isTotalUrl && <LoadingCenter />}
+        {FirstLoader()}
+        {/* 전체url */}
+        {TotalUrlMap()}
+        {/* 검색 url */}
+        {SearchUrlMap()}
+        {/* url 검색중 */}
+        {SearchLoader()}
+        {/* 검색창 url없을 때 */}
+        {SearchNoUrl()}
+        {/* 태그별 url */}
+        {TagUrlMap()}
+        {/* 태그 url없을때 */}
+        {TagNoUrl()}
+        {/* 태그 누르고 0.2s동안 로딩 */}
+        {TagSearchingLoader()}
         <Marker isScroll={isScroll} onClick={handleScrollUp} />
       </FlexContainer>
     </LeftBoxEl>
@@ -256,15 +284,25 @@ const TitleContainer = ({
   onClickSearchTitle,
   onClickTagTitle,
 }) => {
+  // 전체 북마크
+  const TotalTitleFn = () =>
+    !tagIsClicked && !isSearch && <Title>전체 북마크</Title>;
+
+  // 태그 북마크
+  const TagTitleFn = () =>
+    tagIsClicked && <TagTitle onClick={onClickTagTitle}>#태그</TagTitle>;
+
+  const SearchTitleFn = () =>
+    isSearch && (
+      <SearchTitle onClick={onClickSearchTitle} tagIsClicked={tagIsClicked}>
+        #검색
+      </SearchTitle>
+    );
   return (
     <TitleContainerEl isSearch={isSearch} tagIsClicked={tagIsClicked}>
-      {!tagIsClicked && !isSearch && <Title>전체 북마크</Title>}
-      {tagIsClicked && <TagTitle onClick={onClickTagTitle}>#태그</TagTitle>}
-      {isSearch && (
-        <SearchTitle onClick={onClickSearchTitle} tagIsClicked={tagIsClicked}>
-          #검색
-        </SearchTitle>
-      )}
+      {TotalTitleFn()}
+      {TagTitleFn()}
+      {SearchTitleFn()}
     </TitleContainerEl>
   );
 };

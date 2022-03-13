@@ -114,26 +114,46 @@ const RightBox = () => {
   };
   const isLikeUrls = true;
 
+  //FIXME: DOM
+  // 좋아요 타이틀
+  const LikeTitle = () =>
+    normalModeList.includes(mode) && <Title>즐겨찾기</Title>;
+
+  //삭제할 북마크 타이틀
+  const DeleteTitle = () =>
+    mode === constants.DELETE && (
+      <Title style={{ color: "tomato" }}>삭제할 북마크 목록</Title>
+    );
+
+  // 삭제모드 아닐때 MAPPING
+  const NormalMapping = () =>
+    normalModeList.includes(mode) && (
+      <NormalMode
+        isLikeUrls={isLikeUrls}
+        loading={loading}
+        isScroll={isScroll}
+        handleScrollUp={handleScrollUp}
+      />
+    );
+
+  //삭제모드일 때 MAPPING
+  const DeleteMapping = () =>
+    mode === constants.DELETE && (
+      <DeleteMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
+    );
   return (
     <RightBoxEl>
       <TitleWrapper>
-        {normalModeList.includes(mode) && <Title>즐겨찾기</Title>}
-        {mode === constants.DELETE && (
-          <Title style={{ color: "tomato" }}>삭제할 북마크 목록</Title>
-        )}
+        {/* 좋아요 타이틀 */}
+        {LikeTitle()}
+        {/* 삭제 타이틀 */}
+        {DeleteTitle()}
       </TitleWrapper>
       <FlexContainer onScroll={onScroll} ref={scrollRef}>
-        {normalModeList.includes(mode) && (
-          <NormalMode
-            isLikeUrls={isLikeUrls}
-            loading={loading}
-            isScroll={isScroll}
-            handleScrollUp={handleScrollUp}
-          />
-        )}
-        {mode === constants.DELETE && (
-          <DeleteMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
-        )}
+        {/* 삭제모드 아닐 때 매핑 */}
+        {NormalMapping()}
+        {/* 삭제모드일 때 매핑 */}
+        {DeleteMapping()}
       </FlexContainer>
     </RightBoxEl>
   );
@@ -166,18 +186,13 @@ const DeleteMode = ({ isScroll, handleScrollUp }) => {
 
   return (
     <>
-      {loading && <LoadingWindow />}
+      {/* 로딩창 */}
+      {loading && <LoadingCenter />}
+      {/* 매핑 */}
       {!loading && <ItemContainer urls={deleteUrls} />}
+      {/* 북마크 없을 때 */}
       {!loading && deleteUrls.length === 0 && <NoUrl />}
       <Marker isScroll={isScroll} onClick={handleScrollUp} />
     </>
-  );
-};
-
-const LoadingWindow = () => {
-  return (
-    <LoaderWrapper>
-      <Loader />
-    </LoaderWrapper>
   );
 };

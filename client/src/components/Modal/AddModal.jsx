@@ -217,7 +217,7 @@ const InputContent = ({ isInput, count, onChange, text }) => {
           type="text"
           autoComplete="off"
           name="url"
-          placeholder=""
+          placeholder=" "
           onChange={onChange}
           value={text.url}
         />
@@ -228,7 +228,7 @@ const InputContent = ({ isInput, count, onChange, text }) => {
           type="text"
           autoComplete="off"
           name="title"
-          placeholder=""
+          placeholder=" "
           onChange={onChange}
           value={text.title}
         />
@@ -239,7 +239,7 @@ const InputContent = ({ isInput, count, onChange, text }) => {
           type="text"
           autoComplete="off"
           name="hashtag"
-          placeholder=""
+          placeholder=" "
           onChange={onChange}
           value={text.hashtag}
         />
@@ -257,7 +257,7 @@ const TextAreaContent = ({ isInput, onChange, text }) => {
           type="text"
           autoComplete="off"
           name="memo"
-          placeholder=""
+          placeholder=" "
           onChange={onChange}
           value={text.memo}
         />
