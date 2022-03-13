@@ -75,10 +75,10 @@ const ItemContainer = ({ urls }) => {
     const fn = () => {
       const _deleteUrlIds = deleteUrls.map((url) => url._id);
       setDeleteUrlIds(_deleteUrlIds);
-      // console.log(_deleteUrlIds);
     };
     mode === constants.DELETE && fn();
-  }, [deleteUrls]);
+    mode === constants.NORMAL && setDeleteUrlIds([]);
+  }, [deleteUrls, mode]);
 
   return filterdItems.map((url, index) => {
     if (index === contentsNum - 1)

@@ -125,6 +125,10 @@ const RightBox = () => {
       <Title style={{ color: "tomato" }}>삭제할 북마크 목록</Title>
     );
 
+  // 폴더 엔트리 타이틀
+  const FolderTitle = () =>
+    mode === constants.FOLDER && <Title>즐겨찾기 폴더</Title>;
+
   // 삭제모드 아닐때 MAPPING
   const NormalMapping = () =>
     normalModeList.includes(mode) && (
@@ -141,6 +145,13 @@ const RightBox = () => {
     mode === constants.DELETE && (
       <DeleteMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
     );
+
+  // 폴더모드일 때 MAPPING
+  const FolderMapping = () =>
+    mode === constants.FOLDER && (
+      <FolderMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
+    );
+
   return (
     <RightBoxEl>
       <TitleWrapper>
@@ -148,12 +159,16 @@ const RightBox = () => {
         {LikeTitle()}
         {/* 삭제 타이틀 */}
         {DeleteTitle()}
+        {/* 폴더 타이틀 */}
+        {FolderTitle()}
       </TitleWrapper>
       <FlexContainer onScroll={onScroll} ref={scrollRef}>
         {/* 삭제모드 아닐 때 매핑 */}
         {NormalMapping()}
         {/* 삭제모드일 때 매핑 */}
         {DeleteMapping()}
+        {/* 폴더모드일 때 매핑 */}
+        {FolderMapping()}
       </FlexContainer>
     </RightBoxEl>
   );
@@ -177,10 +192,11 @@ const NormalMode = ({ isLikeUrls, loading, isScroll, handleScrollUp }) => {
 const DeleteMode = ({ isScroll, handleScrollUp }) => {
   const [loading, setLoading] = useState(true);
   const deleteUrls = useUrl().url.deleteUrls;
-  const timer = setTimeout(() => {
-    setLoading(false);
-  }, 300);
+
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 300);
     return () => clearTimeout(timer);
   });
 
@@ -192,6 +208,29 @@ const DeleteMode = ({ isScroll, handleScrollUp }) => {
       {!loading && <ItemContainer urls={deleteUrls} />}
       {/* 북마크 없을 때 */}
       {!loading && deleteUrls.length === 0 && <NoUrl />}
+      <Marker isScroll={isScroll} onClick={handleScrollUp} />
+    </>
+  );
+};
+
+const FolderMode = ({ isScroll, handleScrollUp }) => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  });
+
+  const folders = [];
+
+  return (
+    <>
+      {/* 로딩창 */}
+      {loading && <LoadingCenter />}
+      {/* 북마크 없을 때 */}
+      {!loading && folders.length === 0 && <NoUrl />}
       <Marker isScroll={isScroll} onClick={handleScrollUp} />
     </>
   );

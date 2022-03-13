@@ -4,6 +4,7 @@ import {
   HiOutlineDocumentAdd,
   HiOutlineDocumentRemove,
   HiOutlineFolderAdd,
+  HiOutlineFolderRemove,
 } from "react-icons/hi";
 import { CgBackspace, CgEditBlackPoint, CgHashtag } from "react-icons/cg";
 import Footer from "../Footer/Footer.jsx";
@@ -153,7 +154,8 @@ const DeleteWrapper = styled(TapsWrapper)`
   }
 `;
 
-const NormalWrapper = styled(TapsWrapper)`
+const NormalWrapper = styled.div`
+  animation: ${({ count }) => (count === 1 ? "fadeIn 0.5s ease-in-out;" : "")};
   pointer-events: ${({ token }) => (token ? "auto" : "none")};
 `;
 
@@ -176,6 +178,7 @@ const SideBar = () => {
       {sidebarNormalModeList.includes(mode) && <NormalModeItems />}
       {constants.DELETE === mode && <DeleteModeItems />}
       {sidebarEditModeList.includes(mode) && <EditModeItems />}
+      {constants.FOLDER === mode && <FolderModeItems />}
       <Footer />
     </SideBarEl>
   );
@@ -204,10 +207,12 @@ const NormalModeItems = () => {
   const onClickDelete = () => setMode(constants.DELETE);
   const onClickHashtag = () => setMode(constants.HASHTAG);
   const onClickEdit = () => setMode(constants.EDIT);
+  const onClickFolder = () => setMode(constants.FOLDER);
+  const sidebarAnimeCount = useMode().count.sidebarAnimeCount;
   const token = useSelector(getToken);
 
   return (
-    <NormalWrapper token={token}>
+    <NormalWrapper token={token} count={sidebarAnimeCount}>
       <Item name="추가하기" onClick={onClickAdd}>
         <HiOutlineDocumentAdd />
       </Item>
@@ -218,7 +223,7 @@ const NormalModeItems = () => {
         <CgEditBlackPoint />
       </Item>
 
-      <TagWrapper>
+      <TagWrapper onClick={onClickFolder}>
         <Item name="폴더설정">
           <HiOutlineFolderAdd />
         </Item>
@@ -283,6 +288,25 @@ const EditModeItems = () => {
     <EditWrapper>
       <Item name="뒤로가기" onClick={onClickBack}>
         <CgBackspace />
+      </Item>
+    </EditWrapper>
+  );
+};
+
+const FolderModeItems = () => {
+  const setMode = useMode().setMode;
+  const onClickBack = () => setMode(constants.NORMAL);
+
+  return (
+    <EditWrapper>
+      <Item name="뒤로가기" onClick={onClickBack}>
+        <CgBackspace />
+      </Item>
+      <Item name="추가하기">
+        <HiOutlineFolderAdd />
+      </Item>
+      <Item name="삭제하기">
+        <HiOutlineFolderRemove />
       </Item>
     </EditWrapper>
   );

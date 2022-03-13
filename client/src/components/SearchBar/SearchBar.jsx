@@ -68,7 +68,12 @@ const SearchBar = ({ onChange, keyword }) => {
       <BtnSearch>
         <IoSearchCircleOutline size="35px" color="gray" />
       </BtnSearch>
-      <InputSearch type="text" onChange={onChange} value={keyword} />
+      <InputSearch
+        type="text"
+        onChange={onChange}
+        value={keyword}
+        spellCheck="false"
+      />
     </SearchBarEl>
   );
 };

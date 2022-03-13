@@ -259,6 +259,7 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
         name="url"
         placeholder=" "
         onClick={onClickInput}
+        spellCheck="false"
       />
       <Label htmlFor="text1">HASHTAG</Label>
       <SearchedTagsContainer isInputClicked={isInputClicked}>

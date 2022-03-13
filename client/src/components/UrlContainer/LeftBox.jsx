@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getIsClicked, RESET_TAGS } from "../../store/reducers/Tags";
 import { useFolder } from "../../contexts/FolderContext";
 import NoUrl from "./NoUrl";
-import { constants, useMode } from "../../contexts/ModeContext";
+import { useMode } from "../../contexts/ModeContext";
 import LoadingCenter from "../Utils/Loader/LoaderCenter";
 import { getToken } from "../../redux/ReducersT/tokenReducer";
 
@@ -27,10 +27,13 @@ export const LeftBoxEl = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  max-width: 100%;
 `;
 
 const FlexContainer = styled(ItemConatiner)`
   position: relative;
+  animation: ${({ folderBoxAnimeCount }) =>
+    folderBoxAnimeCount === 1 ? "fadeIn 0.5s ease-in" : ""};
 
   padding: 1rem;
   display: flex;
@@ -93,8 +96,6 @@ const TitleContainerEl = styled.div`
   > span {
     animation: jaehee 0.3s ease-in-out;
   }
-
-  /* justify-content: center; */
 `;
 
 const debounceFn = debounce((fn, keyword) => fn(keyword), 400);
@@ -117,6 +118,7 @@ const LeftBox = () => {
   const handleSetFilterdUrls = useUrl().handleSetFilterdUrls;
   const token = useSelector(getToken);
   const mode = useMode().mode;
+  const folderBoxAnimeCount = useMode().count.folderBoxAnimeCount;
   // const [option]
 
   // 디펜던시 말 잘듣자
@@ -164,10 +166,7 @@ const LeftBox = () => {
 
   const onClickSearchTitle = () => setKeyword("");
 
-  const onClickTagTitle = () => {
-    handleSetFilterdUrls([]);
-    dispatch(RESET_TAGS());
-  };
+  const onClickTagTitle = () => dispatch(RESET_TAGS());
 
   // 검색시 setting
 
@@ -253,7 +252,11 @@ const LeftBox = () => {
         <SearchBar onChange={onChange} keyword={keyword} />
       </TitleWrapper>
       <Indicator />
-      <FlexContainer onScroll={onScroll} ref={scrollRef}>
+      <FlexContainer
+        onScroll={onScroll}
+        ref={scrollRef}
+        folderBoxAnimeCount={folderBoxAnimeCount}
+      >
         {/* 맨 처음 로딩 */}
         {FirstLoader()}
         {/* 전체url */}

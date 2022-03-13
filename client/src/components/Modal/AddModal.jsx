@@ -220,6 +220,7 @@ const InputContent = ({ isInput, count, onChange, text }) => {
           placeholder=" "
           onChange={onChange}
           value={text.url}
+          spellCheck="false"
         />
         <LabelEl htmlFor="text1">URL</LabelEl>
       </InputContainerEl>
@@ -231,6 +232,7 @@ const InputContent = ({ isInput, count, onChange, text }) => {
           placeholder=" "
           onChange={onChange}
           value={text.title}
+          spellCheck="false"
         />
         <LabelEl htmlFor="text1">TITLE</LabelEl>
       </InputContainerEl>
@@ -242,6 +244,7 @@ const InputContent = ({ isInput, count, onChange, text }) => {
           placeholder=" "
           onChange={onChange}
           value={text.hashtag}
+          spellCheck="false"
         />
         <LabelEl htmlFor="text1">HASHTAG</LabelEl>
       </InputContainerEl>
@@ -260,6 +263,7 @@ const TextAreaContent = ({ isInput, onChange, text }) => {
           placeholder=" "
           onChange={onChange}
           value={text.memo}
+          spellCheck="false"
         />
         <MemoLabel htmlFor="text1">MEMO</MemoLabel>
       </TextAreaContainer>

@@ -13,6 +13,7 @@ const MainEl = styled.div`
   z-index: 1;
   height: calc(100vh - 100px);
   display: flex;
+  /* max-width: 100%; */
 `;
 
 const modalWhiteList = [
