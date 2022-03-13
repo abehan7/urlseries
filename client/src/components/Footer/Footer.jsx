@@ -12,6 +12,7 @@ const MainFooter = styled.div`
   width: 100%;
   background: transparent;
   color: rgb(3, 3, 3);
+  flex: 1;
 `;
 
 const FooterContent = styled.div`

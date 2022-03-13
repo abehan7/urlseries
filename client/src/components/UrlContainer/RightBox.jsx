@@ -71,6 +71,7 @@ const FlexContainer = styled(ItemConatiner)`
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
   overflow-y: scroll;
+  overflow-x: hidden;
 
   scrollbar-width: 0;
   ::-webkit-scrollbar {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { constants, useMode } from "../../contexts/ModeContext";
+import { useUrl } from "../../contexts/UrlContext";
 import { BodyContent } from "./styled/BodyContent.styled";
 import { ColoredFooterBtn } from "./styled/ColoredFooterBtn.styled";
 import { Footer } from "./styled/Footer.styled";
@@ -125,24 +126,72 @@ const AddModal = () => {
   const [isInput, setIsInput] = useState(true);
   const [count, setCount] = useState(0);
   const setMode = useMode().setMode;
+  const mode = useMode().mode;
+  const editUrl = useUrl().editUrl;
+  const handleSetEditUrl = useUrl().handleSetEditUrl;
+
+  const textInitialize = () => {
+    if (mode === constants.ADD)
+      return {
+        url: "",
+        title: "",
+        hashtag: "",
+        memo: "",
+      };
+
+    const oneLineTag = editUrl?.url_hashTags?.join(" ");
+
+    if (mode === constants.EDIT_MODAL_UP)
+      return {
+        url: editUrl.url,
+        title: editUrl.url_title,
+        hashtag: oneLineTag,
+        memo: editUrl.url_memo,
+        urlId: editUrl.url_id,
+      };
+  };
+
+  const [text, setText] = useState(textInitialize);
   const onClickBack = () => setIsInput(true);
   const onClickNext = () => {
     setIsInput(false);
     setCount(count + 1);
   };
-  const onClickSubmit = () => {};
+  const onClickSubmit = () => {
+    const addFn = () => {};
+    const editFn = () => {};
+    mode === constants.ADD && addFn();
+    mode === constants.EDIT && editFn();
+  };
   const onClickCancel = () => {
-    setMode(constants.NORMAL);
-    setCount(0);
+    mode === constants.ADD && setMode(constants.NORMAL);
+    mode === constants.EDIT_MODAL_UP && setMode(constants.EDIT);
+    mode === constants.EDIT_MODAL_UP && handleSetEditUrl({});
+
+    // mode === constants.EDIT_MODAL_UP && setCount(0);
+  };
+  const onChange = (e) => {
+    setText({
+      ...text,
+      [e.target.name]: e.target.value,
+    });
   };
   return (
     <ModalContentEl>
       <ModalHeader>
-        <ModalTitle>북마크 추가하기</ModalTitle>
+        <ModalTitle>{mode === constants.ADD && "북마크 추가하기"}</ModalTitle>
+        <ModalTitle>
+          {mode === constants.EDIT_MODAL_UP && "북마크 수정하기"}
+        </ModalTitle>
       </ModalHeader>
       <ModalBodyEl>
-        <InputContent isInput={isInput} count={count} />
-        <TextAreaContent isInput={isInput} />
+        <InputContent
+          isInput={isInput}
+          count={count}
+          onChange={onChange}
+          text={text}
+        />
+        <TextAreaContent isInput={isInput} onChange={onChange} text={text} />
       </ModalBodyEl>
       <FooterEl>
         {!isInput && (
@@ -160,30 +209,58 @@ const AddModal = () => {
 
 export default AddModal;
 
-const InputContent = ({ isInput, count }) => {
+const InputContent = ({ isInput, count, onChange, text }) => {
   return (
     <InputContentEl isInput={isInput} count={count}>
       <InputContainerEl>
-        <Input type="text" autoComplete="off" name="url" placeholder=" " />
+        <Input
+          type="text"
+          autoComplete="off"
+          name="url"
+          placeholder=""
+          onChange={onChange}
+          value={text.url}
+        />
         <LabelEl htmlFor="text1">URL</LabelEl>
       </InputContainerEl>
       <InputContainerEl>
-        <Input type="text" autoComplete="off" name="title" placeholder=" " />
+        <Input
+          type="text"
+          autoComplete="off"
+          name="title"
+          placeholder=""
+          onChange={onChange}
+          value={text.title}
+        />
         <LabelEl htmlFor="text1">TITLE</LabelEl>
       </InputContainerEl>
       <InputContainerEl>
-        <Input type="text" autoComplete="off" name="hashtag" placeholder=" " />
+        <Input
+          type="text"
+          autoComplete="off"
+          name="hashtag"
+          placeholder=""
+          onChange={onChange}
+          value={text.hashtag}
+        />
         <LabelEl htmlFor="text1">HASHTAG</LabelEl>
       </InputContainerEl>
     </InputContentEl>
   );
 };
 
-const TextAreaContent = ({ isInput }) => {
+const TextAreaContent = ({ isInput, onChange, text }) => {
   return (
     <TextAreaContentEl isInput={isInput}>
       <TextAreaContainer>
-        <TextArea type="text" autoComplete="off" name="memo" placeholder=" " />
+        <TextArea
+          type="text"
+          autoComplete="off"
+          name="memo"
+          placeholder=""
+          onChange={onChange}
+          value={text.memo}
+        />
         <MemoLabel htmlFor="text1">MEMO</MemoLabel>
       </TextAreaContainer>
     </TextAreaContentEl>

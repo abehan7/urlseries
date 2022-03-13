@@ -1,4 +1,3 @@
-import { debounce } from "lodash";
 import React, {
   useContext,
   useEffect,
@@ -39,6 +38,15 @@ export const UrlProvider = ({ children }) => {
   });
 
   const [currentUrl, setCurrentUrl] = useState({
+    url: "",
+    urlId: "",
+    memo: "",
+    hashtag: "",
+    urlTitle: "",
+    url_likedUrl: "",
+  });
+
+  const [editUrl, setEditUrl] = useState({
     url: "",
     urlId: "",
     memo: "",
@@ -218,10 +226,20 @@ export const UrlProvider = ({ children }) => {
     setUrl({ ...url, deleteUrls: [_url, ...url?.deleteUrls] });
   };
 
+  const getResetCurrentUrl = () =>
+    setCurrentUrl({
+      url: "",
+      urlId: "",
+      memo: "",
+      hashtag: "",
+      urlTitle: "",
+      url_likedUrl: "",
+    });
+
   const handleAddDeleteUrlList = (newUrls) => {
     const duplicatedList = [...newUrls, ...url.deleteUrls];
     const filterd = duplicateUrlChecker(duplicatedList);
-    setCurrentUrl({});
+    getResetCurrentUrl();
     setUrl({ ...url, deleteUrls: filterd });
   };
 
@@ -232,7 +250,7 @@ export const UrlProvider = ({ children }) => {
 
   const handleResetDeleteUrl = () => {
     setUrl({ ...url, deleteUrls: [] });
-    setCurrentUrl({});
+    getResetCurrentUrl();
   };
 
   // FIXME: BOX들에 보여질 filterd
@@ -246,6 +264,8 @@ export const UrlProvider = ({ children }) => {
       recentClickedUrls: [],
       likedUrls: [],
     });
+
+  const handleSetEditUrl = (_url) => setEditUrl(_url);
 
   // FIXME: 전체 url
   useEffect(() => {
@@ -323,14 +343,11 @@ export const UrlProvider = ({ children }) => {
     token && !loading && startfn();
   }, [token, loading.isLikedUrl]);
 
-  // useEffect(() => {
-  //   console.log("url:", url);
-  // }, [url]);
-
   const value = {
     url,
     hashtag,
     currentUrl,
+    editUrl,
     addAssignedTag,
     removeAssignedTag,
     handleGetTotalTags,
@@ -348,6 +365,7 @@ export const UrlProvider = ({ children }) => {
     handleAddDeleteUrlList,
     handleSetFilterdUrls,
     handleResetAllUrl,
+    handleSetEditUrl,
     loading,
   };
 

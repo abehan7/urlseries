@@ -19,6 +19,8 @@ const ItemContainer = ({ urls }) => {
   const deleteUrls = useUrl().url.deleteUrls;
   const handleAddDeleteUrl = useUrl().handleAddDeleteUrl;
   const handleRemoveDeleteUrl = useUrl().handleRemoveDeleteUrl;
+  const setMode = useMode().setMode;
+  const handleSetEditUrl = useUrl().handleSetEditUrl;
 
   // 무한스크롤
   const getNextItems = async () => {
@@ -33,7 +35,10 @@ const ItemContainer = ({ urls }) => {
 
   const normalClick = (url) => window.open(url.url);
 
-  const editClick = (url) => {};
+  const editClick = (url) => {
+    handleSetEditUrl(url);
+    setMode(constants.EDIT_MODAL_UP);
+  };
   //최대한 큰 범위를 넣는게 맞아 그래야 선택의 범위가 넓어져
   // 그냥 id만 가지는건 매핑해서 얻을 수 있지만
   // 아이디만 있는 경우에는 전체를 얻기위해서 복잡해서 이렇게 해야함

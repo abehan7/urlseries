@@ -9,7 +9,8 @@ import { CgBackspace, CgEditBlackPoint, CgHashtag } from "react-icons/cg";
 import Footer from "../Footer/Footer.jsx";
 import {
   constants,
-  normalModeList,
+  sidebarEditModeList,
+  sidebarNormalModeList,
   useMode,
 } from "../../contexts/ModeContext.jsx";
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
@@ -34,6 +35,8 @@ const SideBarEl = styled.div`
   width: 200px;
   background-color: #fff;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Button = styled.div`
@@ -107,8 +110,15 @@ const FaviconWrapper = styled.div`
   justify-content: center;
 `;
 
-const ImgWrapper = styled.div`
+const FaviconContainer = styled.div`
   border-bottom: 1px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+`;
+
+const ImgWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -143,20 +153,25 @@ const DeleteWrapper = styled(TapsWrapper)`
 
 const NormalWrapper = styled(TapsWrapper)``;
 
+const EditWrapper = styled(TapsWrapper)``;
+
 const SideBar = () => {
   const mode = useMode().mode;
 
   return (
     <SideBarEl>
       <FaviconWrapper>
-        <ImgWrapper>
-          <Img src="img/logotest2.png" alt="logoImage" />
-          <Ment>Welcome!</Ment>
-        </ImgWrapper>
+        <FaviconContainer>
+          <ImgWrapper>
+            <Img src="img/logotest2.png" alt="logoImage" />
+            <Ment>Welcome!</Ment>
+          </ImgWrapper>
+        </FaviconContainer>
       </FaviconWrapper>
       {/* 탭 맵핑 */}
-      {normalModeList.includes(mode) && <NormalModeItems />}
+      {sidebarNormalModeList.includes(mode) && <NormalModeItems />}
       {constants.DELETE === mode && <DeleteModeItems />}
+      {sidebarEditModeList.includes(mode) && <EditModeItems />}
       <Footer />
     </SideBarEl>
   );
@@ -184,6 +199,7 @@ const NormalModeItems = () => {
   const onClickAdd = () => setMode(constants.ADD);
   const onClickDelete = () => setMode(constants.DELETE);
   const onClickHashtag = () => setMode(constants.HASHTAG);
+  const onClickEdit = () => setMode(constants.EDIT);
 
   return (
     <NormalWrapper>
@@ -193,7 +209,7 @@ const NormalModeItems = () => {
       <Item name="삭제하기" onClick={onClickDelete}>
         <HiOutlineDocumentRemove />
       </Item>
-      <Item name="수정하기">
+      <Item name="수정하기" onClick={onClickEdit}>
         <CgEditBlackPoint />
       </Item>
 
@@ -229,10 +245,6 @@ const DeleteModeItems = () => {
   };
   const onUnClickAll = () => handleResetDeleteUrl();
 
-  // useEffect(() => {
-  // console.log("filterdUrls from sidebar:", filterdUrls);
-  // }, [filterdUrls]);
-
   return (
     <DeleteWrapper>
       <Item name="뒤로가기" onClick={onClickBack}>
@@ -254,5 +266,19 @@ const DeleteModeItems = () => {
       </TagWrapper>
       <Item name=""></Item>
     </DeleteWrapper>
+  );
+};
+
+const EditModeItems = () => {
+  const setMode = useMode().setMode;
+
+  const onClickBack = () => setMode(constants.NORMAL);
+
+  return (
+    <EditWrapper>
+      <Item name="뒤로가기" onClick={onClickBack}>
+        <CgBackspace />
+      </Item>
+    </EditWrapper>
   );
 };

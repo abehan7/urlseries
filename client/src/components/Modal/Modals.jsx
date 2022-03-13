@@ -2,6 +2,7 @@ import React from "react";
 import { useRef } from "react";
 import styled from "styled-components";
 import { constants, useMode } from "../../contexts/ModeContext";
+import { useUrl } from "../../contexts/UrlContext";
 import AddModal from "./AddModal";
 import HashtagModal from "./HashtagModal";
 const ModalEl = styled.div`
@@ -19,15 +20,27 @@ const ModalEl = styled.div`
 `;
 const Modals = ({ mode }) => {
   const ref = useRef(null);
-  // const mode = useMode().mode;
   const setMode = useMode().setMode;
+  const handleSetEditUrl = useUrl().handleSetEditUrl;
+
   const onClickOutside = (e) => {
-    e.target === ref.current && setMode(constants.NORMAL);
+    mode === constants.EDIT_MODAL_UP &&
+      e.target === ref.current &&
+      setMode(constants.EDIT);
+
+    mode === constants.EDIT_MODAL_UP &&
+      e.target === ref.current &&
+      handleSetEditUrl({});
+
+    mode !== constants.EDIT_MODAL_UP &&
+      e.target === ref.current &&
+      setMode(constants.NORMAL);
   };
   // console.log(mode);
+  const AddModalWhiteList = [constants.ADD, constants.EDIT_MODAL_UP];
   return (
     <ModalEl onClick={onClickOutside} ref={ref}>
-      {mode === constants.ADD && <AddModal />}
+      {AddModalWhiteList.includes(mode) && <AddModal />}
       {mode === constants.HASHTAG && <HashtagModal />}
     </ModalEl>
   );

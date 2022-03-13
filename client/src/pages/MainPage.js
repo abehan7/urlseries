@@ -15,7 +15,11 @@ const MainEl = styled.div`
   display: flex;
 `;
 
-const modalWhiteList = [constants.ADD, constants.HASHTAG];
+const modalWhiteList = [
+  constants.ADD,
+  constants.HASHTAG,
+  constants.EDIT_MODAL_UP,
+];
 
 const MainPage = () => {
   const mode = useMode().mode;
