@@ -18,7 +18,7 @@ const initialState = {
   err: "",
   success: "",
 };
-function LoginT() {
+function Login() {
   const [user, setUser] = useState(initialState);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -161,4 +161,4 @@ function LoginT() {
   );
 }
 
-export default LoginT;
+export default Login;

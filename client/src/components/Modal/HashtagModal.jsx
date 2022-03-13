@@ -222,16 +222,7 @@ const HashtagModal = () => {
   const onClickInput = () => setIsInputClicked(true);
   const handleFoldUp = () => setIsInputClicked(false);
   const onClickWindow = (e) => {
-    // 해시태그 저장할때 무조건 대문자로 저장시키기
-    const blackList = [
-      ...TopBoxRef.current.querySelectorAll("input"),
-      ...TopBoxRef.current.querySelectorAll("div"),
-      ...TopBoxRef.current.querySelectorAll("label"),
-      ...TopBoxRef.current.querySelectorAll("span"),
-      ...TopBoxRef.current.querySelectorAll("svg"),
-      ...TopBoxRef.current.querySelectorAll("path"),
-    ];
-    if (blackList.includes(e.target)) return;
+    if (TopBoxRef.current.contains(e.target)) return;
     handleFoldUp();
   };
   return (
