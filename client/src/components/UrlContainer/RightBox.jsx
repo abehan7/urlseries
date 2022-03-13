@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { constants, normalModeList, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 import Loader from "../Utils/Loader/Loader";
+import LoadingCenter from "../Utils/Loader/LoaderCenter";
 import ItemContainer from "./ItemContainer";
 import Marker from "./Marker";
 import NoUrl from "./NoUrl";
@@ -147,7 +148,7 @@ const NormalMode = ({ isLikeUrls, loading, isScroll, handleScrollUp }) => {
     <>
       {!isLikeUrls && <ItemContainer urls={searchedUrls} />}
       {isLikeUrls && <ItemContainer urls={likedUrls} />}
-      {loading.isLikedUrl && <Loader />}
+      {loading.isLikedUrl && <LoadingCenter />}
       <Marker isScroll={isScroll} onClick={handleScrollUp} />
     </>
   );

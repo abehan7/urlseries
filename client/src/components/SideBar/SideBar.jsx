@@ -15,6 +15,8 @@ import {
 } from "../../contexts/ModeContext.jsx";
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
 import { useUrl } from "../../contexts/UrlContext.jsx";
+import { useSelector } from "react-redux";
+import { getToken } from "../../redux/ReducersT/tokenReducer.js";
 
 // import {} from "react-icons"
 
@@ -151,7 +153,9 @@ const DeleteWrapper = styled(TapsWrapper)`
   }
 `;
 
-const NormalWrapper = styled(TapsWrapper)``;
+const NormalWrapper = styled(TapsWrapper)`
+  pointer-events: ${({ token }) => (token ? "auto" : "none")};
+`;
 
 const EditWrapper = styled(TapsWrapper)``;
 
@@ -200,9 +204,10 @@ const NormalModeItems = () => {
   const onClickDelete = () => setMode(constants.DELETE);
   const onClickHashtag = () => setMode(constants.HASHTAG);
   const onClickEdit = () => setMode(constants.EDIT);
+  const token = useSelector(getToken);
 
   return (
-    <NormalWrapper>
+    <NormalWrapper token={token}>
       <Item name="추가하기" onClick={onClickAdd}>
         <HiOutlineDocumentAdd />
       </Item>

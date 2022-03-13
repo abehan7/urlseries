@@ -18,6 +18,8 @@ import { getIsClicked, RESET_TAGS } from "../../store/reducers/Tags";
 import { useFolder } from "../../contexts/FolderContext";
 import NoUrl from "./NoUrl";
 import { constants, useMode } from "../../contexts/ModeContext";
+import LoadingCenter from "../Utils/Loader/LoaderCenter";
+import { getToken } from "../../redux/ReducersT/tokenReducer";
 
 const LeftBoxEl = styled.div`
   flex: 2;
@@ -113,6 +115,7 @@ const LeftBox = () => {
   const combinedItemsloading = useFolder().loading;
   const filterdUrls = useUrl().url.filterdUrls;
   const handleSetFilterdUrls = useUrl().handleSetFilterdUrls;
+  const token = useSelector(getToken);
   const mode = useMode().mode;
   // const [option]
 
@@ -227,7 +230,7 @@ const LeftBox = () => {
         {/* 검색 url */}
         {isSearch && <ItemContainer urls={filterdUrls} />}
         {/* url 검색중 */}
-        {isSearch && isSearchLoading && <Loader />}
+        {isSearch && isSearchLoading && <LoadingCenter />}
         {/* 태그 url없을때 */}
         {tagIsClicked &&
           !combinedItemsloading &&
@@ -235,10 +238,10 @@ const LeftBox = () => {
         {/* 검색창 url없을 때 */}
         {isSearch && !isSearchLoading && filterdUrls.length === 0 && <NoUrl />}
 
-        {tagIsClicked && combinedItemsloading && <Loader />}
+        {tagIsClicked && combinedItemsloading && <LoadingCenter />}
 
         {/* 맨 처음 로딩 */}
-        {loading.isTotalUrl && <Loader />}
+        {loading.isTotalUrl && <LoadingCenter />}
         <Marker isScroll={isScroll} onClick={handleScrollUp} />
       </FlexContainer>
     </LeftBoxEl>

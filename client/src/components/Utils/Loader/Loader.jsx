@@ -14,7 +14,6 @@ const LoaderWrap = styled.div`
 const Loader = ({ target }) => {
   return (
     <LoaderWrap ref={target}>
-      {/* <Image src="./img/loadingSpin.gif" alt="로딩" /> */}
       <ReactLoading type="spin" color="#A593E0" />
     </LoaderWrap>
   );
