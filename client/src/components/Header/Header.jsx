@@ -4,6 +4,8 @@ import { VscAccount, VscLayers, VscChevronDown } from "react-icons/vsc";
 import "./Header.css";
 import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
+import { useUrl } from "../../contexts/UrlContext";
+import { useEffect } from "react";
 
 const DropdownBtn = styled.div`
   background-color: transparent;
@@ -90,13 +92,13 @@ function Header() {
 
   const { user, isLogged } = auth;
   const [isOpen, setIsOpen] = useState(false);
+  const ref = useRef();
 
-  const onClickDropDown = () => {
-    console.log("clicked");
-    setIsOpen(!isOpen);
-  };
+  const onClickDropDown = () => setIsOpen(!isOpen);
+  const handleFoldUpDropDown = () => setIsOpen(false);
 
   const handleLogout = async () => {
+    handleFoldUpDropDown();
     try {
       // await axios.get("/user/logout");
       localStorage.removeItem("firstLogin");
@@ -108,9 +110,28 @@ function Header() {
     }
   };
 
+  // const handleResetAllUrl = useUrl().handleResetAllUrl;
+  const onClickLogin = () => {};
+
+  const windowClick = (e) => {
+    if (!isOpen) return;
+    if (ref.current.contains(e.target)) {
+      return;
+    }
+    console.log("click");
+    setIsOpen(false);
+    // if (e.target.id !== "dropdown-btn") {
+    // }
+  };
+
+  useEffect(() => {
+    window.addEventListener("click", windowClick);
+    return () => window.removeEventListener("click", windowClick);
+  }, [isOpen]);
+
   const userLink = () => {
     return (
-      <div className="dropdown">
+      <div className="dropdown" ref={ref}>
         <DropdownBtn onClick={onClickDropDown} className="dropbtn">
           <img className="profileImage" src={user.avatar} alt="" />
           {user.user_id} <VscChevronDown />
@@ -121,7 +142,9 @@ function Header() {
           className="dropdown-content"
           isOpen={isOpen}
         >
-          <Link to="profile">Profile</Link>
+          <Link to="profile" onClick={handleFoldUpDropDown}>
+            Profile
+          </Link>
           <Link to="/" onClick={handleLogout}>
             Logout
           </Link>
@@ -160,7 +183,7 @@ function Header() {
           userLink()
         ) : (
           <li>
-            <Link to="/logintest">
+            <Link to="/logintest" onClick={onClickLogin}>
               <VscAccount className="icon_page" size="20"></VscAccount>로그인
             </Link>
           </li>

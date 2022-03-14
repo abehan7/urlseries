@@ -27,11 +27,15 @@ export const TagProvider = ({ children }) => {
   const addAssignedTag = (tag) => {
     setHashtag({
       ...hashtag,
-      assignedHashtags: [...hashtag.assignedHashtags, { ...tag, assigned: 1 }],
+      assignedHashtags: [{ ...tag, assigned: 1 }, ...hashtag.assignedHashtags],
     });
   };
-  const removeAssignedTag = (filterdTags) => {
-    setHashtag({ ...hashtag, assignedHashtags: filterdTags });
+  const removeAssignedTag = (tag) => {
+    const filterd = hashtag.assignedHashtags.filter((_tag) => {
+      return tag.name !== _tag.name;
+    });
+    setHashtag({ ...hashtag, assignedHashtags: filterd });
+    console.log(filterd);
   };
 
   const getTotalTags = () => {
@@ -125,6 +129,7 @@ export const TagProvider = ({ children }) => {
   const value = {
     hashtag,
     loading,
+    getTotalTags,
     addAssignedTag,
     removeAssignedTag,
     handleGetTotalTags,

@@ -2,9 +2,10 @@ import { useState } from "react";
 import Loader from "../Utils/Loader/Loader";
 import { InfiniteScroll } from "../Utils/InfiniteScroll/InfiniteScroll";
 import Url from "./Url";
-import { constants, useMode } from "../../contexts/ModeContext";
+import { constants, normalModeList, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 import { useEffect } from "react";
+import DeleteUrl from "../DeleteUrl/DeleteUrl";
 
 const ItemContainer = ({ urls }) => {
   const [contentsNum, setContentsNum] = useState(50);
@@ -18,12 +19,8 @@ const ItemContainer = ({ urls }) => {
   const deleteUrls = useUrl().url.deleteUrls;
   const handleAddDeleteUrl = useUrl().handleAddDeleteUrl;
   const handleRemoveDeleteUrl = useUrl().handleRemoveDeleteUrl;
-  // handleAddDeleteUrl,
-  // handleRemoveDeleteUrl
-  // console.log(deleteUrls);
-
-  // const currentUrl = useUrl().currentUrl;
-  // console.log("currentUrl from ItemContainer ", currentUrl);
+  const setMode = useMode().setMode;
+  const handleSetEditUrl = useUrl().handleSetEditUrl;
 
   // 무한스크롤
   const getNextItems = async () => {
@@ -38,14 +35,25 @@ const ItemContainer = ({ urls }) => {
 
   const normalClick = (url) => window.open(url.url);
 
-  const editClick = (url) => {};
+  const editClick = (url) => {
+    handleSetEditUrl(url);
+    setMode(constants.EDIT_MODAL_UP);
+  };
   //최대한 큰 범위를 넣는게 맞아 그래야 선택의 범위가 넓어져
   // 그냥 id만 가지는건 매핑해서 얻을 수 있지만
   // 아이디만 있는 경우에는 전체를 얻기위해서 복잡해서 이렇게 해야함
 
   const deleteClick = (url) => {
-    deleteUrlIds.includes(url._id) && handleRemoveDeleteUrl(url._id);
-    !deleteUrlIds.includes(url._id) && handleAddDeleteUrl(url);
+    if (deleteUrlIds.includes(url._id)) {
+      handleSetCurrentUrl({ ...url, isNewItem: false });
+
+      setTimeout(() => handleRemoveDeleteUrl(url._id), 200);
+    }
+
+    if (!deleteUrlIds.includes(url._id)) {
+      handleAddDeleteUrl(url);
+      handleSetCurrentUrl({ ...url, isNewItem: true });
+    }
   };
 
   const onClickUrl = (url) => {
@@ -67,10 +75,10 @@ const ItemContainer = ({ urls }) => {
     const fn = () => {
       const _deleteUrlIds = deleteUrls.map((url) => url._id);
       setDeleteUrlIds(_deleteUrlIds);
-      console.log(deleteUrls);
     };
     mode === constants.DELETE && fn();
-  }, [deleteUrls]);
+    mode === constants.NORMAL && setDeleteUrlIds([]);
+  }, [deleteUrls, mode]);
 
   return filterdItems.map((url, index) => {
     if (index === contentsNum - 1)
@@ -78,19 +86,37 @@ const ItemContainer = ({ urls }) => {
     const onClick = () => onClickUrl(url);
     const _onClickStar = () => onClickStar(url);
 
+    const isDeleteUrl =
+      mode === constants.DELETE ? deleteUrlIds.includes(url._id) : null;
+
     return (
-      <Url
-        item={url}
-        url={url.url}
-        title={url.url_title}
-        key={url._id}
-        id={url._id}
-        index={index}
-        totalUrlNum={urls.length}
-        isLiked={url.url_likedUrl === 1}
-        onClick={onClick}
-        onClickStar={_onClickStar}
-      />
+      <>
+        {normalModeList.includes(mode) && (
+          <Url
+            url={url.url}
+            title={url.url_title}
+            key={url._id}
+            id={url._id}
+            index={index}
+            totalUrlNum={urls.length}
+            isLiked={url.url_likedUrl === 1}
+            onClick={onClick}
+            onClickStar={_onClickStar}
+          />
+        )}
+        {mode === constants.DELETE && (
+          <DeleteUrl
+            url={url.url}
+            title={url.url_title}
+            key={url._id}
+            id={url._id}
+            index={index}
+            totalUrlNum={urls.length}
+            onClick={onClick}
+            isDeleteUrl={isDeleteUrl}
+          />
+        )}
+      </>
     );
   });
 };

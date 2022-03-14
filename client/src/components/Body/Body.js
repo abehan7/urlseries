@@ -1,7 +1,7 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-// import LoginT from "./auth/LoginT";s
-import RegisterT from "./auth/RegisterT";
+// import LoginT from "./auth/LoginT";
+import Register from "./auth/Register";
 import ActivationEmail from "./auth/ActivationEmail";
 import { useSelector } from "react-redux";
 import MainPage from "../../pages/MainPage";
@@ -13,7 +13,7 @@ const UserInfomation = loadable(() =>
   import("../UserInfomation/Userinfomation")
 );
 const NotFound = loadable(() => import("../Utils/NotFound/NotFound"));
-const LoginT = loadable(() => import("./auth/LoginT"));
+const Login = loadable(() => import("./auth/Login"));
 const Profile = loadable(() => import("./profile/Profile"));
 const EditUser = loadable(() => import("./profile/EditUser"));
 const ResetPassword = loadable(() => import("./auth/ResetPassword"));
@@ -35,17 +35,16 @@ function Body() {
   return (
     <Section>
       <Routes>
-        {/* <RouteChangeTracker /> */}
         <Route path="/" element={<MainPage />} />
         <Route path="/about" element={<Aboutpage />} />
         <Route path="/userauth" element={<UserInfomation />} />
         <Route
           path="/logintest"
-          element={isLogged ? <NotFound /> : <LoginT />}
+          element={isLogged ? <NotFound /> : <Login />}
         />
         <Route
           path="/registertest"
-          element={isLogged ? <NotFound /> : <RegisterT />}
+          element={isLogged ? <NotFound /> : <Register />}
         />
         <Route
           path="/forgot_password"

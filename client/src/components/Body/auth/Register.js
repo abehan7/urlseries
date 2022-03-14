@@ -23,7 +23,7 @@ const initialState = {
   err: "",
   success: "",
 };
-function RegisterT() {
+function Register() {
   const [user, setUser] = useState(initialState);
   const navigate = useNavigate();
 
@@ -168,72 +168,7 @@ function RegisterT() {
         </div>
       </div>
     </center>
-
-    // <div className="login_page">
-    //   <h2>URurl Register page</h2>
-
-    //   {err && showErrMsg(err)}
-    //   {success && showSuccessMsg(success)}
-
-    //   <form onSubmit={handleSubmit}>
-    // <div>
-    //   <label htmlFor="user_id">ID</label>
-
-    //   <input
-    //     type="text"
-    //     placeholder="아이디를 입력해주세요"
-    //     value={user_id}
-    //     name="user_id"
-    //     onChange={handleChangeInput}
-    //   ></input>
-    // </div>
-
-    // <div>
-    //   <label htmlFor="email">Email</label>
-
-    //   <input
-    //     type="text"
-    //     placeholder="이메일을 입력해주세요"
-    //     value={email}
-    //     name="email"
-    //     onChange={handleChangeInput}
-    //   ></input>
-    // </div>
-
-    // <div>
-    //   <label htmlFor="password">password</label>
-
-    //   <input
-    //     type="password"
-    //     placeholder="비밀번호를 입력해주세요"
-    //     value={password}
-    //     name="password"
-    //     onChange={handleChangeInput}
-    //   ></input>
-    // </div>
-
-    // <div>
-    //   <label htmlFor="cf_password">ReEnter-password</label>
-
-    //   <input
-    //     type="password"
-    //     placeholder="비밀번호를 확인해주세요"
-    //     value={cf_password}
-    //     name="cf_password"
-    //     onChange={handleChangeInput}
-    //   ></input>
-    // </div>
-
-    //   <div className="row">
-    //     <button type="submit">회원가입</button>
-    //   </div>
-    // </form>
-
-    //   <p>
-    //     이미 아이디가 있습니까?<Link to="/logintest">로그인</Link>
-    //   </p>
-    // </div>
   );
 }
 
-export default RegisterT;
+export default Register;

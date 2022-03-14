@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { constants, useMode } from "../../contexts/ModeContext";
+import FolderLeftBox from "../Folder/FolderLeftBox";
 import LeftBox from "./LeftBox";
 import RightBox from "./RightBox";
 
@@ -20,9 +22,11 @@ const UrlContainerEl = styled.div`
   }
 `;
 const UrlContainer = () => {
+  const mode = useMode().mode;
   return (
     <UrlContainerEl>
-      <LeftBox />
+      {mode === constants.FOLDER && <FolderLeftBox />}
+      {mode !== constants.FOLDER && <LeftBox />}
       <RightBox />
     </UrlContainerEl>
   );
