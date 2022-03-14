@@ -12,9 +12,13 @@ const MainFooter = styled.div`
   width: 100%;
   background: transparent;
   color: rgb(3, 3, 3);
+<<<<<<< HEAD
   @media screen and (max-width: 600px) {
     display: none;
   }
+=======
+  flex: 1;
+>>>>>>> future/mainPage-design-change
 `;
 
 const FooterContent = styled.div`
@@ -63,6 +67,7 @@ const FooterDetail = styled.div`
     text-align: center;
     padding-left: 10px;
     margin-top: 3px;
+    cursor: pointer;
   }
   > button:focus + ul {
     opacity: 1;

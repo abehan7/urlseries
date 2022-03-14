@@ -84,6 +84,8 @@ export const FolderProvider = ({ children }) => {
 
   useEffect(() => {
     isClicked && getCombinedItems();
+    // 태그 클릭 아무것도 안되면 전체 비우기
+    !isClicked && setCombinedTagItems({ urls: [], urlIds: [] });
   }, [metaTagItems, folderTagItems, folders, isClicked]);
 
   useEffect(() => {

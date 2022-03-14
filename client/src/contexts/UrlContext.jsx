@@ -1,4 +1,3 @@
-import { debounce } from "lodash";
 import React, {
   useContext,
   useEffect,
@@ -14,6 +13,7 @@ import {
   getAbort,
   TotalAfter,
 } from "../components/Api";
+import { duplicateUrlChecker } from "../components/Utils/Urls/checkDuplicate";
 import { getToken } from "../redux/ReducersT/tokenReducer";
 import { SET_FOLDERS } from "../store/reducers/Folders";
 // import { getComments } from "../Api";
@@ -34,6 +34,7 @@ export const UrlProvider = ({ children }) => {
     recentClickedUrls: [],
     likedUrls: [],
     deleteUrls: [],
+    filterdUrls: [],
   });
 
   const [currentUrl, setCurrentUrl] = useState({
@@ -44,6 +45,17 @@ export const UrlProvider = ({ children }) => {
     urlTitle: "",
     url_likedUrl: "",
   });
+
+  const [editUrl, setEditUrl] = useState({
+    url: "",
+    urlId: "",
+    memo: "",
+    hashtag: "",
+    urlTitle: "",
+    url_likedUrl: "",
+  });
+
+  const [urlIds, setUrlIds] = useState({ deleteUrlIds: [] });
 
   // const [totalUrls, setTotalUrls] = useState([]);
 
@@ -142,7 +154,7 @@ export const UrlProvider = ({ children }) => {
 
     // await updateHashtag(processed);
   }, [hashtag]);
-
+  // FIXME: 무한스크롤
   const handleGetInfiniteScrollItems = (urls) => {
     setUrl({ ...url, displayUrls: urls });
   };
@@ -201,15 +213,34 @@ export const UrlProvider = ({ children }) => {
     // api call
   };
 
+  //FIXME: 가장 최신에 클릭한 URL
   const handleSetCurrentUrl = (url) => {
     // console.log("url: ", url);
     setCurrentUrl(url);
   };
 
+  // FIXME: 삭제탭 기능
   const handleAddDeleteUrl = (_url) => {
     // console.log("url?.deleteUrls: ", url);
 
     setUrl({ ...url, deleteUrls: [_url, ...url?.deleteUrls] });
+  };
+
+  const getResetCurrentUrl = () =>
+    setCurrentUrl({
+      url: "",
+      urlId: "",
+      memo: "",
+      hashtag: "",
+      urlTitle: "",
+      url_likedUrl: "",
+    });
+
+  const handleAddDeleteUrlList = (newUrls) => {
+    const duplicatedList = [...newUrls, ...url.deleteUrls];
+    const filterd = duplicateUrlChecker(duplicatedList);
+    getResetCurrentUrl();
+    setUrl({ ...url, deleteUrls: filterd });
   };
 
   const handleRemoveDeleteUrl = (urlId) => {
@@ -217,14 +248,34 @@ export const UrlProvider = ({ children }) => {
     setUrl({ ...url, deleteUrls: newDeleteUrls });
   };
 
+  const handleResetDeleteUrl = () => {
+    setUrl({ ...url, deleteUrls: [] });
+    getResetCurrentUrl();
+  };
+
+  // FIXME: BOX들에 보여질 filterd
+  const handleSetFilterdUrls = (filterdUrls) => setUrl({ ...url, filterdUrls });
+
+  const handleResetAllUrl = () =>
+    setUrl({
+      totalUrls: [],
+      displayUrls: [],
+      searchedUrls: [],
+      recentClickedUrls: [],
+      likedUrls: [],
+    });
+
+  const handleSetEditUrl = (_url) => setEditUrl(_url);
+
   // FIXME: 전체 url
   useEffect(() => {
     const fn = async () => {
+      // 전체 url
+      console.log("전체 url");
       setLoading({ ...loading, isTotalUrl: true });
       const { data } = await TotalAfter();
       setUrl({ ...url, totalUrls: data.totalAfter });
       setLoading({ ...loading, isTotalUrl: false });
-
       // console.log("totalUrls: ", data.totalAfter);
     };
     token && !loading.isLikedUrl && fn();
@@ -272,8 +323,8 @@ export const UrlProvider = ({ children }) => {
     let timer;
 
     token && getMemberData();
-    !token && (timer = setTimeout(getGuestData, 1000));
-    return () => clearTimeout(timer);
+    // !token && (timer = setTimeout(getGuestData, 1000));
+    // return () => clearTimeout(timer);
   }, [token]);
 
   // FIXME: 해시태그
@@ -292,14 +343,11 @@ export const UrlProvider = ({ children }) => {
     token && !loading && startfn();
   }, [token, loading.isLikedUrl]);
 
-  // useEffect(() => {
-  //   console.log("url:", url);
-  // }, [url]);
-
   const value = {
     url,
     hashtag,
     currentUrl,
+    editUrl,
     addAssignedTag,
     removeAssignedTag,
     handleGetTotalTags,
@@ -313,6 +361,11 @@ export const UrlProvider = ({ children }) => {
     handleSetCurrentUrl,
     handleAddDeleteUrl,
     handleRemoveDeleteUrl,
+    handleResetDeleteUrl,
+    handleAddDeleteUrlList,
+    handleSetFilterdUrls,
+    handleResetAllUrl,
+    handleSetEditUrl,
     loading,
   };
 

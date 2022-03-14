@@ -8,6 +8,7 @@ import styled from "styled-components";
 import { constants, normalModeList, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 import Loader from "../Utils/Loader/Loader";
+import LoadingCenter from "../Utils/Loader/LoaderCenter";
 import ItemContainer from "./ItemContainer";
 import Marker from "./Marker";
 import NoUrl from "./NoUrl";
@@ -77,6 +78,7 @@ const FlexContainer = styled(ItemConatiner)`
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 
   overflow-y: scroll;
+  overflow-x: hidden;
 
   scrollbar-width: 0;
   ::-webkit-scrollbar {
@@ -124,22 +126,61 @@ const RightBox = () => {
   };
   const isLikeUrls = true;
 
+  //FIXME: DOM
+  // 좋아요 타이틀
+  const LikeTitle = () =>
+    normalModeList.includes(mode) && <Title>즐겨찾기</Title>;
+
+  //삭제할 북마크 타이틀
+  const DeleteTitle = () =>
+    mode === constants.DELETE && (
+      <Title style={{ color: "tomato" }}>삭제할 북마크 목록</Title>
+    );
+
+  // 폴더 엔트리 타이틀
+  const FolderTitle = () =>
+    mode === constants.FOLDER && <Title>즐겨찾기 폴더</Title>;
+
+  // 삭제모드 아닐때 MAPPING
+  const NormalMapping = () =>
+    normalModeList.includes(mode) && (
+      <NormalMode
+        isLikeUrls={isLikeUrls}
+        loading={loading}
+        isScroll={isScroll}
+        handleScrollUp={handleScrollUp}
+      />
+    );
+
+  //삭제모드일 때 MAPPING
+  const DeleteMapping = () =>
+    mode === constants.DELETE && (
+      <DeleteMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
+    );
+
+  // 폴더모드일 때 MAPPING
+  const FolderMapping = () =>
+    mode === constants.FOLDER && (
+      <FolderMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
+    );
+
   return (
     <RightBoxEl>
       <TitleWrapper>
-        {normalModeList.includes(mode) && <Title>즐겨찾기</Title>}
-        {mode === constants.DELETE && <Title>삭제할 북마크 목록</Title>}
+        {/* 좋아요 타이틀 */}
+        {LikeTitle()}
+        {/* 삭제 타이틀 */}
+        {DeleteTitle()}
+        {/* 폴더 타이틀 */}
+        {FolderTitle()}
       </TitleWrapper>
       <FlexContainer onScroll={onScroll} ref={scrollRef}>
-        {normalModeList.includes(mode) && (
-          <NormalMode
-            isLikeUrls={isLikeUrls}
-            loading={loading}
-            isScroll={isScroll}
-            handleScrollUp={handleScrollUp}
-          />
-        )}
-        {mode === constants.DELETE && <DeleteMode />}
+        {/* 삭제모드 아닐 때 매핑 */}
+        {NormalMapping()}
+        {/* 삭제모드일 때 매핑 */}
+        {DeleteMapping()}
+        {/* 폴더모드일 때 매핑 */}
+        {FolderMapping()}
       </FlexContainer>
     </RightBoxEl>
   );
@@ -154,35 +195,55 @@ const NormalMode = ({ isLikeUrls, loading, isScroll, handleScrollUp }) => {
     <>
       {!isLikeUrls && <ItemContainer urls={searchedUrls} />}
       {isLikeUrls && <ItemContainer urls={likedUrls} />}
-      {loading.isLikedUrl && <Loader />}
+      {loading.isLikedUrl && <LoadingCenter />}
       <Marker isScroll={isScroll} onClick={handleScrollUp} />
     </>
   );
 };
 
-const DeleteMode = () => {
+const DeleteMode = ({ isScroll, handleScrollUp }) => {
   const [loading, setLoading] = useState(true);
   const deleteUrls = useUrl().url.deleteUrls;
-  const timer = setTimeout(() => {
-    setLoading(false);
-  }, 300);
+
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 300);
     return () => clearTimeout(timer);
   });
 
   return (
     <>
-      {loading && <LoadingWindow />}
-      <ItemContainer urls={deleteUrls} />
+      {/* 로딩창 */}
+      {loading && <LoadingCenter />}
+      {/* 매핑 */}
+      {!loading && <ItemContainer urls={deleteUrls} />}
+      {/* 북마크 없을 때 */}
       {!loading && deleteUrls.length === 0 && <NoUrl />}
+      <Marker isScroll={isScroll} onClick={handleScrollUp} />
     </>
   );
 };
 
-const LoadingWindow = () => {
+const FolderMode = ({ isScroll, handleScrollUp }) => {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  });
+
+  const folders = [];
+
   return (
-    <LoaderWrapper>
-      <Loader />
-    </LoaderWrapper>
+    <>
+      {/* 로딩창 */}
+      {loading && <LoadingCenter />}
+      {/* 북마크 없을 때 */}
+      {!loading && folders.length === 0 && <NoUrl />}
+      <Marker isScroll={isScroll} onClick={handleScrollUp} />
+    </>
   );
 };

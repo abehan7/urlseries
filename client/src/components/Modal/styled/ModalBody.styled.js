@@ -7,4 +7,8 @@ export const ModalBody = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  flex: 1;
+  padding: 0.5rem 0;
+  overflow: hidden;
 `;

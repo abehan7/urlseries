@@ -1,6 +1,4 @@
-import { useRef } from "react";
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useUrl } from "../../contexts/UrlContext";
 const Line = styled.div`
   width: 4px;
@@ -99,17 +97,24 @@ const UrlEl = styled.div`
   background-color: #fff;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   cursor: pointer;
 
   transition: all 0.3s ease-in-out;
 
   :hover {
-    background-color: #a597fe1a;
-    ${Line} {
-      background-color: #c282ff;
-    }
+    background-color: #ffcccb7a;
   }
+
+  ${(props) =>
+    props.isDeleteUrl &&
+    css`
+      background-color: #ffcccb7a;
+
+      ${Line} {
+        background-color: tomato;
+      }
+    `}
 `;
 
 const Index = styled.div`
@@ -127,46 +132,34 @@ const DeleteUrl = ({
   id,
   index,
   totalUrlNum,
-  isLiked,
   onClick,
-  onClickStar,
+  isDeleteUrl,
 }) => {
   const src = `http://www.google.com/s2/favicons?domain=${url}`;
-  const starWrapRef = useRef(null);
-  // const currentUrlRef = useRef(null);
   const currentUrl = useUrl().currentUrl;
-  // console.log("currentUrl", currentUrl);
-
-  const onClickUrl = async (e) => {
-    // 별 누르면 클릭 안되게하기
-    const svg = starWrapRef.current.querySelector("svg");
-    const path = svg.querySelector("path");
-    const blackList = [path, svg, starWrapRef.current];
-    if (blackList.includes(e.target)) return;
-
-    onClick();
-    // onClick();
-  };
 
   // const className = currentUrl._id === id ? "newItem" : "";
   const className = {
     isNewItem: () => {
       if (currentUrl._id !== id) return "";
-      const nowItem = currentUrl.url_likedUrl === 0 ? "newItem" : "removeItem";
+      const nowItem = currentUrl.isNewItem ? "newItem" : "removeItem";
       return nowItem;
     },
   };
 
   return (
-    <UrlEl key={id} onClick={onClickUrl} className={className.isNewItem()}>
+    <UrlEl
+      key={id}
+      onClick={onClick}
+      className={className.isNewItem()}
+      isDeleteUrl={isDeleteUrl}
+    >
       <Line />
       <Img src={src} />
       <TextWrapper>
         <Text>{title}</Text>
       </TextWrapper>
-      <Icon onClick={onClickStar} ref={starWrapRef}>
-        {isLiked ? <AiFillStar /> : <AiOutlineStar />}
-      </Icon>
+      <Icon></Icon>
       <Index>
         {totalUrlNum - index}/{totalUrlNum}
       </Index>

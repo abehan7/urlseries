@@ -1,18 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import {
   HiOutlineDocumentAdd,
   HiOutlineDocumentRemove,
   HiOutlineFolderAdd,
+  HiOutlineFolderRemove,
 } from "react-icons/hi";
 import { CgBackspace, CgEditBlackPoint, CgHashtag } from "react-icons/cg";
 import Footer from "../Footer/Footer.jsx";
 import {
   constants,
-  normalModeList,
+  sidebarEditModeList,
+  sidebarNormalModeList,
   useMode,
 } from "../../contexts/ModeContext.jsx";
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
+import { useUrl } from "../../contexts/UrlContext.jsx";
+import { useSelector } from "react-redux";
+import { getToken } from "../../redux/ReducersT/tokenReducer.js";
 
 // import {} from "react-icons"
 
@@ -34,6 +39,7 @@ const SideBarEl = styled.div`
   width: 180px;
   background-color: #fff;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+<<<<<<< HEAD
   @media screen and (max-width: 1018px) {
     /* height: calc(100vh - 100px); */
     /* height: calc(100vh+100px); */
@@ -43,6 +49,10 @@ const SideBarEl = styled.div`
   @media screen and (max-width: 600px) {
     width: 80px;
   }
+=======
+  display: flex;
+  flex-direction: column;
+>>>>>>> future/mainPage-design-change
 `;
 
 const Button = styled.div`
@@ -128,8 +138,15 @@ const FaviconWrapper = styled.div`
   justify-content: center;
 `;
 
-const ImgWrapper = styled.div`
+const FaviconContainer = styled.div`
   border-bottom: 1px solid #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 70%;
+`;
+
+const ImgWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -165,7 +182,12 @@ const DeleteWrapper = styled(TapsWrapper)`
   }
 `;
 
-const NormalWrapper = styled(TapsWrapper)``;
+const NormalWrapper = styled.div`
+  animation: ${({ count }) => (count === 1 ? "fadeIn 0.5s ease-in-out;" : "")};
+  pointer-events: ${({ token }) => (token ? "auto" : "none")};
+`;
+
+const EditWrapper = styled(TapsWrapper)``;
 
 const SideBar = () => {
   const mode = useMode().mode;
@@ -173,14 +195,18 @@ const SideBar = () => {
   return (
     <SideBarEl>
       <FaviconWrapper>
-        <ImgWrapper>
-          <Img src="img/logotest2.png" alt="logoImage" />
-          <Ment>Welcome!</Ment>
-        </ImgWrapper>
+        <FaviconContainer>
+          <ImgWrapper>
+            <Img src="img/logotest2.png" alt="logoImage" />
+            <Ment>Welcome!</Ment>
+          </ImgWrapper>
+        </FaviconContainer>
       </FaviconWrapper>
       {/* 탭 맵핑 */}
-      {normalModeList.includes(mode) && <NormalModeItems />}
+      {sidebarNormalModeList.includes(mode) && <NormalModeItems />}
       {constants.DELETE === mode && <DeleteModeItems />}
+      {sidebarEditModeList.includes(mode) && <EditModeItems />}
+      {constants.FOLDER === mode && <FolderModeItems />}
       <Footer />
     </SideBarEl>
   );
@@ -207,25 +233,33 @@ const NormalModeItems = () => {
   const setMode = useMode().setMode;
   const onClickAdd = () => setMode(constants.ADD);
   const onClickDelete = () => setMode(constants.DELETE);
+  const onClickHashtag = () => setMode(constants.HASHTAG);
+  const onClickEdit = () => setMode(constants.EDIT);
+  const onClickFolder = () => setMode(constants.FOLDER);
+  const sidebarAnimeCount = useMode().count.sidebarAnimeCount;
+  const token = useSelector(getToken);
+
   return (
-    <NormalWrapper>
+    <NormalWrapper token={token} count={sidebarAnimeCount}>
       <Item name="추가하기" onClick={onClickAdd}>
         <HiOutlineDocumentAdd />
       </Item>
       <Item name="삭제하기" onClick={onClickDelete}>
         <HiOutlineDocumentRemove />
       </Item>
-      <Item name="수정하기">
+      <Item name="수정하기" onClick={onClickEdit}>
         <CgEditBlackPoint />
       </Item>
-      <TagWrapper>
-        <Item name="해시태그설정">
-          <CgHashtag />
-        </Item>
-      </TagWrapper>
-      <TagWrapper>
+
+      <TagWrapper onClick={onClickFolder}>
         <Item name="폴더설정">
           <HiOutlineFolderAdd />
+        </Item>
+      </TagWrapper>
+
+      <TagWrapper onClick={onClickHashtag}>
+        <Item name="해시태그설정">
+          <CgHashtag />
         </Item>
       </TagWrapper>
     </NormalWrapper>
@@ -234,7 +268,20 @@ const NormalModeItems = () => {
 
 const DeleteModeItems = () => {
   const setMode = useMode().setMode;
+  const filterdUrls = useUrl().url.filterdUrls;
+  const handleAddDeleteUrlList = useUrl().handleAddDeleteUrlList;
+  const handleResetDeleteUrl = useUrl().handleResetDeleteUrl;
+  const totalUrls = useUrl().url.totalUrls;
+
   const onClickBack = () => setMode(constants.NORMAL);
+  const onClickAll = () => {
+    console.log(filterdUrls);
+    // 검색 하나라도 했을 때만 실행
+    filterdUrls.length !== 0 && handleAddDeleteUrlList(filterdUrls);
+    // 검색도 안하고 태그도 클릭 안했을 때
+    filterdUrls.length === 0 && handleAddDeleteUrlList(totalUrls);
+  };
+  const onUnClickAll = () => handleResetDeleteUrl();
 
   return (
     <DeleteWrapper>
@@ -245,17 +292,50 @@ const DeleteModeItems = () => {
         <HiOutlineDocumentRemove />
       </Item>
       <TagWrapper>
-        <Item name="전체선택">
+        <Item name="전체선택" onClick={onClickAll}>
           <MdRadioButtonChecked />
         </Item>
       </TagWrapper>
 
       <TagWrapper>
-        <Item name="전체해제">
+        <Item name="전체해제" onClick={onUnClickAll}>
           <MdRadioButtonUnchecked />
         </Item>
       </TagWrapper>
       <Item name=""></Item>
     </DeleteWrapper>
+  );
+};
+
+const EditModeItems = () => {
+  const setMode = useMode().setMode;
+
+  const onClickBack = () => setMode(constants.NORMAL);
+
+  return (
+    <EditWrapper>
+      <Item name="뒤로가기" onClick={onClickBack}>
+        <CgBackspace />
+      </Item>
+    </EditWrapper>
+  );
+};
+
+const FolderModeItems = () => {
+  const setMode = useMode().setMode;
+  const onClickBack = () => setMode(constants.NORMAL);
+
+  return (
+    <EditWrapper>
+      <Item name="뒤로가기" onClick={onClickBack}>
+        <CgBackspace />
+      </Item>
+      <Item name="추가하기">
+        <HiOutlineFolderAdd />
+      </Item>
+      <Item name="삭제하기">
+        <HiOutlineFolderRemove />
+      </Item>
+    </EditWrapper>
   );
 };
