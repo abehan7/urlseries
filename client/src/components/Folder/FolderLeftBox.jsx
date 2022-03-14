@@ -22,12 +22,17 @@ const TitleEl = styled(Title)`
 
 const GridBox = styled(ItemConatiner)`
   padding: 1rem;
+  animation: fadeIn 0.5s ease-in;
+
+  max-height: calc(100% - 130px);
+  height: calc(100% - 130px);
   width: 90%;
 
-  height: calc(100% - 130px);
-  max-height: calc(100% - 130px);
   display: grid;
-  animation: fadeIn 0.5s ease-in;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 50px;
+
+  /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
 `;
 const FolderLeftBoxEl = styled(LeftBoxEl)``;
 
