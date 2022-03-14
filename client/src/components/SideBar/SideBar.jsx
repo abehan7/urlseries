@@ -29,7 +29,8 @@ const SideBarEl = styled.div`
   }
 
   z-index: 2;
-  height: calc(100vh - 100px);
+  /* height: calc(100vh - 100px); */
+  height: 100%;
   /* min-height: 650px; */
   width: 180px;
   background-color: #fff;
@@ -38,9 +39,11 @@ const SideBarEl = styled.div`
     /* height: calc(100vh - 100px); */
     /* height: calc(100vh+100px); */
     /* width: 100px; */
-    height: auto;
+    height: 100%;
   }
   @media screen and (max-width: 600px) {
+    height: 100%;
+
     width: 80px;
   }
 `;

@@ -1,8 +1,8 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 // import LoginT from "./auth/LoginT";s
-import RegisterT from "./Auth/RegisterT";
-import ActivationEmail from "./Auth/ActivationEmail";
+import RegisterT from "./auth/RegisterT";
+import ActivationEmail from "./auth/ActivationEmail";
 import { useSelector } from "react-redux";
 import MainPage from "../../pages/MainPage";
 import styled from "styled-components";
@@ -13,11 +13,11 @@ const UserInfomation = loadable(() =>
   import("../UserInfomation/Userinfomation")
 );
 const NotFound = loadable(() => import("../Utils/NotFound/NotFound"));
-const LoginT = loadable(() => import("./Auth/LoginT"));
-const Profile = loadable(() => import("./Profile/Profile"));
-const EditUser = loadable(() => import("./Profile/EditUser"));
-const ResetPassword = loadable(() => import("./Auth/ResetPassword"));
-const ForgotPassword = loadable(() => import("./Auth/ForgotPassword"));
+const LoginT = loadable(() => import("./auth/LoginT"));
+const Profile = loadable(() => import("./profile/Profile"));
+const EditUser = loadable(() => import("./profile/EditUser"));
+const ResetPassword = loadable(() => import("./auth/ResetPassword"));
+const ForgotPassword = loadable(() => import("./auth/ForgotPassword"));
 
 const Section = styled.section`
   position: relative;
