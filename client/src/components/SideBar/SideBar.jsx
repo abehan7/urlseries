@@ -162,6 +162,25 @@ const NormalWrapper = styled.div`
 
 const EditWrapper = styled(TapsWrapper)``;
 
+const FolderWrapper = styled(TapsWrapper)`
+  > div {
+    :hover {
+      background-color: #e6c7b675;
+      ::before {
+        background-color: #e6c7b6;
+      }
+    }
+    ::before {
+      transition: all 0.2s ease-in-out;
+      left: 0;
+      content: "";
+      height: 100%;
+      width: 2px;
+      position: absolute;
+    }
+  }
+`;
+
 const SideBar = () => {
   const mode = useMode().mode;
 
@@ -299,7 +318,7 @@ const FolderModeItems = () => {
   const onClickEdit = () => {};
 
   return (
-    <EditWrapper>
+    <FolderWrapper>
       <Item name="뒤로가기" onClick={onClickBack}>
         <CgBackspace />
       </Item>
@@ -312,6 +331,6 @@ const FolderModeItems = () => {
       <Item name="수정하기" onClick={onClickEdit}>
         <CgEditBlackPoint />
       </Item>
-    </EditWrapper>
+    </FolderWrapper>
   );
 };

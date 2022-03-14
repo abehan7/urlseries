@@ -30,11 +30,11 @@ const ItemContainer = ({ folders }) => {
     return (
       <FolderItem
         key={folder._id}
-        folderName={folder.folderName}
+        folderName={folder.folder_name}
         id={folder._id}
         index={index}
         totalFolderNum={folders.length}
-        isLiked={folder.folder_likedFolder === 1}
+        isLiked={folder.like}
         onClick={onClick}
         onClickStar={_onClickStar}
       />

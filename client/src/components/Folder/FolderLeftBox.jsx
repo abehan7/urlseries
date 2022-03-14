@@ -2,7 +2,9 @@ import { throttle } from "lodash";
 import { useRef } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { getFolders } from "../../store/reducers/Folders";
 import SearchBar from "../SearchBar/SearchBar";
 import { LeftBoxEl } from "../UrlContainer/LeftBox";
 import Marker from "../UrlContainer/Marker";
@@ -10,6 +12,7 @@ import { ItemConatiner } from "../UrlContainer/styled/ItemContainer";
 import { Title } from "../UrlContainer/styled/Title.styled";
 import { TitleWrapper } from "../UrlContainer/styled/TitleWrapper.styled";
 import FolderItem from "./FolderItem";
+import ItemContainer from "./ItemContainer";
 
 const TitleEl = styled(Title)`
   @keyframes jaehee {
@@ -70,6 +73,8 @@ const FolderLeftBox = () => {
   const [keyword, setKeyword] = useState("");
   const [isScroll, setIsScroll] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
+  const folders = useSelector(getFolders);
+  // console.log(folders);
 
   const scrollRef = useRef(null);
   const onClickSearchTitle = () => {};
@@ -101,13 +106,7 @@ const FolderLeftBox = () => {
         <SearchBar onChange={onChange} keyword={keyword} />
       </TitleWrapper>
       <GridBox onScroll={onScroll} ref={scrollRef}>
-        {testData.map((folder, index) => (
-          <FolderItem
-            folderName={folder.folderName}
-            key={folder.id}
-            index={index}
-          />
-        ))}
+        <ItemContainer folders={folders} />
         <Marker
           isScroll={isScroll}
           onClick={handleScrollUp}

@@ -30,10 +30,7 @@ export const FolderProvider = ({ children }) => {
   const totalUrls = useUrl().url.totalUrls;
   const isClicked = useSelector(getIsClicked);
 
-  // console.log("totalUrls from getMetaTagUrls: ", totalUrls);
-
-  // 태그 아이템들
-
+  // FIXME: 메타태그 + 폴더태그 아이템 함수들
   const getMetaTagUrls = () => {
     const filterd = totalUrls?.filter((url) => {
       return metaTagItems.some((tag) => {
@@ -74,6 +71,7 @@ export const FolderProvider = ({ children }) => {
 
   const handleSetCombinedItemLoading = (boolean) => setLoading(boolean);
 
+  //맨 처음 화면 업로드 되면 폴더 redux에 저장
   useEffect(() => {
     const getFolder = async () => {
       dispatch(SET_FOLDERS);
@@ -81,6 +79,10 @@ export const FolderProvider = ({ children }) => {
     getFolder();
     token && folders.length === 0 && getFolder();
   }, [token]);
+
+  //FIXME: 폴더에서만 사용되는 함수
+
+  // FIXME: 메타태그 + 폴더태그 아이템 useEffect
 
   useEffect(() => {
     isClicked && getCombinedItems();

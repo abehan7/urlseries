@@ -59,6 +59,7 @@ const LikeTextWrapper = styled.div`
   background-color: #f0f9ea;
   padding: 0.3rem;
   border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.15) 0.5px 0.5px 2.6px;
 `;
 
 const NotLikedWrapper = styled.div`
@@ -69,7 +70,6 @@ const NotLikedWrapper = styled.div`
   border-radius: 5px;
   color: gray;
   border: 1px solid #ddd;
-  box-shadow: rgba(0, 0, 0, 0.15) 0.5px 0.5px 2.6px;
 `;
 
 const PadidngWrapper = styled.div`
@@ -103,8 +103,16 @@ const Text = styled.span`
 `;
 
 const text = `this is a pedrotech 123123 this is a pedrotecasdsadasdasdh 123123thi `;
-const FolderItem = ({ folderName, index }) => {
-  const isLiked = index % 2 === 0;
+const FolderItem = ({
+  folderName,
+  id,
+  totalFolderNum,
+  index,
+  isLiked,
+  onClick,
+  onClickStar,
+}) => {
+  // const isLiked = index % 2 === 0;
   return (
     <FolderItemEl>
       <ItemWrapper>
