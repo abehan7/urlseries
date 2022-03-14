@@ -13,6 +13,7 @@ import { ModalTitle } from "./styled/ModalTitle.styled";
 import { RiCheckFill } from "react-icons/ri";
 import { useState } from "react";
 import { useRef } from "react";
+import { useTag } from "../../contexts/TagContext";
 
 //FIXME: TopBox
 const Input = styled.input`
@@ -225,6 +226,7 @@ const HashtagModal = () => {
     if (TopBoxRef.current.contains(e.target)) return;
     handleFoldUp();
   };
+
   return (
     <ModalContent onClick={onClickWindow}>
       <ModalHeader>

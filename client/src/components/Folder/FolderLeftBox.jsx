@@ -1,4 +1,6 @@
+import { throttle } from "lodash";
 import { useRef } from "react";
+import { useCallback } from "react";
 import { useState } from "react";
 import styled from "styled-components";
 import SearchBar from "../SearchBar/SearchBar";
@@ -7,6 +9,7 @@ import Marker from "../UrlContainer/Marker";
 import { ItemConatiner } from "../UrlContainer/styled/ItemContainer";
 import { Title } from "../UrlContainer/styled/Title.styled";
 import { TitleWrapper } from "../UrlContainer/styled/TitleWrapper.styled";
+import FolderItem from "./FolderItem";
 
 const TitleEl = styled(Title)`
   @keyframes jaehee {
@@ -21,6 +24,8 @@ const TitleEl = styled(Title)`
 `;
 
 const GridBox = styled(ItemConatiner)`
+  /* position: relative; */
+
   padding: 1rem;
   animation: fadeIn 0.5s ease-in;
 
@@ -29,22 +34,65 @@ const GridBox = styled(ItemConatiner)`
   width: 90%;
 
   display: grid;
+  justify-content: center;
+
   grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 50px;
+
+  grid-auto-rows: calc(100% / 3);
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  scrollbar-width: 0;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 
   /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
 `;
 const FolderLeftBoxEl = styled(LeftBoxEl)``;
 
+const testData = [
+  { folderName: "pedrtech_a", id: "a" },
+  { folderName: "pedrtech_b", id: "b" },
+  { folderName: "pedrtech_c", id: "c" },
+  { folderName: "pedrtech_d", id: "d" },
+  { folderName: "pedrtech_e", id: "e" },
+  { folderName: "pedrtech_f", id: "f" },
+  { folderName: "pedrtech_g", id: "g" },
+  { folderName: "pedrtech_h", id: "h" },
+  { folderName: "pedrtech_i", id: "i" },
+  { folderName: "pedrtech_j", id: "j" },
+  { folderName: "pedrtech_k", id: "k" },
+];
+
 const FolderLeftBox = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [isScroll, setIsScroll] = useState(false);
+  const [scrollTop, setScrollTop] = useState(0);
+
   const scrollRef = useRef(null);
-  const onScroll = () => {};
   const onClickSearchTitle = () => {};
   const onChange = () => {};
-  const handleScrollUp = () => {};
+  const handleScrollUp = useCallback(() => {
+    const option = { top: 0, left: 0, behavior: "smooth" };
+    scrollRef.current.scrollTo(option);
+  }, []);
+
+  const throttled = useRef(
+    throttle((newValue, scrollTop) => {
+      setScrollTop(newValue);
+      // TODO: 이거 저장 현재 퍼센트 매우매우 중요
+      // const scrollPercent = newValue / (totalUrls.length * 50);
+      const diff = newValue - scrollTop; //음수면 위로 양수면 아래로
+      diff > 0 ? setIsScroll(true) : setIsScroll(false);
+    }, 500)
+  );
+
+  const onScroll = useCallback(
+    (e) => throttled.current(e.target.scrollTop, scrollTop),
+    [scrollTop]
+  );
 
   return (
     <FolderLeftBoxEl>
@@ -53,7 +101,19 @@ const FolderLeftBox = () => {
         <SearchBar onChange={onChange} keyword={keyword} />
       </TitleWrapper>
       <GridBox onScroll={onScroll} ref={scrollRef}>
-        <Marker isScroll={isScroll} onClick={handleScrollUp} />
+        {testData.map((folder, index) => (
+          <FolderItem
+            folderName={folder.folderName}
+            key={folder.id}
+            index={index}
+          />
+        ))}
+        <Marker
+          isScroll={isScroll}
+          onClick={handleScrollUp}
+          notHoverColor="#e6c7b675"
+          hoverColor="#e6c7b6"
+        />
       </GridBox>
     </FolderLeftBoxEl>
   );

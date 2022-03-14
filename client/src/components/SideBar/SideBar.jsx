@@ -3,6 +3,7 @@ import styled from "styled-components";
 import {
   HiOutlineDocumentAdd,
   HiOutlineDocumentRemove,
+  HiOutlineFolder,
   HiOutlineFolderAdd,
   HiOutlineFolderRemove,
 } from "react-icons/hi";
@@ -222,10 +223,9 @@ const NormalModeItems = () => {
       <Item name="수정하기" onClick={onClickEdit}>
         <CgEditBlackPoint />
       </Item>
-
       <TagWrapper onClick={onClickFolder}>
         <Item name="폴더설정">
-          <HiOutlineFolderAdd />
+          <HiOutlineFolder />
         </Item>
       </TagWrapper>
 
@@ -296,6 +296,7 @@ const EditModeItems = () => {
 const FolderModeItems = () => {
   const setMode = useMode().setMode;
   const onClickBack = () => setMode(constants.NORMAL);
+  const onClickEdit = () => {};
 
   return (
     <EditWrapper>
@@ -307,6 +308,9 @@ const FolderModeItems = () => {
       </Item>
       <Item name="삭제하기">
         <HiOutlineFolderRemove />
+      </Item>
+      <Item name="수정하기" onClick={onClickEdit}>
+        <CgEditBlackPoint />
       </Item>
     </EditWrapper>
   );
