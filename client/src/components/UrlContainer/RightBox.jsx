@@ -2,6 +2,7 @@ import { throttle } from "lodash";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useCallback } from "react";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 
@@ -266,7 +267,11 @@ const FolderMode = ({ isScroll, handleScrollUp }) => {
 };
 
 const FolderEditUrlMode = ({ isScroll, handleScrollUp }) => {
-  const folderContents = useFolder().currentFolder.folder_contents;
+  const currentFolder = useFolder().currentFolder;
+  // const totalUrls = useUrl().url.totalUrls;
+
+  const folderContents = currentFolder.folder_contents;
+
   // folder_contents
   const [loading, setLoading] = useState(true);
   useEffect(() => {

@@ -24,6 +24,8 @@ const ItemContainer = ({ urls }) => {
   const setMode = useMode().setMode;
   const handleSetEditUrl = useUrl().handleSetEditUrl;
   const folderUrlIds = useFolder().folderUrlIds;
+  const handleAddFolderEditUrl = useFolder().handleAddFolderEditUrl;
+  const handleRemoveFolderEditUrl = useFolder().handleRemoveFolderEditUrl;
 
   // 무한스크롤
   const getNextItems = async () => {
@@ -49,18 +51,26 @@ const ItemContainer = ({ urls }) => {
   const deleteClick = (url) => {
     if (deleteUrlIds.includes(url._id)) {
       handleSetCurrentUrl({ ...url, isNewItem: false });
-
       setTimeout(() => handleRemoveDeleteUrl(url._id), 200);
     }
 
     if (!deleteUrlIds.includes(url._id)) {
-      handleAddDeleteUrl(url);
       handleSetCurrentUrl({ ...url, isNewItem: true });
+      handleAddDeleteUrl(url);
     }
   };
 
   const folderEditUrlClick = (url) => {
-    console.log(url);
+    // 있으면 삭제
+    if (folderUrlIds.includes(url._id)) {
+      handleSetCurrentUrl({ ...url, isNewItem: false });
+      setTimeout(() => handleRemoveFolderEditUrl(url), 200);
+    }
+    // folderUrlIds안에 없으면 추가
+    if (!folderUrlIds.includes(url._id)) {
+      handleSetCurrentUrl({ ...url, isNewItem: true });
+      handleAddFolderEditUrl(url);
+    }
   };
 
   const onClickUrl = (url) => {

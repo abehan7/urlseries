@@ -85,6 +85,22 @@ export const FolderProvider = ({ children }) => {
   //FIXME: 폴더에서만 사용되는 함수
   const handleSetCurrentFolder = (folder) => setCurrentFolder(folder);
 
+  // 현재 선택한 폴더에 url추가
+  const handleAddFolderEditUrl = (url) => {
+    //folderContainer에 넣어야돼
+    if (folderUrlIds.includes(url._id)) return;
+    const update = [url, ...currentFolder.folder_contents];
+    setCurrentFolder({ ...currentFolder, folder_contents: update });
+  };
+  // 현재 선택한 폴더에 url삭제
+  const handleRemoveFolderEditUrl = (url) => {
+    if (!folderUrlIds.includes(url._id)) return;
+    const update = currentFolder.folder_contents.filter(
+      (item) => item._id !== url._id
+    );
+    setCurrentFolder({ ...currentFolder, folder_contents: update });
+  };
+
   // FIXME: 메타태그 + 폴더태그 아이템 useEffect
 
   useEffect(() => {
@@ -99,6 +115,8 @@ export const FolderProvider = ({ children }) => {
 
   // FIXME: 폴더에서만 사용되는 useEffect
   // 폴더 아이템 클릭시 폴더 아이템 아이디를 배열에 추가
+  // 여기는 어처피 자동으로 추가되니까 useEffect써서
+  // 내가 신경쓸 부분은 currentFolder에서 가져오는 것
   useEffect(() => {
     const currentFolderUrlIds = currentFolder?.folder_contents?.map((url) => {
       return url._id;
@@ -113,6 +131,8 @@ export const FolderProvider = ({ children }) => {
     folderUrlIds,
     handleSetCombinedItemLoading,
     handleSetCurrentFolder,
+    handleAddFolderEditUrl,
+    handleRemoveFolderEditUrl,
   };
 
   return (
