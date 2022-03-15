@@ -11,8 +11,7 @@ import Marker from "../UrlContainer/Marker";
 import { ItemConatiner } from "../UrlContainer/styled/ItemContainer";
 import { Title } from "../UrlContainer/styled/Title.styled";
 import { TitleWrapper } from "../UrlContainer/styled/TitleWrapper.styled";
-import FolderItem from "./FolderItem";
-import ItemContainer from "./ItemContainer";
+import FolderItemContainer from "./FolderItemContainer";
 
 const TitleEl = styled(Title)`
   @keyframes jaehee {
@@ -54,20 +53,6 @@ const GridBox = styled(ItemConatiner)`
 `;
 const FolderLeftBoxEl = styled(LeftBoxEl)``;
 
-const testData = [
-  { folderName: "pedrtech_a", id: "a" },
-  { folderName: "pedrtech_b", id: "b" },
-  { folderName: "pedrtech_c", id: "c" },
-  { folderName: "pedrtech_d", id: "d" },
-  { folderName: "pedrtech_e", id: "e" },
-  { folderName: "pedrtech_f", id: "f" },
-  { folderName: "pedrtech_g", id: "g" },
-  { folderName: "pedrtech_h", id: "h" },
-  { folderName: "pedrtech_i", id: "i" },
-  { folderName: "pedrtech_j", id: "j" },
-  { folderName: "pedrtech_k", id: "k" },
-];
-
 const FolderLeftBox = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [keyword, setKeyword] = useState("");
@@ -106,7 +91,7 @@ const FolderLeftBox = () => {
         <SearchBar onChange={onChange} keyword={keyword} />
       </TitleWrapper>
       <GridBox onScroll={onScroll} ref={scrollRef}>
-        <ItemContainer folders={folders} />
+        <FolderItemContainer folders={folders} type="SQUARE" />
         <Marker
           isScroll={isScroll}
           onClick={handleScrollUp}

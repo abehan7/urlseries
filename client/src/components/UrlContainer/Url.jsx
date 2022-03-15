@@ -24,7 +24,7 @@ const Img = styled.img`
   vertical-align: middle;
 `;
 
-const Text = styled.span`
+export const Text = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -34,7 +34,7 @@ const Text = styled.span`
   word-wrap: break-word;
 `;
 
-const TextWrapper = styled.div`
+export const TextWrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
@@ -114,7 +114,7 @@ const UrlEl = styled.div`
   }
 `;
 
-const Index = styled.div`
+export const Index = styled.div`
   position: absolute;
   top: 101%;
   right: 0.4rem;

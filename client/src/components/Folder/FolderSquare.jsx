@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 import { FcFolder } from "react-icons/fc";
-const FolderItemEl = styled.div`
+import { Index } from "../UrlContainer/Url";
+
+const IndexEl = styled(Index)``;
+const FolderSquareEl = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
@@ -78,6 +81,7 @@ const PadidngWrapper = styled.div`
 
 const DescPaddingWrapper = styled(PaddingWrapper)`
   flex: 1;
+  position: relative;
 `;
 
 const Title = styled.div`
@@ -103,7 +107,7 @@ const Text = styled.span`
 `;
 
 const text = `this is a pedrotech 123123 this is a pedrotecasdsadasdasdh 123123thi `;
-const FolderItem = ({
+const FolderSquare = ({
   folderName,
   id,
   totalFolderNum,
@@ -112,9 +116,8 @@ const FolderItem = ({
   onClick,
   onClickStar,
 }) => {
-  // const isLiked = index % 2 === 0;
   return (
-    <FolderItemEl>
+    <FolderSquareEl>
       <ItemWrapper>
         <TopWrapper>
           <FolderIcon>
@@ -129,18 +132,21 @@ const FolderItem = ({
           <Desc>
             <Text>{text}</Text>
           </Desc>
+          <IndexEl>
+            {totalFolderNum - index}/{totalFolderNum}
+          </IndexEl>
         </DescPaddingWrapper>
       </ItemWrapper>
-    </FolderItemEl>
+    </FolderSquareEl>
   );
 };
 
-export default FolderItem;
+export default FolderSquare;
 
-const Liked = () => {
+export const Liked = () => {
   return <LikeTextWrapper>Liked</LikeTextWrapper>;
 };
 
-const NotLiked = () => {
+export const NotLiked = () => {
   return <NotLikedWrapper>Like</NotLikedWrapper>;
 };

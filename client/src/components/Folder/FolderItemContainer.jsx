@@ -2,9 +2,13 @@ import React from "react";
 import { useState } from "react";
 import { InfiniteScroll } from "../Utils/InfiniteScroll/InfiniteScroll";
 import Loader from "../Utils/Loader/Loader";
-import FolderItem from "./FolderItem";
+import FolderSquare from "./FolderSquare";
+import FolderStick from "./FolderStick";
 
-const ItemContainer = ({ folders }) => {
+const STICK = "STICK";
+const SQUARE = "SQUARE";
+
+const FolderItemContainer = ({ folders, type }) => {
   const [contentsNum, setContentsNum] = useState(50);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -24,11 +28,9 @@ const ItemContainer = ({ folders }) => {
   const onClick = () => {};
   const _onClickStar = () => {};
 
-  return folders.map((folder, index) => {
-    if (index === contentsNum - 1)
-      return <Loader key={"thisIsLoader"} target={setTarget} />;
-    return (
-      <FolderItem
+  const SquareMap = (folder, index) =>
+    type === SQUARE && (
+      <FolderSquare
         key={folder._id}
         folderName={folder.folder_name}
         id={folder._id}
@@ -39,7 +41,30 @@ const ItemContainer = ({ folders }) => {
         onClickStar={_onClickStar}
       />
     );
+
+  const StickMap = (folder, index) =>
+    type === STICK && (
+      <FolderStick
+        title={folder.folder_name}
+        id={folder._id}
+        index={index}
+        totalUrlNum={folders.length}
+        isLiked={folder.like}
+        onClick={onClick}
+        onClickStar={_onClickStar}
+      />
+    );
+
+  return filterdItems.map((folder, index) => {
+    if (index === contentsNum - 1)
+      return <Loader key={"thisIsLoader"} target={setTarget} />;
+    return (
+      <>
+        {SquareMap(folder, index)}
+        {StickMap(folder, index)}
+      </>
+    );
   });
 };
 
-export default ItemContainer;
+export default FolderItemContainer;

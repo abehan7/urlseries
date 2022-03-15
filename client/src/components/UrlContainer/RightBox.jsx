@@ -3,10 +3,13 @@ import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useRef } from "react";
+import { useSelector } from "react-redux";
 
 import styled from "styled-components";
 import { constants, normalModeList, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
+import { getFolders } from "../../store/reducers/Folders";
+import FolderItemContainer from "../Folder/FolderItemContainer";
 import Loader from "../Utils/Loader/Loader";
 import LoadingCenter from "../Utils/Loader/LoaderCenter";
 import ItemContainer from "./ItemContainer";
@@ -223,14 +226,18 @@ const FolderMode = ({ isScroll, handleScrollUp }) => {
     return () => clearTimeout(timer);
   });
 
-  const folders = [];
+  const folders = useSelector(getFolders);
+  const likedFolders = folders.filter((folder) => folder.like);
 
   return (
     <>
       {/* 로딩창 */}
       {loading && <LoadingCenter />}
       {/* 북마크 없을 때 */}
-      {!loading && folders.length === 0 && <NoUrl />}
+      {!loading && likedFolders.length !== 0 && (
+        <FolderItemContainer folders={likedFolders} type="STICK" />
+      )}
+      {!loading && likedFolders.length === 0 && <NoUrl />}
       <Marker isScroll={isScroll} onClick={handleScrollUp} />
     </>
   );
