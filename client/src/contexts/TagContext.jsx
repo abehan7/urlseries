@@ -35,7 +35,7 @@ export const TagProvider = ({ children }) => {
       return tag.name !== _tag.name;
     });
     setHashtag({ ...hashtag, assignedHashtags: filterd });
-    console.log(filterd);
+    console.log("filterd : ", filterd);
   };
 
   const getTotalTags = () => {

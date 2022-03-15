@@ -246,30 +246,24 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
   const totalHashtags = useTag().getTotalTags();
   const addAssignedTag = useTag().addAssignedTag;
   const removeAssignedTag = useTag().removeAssignedTag;
+  const assignedHashtags = useTag().hashtag.assignedHashtags;
 
-  console.log(totalHashtags);
+  const assignedTagsNames = assignedHashtags.map((tag) => tag.name);
 
   //태그 클릭시 추가,제거 로직
 
   const onClickTag = (tag) => {
-    const unClick = () => {
-      removeAssignedTag(tag);
-    };
-    const click = () => {
-      addAssignedTag(tag);
-    };
+    const unClick = () => removeAssignedTag(tag);
 
-    tag.assigned === 0 && click();
-    tag.assigned === 1 && unClick();
+    const click = () => addAssignedTag(tag);
+
+    !assignedTagsNames.includes(tag.name) && click();
+    assignedTagsNames.includes(tag.name) && unClick();
+
+    console.log("clicktag : ", tag);
   };
 
   //검색 로직
-
-  // const _getFilterdHash = () => {
-  //   const pKeyword = KeywordNormalize(keyword);
-  //   const filterd = SearchNotByDB(pKeyword, totalHashtags);
-  //   handleSetFilterHashs
-  // };
 
   const onChange = async (e) => {
     const searchWord = e.target.value;
@@ -283,10 +277,6 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
     } else {
       setKeyword(hashFilter);
     }
-
-    // const _keyword = e.target.value;
-    // setKeyword(_keyword);
-    // console.log(_keyword);
   };
 
   return (
@@ -303,11 +293,10 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
       />
       <Label htmlFor="text1">HASHTAG</Label>
 
-      {keyword.length != 0 && (
+      {keyword.length !== 0 && (
         <SearchedTagsContainer isInputClicked={isInputClicked}>
           {keyword.map((tag, index) => {
-            // const isClicked = index % 2 === 0;
-            const isClicked = tag.assigned === 1;
+            const isClicked = assignedTagsNames.includes(tag.name);
 
             return (
               <TagWrapper
@@ -330,7 +319,6 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
 
 const BottomBox = () => {
   const selectedTagsData = useTag().hashtag.assignedHashtags;
-  console.log(selectedTagsData);
   const removeAssignedTag = useTag().removeAssignedTag;
   const onClickHash = (tag) => {
     removeAssignedTag(tag);
