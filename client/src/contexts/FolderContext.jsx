@@ -34,7 +34,7 @@ export const FolderProvider = ({ children }) => {
   const totalUrls = useUrl().url.totalUrls;
   const isClicked = useSelector(getIsClicked);
   const getResetCurrentUrl = useUrl().getResetCurrentUrl;
-  const handleSetFilterdUrls = useUrl().handleSetFilterdUrls;
+
   const mode = useMode().mode;
 
   // FIXME: 메타태그 + 폴더태그 아이템 함수들

@@ -19,9 +19,13 @@ import {
 } from "../../contexts/ModeContext.jsx";
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
 import { useUrl } from "../../contexts/UrlContext.jsx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getToken } from "../../redux/ReducersT/tokenReducer.js";
 import { useFolder } from "../../contexts/FolderContext.jsx";
+import {
+  getFolders,
+  SET_FOLDER_CONTENTS,
+} from "../../store/reducers/Folders.js";
 
 // import {} from "react-icons"
 
@@ -381,13 +385,24 @@ const FolderModeItems = () => {
 };
 
 const FolderEditModeItems = () => {
+  const dispatch = useDispatch();
   const setMode = useMode().setMode;
   const handleAddFolderEditUrlList = useFolder().handleAddFolderEditUrlList;
   const handleResetFolderEditUrl = useFolder().handleResetFolderEditUrl;
   const filterdUrls = useUrl().url.filterdUrls;
   const totalUrls = useUrl().url.totalUrls;
+  const currentFolder = useFolder().currentFolder;
+
+  // console.log(currentFolder);
+
   const onClickBack = () => setMode(constants.FOLDER);
-  const onClickEdit = () => {};
+  const onClickEdit = () => {
+    const update = {
+      folderId: currentFolder._id,
+      urls: currentFolder.folder_contents,
+    };
+    dispatch(SET_FOLDER_CONTENTS(update));
+  };
   const onClickAll = () => {
     // console.log(filterdUrls);
     // 검색 하나라도 했을 때만 실행
