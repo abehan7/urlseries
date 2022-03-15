@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { FcFolder } from "react-icons/fc";
 import styled from "styled-components";
+import Colors from "../../assets/Colors";
 import { useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 import { Icon, Index, Text, TextWrapper } from "../UrlContainer/Url";
@@ -47,9 +48,9 @@ const FolderStickEl = styled.div`
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   :hover {
-    background-color: #e6c7b675;
+    background-color: ${Colors.BgPurple};
     ${Line} {
-      background-color: #e0a47b;
+      background-color: ${Colors.BarPurple};
     }
   }
 `;

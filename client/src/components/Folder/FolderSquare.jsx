@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import styled from "styled-components";
 import { FcFolder } from "react-icons/fc";
 import { Index } from "../UrlContainer/Url";
+import Colors from "../../assets/Colors";
 
 const IndexEl = styled(Index)``;
 const FolderSquareEl = styled.div`
@@ -30,7 +31,7 @@ const ItemWrapper = styled.div`
   flex-direction: column;
 
   :hover {
-    background-color: #e6c7b675;
+    background-color: ${Colors.BgPurple};
     /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
   }
 `;

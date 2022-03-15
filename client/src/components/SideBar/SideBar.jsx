@@ -358,6 +358,7 @@ const EditModeItems = () => {
 
 const FolderModeItems = () => {
   const setMode = useMode().setMode;
+
   const onClickBack = () => setMode(constants.NORMAL);
   const onClickEdit = () => {};
 
@@ -372,7 +373,7 @@ const FolderModeItems = () => {
       <Item name="삭제하기">
         <HiOutlineFolderRemove />
       </Item>
-      <Item name="수정하기" onClick={onClickEdit}>
+      <Item name="수정하기">
         <CgEditBlackPoint />
       </Item>
     </TapsWrapper>
@@ -381,10 +382,20 @@ const FolderModeItems = () => {
 
 const FolderEditModeItems = () => {
   const setMode = useMode().setMode;
+  const handleAddFolderEditUrlList = useFolder().handleAddFolderEditUrlList;
+  const handleResetFolderEditUrl = useFolder().handleResetFolderEditUrl;
+  const filterdUrls = useUrl().url.filterdUrls;
+  const totalUrls = useUrl().url.totalUrls;
   const onClickBack = () => setMode(constants.FOLDER);
   const onClickEdit = () => {};
-  const onClickAll = () => {};
-  const onUnClickAll = () => {};
+  const onClickAll = () => {
+    // console.log(filterdUrls);
+    // 검색 하나라도 했을 때만 실행
+    filterdUrls.length !== 0 && handleAddFolderEditUrlList(filterdUrls);
+    // 검색도 안하고 태그도 클릭 안했을 때
+    filterdUrls.length === 0 && handleAddFolderEditUrlList(totalUrls);
+  };
+  const onUnClickAll = () => handleResetFolderEditUrl();
   return (
     <TapsWrapper>
       <Item name="뒤로가기" onClick={onClickBack}>

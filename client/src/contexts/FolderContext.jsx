@@ -9,8 +9,10 @@ import {
   getFolderTagItems,
   getIsClicked,
   getMetaTagItems,
+  RESET_TAGS,
 } from "../store/reducers/Tags";
 import { duplicateUrlChecker } from "../components/Utils/Urls/checkDuplicate";
+import { constants, useMode } from "./ModeContext";
 
 const FolderContext = createContext();
 
@@ -31,6 +33,9 @@ export const FolderProvider = ({ children }) => {
   const folderTagItems = useSelector(getFolderTagItems);
   const totalUrls = useUrl().url.totalUrls;
   const isClicked = useSelector(getIsClicked);
+  const getResetCurrentUrl = useUrl().getResetCurrentUrl;
+  const handleSetFilterdUrls = useUrl().handleSetFilterdUrls;
+  const mode = useMode().mode;
 
   // FIXME: 메타태그 + 폴더태그 아이템 함수들
   const getMetaTagUrls = () => {
@@ -101,6 +106,19 @@ export const FolderProvider = ({ children }) => {
     setCurrentFolder({ ...currentFolder, folder_contents: update });
   };
 
+  // 현재 선택한 폴더에 urlList추가
+  const handleAddFolderEditUrlList = (newUrls) => {
+    const duplicatedList = [...newUrls, ...currentFolder.folder_contents];
+    const filterd = duplicateUrlChecker(duplicatedList);
+    getResetCurrentUrl();
+    setCurrentFolder({ ...currentFolder, folder_contents: filterd });
+  };
+
+  // 현재 선택한 폴더 url들 전체삭제
+  const handleResetFolderEditUrl = () => {
+    setCurrentFolder({ ...currentFolder, folder_contents: [] });
+    getResetCurrentUrl();
+  };
   // FIXME: 메타태그 + 폴더태그 아이템 useEffect
 
   useEffect(() => {
@@ -124,6 +142,9 @@ export const FolderProvider = ({ children }) => {
     setFolderUrlIds(currentFolderUrlIds);
   }, [currentFolder]);
 
+  // 모드가 폴더면 해시태그 클릭된거 전체 초기화
+  useEffect(() => mode === constants.FOLDER && dispatch(RESET_TAGS()), [mode]);
+
   const value = {
     loading,
     combinedTagItems,
@@ -133,6 +154,8 @@ export const FolderProvider = ({ children }) => {
     handleSetCurrentFolder,
     handleAddFolderEditUrl,
     handleRemoveFolderEditUrl,
+    handleAddFolderEditUrlList,
+    handleResetFolderEditUrl,
   };
 
   return (

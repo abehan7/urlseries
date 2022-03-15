@@ -11,5 +11,7 @@ const Colors = {
   Yellow: "#fbb917",
   DarkBrown: "#e0a47b",
   LightBrown: "#e6c7b675",
+  BgPurple: "#a597fe1a",
+  BarPurple: "#c282ff",
 };
 export default Colors;

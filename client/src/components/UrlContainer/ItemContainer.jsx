@@ -149,8 +149,8 @@ const ItemContainer = ({ urls }) => {
             totalUrlNum={urls.length}
             onClick={onClick}
             isDeleteUrl={isFolderUrl}
-            backgroundColor={Colors.LightBrown}
-            barColor={Colors.DarkBrown}
+            backgroundColor={Colors.BgPurple}
+            barColor={Colors.BarPurple}
           />
         )}
       </>

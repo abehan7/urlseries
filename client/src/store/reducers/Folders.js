@@ -41,6 +41,7 @@ export const folderSlice = createSlice({
       const folder = state.folders.find((folder) => folder._id === folderId);
       folder.folder_contents = [...urlId, ...folder.folder_contents];
     },
+
     REMOVE_CONTENT: (state, action) => {
       const { folderId, urlId } = action.payload;
       const folder = state.folders.find((folder) => folder._id === folderId);
