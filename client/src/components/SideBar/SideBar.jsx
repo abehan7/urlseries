@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import {
   HiOutlineDocumentAdd,
@@ -7,6 +7,8 @@ import {
   HiOutlineFolderAdd,
   HiOutlineFolderRemove,
 } from "react-icons/hi";
+import { FcFolder } from "react-icons/fc";
+
 import { CgBackspace, CgEditBlackPoint, CgHashtag } from "react-icons/cg";
 import Footer from "../Footer/Footer.jsx";
 import {
@@ -19,6 +21,7 @@ import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
 import { useUrl } from "../../contexts/UrlContext.jsx";
 import { useSelector } from "react-redux";
 import { getToken } from "../../redux/ReducersT/tokenReducer.js";
+import { useFolder } from "../../contexts/FolderContext.jsx";
 
 // import {} from "react-icons"
 
@@ -181,24 +184,65 @@ const FolderWrapper = styled(TapsWrapper)`
   }
 `;
 
+const FolderIcon = styled.div`
+  font-size: 1.7rem;
+`;
+
 const SideBar = () => {
   const mode = useMode().mode;
+
+  // const currentFolder = useFolder().currentFolder;
+  const folderTitle = useFolder().currentFolder?.folder_name;
+
+  // console.log(currentFolder);
+
+  const NormalModeTaps = () =>
+    sidebarNormalModeList.includes(mode) && <NormalModeItems />;
+
+  const DeleteModeTaps = () => constants.DELETE === mode && <DeleteModeItems />;
+
+  const EditModeTaps = () =>
+    sidebarEditModeList.includes(mode) && <EditModeItems />;
+
+  const FolderTaps = () => constants.FOLDER === mode && <FolderModeItems />;
+
+  const FolderEditUrlTaps = () =>
+    constants.FOLDER_EDIT_URL === mode && <FolderEditModeItems />;
+
+  const folderIconList = [constants.FOLDER, constants.FOLDER_EDIT_URL];
+  const FolderIconImg = () =>
+    folderIconList.includes(mode) && (
+      <FolderIcon>
+        <FcFolder />
+      </FolderIcon>
+    );
+
+  const FaviconImg = () =>
+    !folderIconList.includes(mode) && (
+      <Img src="img/logotest2.png" alt="logoImage" />
+    );
 
   return (
     <SideBarEl>
       <FaviconWrapper>
         <FaviconContainer>
           <ImgWrapper>
-            <Img src="img/logotest2.png" alt="logoImage" />
-            <Ment>Welcome!</Ment>
+            {FolderIconImg()}
+            {FaviconImg()}
+            <Ment>
+              {constants.FOLDER === mode && "Folder"}
+              {constants.FOLDER_EDIT_URL === mode && folderTitle}
+              {!folderIconList.includes(mode) && "Welcome!"}
+            </Ment>
           </ImgWrapper>
         </FaviconContainer>
       </FaviconWrapper>
       {/* 탭 맵핑 */}
-      {sidebarNormalModeList.includes(mode) && <NormalModeItems />}
-      {constants.DELETE === mode && <DeleteModeItems />}
-      {sidebarEditModeList.includes(mode) && <EditModeItems />}
-      {constants.FOLDER === mode && <FolderModeItems />}
+      {NormalModeTaps()}
+      {DeleteModeTaps()}
+      {EditModeTaps()}
+      {FolderTaps()}
+      {FolderEditUrlTaps()}
       <Footer />
     </SideBarEl>
   );
@@ -318,7 +362,7 @@ const FolderModeItems = () => {
   const onClickEdit = () => {};
 
   return (
-    <FolderWrapper>
+    <TapsWrapper>
       <Item name="뒤로가기" onClick={onClickBack}>
         <CgBackspace />
       </Item>
@@ -331,6 +375,34 @@ const FolderModeItems = () => {
       <Item name="수정하기" onClick={onClickEdit}>
         <CgEditBlackPoint />
       </Item>
-    </FolderWrapper>
+    </TapsWrapper>
+  );
+};
+
+const FolderEditModeItems = () => {
+  const setMode = useMode().setMode;
+  const onClickBack = () => setMode(constants.FOLDER);
+  const onClickEdit = () => {};
+  const onClickAll = () => {};
+  const onUnClickAll = () => {};
+  return (
+    <TapsWrapper>
+      <Item name="뒤로가기" onClick={onClickBack}>
+        <CgBackspace />
+      </Item>
+      <Item name="수정하기" onClick={onClickEdit}>
+        <CgEditBlackPoint />
+      </Item>
+      <TagWrapper>
+        <Item name="전체선택" onClick={onClickAll}>
+          <MdRadioButtonChecked />
+        </Item>
+      </TagWrapper>
+      <TagWrapper>
+        <Item name="전체해제" onClick={onUnClickAll}>
+          <MdRadioButtonUnchecked />
+        </Item>
+      </TagWrapper>
+    </TapsWrapper>
   );
 };

@@ -6,6 +6,8 @@ import { constants, normalModeList, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 import { useEffect } from "react";
 import DeleteUrl from "../DeleteUrl/DeleteUrl";
+import { useFolder } from "../../contexts/FolderContext";
+import Colors from "../../assets/Colors";
 
 const ItemContainer = ({ urls }) => {
   const [contentsNum, setContentsNum] = useState(50);
@@ -21,6 +23,7 @@ const ItemContainer = ({ urls }) => {
   const handleRemoveDeleteUrl = useUrl().handleRemoveDeleteUrl;
   const setMode = useMode().setMode;
   const handleSetEditUrl = useUrl().handleSetEditUrl;
+  const folderUrlIds = useFolder().folderUrlIds;
 
   // 무한스크롤
   const getNextItems = async () => {
@@ -56,10 +59,15 @@ const ItemContainer = ({ urls }) => {
     }
   };
 
+  const folderEditUrlClick = (url) => {
+    console.log(url);
+  };
+
   const onClickUrl = (url) => {
     constants.NORMAL === mode && normalClick(url);
     constants.EDIT === mode && editClick(url);
     constants.DELETE === mode && deleteClick(url);
+    constants.FOLDER_EDIT_URL === mode && folderEditUrlClick(url);
   };
 
   const onClickStar = async (url) => {
@@ -89,6 +97,11 @@ const ItemContainer = ({ urls }) => {
     const isDeleteUrl =
       mode === constants.DELETE ? deleteUrlIds.includes(url._id) : null;
 
+    const isFolderUrl =
+      mode === constants.FOLDER_EDIT_URL
+        ? folderUrlIds?.includes(url._id)
+        : null;
+
     return (
       <>
         {normalModeList.includes(mode) && (
@@ -114,6 +127,20 @@ const ItemContainer = ({ urls }) => {
             totalUrlNum={urls.length}
             onClick={onClick}
             isDeleteUrl={isDeleteUrl}
+          />
+        )}
+        {mode === constants.FOLDER_EDIT_URL && (
+          <DeleteUrl
+            url={url.url}
+            title={url.url_title}
+            key={url._id}
+            id={url._id}
+            index={index}
+            totalUrlNum={urls.length}
+            onClick={onClick}
+            isDeleteUrl={isFolderUrl}
+            backgroundColor={Colors.LightBrown}
+            barColor={Colors.DarkBrown}
           />
         )}
       </>

@@ -140,16 +140,9 @@ const Url = ({
 
   const onClickUrl = async (e) => {
     // 별 누르면 클릭 안되게하기
-    const svg = starWrapRef?.current?.querySelector("svg");
-    const path = svg?.querySelector("path");
-    const blackList = [path, svg, starWrapRef.current];
-    if (blackList?.includes(e.target)) return false;
-
+    if (starWrapRef.current.contains(e.target)) return;
     // whiteList.includes(mode) && nomalModeFn();
-    // 노멀모드일때
-
     onClick();
-    // 삭제모드일때
   };
 
   const classNameMethod = {

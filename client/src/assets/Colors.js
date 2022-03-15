@@ -9,5 +9,7 @@ const Colors = {
   White: "#fafafa",
   Blue: "#00B4D8",
   Yellow: "#fbb917",
+  DarkBrown: "#e0a47b",
+  LightBrown: "#e6c7b675",
 };
 export default Colors;

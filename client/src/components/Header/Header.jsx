@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import styled, { css } from "styled-components";
 import { useUrl } from "../../contexts/UrlContext";
 import { useEffect } from "react";
+import { constants, useMode } from "../../contexts/ModeContext";
 
 const DropdownBtn = styled.div`
   background-color: transparent;
@@ -89,6 +90,7 @@ function Header() {
   const { user, isLogged } = auth;
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
+  const setMode = useMode().setMode;
 
   const onClickDropDown = () => setIsOpen(!isOpen);
   const handleFoldUpDropDown = () => setIsOpen(false);
@@ -111,14 +113,13 @@ function Header() {
 
   const windowClick = (e) => {
     if (!isOpen) return;
-    if (ref.current.contains(e.target)) {
-      return;
-    }
-    console.log("click");
+    if (ref.current.contains(e.target)) return;
     setIsOpen(false);
     // if (e.target.id !== "dropdown-btn") {
     // }
   };
+
+  const onClickLogo = () => setMode(constants.NORMAL);
 
   useEffect(() => {
     window.addEventListener("click", windowClick);
@@ -157,12 +158,7 @@ function Header() {
     <HeaderEl>
       <div className="logo">
         <h1>
-          <Link to="/">
-            {/* <img
-              className="logoImage"
-              src="img/logotest2.png"
-              alt="logoImage"
-            /> */}
+          <Link to="/" onClick={onClickLogo}>
             <p>Urlseries</p>
           </Link>
         </h1>

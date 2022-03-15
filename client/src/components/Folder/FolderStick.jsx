@@ -67,18 +67,20 @@ const FolderStick = ({
   totalUrlNum,
   isLiked,
   onClick,
-  onClickStar,
+  handleClickStar,
 }) => {
-  // const starWrapRef = useRef(null);
+  const ref = useRef(null);
   const currentUrl = useUrl().currentUrl;
   const mode = useMode().mode;
 
-  const onClickUrl = async (e) => {
+  const onClickFolder = async (e) => {
     // 별 누르면 클릭 안되게하기
-    // if (starWrapRef.current.contains(e.target)) return;
+    if (ref.current.contains(e.target)) return;
     onClick();
     // 삭제모드일때
   };
+
+  const onClickStar = () => handleClickStar(id);
 
   const classNameMethod = {
     isNewItem: () => {
@@ -91,7 +93,7 @@ const FolderStick = ({
   return (
     <FolderStickEl
       key={id}
-      onClick={onClickUrl}
+      onClick={onClickFolder}
       className={classNameMethod.isNewItem()}
       mode={mode}
     >
@@ -103,7 +105,9 @@ const FolderStick = ({
         <Text>{title}</Text>
       </TextWrapper>
 
-      <LikedIcon>{isLiked ? <Liked /> : <NotLiked />}</LikedIcon>
+      <LikedIcon onClick={onClickStar} ref={ref}>
+        {isLiked ? <Liked /> : <NotLiked />}
+      </LikedIcon>
 
       <Index>
         {totalUrlNum - index}/{totalUrlNum}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import styled from "styled-components";
 import { FcFolder } from "react-icons/fc";
 import { Index } from "../UrlContainer/Url";
@@ -114,16 +114,25 @@ const FolderSquare = ({
   index,
   isLiked,
   onClick,
-  onClickStar,
+  handleClickStar,
 }) => {
+  const ref = useRef(null);
+  const onClickFolder = (e) => {
+    if (ref.current.contains(e.target)) return;
+    onClick();
+  };
+  const onClickStar = () => handleClickStar(id);
+
   return (
-    <FolderSquareEl>
+    <FolderSquareEl onClick={onClickFolder}>
       <ItemWrapper>
         <TopWrapper>
           <FolderIcon>
             <FcFolder />
           </FolderIcon>
-          <LikedIcon>{isLiked ? <Liked /> : <NotLiked />}</LikedIcon>
+          <LikedIcon ref={ref} onClick={onClickStar}>
+            {isLiked ? <Liked /> : <NotLiked />}
+          </LikedIcon>
         </TopWrapper>
         <PadidngWrapper>
           <Title>{folderName}</Title>

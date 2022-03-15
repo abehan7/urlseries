@@ -22,6 +22,8 @@ export const FolderProvider = ({ children }) => {
     urls: [],
     urlIds: [],
   });
+  const [currentFolder, setCurrentFolder] = useState({});
+  const [folderUrlIds, setFolderUrlIds] = useState([]);
   const dispatch = useDispatch();
   const token = useSelector(getToken);
   const folders = useSelector(getFolders);
@@ -81,6 +83,7 @@ export const FolderProvider = ({ children }) => {
   }, [token]);
 
   //FIXME: 폴더에서만 사용되는 함수
+  const handleSetCurrentFolder = (folder) => setCurrentFolder(folder);
 
   // FIXME: 메타태그 + 폴더태그 아이템 useEffect
 
@@ -94,7 +97,23 @@ export const FolderProvider = ({ children }) => {
     console.log("metaTagItems :", metaTagItems);
   }, [metaTagItems]);
 
-  const value = { loading, combinedTagItems, handleSetCombinedItemLoading };
+  // FIXME: 폴더에서만 사용되는 useEffect
+  // 폴더 아이템 클릭시 폴더 아이템 아이디를 배열에 추가
+  useEffect(() => {
+    const currentFolderUrlIds = currentFolder?.folder_contents?.map((url) => {
+      return url._id;
+    });
+    setFolderUrlIds(currentFolderUrlIds);
+  }, [currentFolder]);
+
+  const value = {
+    loading,
+    combinedTagItems,
+    currentFolder,
+    folderUrlIds,
+    handleSetCombinedItemLoading,
+    handleSetCurrentFolder,
+  };
 
   return (
     <FolderContext.Provider value={value}>{children}</FolderContext.Provider>
