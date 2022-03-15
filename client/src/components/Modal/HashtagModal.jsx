@@ -14,6 +14,7 @@ import { RiCheckFill } from "react-icons/ri";
 import { useState } from "react";
 import { useRef } from "react";
 import { useTag } from "../../contexts/TagContext";
+import { KeywordNormalize, SearchNotByDB } from "../Utils/Search";
 
 //FIXME: TopBox
 const Input = styled.input`
@@ -201,6 +202,8 @@ const SelectedItems = styled.div`
   }
 `;
 
+// const debounceFn = debounce((fn, keyword) => fn(keyword), 400);
+
 const HashtagModal = () => {
   const [isInputClicked, setIsInputClicked] = useState(false);
   const TopBoxRef = useRef(null);
@@ -236,18 +239,54 @@ const HashtagModal = () => {
 export default HashtagModal;
 
 const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
+  const [keyword, setKeyword] = useState("");
+
+  //context TagContext 에서 함수 가져와서 사용 useTag().~ 로 가져온다
+
   const totalHashtags = useTag().getTotalTags();
   const addAssignedTag = useTag().addAssignedTag;
   const removeAssignedTag = useTag().removeAssignedTag;
 
   console.log(totalHashtags);
 
+  //태그 클릭시 추가,제거 로직
+
   const onClickTag = (tag) => {
-    const unClick = () => removeAssignedTag(tag);
-    const click = () => addAssignedTag(tag);
+    const unClick = () => {
+      removeAssignedTag(tag);
+    };
+    const click = () => {
+      addAssignedTag(tag);
+    };
 
     tag.assigned === 0 && click();
     tag.assigned === 1 && unClick();
+  };
+
+  //검색 로직
+
+  // const _getFilterdHash = () => {
+  //   const pKeyword = KeywordNormalize(keyword);
+  //   const filterd = SearchNotByDB(pKeyword, totalHashtags);
+  //   handleSetFilterHashs
+  // };
+
+  const onChange = async (e) => {
+    const searchWord = e.target.value;
+    console.log("searchword : ", searchWord);
+    const hashFilter = totalHashtags.filter((tag) => {
+      return tag.name.toLowerCase().includes(searchWord.toLowerCase());
+    });
+
+    if (searchWord === "") {
+      setKeyword("");
+    } else {
+      setKeyword(hashFilter);
+    }
+
+    // const _keyword = e.target.value;
+    // setKeyword(_keyword);
+    // console.log(_keyword);
   };
 
   return (
@@ -257,35 +296,34 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
         autoComplete="off"
         name="url"
         placeholder=" "
-        // onClick={onClickInput}
-        onChange={onClickInput}
+        onClick={onClickInput}
+        onChange={onChange}
         spellCheck="false"
+        keyword={keyword}
       />
       <Label htmlFor="text1">HASHTAG</Label>
-      <SearchedTagsContainer isInputClicked={isInputClicked}>
-        {totalHashtags.map((tag, index) => {
-          // const isClicked = index % 2 === 0;
-          const isClicked = tag.assigned === 1;
-          const selectClicked = () => {
-            if (tag.assigned !== 1) {
-              // isClicked = true;
-            }
-          };
 
-          return (
-            <TagWrapper
-              tag={tag.name}
-              key={index}
-              onClick={() => onClickTag(tag)}
-            >
-              <Tag isClicked={isClicked}>
-                <ClickedIcon>{isClicked && <RiCheckFill />}</ClickedIcon>
-                <Text>{tag.name.slice(1, tag.length).toUpperCase()}</Text>
-              </Tag>
-            </TagWrapper>
-          );
-        })}
-      </SearchedTagsContainer>
+      {keyword.length != 0 && (
+        <SearchedTagsContainer isInputClicked={isInputClicked}>
+          {keyword.map((tag, index) => {
+            // const isClicked = index % 2 === 0;
+            const isClicked = tag.assigned === 1;
+
+            return (
+              <TagWrapper
+                tag={tag.name}
+                key={index}
+                onClick={() => onClickTag(tag)}
+              >
+                <Tag isClicked={isClicked}>
+                  <ClickedIcon>{isClicked && <RiCheckFill />}</ClickedIcon>
+                  <Text>{tag.name.slice(1, tag.length).toUpperCase()}</Text>
+                </Tag>
+              </TagWrapper>
+            );
+          })}
+        </SearchedTagsContainer>
+      )}
     </InputContainerEl>
   );
 };
