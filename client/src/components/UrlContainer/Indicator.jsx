@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
-import ScrollHorizontal from "react-scroll-horizontal";
+// import ScrollHorizontal from "react-scroll-horizontal";
 import { useTag } from "../../contexts/TagContext";
 import {
   MdOutlineKeyboardArrowLeft,
