@@ -199,8 +199,25 @@ const SideBar = () => {
 
   // const currentFolder = useFolder().currentFolder;
   const folderTitle = useFolder().currentFolder?.folder_name;
+  const folderIconList = [
+    constants.FOLDER,
+    constants.FOLDER_EDIT_URL,
+    constants.FOLDER_ADD,
+    constants.FOLDER_DELETE,
+    constants.FOLDER_EDIT,
+    constants.FOLDER_EDIT_MODAL_UP,
+  ];
 
+  const folderNameList = [
+    constants.FOLDER,
+    constants.FOLDER_ADD,
+    constants.FOLDER_DELETE,
+    constants.FOLDER_EDIT,
+    constants.FOLDER_EDIT_MODAL_UP,
+  ];
   // console.log(currentFolder);
+
+  // 북마크 탭
 
   const NormalModeTaps = () =>
     sidebarNormalModeList.includes(mode) && <NormalModeItems />;
@@ -210,12 +227,14 @@ const SideBar = () => {
   const EditModeTaps = () =>
     sidebarEditModeList.includes(mode) && <EditModeItems />;
 
-  const FolderTaps = () => constants.FOLDER === mode && <FolderModeItems />;
+  // 폴더 탭
 
+  const FolderTaps = () => folderNameList.includes(mode) && <FolderModeItems />;
+
+  // 폴더 클릭 후 북마크 탭
   const FolderEditUrlTaps = () =>
     constants.FOLDER_EDIT_URL === mode && <FolderEditModeItems />;
 
-  const folderIconList = [constants.FOLDER, constants.FOLDER_EDIT_URL];
   const FolderIconImg = () =>
     folderIconList.includes(mode) && (
       <FolderIcon>
@@ -235,7 +254,7 @@ const SideBar = () => {
             {FolderIconImg()}
             {FaviconImg()}
             <Ment>
-              {constants.FOLDER === mode && "Folder"}
+              {folderNameList.includes(mode) && "Folder"}
               {constants.FOLDER_EDIT_URL === mode && folderTitle}
               {!folderIconList.includes(mode) && "Welcome!"}
             </Ment>
@@ -387,7 +406,7 @@ const FolderModeItems = () => {
   const setMode = useMode().setMode;
 
   const onClickBack = () => setMode(constants.NORMAL);
-  const onClickAddFolder = () => setMode(constants.ADD_FOLDER);
+  const onClickAddFolder = () => setMode(constants.FOLDER_ADD);
   const onClickEdit = () => {};
 
   return (

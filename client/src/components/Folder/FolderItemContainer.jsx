@@ -20,6 +20,7 @@ const FolderItemContainer = ({ folders, type }) => {
   const setMode = useMode().setMode;
   const handleSetCurrentFolder = useFolder().handleSetCurrentFolder;
   const dispatch = useDispatch();
+  const mode = useMode().mode;
 
   // SET_LIKE
 
@@ -35,10 +36,25 @@ const FolderItemContainer = ({ folders, type }) => {
   InfiniteScroll({ isLoaded, getNextItems, target, stopCondition });
 
   const handleClickStar = (folderId) => dispatch(SET_LIKE(folderId));
-  const onClickFolder = (folder) => {
-    // console.log(folder);
+
+  // 폴더 클릭 할 때 mode에 따라서 클릭 이벤트 다른거 주기
+  // FOLDER일때 onClick
+  const normalClick = (folder) => {
     setMode(constants.FOLDER_EDIT_URL);
     handleSetCurrentFolder(folder);
+  };
+
+  const addClick = () => {
+    console.log("addClick");
+  };
+  const deleteClick = () => {};
+  const editClick = () => {};
+
+  const onClickFolder = (folder) => {
+    mode === constants.FOLDER && normalClick(folder);
+    mode === constants.FOLDER_ADD && addClick(folder);
+    mode === constants.FOLDER_DELETE && deleteClick(folder);
+    mode === constants.FOLDER_EDIT && editClick(folder);
   };
   const SquareMap = (folder, index) => {
     const _onClickFolder = () => onClickFolder(folder);

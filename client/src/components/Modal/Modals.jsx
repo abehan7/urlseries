@@ -19,6 +19,12 @@ const ModalEl = styled.div`
   align-items: center;
   cursor: pointer;
 `;
+
+const AddModalWhiteList = [constants.ADD, constants.EDIT_MODAL_UP];
+const FolderModalWhiteList = [
+  constants.FOLDER_ADD,
+  constants.FOLDER_EDIT_MODAL_UP,
+];
 const Modals = ({ mode }) => {
   const ref = useRef(null);
   const setMode = useMode().setMode;
@@ -38,11 +44,7 @@ const Modals = ({ mode }) => {
       setMode(constants.NORMAL);
   };
   // console.log(mode);
-  const AddModalWhiteList = [constants.ADD, constants.EDIT_MODAL_UP];
-  const FolderModalWhiteList = [
-    constants.FOLDER_ADD,
-    constants.FOLDER_EDIT_MODAL_UP,
-  ];
+
   return (
     <ModalEl onClick={onClickOutside} ref={ref}>
       {/* 북마크 추가 수정 모달 */}

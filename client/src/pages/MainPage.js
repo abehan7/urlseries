@@ -22,6 +22,8 @@ const modalWhiteList = [
   constants.ADD,
   constants.HASHTAG,
   constants.EDIT_MODAL_UP,
+  constants.FOLDER_ADD,
+  constants.FOLDER_EDIT_MODAL_UP,
 ];
 
 const MainPage = () => {

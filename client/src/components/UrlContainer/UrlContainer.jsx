@@ -13,10 +13,18 @@ const UrlContainerEl = styled.div`
 `;
 const UrlContainer = () => {
   const mode = useMode().mode;
+  const FolderLeftBoxWhiteList = [
+    constants.FOLDER_ADD,
+    constants.FOLDER_EDIT,
+    constants.FOLDER_EDIT_MODAL_UP,
+    constants.FOLDER,
+    constants.FOLDER_DELETE,
+  ];
+  // console.log(mode);
   return (
     <UrlContainerEl>
-      {mode === constants.FOLDER && <FolderLeftBox />}
-      {mode !== constants.FOLDER && <LeftBox />}
+      {FolderLeftBoxWhiteList.includes(mode) && <FolderLeftBox />}
+      {!FolderLeftBoxWhiteList.includes(mode) && <LeftBox />}
       <RightBox />
     </UrlContainerEl>
   );

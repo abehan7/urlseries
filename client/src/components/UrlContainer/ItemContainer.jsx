@@ -2,7 +2,12 @@ import { useState } from "react";
 import Loader from "../Utils/Loader/Loader";
 import { InfiniteScroll } from "../Utils/InfiniteScroll/InfiniteScroll";
 import Url from "./Url";
-import { constants, normalModeList, useMode } from "../../contexts/ModeContext";
+import {
+  constants,
+  normalModeList,
+  folderNormalModeList,
+  useMode,
+} from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 import { useEffect } from "react";
 import DeleteUrl from "../DeleteUrl/DeleteUrl";

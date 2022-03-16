@@ -101,6 +101,13 @@ const normalModeListLocal = [
   constants.EDIT_MODAL_UP,
 ];
 
+const FolderItemWhiteList = [
+  constants.FOLDER,
+  constants.FOLDER_ADD,
+  constants.FOLDER_EDIT,
+  constants.FOLDER_EDIT_MODAL_UP,
+];
+
 const RightBox = () => {
   const [isScroll, setIsScroll] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
@@ -140,7 +147,7 @@ const RightBox = () => {
 
   // 폴더 엔트리 타이틀
   const FolderTitle = () =>
-    mode === constants.FOLDER && <Title>즐겨찾기 폴더</Title>;
+    FolderItemWhiteList.includes(mode) && <Title>즐겨찾기 폴더</Title>;
 
   //폴더 클릭 후 타이틀
   const FolderEditUrlTitle = () =>
@@ -164,8 +171,9 @@ const RightBox = () => {
     );
 
   // 폴더모드일 때 MAPPING
+
   const FolderMapping = () =>
-    mode === constants.FOLDER && (
+    FolderItemWhiteList.includes(mode) && (
       <FolderMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
     );
 

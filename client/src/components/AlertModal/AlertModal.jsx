@@ -65,7 +65,7 @@ const AlertModal = () => {
     options.confirmFn();
     options.cancelFn();
   };
-  console.log(options);
+  // console.log(options);
 
   return (
     <ModalOverlay show={options.isOpen} onClick={onClickOutside}>

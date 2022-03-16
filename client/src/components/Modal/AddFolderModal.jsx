@@ -20,41 +20,13 @@ const CancelBtn = styled(FooterBtn)`
 `;
 const SaveBtn = styled(ColoredFooterBtn)``;
 
-const BackBtn = styled(FooterBtn)`
-  margin-left: 10px;
-  border: none;
-`;
-const BtnContainer = styled.div`
-  flex: 1;
-`;
-
 const BodyContentEl = styled(BodyContent)``;
 
 const InputContentEl = styled(BodyContentEl)`
-  /* transition: 0.3s ease-in-out all; */
-  ${({ count, isInput }) =>
-    count > 0
-      ? isInput
-        ? css`
-            display: flex;
-            animation: fadeInInput 0.3s ease-in-out;
-          `
-        : css`
-            display: none;
-          `
-      : ""}
+  flex: 0;
+  font-size: 16px;
 `;
-const TextAreaContentEl = styled(BodyContentEl)`
-  ${({ isInput }) =>
-    !isInput
-      ? css`
-          display: flex;
-          animation: fadeOutInput 0.3s ease-in-out;
-        `
-      : css`
-          display: none;
-        `}
-`;
+const TextAreaContentEl = styled(BodyContentEl)``;
 
 const ModalBodyEl = styled(ModalBody)``;
 
@@ -168,37 +140,12 @@ const InputContent = ({ isInput, onChange, text }) => {
         <Input
           type="text"
           autoComplete="off"
-          name="url"
+          name="name"
           placeholder=" "
           onChange={onChange}
-          value={text.url}
           spellCheck="false"
         />
-        <LabelEl htmlFor="text1">URL</LabelEl>
-      </InputContainerEl>
-      <InputContainerEl>
-        <Input
-          type="text"
-          autoComplete="off"
-          name="title"
-          placeholder=" "
-          onChange={onChange}
-          value={text.title}
-          spellCheck="false"
-        />
-        <LabelEl htmlFor="text1">TITLE</LabelEl>
-      </InputContainerEl>
-      <InputContainerEl>
-        <Input
-          type="text"
-          autoComplete="off"
-          name="hashtag"
-          placeholder=" "
-          onChange={onChange}
-          value={text.hashtag}
-          spellCheck="false"
-        />
-        <LabelEl htmlFor="text1">HASHTAG</LabelEl>
+        <LabelEl htmlFor="text1">NAME</LabelEl>
       </InputContainerEl>
     </InputContentEl>
   );
@@ -214,7 +161,6 @@ const TextAreaContent = ({ onChange, text }) => {
           name="memo"
           placeholder=" "
           onChange={onChange}
-          value={text.memo}
           spellCheck="false"
         />
         <MemoLabel htmlFor="text1">MEMO</MemoLabel>
