@@ -247,8 +247,8 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
   const totalHashtags = useTag().getTotalTags();
   const addAssignedTag = useTag().addAssignedTag;
   const removeAssignedTag = useTag().removeAssignedTag;
-  const assignedHashtags = useTag().hashtag.assignedHashtags;
 
+  const assignedHashtags = useTag().hashtag.assignedHashtags;
   const assignedTagsNames = assignedHashtags.map((tag) => tag.name);
 
   //태그 클릭시 추가,제거 로직
@@ -260,15 +260,12 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
 
     !assignedTagsNames.includes(tag.name) && click();
     assignedTagsNames.includes(tag.name) && unClick();
-
-    console.log("clicktag : ", tag);
   };
 
   //검색 로직
 
   const onChange = async (e) => {
     const searchWord = e.target.value;
-    console.log("searchword : ", searchWord);
     const hashFilter = totalHashtags.filter((tag) => {
       return tag.name.toLowerCase().includes(searchWord.toLowerCase());
     });
