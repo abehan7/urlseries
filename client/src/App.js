@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
-import loadable from "@loadable/component";
+
+import toast, { Toaster } from "react-hot-toast";
 
 import Header from "./components/Header/Header";
 import Body from "./components/Body/Body";
@@ -19,6 +20,7 @@ import styled from "styled-components";
 const AppEl = styled.div`
   /* height: 100%; */
   position: relative;
+  overflow: hidden;
 `;
 
 function App() {

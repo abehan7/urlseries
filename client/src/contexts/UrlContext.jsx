@@ -267,6 +267,8 @@ export const UrlProvider = ({ children }) => {
 
   const handleSetEditUrl = (_url) => setEditUrl(_url);
 
+  // const handleResetFilterdUrls
+
   // FIXME: 전체 url
   useEffect(() => {
     const fn = async () => {
@@ -366,6 +368,7 @@ export const UrlProvider = ({ children }) => {
     handleSetFilterdUrls,
     handleResetAllUrl,
     handleSetEditUrl,
+    getResetCurrentUrl,
     loading,
   };
 

@@ -213,6 +213,7 @@ const HashtagModal = () => {
     if (TopBoxRef.current.contains(e.target)) return;
     handleFoldUp();
   };
+
   return (
     <ModalContent onClick={onClickWindow}>
       <ModalHeader>

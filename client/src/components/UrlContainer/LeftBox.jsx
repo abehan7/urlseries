@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getIsClicked, RESET_TAGS } from "../../store/reducers/Tags";
 import { useFolder } from "../../contexts/FolderContext";
 import NoUrl from "./NoUrl";
-import { useMode } from "../../contexts/ModeContext";
+import { constants, useMode } from "../../contexts/ModeContext";
 import LoadingCenter from "../Utils/Loader/LoaderCenter";
 import { getToken } from "../../redux/ReducersT/tokenReducer";
 
@@ -205,6 +205,9 @@ const LeftBox = () => {
     tagIsClicked && fn();
   }, [totalUrls]);
 
+  //currentFolder 클릭하면 filterdItems리셋
+ 
+    
   //FIXME: DOM MAPPING
   //전체 북마크
   const TotalUrlMap = () =>

@@ -2,11 +2,16 @@ import { throttle } from "lodash";
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
+import { useCallback } from "react";
 import { useRef } from "react";
+import { useSelector } from "react-redux";
 
 import styled from "styled-components";
-import { constants, normalModeList, useMode } from "../../contexts/ModeContext";
+import { useFolder } from "../../contexts/FolderContext";
+import { constants, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
+import { getFolders } from "../../store/reducers/Folders";
+import FolderItemContainer from "../Folder/FolderItemContainer";
 import Loader from "../Utils/Loader/Loader";
 import LoadingCenter from "../Utils/Loader/LoaderCenter";
 import ItemContainer from "./ItemContainer";
@@ -100,6 +105,14 @@ const LoaderWrapper = styled.div`
   justify-content: center;
 `;
 
+const normalModeListLocal = [
+  constants.ADD,
+  constants.NORMAL,
+  constants.HASHTAG,
+  constants.EDIT,
+  constants.EDIT_MODAL_UP,
+];
+
 const RightBox = () => {
   const [isScroll, setIsScroll] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
@@ -129,7 +142,7 @@ const RightBox = () => {
   //FIXME: DOM
   // 좋아요 타이틀
   const LikeTitle = () =>
-    normalModeList.includes(mode) && <Title>즐겨찾기</Title>;
+    normalModeListLocal.includes(mode) && <Title>즐겨찾기</Title>;
 
   //삭제할 북마크 타이틀
   const DeleteTitle = () =>
@@ -141,9 +154,13 @@ const RightBox = () => {
   const FolderTitle = () =>
     mode === constants.FOLDER && <Title>즐겨찾기 폴더</Title>;
 
+  //폴더 클릭 후 타이틀
+  const FolderEditUrlTitle = () =>
+    mode === constants.FOLDER_EDIT_URL && <Title>폴더 북마크</Title>;
+
   // 삭제모드 아닐때 MAPPING
   const NormalMapping = () =>
-    normalModeList.includes(mode) && (
+    normalModeListLocal.includes(mode) && (
       <NormalMode
         isLikeUrls={isLikeUrls}
         loading={loading}
@@ -164,6 +181,11 @@ const RightBox = () => {
       <FolderMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
     );
 
+  const FolderEditUrlMapping = () =>
+    mode === constants.FOLDER_EDIT_URL && (
+      <FolderEditUrlMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
+    );
+
   return (
     <RightBoxEl>
       <TitleWrapper>
@@ -173,6 +195,8 @@ const RightBox = () => {
         {DeleteTitle()}
         {/* 폴더 타이틀 */}
         {FolderTitle()}
+        {/* 폴더 클릭 후 타이틀 */}
+        {FolderEditUrlTitle()}
       </TitleWrapper>
       <FlexContainer onScroll={onScroll} ref={scrollRef}>
         {/* 삭제모드 아닐 때 매핑 */}
@@ -181,6 +205,8 @@ const RightBox = () => {
         {DeleteMapping()}
         {/* 폴더모드일 때 매핑 */}
         {FolderMapping()}
+        {/* 폴더 클릭 후 폴더 안에 있는 url 매핑 */}
+        {FolderEditUrlMapping()}
       </FlexContainer>
     </RightBoxEl>
   );
@@ -193,7 +219,7 @@ const NormalMode = ({ isLikeUrls, loading, isScroll, handleScrollUp }) => {
   const searchedUrls = useUrl().url.searchedUrls;
   return (
     <>
-      {!isLikeUrls && <ItemContainer urls={searchedUrls} />}
+      {/* {!isLikeUrls && <ItemContainer urls={searchedUrls} />} */}
       {isLikeUrls && <ItemContainer urls={likedUrls} />}
       {loading.isLikedUrl && <LoadingCenter />}
       <Marker isScroll={isScroll} onClick={handleScrollUp} />
@@ -235,14 +261,45 @@ const FolderMode = ({ isScroll, handleScrollUp }) => {
     return () => clearTimeout(timer);
   });
 
-  const folders = [];
+  const folders = useSelector(getFolders);
+  const likedFolders = folders.filter((folder) => folder.like);
 
   return (
     <>
       {/* 로딩창 */}
       {loading && <LoadingCenter />}
       {/* 북마크 없을 때 */}
-      {!loading && folders.length === 0 && <NoUrl />}
+      {!loading && likedFolders.length !== 0 && (
+        <FolderItemContainer folders={likedFolders} type="STICK" />
+      )}
+      {!loading && likedFolders.length === 0 && <NoUrl />}
+      <Marker isScroll={isScroll} onClick={handleScrollUp} />
+    </>
+  );
+};
+
+const FolderEditUrlMode = ({ isScroll, handleScrollUp }) => {
+  const currentFolder = useFolder().currentFolder;
+  // const totalUrls = useUrl().url.totalUrls;
+
+  const folderContents = currentFolder.folder_contents;
+
+  // folder_contents
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  });
+  return (
+    <>
+      {/* 로딩창 */}
+      {loading && <LoadingCenter />}
+      {/* 매핑 */}
+      {!loading && <ItemContainer urls={folderContents} />}
+      {/* 북마크 없을 때 */}
+      {!loading && folderContents.length === 0 && <NoUrl />}
       <Marker isScroll={isScroll} onClick={handleScrollUp} />
     </>
   );

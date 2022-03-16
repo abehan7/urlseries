@@ -9,8 +9,10 @@ import {
   getFolderTagItems,
   getIsClicked,
   getMetaTagItems,
+  RESET_TAGS,
 } from "../store/reducers/Tags";
 import { duplicateUrlChecker } from "../components/Utils/Urls/checkDuplicate";
+import { constants, useMode } from "./ModeContext";
 
 const FolderContext = createContext();
 
@@ -22,6 +24,8 @@ export const FolderProvider = ({ children }) => {
     urls: [],
     urlIds: [],
   });
+  const [currentFolder, setCurrentFolder] = useState({});
+  const [folderUrlIds, setFolderUrlIds] = useState([]);
   const dispatch = useDispatch();
   const token = useSelector(getToken);
   const folders = useSelector(getFolders);
@@ -29,11 +33,11 @@ export const FolderProvider = ({ children }) => {
   const folderTagItems = useSelector(getFolderTagItems);
   const totalUrls = useUrl().url.totalUrls;
   const isClicked = useSelector(getIsClicked);
+  const getResetCurrentUrl = useUrl().getResetCurrentUrl;
 
-  // console.log("totalUrls from getMetaTagUrls: ", totalUrls);
+  const mode = useMode().mode;
 
-  // 태그 아이템들
-
+  // FIXME: 메타태그 + 폴더태그 아이템 함수들
   const getMetaTagUrls = () => {
     const filterd = totalUrls?.filter((url) => {
       return metaTagItems.some((tag) => {
@@ -74,6 +78,7 @@ export const FolderProvider = ({ children }) => {
 
   const handleSetCombinedItemLoading = (boolean) => setLoading(boolean);
 
+  //맨 처음 화면 업로드 되면 폴더 redux에 저장
   useEffect(() => {
     const getFolder = async () => {
       dispatch(SET_FOLDERS);
@@ -81,6 +86,40 @@ export const FolderProvider = ({ children }) => {
     getFolder();
     token && folders.length === 0 && getFolder();
   }, [token]);
+
+  //FIXME: 폴더에서만 사용되는 함수
+  const handleSetCurrentFolder = (folder) => setCurrentFolder(folder);
+
+  // 현재 선택한 폴더에 url추가
+  const handleAddFolderEditUrl = (url) => {
+    //folderContainer에 넣어야돼
+    if (folderUrlIds.includes(url._id)) return;
+    const update = [url, ...currentFolder.folder_contents];
+    setCurrentFolder({ ...currentFolder, folder_contents: update });
+  };
+  // 현재 선택한 폴더에 url삭제
+  const handleRemoveFolderEditUrl = (url) => {
+    if (!folderUrlIds.includes(url._id)) return;
+    const update = currentFolder.folder_contents.filter(
+      (item) => item._id !== url._id
+    );
+    setCurrentFolder({ ...currentFolder, folder_contents: update });
+  };
+
+  // 현재 선택한 폴더에 urlList추가
+  const handleAddFolderEditUrlList = (newUrls) => {
+    const duplicatedList = [...newUrls, ...currentFolder.folder_contents];
+    const filterd = duplicateUrlChecker(duplicatedList);
+    getResetCurrentUrl();
+    setCurrentFolder({ ...currentFolder, folder_contents: filterd });
+  };
+
+  // 현재 선택한 폴더 url들 전체삭제
+  const handleResetFolderEditUrl = () => {
+    setCurrentFolder({ ...currentFolder, folder_contents: [] });
+    getResetCurrentUrl();
+  };
+  // FIXME: 메타태그 + 폴더태그 아이템 useEffect
 
   useEffect(() => {
     isClicked && getCombinedItems();
@@ -92,7 +131,32 @@ export const FolderProvider = ({ children }) => {
     console.log("metaTagItems :", metaTagItems);
   }, [metaTagItems]);
 
-  const value = { loading, combinedTagItems, handleSetCombinedItemLoading };
+  // FIXME: 폴더에서만 사용되는 useEffect
+  // 폴더 아이템 클릭시 폴더 아이템 아이디를 배열에 추가
+  // 여기는 어처피 자동으로 추가되니까 useEffect써서
+  // 내가 신경쓸 부분은 currentFolder에서 가져오는 것
+  useEffect(() => {
+    const currentFolderUrlIds = currentFolder?.folder_contents?.map((url) => {
+      return url._id;
+    });
+    setFolderUrlIds(currentFolderUrlIds);
+  }, [currentFolder]);
+
+  // 모드가 폴더면 해시태그 클릭된거 전체 초기화
+  useEffect(() => mode === constants.FOLDER && dispatch(RESET_TAGS()), [mode]);
+
+  const value = {
+    loading,
+    combinedTagItems,
+    currentFolder,
+    folderUrlIds,
+    handleSetCombinedItemLoading,
+    handleSetCurrentFolder,
+    handleAddFolderEditUrl,
+    handleRemoveFolderEditUrl,
+    handleAddFolderEditUrlList,
+    handleResetFolderEditUrl,
+  };
 
   return (
     <FolderContext.Provider value={value}>{children}</FolderContext.Provider>

@@ -41,6 +41,7 @@ export const folderSlice = createSlice({
       const folder = state.folders.find((folder) => folder._id === folderId);
       folder.folder_contents = [...urlId, ...folder.folder_contents];
     },
+
     REMOVE_CONTENT: (state, action) => {
       const { folderId, urlId } = action.payload;
       const folder = state.folders.find((folder) => folder._id === folderId);
@@ -55,11 +56,16 @@ export const folderSlice = createSlice({
     },
 
     SET_LIKE: (state, action) => {
-      const { likedFolderIdList } = action.payload;
-      state.folders.forEach((folder) => {
-        likedFolderIdList.includes(folder._id) && (folder.like = true);
-        !likedFolderIdList.includes(folder._id) && (folder.like = false);
-      });
+      const folderId = action.payload;
+      const folder = state.folders.find((folder) => folder._id === folderId);
+      if (!folder.like) {
+        folder.like = true;
+        return;
+      }
+      if (folder.like) {
+        folder.like = false;
+        return;
+      }
     },
   },
 

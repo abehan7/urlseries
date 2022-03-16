@@ -55,10 +55,6 @@ const Icon = styled.div`
   justify-content: flex-start;
 
   z-index: 2;
-  /* background-color: #fff; */
-  /* align-self: flex-start; */
-  /* color: #ffc64b; */
-  /* vertical-align: middle; */
 `;
 
 const UrlEl = styled.div`
@@ -80,11 +76,6 @@ const UrlEl = styled.div`
     }
   }
 
-  /* transition: all 0.3s ease-in-out; */
-  /* translate: translateX(50px); */
-
-  /* animation: urlIn 0.3s ease-in-out; */
-  /* animation-fill-mode: forwards; */
   padding: 0.3rem;
   position: relative;
   width: 100%;
@@ -103,16 +94,16 @@ const UrlEl = styled.div`
   transition: all 0.3s ease-in-out;
 
   :hover {
-    background-color: #ffcccb7a;
+    background-color: ${(props) => props.backgroundColor};
   }
 
   ${(props) =>
     props.isDeleteUrl &&
     css`
-      background-color: #ffcccb7a;
+      background-color: ${(props) => props.backgroundColor};
 
       ${Line} {
-        background-color: tomato;
+        background-color: ${(props) => props.barColor};
       }
     `}
 `;
@@ -134,11 +125,12 @@ const DeleteUrl = ({
   totalUrlNum,
   onClick,
   isDeleteUrl,
+  backgroundColor = "#ffcccb7a",
+  barColor = "tomato",
 }) => {
   const src = `http://www.google.com/s2/favicons?domain=${url}`;
   const currentUrl = useUrl().currentUrl;
 
-  // const className = currentUrl._id === id ? "newItem" : "";
   const className = {
     isNewItem: () => {
       if (currentUrl._id !== id) return "";
@@ -153,6 +145,8 @@ const DeleteUrl = ({
       onClick={onClick}
       className={className.isNewItem()}
       isDeleteUrl={isDeleteUrl}
+      backgroundColor={backgroundColor}
+      barColor={barColor}
     >
       <Line />
       <Img src={src} />

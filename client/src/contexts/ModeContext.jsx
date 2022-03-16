@@ -12,6 +12,12 @@ const ADD = "ADD";
 const DELETE = "DELETE";
 const HASHTAG = "HASHTAG";
 const FOLDER = "FOLDER";
+const FOLDER_EDIT_URL = "FOLDER_EDIT_URL";
+const FOLDER_NORMAL = "FOLDER_NORMAL";
+const FOLDER_ADD = "FOLDER_ADD";
+const FOLDER_EDIT = "FOLDER_EDIT";
+const FOLDER_EDIT_MODAL_UP = "FOLDER_EDIT_MODAL_UP";
+const FOLDER_DELETE = "FOLDER_DELETE";
 
 export const constants = {
   NORMAL,
@@ -21,6 +27,12 @@ export const constants = {
   HASHTAG,
   FOLDER,
   EDIT_MODAL_UP,
+  FOLDER_EDIT_URL,
+  FOLDER_NORMAL,
+  FOLDER_ADD,
+  FOLDER_EDIT,
+  FOLDER_EDIT_MODAL_UP,
+  FOLDER_DELETE,
 };
 export const normalModeList = [ADD, NORMAL, HASHTAG, EDIT, EDIT_MODAL_UP];
 export const sidebarNormalModeList = [ADD, NORMAL, HASHTAG];
