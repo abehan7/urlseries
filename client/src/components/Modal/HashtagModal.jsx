@@ -15,6 +15,9 @@ import { useState } from "react";
 import { useRef } from "react";
 import { useTag } from "../../contexts/TagContext";
 import { KeywordNormalize, SearchNotByDB } from "../Utils/Search";
+import toast from "react-hot-toast";
+import { useModal } from "../../contexts/ModalContext";
+import { constants, useMode } from "../../contexts/ModeContext";
 
 //FIXME: TopBox
 const Input = styled.input`
@@ -207,6 +210,9 @@ const SelectedItems = styled.div`
 const HashtagModal = () => {
   const [isInputClicked, setIsInputClicked] = useState(false);
   const TopBoxRef = useRef(null);
+  const handleAlertTrigger = useModal().handleAlertTrigger;
+  const setMode = useMode().setMode;
+
   const onClickInput = () => setIsInputClicked(true);
   const handleFoldUp = () => setIsInputClicked(false);
   const onClickWindow = (e) => {
@@ -214,6 +220,26 @@ const HashtagModal = () => {
     handleFoldUp();
   };
 
+  const onClickCancel = () => setMode(constants.NORMAL);
+
+  const onClickSave = () => {
+    const fn = () => {
+      // 토스트 모달
+      const getData = async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      };
+      const myPromise = getData();
+      toast.promise(myPromise, {
+        loading: "저장중입니다",
+        success: "저장이 완료되었습니다!",
+        error: "저장이 정상적으로 이루어지지 않았습니다",
+      });
+      //  수정 함수 넣기
+      // onClickCancel();
+      onClickCancel();
+    };
+    handleAlertTrigger(fn, "저장하시겠습니까?");
+  };
   return (
     <ModalContent onClick={onClickWindow}>
       <ModalHeader>
@@ -230,8 +256,10 @@ const HashtagModal = () => {
         </BodyContent>
       </ModalBody>
       <Footer>
-        <FooterBtn style={{ border: "none" }}>Cancel</FooterBtn>
-        <ColoredFooterBtn>Save</ColoredFooterBtn>
+        <FooterBtn style={{ border: "none" }} onClick={onClickCancel}>
+          Cancel
+        </FooterBtn>
+        <ColoredFooterBtn onClick={onClickSave}>Save</ColoredFooterBtn>
       </Footer>
     </ModalContent>
   );

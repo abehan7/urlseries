@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import styled, { css } from "styled-components";
+import { useModal } from "../../contexts/ModalContext";
 import { constants, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 import { BodyContent } from "./styled/BodyContent.styled";
@@ -129,6 +131,7 @@ const AddModal = () => {
   const mode = useMode().mode;
   const editUrl = useUrl().editUrl;
   const handleSetEditUrl = useUrl().handleSetEditUrl;
+  const handleAlertTrigger = useModal().handleAlertTrigger;
 
   const textInitialize = () => {
     if (mode === constants.ADD)
@@ -157,19 +160,35 @@ const AddModal = () => {
     setIsInput(false);
     setCount(count + 1);
   };
-  const onClickSubmit = () => {
-    const addFn = () => {};
-    const editFn = () => {};
-    mode === constants.ADD && addFn();
-    mode === constants.EDIT && editFn();
-  };
   const onClickCancel = () => {
     mode === constants.ADD && setMode(constants.NORMAL);
     mode === constants.EDIT_MODAL_UP && setMode(constants.EDIT);
     mode === constants.EDIT_MODAL_UP && handleSetEditUrl({});
-
     // mode === constants.EDIT_MODAL_UP && setCount(0);
   };
+  const onClickSubmit = () => {
+    const addFn = () => {};
+    const editFn = () => {
+      const fn = () => {
+        // 토스트 모달
+        const getData = async () => {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        };
+        const myPromise = getData();
+        toast.promise(myPromise, {
+          loading: "수정중입니다",
+          success: "수정이 완료되었습니다!",
+          error: "수정이 정상적으로 이루어지지 않았습니다",
+        });
+        //  수정 함수 넣기
+        onClickCancel();
+      };
+      handleAlertTrigger(fn, "수정하시겠습니까?");
+    };
+    mode === constants.ADD && addFn();
+    mode === constants.EDIT_MODAL_UP && editFn();
+  };
+
   const onChange = (e) => {
     setText({
       ...text,
