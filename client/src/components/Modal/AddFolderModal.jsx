@@ -12,6 +12,7 @@ import { ModalBody } from "./styled/ModalBody.styled";
 import { ModalContent } from "./styled/ModalContent.styled";
 import { ModalHeader } from "./styled/ModalHeader.styled";
 import { ModalTitle } from "./styled/ModalTitle.styled";
+import { useFolder } from "../../contexts/FolderContext";
 
 const FooterEl = styled(Footer)``;
 
@@ -87,36 +88,40 @@ const TextAreaContainer = styled.div`
 `;
 
 const MemoLabel = styled(Label)`
-  left: 10px;
+  left: 0px;
   top: 20px;
-  background-color: #fff;
   width: fit-content;
   height: 20px;
 `;
 const AddFolderModal = () => {
+  const editFolder = useFolder().editFolder;
+  const handleSetEditFolder = useFolder().handleSetEditFolder;
+  // console.log(editFolder);
+  // const handleSetEditFolder = useFolder().handleSetEditFolder;
   const textInitialize = () => {
-    if (mode === constants.ADD)
-      return {
-        url: "",
-        title: "",
-        hashtag: "",
-        memo: "",
-      };
+    if (modalMode === constants.FOLDER_ADD) return { title: "", memo: "" };
+    if (modalMode === constants.FOLDER_EDIT_MODAL_UP)
+      return { name: editFolder?.folder_name, memo: editFolder?._id };
   };
-  const mode = useMode().mode;
-  const onChange = (e) => {};
+  const modalMode = useMode().modalMode;
+  const setModalMode = useMode().setModalMode;
   const [text, setText] = useState(textInitialize);
-  const onClickCancel = () => {};
+  const onChange = (e) => setText({ ...text, [e.target.name]: e.target.value });
+
+  const onClickCancel = () => {
+    setModalMode(null);
+    handleSetEditFolder(null);
+  };
   const onClickSubmit = () => {};
 
   return (
     <ModalContentEl>
       <ModalHeader>
         <ModalTitle>
-          {mode === constants.FOLDER_ADD && "폴더 추가하기"}
+          {modalMode === constants.FOLDER_ADD && "폴더 추가하기"}
         </ModalTitle>
         <ModalTitle>
-          {mode === constants.FOLDER_EDIT_MODAL_UP && "폴더 수정하기"}
+          {modalMode === constants.FOLDER_EDIT_MODAL_UP && "폴더 수정하기"}
         </ModalTitle>
       </ModalHeader>
       <ModalBodyEl>
@@ -144,6 +149,7 @@ const InputContent = ({ isInput, onChange, text }) => {
           placeholder=" "
           onChange={onChange}
           spellCheck="false"
+          value={text.name}
         />
         <LabelEl htmlFor="text1">NAME</LabelEl>
       </InputContainerEl>
@@ -162,6 +168,7 @@ const TextAreaContent = ({ onChange, text }) => {
           placeholder=" "
           onChange={onChange}
           spellCheck="false"
+          value={text.memo}
         />
         <MemoLabel htmlFor="text1">MEMO</MemoLabel>
       </TextAreaContainer>

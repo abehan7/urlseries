@@ -224,7 +224,7 @@ const HashtagModal = () => {
   const [isInputClicked, setIsInputClicked] = useState(false);
   const TopBoxRef = useRef(null);
   const handleAlertTrigger = useModal().handleAlertTrigger;
-  const setMode = useMode().setMode;
+  const setModalMode = useMode().setModalMode;
 
   const onClickInput = () => setIsInputClicked(true);
   const handleFoldUp = () => setIsInputClicked(false);
@@ -233,7 +233,7 @@ const HashtagModal = () => {
     handleFoldUp();
   };
 
-  const onClickCancel = () => setMode(constants.NORMAL);
+  const onClickCancel = () => setModalMode(null);
 
   const onClickSave = () => {
     const fn = () => {

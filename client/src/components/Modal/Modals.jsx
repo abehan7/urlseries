@@ -1,6 +1,7 @@
 import React from "react";
 import { useRef } from "react";
 import styled from "styled-components";
+import { useFolder } from "../../contexts/FolderContext";
 import { constants, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 import AddFolderModal from "./AddFolderModal";
@@ -21,38 +22,34 @@ const ModalEl = styled.div`
 `;
 
 const AddModalWhiteList = [constants.ADD, constants.EDIT_MODAL_UP];
+
 const FolderModalWhiteList = [
   constants.FOLDER_ADD,
   constants.FOLDER_EDIT_MODAL_UP,
 ];
-const Modals = ({ mode }) => {
+
+const Modals = ({ modalMode }) => {
   const ref = useRef(null);
-  const setMode = useMode().setMode;
-  const handleSetEditUrl = useUrl().handleSetEditUrl;
+  const setModalMode = useMode().setModalMode;
+  // const handleSetEditUrl = useUrl().handleSetEditUrl;
+  const handleSetEditFolder = useFolder().handleSetEditFolder;
 
+  //
   const onClickOutside = (e) => {
-    mode === constants.EDIT_MODAL_UP &&
-      e.target === ref.current &&
-      setMode(constants.EDIT);
-
-    mode === constants.EDIT_MODAL_UP &&
-      e.target === ref.current &&
-      handleSetEditUrl({});
-
-    mode !== constants.EDIT_MODAL_UP &&
-      e.target === ref.current &&
-      setMode(constants.NORMAL);
+    e.target === ref.current && setModalMode(null);
+    e.target === ref.current && handleSetEditFolder(null);
   };
+
   // console.log(mode);
 
   return (
     <ModalEl onClick={onClickOutside} ref={ref}>
       {/* 북마크 추가 수정 모달 */}
-      {AddModalWhiteList.includes(mode) && <AddModal />}
+      {AddModalWhiteList.includes(modalMode) && <AddModal />}
       {/* 해시태그 모달 */}
-      {mode === constants.HASHTAG && <HashtagModal />}
+      {modalMode === constants.HASHTAG && <HashtagModal />}
       {/* 폴더 추가 수정 모달 */}
-      {FolderModalWhiteList.includes(mode) && <AddFolderModal />}
+      {FolderModalWhiteList.includes(modalMode) && <AddFolderModal />}
     </ModalEl>
   );
 };

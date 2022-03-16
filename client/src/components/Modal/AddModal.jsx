@@ -127,24 +127,19 @@ const MemoLabel = styled(Label)`
 const AddModal = () => {
   const [isInput, setIsInput] = useState(true);
   const [count, setCount] = useState(0);
-  const setMode = useMode().setMode;
-  const mode = useMode().mode;
+  const setModalMode = useMode().setModalMode;
+  const modalMode = useMode().modalMode;
   const editUrl = useUrl().editUrl;
   const handleSetEditUrl = useUrl().handleSetEditUrl;
   const handleAlertTrigger = useModal().handleAlertTrigger;
 
   const textInitialize = () => {
-    if (mode === constants.ADD)
-      return {
-        url: "",
-        title: "",
-        hashtag: "",
-        memo: "",
-      };
+    if (modalMode === constants.ADD)
+      return { url: "", title: "", hashtag: "", memo: "" };
 
     const oneLineTag = editUrl?.url_hashTags?.join(" ").toUpperCase();
 
-    if (mode === constants.EDIT_MODAL_UP)
+    if (modalMode === constants.EDIT_MODAL_UP)
       return {
         url: editUrl.url,
         title: editUrl.url_title,
@@ -161,9 +156,9 @@ const AddModal = () => {
     setCount(count + 1);
   };
   const onClickCancel = () => {
-    mode === constants.ADD && setMode(constants.NORMAL);
-    mode === constants.EDIT_MODAL_UP && setMode(constants.EDIT);
-    mode === constants.EDIT_MODAL_UP && handleSetEditUrl({});
+    modalMode === constants.ADD && setModalMode(constants.NORMAL);
+    modalMode === constants.EDIT_MODAL_UP && setModalMode(constants.EDIT);
+    modalMode === constants.EDIT_MODAL_UP && handleSetEditUrl({});
     // mode === constants.EDIT_MODAL_UP && setCount(0);
   };
   const onClickSubmit = () => {
@@ -185,22 +180,21 @@ const AddModal = () => {
       };
       handleAlertTrigger(fn, "수정하시겠습니까?");
     };
-    mode === constants.ADD && addFn();
-    mode === constants.EDIT_MODAL_UP && editFn();
+    modalMode === constants.ADD && addFn();
+    modalMode === constants.EDIT_MODAL_UP && editFn();
   };
 
   const onChange = (e) => {
-    setText({
-      ...text,
-      [e.target.name]: e.target.value,
-    });
+    setText({ ...text, [e.target.name]: e.target.value });
   };
   return (
     <ModalContentEl>
       <ModalHeader>
-        <ModalTitle>{mode === constants.ADD && "북마크 추가하기"}</ModalTitle>
         <ModalTitle>
-          {mode === constants.EDIT_MODAL_UP && "북마크 수정하기"}
+          {modalMode === constants.ADD && "북마크 추가하기"}
+        </ModalTitle>
+        <ModalTitle>
+          {modalMode === constants.EDIT_MODAL_UP && "북마크 수정하기"}
         </ModalTitle>
       </ModalHeader>
       <ModalBodyEl>

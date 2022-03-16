@@ -50,6 +50,7 @@ export const sidebarEditModeList = [EDIT, EDIT_MODAL_UP];
 export const ModeProvider = ({ children }) => {
   // isDarkMode isEditMode isDeleteMode isNormalMode
   const [mode, setMode] = useState(NORMAL);
+  const [modalMode, setModalMode] = useState(null);
   const [sidebarAnimeCount, setSidebarAnimeCount] = useState(0);
   const [folderBoxAnimeCount, setFolderBoxAnimeCount] = useState(0);
   const handleSetCurrentUrl = useUrl().handleSetCurrentUrl;
@@ -72,7 +73,11 @@ export const ModeProvider = ({ children }) => {
     sidebarAnimeWhiteList.includes(mode) && setSidebarAnimeCount(1);
   }, [mode]);
 
-  const value = { mode, setMode, loading, count };
+  useEffect(() => {
+    console.log("modalMode: ", modalMode);
+  }, [modalMode]);
+
+  const value = { mode, setMode, loading, count, modalMode, setModalMode };
 
   return <ModeContext.Provider value={value}>{children}</ModeContext.Provider>;
 };

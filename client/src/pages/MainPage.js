@@ -28,6 +28,7 @@ const modalWhiteList = [
 
 const MainPage = () => {
   const mode = useMode().mode;
+  const modalMode = useMode().modalMode;
   const containerStyle = { top: 100 };
   return (
     <MainEl>
@@ -36,7 +37,7 @@ const MainPage = () => {
       {/* 그리드 컨테이너 */}
       <UrlContainer />
       {/* 모달 */}
-      {modalWhiteList.includes(mode) && <Modals mode={mode} />}
+      {modalWhiteList.includes(modalMode) && <Modals modalMode={modalMode} />}
       {/* 토스트 */}
       <Toaster containerStyle={containerStyle} />
       {/* 얼럴트 모달 */}

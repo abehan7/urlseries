@@ -19,8 +19,10 @@ const FolderItemContainer = ({ folders, type }) => {
   const filterdItems = folders?.slice(0, contentsNum);
   const setMode = useMode().setMode;
   const handleSetCurrentFolder = useFolder().handleSetCurrentFolder;
+  const handleSetEditFolder = useFolder().handleSetEditFolder;
   const dispatch = useDispatch();
   const mode = useMode().mode;
+  const setModalMode = useMode().setModalMode;
 
   // SET_LIKE
 
@@ -48,11 +50,14 @@ const FolderItemContainer = ({ folders, type }) => {
     console.log("addClick");
   };
   const deleteClick = () => {};
-  const editClick = () => {};
+  const editClick = (folder) => {
+    handleSetEditFolder(folder);
+    setModalMode(constants.FOLDER_EDIT_MODAL_UP);
+  };
 
   const onClickFolder = (folder) => {
     mode === constants.FOLDER && normalClick(folder);
-    mode === constants.FOLDER_ADD && addClick(folder);
+    // mode === constants.FOLDER_ADD && addClick(folder);
     mode === constants.FOLDER_DELETE && deleteClick(folder);
     mode === constants.FOLDER_EDIT && editClick(folder);
   };

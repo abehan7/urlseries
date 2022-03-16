@@ -28,6 +28,7 @@ import {
   getFolders,
   SET_FOLDER_CONTENTS,
 } from "../../store/reducers/Folders.js";
+import { useEffect } from "react";
 
 // import {} from "react-icons"
 
@@ -228,12 +229,14 @@ const SideBar = () => {
     sidebarEditModeList.includes(mode) && <EditModeItems />;
 
   // 폴더 탭
+  const FolderTaps = () => constants.FOLDER === mode && <FolderModeItems />;
 
-  const FolderTaps = () => folderNameList.includes(mode) && <FolderModeItems />;
+  const FolderEditTaps = () =>
+    constants.FOLDER_EDIT === mode && <FolderEditModeItems />;
 
   // 폴더 클릭 후 북마크 탭
   const FolderEditUrlTaps = () =>
-    constants.FOLDER_EDIT_URL === mode && <FolderEditModeItems />;
+    constants.FOLDER_EDIT_URL === mode && <FolderEditUrlModeItems />;
 
   const FolderIconImg = () =>
     folderIconList.includes(mode) && (
@@ -268,6 +271,7 @@ const SideBar = () => {
       {EditModeTaps()}
       {/* 폴더 */}
       {FolderTaps()}
+      {FolderEditTaps()}
 
       {/* 폴더 클릭 후 북마크 */}
       {FolderEditUrlTaps()}
@@ -295,9 +299,11 @@ const Item = ({ children, name, onClick }) => {
 
 const NormalModeItems = () => {
   const setMode = useMode().setMode;
-  const onClickAdd = () => setMode(constants.ADD);
+  const setModalMode = useMode().setModalMode;
+
+  const onClickAdd = () => setModalMode(constants.ADD);
   const onClickDelete = () => setMode(constants.DELETE);
-  const onClickHashtag = () => setMode(constants.HASHTAG);
+  const onClickHashtag = () => setModalMode(constants.HASHTAG);
   const onClickEdit = () => setMode(constants.EDIT);
   const onClickFolder = () => setMode(constants.FOLDER);
   const sidebarAnimeCount = useMode().count.sidebarAnimeCount;
@@ -402,12 +408,14 @@ const EditModeItems = () => {
   );
 };
 
+// 폴더 맨 처음 탭
 const FolderModeItems = () => {
   const setMode = useMode().setMode;
+  const setModalMode = useMode().setModalMode;
 
   const onClickBack = () => setMode(constants.NORMAL);
-  const onClickAddFolder = () => setMode(constants.FOLDER_ADD);
-  const onClickEdit = () => {};
+  const onClickAddFolder = () => setModalMode(constants.FOLDER_ADD);
+  const onClickEdit = () => setMode(constants.FOLDER_EDIT);
 
   return (
     <TapsWrapper>
@@ -420,14 +428,31 @@ const FolderModeItems = () => {
       <Item name="삭제하기">
         <HiOutlineFolderRemove />
       </Item>
-      <Item name="수정하기">
+      <Item name="수정하기" onClick={onClickEdit}>
         <CgEditBlackPoint />
       </Item>
     </TapsWrapper>
   );
 };
 
+// 폴더 수정 탭
 const FolderEditModeItems = () => {
+  const setMode = useMode().setMode;
+
+  const onClickBack = () => setMode(constants.FOLDER);
+
+  return (
+    <EditWrapper>
+      <Item name="뒤로가기" onClick={onClickBack}>
+        <CgBackspace />
+      </Item>
+    </EditWrapper>
+  );
+};
+
+// 폴더 클릭 후 북마크 탭
+
+const FolderEditUrlModeItems = () => {
   const dispatch = useDispatch();
   const setMode = useMode().setMode;
   const handleAddFolderEditUrlList = useFolder().handleAddFolderEditUrlList;
