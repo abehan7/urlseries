@@ -243,10 +243,14 @@ const SideBar = () => {
         </FaviconContainer>
       </FaviconWrapper>
       {/* 탭 맵핑 */}
+      {/* 북마크 */}
       {NormalModeTaps()}
       {DeleteModeTaps()}
       {EditModeTaps()}
+      {/* 폴더 */}
       {FolderTaps()}
+
+      {/* 폴더 클릭 후 북마크 */}
       {FolderEditUrlTaps()}
       <Footer />
     </SideBarEl>
@@ -383,6 +387,7 @@ const FolderModeItems = () => {
   const setMode = useMode().setMode;
 
   const onClickBack = () => setMode(constants.NORMAL);
+  const onClickAddFolder = () => setMode(constants.ADD_FOLDER);
   const onClickEdit = () => {};
 
   return (
@@ -390,7 +395,7 @@ const FolderModeItems = () => {
       <Item name="뒤로가기" onClick={onClickBack}>
         <CgBackspace />
       </Item>
-      <Item name="추가하기">
+      <Item name="추가하기" onClick={onClickAddFolder}>
         <HiOutlineFolderAdd />
       </Item>
       <Item name="삭제하기">

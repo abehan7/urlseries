@@ -3,6 +3,7 @@ import { useRef } from "react";
 import styled from "styled-components";
 import { constants, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
+import AddFolderModal from "./AddFolderModal";
 import AddModal from "./AddModal";
 import HashtagModal from "./HashtagModal";
 const ModalEl = styled.div`
@@ -38,10 +39,18 @@ const Modals = ({ mode }) => {
   };
   // console.log(mode);
   const AddModalWhiteList = [constants.ADD, constants.EDIT_MODAL_UP];
+  const FolderModalWhiteList = [
+    constants.FOLDER_ADD,
+    constants.FOLDER_EDIT_MODAL_UP,
+  ];
   return (
     <ModalEl onClick={onClickOutside} ref={ref}>
+      {/* 북마크 추가 수정 모달 */}
       {AddModalWhiteList.includes(mode) && <AddModal />}
+      {/* 해시태그 모달 */}
       {mode === constants.HASHTAG && <HashtagModal />}
+      {/* 폴더 추가 수정 모달 */}
+      {FolderModalWhiteList.includes(mode) && <AddFolderModal />}
     </ModalEl>
   );
 };

@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import axios from "axios";
 
-import toast, { Toaster } from "react-hot-toast";
-
 import Header from "./components/Header/Header";
 import Body from "./components/Body/Body";
 
