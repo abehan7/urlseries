@@ -1,11 +1,15 @@
-import React, { useEffect } from "react";
+import React from "react";
 import styled from "styled-components";
 import {
   HiOutlineDocumentAdd,
   HiOutlineDocumentRemove,
+  HiOutlineFolder,
   HiOutlineFolderAdd,
   HiOutlineFolderRemove,
 } from "react-icons/hi";
+import { FcFolder } from "react-icons/fc";
+import toast, { Toaster } from "react-hot-toast";
+
 import { CgBackspace, CgEditBlackPoint, CgHashtag } from "react-icons/cg";
 import Footer from "../Footer/Footer.jsx";
 import {
@@ -16,8 +20,13 @@ import {
 } from "../../contexts/ModeContext.jsx";
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
 import { useUrl } from "../../contexts/UrlContext.jsx";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getToken } from "../../redux/ReducersT/tokenReducer.js";
+import { useFolder } from "../../contexts/FolderContext.jsx";
+import {
+  getFolders,
+  SET_FOLDER_CONTENTS,
+} from "../../store/reducers/Folders.js";
 
 // import {} from "react-icons"
 
@@ -189,24 +198,83 @@ const NormalWrapper = styled.div`
 
 const EditWrapper = styled(TapsWrapper)``;
 
+const FolderWrapper = styled(TapsWrapper)`
+  > div {
+    :hover {
+      background-color: #e6c7b675;
+      ::before {
+        background-color: #e6c7b6;
+      }
+    }
+    ::before {
+      transition: all 0.2s ease-in-out;
+      left: 0;
+      content: "";
+      height: 100%;
+      width: 2px;
+      position: absolute;
+    }
+  }
+`;
+
+const FolderIcon = styled.div`
+  font-size: 1.7rem;
+`;
+
 const SideBar = () => {
   const mode = useMode().mode;
 
+  // const currentFolder = useFolder().currentFolder;
+  const folderTitle = useFolder().currentFolder?.folder_name;
+
+  // console.log(currentFolder);
+
+  const NormalModeTaps = () =>
+    sidebarNormalModeList.includes(mode) && <NormalModeItems />;
+
+  const DeleteModeTaps = () => constants.DELETE === mode && <DeleteModeItems />;
+
+  const EditModeTaps = () =>
+    sidebarEditModeList.includes(mode) && <EditModeItems />;
+
+  const FolderTaps = () => constants.FOLDER === mode && <FolderModeItems />;
+
+  const FolderEditUrlTaps = () =>
+    constants.FOLDER_EDIT_URL === mode && <FolderEditModeItems />;
+
+  const folderIconList = [constants.FOLDER, constants.FOLDER_EDIT_URL];
+  const FolderIconImg = () =>
+    folderIconList.includes(mode) && (
+      <FolderIcon>
+        <FcFolder />
+      </FolderIcon>
+    );
+
+  const FaviconImg = () =>
+    !folderIconList.includes(mode) && (
+      <Img src="img/logotest2.png" alt="logoImage" />
+    );
   return (
     <SideBarEl>
       <FaviconWrapper>
         <FaviconContainer>
           <ImgWrapper>
-            <Img src="img/logotest2.png" alt="logoImage" />
-            <Ment>Welcome!</Ment>
+            {FolderIconImg()}
+            {FaviconImg()}
+            <Ment>
+              {constants.FOLDER === mode && "Folder"}
+              {constants.FOLDER_EDIT_URL === mode && folderTitle}
+              {!folderIconList.includes(mode) && "Welcome!"}
+            </Ment>
           </ImgWrapper>
         </FaviconContainer>
       </FaviconWrapper>
       {/* 탭 맵핑 */}
-      {sidebarNormalModeList.includes(mode) && <NormalModeItems />}
-      {constants.DELETE === mode && <DeleteModeItems />}
-      {sidebarEditModeList.includes(mode) && <EditModeItems />}
-      {constants.FOLDER === mode && <FolderModeItems />}
+      {NormalModeTaps()}
+      {DeleteModeTaps()}
+      {EditModeTaps()}
+      {FolderTaps()}
+      {FolderEditUrlTaps()}
       <Footer />
     </SideBarEl>
   );
@@ -250,10 +318,9 @@ const NormalModeItems = () => {
       <Item name="수정하기" onClick={onClickEdit}>
         <CgEditBlackPoint />
       </Item>
-
       <TagWrapper onClick={onClickFolder}>
         <Item name="폴더설정">
-          <HiOutlineFolderAdd />
+          <HiOutlineFolder />
         </Item>
       </TagWrapper>
 
@@ -323,10 +390,12 @@ const EditModeItems = () => {
 
 const FolderModeItems = () => {
   const setMode = useMode().setMode;
+
   const onClickBack = () => setMode(constants.NORMAL);
+  const onClickEdit = () => {};
 
   return (
-    <EditWrapper>
+    <TapsWrapper>
       <Item name="뒤로가기" onClick={onClickBack}>
         <CgBackspace />
       </Item>
@@ -336,6 +405,71 @@ const FolderModeItems = () => {
       <Item name="삭제하기">
         <HiOutlineFolderRemove />
       </Item>
-    </EditWrapper>
+      <Item name="수정하기">
+        <CgEditBlackPoint />
+      </Item>
+    </TapsWrapper>
+  );
+};
+
+const FolderEditModeItems = () => {
+  const dispatch = useDispatch();
+  const setMode = useMode().setMode;
+  const handleAddFolderEditUrlList = useFolder().handleAddFolderEditUrlList;
+  const handleResetFolderEditUrl = useFolder().handleResetFolderEditUrl;
+  const filterdUrls = useUrl().url.filterdUrls;
+  const totalUrls = useUrl().url.totalUrls;
+  const currentFolder = useFolder().currentFolder;
+
+  // console.log(currentFolder);
+
+  const onClickBack = () => setMode(constants.FOLDER);
+  const onClickEdit = async () => {
+    //
+    const getData = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    };
+
+    const myPromise = getData();
+
+    toast.promise(myPromise, {
+      loading: "수정중입니다",
+      success: "수정이 완료되었습니다!",
+      error: "수정이 정상적으로 이루어지지 않았습니다",
+    });
+
+    const update = {
+      folderId: currentFolder._id,
+      urls: currentFolder.folder_contents,
+    };
+    dispatch(SET_FOLDER_CONTENTS(update));
+  };
+  const onClickAll = () => {
+    // console.log(filterdUrls);
+    // 검색 하나라도 했을 때만 실행
+    filterdUrls.length !== 0 && handleAddFolderEditUrlList(filterdUrls);
+    // 검색도 안하고 태그도 클릭 안했을 때
+    filterdUrls.length === 0 && handleAddFolderEditUrlList(totalUrls);
+  };
+  const onUnClickAll = () => handleResetFolderEditUrl();
+  return (
+    <TapsWrapper>
+      <Item name="뒤로가기" onClick={onClickBack}>
+        <CgBackspace />
+      </Item>
+      <Item name="수정하기" onClick={onClickEdit}>
+        <CgEditBlackPoint />
+      </Item>
+      <TagWrapper>
+        <Item name="전체선택" onClick={onClickAll}>
+          <MdRadioButtonChecked />
+        </Item>
+      </TagWrapper>
+      <TagWrapper>
+        <Item name="전체해제" onClick={onUnClickAll}>
+          <MdRadioButtonUnchecked />
+        </Item>
+      </TagWrapper>
+    </TapsWrapper>
   );
 };
