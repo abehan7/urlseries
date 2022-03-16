@@ -20,6 +20,7 @@ import {
 } from "../../contexts/ModeContext.jsx";
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
 import { useUrl } from "../../contexts/UrlContext.jsx";
+import { useModal } from "../../contexts/ModalContext.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { getToken } from "../../redux/ReducersT/tokenReducer.js";
 import { useFolder } from "../../contexts/FolderContext.jsx";
@@ -392,29 +393,30 @@ const FolderEditModeItems = () => {
   const filterdUrls = useUrl().url.filterdUrls;
   const totalUrls = useUrl().url.totalUrls;
   const currentFolder = useFolder().currentFolder;
+  const handleAlertTrigger = useModal().handleAlertTrigger;
 
   // console.log(currentFolder);
 
   const onClickBack = () => setMode(constants.FOLDER);
   const onClickEdit = async () => {
-    //
-    const getData = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+    const fn = () => {
+      const getData = async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      };
+      const myPromise = getData();
+      toast.promise(myPromise, {
+        loading: "수정중입니다",
+        success: "수정이 완료되었습니다!",
+        error: "수정이 정상적으로 이루어지지 않았습니다",
+      });
+
+      const update = {
+        folderId: currentFolder._id,
+        urls: currentFolder.folder_contents,
+      };
+      dispatch(SET_FOLDER_CONTENTS(update));
     };
-
-    const myPromise = getData();
-
-    toast.promise(myPromise, {
-      loading: "수정중입니다",
-      success: "수정이 완료되었습니다!",
-      error: "수정이 정상적으로 이루어지지 않았습니다",
-    });
-
-    const update = {
-      folderId: currentFolder._id,
-      urls: currentFolder.folder_contents,
-    };
-    dispatch(SET_FOLDER_CONTENTS(update));
+    handleAlertTrigger(fn);
   };
   const onClickAll = () => {
     // console.log(filterdUrls);

@@ -37,6 +37,7 @@ const MainPage = () => {
       {modalWhiteList.includes(mode) && <Modals mode={mode} />}
       {/* 토스트 */}
       <Toaster containerStyle={containerStyle} />
+      {/* 얼럴트 모달 */}
       <AlertModal />
     </MainEl>
   );
