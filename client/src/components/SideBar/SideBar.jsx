@@ -8,6 +8,7 @@ import {
   HiOutlineFolderRemove,
 } from "react-icons/hi";
 import { FcFolder } from "react-icons/fc";
+import toast, { Toaster } from "react-hot-toast";
 
 import { CgBackspace, CgEditBlackPoint, CgHashtag } from "react-icons/cg";
 import Footer from "../Footer/Footer.jsx";
@@ -225,7 +226,6 @@ const SideBar = () => {
     !folderIconList.includes(mode) && (
       <Img src="img/logotest2.png" alt="logoImage" />
     );
-
   return (
     <SideBarEl>
       <FaviconWrapper>
@@ -396,7 +396,20 @@ const FolderEditModeItems = () => {
   // console.log(currentFolder);
 
   const onClickBack = () => setMode(constants.FOLDER);
-  const onClickEdit = () => {
+  const onClickEdit = async () => {
+    //
+    const getData = async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    };
+
+    const myPromise = getData();
+
+    toast.promise(myPromise, {
+      loading: "수정중입니다",
+      success: "수정이 완료되었습니다!",
+      error: "수정이 정상적으로 이루어지지 않았습니다",
+    });
+
     const update = {
       folderId: currentFolder._id,
       urls: currentFolder.folder_contents,

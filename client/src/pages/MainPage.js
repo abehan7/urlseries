@@ -7,6 +7,7 @@ import SideBar from "../components/SideBar/SideBar";
 import UrlContainer from "../components/UrlContainer/UrlContainer";
 import Modals from "../components/Modal/Modals";
 import { constants, useMode } from "../contexts/ModeContext";
+import { Toaster } from "react-hot-toast";
 
 const MainEl = styled.div`
   position: inherit;
@@ -32,6 +33,15 @@ const MainPage = () => {
       <UrlContainer />
       {/* 모달 */}
       {modalWhiteList.includes(mode) && <Modals mode={mode} />}
+      {/* 토스트 */}
+      <Toaster
+        containerStyle={{
+          top: 100,
+          left: 20,
+          bottom: 20,
+          right: 20,
+        }}
+      />
     </MainEl>
   );
 };
