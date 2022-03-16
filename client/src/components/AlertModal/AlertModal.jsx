@@ -39,6 +39,7 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = styled.div`
+  font-size: 1.1rem;
   border-top: 1px solid #e0e8e7;
   font-weight: 400;
   padding: 0.4rem;

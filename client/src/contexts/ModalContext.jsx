@@ -22,8 +22,8 @@ export const ModalProvider = ({ children }) => {
     bottomBtn: "취소",
   });
 
-  const handleAlertTrigger = (confirmFn) =>
-    setOptions({ ...options, isOpen: true, confirmFn });
+  const handleAlertTrigger = (confirmFn, message) =>
+    setOptions({ ...options, isOpen: true, confirmFn, message });
 
   const value = { options, setOptions, handleAlertTrigger };
   return (

@@ -312,6 +312,7 @@ const DeleteModeItems = () => {
   const handleAddDeleteUrlList = useUrl().handleAddDeleteUrlList;
   const handleResetDeleteUrl = useUrl().handleResetDeleteUrl;
   const totalUrls = useUrl().url.totalUrls;
+  const handleAlertTrigger = useModal().handleAlertTrigger;
 
   const onClickBack = () => setMode(constants.NORMAL);
   const onClickAll = () => {
@@ -323,12 +324,29 @@ const DeleteModeItems = () => {
   };
   const onUnClickAll = () => handleResetDeleteUrl();
 
+  const onClickDelete = () => {
+    const fn = () => {
+      // 토스트 모달
+      const getData = async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      };
+      const myPromise = getData();
+      toast.promise(myPromise, {
+        loading: "삭제중입니다",
+        success: "삭제가 완료되었습니다!",
+        error: "삭제가 정상적으로 이루어지지 않았습니다",
+      });
+      //  삭제 함수 넣기
+    };
+    handleAlertTrigger(fn, "삭제하시겠습니까?");
+  };
+
   return (
     <DeleteWrapper>
       <Item name="뒤로가기" onClick={onClickBack}>
         <CgBackspace />
       </Item>
-      <Item name="삭제하기">
+      <Item name="삭제하기" onClick={onClickDelete}>
         <HiOutlineDocumentRemove />
       </Item>
       <TagWrapper>
@@ -416,7 +434,7 @@ const FolderEditModeItems = () => {
       };
       dispatch(SET_FOLDER_CONTENTS(update));
     };
-    handleAlertTrigger(fn);
+    handleAlertTrigger(fn, "수정하시겠습니까?");
   };
   const onClickAll = () => {
     // console.log(filterdUrls);
