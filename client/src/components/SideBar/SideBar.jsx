@@ -539,27 +539,25 @@ const FolderEditUrlModeItems = () => {
   const totalUrls = useUrl().url.totalUrls;
   const currentFolder = useFolder().currentFolder;
   const handleAlertTrigger = useModal().handleAlertTrigger;
+  const handleOnClickSaveFolderEditUrl =
+    useFolder().handleOnClickSaveFolderEditUrl;
 
   // console.log(currentFolder);
 
   const onClickBack = () => setMode(constants.FOLDER);
   const onClickEdit = async () => {
     const fn = () => {
-      const getData = async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+      const fetchData = async () => {
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
+        await handleOnClickSaveFolderEditUrl();
       };
-      const myPromise = getData();
+
+      const myPromise = fetchData();
       toast.promise(myPromise, {
         loading: "수정중입니다",
         success: "수정이 완료되었습니다!",
         error: "수정이 정상적으로 이루어지지 않았습니다",
       });
-
-      const update = {
-        folderId: currentFolder._id,
-        urls: currentFolder.folder_contents,
-      };
-      dispatch(SET_FOLDER_CONTENTS(update));
     };
     handleAlertTrigger(fn, "수정하시겠습니까?");
   };

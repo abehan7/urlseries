@@ -50,7 +50,7 @@ export const ClickedSeachedUrlAPI = (_id) =>
   API.put(`/clickedSeachedURL/${_id}`);
 
 export const updateFolderContents = (id, folder_contents) =>
-  API.patch(`/folder/contents/${id}`, { folder_contents });
+  API.patch(`/folder/${id}/contents`, { folder_contents });
 
 export const updateHashtag = (oneLineTags) =>
   API.patch("/hashtag", { oneLineTags });

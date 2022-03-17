@@ -121,6 +121,7 @@ export const folderSlice = createSlice({
     },
     [UPDATE_FOLDER.fulfilled]: (state, action) => {
       const newFolder = action.payload;
+      console.log(newFolder);
       const newFolders = state.folders.map((folder) =>
         folder._id === newFolder._id ? newFolder : folder
       );

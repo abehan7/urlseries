@@ -6,6 +6,7 @@ import {
   DELETE_FOLDER,
   getFolders,
   SET_FOLDERS,
+  SET_FOLDER_CONTENTS,
 } from "../store/reducers/Folders";
 // import { getComments } from "../Api";
 import { useUrl } from "./UrlContext";
@@ -17,6 +18,7 @@ import {
 } from "../store/reducers/Tags";
 import { duplicateUrlChecker } from "../components/Utils/Urls/checkDuplicate";
 import { constants, useMode } from "./ModeContext";
+import { updateFolderContents } from "../components/Api";
 
 const FolderContext = createContext();
 
@@ -129,6 +131,16 @@ export const FolderProvider = ({ children }) => {
     getResetCurrentUrl();
   };
 
+  // 현재 선택한 폴더 안에 url들 저장
+  const handleOnClickSaveFolderEditUrl = async () => {
+    const update = {
+      folderId: currentFolder._id,
+      urls: currentFolder.folder_contents,
+    };
+    await updateFolderContents(update.folderId, update.urls);
+    dispatch(SET_FOLDER_CONTENTS(update));
+  };
+
   //수정모드에서 사용할 folder //currentFolder랑 구분되야 todo 들어가고 빠지는 애니메이션에 이상 안생겨
   const handleSetEditFolder = (_folder) => setEditFolder(_folder);
 
@@ -180,7 +192,8 @@ export const FolderProvider = ({ children }) => {
     isClicked && getCombinedItems();
     // 태그 클릭 아무것도 안되면 전체 비우기
     !isClicked && setCombinedTagItems({ urls: [], urlIds: [] });
-  }, [metaTagItems, folderTagItems, folders, isClicked]);
+  }, [metaTagItems, folderTagItems, isClicked]);
+  // 여기에 folder 디펜던시 있었는데 없애니까 돼
 
   useEffect(() => {
     // console.log("metaTagItems :", metaTagItems);
@@ -233,6 +246,7 @@ export const FolderProvider = ({ children }) => {
     handleResetFolderEditUrl,
     handleResetDeleteFolder,
     handleOnClickDeleteBtn,
+    handleOnClickSaveFolderEditUrl,
   };
 
   return (
