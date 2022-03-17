@@ -38,7 +38,7 @@ export const Get21Urls = (lastId) => API.post("/get21Urls", { lastId });
 
 export const getFolderItems = () => API.get("/folderItems");
 
-export const AddUrl = (url, title, hashTags, memo) =>
+export const addUrl = ({ url, title, hashTags, memo }) =>
   API.post("/addUrl", { url, title, hashTags, memo });
 
 export const AddFolder = (folder_name) =>

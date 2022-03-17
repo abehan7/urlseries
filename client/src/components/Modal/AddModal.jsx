@@ -4,6 +4,8 @@ import styled, { css } from "styled-components";
 import { useModal } from "../../contexts/ModalContext";
 import { constants, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
+import { addUrl } from "../Api";
+import { KeywordNormalize } from "../Utils/Search";
 import { BodyContent } from "./styled/BodyContent.styled";
 import { ColoredFooterBtn } from "./styled/ColoredFooterBtn.styled";
 import { Footer } from "./styled/Footer.styled";
@@ -132,6 +134,7 @@ const AddModal = () => {
   const editUrl = useUrl().editUrl;
   const handleSetEditUrl = useUrl().handleSetEditUrl;
   const handleAlertTrigger = useModal().handleAlertTrigger;
+  const handleAddUrl = useUrl().handleAddUrl;
 
   const textInitialize = () => {
     if (modalMode === constants.ADD)
@@ -151,18 +154,57 @@ const AddModal = () => {
 
   const [text, setText] = useState(textInitialize);
   const onClickBack = () => setIsInput(true);
+
+  const checkInput = () => {
+    if (text.url.length === 0) {
+      toast.error("URL을 입력해주세요");
+      return false;
+    }
+    if (text.title.length === 0) {
+      toast.error("제목을 입력해주세요");
+      return false;
+    }
+    return true;
+  };
+
   const onClickNext = () => {
+    const _checkInput = checkInput();
+    if (!_checkInput) return;
     setIsInput(false);
     setCount(count + 1);
   };
   const onClickCancel = () => {
-    modalMode === constants.ADD && setModalMode(constants.NORMAL);
-    modalMode === constants.EDIT_MODAL_UP && setModalMode(constants.EDIT);
+    modalMode === constants.ADD && setModalMode(null);
+    modalMode === constants.EDIT_MODAL_UP && setModalMode(null);
     modalMode === constants.EDIT_MODAL_UP && handleSetEditUrl({});
-    // mode === constants.EDIT_MODAL_UP && setCount(0);
   };
+
+  const getHashtagArr = (oneLineHashtag) => {
+    const Phashtag = KeywordNormalize(oneLineHashtag).toUpperCase();
+    const _hashtagArr = Phashtag.split("#");
+    const hashtagArr = _hashtagArr.slice(1, _hashtagArr.length);
+    const hashAttached = hashtagArr.map((hashtag) => `#${hashtag}`);
+    return hashAttached;
+  };
+
   const onClickSubmit = () => {
-    const addFn = () => {};
+    const addFn = () => {
+      // 토스트 모달
+      const fetchData = async () => {
+        // 키워드 정규화
+        const hashtagArr = getHashtagArr(text.hashtag);
+        const _url = { ...text, hashTags: hashtagArr };
+        await handleAddUrl(_url);
+      };
+      const myPromise = fetchData();
+      toast.promise(myPromise, {
+        loading: "추가중입니다",
+        success: "완료되었습니다!",
+        error: "정상적으로 이루어지지 않았습니다",
+      });
+      //  추가 함수 넣기
+      onClickCancel();
+    };
     const editFn = () => {
       const fn = () => {
         // 토스트 모달

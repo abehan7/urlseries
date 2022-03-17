@@ -12,6 +12,7 @@ import {
   GetTotalUrls,
   getAbort,
   TotalAfter,
+  addUrl,
 } from "../components/Api";
 import { duplicateUrlChecker } from "../components/Utils/Urls/checkDuplicate";
 import { getToken } from "../redux/ReducersT/tokenReducer";
@@ -168,9 +169,9 @@ export const UrlProvider = ({ children }) => {
 
   const handleAddUrl = async (_url) => {
     // api call
-    const addUrl = () => {};
-    const newUrl = await addUrl(_url);
-    setUrl({ ...url, totalUrl: [newUrl, ...url.totalUrls] });
+    const { data } = await addUrl(_url);
+    setUrl({ ...url, totalUrls: [data, ...url.totalUrls] });
+    console.log(data);
   };
 
   const handleClickDeleteUrlBtn = async (urlId) => {
