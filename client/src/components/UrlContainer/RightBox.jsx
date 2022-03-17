@@ -294,7 +294,7 @@ const FolderMode = ({ isScroll, handleScrollUp }) => {
 
 const FolderDeleteMode = ({ isScroll, handleScrollUp }) => {
   const [loading, setLoading] = useState(true);
-  const folders = [];
+  const folders = useFolder().deleteFolders;
 
   useEffect(() => {
     const timer = setTimeout(() => {

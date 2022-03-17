@@ -88,7 +88,7 @@ const FolderStick = ({
 
   const onClickFolder = async (e) => {
     // 별 누르면 클릭 안되게하기
-    if (ref.current.contains(e.target)) return;
+    if (ref.current?.contains(e.target)) return;
     onClick();
     // 삭제모드일때
   };
@@ -105,17 +105,27 @@ const FolderStick = ({
   const classNameMethod = {
     isNewItem: () => {
       if (likeFolder._id !== id) return "";
-      const nowItem = !likeFolder.like ? "newItem" : "removeItem";
+      const nowItem = likeFolder.isNewItem ? "newItem" : "removeItem";
       return nowItem;
     },
+    isDeleteNewItem: () => {
+      if (likeFolder._id !== id) return "";
+      const nowItem = likeFolder.isNewItem ? "newItem" : "removeItem";
+      return nowItem;
+    },
+  };
+
+  const className = () => {
+    if (mode === constants.FOLDER) return classNameMethod.isNewItem();
+    if (mode === constants.FOLDER_DELETE)
+      return classNameMethod.isDeleteNewItem();
   };
 
   return (
     <FolderStickEl
       key={id}
       onClick={onClickFolder}
-      className={classNameMethod.isNewItem()}
-      mode={mode}
+      className={className()}
       isDeleteFolder={isDeleteFolder}
     >
       <Line />

@@ -13,12 +13,6 @@ const FolderSquareEl = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-
-  ${(props) =>
-    props.isDeleteFolder &&
-    css`
-      background-color: ${(props) => props.backgroundColor};
-    `}
 `;
 
 const ItemWrapper = styled.div`
@@ -39,8 +33,8 @@ const ItemWrapper = styled.div`
   flex-direction: column;
 
   :hover {
-    background-color: ${Colors.BgPurple};
-    /* box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px; */
+    background-color: ${({ mode }) =>
+      mode === constants.FOLDER_DELETE ? Colors.BgRed : Colors.BgPurple};
   }
 `;
 
@@ -142,8 +136,8 @@ const FolderSquare = ({
     );
 
   return (
-    <FolderSquareEl onClick={onClickFolder} isDeleteFolder={isDeleteFolder}>
-      <ItemWrapper>
+    <FolderSquareEl onClick={onClickFolder}>
+      <ItemWrapper mode={mode}>
         <TopWrapper>
           <FolderIcon>
             <FcFolder />

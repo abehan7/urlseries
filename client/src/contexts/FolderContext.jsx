@@ -29,6 +29,7 @@ export const FolderProvider = ({ children }) => {
   const [likeFolder, setLikeFolder] = useState({});
   const [folderUrlIds, setFolderUrlIds] = useState([]);
   const [filterdFolders, setFilterdFolders] = useState([]);
+  const [deleteFolders, setDeleteFolders] = useState([]);
   const dispatch = useDispatch();
   const token = useSelector(getToken);
   const folders = useSelector(getFolders);
@@ -133,6 +134,29 @@ export const FolderProvider = ({ children }) => {
   // 필터링된 폴더 저장
   const handleSetFilterdFolders = (folders) => setFilterdFolders(folders);
 
+  // 폴더 삭제
+  const handleAddDeleteFolderList = (newFolders) => {
+    const duplicatedList = [...newFolders, deleteFolders];
+    //TODO: 여기 로직 FOLDER에 맞게 바꾸기
+    const filterd = duplicateUrlChecker(duplicatedList);
+    // getResetCurrentFolders();
+    setDeleteFolders(filterd);
+  };
+
+  // 삭제 폴더 리스트에서 제거
+  const handleRemoveDeleteFolder = (folderId) => {
+    const newDeleteFolders = deleteFolders.filter(
+      (_folder) => _folder._id !== folderId
+    );
+    setDeleteFolders(newDeleteFolders);
+  };
+
+  // 삭제 폴더 리스트에 추가
+  const handleAddDeleteFolder = (_folder) => {
+    const newDeleteFolders = [_folder, ...deleteFolders];
+    setDeleteFolders(newDeleteFolders);
+  };
+
   // FIXME: 메타태그 + 폴더태그 아이템 useEffect
 
   useEffect(() => {
@@ -173,6 +197,7 @@ export const FolderProvider = ({ children }) => {
     editFolder,
     likeFolder,
     filterdFolders,
+    deleteFolders,
     handleSetCombinedItemLoading,
     handleSetCurrentFolder,
     handleAddFolderEditUrl,
@@ -182,6 +207,8 @@ export const FolderProvider = ({ children }) => {
     handleSetEditFolder,
     handleSetLikeFolder,
     handleSetFilterdFolders,
+    handleAddDeleteFolder,
+    handleRemoveDeleteFolder,
   };
 
   return (

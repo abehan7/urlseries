@@ -55,7 +55,7 @@ export const UrlProvider = ({ children }) => {
     url_likedUrl: "",
   });
 
-  const [urlIds, setUrlIds] = useState({ deleteUrlIds: [] });
+  // const [urlIds, setUrlIds] = useState({ deleteUrlIds: [] });
 
   // const [totalUrls, setTotalUrls] = useState([]);
 
@@ -111,9 +111,6 @@ export const UrlProvider = ({ children }) => {
   }, [url.totalUrls, hashtag.totalHashtags]);
 
   const handleCloseEditModal = () => {
-    // close modal
-    document.querySelector(".hashtagModal-container").style.display = "none";
-
     // reset assigned hashtag
     const resetedAssignedTags = hashtag.totalHashtags.filter((tag) => {
       return tag.origin === 1;

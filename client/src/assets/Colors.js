@@ -13,5 +13,7 @@ const Colors = {
   LightBrown: "#e6c7b675",
   BgPurple: "#a597fe1a",
   BarPurple: "#c282ff",
+  BgRed: "#ffcccb7a",
+  BarRed: "tomato",
 };
 export default Colors;
