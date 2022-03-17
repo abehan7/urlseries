@@ -32,6 +32,24 @@ const updateFolder = async (req, res) => {
   await db.Folders.findById(query, update).clone();
 };
 
+const updateFolderLike = async (req, res) => {
+  const { id } = req.user;
+  const user_id = id;
+  const { _id } = req.params;
+  console.log("updateFolderLike");
+
+  const query = { _id, user_id };
+
+  const update = (error, doc) => {
+    doc.like = !doc.like;
+    doc.folder_edited = getCurrentDate();
+    doc.save();
+    res.json(doc);
+  };
+
+  await db.Folders.findById(query, update).clone();
+};
+
 const deleteFolders = async (req, res) => {
   const { id } = req.user;
   const user_id = id;
@@ -41,4 +59,4 @@ const deleteFolders = async (req, res) => {
   res.json(idList);
 };
 
-module.exports = { addFolder, updateFolder, deleteFolders };
+module.exports = { addFolder, updateFolder, deleteFolders, updateFolderLike };

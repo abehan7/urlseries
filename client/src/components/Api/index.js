@@ -58,8 +58,7 @@ export const updateHashtag = (oneLineTags) =>
 export const updateFolder = ({ folder_id, folder_name, folder_memo }) =>
   API.patch(`/folder/${folder_id}`, { folder_name, folder_memo });
 
-export const updateFolderLike = (folders) =>
-  API.put("/FolderLiked", { folders });
+export const updateFolderLike = (id) => API.put(`/folder/${id}/like`);
 
 export const updateUrlLike = (id) => API.put(`/url/like/${id}`);
 

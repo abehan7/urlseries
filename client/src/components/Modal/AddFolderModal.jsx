@@ -155,7 +155,6 @@ const AddFolderModal = () => {
             folder_id: editFolder._id,
           };
           await dispatch(UPDATE_FOLDER(_folder));
-          // console.log(_folder);
         };
         const myPromise = fatchData();
         toast.promise(myPromise, {

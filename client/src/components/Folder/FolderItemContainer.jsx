@@ -9,6 +9,7 @@ import FolderStick from "./FolderStick";
 import { useDispatch } from "react-redux";
 import { ADD_LIKE, REMOVE_LIKE, SET_LIKE } from "../../store/reducers/Folders";
 import { useEffect } from "react";
+import { updateFolderLike } from "../Api";
 
 const STICK = "STICK";
 const SQUARE = "SQUARE";
@@ -43,7 +44,8 @@ const FolderItemContainer = ({ folders, type }) => {
   const stopCondition = folders.length === contentsNum;
   InfiniteScroll({ isLoaded, getNextItems, target, stopCondition });
 
-  const handleClickStar = (folder) => {
+  const handleClickStar = async (folder) => {
+    await updateFolderLike(folder._id);
     folder.like && setTimeout(() => dispatch(REMOVE_LIKE(folder._id)), 300);
     folder.like && handleSetLikeFolder({ ...folder, isNewItem: false });
     !folder.like && dispatch(ADD_LIKE(folder._id));
