@@ -97,6 +97,7 @@ const FolderItemContainer = ({ folders, type }) => {
     const _onClickFolder = () => onClickFolder(folder);
     const _handleClickStar = () => handleClickStar(folder);
     const isDeleteFolder = deleteFolderIds.includes(folder._id);
+    const memo = folder.folder_memo || "메모";
     return (
       type === SQUARE && (
         <FolderSquare
@@ -109,6 +110,7 @@ const FolderItemContainer = ({ folders, type }) => {
           onClick={_onClickFolder}
           handleClickStar={_handleClickStar}
           isDeleteFolder={isDeleteFolder}
+          memo={memo}
         />
       )
     );

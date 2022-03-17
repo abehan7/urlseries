@@ -1,11 +1,14 @@
+const db = require("../models");
+
 const addFolder = async (req, res) => {
   const { id } = req.user;
   const user_id = id;
   const { folder_name, folder_memo } = req.body;
+  console.log(req.body);
   const update = { folder_name, user_id, folder_memo };
-  const NewFolder = new db.Folders(update);
-  await NewFolder.save();
-  res.json(NewFolder);
+  const newFolder = new db.Folders(update);
+  await newFolder.save();
+  res.json(newFolder);
   console.log("inserted data from addFolder");
 };
 

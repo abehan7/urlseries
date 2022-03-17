@@ -115,7 +115,6 @@ const Text = styled.span`
   word-wrap: break-word;
 `;
 
-const text = `this is a pedrotech 123123 this is a pedrotecasdsadasdasdh 123123thi `;
 const FolderSquare = ({
   folderName,
   id,
@@ -125,6 +124,7 @@ const FolderSquare = ({
   onClick,
   handleClickStar,
   isDeleteFolder = false,
+  memo = "메모",
 }) => {
   const ref = useRef(null);
   const mode = useMode().mode;
@@ -155,7 +155,7 @@ const FolderSquare = ({
         </PadidngWrapper>
         <DescPaddingWrapper>
           <Desc>
-            <Text>{text}</Text>
+            <Text>{memo}</Text>
           </Desc>
           <IndexEl>
             {totalFolderNum - index}/{totalFolderNum}

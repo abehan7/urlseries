@@ -15,6 +15,8 @@ import { ModalTitle } from "./styled/ModalTitle.styled";
 import { useFolder } from "../../contexts/FolderContext";
 import toast from "react-hot-toast";
 import { useModal } from "../../contexts/ModalContext";
+import { useDispatch } from "react-redux";
+import { ADD_FOLDER } from "../../store/reducers/Folders";
 
 const FooterEl = styled(Footer)``;
 
@@ -96,13 +98,14 @@ const MemoLabel = styled(Label)`
   height: 20px;
 `;
 const AddFolderModal = () => {
+  const dispatch = useDispatch();
   const editFolder = useFolder().editFolder;
   const handleSetEditFolder = useFolder().handleSetEditFolder;
   const handleAlertTrigger = useModal().handleAlertTrigger;
   // console.log(editFolder);
   // const handleSetEditFolder = useFolder().handleSetEditFolder;
   const textInitialize = () => {
-    if (modalMode === constants.FOLDER_ADD) return { title: "", memo: "" };
+    if (modalMode === constants.FOLDER_ADD) return { name: "", memo: "" };
     if (modalMode === constants.FOLDER_EDIT_MODAL_UP)
       return { name: editFolder?.folder_name, memo: editFolder?._id };
   };
@@ -115,10 +118,22 @@ const AddFolderModal = () => {
     setModalMode(null);
     handleSetEditFolder(null);
   };
+
+  const checkInput = () => {
+    if (text.name.length === 0) {
+      toast.error("폴더이름을 입력해주세요!");
+      return false;
+    }
+    return true;
+  };
+
   const onClickSubmit = () => {
     const addFn = () => {
       const fetchData = async () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
+        console.log("text: ", text);
+
+        dispatch(ADD_FOLDER(text));
       };
       const myPromise = fetchData();
       toast.promise(myPromise, {
@@ -132,10 +147,10 @@ const AddFolderModal = () => {
     const editFn = () => {
       const fn = () => {
         // 토스트 모달
-        const getData = async () => {
+        const fatchData = async () => {
           await new Promise((resolve) => setTimeout(resolve, 1000));
         };
-        const myPromise = getData();
+        const myPromise = fatchData();
         toast.promise(myPromise, {
           loading: "수정중입니다",
           success: "수정이 완료되었습니다!",
@@ -145,6 +160,9 @@ const AddFolderModal = () => {
       };
       handleAlertTrigger(fn, "수정하시겠습니까?");
     };
+    console.log(text);
+    const _checkInput = checkInput();
+    if (!_checkInput) return;
     modalMode === constants.FOLDER_ADD && addFn();
     modalMode === constants.FOLDER_EDIT_MODAL_UP && editFn();
   };

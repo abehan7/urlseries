@@ -5,8 +5,8 @@ const folders = [];
 
 export const ADD_FOLDER = createAsyncThunk(
   "folders/ADD_FOLDER", // 액션 이름을 정의해 주도록 합니다.
-  async (folder_name, folder_memo) => {
-    const response = await addFolder(folder_name, folder_memo);
+  async (text) => {
+    const response = await addFolder(text.name, text.memo);
     return response.data;
   }
 );
