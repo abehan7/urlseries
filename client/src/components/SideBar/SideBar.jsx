@@ -454,22 +454,23 @@ const FolderEditModeItems = () => {
 
 const FolderDeleteModeItems = () => {
   const setMode = useMode().setMode;
-  // const filterdUrls = useUrl().url.filterdUrls;
-  // const handleAddDeleteUrlList = useUrl().handleAddDeleteUrlList;
-  const handleResetDeleteUrl = useUrl().handleResetDeleteUrl;
-  // const totalUrls = useUrl().url.totalUrls;
+  const filterdFolders = useFolder().filterdFolders;
+  const handleAddDeleteFolderList = useFolder().handleAddDeleteFolderList;
+  const handleResetDeleteFolder = useFolder().handleResetDeleteFolder;
+
+  const folders = useSelector(getFolders);
   const handleAlertTrigger = useModal().handleAlertTrigger;
 
   const onClickBack = () => setMode(constants.FOLDER);
   const onClickAll = () => {
     // 이쪽은 폴더 검색 기능 만든다음에 해야할 듯
-    // console.log(filterdUrls);
+    console.log(filterdFolders);
     // 검색 하나라도 했을 때만 실행
-    // filterdUrls.length !== 0 && handleAddDeleteUrlList(filterdUrls);
+    filterdFolders.length !== 0 && handleAddDeleteFolderList(filterdFolders);
     // 검색도 안하고 태그도 클릭 안했을 때
-    // filterdUrls.length === 0 && handleAddDeleteUrlList(totalUrls);
+    filterdFolders.length === 0 && handleAddDeleteFolderList(folders);
   };
-  const onUnClickAll = () => handleResetDeleteUrl();
+  const onUnClickAll = () => handleResetDeleteFolder();
 
   const onClickDelete = () => {
     const fn = () => {

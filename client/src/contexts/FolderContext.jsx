@@ -136,12 +136,15 @@ export const FolderProvider = ({ children }) => {
 
   // 폴더 삭제
   const handleAddDeleteFolderList = (newFolders) => {
-    const duplicatedList = [...newFolders, deleteFolders];
-    //TODO: 여기 로직 FOLDER에 맞게 바꾸기
+    const duplicatedList = [...newFolders, ...deleteFolders];
+
     const filterd = duplicateUrlChecker(duplicatedList);
     // getResetCurrentFolders();
     setDeleteFolders(filterd);
   };
+
+  // 삭제할 폴더 목록들 초기화
+  const handleResetDeleteFolder = () => setDeleteFolders([]);
 
   // 삭제 폴더 리스트에서 제거
   const handleRemoveDeleteFolder = (folderId) => {
@@ -184,10 +187,14 @@ export const FolderProvider = ({ children }) => {
   useEffect(() => mode === constants.FOLDER && dispatch(RESET_TAGS()), [mode]);
 
   // 모드 바뀌면 likeFolder비우기
-  useEffect(() => setLikeFolder({}), [mode]);
+  // 모드 바뀌면 deleteFolders비우기
   useEffect(() => {
-    console.log("editFolder", editFolder);
-  }, [editFolder]);
+    setLikeFolder({});
+    setDeleteFolders([]);
+  }, [mode]);
+  // useEffect(() => {
+  //   console.log("editFolder", editFolder);
+  // }, [editFolder]);
 
   const value = {
     loading,
@@ -209,6 +216,8 @@ export const FolderProvider = ({ children }) => {
     handleSetFilterdFolders,
     handleAddDeleteFolder,
     handleRemoveDeleteFolder,
+    handleAddDeleteFolderList,
+    handleResetDeleteFolder,
   };
 
   return (
