@@ -26,6 +26,7 @@ export const FolderProvider = ({ children }) => {
   });
   const [currentFolder, setCurrentFolder] = useState({});
   const [editFolder, setEditFolder] = useState({});
+  const [likeFolder, setLikeFolder] = useState({});
   const [folderUrlIds, setFolderUrlIds] = useState([]);
   const dispatch = useDispatch();
   const token = useSelector(getToken);
@@ -125,6 +126,8 @@ export const FolderProvider = ({ children }) => {
   //수정모드에서 사용할 folder //currentFolder랑 구분되야 todo 들어가고 빠지는 애니메이션에 이상 안생겨
   const handleSetEditFolder = (_folder) => setEditFolder(_folder);
 
+  const handleSetLikeFolder = (_folder) => setLikeFolder(_folder);
+
   // FIXME: 메타태그 + 폴더태그 아이템 useEffect
 
   useEffect(() => {
@@ -134,7 +137,7 @@ export const FolderProvider = ({ children }) => {
   }, [metaTagItems, folderTagItems, folders, isClicked]);
 
   useEffect(() => {
-    console.log("metaTagItems :", metaTagItems);
+    // console.log("metaTagItems :", metaTagItems);
   }, [metaTagItems]);
 
   // FIXME: 폴더에서만 사용되는 useEffect
@@ -161,6 +164,7 @@ export const FolderProvider = ({ children }) => {
     currentFolder,
     folderUrlIds,
     editFolder,
+    likeFolder,
     handleSetCombinedItemLoading,
     handleSetCurrentFolder,
     handleAddFolderEditUrl,
@@ -168,6 +172,7 @@ export const FolderProvider = ({ children }) => {
     handleAddFolderEditUrlList,
     handleResetFolderEditUrl,
     handleSetEditFolder,
+    handleSetLikeFolder,
   };
 
   return (

@@ -2,7 +2,8 @@ import { useRef } from "react";
 import { FcFolder } from "react-icons/fc";
 import styled from "styled-components";
 import Colors from "../../assets/Colors";
-import { useMode } from "../../contexts/ModeContext";
+import { useFolder } from "../../contexts/FolderContext";
+import { constants, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 import { Icon, Index, Text, TextWrapper } from "../UrlContainer/Url";
 import { Liked, NotLiked } from "./FolderSquare";
@@ -71,7 +72,7 @@ const FolderStick = ({
   handleClickStar,
 }) => {
   const ref = useRef(null);
-  const currentUrl = useUrl().currentUrl;
+  const likeFolder = useFolder().likeFolder;
   const mode = useMode().mode;
 
   const onClickFolder = async (e) => {
@@ -81,12 +82,19 @@ const FolderStick = ({
     // 삭제모드일때
   };
 
-  const onClickStar = () => handleClickStar(id);
+  const onClickStar = () => handleClickStar();
+
+  const LikedIconEl = () =>
+    mode !== constants.FOLDER_DELETE && (
+      <LikedIcon ref={ref} onClick={onClickStar}>
+        {isLiked ? <Liked /> : <NotLiked />}
+      </LikedIcon>
+    );
 
   const classNameMethod = {
     isNewItem: () => {
-      if (currentUrl._id !== id) return "";
-      const nowItem = currentUrl.url_likedUrl === 0 ? "newItem" : "removeItem";
+      if (likeFolder._id !== id) return "";
+      const nowItem = !likeFolder.like ? "newItem" : "removeItem";
       return nowItem;
     },
   };
@@ -105,11 +113,7 @@ const FolderStick = ({
       <TextWrapper>
         <Text>{title}</Text>
       </TextWrapper>
-
-      <LikedIcon onClick={onClickStar} ref={ref}>
-        {isLiked ? <Liked /> : <NotLiked />}
-      </LikedIcon>
-
+      {LikedIconEl()}
       <Index>
         {totalUrlNum - index}/{totalUrlNum}
       </Index>

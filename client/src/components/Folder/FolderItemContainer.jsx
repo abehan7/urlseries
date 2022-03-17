@@ -7,7 +7,7 @@ import Loader from "../Utils/Loader/Loader";
 import FolderSquare from "./FolderSquare";
 import FolderStick from "./FolderStick";
 import { useDispatch } from "react-redux";
-import { SET_LIKE } from "../../store/reducers/Folders";
+import { ADD_LIKE, REMOVE_LIKE, SET_LIKE } from "../../store/reducers/Folders";
 
 const STICK = "STICK";
 const SQUARE = "SQUARE";
@@ -20,6 +20,7 @@ const FolderItemContainer = ({ folders, type }) => {
   const setMode = useMode().setMode;
   const handleSetCurrentFolder = useFolder().handleSetCurrentFolder;
   const handleSetEditFolder = useFolder().handleSetEditFolder;
+  const handleSetLikeFolder = useFolder().handleSetLikeFolder;
   const dispatch = useDispatch();
   const mode = useMode().mode;
   const setModalMode = useMode().setModalMode;
@@ -37,18 +38,20 @@ const FolderItemContainer = ({ folders, type }) => {
   const stopCondition = folders.length === contentsNum;
   InfiniteScroll({ isLoaded, getNextItems, target, stopCondition });
 
-  const handleClickStar = (folderId) => dispatch(SET_LIKE(folderId));
+  const handleClickStar = (folder) => {
+    handleSetLikeFolder(folder);
+    folder.like && setTimeout(() => dispatch(REMOVE_LIKE(folder._id)), 300);
+    !folder.like && dispatch(ADD_LIKE(folder._id));
+  };
 
   // 폴더 클릭 할 때 mode에 따라서 클릭 이벤트 다른거 주기
   // FOLDER일때 onClick
   const normalClick = (folder) => {
+    handleSetLikeFolder({});
     setMode(constants.FOLDER_EDIT_URL);
     handleSetCurrentFolder(folder);
   };
 
-  const addClick = () => {
-    console.log("addClick");
-  };
   const deleteClick = () => {};
   const editClick = (folder) => {
     handleSetEditFolder(folder);
@@ -57,12 +60,12 @@ const FolderItemContainer = ({ folders, type }) => {
 
   const onClickFolder = (folder) => {
     mode === constants.FOLDER && normalClick(folder);
-    // mode === constants.FOLDER_ADD && addClick(folder);
     mode === constants.FOLDER_DELETE && deleteClick(folder);
     mode === constants.FOLDER_EDIT && editClick(folder);
   };
   const SquareMap = (folder, index) => {
     const _onClickFolder = () => onClickFolder(folder);
+    const _handleClickStar = () => handleClickStar(folder);
 
     return (
       type === SQUARE && (
@@ -74,7 +77,7 @@ const FolderItemContainer = ({ folders, type }) => {
           totalFolderNum={folders.length}
           isLiked={folder.like}
           onClick={_onClickFolder}
-          handleClickStar={handleClickStar}
+          handleClickStar={_handleClickStar}
         />
       )
     );
@@ -82,6 +85,7 @@ const FolderItemContainer = ({ folders, type }) => {
 
   const StickMap = (folder, index) => {
     const _onClickFolder = () => onClickFolder(folder);
+    const _handleClickStar = () => handleClickStar(folder);
     return (
       type === STICK && (
         <FolderStick
@@ -92,7 +96,7 @@ const FolderItemContainer = ({ folders, type }) => {
           totalUrlNum={folders.length}
           isLiked={folder.like}
           onClick={_onClickFolder}
-          handleClickStar={handleClickStar}
+          handleClickStar={_handleClickStar}
         />
       )
     );

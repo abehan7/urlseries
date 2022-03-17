@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { FcFolder } from "react-icons/fc";
 import { Index } from "../UrlContainer/Url";
 import Colors from "../../assets/Colors";
+import { constants, useMode } from "../../contexts/ModeContext";
 
 const IndexEl = styled(Index)``;
 const FolderSquareEl = styled.div`
@@ -118,11 +119,19 @@ const FolderSquare = ({
   handleClickStar,
 }) => {
   const ref = useRef(null);
+  const mode = useMode().mode;
   const onClickFolder = (e) => {
-    if (ref.current.contains(e.target)) return;
+    if (ref.current?.contains(e.target)) return;
     onClick();
   };
-  const onClickStar = () => handleClickStar(id);
+  const onClickStar = () => handleClickStar();
+
+  const LikedIconEl = () =>
+    mode !== constants.FOLDER_DELETE && (
+      <LikedIcon ref={ref} onClick={onClickStar}>
+        {isLiked ? <Liked /> : <NotLiked />}
+      </LikedIcon>
+    );
 
   return (
     <FolderSquareEl onClick={onClickFolder}>
@@ -131,9 +140,7 @@ const FolderSquare = ({
           <FolderIcon>
             <FcFolder />
           </FolderIcon>
-          <LikedIcon ref={ref} onClick={onClickStar}>
-            {isLiked ? <Liked /> : <NotLiked />}
-          </LikedIcon>
+          {LikedIconEl()}
         </TopWrapper>
         <PadidngWrapper>
           <Title>{folderName}</Title>

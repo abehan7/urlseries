@@ -152,9 +152,6 @@ const TapsWrapper = styled.div`
   animation: fadeIn 0.5s ease-in-out;
 `;
 const DeleteWrapper = styled(TapsWrapper)`
-  > div:last-child {
-    pointer-events: none;
-  }
   > div:nth-child(2) {
     :hover {
       background-color: #ffcccb7a;
@@ -234,6 +231,9 @@ const SideBar = () => {
   const FolderEditTaps = () =>
     constants.FOLDER_EDIT === mode && <FolderEditModeItems />;
 
+  const FolderDeleteTaps = () =>
+    constants.FOLDER_DELETE === mode && <FolderDeleteModeItems />;
+
   // 폴더 클릭 후 북마크 탭
   const FolderEditUrlTaps = () =>
     constants.FOLDER_EDIT_URL === mode && <FolderEditUrlModeItems />;
@@ -272,7 +272,7 @@ const SideBar = () => {
       {/* 폴더 */}
       {FolderTaps()}
       {FolderEditTaps()}
-
+      {FolderDeleteTaps()}
       {/* 폴더 클릭 후 북마크 */}
       {FolderEditUrlTaps()}
       <Footer />
@@ -389,7 +389,6 @@ const DeleteModeItems = () => {
           <MdRadioButtonUnchecked />
         </Item>
       </TagWrapper>
-      <Item name=""></Item>
     </DeleteWrapper>
   );
 };
@@ -415,6 +414,7 @@ const FolderModeItems = () => {
 
   const onClickBack = () => setMode(constants.NORMAL);
   const onClickAddFolder = () => setModalMode(constants.FOLDER_ADD);
+  const onClickDeleteFolder = () => setMode(constants.FOLDER_DELETE);
   const onClickEdit = () => setMode(constants.FOLDER_EDIT);
 
   return (
@@ -425,7 +425,7 @@ const FolderModeItems = () => {
       <Item name="추가하기" onClick={onClickAddFolder}>
         <HiOutlineFolderAdd />
       </Item>
-      <Item name="삭제하기">
+      <Item name="삭제하기" onClick={onClickDeleteFolder}>
         <HiOutlineFolderRemove />
       </Item>
       <Item name="수정하기" onClick={onClickEdit}>
@@ -447,6 +447,67 @@ const FolderEditModeItems = () => {
         <CgBackspace />
       </Item>
     </EditWrapper>
+  );
+};
+
+//폴더 삭제 탭
+
+const FolderDeleteModeItems = () => {
+  const setMode = useMode().setMode;
+  // const filterdUrls = useUrl().url.filterdUrls;
+  // const handleAddDeleteUrlList = useUrl().handleAddDeleteUrlList;
+  const handleResetDeleteUrl = useUrl().handleResetDeleteUrl;
+  // const totalUrls = useUrl().url.totalUrls;
+  const handleAlertTrigger = useModal().handleAlertTrigger;
+
+  const onClickBack = () => setMode(constants.FOLDER);
+  const onClickAll = () => {
+    // 이쪽은 폴더 검색 기능 만든다음에 해야할 듯
+    // console.log(filterdUrls);
+    // 검색 하나라도 했을 때만 실행
+    // filterdUrls.length !== 0 && handleAddDeleteUrlList(filterdUrls);
+    // 검색도 안하고 태그도 클릭 안했을 때
+    // filterdUrls.length === 0 && handleAddDeleteUrlList(totalUrls);
+  };
+  const onUnClickAll = () => handleResetDeleteUrl();
+
+  const onClickDelete = () => {
+    const fn = () => {
+      // 토스트 모달
+      const getData = async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      };
+      const myPromise = getData();
+      toast.promise(myPromise, {
+        loading: "삭제중입니다",
+        success: "삭제가 완료되었습니다!",
+        error: "삭제가 정상적으로 이루어지지 않았습니다",
+      });
+      //  삭제 함수 넣기
+    };
+    handleAlertTrigger(fn, "삭제하시겠습니까?");
+  };
+
+  return (
+    <DeleteWrapper>
+      <Item name="뒤로가기" onClick={onClickBack}>
+        <CgBackspace />
+      </Item>
+      <Item name="삭제하기" onClick={onClickDelete}>
+        <HiOutlineDocumentRemove />
+      </Item>
+      <TagWrapper>
+        <Item name="전체선택" onClick={onClickAll}>
+          <MdRadioButtonChecked />
+        </Item>
+      </TagWrapper>
+
+      <TagWrapper>
+        <Item name="전체해제" onClick={onUnClickAll}>
+          <MdRadioButtonUnchecked />
+        </Item>
+      </TagWrapper>
+    </DeleteWrapper>
   );
 };
 

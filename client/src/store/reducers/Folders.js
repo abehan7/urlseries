@@ -49,10 +49,23 @@ export const folderSlice = createSlice({
         (url) => url !== urlId
       );
     },
+
     GET_CHANGE_FOLDER_NAME: (state, action) => {
       const { folderId, folder_name } = action.payload;
       const folder = state.folders.find((folder) => folder._id === folderId);
       folder.folder_name = folder_name;
+    },
+
+    ADD_LIKE: (state, action) => {
+      const folderId = action.payload;
+      const folder = state.folders.find((folder) => folder._id === folderId);
+      folder.like = true;
+    },
+
+    REMOVE_LIKE: (state, action) => {
+      const folderId = action.payload;
+      const folder = state.folders.find((folder) => folder._id === folderId);
+      folder.like = false;
     },
 
     SET_LIKE: (state, action) => {
@@ -86,6 +99,8 @@ export const {
   SET_FOLDER_CONTENTS,
   GET_CHANGE_FOLDER_NAME,
   SET_LIKE,
+  ADD_LIKE,
+  REMOVE_LIKE,
   REMOVE_FOLDER,
 } = folderSlice.actions;
 

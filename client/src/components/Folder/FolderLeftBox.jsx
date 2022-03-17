@@ -1,4 +1,4 @@
-import { throttle } from "lodash";
+import { debounce, throttle } from "lodash";
 import { useRef } from "react";
 import { useCallback } from "react";
 import { useState } from "react";
@@ -11,6 +11,7 @@ import Marker from "../UrlContainer/Marker";
 import { ItemConatiner } from "../UrlContainer/styled/ItemContainer";
 import { Title } from "../UrlContainer/styled/Title.styled";
 import { TitleWrapper } from "../UrlContainer/styled/TitleWrapper.styled";
+import { KeywordNormalize } from "../Utils/Search";
 import FolderItemContainer from "./FolderItemContainer";
 
 const TitleEl = styled(Title)`
@@ -52,18 +53,36 @@ const GridBox = styled(ItemConatiner)`
   /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
 `;
 const FolderLeftBoxEl = styled(LeftBoxEl)``;
-
+const debounceFn = debounce((fn, keyword) => fn(keyword), 400);
 const FolderLeftBox = () => {
   const [isSearch, setIsSearch] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [isScroll, setIsScroll] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
   const folders = useSelector(getFolders);
+  const [isSearchLoading, setIsSearchLoading] = useState(false);
+
   // console.log(folders);
+  const _getFilterdFolders = (keyword) => {
+    const pKeyword = KeywordNormalize(keyword);
+    // TODO: 폴더에 맞게 로직 바꿔야돼
+    // const filterd = SearchNotByDB(pKeyword, totalUrls);
+    // handleSetFilterdUrls(filterd);
+    setIsSearchLoading(false);
+  };
+  // [totalUrls, handleSetFilterdUrls]
 
   const scrollRef = useRef(null);
   const onClickSearchTitle = () => {};
-  const onChange = () => {};
+  const onChange = async (e) => {
+    debounceFn.cancel();
+    setIsSearchLoading(true);
+    const _keyword = e.target.value;
+    setKeyword(_keyword);
+    e.target.value.length > 0 &&
+      (await debounceFn(_getFilterdFolders, _keyword));
+  };
+
   const handleScrollUp = useCallback(() => {
     const option = { top: 0, left: 0, behavior: "smooth" };
     scrollRef.current.scrollTo(option);

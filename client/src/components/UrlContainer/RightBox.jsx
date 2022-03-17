@@ -12,6 +12,7 @@ import { constants, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 import { getFolders } from "../../store/reducers/Folders";
 import FolderItemContainer from "../Folder/FolderItemContainer";
+import NoFolder from "../Folder/NoFolder";
 import Loader from "../Utils/Loader/Loader";
 import LoadingCenter from "../Utils/Loader/LoaderCenter";
 import ItemContainer from "./ItemContainer";
@@ -149,6 +150,11 @@ const RightBox = () => {
   const FolderTitle = () =>
     FolderItemWhiteList.includes(mode) && <Title>즐겨찾기 폴더</Title>;
 
+  const FolderDeleteTitle = () =>
+    constants.FOLDER_DELETE === mode && (
+      <Title style={{ color: "tomato" }}>삭제할 폴더 목록</Title>
+    );
+
   //폴더 클릭 후 타이틀
   const FolderEditUrlTitle = () =>
     mode === constants.FOLDER_EDIT_URL && <Title>폴더 북마크</Title>;
@@ -177,6 +183,13 @@ const RightBox = () => {
       <FolderMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
     );
 
+  const FolderDeleteMapping = () =>
+    mode === constants.FOLDER_DELETE && (
+      <FolderDeleteMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
+    );
+
+  // 폴더 클릭 후 북마크 일때 MAPPING
+
   const FolderEditUrlMapping = () =>
     mode === constants.FOLDER_EDIT_URL && (
       <FolderEditUrlMode isScroll={isScroll} handleScrollUp={handleScrollUp} />
@@ -191,6 +204,8 @@ const RightBox = () => {
         {DeleteTitle()}
         {/* 폴더 타이틀 */}
         {FolderTitle()}
+        {/* 폴더 삭제 목록 */}
+        {FolderDeleteTitle()}
         {/* 폴더 클릭 후 타이틀 */}
         {FolderEditUrlTitle()}
       </TitleWrapper>
@@ -201,6 +216,8 @@ const RightBox = () => {
         {DeleteMapping()}
         {/* 폴더모드일 때 매핑 */}
         {FolderMapping()}
+        {/* 폴더 삭제모드일 때 매핑 */}
+        {FolderDeleteMapping()}
         {/* 폴더 클릭 후 폴더 안에 있는 url 매핑 */}
         {FolderEditUrlMapping()}
       </FlexContainer>
@@ -264,11 +281,37 @@ const FolderMode = ({ isScroll, handleScrollUp }) => {
     <>
       {/* 로딩창 */}
       {loading && <LoadingCenter />}
-      {/* 북마크 없을 때 */}
+      {/* 폴더 없을 때 */}
+      {!loading && likedFolders.length === 0 && <NoFolder />}
+      {/* 폴더 있을 때 */}
       {!loading && likedFolders.length !== 0 && (
         <FolderItemContainer folders={likedFolders} type="STICK" />
       )}
-      {!loading && likedFolders.length === 0 && <NoUrl />}
+      <Marker isScroll={isScroll} onClick={handleScrollUp} />
+    </>
+  );
+};
+
+const FolderDeleteMode = ({ isScroll, handleScrollUp }) => {
+  const [loading, setLoading] = useState(true);
+  const folders = [];
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 300);
+    return () => clearTimeout(timer);
+  });
+  return (
+    <>
+      {/* 로딩창 */}
+      {loading && <LoadingCenter />}
+      {/* 북마크 없을 때 */}
+      {!loading && folders.length === 0 && <NoFolder />}
+      {/* 북마크 있을 때 */}
+      {!loading && folders.length !== 0 && (
+        <FolderItemContainer folders={folders} type="STICK" />
+      )}
       <Marker isScroll={isScroll} onClick={handleScrollUp} />
     </>
   );
