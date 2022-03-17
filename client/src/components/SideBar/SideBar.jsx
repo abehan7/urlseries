@@ -342,6 +342,16 @@ const DeleteModeItems = () => {
   const handleResetDeleteUrl = useUrl().handleResetDeleteUrl;
   const totalUrls = useUrl().url.totalUrls;
   const handleAlertTrigger = useModal().handleAlertTrigger;
+  const handleOnClickDeleteUrl = useUrl().handleOnClickDeleteUrl;
+  const deleteUrls = useUrl().url.deleteUrls;
+
+  const checkError = () => {
+    if (deleteUrls.length === 0) {
+      toast.error("삭제할 북마크를 선택해주세요");
+      return true;
+    }
+    return false;
+  };
 
   const onClickBack = () => setMode(constants.NORMAL);
   const onClickAll = () => {
@@ -354,18 +364,20 @@ const DeleteModeItems = () => {
   const onUnClickAll = () => handleResetDeleteUrl();
 
   const onClickDelete = () => {
+    const _checkError = checkError();
+    if (_checkError) return;
+    console.log(" ✔there's no error");
+
     const fn = () => {
       // 토스트 모달
-      const getData = async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-      };
+      const getData = async () => await handleOnClickDeleteUrl();
+
       const myPromise = getData();
       toast.promise(myPromise, {
         loading: "삭제중입니다",
         success: "삭제가 완료되었습니다!",
         error: "삭제가 정상적으로 이루어지지 않았습니다",
       });
-      //  삭제 함수 넣기
     };
     handleAlertTrigger(fn, "삭제하시겠습니까?");
   };

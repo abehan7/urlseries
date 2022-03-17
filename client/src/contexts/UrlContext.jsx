@@ -9,10 +9,12 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   getAssignedtags,
   getGuestUrls,
-  GetTotalUrls,
   getAbort,
-  TotalAfter,
   addUrl,
+  deleteUrls,
+  getTotalUrls,
+  updateUrlLike,
+  api_updateUrl,
 } from "../components/Api";
 import { duplicateUrlChecker } from "../components/Utils/Urls/checkDuplicate";
 import { getToken } from "../redux/ReducersT/tokenReducer";
@@ -157,12 +159,17 @@ export const UrlProvider = ({ children }) => {
     setUrl({ ...url, displayUrls: urls });
   };
 
-  const handleEditUrl = (urlId, newUrl) => {
-    const newTotalUrl = url.totalUrl.map((_url) =>
-      _url._id === urlId ? newUrl : _url
-    );
-    // displayUrl은 useState라서 자동으로 될 수도 있을꺼같으니 우선 나두자
-    const update = { ...url, totalUrl: newTotalUrl };
+  //url 수정하기
+  const handleEditUrl = async (urlId, newUrl) => {
+    console.log("urlId", urlId);
+    // console.log("newUrl", newUrl);
+    await api_updateUrl(urlId, newUrl);
+    const _updateUrl = (urls) => {
+      return urls.map((_url) => (_url._id === urlId ? newUrl : _url));
+    };
+    const newTotalUrls = _updateUrl(url.totalUrls);
+    const newLikedUrls = _updateUrl(url.likedUrls);
+    const update = { ...url, totalUrls: newTotalUrls, likedUrls: newLikedUrls };
     setUrl(update);
     // api call
   };
@@ -170,22 +177,17 @@ export const UrlProvider = ({ children }) => {
   const handleAddUrl = async (_url) => {
     // api call
     const { data } = await addUrl(_url);
-    setUrl({ ...url, totalUrls: [data, ...url.totalUrls] });
+    const update = [data, ...url.totalUrls];
+    setUrl({ ...url, totalUrls: update });
     console.log(data);
   };
 
-  const handleClickDeleteUrlBtn = async (urlId) => {
-    // api call
-    const deleteUrl = () => {};
-    await deleteUrl(urlId);
-    const newUrl = url.totalUrls.filter((_url) => _url._id !== urlId);
-    setUrl({ ...url, totalUrl: newUrl });
-  };
-
   // FIXME: 좋아요 기능
-  const handleClickStar = (urlId) => {
+  const handleClickStar = async (urlId) => {
     const newUrl = url.totalUrls.find((_url) => _url._id === urlId);
     // totalUrls displayUrls
+    await updateUrlLike(urlId);
+
     const update =
       newUrl.url_likedUrl === 0
         ? { ...newUrl, url_likedUrl: 1 }
@@ -203,19 +205,13 @@ export const UrlProvider = ({ children }) => {
     const addLike = [update, ...url.likedUrls];
     const filterLike = url.likedUrls.filter((_url) => _url._id !== urlId);
     const likedUrls = isLiked ? addLike : filterLike;
-    // searchedUrls
-
     // const updateUrlState = { ...url, totalUrls, displayUrls };
     setUrl({ ...url, displayUrls, totalUrls, likedUrls });
-
     // api call
   };
 
   //FIXME: 가장 최신에 클릭한 URL
-  const handleSetCurrentUrl = (url) => {
-    // console.log("url: ", url);
-    setCurrentUrl(url);
-  };
+  const handleSetCurrentUrl = (url) => setCurrentUrl(url);
 
   // FIXME: 삭제탭 기능
   const handleAddDeleteUrl = (_url) => {
@@ -251,6 +247,27 @@ export const UrlProvider = ({ children }) => {
     getResetCurrentUrl();
   };
 
+  const handleOnClickDeleteUrl = async () => {
+    // await deleteUrls(url.deleteUrls);
+    const newTotalUrls = url.totalUrls.filter(
+      (_url) => !url.deleteUrls.some((url) => url._id === _url._id)
+    );
+    const newLikedUrls = url.likedUrls.filter(
+      (_url) => !url.deleteUrls.some((url) => url._id === _url._id)
+    );
+
+    await deleteUrls(url?.deleteUrls);
+
+    const update = {
+      ...url,
+      totalUrls: newTotalUrls,
+      likedUrls: newLikedUrls,
+      deleteUrls: [],
+    };
+
+    setUrl(update);
+  };
+
   // FIXME: BOX들에 보여질 filterd
   const handleSetFilterdUrls = (filterdUrls) => setUrl({ ...url, filterdUrls });
 
@@ -267,38 +284,17 @@ export const UrlProvider = ({ children }) => {
 
   // const handleResetFilterdUrls
 
-  // FIXME: 전체 url
-  useEffect(() => {
-    const fn = async () => {
-      // 전체 url
-      console.log("전체 url");
-      setLoading({ ...loading, isTotalUrl: true });
-      const { data } = await TotalAfter();
-      setUrl({ ...url, totalUrls: data.totalAfter });
-      setLoading({ ...loading, isTotalUrl: false });
-      // console.log("totalUrls: ", data.totalAfter);
-    };
-    token && !loading.isLikedUrl && fn();
-  }, [token, loading.isLikedUrl]);
-
   // FIXME: 초반 url
   useEffect(() => {
     const getMemberData = async () => {
       console.log("getMemberData");
       await getAbort();
-      setLoading({ ...loading, isLikedUrl: true });
-      const { data } = await GetTotalUrls();
+      setLoading({ ...loading, isLikedUrl: true, isTotalUrl: true });
+      const { data } = await getTotalUrls();
       // console.log(data);
 
-      setUrl({
-        ...url,
-        displayUrls: data.totalURL,
-        searchedUrls: data.recentSearched,
-        recentClickedUrls: data.rightURL,
-        likedUrls: data.leftURL,
-      });
-      setLoading({ ...loading, isLikedUrl: false });
-
+      setUrl({ ...url, likedUrls: data.likedUrls, totalUrls: data.totalUrls });
+      setLoading({ ...loading, isLikedUrl: false, isTotalUrl: false });
       dispatch(SET_FOLDERS());
       // console.log(data);
     };
@@ -320,7 +316,7 @@ export const UrlProvider = ({ children }) => {
       setLoading({ ...loading, isLikedUrl: false });
     };
 
-    let timer;
+    // let timer;
 
     token && getMemberData();
     // !token && (timer = setTimeout(getGuestData, 1000));
@@ -356,7 +352,6 @@ export const UrlProvider = ({ children }) => {
     handleGetInfiniteScrollItems,
     handleEditUrl,
     handleAddUrl,
-    handleClickDeleteUrlBtn,
     handleClickStar,
     handleSetCurrentUrl,
     handleAddDeleteUrl,
@@ -366,6 +361,7 @@ export const UrlProvider = ({ children }) => {
     handleSetFilterdUrls,
     handleResetAllUrl,
     handleSetEditUrl,
+    handleOnClickDeleteUrl,
     getResetCurrentUrl,
     loading,
   };

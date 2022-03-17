@@ -135,6 +135,7 @@ const AddModal = () => {
   const handleSetEditUrl = useUrl().handleSetEditUrl;
   const handleAlertTrigger = useModal().handleAlertTrigger;
   const handleAddUrl = useUrl().handleAddUrl;
+  const handleEditUrl = useUrl().handleEditUrl;
 
   const textInitialize = () => {
     if (modalMode === constants.ADD)
@@ -148,7 +149,7 @@ const AddModal = () => {
         title: editUrl.url_title,
         hashtag: oneLineTag,
         memo: editUrl.url_memo,
-        urlId: editUrl.url_id,
+        urlId: editUrl._id,
       };
   };
 
@@ -209,7 +210,17 @@ const AddModal = () => {
       const fn = () => {
         // 토스트 모달
         const getData = async () => {
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          // await new Promise((resolve) => setTimeout(resolve, 1000));
+          //  수정 함수 넣기
+          const newUrl = {
+            ...editUrl,
+            url: text.url,
+            url_title: text.title,
+            url_hashTags: getHashtagArr(text.hashtag),
+            url_memo: text.memo,
+          };
+          // console.log(newUrl);
+          handleEditUrl(editUrl._id, newUrl);
         };
         const myPromise = getData();
         toast.promise(myPromise, {
@@ -217,7 +228,6 @@ const AddModal = () => {
           success: "수정이 완료되었습니다!",
           error: "수정이 정상적으로 이루어지지 않았습니다",
         });
-        //  수정 함수 넣기
         onClickCancel();
       };
       handleAlertTrigger(fn, "수정하시겠습니까?");

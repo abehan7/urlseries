@@ -22,7 +22,7 @@ API.interceptors.request.use(
   }
 );
 
-export const GetTotalUrls = () => API.get("/totalURL");
+export const getTotalUrls = () => API.get("/url");
 
 export const getAssignedtags = () => API.get("/hashtag/assigned");
 
@@ -30,16 +30,12 @@ export const getAssignedtags = () => API.get("/hashtag/assigned");
 
 export const getGuestUrls = () => API.get("/url/guest", option);
 
-export const TotalAfter = () => API.get("/TotalAfter");
-
 export const SearchDeleteAll = () => API.get("/search/delete/all");
-
-export const Get21Urls = (lastId) => API.post("/get21Urls", { lastId });
 
 export const getFolderItems = () => API.get("/folderItems");
 
 export const addUrl = ({ url, title, hashTags, memo }) =>
-  API.post("/addUrl", { url, title, hashTags, memo });
+  API.post("/url", { url, title, hashTags, memo });
 
 export const AddFolder = (folder_name) =>
   API.post("/addFolder", { folder_name });
@@ -65,9 +61,11 @@ export const updateFolderName = (folder_name, folder_id) =>
 export const updateFolderLike = (folders) =>
   API.put("/FolderLiked", { folders });
 
-export const DeleteUrlAPI = (_id) => API.delete(`/deleteUrl/${_id}`);
+export const updateUrlLike = (id) => API.put(`/url/like/${id}`);
 
-export const deleteUrls = (urls) => API.patch(`/deleteUrls`, { urls });
+export const api_updateUrl = (id, url) => API.patch(`/url/${id}`, { url });
+
+export const deleteUrls = (urls) => API.post(`/url/delete`, { urls });
 
 export const CrawlingAPI = (url) => API.post("/crawling", { url });
 

@@ -33,7 +33,7 @@ export const SearchNotByDB = (PKeyword, totalUrl) => {
     );
   });
 
-  console.log(Filterd);
+  // console.log(Filterd);
 
   return Filterd;
 };
