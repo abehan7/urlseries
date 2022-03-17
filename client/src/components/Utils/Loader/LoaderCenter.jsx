@@ -7,6 +7,8 @@ const LoaderWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  grid-column: span 3;
+  grid-row: span 3;
 `;
 
 const LoadingCenter = () => {

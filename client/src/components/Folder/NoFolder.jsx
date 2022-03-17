@@ -6,9 +6,14 @@ const NoFolderEl = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  grid-column: span 3;
+  grid-row: span 3;
 `;
 
-const NoFolderTitle = styled(Title)``;
+const NoFolderTitle = styled(Title)`
+  align-items: center;
+  justify-content: center;
+`;
 
 const NoFolder = () => {
   return (

@@ -1,17 +1,24 @@
 import React, { useRef } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { FcFolder } from "react-icons/fc";
 import { Index } from "../UrlContainer/Url";
 import Colors from "../../assets/Colors";
 import { constants, useMode } from "../../contexts/ModeContext";
 
 const IndexEl = styled(Index)``;
+
 const FolderSquareEl = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+
+  ${(props) =>
+    props.isDeleteFolder &&
+    css`
+      background-color: ${(props) => props.backgroundColor};
+    `}
 `;
 
 const ItemWrapper = styled.div`
@@ -117,6 +124,7 @@ const FolderSquare = ({
   isLiked,
   onClick,
   handleClickStar,
+  isDeleteFolder = false,
 }) => {
   const ref = useRef(null);
   const mode = useMode().mode;
@@ -134,7 +142,7 @@ const FolderSquare = ({
     );
 
   return (
-    <FolderSquareEl onClick={onClickFolder}>
+    <FolderSquareEl onClick={onClickFolder} isDeleteFolder={isDeleteFolder}>
       <ItemWrapper>
         <TopWrapper>
           <FolderIcon>

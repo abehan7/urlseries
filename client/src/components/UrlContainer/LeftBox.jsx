@@ -119,7 +119,6 @@ const LeftBox = () => {
   const token = useSelector(getToken);
   const mode = useMode().mode;
   const folderBoxAnimeCount = useMode().count.folderBoxAnimeCount;
-  // const [option]
 
   // 디펜던시 말 잘듣자
   // 안그러면 과거로 돌아간다
@@ -210,8 +209,7 @@ const LeftBox = () => {
   }, [totalUrls]);
 
   //currentFolder 클릭하면 filterdItems리셋
- 
-    
+
   //FIXME: DOM MAPPING
   //전체 북마크
   const TotalUrlMap = () =>

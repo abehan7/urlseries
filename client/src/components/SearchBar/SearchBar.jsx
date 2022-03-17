@@ -23,7 +23,8 @@ const InputSearch = styled.input`
     border-radius: 0px;
     background-color: transparent;
     border-bottom: 1px solid rgba(78, 76, 76, 0.5);
-    transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+    transition: all 300ms ease-in-out;
+    /* transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2); */
   }
 `;
 
@@ -47,7 +48,8 @@ const BtnSearch = styled.button`
     border-radius: 0px;
     background-color: transparent;
     border-bottom: 1px solid rgba(78, 76, 76, 0.5);
-    transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
+    transition: all 300ms ease-in-out;
+    /* transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2); */
   }
   :focus svg {
     color: #fff;

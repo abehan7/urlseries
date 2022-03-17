@@ -28,6 +28,7 @@ export const FolderProvider = ({ children }) => {
   const [editFolder, setEditFolder] = useState({});
   const [likeFolder, setLikeFolder] = useState({});
   const [folderUrlIds, setFolderUrlIds] = useState([]);
+  const [filterdFolders, setFilterdFolders] = useState([]);
   const dispatch = useDispatch();
   const token = useSelector(getToken);
   const folders = useSelector(getFolders);
@@ -126,7 +127,11 @@ export const FolderProvider = ({ children }) => {
   //수정모드에서 사용할 folder //currentFolder랑 구분되야 todo 들어가고 빠지는 애니메이션에 이상 안생겨
   const handleSetEditFolder = (_folder) => setEditFolder(_folder);
 
+  // 즐겨찾기 클릭한 폴더 정보 저장
   const handleSetLikeFolder = (_folder) => setLikeFolder(_folder);
+
+  // 필터링된 폴더 저장
+  const handleSetFilterdFolders = (folders) => setFilterdFolders(folders);
 
   // FIXME: 메타태그 + 폴더태그 아이템 useEffect
 
@@ -154,6 +159,8 @@ export const FolderProvider = ({ children }) => {
   // 모드가 폴더면 해시태그 클릭된거 전체 초기화
   useEffect(() => mode === constants.FOLDER && dispatch(RESET_TAGS()), [mode]);
 
+  // 모드 바뀌면 likeFolder비우기
+  useEffect(() => setLikeFolder({}), [mode]);
   useEffect(() => {
     console.log("editFolder", editFolder);
   }, [editFolder]);
@@ -165,6 +172,7 @@ export const FolderProvider = ({ children }) => {
     folderUrlIds,
     editFolder,
     likeFolder,
+    filterdFolders,
     handleSetCombinedItemLoading,
     handleSetCurrentFolder,
     handleAddFolderEditUrl,
@@ -173,6 +181,7 @@ export const FolderProvider = ({ children }) => {
     handleResetFolderEditUrl,
     handleSetEditFolder,
     handleSetLikeFolder,
+    handleSetFilterdFolders,
   };
 
   return (

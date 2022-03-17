@@ -1,6 +1,6 @@
 // FIXME: 키워드 정규화
 export const KeywordNormalize = (keyword) => {
-  const proccecced = keyword.toLowerCase().replace(/(\s*)/g, "");
+  const proccecced = keyword?.toLowerCase()?.replace(/(\s*)/g, "") || "";
   return proccecced;
 };
 
@@ -36,4 +36,20 @@ export const SearchNotByDB = (PKeyword, totalUrl) => {
   console.log(Filterd);
 
   return Filterd;
+};
+
+// FIXME: 폴더 필터링
+const FolderNameFilter = (folder, PKeyword) => {
+  return KeywordNormalize(folder.folder_name).includes(PKeyword);
+};
+
+const FolderMomoFilter = (folder, PKeyword) => {
+  return KeywordNormalize(folder?.folder_memo)?.includes(PKeyword);
+};
+
+export const SearchFolderNotByDB = (PKeyword, totalFolder) => {
+  const isContained = (folder) =>
+    FolderNameFilter(folder, PKeyword) || FolderMomoFilter(folder, PKeyword);
+  const filterd = totalFolder.filter((folder) => isContained(folder));
+  return filterd;
 };

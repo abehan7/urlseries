@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { FcFolder } from "react-icons/fc";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Colors from "../../assets/Colors";
 import { useFolder } from "../../contexts/FolderContext";
 import { constants, useMode } from "../../contexts/ModeContext";
@@ -54,6 +54,16 @@ const FolderStickEl = styled.div`
       background-color: ${Colors.BarPurple};
     }
   }
+
+  ${(props) =>
+    props.isDeleteFolder &&
+    css`
+      background-color: ${(props) => props.backgroundColor};
+
+      ${Line} {
+        background-color: ${(props) => props.barColor};
+      }
+    `}
 `;
 
 const LikedIcon = styled.div``;
@@ -70,6 +80,7 @@ const FolderStick = ({
   isLiked,
   onClick,
   handleClickStar,
+  isDeleteFolder = false,
 }) => {
   const ref = useRef(null);
   const likeFolder = useFolder().likeFolder;
@@ -105,6 +116,7 @@ const FolderStick = ({
       onClick={onClickFolder}
       className={classNameMethod.isNewItem()}
       mode={mode}
+      isDeleteFolder={isDeleteFolder}
     >
       <Line />
       <FolderIcon>

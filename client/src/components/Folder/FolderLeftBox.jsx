@@ -1,9 +1,11 @@
 import { debounce, throttle } from "lodash";
 import { useRef } from "react";
 import { useCallback } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import { useFolder } from "../../contexts/FolderContext";
 import { getFolders } from "../../store/reducers/Folders";
 import SearchBar from "../SearchBar/SearchBar";
 import { LeftBoxEl } from "../UrlContainer/LeftBox";
@@ -11,8 +13,10 @@ import Marker from "../UrlContainer/Marker";
 import { ItemConatiner } from "../UrlContainer/styled/ItemContainer";
 import { Title } from "../UrlContainer/styled/Title.styled";
 import { TitleWrapper } from "../UrlContainer/styled/TitleWrapper.styled";
-import { KeywordNormalize } from "../Utils/Search";
+import LoadingCenter from "../Utils/Loader/LoaderCenter";
+import { KeywordNormalize, SearchFolderNotByDB } from "../Utils/Search";
 import FolderItemContainer from "./FolderItemContainer";
+import NoFolder from "./NoFolder";
 
 const TitleEl = styled(Title)`
   @keyframes jaehee {
@@ -26,6 +30,46 @@ const TitleEl = styled(Title)`
   animation: jaehee 0.3s ease-in-out;
 `;
 
+const SearchTitle = styled(Title)`
+  width: 40px;
+  cursor: pointer;
+  margin-left: 1rem;
+  border-radius: 10px;
+  padding: 0.5rem;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  background-color: #a597fe;
+  color: #fff;
+
+  :hover {
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+`;
+
+const TagTitle = styled(SearchTitle)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const TitleContainerEl = styled.div`
+  @keyframes jaehee {
+    0% {
+      transform: translate3d(-200px, 0, 0);
+    }
+    100% {
+      transform: translate3d(0px, 0, 0);
+    }
+  }
+  flex: 1;
+  display: flex;
+  height: 100%;
+  align-items: center;
+
+  > span {
+    animation: jaehee 0.3s ease-in-out;
+  }
+`;
 const GridBox = styled(ItemConatiner)`
   /* position: relative; */
 
@@ -55,25 +99,29 @@ const GridBox = styled(ItemConatiner)`
 const FolderLeftBoxEl = styled(LeftBoxEl)``;
 const debounceFn = debounce((fn, keyword) => fn(keyword), 400);
 const FolderLeftBox = () => {
-  const [isSearch, setIsSearch] = useState(false);
+  // const [isSearch, setIsSearch] = useState(false);
   const [keyword, setKeyword] = useState("");
   const [isScroll, setIsScroll] = useState(false);
   const [scrollTop, setScrollTop] = useState(0);
   const folders = useSelector(getFolders);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
-
+  const handleSetFilterdFolders = useFolder().handleSetFilterdFolders;
+  const filterdFolders = useFolder().filterdFolders;
   // console.log(folders);
+
+  const isSearch = keyword.length > 0;
+
   const _getFilterdFolders = (keyword) => {
     const pKeyword = KeywordNormalize(keyword);
     // TODO: 폴더에 맞게 로직 바꿔야돼
-    // const filterd = SearchNotByDB(pKeyword, totalUrls);
-    // handleSetFilterdUrls(filterd);
+    const filterd = SearchFolderNotByDB(pKeyword, folders);
+    handleSetFilterdFolders(filterd);
     setIsSearchLoading(false);
   };
-  // [totalUrls, handleSetFilterdUrls]
 
   const scrollRef = useRef(null);
-  const onClickSearchTitle = () => {};
+  const onClickSearchTitle = () => setKeyword("");
+
   const onChange = async (e) => {
     debounceFn.cancel();
     setIsSearchLoading(true);
@@ -103,14 +151,45 @@ const FolderLeftBox = () => {
     [scrollTop]
   );
 
+  // 검색시 setting
+
+  useEffect(() => {
+    handleSetFilterdFolders([]);
+  }, [keyword]);
+
+  useEffect(() => {
+    isSearch && _getFilterdFolders(keyword);
+  }, [folders]);
+
+  // 전체 폴더
+  const TotalFolderMap = () =>
+    !isSearch && <FolderItemContainer folders={folders} type="SQUARE" />;
+
+  // 검색된 폴더
+  const SearchFolderMap = () =>
+    isSearch && <FolderItemContainer folders={filterdFolders} type="SQUARE" />;
+
+  //검색중일 때 로딩창
+  const SearchLoader = () => isSearch && isSearchLoading && <LoadingCenter />;
+
+  //검색창에 북마크 없을 때
+  const SearchNoUrl = () =>
+    isSearch && !isSearchLoading && filterdFolders.length === 0 && <NoFolder />;
+
   return (
     <FolderLeftBoxEl>
       <TitleWrapper>
-        <TitleEl>전체 폴더</TitleEl>
+        <TitleContainer
+          isSearch={isSearch}
+          onClickSearchTitle={onClickSearchTitle}
+        />
         <SearchBar onChange={onChange} keyword={keyword} />
       </TitleWrapper>
       <GridBox onScroll={onScroll} ref={scrollRef}>
-        <FolderItemContainer folders={folders} type="SQUARE" />
+        {TotalFolderMap()}
+        {SearchFolderMap()}
+        {SearchLoader()}
+        {SearchNoUrl()}
         <Marker
           isScroll={isScroll}
           onClick={handleScrollUp}
@@ -124,6 +203,17 @@ const FolderLeftBox = () => {
 
 export default FolderLeftBox;
 
-const TitleContainer = () => {
-  return <></>;
+const TitleContainer = ({ isSearch, onClickSearchTitle }) => {
+  // 전체 북마크
+  const TotalTitleFn = () => !isSearch && <Title>전체 북마크</Title>;
+
+  // 검색 북마크
+  const SearchTitleFn = () =>
+    isSearch && <SearchTitle onClick={onClickSearchTitle}>#검색</SearchTitle>;
+  return (
+    <TitleContainerEl isSearch={isSearch}>
+      {TotalTitleFn()}
+      {SearchTitleFn()}
+    </TitleContainerEl>
+  );
 };
