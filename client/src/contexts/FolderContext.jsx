@@ -2,7 +2,11 @@ import React, { useEffect, useState, createContext } from "react";
 import { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getToken } from "../redux/ReducersT/tokenReducer";
-import { getFolders, SET_FOLDERS } from "../store/reducers/Folders";
+import {
+  DELETE_FOLDER,
+  getFolders,
+  SET_FOLDERS,
+} from "../store/reducers/Folders";
 // import { getComments } from "../Api";
 import { useUrl } from "./UrlContext";
 import {
@@ -136,6 +140,7 @@ export const FolderProvider = ({ children }) => {
 
   // 폴더 삭제
   const handleAddDeleteFolderList = (newFolders) => {
+    setLikeFolder({});
     const duplicatedList = [...newFolders, ...deleteFolders];
 
     const filterd = duplicateUrlChecker(duplicatedList);
@@ -143,8 +148,17 @@ export const FolderProvider = ({ children }) => {
     setDeleteFolders(filterd);
   };
 
+  const handleOnClickDeleteBtn = () => {
+    const deleteFolderList = deleteFolders.map((folder) => folder._id);
+    dispatch(DELETE_FOLDER(deleteFolderList));
+    setDeleteFolders([]);
+  };
+
   // 삭제할 폴더 목록들 초기화
-  const handleResetDeleteFolder = () => setDeleteFolders([]);
+  const handleResetDeleteFolder = () => {
+    setLikeFolder({});
+    setDeleteFolders([]);
+  };
 
   // 삭제 폴더 리스트에서 제거
   const handleRemoveDeleteFolder = (folderId) => {
@@ -218,6 +232,7 @@ export const FolderProvider = ({ children }) => {
     handleRemoveDeleteFolder,
     handleResetFolderEditUrl,
     handleResetDeleteFolder,
+    handleOnClickDeleteBtn,
   };
 
   return (

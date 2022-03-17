@@ -146,6 +146,7 @@ const Ment = styled.span`
   font-size: 1.1rem;
   color: gray;
   padding-top: 0.3rem;
+  text-align: center;
 `;
 
 const TapsWrapper = styled.div`
@@ -469,6 +470,8 @@ const FolderDeleteModeItems = () => {
   const filterdFolders = useFolder().filterdFolders;
   const handleAddDeleteFolderList = useFolder().handleAddDeleteFolderList;
   const handleResetDeleteFolder = useFolder().handleResetDeleteFolder;
+  const handleOnClickDeleteBtn = useFolder().handleOnClickDeleteBtn;
+  const deleteFolders = useFolder().deleteFolders;
 
   const folders = useSelector(getFolders);
   const handleAlertTrigger = useModal().handleAlertTrigger;
@@ -476,7 +479,6 @@ const FolderDeleteModeItems = () => {
   const onClickBack = () => setMode(constants.FOLDER);
   const onClickAll = () => {
     // 이쪽은 폴더 검색 기능 만든다음에 해야할 듯
-    console.log(filterdFolders);
     // 검색 하나라도 했을 때만 실행
     filterdFolders.length !== 0 && handleAddDeleteFolderList(filterdFolders);
     // 검색도 안하고 태그도 클릭 안했을 때
@@ -487,10 +489,10 @@ const FolderDeleteModeItems = () => {
   const onClickDelete = () => {
     const fn = () => {
       // 토스트 모달
-      const getData = async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-      };
-      const myPromise = getData();
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
+      const deleteData = async () => await handleOnClickDeleteBtn();
+
+      const myPromise = deleteData();
       toast.promise(myPromise, {
         loading: "삭제중입니다",
         success: "삭제가 완료되었습니다!",
@@ -498,6 +500,8 @@ const FolderDeleteModeItems = () => {
       });
       //  삭제 함수 넣기
     };
+    deleteFolders.length === 0 && toast.error("삭제할 폴더를 선택해주세요");
+    if (deleteFolders.length === 0) return;
     handleAlertTrigger(fn, "삭제하시겠습니까?");
   };
 

@@ -40,7 +40,7 @@ export const addUrl = ({ url, title, hashTags, memo }) =>
 export const addFolder = (folder_name, folder_memo) =>
   API.post("/folder", { folder_name, folder_memo });
 
-export const DeleteFolder = (idList) => API.post("/deleteFolder", { idList });
+export const deleteFolders = (idList) => API.post("/folder/delete", { idList });
 
 export const EditUrlAPI = (url) => API.put("/editUrl", { ...url });
 
@@ -55,8 +55,8 @@ export const updateFolderContents = (id, folder_contents) =>
 export const updateHashtag = (oneLineTags) =>
   API.patch("/hashtag", { oneLineTags });
 
-export const updateFolderName = (folder_name, folder_id) =>
-  API.patch(`/updateFolderName/${folder_id}`, { folder_name });
+export const updateFolder = ({ folder_id, folder_name, folder_memo }) =>
+  API.patch(`/folder/${folder_id}`, { folder_name, folder_memo });
 
 export const updateFolderLike = (folders) =>
   API.put("/FolderLiked", { folders });

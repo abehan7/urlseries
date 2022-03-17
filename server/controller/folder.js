@@ -1,4 +1,5 @@
 const db = require("../models");
+const getCurrentDate = require("../hooks/getCurrentDate");
 
 const addFolder = async (req, res) => {
   const { id } = req.user;
@@ -13,16 +14,31 @@ const addFolder = async (req, res) => {
 };
 
 const updateFolder = async (req, res) => {
-  const { user_id } = req.decodedData;
-  const { id } = req.params;
-  const { folder_name } = req.body;
+  const { id } = req.user;
+  const user_id = id;
+  const { _id } = req.params;
+  const { folder_name, folder_memo } = req.body;
 
-  const query = { _id: id, user_id };
-  await db.Folders.findById(query, (error, doc) => {
+  const query = { _id, user_id };
+
+  const update = (error, doc) => {
     doc.folder_name = folder_name;
+    doc.folder_memo = folder_memo;
     doc.url_updatedDate = getCurrentDate();
     doc.save();
-  }).clone();
+    res.json(doc);
+  };
+
+  await db.Folders.findById(query, update).clone();
 };
 
-module.exports = { addFolder, updateFolder };
+const deleteFolders = async (req, res) => {
+  const { id } = req.user;
+  const user_id = id;
+  const { idList } = req.body;
+  const query = { _id: { $in: idList }, user_id };
+  await db.Folders.deleteMany(query);
+  res.json(idList);
+};
+
+module.exports = { addFolder, updateFolder, deleteFolders };

@@ -16,7 +16,7 @@ import { useFolder } from "../../contexts/FolderContext";
 import toast from "react-hot-toast";
 import { useModal } from "../../contexts/ModalContext";
 import { useDispatch } from "react-redux";
-import { ADD_FOLDER } from "../../store/reducers/Folders";
+import { ADD_FOLDER, UPDATE_FOLDER } from "../../store/reducers/Folders";
 
 const FooterEl = styled(Footer)``;
 
@@ -107,7 +107,10 @@ const AddFolderModal = () => {
   const textInitialize = () => {
     if (modalMode === constants.FOLDER_ADD) return { name: "", memo: "" };
     if (modalMode === constants.FOLDER_EDIT_MODAL_UP)
-      return { name: editFolder?.folder_name, memo: editFolder?._id };
+      return {
+        name: editFolder?.folder_name,
+        memo: editFolder?.folder_memo || "",
+      };
   };
   const modalMode = useMode().modalMode;
   const setModalMode = useMode().setModalMode;
@@ -129,12 +132,9 @@ const AddFolderModal = () => {
 
   const onClickSubmit = () => {
     const addFn = () => {
-      const fetchData = async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        console.log("text: ", text);
+      // await new Promise((resolve) => setTimeout(resolve, 1000));
+      const fetchData = async () => await dispatch(ADD_FOLDER(text));
 
-        dispatch(ADD_FOLDER(text));
-      };
       const myPromise = fetchData();
       toast.promise(myPromise, {
         loading: "추가중입니다",
@@ -148,7 +148,14 @@ const AddFolderModal = () => {
       const fn = () => {
         // 토스트 모달
         const fatchData = async () => {
-          await new Promise((resolve) => setTimeout(resolve, 1000));
+          // await new Promise((resolve) => setTimeout(resolve, 1000));
+          const _folder = {
+            folder_name: text.name,
+            folder_memo: text.memo,
+            folder_id: editFolder._id,
+          };
+          await dispatch(UPDATE_FOLDER(_folder));
+          // console.log(_folder);
         };
         const myPromise = fatchData();
         toast.promise(myPromise, {
@@ -160,7 +167,7 @@ const AddFolderModal = () => {
       };
       handleAlertTrigger(fn, "수정하시겠습니까?");
     };
-    console.log(text);
+    // console.log(text);
     const _checkInput = checkInput();
     if (!_checkInput) return;
     modalMode === constants.FOLDER_ADD && addFn();

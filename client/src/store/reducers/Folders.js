@@ -1,5 +1,10 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { addFolder, getFolderItems } from "../../components/Api";
+import {
+  addFolder,
+  deleteFolders,
+  getFolderItems,
+  updateFolder,
+} from "../../components/Api";
 
 const folders = [];
 
@@ -15,6 +20,22 @@ export const SET_FOLDERS = createAsyncThunk(
   "folders/SET_FOLDERS", // 액션 이름을 정의해 주도록 합니다.
   async () => {
     const response = await getFolderItems();
+    return response.data;
+  }
+);
+
+export const DELETE_FOLDER = createAsyncThunk(
+  "folders/DELETE_FOLDER", // 액션 이름을 정의해 주도록 합니다.
+  async (idList) => {
+    await deleteFolders(idList);
+    return idList;
+  }
+);
+
+export const UPDATE_FOLDER = createAsyncThunk(
+  "folders/UPDATE_FOLDER", // 액션 이름을 정의해 주도록 합니다.
+  async (folder) => {
+    const response = await updateFolder(folder);
     return response.data;
   }
 );
@@ -91,6 +112,24 @@ export const folderSlice = createSlice({
     [SET_FOLDERS.fulfilled]: (state, action) => {
       const newFolder = action.payload;
       state.folders = newFolder;
+    },
+    [DELETE_FOLDER.fulfilled]: (state, action) => {
+      const FolderList = action.payload;
+      state.folders = state.folders.filter(
+        (folder) => !FolderList.includes(folder._id)
+      );
+    },
+    [UPDATE_FOLDER.fulfilled]: (state, action) => {
+      const newFolder = action.payload;
+      console.log(newFolder);
+      const newFolders = state.folders.map((folder) =>
+        folder._id === newFolder._id ? newFolder : folder
+      );
+      state.folders = newFolders;
+      // const index = state.folders.findIndex(
+      //   (folder) => folder._id === newFolder._id
+      // );
+      // state.folders[index] = newFolder;
     },
   },
 });
