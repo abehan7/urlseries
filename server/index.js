@@ -83,7 +83,7 @@ app.use("/apitest", require("./routes/upload"));
 app.use("/hashtag", hashtagRouter);
 app.use("/crawler", require("./routes/crawler"));
 app.use("/url", require("./routes/urls"));
-// app.use("/folder",);
+app.use("/folder", require("./routes/folders"));
 
 // [4]  폴더 아이템들 가지고오기
 app.get("/folderItems", authtest, FolderItems);

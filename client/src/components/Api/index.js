@@ -37,8 +37,8 @@ export const getFolderItems = () => API.get("/folderItems");
 export const addUrl = ({ url, title, hashTags, memo }) =>
   API.post("/url", { url, title, hashTags, memo });
 
-export const AddFolder = (folder_name) =>
-  API.post("/addFolder", { folder_name });
+export const addFolder = (folder_name, folder_memo) =>
+  API.post("/folder", { folder_name, folder_memo });
 
 export const DeleteFolder = (idList) => API.post("/deleteFolder", { idList });
 

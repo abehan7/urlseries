@@ -13,6 +13,8 @@ import { ModalContent } from "./styled/ModalContent.styled";
 import { ModalHeader } from "./styled/ModalHeader.styled";
 import { ModalTitle } from "./styled/ModalTitle.styled";
 import { useFolder } from "../../contexts/FolderContext";
+import toast from "react-hot-toast";
+import { useModal } from "../../contexts/ModalContext";
 
 const FooterEl = styled(Footer)``;
 
@@ -96,6 +98,7 @@ const MemoLabel = styled(Label)`
 const AddFolderModal = () => {
   const editFolder = useFolder().editFolder;
   const handleSetEditFolder = useFolder().handleSetEditFolder;
+  const handleAlertTrigger = useModal().handleAlertTrigger;
   // console.log(editFolder);
   // const handleSetEditFolder = useFolder().handleSetEditFolder;
   const textInitialize = () => {
@@ -112,7 +115,39 @@ const AddFolderModal = () => {
     setModalMode(null);
     handleSetEditFolder(null);
   };
-  const onClickSubmit = () => {};
+  const onClickSubmit = () => {
+    const addFn = () => {
+      const fetchData = async () => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+      };
+      const myPromise = fetchData();
+      toast.promise(myPromise, {
+        loading: "추가중입니다",
+        success: "완료되었습니다!",
+        error: "정상적으로 이루어지지 않았습니다",
+      });
+      //  추가 함수 넣기
+      onClickCancel();
+    };
+    const editFn = () => {
+      const fn = () => {
+        // 토스트 모달
+        const getData = async () => {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        };
+        const myPromise = getData();
+        toast.promise(myPromise, {
+          loading: "수정중입니다",
+          success: "수정이 완료되었습니다!",
+          error: "수정이 정상적으로 이루어지지 않았습니다",
+        });
+        onClickCancel();
+      };
+      handleAlertTrigger(fn, "수정하시겠습니까?");
+    };
+    modalMode === constants.FOLDER_ADD && addFn();
+    modalMode === constants.FOLDER_EDIT_MODAL_UP && editFn();
+  };
 
   return (
     <ModalContentEl>

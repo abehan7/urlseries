@@ -1,12 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { AddFolder, getFolderItems } from "../../components/Api";
+import { addFolder, getFolderItems } from "../../components/Api";
 
 const folders = [];
 
 export const ADD_FOLDER = createAsyncThunk(
   "folders/ADD_FOLDER", // 액션 이름을 정의해 주도록 합니다.
-  async (folder_name) => {
-    const response = await AddFolder(folder_name);
+  async (folder_name, folder_memo) => {
+    const response = await addFolder(folder_name, folder_memo);
     return response.data;
   }
 );
