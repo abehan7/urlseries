@@ -96,7 +96,7 @@ const FolderItemContainer = ({ folders, type }) => {
   const SquareMap = (folder, index) => {
     const _onClickFolder = () => onClickFolder(folder);
     const _handleClickStar = () => handleClickStar(folder);
-
+    const isDeleteFolder = deleteFolderIds.includes(folder._id);
     return (
       type === SQUARE && (
         <FolderSquare
@@ -108,6 +108,7 @@ const FolderItemContainer = ({ folders, type }) => {
           isLiked={folder.like}
           onClick={_onClickFolder}
           handleClickStar={_handleClickStar}
+          isDeleteFolder={isDeleteFolder}
         />
       )
     );
@@ -116,6 +117,8 @@ const FolderItemContainer = ({ folders, type }) => {
   const StickMap = (folder, index) => {
     const _onClickFolder = () => onClickFolder(folder);
     const _handleClickStar = () => handleClickStar(folder);
+    const isDeleteFolder = deleteFolderIds.includes(folder._id);
+
     return (
       type === STICK && (
         <FolderStick
@@ -127,6 +130,7 @@ const FolderItemContainer = ({ folders, type }) => {
           isLiked={folder.like}
           onClick={_onClickFolder}
           handleClickStar={_handleClickStar}
+          isDeleteFolder={isDeleteFolder}
         />
       )
     );

@@ -33,9 +33,15 @@ const ItemWrapper = styled.div`
   flex-direction: column;
 
   :hover {
-    background-color: ${({ mode }) =>
-      mode === constants.FOLDER_DELETE ? Colors.BgRed : Colors.BgPurple};
+    background-color: ${({ folderMode }) =>
+      folderMode === constants.FOLDER_DELETE ? Colors.BgRed : Colors.BgPurple};
   }
+
+  ${({ isDeleteFolder }) =>
+    isDeleteFolder &&
+    css`
+      background-color: ${Colors.BgRed};
+    `}
 `;
 
 const PaddingWrapper = styled.div`
@@ -137,7 +143,7 @@ const FolderSquare = ({
 
   return (
     <FolderSquareEl onClick={onClickFolder}>
-      <ItemWrapper mode={mode}>
+      <ItemWrapper folderMode={mode} isDeleteFolder={isDeleteFolder}>
         <TopWrapper>
           <FolderIcon>
             <FcFolder />

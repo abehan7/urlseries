@@ -48,20 +48,34 @@ const FolderStickEl = styled.div`
   justify-content: flex-start;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
-  :hover {
-    background-color: ${Colors.BgPurple};
-    ${Line} {
-      background-color: ${Colors.BarPurple};
-    }
-  }
 
-  ${(props) =>
-    props.isDeleteFolder &&
+  ${({ folderMode }) =>
+    folderMode === constants.FOLDER_DELETE &&
     css`
-      background-color: ${(props) => props.backgroundColor};
+      :hover {
+        background-color: ${Colors.BgRed};
+        ${Line} {
+          background-color: ${Colors.BarRed};
+        }
+      }
+    `}
+  ${({ folderMode }) =>
+    folderMode === constants.FOLDER &&
+    css`
+      :hover {
+        background-color: ${Colors.BgPurple};
+        ${Line} {
+          background-color: ${Colors.BarPurple};
+        }
+      }
+    `}
 
+  ${({ isDeleteFolder }) =>
+    isDeleteFolder &&
+    css`
+      background-color: ${Colors.BgRed};
       ${Line} {
-        background-color: ${(props) => props.barColor};
+        background-color: ${Colors.BarRed};
       }
     `}
 `;
@@ -108,18 +122,9 @@ const FolderStick = ({
       const nowItem = likeFolder.isNewItem ? "newItem" : "removeItem";
       return nowItem;
     },
-    isDeleteNewItem: () => {
-      if (likeFolder._id !== id) return "";
-      const nowItem = likeFolder.isNewItem ? "newItem" : "removeItem";
-      return nowItem;
-    },
   };
 
-  const className = () => {
-    if (mode === constants.FOLDER) return classNameMethod.isNewItem();
-    if (mode === constants.FOLDER_DELETE)
-      return classNameMethod.isDeleteNewItem();
-  };
+  const className = () => classNameMethod.isNewItem();
 
   return (
     <FolderStickEl
@@ -127,6 +132,7 @@ const FolderStick = ({
       onClick={onClickFolder}
       className={className()}
       isDeleteFolder={isDeleteFolder}
+      folderMode={mode}
     >
       <Line />
       <FolderIcon>
