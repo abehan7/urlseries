@@ -27,7 +27,6 @@ const modalWhiteList = [
 ];
 
 const MainPage = () => {
-  const mode = useMode().mode;
   const modalMode = useMode().modalMode;
   const containerStyle = { top: 100 };
   return (

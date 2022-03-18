@@ -10,11 +10,13 @@ import styled from "styled-components";
 import { useFolder } from "../../contexts/FolderContext";
 import { constants, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
+import { getToken } from "../../redux/ReducersT/tokenReducer";
 import { getFolders } from "../../store/reducers/Folders";
 import FolderItemContainer from "../Folder/FolderItemContainer";
 import NoFolder from "../Folder/NoFolder";
 import Loader from "../Utils/Loader/Loader";
 import LoadingCenter from "../Utils/Loader/LoaderCenter";
+import GuestItemContainer from "./GuestItemContainer";
 import ItemContainer from "./ItemContainer";
 import Marker from "./Marker";
 import NoUrl from "./NoUrl";
@@ -229,12 +231,18 @@ export default RightBox;
 
 const NormalMode = ({ isLikeUrls, loading, isScroll, handleScrollUp }) => {
   const likedUrls = useUrl().url.likedUrls;
-  const searchedUrls = useUrl().url.searchedUrls;
+  // const searchedUrls = useUrl().url.searchedUrls;
+  const token = useSelector(getToken);
+  // 로그인 안됐을 때
+  const Guest = () =>
+    !token && <GuestItemContainer>로그인 후 이용해주세요</GuestItemContainer>;
   return (
     <>
       {/* {!isLikeUrls && <ItemContainer urls={searchedUrls} />} */}
       {isLikeUrls && <ItemContainer urls={likedUrls} />}
-      {loading.isLikedUrl && <LoadingCenter />}
+      {token && loading.isLikedUrl && <LoadingCenter />}
+      {/* 토큰 없을 때 */}
+      {Guest()}
       <Marker isScroll={isScroll} onClick={handleScrollUp} />
     </>
   );

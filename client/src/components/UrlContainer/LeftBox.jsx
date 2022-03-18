@@ -20,6 +20,7 @@ import NoUrl from "./NoUrl";
 import { constants, useMode } from "../../contexts/ModeContext";
 import LoadingCenter from "../Utils/Loader/LoaderCenter";
 import { getToken } from "../../redux/ReducersT/tokenReducer";
+import GuestItemContainer from "./GuestItemContainer";
 
 export const LeftBoxEl = styled.div`
   flex: 2;
@@ -239,8 +240,13 @@ const LeftBox = () => {
     tagIsClicked && combinedItemsloading && <LoadingCenter />;
 
   //맨 처음 로딩중
-  const FirstLoader = () => loading.isTotalUrl && <LoadingCenter />;
+  const FirstLoader = () => token && loading.isTotalUrl && <LoadingCenter />;
 
+  // 로그인 안됐을 때
+  const Guest = () =>
+    !token && (
+      <GuestItemContainer>로그인 후 이용 가능합니다!</GuestItemContainer>
+    );
   return (
     <LeftBoxEl>
       <TitleWrapper>
@@ -274,6 +280,9 @@ const LeftBox = () => {
         {TagNoUrl()}
         {/* 태그 누르고 0.2s동안 로딩 */}
         {TagSearchingLoader()}
+        {/* 토큰 없을 때 */}
+        {Guest()}
+
         <Marker isScroll={isScroll} onClick={handleScrollUp} />
       </FlexContainer>
     </LeftBoxEl>

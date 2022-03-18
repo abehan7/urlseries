@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { constants, useMode } from "../../contexts/ModeContext";
+import { getToken } from "../../redux/ReducersT/tokenReducer";
 import FolderLeftBox from "../Folder/FolderLeftBox";
 import LeftBox from "./LeftBox";
 import RightBox from "./RightBox";
@@ -20,6 +21,7 @@ const UrlContainer = () => {
     constants.FOLDER,
     constants.FOLDER_DELETE,
   ];
+
   // console.log(mode);
   return (
     <UrlContainerEl>
