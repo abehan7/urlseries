@@ -160,9 +160,9 @@ export const FolderProvider = ({ children }) => {
     setDeleteFolders(filterd);
   };
 
-  const handleOnClickDeleteBtn = () => {
+  const handleOnClickDeleteBtn = async () => {
     const deleteFolderList = deleteFolders.map((folder) => folder._id);
-    dispatch(DELETE_FOLDER(deleteFolderList));
+    await dispatch(DELETE_FOLDER(deleteFolderList));
     setDeleteFolders([]);
   };
 
