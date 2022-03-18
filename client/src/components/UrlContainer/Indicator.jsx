@@ -183,13 +183,13 @@ const Indicator = () => {
   // FIXME: 맵핑
   const hashtagMap = () => {
     return assignedHashtags.map((tag, index) => {
-      const clicked = metaTagItems.includes(tag.name);
+      const clicked = metaTagItems.includes(tag);
       const key = index;
       return (
         <MetaTag
-          tag={tag.name}
+          tag={tag}
           key={key}
-          onClick={() => handleClickMetaTag(tag.name)}
+          onClick={() => handleClickMetaTag(tag)}
           clicked={clicked}
         />
       );

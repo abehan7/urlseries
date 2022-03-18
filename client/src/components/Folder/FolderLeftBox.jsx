@@ -190,12 +190,7 @@ const FolderLeftBox = () => {
         {SearchFolderMap()}
         {SearchLoader()}
         {SearchNoUrl()}
-        <Marker
-          isScroll={isScroll}
-          onClick={handleScrollUp}
-          notHoverColor="#e6c7b675"
-          hoverColor="#e6c7b6"
-        />
+        <Marker isScroll={isScroll} onClick={handleScrollUp} />
       </GridBox>
     </FolderLeftBoxEl>
   );

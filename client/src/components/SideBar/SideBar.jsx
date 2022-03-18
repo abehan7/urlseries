@@ -21,6 +21,7 @@ import {
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
 import { useUrl } from "../../contexts/UrlContext.jsx";
 import { useModal } from "../../contexts/ModalContext.jsx";
+import { useTag } from "../../contexts/TagContext.jsx";
 import { useDispatch, useSelector } from "react-redux";
 import { getToken } from "../../redux/ReducersT/tokenReducer.js";
 import { useFolder } from "../../contexts/FolderContext.jsx";
@@ -165,7 +166,8 @@ const DeleteWrapper = styled(TapsWrapper)`
 
 const NormalWrapper = styled.div`
   animation: ${({ count }) => (count === 1 ? "fadeIn 0.5s ease-in-out;" : "")};
-  pointer-events: ${({ token }) => (token ? "auto" : "none")};
+  pointer-events: ${({ token, isLoading }) =>
+    token && !isLoading ? "auto" : "none"};
 `;
 
 const EditWrapper = styled(TapsWrapper)``;
@@ -301,17 +303,25 @@ const Item = ({ children, name, onClick }) => {
 const NormalModeItems = () => {
   const setMode = useMode().setMode;
   const setModalMode = useMode().setModalMode;
-
+  const handleGetTotalTags = useTag().handleGetTotalTags;
+  const totlaUrlLoading = useUrl().loading.isTotalUrl;
   const onClickAdd = () => setModalMode(constants.ADD);
   const onClickDelete = () => setMode(constants.DELETE);
-  const onClickHashtag = () => setModalMode(constants.HASHTAG);
+  const onClickHashtag = () => {
+    handleGetTotalTags();
+    setModalMode(constants.HASHTAG);
+  };
   const onClickEdit = () => setMode(constants.EDIT);
   const onClickFolder = () => setMode(constants.FOLDER);
   const sidebarAnimeCount = useMode().count.sidebarAnimeCount;
   const token = useSelector(getToken);
 
   return (
-    <NormalWrapper token={token} count={sidebarAnimeCount}>
+    <NormalWrapper
+      token={token}
+      count={sidebarAnimeCount}
+      isLoading={totlaUrlLoading}
+    >
       <Item name="추가하기" onClick={onClickAdd}>
         <HiOutlineDocumentAdd />
       </Item>

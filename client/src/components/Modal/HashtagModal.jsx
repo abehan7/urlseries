@@ -16,7 +16,13 @@ import { useRef } from "react";
 import { useTag } from "../../contexts/TagContext";
 import toast from "react-hot-toast";
 import { useModal } from "../../contexts/ModalContext";
-import { constants, useMode } from "../../contexts/ModeContext";
+import { useMode } from "../../contexts/ModeContext";
+import { InfiniteScroll } from "../Utils/InfiniteScroll/InfiniteScroll";
+import Loader from "../Utils/Loader/Loader";
+import { useEffect } from "react";
+import { debounce } from "lodash";
+import { KeywordNormalize } from "../Utils/Search";
+import NoResult from "../Utils/NotFound/NoResult";
 
 //FIXME: TopBox
 const Input = styled.input`
@@ -73,6 +79,7 @@ const TagWrapper = styled.div`
 `;
 
 const Tag = styled.span`
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -140,7 +147,7 @@ const Text = styled.span`
   overflow: hidden;
   text-overflow: ellipsis;
   width: 100%;
-  max-width: 250px;
+  max-width: 200px;
 `;
 
 //FIXME: BottomBox
@@ -154,6 +161,20 @@ const FlexWrapContainer = styled.div`
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
+`;
+
+const Circle = styled.span`
+  width: 23px;
+  height: 23px;
+  min-height: 23px;
+  min-width: 23px;
+  background-color: #6d27e8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  transition: all 0.2s ease-in-out;
 `;
 
 const SelectedTag = styled.div`
@@ -170,20 +191,15 @@ const SelectedTag = styled.div`
   cursor: pointer;
   color: #6d27e8;
   transition: all 0.2s ease-in-out;
+  overflow: hidden;
+  :hover {
+    background-color: #ffcccb7a;
+    ${Circle} {
+      background-color: tomato;
+    }
+  }
 `;
 
-const Circle = styled.span`
-  width: 23px;
-  height: 23px;
-  min-height: 23px;
-  min-width: 23px;
-  background-color: #6d27e8;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-`;
 const TagName = styled.span`
   white-space: nowrap;
   overflow: hidden;
@@ -204,33 +220,44 @@ const SelectedItems = styled.div`
   }
 `;
 
-const selectedTagsData = [
-  "#아이유",
-  "#pedrotech",
-  "#realclass",
-  "#instagram",
-  "#music",
-  "#marvel",
-  "#로버트기요사키123123",
-  "#아이유",
-  "#pedrotech",
-  "#realclass",
-  "#instagram",
-  "#music",
-  "#marvel",
-  "#로버트기요사키123123",
-];
+const Index = styled.span`
+  color: #c4c4c4;
+  font-size: 0.8rem;
+  font-weight: 100;
+  position: absolute;
+  right: 10px;
+  bottom: 0;
+`;
+
+const LoaderWrap = styled.div`
+  width: 100%;
+  padding: 0.6rem;
+  z-index: 1;
+`;
+const debounceFn = debounce((fn, keyword) => fn(keyword), 400);
+
 const HashtagModal = () => {
   const [isInputClicked, setIsInputClicked] = useState(false);
   const TopBoxRef = useRef(null);
+  const [tmpAssignedHashtags, setTmpAssignedHashtags] = useState([]);
+  const assignedHashtags = useTag().hashtag.assignedHashtags;
+  const handleSetAssignedHashtags = useTag().handleSetAssignedHashtags;
+
   const handleAlertTrigger = useModal().handleAlertTrigger;
   const setModalMode = useMode().setModalMode;
-
   const onClickInput = () => setIsInputClicked(true);
   const handleFoldUp = () => setIsInputClicked(false);
   const onClickWindow = (e) => {
     if (TopBoxRef.current.contains(e.target)) return;
     handleFoldUp();
+  };
+
+  const addTag = (tag) => setTmpAssignedHashtags([tag, ...tmpAssignedHashtags]);
+  const removeTag = (tag) =>
+    setTmpAssignedHashtags(tmpAssignedHashtags.filter((t) => t !== tag));
+
+  const handleClickTopUrl = (tag) => {
+    tmpAssignedHashtags.includes(tag) ? removeTag(tag) : addTag(tag);
   };
 
   const onClickCancel = () => setModalMode(null);
@@ -240,6 +267,7 @@ const HashtagModal = () => {
       // 토스트 모달
       const getData = async () => {
         await new Promise((resolve) => setTimeout(resolve, 1000));
+        handleSetAssignedHashtags(tmpAssignedHashtags);
       };
       const myPromise = getData();
       toast.promise(myPromise, {
@@ -248,11 +276,12 @@ const HashtagModal = () => {
         error: "저장이 정상적으로 이루어지지 않았습니다",
       });
       //  수정 함수 넣기
-      // onClickCancel();
       onClickCancel();
     };
     handleAlertTrigger(fn, "저장하시겠습니까?");
   };
+  // initialize tmp assigned hashtag
+  useEffect(() => setTmpAssignedHashtags(assignedHashtags), [assignedHashtags]);
   return (
     <ModalContent onClick={onClickWindow}>
       <ModalHeader>
@@ -264,8 +293,13 @@ const HashtagModal = () => {
             isInputClicked={isInputClicked}
             onClickInput={onClickInput}
             TopBoxRef={TopBoxRef}
+            tmpAssignedHashtags={tmpAssignedHashtags}
+            handleClickTopUrl={handleClickTopUrl}
           />
-          <BottomBox />
+          <BottomBox
+            tmpAssignedHashtags={tmpAssignedHashtags}
+            removeTag={removeTag}
+          />
         </BodyContent>
       </ModalBody>
       <Footer>
@@ -280,7 +314,97 @@ const HashtagModal = () => {
 
 export default HashtagModal;
 
-const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
+const TopBox = ({
+  isInputClicked,
+  onClickInput,
+  TopBoxRef,
+  tmpAssignedHashtags,
+  handleClickTopUrl,
+}) => {
+  const [contentsNum, setContentsNum] = useState(30);
+  const [target, setTarget] = useState(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  const [searchedTags, setSearchedTags] = useState([]);
+  const [keyword, setKeyword] = useState("");
+  const [isSearching, setIsSearching] = useState(false);
+  const totalHashtags = useTag().hashtag.totalHashtags;
+
+  const tagBoxRef = useRef(null);
+  const isSearch = keyword.length > 0;
+
+  const getSearchedTags = (keyword) => {
+    const pKeyword = KeywordNormalize(keyword);
+    // TODO: 폴더에 맞게 로직 바꿔야돼
+    const filterd = totalHashtags.filter((_tag) => {
+      const tag = KeywordNormalize(_tag);
+      return tag.includes(pKeyword);
+    });
+    console.log(filterd);
+    setSearchedTags(filterd);
+    setIsSearching(false);
+  };
+
+  const onChange = async (e) => {
+    setKeyword(e.target.value);
+    debounceFn.cancel();
+    setIsSearching(true);
+    const _keyword = e.target.value;
+    setKeyword(_keyword);
+    e.target.value.length > 0 && (await debounceFn(getSearchedTags, _keyword));
+  };
+
+  // 무한스크롤
+  const getNextItems = async () => {
+    setIsLoaded(true);
+    await new Promise((resolve) => setTimeout(resolve, 10));
+    setContentsNum((num) => num + 100);
+    setIsLoaded(false);
+  };
+
+  const stopCondition = totalHashtags.length === contentsNum;
+
+  InfiniteScroll({ isLoaded, getNextItems, target, stopCondition });
+
+  const option = { top: 0, left: 0, behavior: "smooth" };
+  useEffect(() => {
+    tagBoxRef.current.scrollTop !== 0 && tagBoxRef.current.scrollTo(option);
+    contentsNum !== 30 && setContentsNum(30);
+  }, [keyword, isInputClicked]);
+
+  useEffect(() => setSearchedTags([]), [keyword]);
+
+  const onClick = (tag) => handleClickTopUrl(tag);
+
+  const tagListMap = (tagList) => {
+    const filterdItems = tagList?.slice(0, contentsNum);
+    return filterdItems.map((tag, index) => {
+      const isClicked = tmpAssignedHashtags.includes(tag);
+      // 키 넣으니까 된다
+      // 키 꼭 넣자
+      // 로더에는 무조껀 키 넣기 매우 중요
+
+      if (index === contentsNum - 1) {
+        return (
+          <LoaderWrap key={"thisIsLoader"} ref={setTarget}>
+            <Loader radius="32px" />
+          </LoaderWrap>
+        );
+      }
+      return (
+        <TagWrapper key={index} onClick={() => onClick(tag)}>
+          <Tag isClicked={isClicked}>
+            <ClickedIcon>{isClicked && <RiCheckFill />}</ClickedIcon>
+            <Text>{tag.slice(1, tag.length).toUpperCase()}</Text>
+            <Index>
+              {tagList.length - index}/{tagList.length}
+            </Index>
+          </Tag>
+        </TagWrapper>
+      );
+    });
+  };
+
   return (
     <InputContainerEl isInputClicked={isInputClicked} ref={TopBoxRef}>
       <Input
@@ -290,31 +414,28 @@ const TopBox = ({ isInputClicked, onClickInput, TopBoxRef }) => {
         placeholder=" "
         onClick={onClickInput}
         spellCheck="false"
+        onChange={onChange}
       />
       <Label htmlFor="text1">HASHTAG</Label>
-      <SearchedTagsContainer isInputClicked={isInputClicked}>
-        {selectedTagsData.map((tag, index) => {
-          const isClicked = index % 2 === 0;
-          return (
-            <TagWrapper key={index}>
-              <Tag isClicked={isClicked}>
-                <ClickedIcon>{isClicked && <RiCheckFill />}</ClickedIcon>
-                <Text>{tag.slice(1, tag.length).toUpperCase()}</Text>
-              </Tag>
-            </TagWrapper>
-          );
-        })}
+      <SearchedTagsContainer isInputClicked={isInputClicked} ref={tagBoxRef}>
+        {!isSearch && tagListMap(totalHashtags)}
+        {isSearch && tagListMap(searchedTags)}
+        {isSearch && isSearching && <Loader radius="40px" />}
+        {isSearch && !isSearching && searchedTags.length === 0 && (
+          <NoResult>검색결과가 없습니다.</NoResult>
+        )}
       </SearchedTagsContainer>
     </InputContainerEl>
   );
 };
 
-const BottomBox = () => {
+const BottomBox = ({ tmpAssignedHashtags, removeTag }) => {
+  const onClick = (tag) => removeTag(tag);
   return (
     <SelectedItems>
       <FlexWrapContainer>
-        {selectedTagsData.map((tag, index) => (
-          <SelectedTag key={index}>
+        {tmpAssignedHashtags.map((tag, index) => (
+          <SelectedTag key={index} onClick={() => onClick(tag)}>
             <Circle>{tag.slice(1, 2).toUpperCase()}</Circle>
             <TagName>{tag.slice(1, tag.length).toUpperCase()}</TagName>
           </SelectedTag>
