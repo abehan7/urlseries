@@ -45,7 +45,7 @@ const FolderItemContainer = ({ folders, type }) => {
   InfiniteScroll({ isLoaded, getNextItems, target, stopCondition });
 
   const handleClickStar = async (folder) => {
-    await updateFolderLike(folder._id);
+    updateFolderLike(folder._id);
     folder.like && setTimeout(() => dispatch(REMOVE_LIKE(folder._id)), 300);
     folder.like && handleSetLikeFolder({ ...folder, isNewItem: false });
     !folder.like && dispatch(ADD_LIKE(folder._id));

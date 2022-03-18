@@ -101,10 +101,10 @@ export const UrlProvider = ({ children }) => {
   };
 
   // FIXME: 좋아요 기능
-  const handleClickStar = async (urlId) => {
+  const handleClickStar = (urlId) => {
     const newUrl = url.totalUrls.find((_url) => _url._id === urlId);
     // totalUrls displayUrls
-    await updateUrlLike(urlId);
+    updateUrlLike(urlId);
 
     const update =
       newUrl.url_likedUrl === 0

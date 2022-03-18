@@ -256,7 +256,7 @@ const LeftBox = () => {
           onClickSearchTitle={onClickSearchTitle}
           onClickTagTitle={onClickTagTitle}
         />
-        <SearchBar onChange={onChange} keyword={keyword} />
+        {token && <SearchBar onChange={onChange} keyword={keyword} />}
       </TitleWrapper>
       <Indicator />
       <FlexContainer

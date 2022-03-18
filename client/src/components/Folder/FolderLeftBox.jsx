@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import { useFolder } from "../../contexts/FolderContext";
+import { getToken } from "../../redux/ReducersT/tokenReducer";
 import { getFolders } from "../../store/reducers/Folders";
 import SearchBar from "../SearchBar/SearchBar";
 import { LeftBoxEl } from "../UrlContainer/LeftBox";
@@ -107,6 +108,7 @@ const FolderLeftBox = () => {
   const [isSearchLoading, setIsSearchLoading] = useState(false);
   const handleSetFilterdFolders = useFolder().handleSetFilterdFolders;
   const filterdFolders = useFolder().filterdFolders;
+  const token = useSelector(getToken);
   // console.log(folders);
 
   const isSearch = keyword.length > 0;
@@ -183,7 +185,7 @@ const FolderLeftBox = () => {
           isSearch={isSearch}
           onClickSearchTitle={onClickSearchTitle}
         />
-        <SearchBar onChange={onChange} keyword={keyword} />
+        {token && <SearchBar onChange={onChange} keyword={keyword} />}
       </TitleWrapper>
       <GridBox onScroll={onScroll} ref={scrollRef}>
         {TotalFolderMap()}
