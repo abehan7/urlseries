@@ -52,8 +52,7 @@ export const ClickedSeachedUrlAPI = (_id) =>
 export const updateFolderContents = (id, folder_contents) =>
   API.patch(`/folder/${id}/contents`, { folder_contents });
 
-export const updateHashtag = (oneLineTags) =>
-  API.patch("/hashtag", { oneLineTags });
+export const updateaAssignedHashtag = (tags) => API.patch("/hashtag", { tags });
 
 export const updateFolder = ({ folder_id, folder_name, folder_memo }) =>
   API.patch(`/folder/${folder_id}`, { folder_name, folder_memo });

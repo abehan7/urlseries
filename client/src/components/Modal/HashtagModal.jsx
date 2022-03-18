@@ -266,8 +266,9 @@ const HashtagModal = () => {
     const fn = () => {
       // 토스트 모달
       const getData = async () => {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        handleSetAssignedHashtags(tmpAssignedHashtags);
+        // await new Promise((resolve) => setTimeout(resolve, 1000));
+        // console.log(tmpAssignedHashtags);
+        await handleSetAssignedHashtags(tmpAssignedHashtags);
       };
       const myPromise = getData();
       toast.promise(myPromise, {

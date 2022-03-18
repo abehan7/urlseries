@@ -2,7 +2,11 @@ import React, { useEffect, useState, createContext } from "react";
 import { useCallback } from "react";
 import { useContext } from "react";
 import { useSelector } from "react-redux";
-import { getAssignedtags, updateHashtag } from "../components/Api";
+import {
+  getAssignedtags,
+  updateaAssignedHashtag,
+  updateHashtag,
+} from "../components/Api";
 import { getToken } from "../redux/ReducersT/tokenReducer";
 import { useUrl } from "./UrlContext";
 // import { getComments } from "../Api";
@@ -23,8 +27,9 @@ export const TagProvider = ({ children }) => {
 
   const totalUrls = useUrl().url.totalUrls;
 
-  const handleSetAssignedHashtags = (newTags) => {
+  const handleSetAssignedHashtags = async (newTags) => {
     setHashtag({ ...hashtag, assignedHashtags: newTags });
+    await updateaAssignedHashtag(newTags);
   };
 
   const getTotalTags = () => {
@@ -37,10 +42,10 @@ export const TagProvider = ({ children }) => {
   const handleGetTotalTags = useCallback(() => {
     const fn = () => {
       const totalTags = getTotalTags();
-      console.log("totalTags from getTotalTags: ", totalTags);
+      // console.log("totalTags from getTotalTags: ", totalTags);
       setHashtag({ ...hashtag, totalHashtags: totalTags });
     };
-    console.log(hashtag.totalHashtags.length);
+    // console.log(hashtag.totalHashtags.length);
     hashtag.totalHashtags.length === 0 && fn();
   }, [totalUrls, hashtag.totalHashtags]);
 

@@ -14,21 +14,18 @@ const getAssignedtags = async (req, res) => {
 };
 
 const updateLikeTags = async (req, res) => {
-  const { oneLineTags } = req.body;
   const user_id = req.user.id;
-  console.log(oneLineTags);
+  const { tags } = req.body;
+  console.log(tags);
   const query = { user_id };
-  const update = {
-    $set: {
-      hashtag_assigned: oneLineTags,
-    },
-  };
-
+  const update = { $set: { hashtag_assigned: tags } };
   try {
     await db.Hashtags.updateOne(query, update);
+    res.json({ message: "success" });
     console.log("changed assigned tag");
   } catch (err) {
     console.log(err);
+    res.json({ message: "fail" });
   }
 };
 

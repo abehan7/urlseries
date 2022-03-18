@@ -72,7 +72,7 @@ export const FolderProvider = ({ children }) => {
 
     const filterd = duplicateUrlChecker(flatten);
 
-    console.log("filterd", filterd);
+    // console.log("filterd", filterd);
 
     return filterd;
   };
@@ -80,7 +80,7 @@ export const FolderProvider = ({ children }) => {
   const getCombinedItems = () => {
     const combined = [...getMetaTagUrls(), ...getFoldersTagUrls()];
     const filterd = duplicateUrlChecker(combined);
-    console.log("combined", filterd);
+    // console.log("combined", filterd);
     const onlyIds = filterd.map((url) => {
       return url._id;
     });
