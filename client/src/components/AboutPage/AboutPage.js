@@ -1,4 +1,5 @@
 import React, { createContext, useState } from "react";
+import { useEffect } from "react";
 import "./AboutPage.css";
 import PlayerModal from "./PlayerModal";
 
@@ -6,6 +7,49 @@ import PlayerModal from "./PlayerModal";
 
 const AboutPage = () => {
   const [openModal, setOpenModal] = useState(false);
+  const [bookmark, setBookmark] = useState(null);
+
+  useEffect(() => {
+    const fn = () =>
+      (window.onmessage = (e) => {
+        const oldBookmark = JSON.parse(localStorage.getItem("bookmarks"));
+        const newBookmark = JSON.parse(e.data);
+
+        console.log("old bookmarks: ", oldBookmark);
+        console.log("newBookmark: ", newBookmark);
+
+        if (!oldBookmark)
+          return localStorage.setItem(
+            newBookmark?.key,
+            JSON.stringify([newBookmark.data])
+          );
+
+        // old bookmark가 있을 때
+
+        const isDuplicated = oldBookmark?.some(
+          (bookmark) => bookmark.url === newBookmark.data.url
+        );
+        console.log("isDuplicated: ", isDuplicated);
+
+        if (isDuplicated) return;
+
+        const combinedBookmark = JSON.stringify([
+          newBookmark.data,
+          ...oldBookmark,
+        ]);
+        console.log("yo! this from combinedBookmark: ", combinedBookmark);
+
+        localStorage.setItem(newBookmark?.key, combinedBookmark);
+      });
+    fn();
+  }, []);
+
+  useEffect(() => {
+    const _bookmark = localStorage.getItem("bookmarks");
+    _bookmark && setBookmark(JSON.parse(_bookmark));
+    setBookmark(_bookmark);
+    console.log("_bookmark from aboutPage", _bookmark);
+  }, []);
 
   return (
     <>
