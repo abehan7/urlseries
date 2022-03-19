@@ -7,7 +7,6 @@ import PlayerModal from "./PlayerModal";
 
 const AboutPage = () => {
   const [openModal, setOpenModal] = useState(false);
-  const [bookmark, setBookmark] = useState(null);
 
   useEffect(() => {
     const fn = () =>
@@ -34,21 +33,14 @@ const AboutPage = () => {
         if (isDuplicated) return;
 
         const combinedBookmark = JSON.stringify([
-          newBookmark.data,
           ...oldBookmark,
+          newBookmark.data,
         ]);
         console.log("yo! this from combinedBookmark: ", combinedBookmark);
 
         localStorage.setItem(newBookmark?.key, combinedBookmark);
       });
     fn();
-  }, []);
-
-  useEffect(() => {
-    const _bookmark = localStorage.getItem("bookmarks");
-    _bookmark && setBookmark(JSON.parse(_bookmark));
-    setBookmark(_bookmark);
-    console.log("_bookmark from aboutPage", _bookmark);
   }, []);
 
   return (
