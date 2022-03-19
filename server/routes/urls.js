@@ -2,6 +2,7 @@ const express = require("express");
 const {
   getLikeUrls,
   addUrl,
+  addUrls,
   updateUrl,
   deleteUrls,
   getTotalUrls,
@@ -14,6 +15,7 @@ const router = express.Router();
 router.get("/like", auth, getLikeUrls);
 router.get("/", auth, getTotalUrls);
 router.post("/", auth, addUrl);
+router.post("/batch", auth, addUrls);
 router.patch("/:id", auth, updateUrl);
 router.post("/delete", auth, deleteUrls);
 router.put("/like/:id", auth, updateUrlLike);

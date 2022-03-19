@@ -26,28 +26,19 @@ export const getTotalUrls = () => API.get("/url");
 
 export const getAssignedtags = () => API.get("/hashtag/assigned");
 
-// export const getTotalTags = () => API.get("/hashtag/total");
-
 export const getGuestUrls = () => API.get("/url/guest", option);
-
-export const SearchDeleteAll = () => API.get("/search/delete/all");
 
 export const getFolderItems = () => API.get("/folderItems");
 
 export const addUrl = ({ url, title, hashTags, memo }) =>
   API.post("/url", { url, title, hashTags, memo });
 
+export const addUrls = (urls) => API.post("/url/batch", { urls });
+
 export const addFolder = (folder_name, folder_memo) =>
   API.post("/folder", { folder_name, folder_memo });
 
 export const deleteFolders = (idList) => API.post("/folder/delete", { idList });
-
-export const EditUrlAPI = (url) => API.put("/editUrl", { ...url });
-
-export const ClickUrl = (url) => API.put("/clickedURLInBox", { url });
-
-export const ClickedSeachedUrlAPI = (_id) =>
-  API.put(`/clickedSeachedURL/${_id}`);
 
 export const updateFolderContents = (id, folder_contents) =>
   API.patch(`/folder/${id}/contents`, { folder_contents });
@@ -66,10 +57,6 @@ export const api_updateUrl = (id, url) => API.patch(`/url/${id}`, { url });
 export const deleteUrls = (urls) => API.post(`/url/delete`, { urls });
 
 export const CrawlingAPI = (url) => API.post("/crawling", { url });
-
-export const LoginApi = (user) => API.post("/login", user);
-
-export const SignUp = (user) => API.post("/signup", user);
 
 // FIXME: api call abort하는 부분
 // export const CrawlingAPI = (url) =>

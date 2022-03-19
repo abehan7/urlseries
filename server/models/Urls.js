@@ -3,7 +3,11 @@ const autoIncrement = require("mongoose-auto-increment");
 const getCurrentDate = require("./getCurrentDate");
 
 const UrlSchema = new mongoose.Schema({
-  url_id: { type: Number, required: false },
+  url_id: {
+    type: mongoose.Types.ObjectId,
+    required: false,
+    default: mongoose.Types.ObjectId,
+  },
   url: { type: String, required: false },
   url_title: { type: String, required: false },
   url_hashTags: { type: Array, required: false, default: [] },
@@ -24,12 +28,6 @@ const connection = mongoose.createConnection(
 );
 autoIncrement.initialize(connection);
 
-UrlSchema.plugin(autoIncrement.plugin, {
-  model: "Urls",
-  field: "url_id",
-  startAt: 88,
-  // increasementBy: 1,
-});
 const Urls = mongoose.model("urls", UrlSchema);
 
 // exports.UrlSchema = UrlSchema;

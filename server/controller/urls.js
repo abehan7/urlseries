@@ -60,6 +60,29 @@ const addUrl = async (req, res) => {
   }
 };
 
+const addUrls = async (req, res) => {
+  const user_id = req.user.id;
+  const { urls } = req.body;
+  const _urls = urls.map((url) => {
+    return {
+      url: url.url,
+      url_title: url.title,
+      url_hashTags: url.hashtag,
+      url_memo: url.memo,
+      user_id,
+    };
+  });
+
+  console.log("_urls: ", _urls[0]);
+  try {
+    await db.Urls.insertMany(_urls);
+    res.send("items inserted");
+  } catch (err) {
+    console.log(err);
+    res.send("items NOT inserted");
+  }
+};
+
 const getLikeUrls = async (req, res) => {
   console.log("like url");
   const { id } = req.user;
@@ -83,9 +106,6 @@ const getTotalUrls = async (req, res) => {
   const likedUrls =
     (await db.Urls.find(likeQuery).sort({ url_updatedDate: -1 })) || [];
 
-  const tagOptions = { hashtag_assigned: 1 };
-  const tags = await db.Hashtags.findOne(query, tagOptions);
-
   res.json({ totalUrls, likedUrls });
 };
 
@@ -105,6 +125,7 @@ const updateUrlLike = async (req, res) => {
 module.exports = {
   getLikeUrls,
   addUrl,
+  addUrls,
   updateUrl,
   deleteUrls,
   getTotalUrls,

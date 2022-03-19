@@ -11,6 +11,7 @@ import { Toaster } from "react-hot-toast";
 import AlertModal from "../components/AlertModal/AlertModal";
 import { useSelector } from "react-redux";
 import { getToken } from "../redux/ReducersT/tokenReducer";
+import { addUrls } from "../components/Api";
 
 const MainEl = styled.div`
   position: inherit;
@@ -32,13 +33,14 @@ const MainPage = () => {
   const modalMode = useMode().modalMode;
   const containerStyle = { top: 100 };
   const token = useSelector(getToken);
+  // const bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
 
   useEffect(() => {
-    const fn = () => {
-      const bookmarks = localStorage.getItem("bookmarks");
+    const fn = async () => {
+      const bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
       console.log("bookmarks from mainPage: ", bookmarks);
       //url 넣기
-
+      bookmarks.length !== 0 && (await addUrls(bookmarks));
       //아이템 지우기
       localStorage.removeItem("bookmarks");
     };
