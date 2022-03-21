@@ -40,7 +40,7 @@ const MainPage = () => {
       const bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
       console.log("bookmarks from mainPage: ", bookmarks);
       //url 넣기
-      bookmarks?.length !== 0 && (await addUrls(bookmarks));
+      bookmarks.length !== 0 && (await addUrls(bookmarks));
       //아이템 지우기
       localStorage.removeItem("bookmarks");
     };

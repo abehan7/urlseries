@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import { createGlobalStyle } from "styled-components";
 import ReactGA from "react-ga";
+import Context from "./contexts";
 const GlobalStyle = createGlobalStyle`
 
 position: relative;
@@ -30,8 +31,10 @@ ReactGA.initialize("UA-12341234-1");
 
 ReactDOM.render(
   <Provider store={store}>
-    <GlobalStyle />
-    <App />
+    <Context>
+      <GlobalStyle />
+      <App />
+    </Context>
   </Provider>,
   document.getElementById("urlseries")
 );
