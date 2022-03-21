@@ -6,7 +6,6 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import { createGlobalStyle } from "styled-components";
 import ReactGA from "react-ga";
-import Context from "./contexts";
 const GlobalStyle = createGlobalStyle`
 
 position: relative;

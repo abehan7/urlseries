@@ -12,7 +12,6 @@ import AlertModal from "../components/AlertModal/AlertModal";
 import { useSelector } from "react-redux";
 import { getToken } from "../redux/ReducersT/tokenReducer";
 import { addUrls } from "../components/Api";
-import Context from "../contexts";
 
 const MainEl = styled.div`
   position: inherit;
@@ -41,7 +40,7 @@ const MainPage = () => {
       const bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
       console.log("bookmarks from mainPage: ", bookmarks);
       //url 넣기
-      bookmarks.length !== 0 && (await addUrls(bookmarks));
+      bookmarks?.length !== 0 && (await addUrls(bookmarks));
       //아이템 지우기
       localStorage.removeItem("bookmarks");
     };
@@ -49,20 +48,18 @@ const MainPage = () => {
   }, [token]);
 
   return (
-    <Context>
-      <MainEl>
-        {/* 사이드바 */}
-        <SideBar />
-        {/* 그리드 컨테이너 */}
-        <UrlContainer />
-        {/* 모달 */}
-        {modalWhiteList.includes(modalMode) && <Modals modalMode={modalMode} />}
-        {/* 토스트 */}
-        <Toaster containerStyle={containerStyle} />
-        {/* 얼럴트 모달 */}
-        <AlertModal />
-      </MainEl>
-    </Context>
+    <MainEl>
+      {/* 사이드바 */}
+      <SideBar />
+      {/* 그리드 컨테이너 */}
+      <UrlContainer />
+      {/* 모달 */}
+      {modalWhiteList.includes(modalMode) && <Modals modalMode={modalMode} />}
+      {/* 토스트 */}
+      <Toaster containerStyle={containerStyle} />
+      {/* 얼럴트 모달 */}
+      <AlertModal />
+    </MainEl>
   );
 };
 
