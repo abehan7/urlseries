@@ -30,6 +30,7 @@ import {
   SET_FOLDER_CONTENTS,
 } from "../../store/reducers/Folders.js";
 import { useEffect } from "react";
+import { RiShareBoxFill } from "react-icons/ri";
 
 // import {} from "react-icons"
 
@@ -543,6 +544,8 @@ const FolderDeleteModeItems = () => {
 const FolderEditUrlModeItems = () => {
   const dispatch = useDispatch();
   const setMode = useMode().setMode;
+  const setModalMode = useMode().setModalMode;
+
   const handleAddFolderEditUrlList = useFolder().handleAddFolderEditUrlList;
   const handleResetFolderEditUrl = useFolder().handleResetFolderEditUrl;
   const filterdUrls = useUrl().url.filterdUrls;
@@ -579,6 +582,8 @@ const FolderEditUrlModeItems = () => {
     filterdUrls.length === 0 && handleAddFolderEditUrlList(totalUrls);
   };
   const onUnClickAll = () => handleResetFolderEditUrl();
+
+  const onClickShare = () => setModalMode(constants.SHARE);
   return (
     <TapsWrapper>
       <Item name="뒤로가기" onClick={onClickBack}>
@@ -595,6 +600,11 @@ const FolderEditUrlModeItems = () => {
       <TagWrapper>
         <Item name="전체해제" onClick={onUnClickAll}>
           <MdRadioButtonUnchecked />
+        </Item>
+      </TagWrapper>
+      <TagWrapper>
+        <Item name="공유하기" onClick={onClickShare}>
+          <RiShareBoxFill />
         </Item>
       </TagWrapper>
     </TapsWrapper>

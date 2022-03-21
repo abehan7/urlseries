@@ -12,6 +12,7 @@ const EDIT_MODAL_UP = "EDIT_MODAL_UP";
 const ADD = "ADD";
 const DELETE = "DELETE";
 const HASHTAG = "HASHTAG";
+const SHARE = "SHARE";
 // 폴더에서 사용할 constants
 // const FOLDER_NORMAL = "FOLDER_NORMAL"; // 이건 사용 못해 FOLDER로 이미 내가 해놨거든
 const FOLDER = "FOLDER";
@@ -28,6 +29,7 @@ export const constants = {
   ADD,
   DELETE,
   HASHTAG,
+  SHARE,
   FOLDER,
   EDIT_MODAL_UP,
   FOLDER_EDIT_URL,

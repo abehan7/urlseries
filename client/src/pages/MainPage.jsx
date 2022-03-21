@@ -22,6 +22,7 @@ const MainEl = styled.div`
 `;
 
 const modalWhiteList = [
+  constants.SHARE,
   constants.ADD,
   constants.HASHTAG,
   constants.EDIT_MODAL_UP,

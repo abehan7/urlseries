@@ -7,6 +7,7 @@ import { useUrl } from "../../contexts/UrlContext";
 import AddFolderModal from "./AddFolderModal";
 import AddModal from "./AddModal";
 import HashtagModal from "./HashtagModal";
+import ShareModal from "./ShareModal";
 const ModalEl = styled.div`
   width: 100vw;
   height: 100vh;
@@ -50,6 +51,8 @@ const Modals = ({ modalMode }) => {
       {modalMode === constants.HASHTAG && <HashtagModal />}
       {/* 폴더 추가 수정 모달 */}
       {FolderModalWhiteList.includes(modalMode) && <AddFolderModal />}
+      {/* 공유하기 모달 */}
+      {modalMode === constants.SHARE && <ShareModal />}
     </ModalEl>
   );
 };
