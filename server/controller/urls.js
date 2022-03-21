@@ -109,6 +109,14 @@ const getTotalUrls = async (req, res) => {
   res.json({ totalUrls, likedUrls });
 };
 
+const getGuestUrls = async (req, res) => {
+  const user_id = "61dab50ad3063e55d1d781c3";
+  const query = { user_id };
+  const urls = (await db.Urls.find(query).sort({ _id: -1 }).limit(100)) || [];
+  // console.log(urls);
+  res.json(urls);
+};
+
 const updateUrlLike = async (req, res) => {
   const { id } = req.params;
 
@@ -124,6 +132,7 @@ const updateUrlLike = async (req, res) => {
 
 module.exports = {
   getLikeUrls,
+  getGuestUrls,
   addUrl,
   addUrls,
   updateUrl,

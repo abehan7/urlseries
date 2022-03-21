@@ -12,6 +12,8 @@ const DropdownBtn = styled.div`
   background-color: transparent;
 `;
 
+const UserId = styled.span``;
+
 const HeaderEl = styled.header`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   z-index: 3;
@@ -22,6 +24,16 @@ const HeaderEl = styled.header`
   }
   img {
     padding-right: 0.7rem;
+  }
+  @media (max-width: 1018px) {
+    li:first-child {
+      display: none;
+    }
+  }
+  @media (max-width: 500px) {
+    ${UserId} {
+      display: none;
+    }
   }
 `;
 
@@ -131,7 +143,7 @@ function Header() {
       <div className="dropdown" ref={ref}>
         <DropdownBtn onClick={onClickDropDown} className="dropbtn">
           <img className="profileImage" src={user.avatar} alt="" />
-          {user.user_id} <VscChevronDown />
+          <UserId>{user.user_id}</UserId> <VscChevronDown />
         </DropdownBtn>
 
         <DropDownContent

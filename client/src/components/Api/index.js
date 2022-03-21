@@ -22,13 +22,13 @@ API.interceptors.request.use(
   }
 );
 
-export const getTotalUrls = () => API.get("/url");
+export const getTotalUrls = () => API.get("/url", option);
 
-export const getAssignedtags = () => API.get("/hashtag/assigned");
+export const getAssignedtags = () => API.get("/hashtag/assigned", option);
 
 export const getGuestUrls = () => API.get("/url/guest", option);
 
-export const getFolderItems = () => API.get("/folderItems");
+export const getFolderItems = () => API.get("/folderItems", option);
 
 export const addUrl = ({ url, title, hashTags, memo }) =>
   API.post("/url", { url, title, hashTags, memo });

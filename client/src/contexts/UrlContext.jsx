@@ -206,7 +206,7 @@ export const UrlProvider = ({ children }) => {
   useEffect(() => {
     const getMemberData = async () => {
       console.log("getMemberData");
-      await getAbort();
+      // await getAbort();
       setLoading({ ...loading, isLikedUrl: true, isTotalUrl: true });
       const { data } = await getTotalUrls();
       // console.log(data);

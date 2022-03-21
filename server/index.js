@@ -88,10 +88,7 @@ app.use("/folder", require("./routes/folders"));
 // [4]  폴더 아이템들 가지고오기
 app.get("/folderItems", authtest, FolderItems);
 
-// [5]  폴더 아이템들 가지고오기
-app.get("/search/delete/all", authtest, SearchDeleteAll);
-
-app.get("/url/guest", getGuestUrls);
+// app.get("/url/guest", getGuestUrls);
 
 // [3]  url추가 용도 post
 

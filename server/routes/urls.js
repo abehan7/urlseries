@@ -7,11 +7,13 @@ const {
   deleteUrls,
   getTotalUrls,
   updateUrlLike,
+  getGuestUrls,
 } = require("../controller/urls.js");
 
 const auth = require("../middleware/authtest.js");
 
 const router = express.Router();
+router.get("/guest", getGuestUrls);
 router.get("/like", auth, getLikeUrls);
 router.get("/", auth, getTotalUrls);
 router.post("/", auth, addUrl);
