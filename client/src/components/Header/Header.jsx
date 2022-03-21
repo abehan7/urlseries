@@ -102,7 +102,7 @@ function Header() {
   const { user, isLogged } = auth;
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
-  const setMode = useMode().setMode;
+  // const setMode = useMode().setMode;
 
   const onClickDropDown = () => setIsOpen(!isOpen);
   const handleFoldUpDropDown = () => setIsOpen(false);
@@ -131,7 +131,7 @@ function Header() {
     // }
   };
 
-  const onClickLogo = () => setMode(constants.NORMAL);
+  // const onClickLogo = () => setMode(constants.NORMAL);
 
   useEffect(() => {
     window.addEventListener("click", windowClick);
@@ -170,7 +170,7 @@ function Header() {
     <HeaderEl>
       <div className="logo">
         <h1>
-          <Link to="/" onClick={onClickLogo}>
+          <Link to="/">
             <p>Urlseries</p>
           </Link>
         </h1>

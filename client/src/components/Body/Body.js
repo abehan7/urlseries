@@ -10,6 +10,7 @@ import styled from "styled-components";
 import loadable from "@loadable/component";
 import ChromeExtensionPage from "../../pages/ChromeExtensionPage";
 import AdsensePage from "../../pages/AdsensePage";
+import Context from "../../contexts";
 
 const Aboutpage = loadable(() => import("../AboutPage/AboutPage"));
 const UserInfomation = loadable(() =>
@@ -36,7 +37,14 @@ function Body() {
   return (
     <Section>
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route
+          path="/"
+          element={
+            <Context>
+              <MainPage />
+            </Context>
+          }
+        />
         <Route path="/about" element={<Aboutpage />} />
         <Route path="/userauth" element={<UserInfomation />} />
         <Route

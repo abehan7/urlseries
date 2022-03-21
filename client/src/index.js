@@ -31,10 +31,8 @@ ReactGA.initialize("UA-12341234-1");
 
 ReactDOM.render(
   <Provider store={store}>
-    <Context>
-      <GlobalStyle />
-      <App />
-    </Context>
+    <GlobalStyle />
+    <App />
   </Provider>,
   document.getElementById("urlseries")
 );

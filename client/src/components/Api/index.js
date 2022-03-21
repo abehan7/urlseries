@@ -1,8 +1,8 @@
 import axios from "axios";
 
 axios.defaults.withCredentials = true;
-export const API = axios.create({ baseURL: "https://urlstory.herokuapp.com" });
-// export const API = axios.create({ baseURL: "http://localhost:3001" });
+// export const API = axios.create({ baseURL: "https://urlstory.herokuapp.com" });
+export const API = axios.create({ baseURL: "http://localhost:3001" });
 const controller = new AbortController();
 
 export const getAbort = () => controller.abort();
