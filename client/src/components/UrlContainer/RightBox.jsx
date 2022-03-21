@@ -236,6 +236,10 @@ const NormalMode = ({ isLikeUrls, loading, isScroll, handleScrollUp }) => {
   // 로그인 안됐을 때
   const Guest = () =>
     !token && <GuestItemContainer>로그인 후 이용해주세요</GuestItemContainer>;
+
+  // 처음 로딩 후에 북마크 없을 때
+  const NoUrlAfterFirstLoading = () =>
+    token && !loading.isLikedUrl && likedUrls.length === 0 && <NoUrl />;
   return (
     <>
       {/* {!isLikeUrls && <ItemContainer urls={searchedUrls} />} */}
@@ -243,6 +247,8 @@ const NormalMode = ({ isLikeUrls, loading, isScroll, handleScrollUp }) => {
       {token && loading.isLikedUrl && <LoadingCenter />}
       {/* 토큰 없을 때 */}
       {Guest()}
+      {/* 처음 로딩 후에 북마크 없을 때 */}
+      {NoUrlAfterFirstLoading()}
       <Marker isScroll={isScroll} onClick={handleScrollUp} />
     </>
   );

@@ -242,11 +242,16 @@ const LeftBox = () => {
   //맨 처음 로딩중
   const FirstLoader = () => token && loading.isTotalUrl && <LoadingCenter />;
 
+  // 로딩끝나고 북마크 없을 때
+  const NoUrlAfterFirstLoading = () =>
+    token && !loading.isTotalUrl && totalUrls.length === 0 && <NoUrl />;
+
   // 로그인 안됐을 때
   const Guest = () =>
     !token && (
       <GuestItemContainer>로그인 후 이용 가능합니다!</GuestItemContainer>
     );
+
   return (
     <LeftBoxEl>
       <TitleWrapper>
@@ -266,6 +271,8 @@ const LeftBox = () => {
       >
         {/* 맨 처음 로딩 */}
         {FirstLoader()}
+        {/* 맨 처음 로딩 끝나고 북마크 없을 때 */}
+        {NoUrlAfterFirstLoading()}
         {/* 전체url */}
         {TotalUrlMap()}
         {/* 검색 url */}
