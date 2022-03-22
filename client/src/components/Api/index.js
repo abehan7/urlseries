@@ -30,6 +30,9 @@ export const getGuestUrls = () => API.get("/url/guest", option);
 
 export const getFolderItems = () => API.get("/folderItems", option);
 
+export const getShareFolderItems = (id) =>
+  API.get(`/folder/${id}/share`, option);
+
 export const addUrl = ({ url, title, hashTags, memo }) =>
   API.post("/url", { url, title, hashTags, memo });
 

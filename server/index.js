@@ -92,9 +92,6 @@ app.get("/folderItems", authtest, FolderItems);
 
 // [3]  url추가 용도 post
 
-// [4]  폴더 추가
-app.post("/addFolder", authtest, AddFolder);
-
 app.put("/editUrl", authtest, EditUrl);
 
 // FIXME: 폴더이름 수정

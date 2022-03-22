@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { ItemConatiner } from "../components/UrlContainer/styled/ItemContainer";
 import { useRef } from "react";
 import Marker from "../components/UrlContainer/Marker";
+import { getShareFolderItems } from "../components/Api";
 const SharePageEl = styled.div`
   display: flex;
   width: 100%;
@@ -62,7 +63,7 @@ const FlexContainer = styled(ItemConatiner)`
 `;
 
 const TitleWrapper = styled.div`
-  display: flex;
+  display: ${({ isShared }) => (isShared ? "flex" : "none")};
   align-items: center;
   justify-content: center;
   width: 100%;
@@ -74,6 +75,15 @@ const Title = styled.div`
   color: gray;
 `;
 
+const Ment = styled.div`
+  color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
+
 const SharePage = () => {
   const { folder_id } = useParams();
   const [keyword, setKeyword] = useState("");
@@ -81,20 +91,24 @@ const SharePage = () => {
   const [filterdUrls, setFilterdUrls] = useState([]);
   const [scrollTop, setScrollTop] = useState(0);
   const [isScroll, setIsScroll] = useState(false);
+  const [folder, setFolder] = useState({
+    folder_contents: [],
+    folder_name: "",
+    share: false,
+  });
+  const [msg, setMsg] = useState("");
   const scrollRef = useRef(null);
-
-  const folderUrls = urls;
 
   const isSearch = keyword.length > 0;
   //   const onChange = (e) => setKeyword(e.target.value);
   const _getFilterdUrls = useCallback(
     (keyword) => {
       const pKeyword = KeywordNormalize(keyword);
-      const filterd = SearchNotByDB(pKeyword, folderUrls);
+      const filterd = SearchNotByDB(pKeyword, folder.folder_contents);
       setFilterdUrls(filterd);
       setIsSearchLoading(false);
     },
-    [folderUrls, filterdUrls]
+    [folder.folder_contents, filterdUrls]
   );
   const onChange = async (e) => {
     debounceFn.cancel();
@@ -132,19 +146,37 @@ const SharePage = () => {
   const SearchLoader = () => isSearch && isSearchLoading && <LoadingCenter />;
 
   //전체 북마크
-  const TotalUrlMap = () => !isSearch && <ItemContainer urls={folderUrls} />;
+  const TotalUrlMap = () =>
+    !isSearch && <ItemContainer urls={folder.folder_contents} />;
 
   //검색 북마크
   const SearchUrlMap = () => isSearch && <ItemContainer urls={filterdUrls} />;
 
+  // 공유중인 폴더가 아닐 때
+  const NoShareFolder = () =>
+    msg === "NOT_SHARED" && <Ment>공유중인 폴더가 아닙니다</Ment>;
+
+  // 폴더가 존재하지 않을 때
+  const NoFolder = () =>
+    msg === "NOT_FOUND" && <Ment>폴더가 존재하지 않습니다</Ment>;
+
   useEffect(() => setFilterdUrls([]), [keyword]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    const fn = async () => {
+      const { data } = await getShareFolderItems(folder_id);
+      console.log(data);
+      setMsg(data.msg);
+      data.msg === "SHARED" && setFolder(data.folder);
+    };
+    fn();
+  }, []);
+
   return (
     <SharePageEl>
       <Wrapper>
-        <TitleWrapper>
-          <Title>{folder_id}</Title>
+        <TitleWrapper isShared={folder?.share}>
+          <Title>{folder.folder_name}</Title>
           <SearchBar keyword={keyword} onChange={onChange} />
         </TitleWrapper>
 
@@ -153,6 +185,11 @@ const SharePage = () => {
           {TotalUrlMap()}
           {SearchLoader()}
           {SearchUrlMap()}
+          {/* 공유중인 폴더가 아닙니다 */}
+          {NoShareFolder()}
+          {/* 해당하는 폴더가 존재하지 않습니다 */}
+          {NoFolder()}
+
           <Marker isScroll={isScroll} onClick={handleScrollUp} />
         </FlexContainer>
       </Wrapper>

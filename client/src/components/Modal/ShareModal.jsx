@@ -3,9 +3,12 @@ import { useEffect } from "react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { MdOutlineFileCopy } from "react-icons/md";
+import { useDispatch } from "react-redux";
 import styled, { css } from "styled-components";
 import { useFolder } from "../../contexts/FolderContext";
 import { useMode } from "../../contexts/ModeContext";
+import { SET_SHARE } from "../../store/reducers/Folders";
+import { updateFolderShare } from "../Api";
 import { ColoredFooterBtn } from "./styled/ColoredFooterBtn.styled";
 import { Footer } from "./styled/Footer.styled";
 import { FooterBtn } from "./styled/FooterBtn.styled";
@@ -96,6 +99,7 @@ const ShareModal = () => {
   const [isShare, setIsShare] = useState(false);
   const currentFolder = useFolder().currentFolder;
   const setModalMode = useMode().setModalMode;
+  const dispatch = useDispatch();
 
   const handleSetCurrentFolder = useFolder().handleSetCurrentFolder;
   const shareUrl = `${window.location.origin}/share/${currentFolder._id}`;
@@ -117,11 +121,14 @@ const ShareModal = () => {
   const onClickCancel = () => setModalMode(null);
 
   const onClickSave = () => {
+    // await new Promise((resolve) => setTimeout(resolve, 1000));
     // 토스트 모달
     const fetchData = async () => {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
       const newFolder = { ...currentFolder, share: isShare };
       handleSetCurrentFolder(newFolder);
+      dispatch(SET_SHARE(newFolder._id));
+      await updateFolderShare(newFolder._id);
+      // 리덕스도 초기화
     };
     const myPromise = fetchData();
     toast.promise(myPromise, {

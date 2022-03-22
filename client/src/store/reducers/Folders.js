@@ -141,6 +141,7 @@ export const {
   GET_CHANGE_FOLDER_NAME,
   SET_LIKE,
   ADD_LIKE,
+  SET_SHARE,
   REMOVE_LIKE,
   REMOVE_FOLDER,
 } = folderSlice.actions;

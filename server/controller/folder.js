@@ -1,6 +1,22 @@
 const db = require("../models");
 const getCurrentDate = require("../hooks/getCurrentDate");
 
+const getShareFolderItems = async (req, res) => {
+  const { _id } = req.params;
+  const query = { _id };
+
+  try {
+    const folderItems = await db.Folders.findOne(query);
+    console.log(folderItems?.share);
+    folderItems?.share && res.json({ msg: "SHARED", folder: folderItems });
+    !folderItems?.share && res.json({ msg: "NOT_SHARED", folder: null });
+  } catch (error) {
+    // console.error(error);
+    console.log("this is an error");
+    res.json({ msg: "NOT_FOUND" });
+  }
+};
+
 const addFolder = async (req, res) => {
   const { id } = req.user;
   const user_id = id;
@@ -95,6 +111,7 @@ const deleteFolders = async (req, res) => {
 };
 
 module.exports = {
+  getShareFolderItems,
   addFolder,
   updateFolder,
   deleteFolders,

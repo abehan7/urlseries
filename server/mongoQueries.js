@@ -561,3 +561,7 @@ db.folders.updateMany(
     },
   }
 );
+
+const folderItems = await db.Folder.findOne(query)
+  .populate("folder_contents")
+  .populate("folder_contents.item_id");
