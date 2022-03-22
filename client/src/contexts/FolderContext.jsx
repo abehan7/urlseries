@@ -186,6 +186,11 @@ export const FolderProvider = ({ children }) => {
     setDeleteFolders(newDeleteFolders);
   };
 
+  // 폴더 공유하기
+  const handleOnClickShareFolder = async () => {
+    // currentFolder.share&&
+  };
+
   // FIXME: 메타태그 + 폴더태그 아이템 useEffect
 
   useEffect(() => {

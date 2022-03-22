@@ -50,6 +50,8 @@ export const updateFolder = ({ folder_id, folder_name, folder_memo }) =>
 
 export const updateFolderLike = (id) => API.put(`/folder/${id}/like`);
 
+export const updateFolderShare = (id) => API.put(`/folder/${id}/share`);
+
 export const updateUrlLike = (id) => API.put(`/url/like/${id}`);
 
 export const api_updateUrl = (id, url) => API.patch(`/url/${id}`, { url });

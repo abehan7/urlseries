@@ -38,6 +38,8 @@ function Body() {
     <Section>
       <Routes>
         <Route path="/" element={<MainPage />} />
+        {/* <Route path="/" element={<AdsensePage />} /> */}
+
         <Route path="/share/:folder_id" element={<SharePage />} />
         <Route path="/about" element={<Aboutpage />} />
         <Route path="/userauth" element={<UserInfomation />} />

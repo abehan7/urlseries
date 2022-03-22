@@ -50,6 +50,23 @@ const updateFolderLike = async (req, res) => {
   await db.Folders.findById(query, update).clone();
 };
 
+const updateFolderShare = async (req, res) => {
+  const user_id = req.user.id;
+  const { _id } = req.params;
+  console.log("updateFolderShare");
+
+  const query = { _id, user_id };
+
+  const update = (error, doc) => {
+    doc.share = !doc.share;
+    doc.folder_edited = getCurrentDate();
+    doc.save();
+    res.json(doc);
+  };
+
+  await db.Folders.findById(query, update).clone();
+};
+
 const updateFolderContents = async (req, res) => {
   const { id } = req.user;
   const user_id = id;
@@ -82,5 +99,6 @@ module.exports = {
   updateFolder,
   deleteFolders,
   updateFolderLike,
+  updateFolderShare,
   updateFolderContents,
 };

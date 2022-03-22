@@ -193,6 +193,11 @@ function Header() {
           </li>
         )}
       </ul>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3881602489337676"
+        crossorigin="anonymous"
+      ></script>
     </HeaderEl>
   );
 }

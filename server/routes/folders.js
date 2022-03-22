@@ -5,6 +5,7 @@ const {
   updateFolder,
   updateFolderLike,
   updateFolderContents,
+  updateFolderShare,
 } = require("../controller/folder.js");
 const auth = require("../middleware/authtest.js");
 
@@ -14,5 +15,6 @@ router.post("/delete", auth, deleteFolders);
 router.patch("/:_id", auth, updateFolder);
 router.patch("/:_id/contents", auth, updateFolderContents);
 router.put("/:_id/like", auth, updateFolderLike);
+router.put("/:_id/share", auth, updateFolderShare);
 
 module.exports = router;

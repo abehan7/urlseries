@@ -9,6 +9,7 @@ const FolderSchema = new mongoose.Schema({
   folder_date_first: { type: Date, required: true, default: getCurrentDate() },
   folder_edited: { type: Date, required: true, default: getCurrentDate() },
   like: { type: Boolean, required: true, default: false },
+  share: { type: Boolean, required: true, default: false },
 });
 
 const Folders = mongoose.model("folders", FolderSchema);
