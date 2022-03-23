@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import styled from "styled-components";
 import ItemContainer from "../components/UrlContainer/ItemContainer";
 import urls from "../data/urls.json";
@@ -11,6 +12,11 @@ const AdsensePageEl = styled.div`
 const AdsensePage = () => {
   return (
     <AdsensePageEl>
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3881602489337676"
+        crossOrigin="anonymous"
+      />
       <ItemContainer urls={urls} />
     </AdsensePageEl>
   );

@@ -16,7 +16,7 @@ function PlayerModal({ closeModal }) {
         </div>
         <div className="body">
           <div className="videopocket">
-            <img className="video" src="img/aboutsearch.gif" />
+            <img className="video" src="img/aboutsearch.gif" alt="vedio" />
           </div>
         </div>
       </div>
