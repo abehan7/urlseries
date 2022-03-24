@@ -17,7 +17,7 @@ const AdsensePage = () => {
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3881602489337676"
         crossOrigin="anonymous"
       />
-      <ItemContainer urls={urls} />
+      <ItemContainer urls={urls} urlLength={100} />
     </AdsensePageEl>
   );
 };

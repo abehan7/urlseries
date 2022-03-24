@@ -28,17 +28,11 @@ function Body() {
   const auth = useSelector((state) => state.auth);
   const { isLogged, isAdmin } = auth;
 
-  // // const navigate = useNavigate();
-  // navigate.listen((location) => {
-  //   ReactGA.set({ page: location.pathname });
-  //   ReactGA.pageview(location.pathname);
-  // });
-
   return (
     <Section>
       <Routes>
-        {/* <Route path="/" element={<MainPage />} /> */}
-        <Route path="/" element={<AdsensePage />} />
+        <Route path="/" element={<MainPage />} />
+        <Route path="/adsense" element={<AdsensePage />} />
 
         <Route path="/share/:folder_id" element={<SharePage />} />
         <Route path="/about" element={<Aboutpage />} />

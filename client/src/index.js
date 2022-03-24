@@ -1,5 +1,5 @@
 import React from "react";
-import ReactDOM, { hydrate, render } from "react-dom";
+import ReactDOM from "react-dom";
 import App from "./App";
 import "./index.css";
 import { Provider } from "react-redux";
@@ -27,33 +27,13 @@ h2 {
 }
 
 `;
-// ReactGA.initialize("UA-12341234-1");
 
-const rootElement = document.getElementById("urlseries");
-
-const Dom = () => {
-  return (
-    <Provider store={store}>
-      <Context>
-        <GlobalStyle />
-        <App />
-      </Context>
-    </Provider>
-  );
-};
-
-if (rootElement.hasChildNodes()) {
-  hydrate(<Dom />, rootElement);
-} else {
-  render(<Dom />, rootElement);
-}
-
-// ReactDOM.render(
-//   <Provider store={store}>
-//     <Context>
-//       <GlobalStyle />
-//       <App />
-//     </Context>
-//   </Provider>,
-//   document.getElementById("urlseries")
-// );
+ReactDOM.render(
+  <Provider store={store}>
+    <Context>
+      <GlobalStyle />
+      <App />
+    </Context>
+  </Provider>,
+  document.getElementById("urlseries")
+);

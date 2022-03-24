@@ -9,8 +9,8 @@ import DeleteUrl from "../DeleteUrl/DeleteUrl";
 import { useFolder } from "../../contexts/FolderContext";
 import Colors from "../../assets/Colors";
 
-const ItemContainer = ({ urls }) => {
-  const [contentsNum, setContentsNum] = useState(50);
+const ItemContainer = ({ urls, urlLength = 50 }) => {
+  const [contentsNum, setContentsNum] = useState(urlLength);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [deleteUrlIds, setDeleteUrlIds] = useState([]);

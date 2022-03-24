@@ -159,7 +159,7 @@ const ShareModal = () => {
         </UrlContainer>
       </ModalBodyEl>
       <Footer>
-        <CancelBtn>Cancel</CancelBtn>
+        <CancelBtn onClick={onClickCancel}>Cancel</CancelBtn>
         <ColoredFooterBtn onClick={onClickSave}>Save</ColoredFooterBtn>
       </Footer>
     </ModalContentEl>
