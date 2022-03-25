@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import { debounce, throttle } from "lodash";
 import ItemContainer from "../components/UrlContainer/ItemContainer";
-import urls from "../data/urls.json";
 import SearchBar from "../components/SearchBar/SearchBar";
 import { KeywordNormalize, SearchNotByDB } from "../components/Utils/Search";
 import NoUrl from "../components/UrlContainer/NoUrl";
