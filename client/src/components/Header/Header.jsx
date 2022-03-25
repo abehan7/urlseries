@@ -187,7 +187,7 @@ function Header() {
           userLink()
         ) : (
           <li>
-            <Link to="/logintest" onClick={onClickLogin}>
+            <Link to="/login" onClick={onClickLogin}>
               <VscAccount className="icon_page" size="20"></VscAccount>로그인
             </Link>
           </li>

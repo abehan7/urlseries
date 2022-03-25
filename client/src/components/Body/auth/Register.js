@@ -71,7 +71,7 @@ function Register() {
       });
 
       setUser({ ...user, err: "", success: res.data.msg });
-      // const res = await axios.post("/user/logintest", { user_id, password });
+      // const res = await axios.post("/user/login", { user_id, password });
       // setUser({ ...user, err: "", success: res.data.msg });
       // localStorage.setItem("firstLogin", true);
       // dispatch(dispatchLogin());
@@ -87,7 +87,7 @@ function Register() {
   };
 
   const goSignUp = () => {
-    navigate("/logintest");
+    navigate("/login");
   };
 
   return (
@@ -161,7 +161,7 @@ function Register() {
               <h1 className="auth_opening">환영합니다!</h1>
               <p className="auth_text">기존 아이디가 있다면 로그인해주세요!</p>
               <button className="ghost" id="signUp">
-                <Link to="/logintest">로그인</Link>
+                <Link to="/login">로그인</Link>
               </button>
             </div>
           </div>

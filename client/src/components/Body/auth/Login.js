@@ -10,7 +10,32 @@ import { dispatchLogin } from "../../../redux/Actions/authAction";
 import { useDispatch } from "react-redux";
 import { GoogleLogin } from "react-google-login";
 import { RiUser3Line, RiLockPasswordLine } from "react-icons/ri";
-import { useUrl } from "../../../contexts/UrlContext";
+import styled from "styled-components";
+
+const Input = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: none;
+  text-decoration: none;
+  :focus {
+    text-decoration: none;
+    outline: none;
+  }
+
+  :-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 30px #fff inset;
+    -webkit-text-fill-color: #000;
+  }
+
+  /* 인풋 초기화 */
+  :-webkit-autofill,
+  :-webkit-autofill:hover,
+  :-webkit-autofill:focus,
+  :-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+  }
+`;
 
 const initialState = {
   user_id: "",
@@ -18,6 +43,10 @@ const initialState = {
   err: "",
   success: "",
 };
+
+const Button = styled.button`
+  cursor: pointer;
+`;
 function Login() {
   const [user, setUser] = useState(initialState);
   const dispatch = useDispatch();
@@ -35,19 +64,17 @@ function Login() {
     try {
       // guest url들 초기화
 
-      const res = await API.post("/user/logintest", { user_id, password });
-      // console.log("firstLogin", res.data);
+      const res = await API.post("/user/login", { user_id, password });
 
       setUser({ ...user, err: "", success: res.data.msg });
 
-      res.data.msg === "로그인 성공" &&
+      const loginSuccess = () => {
         dispatch({ type: "GET_TOKEN", payload: res.data.access_token });
-
-      res.data.msg === "로그인 성공" &&
         localStorage.setItem("accessToken", res.data.access_token);
+      };
 
+      res.data.msg === "로그인 성공" && loginSuccess();
       localStorage.setItem("firstLogin", true);
-
       dispatch(dispatchLogin());
       navigate("/");
     } catch (err) {
@@ -72,25 +99,24 @@ function Login() {
 
       setUser({ ...user, err: "", success: res.data.msg });
 
-      res.data.msg === "로그인 성공" &&
+      const loginSuccess = () => {
         dispatch({ type: "GET_TOKEN", payload: res.data.access_token });
-
-      res.data.msg === "로그인 성공" &&
         localStorage.setItem("accessToken", res.data.access_token);
+      };
 
+      res.data.msg === "로그인 성공" && loginSuccess();
       localStorage.setItem("firstLogin", true);
 
       dispatch(dispatchLogin());
       navigate("/");
     } catch (err) {
+      console.error(err);
       err.response.data.msg &&
         setUser({ ...user, err: err.response.data.msg, success: "" });
     }
   };
 
-  const goSignUp = () => {
-    navigate("/registertest");
-  };
+  const goSignUp = () => navigate("/register");
 
   return (
     <center>
@@ -104,33 +130,33 @@ function Login() {
 
             <div className="icon_field">
               <RiUser3Line className="icon" />
-              <input
+              <Input
                 type="text"
                 className="auth_input"
                 placeholder="아이디를 입력해주세요"
                 value={user_id}
                 name="user_id"
                 onChange={handleChangeInput}
-              ></input>
+              />
             </div>
             <div className="icon_field">
               <RiLockPasswordLine className="icon" />
-              <input
+              <Input
                 type="password"
                 className="auth_input"
                 placeholder="비밀번호를 입력해주세요"
                 value={password}
                 name="password"
                 onChange={handleChangeInput}
-              ></input>
+              />
             </div>
             <Link to="/forgot_password">비밀번호를 잊으셨나요?</Link>
             <button className="response_register" onClick={goSignUp}>
               회원가입
             </button>
-            <button id="auth_btn" type="summit">
+            <Button id="auth_btn" type="summit">
               로그인
-            </button>
+            </Button>
             {/*  */}
 
             <div className="social">
@@ -150,9 +176,11 @@ function Login() {
               <p className="auth_text">
                 자신만의 개성있고 효율적인 URL 관리를 시작해보세요!
               </p>
-              <button className="ghost" id="signUp">
-                <Link to="/registertest">회원가입</Link>
-              </button>
+              <Link to="/register">
+                <Button className="ghost" id="signUp">
+                  회원가입
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

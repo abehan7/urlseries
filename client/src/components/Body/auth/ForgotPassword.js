@@ -40,7 +40,7 @@ function ForgotPassword() {
     }
   };
   const goSignUp = () => {
-    navigate("/logintest");
+    navigate("/login");
   };
 
   return (
@@ -90,7 +90,7 @@ function ForgotPassword() {
                 이메일 확인을 받은 후 재설정 해보세요!
               </p>
               <button className="ghost" id="signUp">
-                <Link to="/logintest">로그인</Link>
+                <Link to="/login">로그인</Link>
               </button>
             </div>
           </div>

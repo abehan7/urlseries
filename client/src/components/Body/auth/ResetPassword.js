@@ -56,7 +56,7 @@ function ResetPassword() {
   };
 
   const goSignUp = () => {
-    navigate("/logintest");
+    navigate("/login");
   };
 
   return (
@@ -104,7 +104,7 @@ function ResetPassword() {
               <h1 className="auth_opening">비밀번호를 재설정 하세요!</h1>
               <p className="auth_text">비밀번호 변경 후 로그인 하세요!</p>
               <button className="ghost" id="signUp">
-                <Link to="/logintest">로그인</Link>
+                <Link to="/login">로그인</Link>
               </button>
             </div>
           </div>

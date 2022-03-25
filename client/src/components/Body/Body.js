@@ -37,12 +37,9 @@ function Body() {
         <Route path="/share/:folder_id" element={<SharePage />} />
         <Route path="/about" element={<Aboutpage />} />
         <Route path="/userauth" element={<UserInfomation />} />
+        <Route path="/login" element={isLogged ? <NotFound /> : <Login />} />
         <Route
-          path="/logintest"
-          element={isLogged ? <NotFound /> : <Login />}
-        />
-        <Route
-          path="/registertest"
+          path="/register"
           element={isLogged ? <NotFound /> : <Register />}
         />
         <Route

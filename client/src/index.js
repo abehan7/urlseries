@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import store from "./store/store";
 import { createGlobalStyle } from "styled-components";
 import Context from "./contexts";
+import ReactGA from "react-ga";
 
 const GlobalStyle = createGlobalStyle`
 
@@ -25,8 +26,9 @@ h2 {
   /* font-size: 20px; */
   font-weight: bold;
 }
-
 `;
+
+ReactGA.initialize("UA-12341234-1");
 
 ReactDOM.render(
   <Provider store={store}>
