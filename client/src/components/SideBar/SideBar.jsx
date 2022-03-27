@@ -34,7 +34,7 @@ import { RiShareBoxFill } from "react-icons/ri";
 
 // import {} from "react-icons"
 
-const SideBarEl = styled.div`
+export const SideBarEl = styled.div`
   @keyframes fadeIn {
     0% {
       opacity: 0;
@@ -119,14 +119,14 @@ const Img = styled.img`
   padding-bottom: 0.5rem;
 `;
 
-const FaviconWrapper = styled.div`
+export const FaviconWrapper = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
 `;
 
-const FaviconContainer = styled.div`
+export const FaviconContainer = styled.div`
   border-bottom: 1px solid #e9ecef;
   display: flex;
   align-items: center;
@@ -134,7 +134,7 @@ const FaviconContainer = styled.div`
   width: 70%;
 `;
 
-const ImgWrapper = styled.div`
+export const ImgWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -144,14 +144,14 @@ const ImgWrapper = styled.div`
   height: 100%;
   flex-direction: column;
 `;
-const Ment = styled.span`
+export const Ment = styled.span`
   font-size: 1.1rem;
   color: gray;
   padding-top: 0.3rem;
   text-align: center;
 `;
 
-const TapsWrapper = styled.div`
+export const TapsWrapper = styled.div`
   animation: fadeIn 0.5s ease-in-out;
 `;
 const DeleteWrapper = styled(TapsWrapper)`
@@ -288,7 +288,7 @@ export default SideBar;
 
 //  Q space => git branch -a 탈출하는 방법
 
-const Item = ({ children, name, onClick }) => {
+export const Item = ({ children, name, onClick }) => {
   return (
     <Button onClick={onClick}>
       <IconWrapper>

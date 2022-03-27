@@ -14,7 +14,19 @@ const GridWrap = styled.div`
   gap: 1rem;
 `;
 
-const Writing = styled.div``;
+const Title = styled.h3`
+  border-bottom: 1px solid #e6e6e6;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+`;
+
+const Writing = styled.div`
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  margin-bottom: 1rem;
+`;
 const AdsensePage = () => {
   return (
     <AdsensePageEl>
@@ -35,7 +47,9 @@ const AdsensePage = () => {
 const Post = ({ writing, index }) => {
   return (
     <Writing key={index}>
-      <h3>{writing.title}</h3>
+      <Title>
+        #{index + 1} {writing.title}
+      </Title>
       <p>{writing.description}</p>
       <div
         className="ad-container"

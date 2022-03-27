@@ -31,7 +31,7 @@ export const LeftBoxEl = styled.div`
   max-width: 100%;
 `;
 
-const FlexContainer = styled(ItemConatiner)`
+export const FlexContainer = styled(ItemConatiner)`
   position: relative;
   animation: ${({ folderBoxAnimeCount }) =>
     folderBoxAnimeCount === 1 ? "fadeIn 0.5s ease-in" : ""};

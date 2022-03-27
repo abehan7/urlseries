@@ -80,7 +80,7 @@ header ul li:hover {
 .profileImage {
   width: 30px;
   height: 30px;
-  transform: translateY(10px);
+  /* transform: translateY(10px); */
   border-radius: 50%;
   margin-right: 5px;
 }

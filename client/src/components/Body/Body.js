@@ -9,6 +9,7 @@ import styled from "styled-components";
 
 import loadable from "@loadable/component";
 import ChromeExtensionPage from "../../pages/ChromeExtensionPage";
+import ChromeExtension from "../../pages/chrome-extension";
 import AdsensePage from "../../pages/AdsensePage";
 import SharePage from "../../pages/SharePage";
 
@@ -31,8 +32,11 @@ function Body() {
   return (
     <Section>
       <Routes>
+        {/* <Route path="/" element={<MainPage />} /> */}
         <Route path="/" element={<MainPage />} />
-        <Route path="/adsense" element={<AdsensePage />} />
+        <Route path="/chrome-extension" element={<ChromeExtension />} />
+        {/* <Route path="/" element={<AdsensePage />} /> */}
+        {/* <Route path="/adsense" element={<AdsensePage />} /> */}
 
         <Route path="/share/:folder_id" element={<SharePage />} />
         <Route path="/about" element={<Aboutpage />} />
