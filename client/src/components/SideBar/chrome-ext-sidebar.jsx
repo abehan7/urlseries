@@ -57,11 +57,8 @@ const NormalModeItems = () => {
       <Item name="추가하기">
         <HiOutlineDocumentAdd />
       </Item>
-      <Item name="북마크 불러오기">
-        <AiOutlineCloudSync />
-      </Item>
       <Item name="북마크 옮기기">
-        <HiOutlineDocumentDuplicate />
+        <AiOutlineCloudSync />
       </Item>
     </TapsWrapper>
   );

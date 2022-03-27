@@ -32,9 +32,6 @@ export const SearchNotByDB = (PKeyword, totalUrl) => {
       MemoFilter(url, PKeyword)
     );
   });
-
-  // console.log(Filterd);
-
   return Filterd;
 };
 
@@ -52,4 +49,16 @@ export const SearchFolderNotByDB = (PKeyword, totalFolder) => {
     FolderNameFilter(folder, PKeyword) || FolderMomoFilter(folder, PKeyword);
   const filterd = totalFolder.filter((folder) => isContained(folder));
   return filterd;
+};
+
+// FIXME: 최근 방문한 URL검색
+const UrlFilter = (url, PKeyword) => {
+  return KeywordNormalize(url.url).includes(PKeyword);
+};
+
+export const SearchUrlHistoryNotByDB = (PKeyword, totalUrl) => {
+  const Filterd = totalUrl.filter((url) => {
+    return TitleFilter(url, PKeyword) || UrlFilter(url, PKeyword);
+  });
+  return Filterd;
 };

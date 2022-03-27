@@ -1,29 +1,72 @@
-export let searchedUrls = [];
+export const getSearchHistoryUrls = (setState) => {
+  const indexedDB =
+    window.indexedDB ||
+    window.mozIndexedDB ||
+    window.webkitIndexedDB ||
+    window.msIndexedDB;
 
-const indexedDB =
-  window.indexedDB ||
-  window.mozIndexedDB ||
-  window.webkitIndexedDB ||
-  window.msIndexedDB;
+  const dbName = "search_history";
+  const dbVersion = 1;
+  const dbStoreName = "searched_urls";
 
-const dbName = "search_history";
-const dbVersion = 1;
-const dbStoreName = "searched_urls";
+  const db = indexedDB.open(dbName, dbVersion);
 
-const db = indexedDB.open(dbName, dbVersion);
-
-db.onsuccess = function (e) {
-  const db = e.target.result;
-  const transaction = db.transaction(dbStoreName, "readwrite");
-  const store = transaction.objectStore(dbStoreName);
-  const request = store.getAll();
-  request.onsuccess = function (e) {
-    searchedUrls = e.target.result.map((item) => {
-      return { url: item.url, _id: item.id, url_title: item.title };
-    });
+  db.onsuccess = function (e) {
+    const db = e.target.result;
+    const transaction = db.transaction(dbStoreName, "readwrite");
+    const store = transaction.objectStore(dbStoreName);
+    const request = store.getAll();
+    request.onsuccess = async function (e) {
+      const searchedUrls = e.target.result.map((item) => {
+        return {
+          url: item.url,
+          _id: item.id,
+          url_title: item.title,
+          date: item.lastVisitTime,
+        };
+      });
+      const sorted = searchedUrls.sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+      setState(sorted);
+    };
   };
 };
 
+export const getChromeBookmarks = (setState) => {
+  const indexedDB =
+    window.indexedDB ||
+    window.mozIndexedDB ||
+    window.webkitIndexedDB ||
+    window.msIndexedDB;
+
+  const dbName = "search_history";
+  const dbVersion = 1;
+  const dbStoreName = "chrome_bookmarks";
+
+  const db = indexedDB.open(dbName, dbVersion);
+
+  db.onsuccess = function (e) {
+    const db = e.target.result;
+    const transaction = db.transaction(dbStoreName, "readwrite");
+    const store = transaction.objectStore(dbStoreName);
+    const request = store.getAll();
+    request.onsuccess = async function (e) {
+      const chromeBookmarkUrls = e.target.result.map((item) => {
+        return {
+          url: item.url,
+          _id: item.id,
+          url_title: item.title,
+          date: item.lastVisitTime,
+        };
+      });
+      const sorted = chromeBookmarkUrls.sort(
+        (a, b) => new Date(b.date) - new Date(a.date)
+      );
+      setState(sorted);
+    };
+  };
+};
 // FIXME: 코파일럿
 // export const fn = {
 //   addUrl: function (url) {

@@ -214,15 +214,17 @@ function Header() {
       </LogoWrapper>
 
       <TapWrapper style={{}}>
-        <Tap
-          onClick={() => navigate("/chrome-extension")}
-          className="header--chrome--tap"
-        >
-          <TapIcon>
-            <AiOutlineChrome />
-          </TapIcon>
-          <TapText>Chrome</TapText>
-        </Tap>
+        {token && (
+          <Tap
+            onClick={() => navigate("/chrome-extension")}
+            className="header--chrome--tap"
+          >
+            <TapIcon>
+              <AiOutlineChrome />
+            </TapIcon>
+            <TapText>Chrome</TapText>
+          </Tap>
+        )}
         <Tap>
           <Link to="/about">
             <VscLayers className="icon_page" size="20"></VscLayers>ABOUT

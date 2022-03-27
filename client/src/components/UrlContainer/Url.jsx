@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 const Line = styled.div`
@@ -30,8 +30,12 @@ export const Text = styled.span`
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  /* word-break: keep-all; */
   word-wrap: break-word;
+  /* width: 600px; */
+
+  /* word-break: break-all; */
+  word-break: ${({ isHttp }) => (isHttp ? "break-all" : "keep-all")};
+  white-space: normal;
 `;
 
 export const TextWrapper = styled.div`
@@ -153,6 +157,8 @@ const Url = ({
     },
   };
 
+  const isHttp = url.includes("http");
+
   return (
     <UrlEl
       key={id}
@@ -163,7 +169,7 @@ const Url = ({
       <Line />
       <Img src={src} />
       <TextWrapper>
-        <Text>{title}</Text>
+        <Text isHttp={isHttp}>{title}</Text>
       </TextWrapper>
 
       <Icon onClick={onClickStar} ref={starWrapRef}>
