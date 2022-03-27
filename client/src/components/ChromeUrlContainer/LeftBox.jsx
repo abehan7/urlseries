@@ -4,7 +4,7 @@ import styled from "styled-components";
 import SearchBar from "../SearchBar/SearchBar";
 import ItemContainer from "../UrlContainer/ItemContainer";
 import { LeftBoxEl, FlexContainer } from "../UrlContainer/LeftBox";
-import { getSearchHistoryUrls } from "../../indexedDb";
+import { getChromeBookmarks, getSearchHistoryUrls } from "../../IndexedDb";
 import { KeywordNormalize, SearchUrlHistoryNotByDB } from "../Utils/Search";
 import { debounce, throttle } from "lodash";
 import { Title } from "../UrlContainer/styled/Title.styled";
@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import NoUrl from "../UrlContainer/NoUrl";
 import Marker from "../UrlContainer/Marker";
 import { useRef } from "react";
+import { GetScrollUpMarker } from "../Utils/Scroll/GetThrottled";
 
 const FlexContainerEl = styled(FlexContainer)`
   height: calc(100% - 130px);
@@ -26,21 +27,28 @@ const LeftBox = () => {
   const [filterdUrls, setFilterdUrls] = useState([]);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
   const [historySearchedUrls, setHistorySearchedUrls] = useState([]);
+  const [chromeBookmarks, setChromeBookmarks] = useState([]);
   const [isScroll, setIsScroll] = useState(false);
-  const [scrollTop, setScrollTop] = useState(0);
   const scrollRef = useRef(null);
+  const [loading, setLoading] = useState(true);
+  const { onScroll, handleScrollUp } = GetScrollUpMarker({
+    setIsScroll,
+    scrollRef,
+  });
 
   // console.log("searchedUrls:", historySearchedUrls);
   const isSearch = keyword.length > 0;
   const _getFilterdUrls = useCallback(
     (keyword) => {
       const pKeyword = KeywordNormalize(keyword);
-      const filterd = SearchUrlHistoryNotByDB(pKeyword, historySearchedUrls);
+      const filterd = SearchUrlHistoryNotByDB(pKeyword, [
+        ...historySearchedUrls,
+        ...chromeBookmarks,
+      ]);
       setFilterdUrls(filterd);
-
       setIsSearchLoading(false);
     },
-    [historySearchedUrls]
+    [historySearchedUrls, chromeBookmarks]
   );
 
   const onChange = async (e) => {
@@ -51,36 +59,29 @@ const LeftBox = () => {
     e.target.value.length > 0 && (await debounceFn(_getFilterdUrls, _keyword));
   };
 
-  const throttled = useRef(
-    throttle((newValue, scrollTop) => {
-      setScrollTop(newValue);
-      // TODO: 이거 저장 현재 퍼센트 매우매우 중요
-      // const scrollPercent = newValue / (totalUrls.length * 50);
-      const diff = newValue - scrollTop; //음수면 위로 양수면 아래로
-      diff > 0 ? setIsScroll(true) : setIsScroll(false);
-    }, 500)
-  );
-
-  const onScroll = useCallback(
-    (e) => throttled.current(e.target.scrollTop, scrollTop),
-    [scrollTop]
-  );
-
-  const handleScrollUp = useCallback(() => {
-    const option = { top: 0, left: 0, behavior: "smooth" };
-    scrollRef.current.scrollTo(option);
-  }, []);
-
   useEffect(() => setFilterdUrls([]), [keyword]);
 
-  useEffect(() => getSearchHistoryUrls(setHistorySearchedUrls), []);
+  useEffect(() => {
+    getSearchHistoryUrls(setHistorySearchedUrls);
+    getChromeBookmarks(setChromeBookmarks);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoading(false), 300);
+    return () => clearTimeout(timer);
+  });
 
   //FIXME: DOM MAPPING
   //전체 북마크
   const TotalUrlMap = () =>
-    !isSearch && <ItemContainer urls={historySearchedUrls} />;
+    !loading &&
+    !isSearch && (
+      <ItemContainer urls={historySearchedUrls} urlType="chrome-extension" />
+    );
   //검색 북마크
-  const SearchUrlMap = () => isSearch && <ItemContainer urls={filterdUrls} />;
+  const SearchUrlMap = () =>
+    !loading &&
+    isSearch && <ItemContainer urls={filterdUrls} urlType="chrome-extension" />;
   //검색중일 때 로딩창
   const SearchLoader = () => isSearch && isSearchLoading && <LoadingCenter />;
 
@@ -98,6 +99,8 @@ const LeftBox = () => {
         {SearchUrlMap()}
         {SearchLoader()}
         {SearchNoUrl()}
+        {/* 로딩창 */}
+        {loading && <LoadingCenter />}
         <Marker isScroll={isScroll} onClick={handleScrollUp} />
       </FlexContainerEl>
     </LeftBoxEl>

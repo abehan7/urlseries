@@ -62,11 +62,6 @@ const Icon = styled.div`
   justify-content: flex-start;
 
   z-index: 2;
-
-  /* background-color: #fff; */
-  /* align-self: flex-start; */
-  /* color: #ffc64b; */
-  /* vertical-align: middle; */
 `;
 
 const UrlEl = styled.div`
@@ -88,15 +83,9 @@ const UrlEl = styled.div`
     }
   }
 
-  /* transition: all 0.3s ease-in-out; */
-  /* translate: translateX(50px); */
-
-  /* animation: urlIn 0.3s ease-in-out; */
-  /* animation-fill-mode: forwards; */
   padding: 0.3rem;
   position: relative;
   width: 100%;
-  /* height: 50px; */
   height: 40px;
   max-height: 40px;
   min-height: 40px;
@@ -127,6 +116,10 @@ export const Index = styled.div`
   font-weight: 100;
 `;
 
+const Date = styled.span`
+  padding-right: 0.5rem;
+`;
+
 const Url = ({
   url,
   title,
@@ -136,6 +129,8 @@ const Url = ({
   isLiked,
   onClick,
   onClickStar,
+  urlType = "normal",
+  date,
 }) => {
   const src = `http://www.google.com/s2/favicons?domain=${url}`;
   const starWrapRef = useRef(null);
@@ -144,7 +139,7 @@ const Url = ({
 
   const onClickUrl = async (e) => {
     // 별 누르면 클릭 안되게하기
-    if (starWrapRef.current.contains(e.target)) return;
+    if (starWrapRef?.current?.contains(e.target)) return;
     // whiteList.includes(mode) && nomalModeFn();
     onClick();
   };
@@ -159,6 +154,13 @@ const Url = ({
 
   const isHttp = url.includes("http");
 
+  const starMap = () =>
+    urlType !== "chrome-extension" && (
+      <Icon onClick={onClickStar} ref={starWrapRef}>
+        {isLiked ? <AiFillStar /> : <AiOutlineStar />}
+      </Icon>
+    );
+
   return (
     <UrlEl
       key={id}
@@ -171,12 +173,9 @@ const Url = ({
       <TextWrapper>
         <Text isHttp={isHttp}>{title}</Text>
       </TextWrapper>
-
-      <Icon onClick={onClickStar} ref={starWrapRef}>
-        {isLiked ? <AiFillStar /> : <AiOutlineStar />}
-      </Icon>
-
+      {starMap()}
       <Index>
+        {urlType === "chrome-extension" && <Date>{date}</Date>}
         {totalUrlNum - index}/{totalUrlNum}
       </Index>
     </UrlEl>

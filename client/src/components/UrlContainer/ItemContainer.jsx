@@ -8,8 +8,9 @@ import { useEffect } from "react";
 import DeleteUrl from "../DeleteUrl/DeleteUrl";
 import { useFolder } from "../../contexts/FolderContext";
 import Colors from "../../assets/Colors";
+import { timeForToday } from "../Utils/Time";
 
-const ItemContainer = ({ urls, urlLength = 50 }) => {
+const ItemContainer = ({ urls, urlLength = 50, urlType }) => {
   const [contentsNum, setContentsNum] = useState(urlLength);
   const [target, setTarget] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -109,6 +110,10 @@ const ItemContainer = ({ urls, urlLength = 50 }) => {
         ? folderUrlIds?.includes(url._id)
         : null;
 
+    let date;
+    if (urlType === "chrome-extension") date = timeForToday(url?.date);
+    // date = JSON.stringify(new Date(url?.date));
+
     return (
       <>
         {normalModeList.includes(mode) && (
@@ -122,6 +127,8 @@ const ItemContainer = ({ urls, urlLength = 50 }) => {
             isLiked={url.url_likedUrl === 1}
             onClick={onClick}
             onClickStar={_onClickStar}
+            urlType={urlType}
+            date={date}
           />
         )}
         {mode === constants.DELETE && (

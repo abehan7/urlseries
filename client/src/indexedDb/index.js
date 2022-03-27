@@ -57,7 +57,7 @@ export const getChromeBookmarks = (setState) => {
           url: item.url,
           _id: item.id,
           url_title: item.title,
-          date: item.lastVisitTime,
+          date: item.dateAdded,
         };
       });
       const sorted = chromeBookmarkUrls.sort(
