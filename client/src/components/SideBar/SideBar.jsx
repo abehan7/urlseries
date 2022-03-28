@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { media } from "../../assets/Themes";
 import {
   HiOutlineDocumentAdd,
   HiOutlineDocumentRemove,
@@ -8,7 +9,7 @@ import {
   HiOutlineFolderRemove,
 } from "react-icons/hi";
 import { FcFolder } from "react-icons/fc";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 
 import { CgBackspace, CgEditBlackPoint, CgHashtag } from "react-icons/cg";
 import Footer from "../Footer/Footer.jsx";
@@ -53,6 +54,18 @@ export const SideBarEl = styled.div`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   display: flex;
   flex-direction: column;
+
+  ${media[1100]} {
+    width: 100px;
+  }
+
+  ${media.mobile} {
+    position: absolute;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    ${({ isSidebarOpen }) => isSidebarOpen && `transform: translateX(0);`}
+    height:calc(100% - 70px);
+  }
 `;
 
 const Button = styled.div`
@@ -84,10 +97,18 @@ const Button = styled.div`
       background-color: #a597fe;
     }
   }
+
+  ${media[1100]} {
+    justify-content: center;
+  }
 `;
 
 const IconWrapper = styled.div``;
-const TextWrapper = styled.div``;
+const TextWrapper = styled.div`
+  ${media[1100]} {
+    display: none;
+  }
+`;
 const Text = styled.span``;
 const Icon = styled.div`
   font-size: 1.4rem;
@@ -96,6 +117,10 @@ const Icon = styled.div`
   justify-content: center;
   padding-left: 1rem;
   padding-right: 0.5rem;
+  ${media[1100]} {
+    padding: 0;
+    font-size: 1.5rem;
+  }
 `;
 
 const TagWrapper = styled.div`
@@ -111,6 +136,9 @@ const TagWrapper = styled.div`
       width: 2px;
       position: absolute;
     }
+  }
+  ${media[1100]} {
+    padding-left: 0;
   }
 `;
 const Img = styled.img`
@@ -198,6 +226,7 @@ const FolderIcon = styled.div`
 
 const SideBar = () => {
   const mode = useMode().mode;
+  const isSidebarOpen = useMode().isSidebarOpen;
 
   // const currentFolder = useFolder().currentFolder;
   const folderTitle = useFolder().currentFolder?.folder_name;
@@ -254,7 +283,7 @@ const SideBar = () => {
       <Img src="img/logotest2.png" alt="logoImage" />
     );
   return (
-    <SideBarEl>
+    <SideBarEl className="mobile--sidebar" isSidebarOpen={isSidebarOpen}>
       <FaviconWrapper>
         <FaviconContainer>
           <ImgWrapper>

@@ -7,17 +7,21 @@ import SideBar from "../components/SideBar/SideBar";
 import UrlContainer from "../components/UrlContainer/UrlContainer";
 import Modals from "../components/Modal/Modals";
 import { constants, useMode } from "../contexts/ModeContext";
-import { Toaster } from "react-hot-toast";
 import AlertModal from "../components/AlertModal/AlertModal";
 import { useSelector } from "react-redux";
 import { getToken } from "../redux/ReducersT/tokenReducer";
 import { addUrls } from "../components/Api";
+import { media } from "../assets/Themes";
 
 const MainEl = styled.div`
   position: inherit;
   z-index: 1;
   height: calc(100vh - 100px);
   display: flex;
+
+  ${media.mobile} {
+    height: calc(100vh - 70px);
+  }
   /* max-width: 100%; */
 `;
 

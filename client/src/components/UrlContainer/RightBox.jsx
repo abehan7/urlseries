@@ -7,6 +7,7 @@ import { useRef } from "react";
 import { useSelector } from "react-redux";
 
 import styled from "styled-components";
+import { media } from "../../assets/Themes";
 import { useFolder } from "../../contexts/FolderContext";
 import { constants, useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
@@ -48,6 +49,11 @@ export const RightBoxEl = styled.div`
   }
 
   display: flex;
+
+  ${media[768]} {
+    display: none;
+  }
+
   align-items: center;
   justify-content: center;
   flex: 1;

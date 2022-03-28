@@ -1,6 +1,7 @@
 import { RiArrowDropDownLine, RiMailLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { media } from "../../assets/Themes";
 
 const MainFooter = styled.div`
   /* margin-top: 180px; */
@@ -18,11 +19,18 @@ const MainFooter = styled.div`
 const FooterContent = styled.div`
   display: flex;
   flex-direction: row;
+  ${media[1100]} {
+    flex-direction: column;
+    > div:first-child {
+      display: none;
+    }
+  }
 `;
 
 const FooterDetail = styled.div`
   position: relative;
   margin-left: 5px;
+
   > ul {
     position: absolute;
     display: flex;
@@ -70,6 +78,16 @@ const FooterDetail = styled.div`
   }
   > button > a {
     color: white;
+  }
+
+  ${media[1100]} {
+    margin-left: 0;
+    > button {
+      background-color: #fff;
+      > a {
+        color: #a7aaaa;
+      }
+    }
   }
 `;
 
