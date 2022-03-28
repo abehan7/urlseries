@@ -13,6 +13,7 @@ import {
 } from "./redux/Actions/authAction";
 import { API } from "./components/Api";
 import styled from "styled-components";
+import { Toaster } from "react-hot-toast";
 
 //-----------------수정본 코드----------------
 const AppEl = styled.div`
@@ -55,12 +56,14 @@ function App() {
       getUser();
     }
   }, [token, dispatch]);
+  const containerStyle = { top: 100 };
 
   return (
     <Router>
       <AppEl className="App">
         <Header />
         <Body />
+        <Toaster containerStyle={containerStyle} />
       </AppEl>
     </Router>
   );

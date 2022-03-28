@@ -32,18 +32,17 @@ const modalWhiteList = [
 
 const MainPage = () => {
   const modalMode = useMode().modalMode;
-  const containerStyle = { top: 100 };
   const token = useSelector(getToken);
   // const bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
 
   useEffect(() => {
     const fn = async () => {
-      const bookmarks = JSON.parse(localStorage.getItem("bookmarks"));
+      const bookmarks = JSON.parse(localStorage.getItem("bookmark"));
       console.log("bookmarks from mainPage: ", bookmarks);
       //url 넣기
       bookmarks?.length !== 0 && (await addUrls(bookmarks));
       //아이템 지우기
-      localStorage.removeItem("bookmarks");
+      localStorage.removeItem("bookmark");
     };
     token && fn();
   }, [token]);
@@ -57,7 +56,6 @@ const MainPage = () => {
       {/* 모달 */}
       {modalWhiteList.includes(modalMode) && <Modals modalMode={modalMode} />}
       {/* 토스트 */}
-      <Toaster containerStyle={containerStyle} />
       {/* 얼럴트 모달 */}
       <AlertModal />
     </MainEl>

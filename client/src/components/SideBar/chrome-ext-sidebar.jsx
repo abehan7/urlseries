@@ -1,12 +1,8 @@
 import React from "react";
 import { AiFillChrome, AiOutlineCloudSync } from "react-icons/ai";
 import { CgBackspace } from "react-icons/cg";
-import {
-  HiOutlineDocumentAdd,
-  HiOutlineDocumentDownload,
-  HiOutlineDocumentDuplicate,
-} from "react-icons/hi";
-import { MdOutlineDriveFileMoveRtl } from "react-icons/md";
+import { HiOutlineDocumentAdd } from "react-icons/hi";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Footer from "../Footer/Footer";
@@ -49,15 +45,17 @@ const ChromeExtensionSideBar = () => {
 
 const NormalModeItems = () => {
   const navigate = useNavigate();
+  const onClickAdd = () => toast("아직 개발중입니다...", { icon: "🛑" });
+  const onClickSync = () => toast("아직 개발중입니다...", { icon: "🛑" });
   return (
     <TapsWrapper>
       <Item name="뒤로가기" onClick={() => navigate("/")}>
         <CgBackspace />
       </Item>
-      <Item name="추가하기">
+      <Item name="추가하기" onClick={onClickAdd}>
         <HiOutlineDocumentAdd />
       </Item>
-      <Item name="북마크 옮기기">
+      <Item name="북마크 옮기기" onClick={onClickSync}>
         <AiOutlineCloudSync />
       </Item>
     </TapsWrapper>

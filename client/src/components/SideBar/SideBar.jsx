@@ -166,7 +166,7 @@ const DeleteWrapper = styled(TapsWrapper)`
 `;
 
 const NormalWrapper = styled.div`
-  animation: ${({ count }) => (count === 1 ? "fadeIn 0.5s ease-in-out;" : "")};
+  animation: fadeIn 0.5s ease-in-out;
   pointer-events: ${({ token, isLoading }) =>
     token && !isLoading ? "auto" : "none"};
 `;
