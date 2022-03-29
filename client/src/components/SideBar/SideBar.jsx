@@ -96,6 +96,12 @@ const Button = styled.div`
     ::before {
       background-color: #a597fe;
     }
+    ${media[1100]} {
+      background-color: #fff;
+      ::before {
+        background-color: #fff;
+      }
+    }
   }
 
   ${media[1100]} {

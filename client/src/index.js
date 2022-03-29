@@ -15,7 +15,7 @@ position: relative;
 
 * {
   font-family: "Pretendard";
-
+  -webkit-tap-highlight-color : transparent !important;
   font-weight: bold;
 }
 a {

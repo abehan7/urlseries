@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import styled, { css } from "styled-components";
+import { media } from "../../assets/Themes";
 import { useMode } from "../../contexts/ModeContext";
 import { useUrl } from "../../contexts/UrlContext";
 const Line = styled.div`

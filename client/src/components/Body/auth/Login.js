@@ -12,7 +12,7 @@ import { GoogleLogin } from "react-google-login";
 import { RiUser3Line, RiLockPasswordLine } from "react-icons/ri";
 import styled from "styled-components";
 
-const Input = styled.input`
+export const Input = styled.input`
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -46,6 +46,10 @@ const initialState = {
 
 const Button = styled.button`
   cursor: pointer;
+`;
+
+export const RegistalBtn = styled(Button)`
+  background-color: #ff416c; ;
 `;
 function Login() {
   const [user, setUser] = useState(initialState);
@@ -137,6 +141,7 @@ function Login() {
                 value={user_id}
                 name="user_id"
                 onChange={handleChangeInput}
+                autoComplete="user-name"
               />
             </div>
             <div className="icon_field">
@@ -148,6 +153,7 @@ function Login() {
                 value={password}
                 name="password"
                 onChange={handleChangeInput}
+                autoComplete="current-password"
               />
             </div>
             <Link to="/forgot_password">비밀번호를 잊으셨나요?</Link>
@@ -177,9 +183,9 @@ function Login() {
                 자신만의 개성있고 효율적인 URL 관리를 시작해보세요!
               </p>
               <Link to="/register">
-                <Button className="ghost" id="signUp">
+                <RegistalBtn className="ghost" id="signUp">
                   회원가입
-                </Button>
+                </RegistalBtn>
               </Link>
             </div>
           </div>

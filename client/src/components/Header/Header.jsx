@@ -32,8 +32,7 @@ const HeaderEl = styled.header`
     padding-right: 0.7rem;
   }
   @media (max-width: 1018px) {
-    li:first-child,
-    li:nth-child(2) {
+    li:first-child {
       display: none;
     }
   }

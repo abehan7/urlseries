@@ -37,6 +37,7 @@ const ChromeExtensionSideBar = () => {
           </ImgWrapper>
         </FaviconContainer>
       </FaviconWrapper>
+
       {NormalModeTaps()}
       <Footer />
     </SideBarEl>

@@ -18,7 +18,7 @@ import LoadingCenter from "../Utils/Loader/LoaderCenter";
 import { KeywordNormalize, SearchFolderNotByDB } from "../Utils/Search";
 import FolderItemContainer from "./FolderItemContainer";
 import NoFolder from "./NoFolder";
-
+import { media } from "../../assets/Themes";
 const TitleEl = styled(Title)`
   @keyframes jaehee {
     0% {
@@ -95,6 +95,12 @@ const GridBox = styled(ItemConatiner)`
     display: none;
   }
 
+  ${media[1100]} {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  ${media.mobile} {
+    grid-template-columns: repeat(1, 1fr);
+  }
   /* grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); */
 `;
 const FolderLeftBoxEl = styled(LeftBoxEl)``;

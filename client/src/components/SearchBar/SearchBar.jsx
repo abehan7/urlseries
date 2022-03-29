@@ -1,6 +1,7 @@
 import React from "react";
 import { IoSearchCircleOutline } from "react-icons/io5";
 import styled from "styled-components";
+import { media } from "../../assets/Themes";
 
 const InputSearch = styled.input`
   height: 35px;
@@ -24,12 +25,14 @@ const InputSearch = styled.input`
     background-color: transparent;
     border-bottom: 1px solid rgba(78, 76, 76, 0.5);
     transition: all 300ms ease-in-out;
-    /* transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2); */
+    ${media.mobile} {
+      width: 150px;
+    }
   }
 `;
 
 const BtnSearch = styled.button`
-  width: 50px;
+  width: fit-content;
   height: 50px;
   border-style: none;
   font-size: 20px;
@@ -45,6 +48,9 @@ const BtnSearch = styled.button`
   :focus ~ input {
     color: #535151;
     width: 300px;
+    ${media.mobile} {
+      width: 150px;
+    }
     border-radius: 0px;
     background-color: transparent;
     border-bottom: 1px solid rgba(78, 76, 76, 0.5);

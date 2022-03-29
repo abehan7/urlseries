@@ -14,6 +14,10 @@ import {
 
 import { RiUser3Line, RiLockPasswordLine, RiMailLine } from "react-icons/ri";
 import { API } from "../../Api";
+import { Input, RegistalBtn } from "./Login";
+import styled from "styled-components";
+
+const LoginBtn = styled(RegistalBtn)``;
 
 const initialState = {
   user_id: "",
@@ -101,54 +105,58 @@ function Register() {
             {success && showSuccessMsg(success)}
             <div className="icon_field">
               <RiUser3Line className="icon" />
-              <input
+              <Input
                 type="text"
                 className="auth_input"
                 placeholder="아이디를 입력해주세요"
                 value={user_id}
                 name="user_id"
                 onChange={handleChangeInput}
-              ></input>
+                autoComplete="off"
+              />
             </div>
             <div className="icon_field">
               <RiMailLine className="icon" />
-              <input
+              <Input
                 type="text"
                 className="auth_input"
                 placeholder="이메일을 입력해주세요"
                 value={email}
                 name="email"
                 onChange={handleChangeInput}
-              ></input>
+                autoComplete="off"
+              />
             </div>
 
             <div className="icon_field">
               <RiLockPasswordLine className="icon" />
-              <input
+              <Input
                 type="password"
                 className="auth_input"
                 placeholder="비밀번호를 입력해주세요"
                 value={password}
                 name="password"
                 onChange={handleChangeInput}
-              ></input>
+                autoComplete="off"
+              />
             </div>
 
             <div className="icon_field">
               <RiLockPasswordLine className="icon" />
-              <input
+              <Input
                 type="password"
                 className="auth_input"
                 placeholder="비밀번호를 확인해주세요"
                 value={cf_password}
                 name="cf_password"
                 onChange={handleChangeInput}
-              ></input>
+                autoComplete="off"
+              />
             </div>
 
-            <button id="auth_btn" type="submit">
+            <RegistalBtn id="auth_btn" type="submit">
               회원가입
-            </button>
+            </RegistalBtn>
             <button className="response_register" onClick={goSignUp}>
               로그인
             </button>
@@ -160,9 +168,11 @@ function Register() {
             <div className="overlay-panel overlay-right">
               <h1 className="auth_opening">환영합니다!</h1>
               <p className="auth_text">기존 아이디가 있다면 로그인해주세요!</p>
-              <button className="ghost" id="signUp">
-                <Link to="/login">로그인</Link>
-              </button>
+              <Link to="/login">
+                <LoginBtn className="ghost" id="signUp">
+                  로그인
+                </LoginBtn>
+              </Link>
             </div>
           </div>
         </div>
