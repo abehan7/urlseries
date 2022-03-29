@@ -29,6 +29,24 @@ export const LeftBoxEl = styled.div`
   justify-content: center;
   flex-direction: column;
   max-width: 100%;
+
+  .newItem {
+    div:nth-child(4) {
+      animation: big-and-small 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    }
+  }
+
+  @keyframes big-and-small {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 `;
 
 export const FlexContainer = styled(ItemConatiner)`

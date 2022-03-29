@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { useState } from "react";
 import "./AboutPage.css";
 import PlayerModal from "./PlayerModal";
 
@@ -12,6 +12,7 @@ const AboutPage = () => {
       {openModal && <PlayerModal closeModal={setOpenModal} />}
       <>
         <div className="mainText">URurl About page</div>
+
         <div className="aboutMain">
           <div className="maindetail_one">
             <div className="text">
@@ -59,10 +60,10 @@ const AboutPage = () => {
               2. 슬라이드 우측으로 넘겨 폴더 생성<br></br>
               3. 폴더에서 슬라이드 우측으로 넘긴후 해쉬태그 추가<br></br>
             </div> */}
-            <img className="image" src="img/aboutfolder.jpg" />
+            <img className="image" src="img/aboutfolder.jpg" alt="img" />
           </div>
           <div className="maindetail_two">
-            <img className="image" src="img/aboutcomplete.jpg" />
+            <img className="image" src="img/aboutcomplete.jpg" alt="img" />
             {/* <div className="slides">페이지이미지</div> */}
             <div className="text">
               <b>자동완성</b> <br></br>기능을 통해 <br></br>간편하게 <br></br>

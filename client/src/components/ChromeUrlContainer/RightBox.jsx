@@ -5,6 +5,7 @@ import { useEffect } from "react";
 import { getChromeBookmarks } from "../../IndexedDb";
 import ItemContainer from "../UrlContainer/ItemContainer";
 import Marker from "../UrlContainer/Marker";
+import NoUrl from "../UrlContainer/NoUrl";
 import { FlexContainer, RightBoxEl } from "../UrlContainer/RightBox";
 import { Title } from "../UrlContainer/styled/Title.styled";
 import { TitleWrapper } from "../UrlContainer/styled/TitleWrapper.styled";
@@ -34,6 +35,9 @@ const RightBox = () => {
     <ItemContainer urls={chromeBookmarks} urlType="chrome-extension" />
   );
 
+  //검색창에 북마크 없을 때
+  const TotalNoUrl = () => chromeBookmarks.length === 0 && <NoUrl />;
+
   return (
     <RightBoxEl>
       <TitleWrapper>
@@ -43,6 +47,8 @@ const RightBox = () => {
         {!loading && TotalUrlMap()}
         {/* 로딩창 */}
         {loading && <LoadingCenter />}
+        {/* url없을 때  */}
+        {!loading && TotalNoUrl()}
         <Marker isScroll={isScroll} onClick={handleScrollUp} />
       </FlexContainer>
     </RightBoxEl>
