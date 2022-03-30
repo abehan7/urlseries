@@ -92,6 +92,7 @@ const LeftBox = () => {
 
   //검색창에 북마크 없을 때
   const TotalNoUrl = () =>
+    !loading &&
     !isSearch &&
     !isSearchLoading &&
     historySearchedUrls.length === 0 && <ChromeInstall />;

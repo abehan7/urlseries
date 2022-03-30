@@ -12,6 +12,14 @@ import { GoogleLogin } from "react-google-login";
 import { RiUser3Line, RiLockPasswordLine } from "react-icons/ri";
 import styled from "styled-components";
 
+import LoginToast from "../../Utils/Toast/LoginToast";
+const Center = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const Input = styled.input`
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -53,6 +61,7 @@ export const RegistalBtn = styled(Button)`
 `;
 function Login() {
   const [user, setUser] = useState(initialState);
+  const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -66,6 +75,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setIsOpen(true);
       // guest url들 초기화
 
       const res = await API.post("/user/login", { user_id, password });
@@ -81,6 +91,7 @@ function Login() {
       localStorage.setItem("firstLogin", true);
       dispatch(dispatchLogin());
       navigate("/");
+      setIsOpen(false);
     } catch (err) {
       console.log(err);
       err.response.data.msg &&
@@ -90,6 +101,7 @@ function Login() {
           success: "",
         });
     }
+    setIsOpen(false);
   };
 
   const responseGoogle = async (response) => {
@@ -120,10 +132,8 @@ function Login() {
     }
   };
 
-  const goSignUp = () => navigate("/register");
-
   return (
-    <center>
+    <Center>
       <div className="container" id="container">
         <div className="form-container sign-in-container">
           <form onSubmit={handleSubmit}>
@@ -157,13 +167,9 @@ function Login() {
               />
             </div>
             <Link to="/forgot_password">비밀번호를 잊으셨나요?</Link>
-            <button className="response_register" onClick={goSignUp}>
-              회원가입
-            </button>
             <Button id="auth_btn" type="summit">
               로그인
             </Button>
-            {/*  */}
 
             <div className="social">
               <GoogleLogin
@@ -191,7 +197,8 @@ function Login() {
           </div>
         </div>
       </div>
-    </center>
+      <LoginToast isOpen={isOpen} />
+    </Center>
   );
 }
 

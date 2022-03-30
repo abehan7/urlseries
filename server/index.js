@@ -6,30 +6,15 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const fileUpload = require("express-fileupload");
 
-const {
-  TotalAfter,
-  TotalURL,
-  FolderItems,
-  Search,
-  Get21Urls,
-  AddUrl,
-  AddFolder,
-  EditUrl,
-  SearchedUrlBYE,
-  ClickedSeachedURL,
-  ClickedURLInBox,
-  updateFolderContents,
-  FolderLiked,
-  DeleteUrl,
-  DeleteFolder,
-  Crawling,
-  SignUp,
-  Login,
-  SearchDeleteAll,
-  updateFolderName,
-  deleteUrls,
-  getGuestUrls,
-} = require("./controller/main");
+const { FolderItems } = require("./controller/main");
+
+const http = require("http");
+const cron = require("node-cron");
+// second minute hour day-of-month month day-of-week
+cron.schedule("*/20 23,0-14 * * *", function () {
+  console.log("node-cron");
+  http.get("http://cors-nhj12311.herokuapp.com");
+});
 
 const authtest = require("./middleware/authtest");
 
@@ -37,6 +22,7 @@ const hashtagRouter = require("./routes/hashtags");
 
 dotenv.config({ path: "./.env" });
 const PORT = process.env.PORT || 3001;
+
 const whitelist = [
   "http://localhost:3001/",
   "https://urlseries.com",
@@ -74,10 +60,7 @@ mongoose.connect(process.env.DATABASE_URL, {
   // useFindAndModify: false,
 });
 
-// const Port = process.env.PORT || 3001
-
 //Routes
-
 app.use("/user", require("./routes/userRouter"));
 app.use("/apitest", require("./routes/upload"));
 app.use("/hashtag", hashtagRouter);
@@ -87,31 +70,6 @@ app.use("/folder", require("./routes/folders"));
 
 // [4]  폴더 아이템들 가지고오기
 app.get("/folderItems", authtest, FolderItems);
-
-// app.get("/url/guest", getGuestUrls);
-
-// [3]  url추가 용도 post
-
-app.put("/editUrl", authtest, EditUrl);
-
-// FIXME: 폴더이름 수정
-app.patch("/updateFolderName/:id", authtest, updateFolderName);
-
-// FIXME: 태그수정
-// app.patch("/hashtags", auth, updateLikeTags);
-
-// [6]    폴더 해쉬태그 contents 수정하는 put
-app.patch("/folder/contents/:id", authtest, updateFolderContents);
-
-// [7]  폴더 좋아요 된거 수정
-app.put("/FolderLiked", authtest, FolderLiked);
-
-// [2]  폴더삭제
-app.post("/deleteFolder", authtest, DeleteFolder);
-
-// [1] 퍼펫티어
-
-app.post("/crawling", Crawling);
 
 app.listen(PORT, () => {
   console.log(`SERVER RUNNING ON ${PORT}`);

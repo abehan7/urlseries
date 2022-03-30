@@ -13,7 +13,6 @@ const ChromeInstallEl = styled.div`
   gap: 1rem;
 `;
 const Ment = styled.span`
-  cursor: pointer;
   display: flex;
 `;
 
@@ -22,7 +21,18 @@ const Icon = styled.span`
   align-items: center;
   justify-content: center;
 `;
-const Text = styled.span``;
+
+const TextWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+`;
+const Text = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const Button = styled.button`
   width: 130px;
@@ -53,9 +63,8 @@ const Button = styled.button`
   line-height: 42px;
   padding: 0;
   border: none;
-  span {
+  div {
     position: relative;
-    display: block;
     width: 100%;
     height: 100%;
   }
@@ -86,11 +95,11 @@ const Button = styled.button`
   :hover:after {
     width: 100%;
   }
-  span:hover {
+  div:hover {
     color: rgba(2, 126, 251, 1);
   }
-  span:before,
-  span:after {
+  div:before,
+  div:after {
     position: absolute;
     content: "";
     left: 0;
@@ -98,18 +107,18 @@ const Button = styled.button`
     background: rgba(2, 126, 251, 1);
     transition: all 0.3s ease;
   }
-  span:before {
+  div:before {
     width: 2px;
     height: 0%;
   }
-  span:after {
+  div:after {
     width: 0%;
     height: 2px;
   }
-  span:hover:before {
+  div:hover:before {
     height: 100%;
   }
-  span:hover:after {
+  div:hover:after {
     width: 100%;
   }
 `;
@@ -122,11 +131,13 @@ const ChromeInstall = () => {
   return (
     <ChromeInstallEl>
       <Ment>크롬 확장 프로그램이 설치되어있는지 확인해주세요!</Ment>
-      <Button onClick={onClick} className="custom-btn btn-3">
-        <Icon>
-          <AiFillChrome />
-        </Icon>
-        <Text>설치하러 가기</Text>
+      <Button onClick={onClick}>
+        <TextWrapper>
+          <Icon>
+            <AiFillChrome />
+          </Icon>
+          <Text>설치하러 가기</Text>
+        </TextWrapper>
       </Button>
     </ChromeInstallEl>
   );
