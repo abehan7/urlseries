@@ -2,7 +2,8 @@ import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import { getChromeBookmarks } from "../../IndexedDb";
+// import { getgetChromeBookmark } from "../../IndexedDb";
+import { useLocalStorage } from "../../LocalStorage";
 import ItemContainer from "../UrlContainer/ItemContainer";
 import Marker from "../UrlContainer/Marker";
 import NoUrl from "../UrlContainer/NoUrl";
@@ -13,7 +14,8 @@ import LoadingCenter from "../Utils/Loader/LoaderCenter";
 import { GetScrollUpMarker } from "../Utils/Scroll/GetThrottled";
 
 const RightBox = () => {
-  const [chromeBookmarks, setChromeBookmarks] = useState([]);
+  // const [getChromeBookmark, setgetChromeBookmark] = useState([]);
+  const { getChromeBookmark } = useLocalStorage();
   const [isScroll, setIsScroll] = useState(false);
   const scrollRef = useRef(null);
 
@@ -24,7 +26,7 @@ const RightBox = () => {
     scrollRef,
   });
 
-  useEffect(() => getChromeBookmarks(setChromeBookmarks), []);
+  // useEffect(() => getgetChromeBookmark(setgetChromeBookmark), []);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 300);
@@ -32,11 +34,11 @@ const RightBox = () => {
   });
 
   const TotalUrlMap = () => (
-    <ItemContainer urls={chromeBookmarks} urlType="chrome-extension" />
+    <ItemContainer urls={getChromeBookmark} urlType="chrome-extension" />
   );
 
   //검색창에 북마크 없을 때
-  const TotalNoUrl = () => chromeBookmarks.length === 0 && <NoUrl />;
+  const TotalNoUrl = () => getChromeBookmark.length === 0 && <NoUrl />;
 
   return (
     <RightBoxEl>

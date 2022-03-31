@@ -4,9 +4,9 @@ import styled from "styled-components";
 import SearchBar from "../SearchBar/SearchBar";
 import ItemContainer from "../UrlContainer/ItemContainer";
 import { LeftBoxEl, FlexContainer } from "../UrlContainer/LeftBox";
-import { getChromeBookmarks, getSearchHistoryUrls } from "../../IndexedDb";
+import { getgetChromeBookmark, getSearchHistoryUrls } from "../../IndexedDb";
 import { KeywordNormalize, SearchUrlHistoryNotByDB } from "../Utils/Search";
-import { debounce, throttle } from "lodash";
+import { debounce } from "lodash";
 import { Title } from "../UrlContainer/styled/Title.styled";
 import { TitleWrapper } from "../UrlContainer/styled/TitleWrapper.styled";
 import { useCallback } from "react";
@@ -17,7 +17,7 @@ import Marker from "../UrlContainer/Marker";
 import { useRef } from "react";
 import { GetScrollUpMarker } from "../Utils/Scroll/GetThrottled";
 import ChromeInstall from "./ChromeInstall";
-
+import { useLocalStorage } from "../../LocalStorage/index";
 const FlexContainerEl = styled(FlexContainer)`
   height: calc(100% - 130px);
   max-height: calc(100% - 130px);
@@ -27,8 +27,8 @@ const LeftBox = () => {
   const [keyword, setKeyword] = useState("");
   const [filterdUrls, setFilterdUrls] = useState([]);
   const [isSearchLoading, setIsSearchLoading] = useState(false);
-  const [historySearchedUrls, setHistorySearchedUrls] = useState([]);
-  const [chromeBookmarks, setChromeBookmarks] = useState([]);
+  // const [getSearchHistory, setgetSearchHistory] = useState([]);
+  // const [getChromeBookmark, setgetChromeBookmark] = useState([]);
   const [isScroll, setIsScroll] = useState(false);
   const scrollRef = useRef(null);
   const [loading, setLoading] = useState(true);
@@ -37,19 +37,22 @@ const LeftBox = () => {
     scrollRef,
   });
 
-  // console.log("searchedUrls:", historySearchedUrls);
+  const { getChromeBookmark, getSearchHistory, getBookmark } =
+    useLocalStorage();
+
+  // console.log("searchedUrls:", getSearchHistory);
   const isSearch = keyword.length > 0;
   const _getFilterdUrls = useCallback(
     (keyword) => {
       const pKeyword = KeywordNormalize(keyword);
       const filterd = SearchUrlHistoryNotByDB(pKeyword, [
-        ...historySearchedUrls,
-        ...chromeBookmarks,
+        ...getSearchHistory,
+        ...getChromeBookmark,
       ]);
       setFilterdUrls(filterd);
       setIsSearchLoading(false);
     },
-    [historySearchedUrls, chromeBookmarks]
+    [getSearchHistory, getChromeBookmark]
   );
 
   const onChange = async (e) => {
@@ -63,8 +66,8 @@ const LeftBox = () => {
   useEffect(() => setFilterdUrls([]), [keyword]);
 
   useEffect(() => {
-    getSearchHistoryUrls(setHistorySearchedUrls);
-    getChromeBookmarks(setChromeBookmarks);
+    // getSearchHistoryUrls(setgetSearchHistory);
+    // getgetChromeBookmark(setgetChromeBookmark);
   }, []);
 
   useEffect(() => {
@@ -77,7 +80,7 @@ const LeftBox = () => {
   const TotalUrlMap = () =>
     !loading &&
     !isSearch && (
-      <ItemContainer urls={historySearchedUrls} urlType="chrome-extension" />
+      <ItemContainer urls={getSearchHistory} urlType="chrome-extension" />
     );
   //검색 북마크
   const SearchUrlMap = () =>
@@ -95,7 +98,7 @@ const LeftBox = () => {
     !loading &&
     !isSearch &&
     !isSearchLoading &&
-    historySearchedUrls.length === 0 && <ChromeInstall />;
+    getSearchHistory.length === 0 && <ChromeInstall />;
   return (
     <LeftBoxEl>
       <TitleWrapper>

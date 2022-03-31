@@ -15,18 +15,18 @@ import {
   SideBarEl,
   TapsWrapper,
 } from "./SideBar";
+import { useMode } from "../../contexts/ModeContext";
 
 const ChromeIconWrapper = styled.div`
   font-size: 2.3rem;
   color: gray;
 `;
 
-const ItemWrapper = styled.div``;
-
 const ChromeExtensionSideBar = () => {
   const NormalModeTaps = () => <NormalModeItems />;
+  const isSidebarOpen = useMode().isSidebarOpen;
   return (
-    <SideBarEl>
+    <SideBarEl isSidebarOpen={isSidebarOpen}>
       <FaviconWrapper>
         <FaviconContainer>
           <ImgWrapper>
