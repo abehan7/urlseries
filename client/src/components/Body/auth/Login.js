@@ -106,7 +106,9 @@ function Login() {
 
   const responseGoogle = async (response) => {
     console.log(response);
+
     try {
+      setIsOpen(true);
       const res = await API.post("/user/google_login", {
         tokenId: response.tokenId,
       });
@@ -125,10 +127,12 @@ function Login() {
 
       dispatch(dispatchLogin());
       navigate("/");
+      setIsOpen(false);
     } catch (err) {
       console.error(err);
       err.response.data.msg &&
         setUser({ ...user, err: err.response.data.msg, success: "" });
+      setIsOpen(false);
     }
   };
 
