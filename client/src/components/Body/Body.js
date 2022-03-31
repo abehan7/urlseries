@@ -10,8 +10,10 @@ import styled from "styled-components";
 import loadable from "@loadable/component";
 import ChromeExtensionPage from "../../pages/ChromeExtensionPage";
 import ChromeExtension from "../../pages/chrome-extension";
-import AdsensePage from "../../pages/AdsensePage";
+
 import SharePage from "../../pages/SharePage";
+import Community from "../../pages/community";
+import Post from "../../pages/post";
 
 const Aboutpage = loadable(() => import("../AboutPage/AboutPage"));
 const UserInfomation = loadable(() =>
@@ -35,6 +37,8 @@ function Body() {
         {/* <Route path="/" element={<MainPage />} /> */}
         <Route path="/" element={<MainPage />} />
         <Route path="/chrome-extension" element={<ChromeExtension />} />
+        <Route path="/community" element={<Community />} />
+        <Route path="/community/post/:id" element={<Post />} />
         {/* <Route path="/" element={<AdsensePage />} /> */}
         {/* <Route path="/adsense" element={<AdsensePage />} /> */}
 

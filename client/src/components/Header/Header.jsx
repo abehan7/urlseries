@@ -10,6 +10,7 @@ import { useEffect } from "react";
 import { constants, useMode } from "../../contexts/ModeContext";
 import { getToken } from "../../redux/ReducersT/tokenReducer";
 import { media } from "../../assets/Themes";
+import { BiCommentDetail } from "react-icons/bi";
 
 const DropdownBtn = styled.div`
   background-color: transparent;
@@ -23,7 +24,7 @@ const UserId = styled.span``;
 const HeaderEl = styled.header`
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   z-index: 3;
-  position: inherit;
+  /* position: inherit; */
   h1 p {
     font-family: "Sansita Swashed", cursive;
     font-weight: 600;
@@ -107,21 +108,30 @@ const DropDownContent = styled.div`
   }
 `;
 
-const Tap = styled.li`
+const Tab = styled.li`
   cursor: pointer;
   display: flex;
   align-items: center;
+  ${media[1100]} {
+    display: none;
+  }
 `;
 
-const TapText = styled.span``;
-const TapIcon = styled.span`
+const LoginTab = styled(Tab)`
+  ${media[1100]} {
+    display: flex;
+  }
+`;
+
+const TabText = styled.span``;
+const TabIcon = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
   padding-right: 0.2rem;
 `;
-const TapWrapper = styled.ul`
+const TabWrapper = styled.ul`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -205,7 +215,6 @@ function Header() {
   const { user, isLogged } = auth;
   const [isOpen, setIsOpen] = useState(false);
   const [isChrome, setIsChrome] = useState(false);
-  const [isBurgerClicked, setIsBurgerClicked] = useState(false);
   const ref = useRef();
   const setMode = useMode().setMode;
   const navigate = useNavigate();
@@ -300,34 +309,40 @@ function Header() {
         </Hamberger>
       </HamburgerWrapper>
 
-      <TapWrapper>
+      <TabWrapper>
+        <Tab onClick={() => navigate("/community")}>
+          <TabIcon>
+            <BiCommentDetail />
+          </TabIcon>
+          <TabText>COMMUNITY</TabText>
+        </Tab>
         {token && (
-          <Tap
+          <Tab
             onClick={() => navigate("/chrome-extension")}
-            className="header--chrome--tap"
+            className="header--chrome--tab"
           >
-            <TapIcon>
+            <TabIcon>
               <AiOutlineChrome />
-            </TapIcon>
-            <TapText>Chrome</TapText>
-          </Tap>
+            </TabIcon>
+            <TabText>CHROME</TabText>
+          </Tab>
         )}
-        <Tap>
+        <Tab>
           <Link to="/about">
             <VscLayers className="icon_page" size="20"></VscLayers>ABOUT
           </Link>
-        </Tap>
+        </Tab>
 
         {isLogged ? (
           userLink()
         ) : (
-          <Tap>
+          <LoginTab>
             <Link to="/login" onClick={onClickLogin}>
               <VscAccount className="icon_page" size="20"></VscAccount>로그인
             </Link>
-          </Tap>
+          </LoginTab>
         )}
-      </TapWrapper>
+      </TabWrapper>
     </HeaderEl>
   );
 }

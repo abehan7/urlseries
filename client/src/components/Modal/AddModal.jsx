@@ -220,7 +220,7 @@ const AddModal = () => {
             url_memo: text.memo,
           };
           // console.log(newUrl);
-          handleEditUrl(editUrl._id, newUrl);
+          await handleEditUrl(editUrl._id, newUrl);
         };
         const myPromise = getData();
         toast.promise(myPromise, {

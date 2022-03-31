@@ -53,7 +53,9 @@ const initialState = {
 };
 
 const Button = styled.button`
-  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
+  background-color: ${({ disabled }) => (disabled ? "#ccc" : "#ff4b2b")};
+  border: ${({ disabled }) => (disabled ? "#ccc" : "#ff4b2b")};
 `;
 
 export const RegistalBtn = styled(Button)`
@@ -171,7 +173,7 @@ function Login() {
               />
             </div>
             <Link to="/forgot_password">비밀번호를 잊으셨나요?</Link>
-            <Button id="auth_btn" type="summit">
+            <Button id="auth_btn" type="summit" disabled={isOpen}>
               로그인
             </Button>
 
@@ -181,6 +183,7 @@ function Login() {
                 buttonText="Google 로그인"
                 onSuccess={responseGoogle}
                 cookiePolicy={"single_host_origin"}
+                disabled={isOpen}
               />
             </div>
           </form>
@@ -193,7 +196,7 @@ function Login() {
                 자신만의 개성있고 효율적인 URL 관리를 시작해보세요!
               </p>
               <Link to="/register">
-                <RegistalBtn className="ghost" id="signUp">
+                <RegistalBtn className="ghost" id="signUp" disabled={isOpen}>
                   회원가입
                 </RegistalBtn>
               </Link>

@@ -2,7 +2,6 @@ import React from "react";
 import { useRef } from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-// import { getgetChromeBookmark } from "../../IndexedDb";
 import { useLocalStorage } from "../../LocalStorage";
 import ItemContainer from "../UrlContainer/ItemContainer";
 import Marker from "../UrlContainer/Marker";
